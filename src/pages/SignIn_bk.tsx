@@ -48,11 +48,12 @@ function SignIn({navigation}: SignInScreenProps) {
     (value: string) => {
       const checkEmail = removeWhitespace(value);
       setEmail(checkEmail);
+      // setEmailMessage(
+      //   validateEmail(checkEmail) ? '' : '이메일 형식에 맞게 입력해 주세요.',
+      // );
       setIsEmail(validateEmail(checkEmail));
       if (!isEmail) {
         setEmailMessage('이메일 형식에 맞게 입력해 주세요.');
-      } else {
-        setEmailMessage('');
       }
     },
     [isEmail],
@@ -65,6 +66,9 @@ function SignIn({navigation}: SignInScreenProps) {
     if (!email || !email.trim()) {
       return Alert.alert('알림', '이메일을 입력해주세요.');
     }
+    // if (!password || !password.trim()) {
+    //   return Alert.alert('알림', '비밀번호를 입력해주세요.');
+    // }
     try {
       setLoading(true);
       const response = await axios.post('', {
@@ -94,10 +98,13 @@ function SignIn({navigation}: SignInScreenProps) {
     }
   }, [loading, dispatch, email]); // password 삭제
 
+  // const toSignUp = useCallback(() => {
+  //   navigation.navigate('SignUp');
+  // }, [navigation]);
+
   // const canGoNext = email && password; // 이메일 그리고 비밀번호가 입력 되면 버튼 활성화
   // 이메일이 입력 되면 버튼 활성화
   const canGoNext = email;
-
   return (
     <DismissKeyboardView style={styles.container}>
       <View style={styles.container}>
@@ -127,7 +134,6 @@ function SignIn({navigation}: SignInScreenProps) {
           keyboardType={KeyboardTypes.EMAIL}
           returnKeyType={ReturnKeyTypes.NEXT}
           emailMessage={emailMessage}
-          onChangeText={onChangeEmail}
         />
 
         {/*<View style={styles.inputWrapper}>*/}
@@ -191,47 +197,8 @@ function SignIn({navigation}: SignInScreenProps) {
           {/*  <Text>회원가입하기</Text>*/}
           {/*</Pressable>*/}
         </View>
-        <View style={styles.easyLoginArea}>
-          <Text style={styles.easyText}>간편 로그인</Text>
-          <View style={styles.iconBox}>
-            <View style={styles.easyIcon}>
-              <Pressable>
-                <Image
-                  source={require('../assets/images/icon/Kakaotalk.png')}
-                  style={styles.icon}
-                  resizeMode={'cover'}
-                />
-              </Pressable>
-            </View>
-            <View style={styles.easyIcon}>
-              <Pressable>
-                <Image
-                  source={require('../assets/images/icon/Naver.png')}
-                  style={styles.icon}
-                  resizeMode={'cover'}
-                />
-              </Pressable>
-            </View>
-            <View style={styles.easyIcon}>
-              <Pressable>
-                <Image
-                  source={require('../assets/images/icon/Google.png')}
-                  style={styles.icon}
-                  resizeMode={'cover'}
-                />
-              </Pressable>
-            </View>
-            <View style={styles.easyIcon}>
-              <Pressable>
-                <Image
-                  source={require('../assets/images/icon/Apple.png')}
-                  style={styles.icon}
-                  resizeMode={'cover'}
-                />
-              </Pressable>
-            </View>
-          </View>
-          <Text style={styles.easyLink}>로그인없이 둘러보기</Text>
+        <View style={styles.easeLoginArea}>
+          <Text>간편 로그인</Text>
         </View>
       </View>
     </DismissKeyboardView>
@@ -242,7 +209,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     paddingHorizontal: 16,
-    paddingVertical: 16,
     backgroundColor: '#ffffff',
   },
   logoArea: {
@@ -268,6 +234,38 @@ const styles = StyleSheet.create({
     fontSize: 16,
     textAlign: 'center',
   },
+  inputWrapper: {
+    position: 'relative',
+    marginTop: 10,
+    marginBottom: 40,
+    // padding: 20,
+  },
+  label: {
+    position: 'absolute',
+    top: -4,
+    left: 16,
+    fontWeight: 'bold',
+    fontSize: 12,
+    zIndex: 10,
+    paddingHorizontal: 4,
+    backgroundColor: '#ffffff',
+    // marginBottom: 20,
+  },
+  textInput: {
+    padding: 16,
+    width: '100%',
+    height: 56,
+    borderWidth: 1,
+    borderColor: '#dcdcdc',
+    borderRadius: 8,
+    borderBottomWidth: StyleSheet.hairlineWidth,
+  },
+  cautionText: {
+    color: '#cc1212',
+    fontSize: 12,
+    paddingTop: 4,
+    paddingLeft: 16,
+  },
   buttonArea: {
     alignItems: 'center',
   },
@@ -278,6 +276,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     borderRadius: 28,
+    marginBottom: 40,
   },
   loginButtonActive: {
     backgroundColor: 'blue',
@@ -286,33 +285,7 @@ const styles = StyleSheet.create({
     color: '#ffffff',
     fontSize: 16,
   },
-  easyLoginArea: {
-    marginTop: 40,
-  },
-  easyText: {
-    fontSize: 16,
-    textAlign: 'center',
-  },
-  iconBox: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'center',
-    marginTop: 16,
-  },
-  icon: {
-    width: 40,
-    height: 40,
-  },
-  easyIcon: {
-    marginHorizontal: 8,
-  },
-  easyLink: {
-    marginTop: 40,
-    color: '#3962f3',
-    fontSize: 16,
-    textAlign: 'center',
-    textDecorationLine: 'underline',
-  },
+  easeLoginArea: {},
 });
 
 export default SignIn;

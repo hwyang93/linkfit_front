@@ -8,7 +8,9 @@
 [타입스크립트 공식문서](https://typescript-kr.github.io/)
 
 ## 프로젝트 환경 
+- node 16.13.1
 - ruby 2.7.5
+- pod 1.11.3
 
 
 ## 프로젝트 실행 
