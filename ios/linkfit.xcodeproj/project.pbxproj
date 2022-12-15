@@ -12,7 +12,10 @@
 		13B07FBC1A68108700A75B9A /* AppDelegate.mm in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.mm */; };
 		13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
+		18F728B1E89C4CD5B5047DBF /* NotoSansKR-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 656E7BB95D12449A83E49C68 /* NotoSansKR-Bold.otf */; };
+		513E3E4363EE44FBB7B4F70A /* NotoSansKR-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = 644B9B853CB0471CA679F6BD /* NotoSansKR-Regular.otf */; };
 		7699B88040F8A987B510C191 /* libPods-linkfit-linkfitTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 19F6CBCC0A4E27FBF8BF4A61 /* libPods-linkfit-linkfitTests.a */; };
+		81804486C0DE496FB18BF0A0 /* NotoSansKR-Medium.otf in Resources */ = {isa = PBXBuildFile; fileRef = DA09DBF8A4914A939B10AF61 /* NotoSansKR-Medium.otf */; };
 		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
 /* End PBXBuildFile section */
 
@@ -41,8 +44,11 @@
 		5709B34CF0A7D63546082F79 /* Pods-linkfit.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-linkfit.release.xcconfig"; path = "Target Support Files/Pods-linkfit/Pods-linkfit.release.xcconfig"; sourceTree = "<group>"; };
 		5B7EB9410499542E8C5724F5 /* Pods-linkfit-linkfitTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-linkfit-linkfitTests.debug.xcconfig"; path = "Target Support Files/Pods-linkfit-linkfitTests/Pods-linkfit-linkfitTests.debug.xcconfig"; sourceTree = "<group>"; };
 		5DCACB8F33CDC322A6C60F78 /* libPods-linkfit.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-linkfit.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		644B9B853CB0471CA679F6BD /* NotoSansKR-Regular.otf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "NotoSansKR-Regular.otf"; path = "../src/assets/fonts/NotoSansKR-Regular.otf"; sourceTree = "<group>"; };
+		656E7BB95D12449A83E49C68 /* NotoSansKR-Bold.otf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "NotoSansKR-Bold.otf"; path = "../src/assets/fonts/NotoSansKR-Bold.otf"; sourceTree = "<group>"; };
 		81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = linkfit/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		89C6BE57DB24E9ADA2F236DE /* Pods-linkfit-linkfitTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-linkfit-linkfitTests.release.xcconfig"; path = "Target Support Files/Pods-linkfit-linkfitTests/Pods-linkfit-linkfitTests.release.xcconfig"; sourceTree = "<group>"; };
+		DA09DBF8A4914A939B10AF61 /* NotoSansKR-Medium.otf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "NotoSansKR-Medium.otf"; path = "../src/assets/fonts/NotoSansKR-Medium.otf"; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
@@ -81,6 +87,16 @@
 				00E356F11AD99517003FC87E /* Info.plist */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		10A1C7779D714EDDA1ABEBA0 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				656E7BB95D12449A83E49C68 /* NotoSansKR-Bold.otf */,
+				DA09DBF8A4914A939B10AF61 /* NotoSansKR-Medium.otf */,
+				644B9B853CB0471CA679F6BD /* NotoSansKR-Regular.otf */,
+			);
+			name = Resources;
 			sourceTree = "<group>";
 		};
 		13B07FAE1A68108700A75B9A /* linkfit */ = {
@@ -122,6 +138,7 @@
 				83CBBA001A601CBA00E9B192 /* Products */,
 				2D16E6871FA4F8E400B85C8A /* Frameworks */,
 				BBD78D7AC51CEA395F1C20DB /* Pods */,
+				10A1C7779D714EDDA1ABEBA0 /* Resources */,
 			);
 			indentWidth = 2;
 			sourceTree = "<group>";
@@ -244,6 +261,9 @@
 			files = (
 				81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */,
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
+				18F728B1E89C4CD5B5047DBF /* NotoSansKR-Bold.otf in Resources */,
+				81804486C0DE496FB18BF0A0 /* NotoSansKR-Medium.otf in Resources */,
+				513E3E4363EE44FBB7B4F70A /* NotoSansKR-Regular.otf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
