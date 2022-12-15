@@ -4,7 +4,6 @@ import {
   Pressable,
   StyleSheet,
   Text,
-  // TextInput,
   View,
   ActivityIndicator,
   Image,
@@ -13,17 +12,17 @@ import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import EncryptedStorage from 'react-native-encrypted-storage';
 import DismissKeyboardView from '../components/DismissKeyboardView';
 import axios, {AxiosError} from 'axios';
-// import Config from 'react-native-config';
 import {RootStackParamList} from '../../AppInner';
 import {useAppDispatch} from '../store';
 import userSlice from '../slices/user';
 import {validateEmail, removeWhitespace} from '../util/util';
 import Input, {KeyboardTypes, ReturnKeyTypes} from '../components/Input';
 import useInput from '../hooks/useInput';
+import common, {width, height, fullWidth, fullHeight} from '../styles/common';
 
 type SignInScreenProps = NativeStackScreenProps<RootStackParamList, 'SignIn'>;
 
-function SignIn({navigation}: SignInScreenProps) {
+function SignIn() {
   const dispatch = useAppDispatch();
   const [loading, setLoading] = useState<boolean>(false);
 
@@ -98,8 +97,12 @@ function SignIn({navigation}: SignInScreenProps) {
   // 이메일이 입력 되면 버튼 활성화
   const canGoNext = email;
 
+  const testClick = () => {
+    Alert.alert('알림', '클릭테스트에용');
+  };
+
   return (
-    <DismissKeyboardView style={styles.container}>
+    <DismissKeyboardView style={styles.wrap}>
       <View style={styles.container}>
         <View style={styles.logoArea}>
           <View style={styles.logoBox}>
@@ -114,61 +117,24 @@ function SignIn({navigation}: SignInScreenProps) {
               resizeMode={'cover'}
             />
           </View>
-
           <Text style={styles.titleText}>
             당신의 커리어를 위한 여정에{'\n'} Linkfit이 함께 할게요.
           </Text>
         </View>
 
-        <Input
-          {...emailInput}
-          label={'이메일'}
-          placeholder={'이메일을 입력해 주세요.'}
-          keyboardType={KeyboardTypes.EMAIL}
-          returnKeyType={ReturnKeyTypes.NEXT}
-          emailMessage={emailMessage}
-          onChangeText={onChangeEmail}
-        />
+        <View style={styles.inputArea}>
+          <Input
+            {...emailInput}
+            label={'이메일'}
+            placeholder={'이메일을 입력해 주세요.'}
+            keyboardType={KeyboardTypes.EMAIL}
+            returnKeyType={ReturnKeyTypes.NEXT}
+            emailMessage={emailMessage}
+            onChangeText={onChangeEmail}
+          />
+          {!isEmail && <Text style={styles.cautionText}>{emailMessage}</Text>}
+        </View>
 
-        {/*<View style={styles.inputWrapper}>*/}
-        {/*  <Text style={styles.label}>이메일</Text>*/}
-        {/*  <TextInput*/}
-        {/*    style={styles.textInput}*/}
-        {/*    onChangeText={onChangeEmail}*/}
-        {/*    placeholder="이메일을 입력해주세요"*/}
-        {/*    placeholderTextColor="#666"*/}
-        {/*    importantForAutofill="yes"*/}
-        {/*    autoComplete="email"*/}
-        {/*    textContentType="emailAddress"*/}
-        {/*    value={email}*/}
-        {/*    returnKeyType="next"*/}
-        {/*    clearButtonMode="while-editing"*/}
-        {/*    ref={emailRef}*/}
-        {/*    onSubmitEditing={() => passwordRef.current?.focus()}*/}
-        {/*    blurOnSubmit={false}*/}
-        {/*    autoCapitalize="none"*/}
-        {/*  />*/}
-        {/*  <Text style={styles.cautionText}>{emailMessage}</Text>*/}
-        {/*</View>*/}
-
-        {/*<View style={styles.inputWrapper}>*/}
-        {/*  <Text style={styles.label}>비밀번호</Text>*/}
-        {/*  <TextInput*/}
-        {/*    style={styles.textInput}*/}
-        {/*    placeholder="비밀번호를 입력해주세요(영문,숫자,특수문자)"*/}
-        {/*    placeholderTextColor="#666"*/}
-        {/*    importantForAutofill="yes"*/}
-        {/*    onChangeText={onChangePassword}*/}
-        {/*    value={password}*/}
-        {/*    autoComplete="password"*/}
-        {/*    textContentType="password"*/}
-        {/*    secureTextEntry*/}
-        {/*    returnKeyType="send"*/}
-        {/*    clearButtonMode="while-editing"*/}
-        {/*    ref={passwordRef}*/}
-        {/*    onSubmitEditing={onSubmit}*/}
-        {/*  />*/}
-        {/*</View>*/}
         <View style={styles.buttonArea}>
           <Pressable
             style={
@@ -192,10 +158,10 @@ function SignIn({navigation}: SignInScreenProps) {
           {/*</Pressable>*/}
         </View>
         <View style={styles.easyLoginArea}>
-          <Text style={styles.easyText}>간편 로그인</Text>
+          <Text style={common.text}>간편 로그인</Text>
           <View style={styles.iconBox}>
             <View style={styles.easyIcon}>
-              <Pressable>
+              <Pressable onPress={testClick}>
                 <Image
                   source={require('../assets/images/icon/Kakaotalk.png')}
                   style={styles.icon}
@@ -204,7 +170,7 @@ function SignIn({navigation}: SignInScreenProps) {
               </Pressable>
             </View>
             <View style={styles.easyIcon}>
-              <Pressable>
+              <Pressable onPress={testClick}>
                 <Image
                   source={require('../assets/images/icon/Naver.png')}
                   style={styles.icon}
@@ -213,7 +179,7 @@ function SignIn({navigation}: SignInScreenProps) {
               </Pressable>
             </View>
             <View style={styles.easyIcon}>
-              <Pressable>
+              <Pressable onPress={testClick}>
                 <Image
                   source={require('../assets/images/icon/Google.png')}
                   style={styles.icon}
@@ -222,7 +188,7 @@ function SignIn({navigation}: SignInScreenProps) {
               </Pressable>
             </View>
             <View style={styles.easyIcon}>
-              <Pressable>
+              <Pressable onPress={testClick}>
                 <Image
                   source={require('../assets/images/icon/Apple.png')}
                   style={styles.icon}
@@ -231,29 +197,34 @@ function SignIn({navigation}: SignInScreenProps) {
               </Pressable>
             </View>
           </View>
-          <Text style={styles.easyLink}>로그인없이 둘러보기</Text>
         </View>
+        <Pressable onPress={testClick}>
+          <Text style={styles.easyLink}>로그인없이 둘러보기</Text>
+        </Pressable>
       </View>
     </DismissKeyboardView>
   );
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    paddingHorizontal: 16,
-    paddingVertical: 16,
+  wrap: {
+    width: fullWidth,
+    height: fullHeight,
     backgroundColor: '#ffffff',
   },
+  container: {
+    justifyContent: 'center',
+    height: fullHeight,
+    paddingHorizontal: 16,
+    paddingVertical: 16,
+  },
   logoArea: {
-    flex: 1,
-    marginTop: 100,
     width: '100%',
     justifyContent: 'center',
     alignItems: 'center',
   },
   logoBox: {
-    width: 200,
+    width: +width * 200,
   },
   logoText: {
     width: '100%',
@@ -264,19 +235,30 @@ const styles = StyleSheet.create({
     height: 58,
   },
   titleText: {
-    marginTop: 20,
-    fontSize: 16,
+    marginTop: +height * 20,
+    fontSize: +width * 16,
     textAlign: 'center',
+  },
+  inputArea: {
+    marginTop: +height * 50,
+    width: '100%',
+  },
+  cautionText: {
+    paddingTop: 4,
+    paddingLeft: 16,
+    color: '#cc1212',
+    fontSize: +width * 12,
   },
   buttonArea: {
     alignItems: 'center',
+    marginTop: +height * 40,
   },
   loginButton: {
-    width: '100%',
-    height: 56,
-    backgroundColor: 'gray',
-    alignItems: 'center',
     justifyContent: 'center',
+    alignItems: 'center',
+    width: '100%',
+    height: +height * 56,
+    backgroundColor: '#dcdcdc',
     borderRadius: 28,
   },
   loginButtonActive: {
@@ -284,20 +266,16 @@ const styles = StyleSheet.create({
   },
   loginButtonText: {
     color: '#ffffff',
-    fontSize: 16,
+    fontSize: +width * 16,
   },
   easyLoginArea: {
-    marginTop: 40,
-  },
-  easyText: {
-    fontSize: 16,
-    textAlign: 'center',
+    marginVertical: +width * 30,
   },
   iconBox: {
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
-    marginTop: 16,
+    marginTop: +width * 16,
   },
   icon: {
     width: 40,
@@ -307,9 +285,8 @@ const styles = StyleSheet.create({
     marginHorizontal: 8,
   },
   easyLink: {
-    marginTop: 40,
     color: '#3962f3',
-    fontSize: 16,
+    fontSize: +width * 16,
     textAlign: 'center',
     textDecorationLine: 'underline',
   },
