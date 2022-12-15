@@ -22,18 +22,18 @@ export const width = // 가로 변환 작업
 
 const common = StyleSheet.create({
   // space area
-  mv10: {marginVertical: 10},
-  mv20: {marginVertical: 20},
-  mv30: {marginVertical: 30},
-  mv40: {marginVertical: 40},
-  mt10: {marginTop: 10},
-  mt20: {marginTop: 20},
-  mt30: {marginTop: 30},
-  mt40: {marginTop: 40},
-  mb10: {marginBottom: 10},
-  mb20: {marginBottom: 20},
-  mb30: {marginBottom: 30},
-  mb40: {marginBottom: 40},
+  mv10: {marginVertical: +height * 10},
+  mv20: {marginVertical: +height * 20},
+  mv30: {marginVertical: +height * 30},
+  mv40: {marginVertical: +height * 40},
+  mt10: {marginTop: +height * 10},
+  mt20: {marginTop: +height * 20},
+  mt30: {marginTop: +height * 30},
+  mt40: {marginTop: +height * 40},
+  mb10: {marginBottom: +height * 10},
+  mb20: {marginBottom: +height * 20},
+  mb30: {marginBottom: +height * 30},
+  mb40: {marginBottom: +height * 40},
   // text area
   tac: {textAlign: 'center'},
   text: {
