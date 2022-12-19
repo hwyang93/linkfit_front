@@ -41,5 +41,14 @@ const common = StyleSheet.create({
     fontSize: +width * 16,
     textAlign: 'center',
   },
+  // basic button
+  button: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    width: '100%',
+    height: +height * 56,
+    backgroundColor: '#dcdcdc',
+    borderRadius: 28,
+  },
 });
 export default common;

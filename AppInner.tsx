@@ -1,32 +1,34 @@
-import SignIn from './src/pages/SignIn';
-import SignUp from './src/pages/SignUp';
-import Link from './src/pages/Link';
-import Community from './src/pages/Community';
-import Message from './src/pages/Message';
-import Setting from './src/pages/Setting';
 import * as React from 'react';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {useSelector} from 'react-redux';
 import {RootState} from './src/store/reducer';
-// import useSocket from './src/hooks/useSocket';
 import {useEffect} from 'react';
 import EncryptedStorage from 'react-native-encrypted-storage';
 import axios, {Axios, AxiosError} from 'axios';
 import {Alert} from 'react-native';
 import userSlice from './src/slices/user';
 import {useAppDispatch} from './src/store';
+import PasswordReset from './src/pages/PasswordReset';
+import SignIn from './src/pages/SignIn';
+import SignUp from './src/pages/SignUp';
+import Link from './src/pages/Link';
+import Community from './src/pages/Community';
+import Message from './src/pages/Message';
+import Setting from './src/pages/Setting';
 
 export type LoggedInParamList = {
-  Orders: undefined;
+  Link: undefined;
   Message: undefined;
-  Delivery: undefined;
-  Complete: {orderId: string};
+  Community: undefined;
+  Setting: undefined;
+  // Complete: {orderId: string};
 };
 
 export type RootStackParamList = {
   SignIn: undefined;
   SignUp: undefined;
+  PasswordReset: undefined;
 };
 
 const Tab = createBottomTabNavigator();
@@ -158,13 +160,17 @@ function AppInner() {
       <Stack.Screen
         name="SignIn"
         component={SignIn}
-        // options={{title: '로그인'}}
         options={{headerShown: false}}
       />
       <Stack.Screen
         name="SignUp"
         component={SignUp}
         options={{title: '회원가입'}}
+      />
+      <Stack.Screen
+        name="PasswordReset"
+        component={PasswordReset}
+        options={{title: '비밀번호 재설정'}}
       />
     </Stack.Navigator>
   );

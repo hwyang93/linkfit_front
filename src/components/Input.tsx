@@ -1,6 +1,7 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {StyleSheet, Text, TextInput, View} from 'react-native';
 import {height, width} from '../styles/common';
+import {CAUTION, SUCCESS} from '../styles/colors';
 
 export const KeyboardTypes = {
   DEFAULT: 'default',
@@ -19,6 +20,7 @@ type InputProps = {
   value: string;
   onChangeText: any;
   keyboardType: any;
+  isEmail: Boolean;
 };
 
 const Input = ({
@@ -27,14 +29,16 @@ const Input = ({
   value,
   onChangeText,
   keyboardType,
+  // isEmail,
   ...props
 }: InputProps) => {
   return (
     <View style={styles.inputWrapper}>
-      <Text style={styles.label}>{label}</Text>
+      <Text style={[styles.label]}>{label}</Text>
       <TextInput
         {...props}
-        style={styles.textInput}
+        // style={[styles.textInput, isEmail ? styles.success : styles.caution]}
+        style={[styles.textInput]}
         placeholder={placeholder}
         placeholderTextColor="#acacac"
         importantForAutofill="yes"
@@ -51,7 +55,6 @@ const Input = ({
         // returnKeyType="returnKeyType"
         // onSubmitEditing={() => passwordRef.current?.focus()}
       />
-      {/*{!isEmail && <Text style={styles.cautionText}>{emailMessage}</Text>}*/}
     </View>
   );
 };
@@ -81,8 +84,43 @@ const styles = StyleSheet.create({
     height: +height * 56,
     borderWidth: 2,
     borderColor: '#dcdcdc',
+    // borderColor: isEmail ? SUCCESS.success : CAUTION.caution,
     borderRadius: 8,
   },
+  caution: {
+    borderColor: '#e20823',
+  },
+  success: {
+    borderColor: '#3962f3',
+  },
 });
+const caution = StyleSheet.create({
+  input: {
+    borderColor: '#e20823',
+  },
+  label: {
+    color: '#e20823',
+  },
+});
+
+const success = StyleSheet.create({
+  input: {
+    borderColor: '##3962f3',
+  },
+  label: {
+    color: '##3962f3',
+  },
+});
+
+// const funcStyle = (isEmail: Boolean) =>
+//   StyleSheet.create({
+//     border: {
+//       borderColor: isEmail ? '#3962f3' : 'e20823',
+//     },
+//
+//     color: {
+//       color: isEmail ? '#3962f3' : 'e20823',
+//     },
+//   });
 
 export default Input;
