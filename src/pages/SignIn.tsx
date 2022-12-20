@@ -15,7 +15,7 @@ import axios, {AxiosError} from 'axios';
 import {RootStackParamList} from '../../AppInner';
 import {useAppDispatch} from '../store';
 import userSlice from '../slices/user';
-import {validateEmail, removeWhitespace} from '../util/util';
+import {validateEmail, removeWhitespace, validatePassword} from '../util/util';
 import Input, {KeyboardTypes, ReturnKeyTypes} from '../components/Input';
 import useInput from '../hooks/useInput';
 import common, {width} from '../styles/common';
@@ -32,7 +32,8 @@ function SignIn({navigation}: SignInScreenProps) {
   const [email, setEmail] = useState<string>('');
   // const [password, setPassword] = useState<string>('');
 
-  const emailInput = useInput('');
+  const emailInput = useInput('', validateEmail);
+  const passwordInput = useInput('', validatePassword);
 
   // 오류메시지 상태저장
   const [emailMessage, setEmailMessage] = useState<string>('');
@@ -187,7 +188,7 @@ function SignIn({navigation}: SignInScreenProps) {
                   label={'이메일'}
                   placeholder={'이메일을 입력해 주세요.'}
                   keyboardType={KeyboardTypes.EMAIL}
-                  // returnKeyType={ReturnKeyTypes.NEXT}
+                  returnKeyType={ReturnKeyTypes.DONE}
                   onChangeText={onChangeEmail}
                 />
                 {!isEmail && (
