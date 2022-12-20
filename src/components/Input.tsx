@@ -15,11 +15,10 @@ export const ReturnKeyTypes = {
 type InputProps = {
   label: string;
   placeholder: string;
-  emailMessage: string;
   value: string;
   onChangeText: any;
   keyboardType: any;
-  isEmail: Boolean;
+  // isEmail: Boolean;
 };
 
 const Input = ({
@@ -37,14 +36,13 @@ const Input = ({
         {...props}
         // style={[styles.textInput, isEmail ? styles.success : styles.caution]}
         style={[common.textInput]}
-        placeholder={placeholder}
+        value={value}
         placeholderTextColor="#acacac"
         importantForAutofill="yes"
-        autoComplete="email"
         clearButtonMode="while-editing"
-        blurOnSubmit={false}
         autoCapitalize="none"
-        value={value}
+        blurOnSubmit={false}
+        placeholder={placeholder}
         onChangeText={onChangeText}
         keyboardType={keyboardType}
       />

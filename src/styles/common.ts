@@ -34,6 +34,18 @@ const common = StyleSheet.create({
   mb20: {marginBottom: +height * 20},
   mb30: {marginBottom: +height * 30},
   mb40: {marginBottom: +height * 40},
+  // layout
+  wrap: {
+    width: '100%',
+    height: '100%',
+    backgroundColor: '#ffffff',
+  },
+  container: {
+    justifyContent: 'center',
+    height: fullHeight,
+    paddingHorizontal: 16,
+    paddingVertical: 16,
+  },
   // text area
   tac: {textAlign: 'center'},
   text: {

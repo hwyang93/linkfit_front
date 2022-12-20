@@ -18,7 +18,7 @@ import userSlice from '../slices/user';
 import {validateEmail, removeWhitespace} from '../util/util';
 import Input, {KeyboardTypes, ReturnKeyTypes} from '../components/Input';
 import useInput from '../hooks/useInput';
-import common, {width, fullWidth, fullHeight} from '../styles/common';
+import common, {width} from '../styles/common';
 import SimpleLogin from '../components/SimpleLogin';
 import LinearGradient from 'react-native-linear-gradient';
 
@@ -40,7 +40,7 @@ function SignIn({navigation}: SignInScreenProps) {
   // 유효성 검사
   const [isEmail, setIsEmail] = useState<boolean>(false);
   // 회원 가입 여부
-  // const [isMember, setIsMember] = useState<boolean>(false);
+  const [isMember, setIsMember] = useState<boolean>(false);
 
   const onChangeEmail = useCallback(
     (value: string) => {
@@ -58,8 +58,9 @@ function SignIn({navigation}: SignInScreenProps) {
   );
 
   const checkMember = () => {
-    Alert.alert('알림', '가입된 멤버인지 확인해요.');
+    Alert.alert('알림', '환영합니다. 회원님');
     // if(isMember) {}
+    setIsMember(true);
   };
 
   const onSubmit = useCallback(async () => {
@@ -111,8 +112,8 @@ function SignIn({navigation}: SignInScreenProps) {
   };
 
   return (
-    <DismissKeyboardView style={styles.wrap}>
-      <View style={styles.container}>
+    <DismissKeyboardView style={common.wrap}>
+      <View style={common.container}>
         <View style={styles.logoArea}>
           <View style={styles.logoBox}>
             <Image
@@ -132,49 +133,99 @@ function SignIn({navigation}: SignInScreenProps) {
         </View>
 
         <View>
-          {/* 이메일 입력 && 로그인 버튼 */}
-          <View style={common.mt40}>
-            <Input
-              {...emailInput}
-              label={'이메일'}
-              placeholder={'이메일을 입력해 주세요.'}
-              keyboardType={KeyboardTypes.EMAIL}
-              returnKeyType={ReturnKeyTypes.NEXT}
-              emailMessage={emailMessage}
-              onChangeText={onChangeEmail}
-              isEmail={isEmail}
-            />
-            {!isEmail && <Text style={styles.cautionText}>{emailMessage}</Text>}
-          </View>
+          {isMember ? (
+            <View>
+              {/* 비밀번호 입력 && 로그인 버튼 */}
+              <View style={common.mt40}>
+                <Input
+                  {...emailInput}
+                  label={'비밀번호'}
+                  placeholder={'비밀번호를 입력해 주세요.'}
+                  keyboardType={KeyboardTypes.PASSWORD}
+                  returnKeyType={ReturnKeyTypes.DONE}
+                  onChangeText={onChangeEmail}
+                />
+                {/*{!isEmail && (*/}
+                {/*  <Text style={styles.cautionText}>{emailMessage}</Text>*/}
+                {/*)}*/}
+              </View>
 
-          <View style={common.mt30}>
-            <Pressable disabled={!canGoNext || loading} onPress={checkMember}>
-              <LinearGradient
-                style={common.button}
-                start={{x: 0.1, y: 0.5}}
-                end={{x: 0.6, y: 1}}
-                colors={
-                  canGoNext ? ['#74ebe4', '#3962f3'] : ['#dcdcdc', '#dcdcdc']
-                }>
-                {loading ? (
-                  <ActivityIndicator color="white" />
-                ) : (
-                  <Text style={styles.buttonText}>이메일로 계속하기</Text>
+              <View style={common.mt30}>
+                <Pressable
+                  disabled={!canGoNext || loading}
+                  onPress={checkMember}>
+                  <LinearGradient
+                    style={common.button}
+                    start={{x: 0.1, y: 0.5}}
+                    end={{x: 0.6, y: 1}}
+                    colors={
+                      canGoNext
+                        ? ['#74ebe4', '#3962f3']
+                        : ['#dcdcdc', '#dcdcdc']
+                    }>
+                    {loading ? (
+                      <ActivityIndicator color="white" />
+                    ) : (
+                      <Text style={styles.buttonText}>로그인</Text>
+                    )}
+                  </LinearGradient>
+                </Pressable>
+              </View>
+              <View style={styles.findPassword}>
+                <Text style={styles.leftBox}>비밀번호를 잊으셨나요?</Text>
+                <Pressable onPress={testClick}>
+                  <Text style={styles.rightBox}>비밀번호 재설정</Text>
+                </Pressable>
+              </View>
+            </View>
+          ) : (
+            <View>
+              {/* 이메일 입력 화면 && 회원가입 여부 확인 버튼 */}
+              <View style={common.mt40}>
+                <Input
+                  {...emailInput}
+                  label={'이메일'}
+                  placeholder={'이메일을 입력해 주세요.'}
+                  keyboardType={KeyboardTypes.EMAIL}
+                  // returnKeyType={ReturnKeyTypes.NEXT}
+                  onChangeText={onChangeEmail}
+                />
+                {!isEmail && (
+                  <Text style={styles.cautionText}>{emailMessage}</Text>
                 )}
-              </LinearGradient>
-            </Pressable>
-            {/*<Pressable onPress={toSignUp}>*/}
-            {/*  <Text>회원가입하기</Text>*/}
-            {/*</Pressable>*/}
-          </View>
-        </View>
+              </View>
 
-        {/* 간편 로그인 컴포넌트 */}
-        <SimpleLogin />
-        <View>
-          <Pressable onPress={testClick}>
-            <Text style={styles.easyLink}>로그인없이 둘러보기</Text>
-          </Pressable>
+              <View style={common.mt30}>
+                <Pressable
+                  disabled={!canGoNext || loading}
+                  onPress={checkMember}>
+                  <LinearGradient
+                    style={common.button}
+                    start={{x: 0.1, y: 0.5}}
+                    end={{x: 0.6, y: 1}}
+                    colors={
+                      canGoNext
+                        ? ['#74ebe4', '#3962f3']
+                        : ['#dcdcdc', '#dcdcdc']
+                    }>
+                    {loading ? (
+                      <ActivityIndicator color="white" />
+                    ) : (
+                      <Text style={styles.buttonText}>이메일로 계속하기</Text>
+                    )}
+                  </LinearGradient>
+                </Pressable>
+              </View>
+              {/* 간편 로그인 컴포넌트 */}
+              <SimpleLogin />
+              {/* 간편 로그인 컴포넌트 */}
+              <View>
+                <Pressable onPress={testClick}>
+                  <Text style={styles.easyLink}>로그인없이 둘러보기</Text>
+                </Pressable>
+              </View>
+            </View>
+          )}
         </View>
       </View>
     </DismissKeyboardView>
@@ -182,17 +233,6 @@ function SignIn({navigation}: SignInScreenProps) {
 }
 
 const styles = StyleSheet.create({
-  wrap: {
-    width: fullWidth,
-    height: fullHeight,
-    backgroundColor: '#ffffff',
-  },
-  container: {
-    justifyContent: 'center',
-    height: fullHeight,
-    paddingHorizontal: 16,
-    paddingVertical: 16,
-  },
   logoArea: {
     width: '100%',
     justifyContent: 'center',
@@ -223,6 +263,23 @@ const styles = StyleSheet.create({
     color: '#3962f3',
     fontSize: +width * 16,
     textAlign: 'center',
+    textDecorationLine: 'underline',
+  },
+  findPassword: {
+    flexDirection: 'row',
+    marginTop: 30,
+    width: '100%',
+  },
+  leftBox: {
+    flex: 1,
+    fontSize: 16,
+    textAlign: 'left',
+  },
+  rightBox: {
+    flex: 1,
+    color: '#3962f3',
+    fontSize: 16,
+    textAlign: 'right',
     textDecorationLine: 'underline',
   },
 });
