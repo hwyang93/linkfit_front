@@ -30,3 +30,10 @@ export const SECONDARY = {
   POINT2: '#4555e1',
   POINT3: '#000533',
 };
+
+export const CAUTION = {
+  caution: '#e20823',
+};
+export const SUCCESS = {
+  success: '#3962f3',
+};

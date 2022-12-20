@@ -1,6 +1,6 @@
 import React from 'react';
-import {StyleSheet, Text, TextInput, View} from 'react-native';
-import {height, width} from '../styles/common';
+import {Text, TextInput, View} from 'react-native';
+import common from '../styles/common';
 
 export const KeyboardTypes = {
   DEFAULT: 'default',
@@ -19,6 +19,7 @@ type InputProps = {
   value: string;
   onChangeText: any;
   keyboardType: any;
+  isEmail: Boolean;
 };
 
 const Input = ({
@@ -30,11 +31,12 @@ const Input = ({
   ...props
 }: InputProps) => {
   return (
-    <View style={styles.inputWrapper}>
-      <Text style={styles.label}>{label}</Text>
+    <View style={common.inputWrapper}>
+      <Text style={[common.label]}>{label}</Text>
       <TextInput
         {...props}
-        style={styles.textInput}
+        // style={[styles.textInput, isEmail ? styles.success : styles.caution]}
+        style={[common.textInput]}
         placeholder={placeholder}
         placeholderTextColor="#acacac"
         importantForAutofill="yes"
@@ -45,13 +47,7 @@ const Input = ({
         value={value}
         onChangeText={onChangeText}
         keyboardType={keyboardType}
-        // onChangeText={onChangeEmail}
-        // textContentType="emailAddress"
-        // value={email}
-        // returnKeyType="returnKeyType"
-        // onSubmitEditing={() => passwordRef.current?.focus()}
       />
-      {/*{!isEmail && <Text style={styles.cautionText}>{emailMessage}</Text>}*/}
     </View>
   );
 };
@@ -59,30 +55,5 @@ const Input = ({
 Input.defaultProps = {
   returnKeyType: ReturnKeyTypes.DONE,
 };
-
-const styles = StyleSheet.create({
-  inputWrapper: {
-    position: 'relative',
-  },
-  label: {
-    position: 'absolute',
-    paddingHorizontal: 4,
-    top: -4,
-    left: 16,
-    color: '#acacac',
-    fontSize: +width * 12,
-    fontWeight: 'bold',
-    backgroundColor: '#ffffff',
-    zIndex: 10,
-  },
-  textInput: {
-    padding: 16,
-    width: '100%',
-    height: +height * 56,
-    borderWidth: 2,
-    borderColor: '#dcdcdc',
-    borderRadius: 8,
-  },
-});
 
 export default Input;

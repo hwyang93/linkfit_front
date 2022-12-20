@@ -41,5 +41,38 @@ const common = StyleSheet.create({
     fontSize: +width * 16,
     textAlign: 'center',
   },
+  // basic button
+  button: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    width: '100%',
+    height: +height * 56,
+    backgroundColor: '#dcdcdc',
+    borderRadius: 28,
+  },
+  // basic input
+  inputWrapper: {
+    position: 'relative',
+  },
+  label: {
+    position: 'absolute',
+    paddingHorizontal: 4,
+    top: -4,
+    left: 16,
+    color: '#acacac',
+    fontSize: +width * 12,
+    fontWeight: 'bold',
+    backgroundColor: '#ffffff',
+    zIndex: 10,
+  },
+  textInput: {
+    padding: 16,
+    width: '100%',
+    height: +height * 56,
+    borderWidth: 2,
+    borderColor: '#dcdcdc',
+    // borderColor: isEmail ? SUCCESS.success : CAUTION.caution,
+    borderRadius: 8,
+  },
 });
 export default common;
