@@ -44,6 +44,7 @@ function SignIn({navigation}: SignInScreenProps) {
 
   const onChangeEmail = useCallback(
     (value: string) => {
+      console.log(value);
       const checkEmail = removeWhitespace(value);
       setEmail(checkEmail);
       setIsEmail(validateEmail(checkEmail));
