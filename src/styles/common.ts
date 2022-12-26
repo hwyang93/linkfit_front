@@ -8,8 +8,8 @@ export const fonts = {
 };
 
 export const basicDimensions = {
-  height: 740,
   width: 360,
+  height: 740,
 };
 
 export const fullWidth = Dimensions.get('window').width;
@@ -47,6 +47,11 @@ const common = StyleSheet.create({
     paddingHorizontal: 16,
     paddingVertical: 16,
   },
+  containerHeader: {
+    width: '100%',
+    paddingHorizontal: 16,
+    paddingVertical: 16,
+  },
   // text area
   tac: {textAlign: 'center'},
   text: {
@@ -62,6 +67,10 @@ const common = StyleSheet.create({
     height: +height * 56,
     backgroundColor: '#dcdcdc',
     borderRadius: 28,
+  },
+  buttonText: {
+    color: '#ffffff',
+    fontSize: +width * 16,
   },
   // basic input
   inputWrapper: {
