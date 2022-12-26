@@ -30,7 +30,7 @@ function SignIn({navigation}: SignInScreenProps) {
 
   // 이메일, 비밀번호
   const [email, setEmail] = useState<string>('');
-  // const [password, setPassword] = useState<string>('');
+  const [password, setPassword] = useState<string>('');
 
   const emailInput = useInput('', validateEmail);
   const passwordInput = useInput('', validatePassword);
@@ -139,16 +139,15 @@ function SignIn({navigation}: SignInScreenProps) {
               {/* 비밀번호 입력 && 로그인 버튼 */}
               <View style={common.mt40}>
                 <Input
-                  {...emailInput}
+                  value={password}
                   label={'비밀번호'}
+                  isEmail={isEmail}
                   placeholder={'비밀번호를 입력해 주세요.'}
                   keyboardType={KeyboardTypes.PASSWORD}
                   returnKeyType={ReturnKeyTypes.DONE}
-                  onChangeText={onChangeEmail}
+                  onChangeText={(text: string) => setPassword(text.trim())}
+                  secureTextEntry
                 />
-                {/*{!isEmail && (*/}
-                {/*  <Text style={styles.cautionText}>{emailMessage}</Text>*/}
-                {/*)}*/}
               </View>
 
               <View style={common.mt30}>
@@ -185,10 +184,12 @@ function SignIn({navigation}: SignInScreenProps) {
               <View style={common.mt40}>
                 <Input
                   {...emailInput}
+                  value={email}
                   label={'이메일'}
                   placeholder={'이메일을 입력해 주세요.'}
                   keyboardType={KeyboardTypes.EMAIL}
                   returnKeyType={ReturnKeyTypes.DONE}
+                  isEmail={isEmail}
                   onChangeText={onChangeEmail}
                 />
                 {!isEmail && (
