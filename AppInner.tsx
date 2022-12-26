@@ -3,11 +3,6 @@ import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {useSelector} from 'react-redux';
 import {RootState} from './src/store/reducer';
-import {useEffect} from 'react';
-import EncryptedStorage from 'react-native-encrypted-storage';
-import axios, {Axios, AxiosError} from 'axios';
-import {Alert} from 'react-native';
-import userSlice from './src/slices/user';
 import {useAppDispatch} from './src/store';
 import PasswordReset from './src/pages/PasswordReset';
 import SignIn from './src/pages/SignIn';
@@ -17,6 +12,7 @@ import Link from './src/pages/Link';
 import Community from './src/pages/Community';
 import Message from './src/pages/Message';
 import Setting from './src/pages/Setting';
+import HeaderLeft from './src/components/HeaderLeft';
 
 export type LoggedInParamList = {
   Link: undefined;
@@ -42,7 +38,13 @@ function AppInner() {
   // const isLoggedIn = true;
 
   return isLoggedIn ? (
-    <Tab.Navigator>
+    <Tab.Navigator
+      screenOptions={{
+        headerTitleAlign: 'center',
+        headerTitleStyle: {
+          fontWeight: '500',
+        },
+      }}>
       <Tab.Screen name="Link" component={Link} options={{title: '링크'}} />
       <Tab.Screen
         name="Community"
@@ -57,7 +59,15 @@ function AppInner() {
       <Tab.Screen name="My" component={Setting} options={{title: 'My'}} />
     </Tab.Navigator>
   ) : (
-    <Stack.Navigator>
+    <Stack.Navigator
+      screenOptions={{
+        headerTitleAlign: 'center',
+        headerTintColor: '#000',
+        headerTitleStyle: {
+          fontWeight: '500',
+        },
+        headerLeft: HeaderLeft,
+      }}>
       <Stack.Screen
         name="SignIn"
         component={SignIn}
