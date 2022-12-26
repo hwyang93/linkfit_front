@@ -1,5 +1,12 @@
 export const WHITE = '#ffffff';
 export const BLACK = '#000000';
+export const CAUTION = '#e20823';
+export const SUCCESS = '#3962f3';
+export const INPUT = {
+  DEFAULT: '#acacac',
+  CAUTION: '#e20823',
+  SUCCESS: '#3962f3',
+};
 
 export const GREEN = {
   POINT1: '#1eddd2',
@@ -29,11 +36,4 @@ export const SECONDARY = {
   POINT1: '#1eddd2',
   POINT2: '#4555e1',
   POINT3: '#000533',
-};
-
-export const CAUTION = {
-  caution: '#e20823',
-};
-export const SUCCESS = {
-  success: '#3962f3',
 };

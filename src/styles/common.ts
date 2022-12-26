@@ -1,4 +1,5 @@
 import {StyleSheet, Dimensions} from 'react-native';
+import {INPUT} from './colors';
 
 export const fonts = {
   regular: 'NotoSansKR-Regular',
@@ -71,7 +72,7 @@ const common = StyleSheet.create({
     paddingHorizontal: 4,
     top: -4,
     left: 16,
-    color: '#acacac',
+    color: INPUT.DEFAULT,
     fontSize: +width * 12,
     fontWeight: 'bold',
     backgroundColor: '#ffffff',
@@ -82,7 +83,7 @@ const common = StyleSheet.create({
     width: '100%',
     height: +height * 56,
     borderWidth: 2,
-    borderColor: '#dcdcdc',
+    borderColor: INPUT.DEFAULT,
     // borderColor: isEmail ? SUCCESS.success : CAUTION.caution,
     borderRadius: 8,
   },
