@@ -5,9 +5,10 @@ import {useNavigation} from '@react-navigation/native';
 
 type HeaderLeftProps = {
   canGoBack: boolean;
-  tintColor: string;
+  tintColor?: string;
 };
 
+// const HeaderLeft: React.FC<HeaderLeftProps> = ({canGoBack, tintColor}) => {
 const HeaderLeft = ({canGoBack, tintColor}: HeaderLeftProps) => {
   const navigation = useNavigation();
   if (!canGoBack) {

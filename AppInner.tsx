@@ -3,7 +3,7 @@ import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {useSelector} from 'react-redux';
 import {RootState} from './src/store/reducer';
-import {useAppDispatch} from './src/store';
+// import {useAppDispatch} from './src/store';
 import PasswordReset from './src/pages/PasswordReset';
 import SignIn from './src/pages/SignIn';
 import Login from './src/pages/Login';
@@ -33,7 +33,7 @@ const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
 function AppInner() {
-  const dispatch = useAppDispatch();
+  // const dispatch = useAppDispatch();
   const isLoggedIn = useSelector((state: RootState) => !!state.user.email);
   // const isLoggedIn = true;
 
