@@ -32,22 +32,29 @@ const Input = ({
   ...props
 }: InputProps) => {
   const [isFocused, setIsFocused] = useState(false);
-  const [isCorrect, setIsCorrect] = useState(false);
-  //test
 
-  useEffect(() => {
-    console.log(isEmail);
-    console.log(value);
-    if (isEmail) {
-      setIsCorrect(true);
-    }
-  }, [isEmail, value]);
+  const onBlur = () => {
+    setIsFocused(false);
+  };
+  const onFocus = () => {
+    setIsFocused(true);
+  };
+
   return (
     <View style={common.inputWrapper}>
-      <Text style={[common.label]}>{label}</Text>
+      <Text
+        style={[
+          common.label,
+          {color: value || isFocused ? INPUT.SUCCESS : INPUT.DEFAULT},
+        ]}>
+        {label}
+      </Text>
       <TextInput
         {...props}
-        style={[common.textInput]}
+        style={[
+          common.textInput,
+          {borderColor: value || isFocused ? INPUT.SUCCESS : INPUT.DEFAULT},
+        ]}
         value={value}
         placeholderTextColor="#acacac"
         importantForAutofill="yes"
@@ -57,8 +64,8 @@ const Input = ({
         placeholder={placeholder}
         // onChangeText={onChangeText}
         textContentType={'none'}
-        onBlur={() => setIsFocused(false)}
-        onFocus={() => setIsFocused(true)}
+        onBlur={onBlur}
+        onFocus={onFocus}
       />
     </View>
   );
@@ -67,23 +74,5 @@ const Input = ({
 Input.defaultProps = {
   returnKeyType: ReturnKeyTypes.DONE,
 };
-
-const styles = StyleSheet.create({
-  focusedLabel: {
-    color: INPUT.DEFAULT,
-  },
-  successLabel: {
-    color: INPUT.DEFAULT,
-  },
-  cautionLabel: {
-    color: INPUT.CAUTION,
-  },
-  focusedInput: {
-    borderColor: INPUT.DEFAULT,
-  },
-  cautionInput: {
-    borderColor: INPUT.CAUTION,
-  },
-});
 
 export default Input;
