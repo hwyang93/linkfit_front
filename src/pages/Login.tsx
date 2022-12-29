@@ -1,5 +1,5 @@
 import React, {useCallback, useState} from 'react';
-import common, {fullHeight, width} from '../styles/common';
+import common from '../styles/common';
 import {
   ActivityIndicator,
   Alert,
@@ -10,12 +10,14 @@ import {
 } from 'react-native';
 import Input, {KeyboardTypes, ReturnKeyTypes} from '../components/Input';
 import LinearGradient from 'react-native-linear-gradient';
-
 import DismissKeyboardView from '../components/DismissKeyboardView';
 import Logo from '../components/Logo';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
+import {NavigationProp, useNavigation} from '@react-navigation/native';
+import {RootStackParamList} from '../../AppInner';
 
 function LogIn() {
+  const navigation = useNavigation<NavigationProp<RootStackParamList>>();
   const [password, setPassword] = useState<string>('');
   const [loading, setLoading] = useState<boolean>(false);
 
@@ -75,7 +77,7 @@ function LogIn() {
           </View>
           <View style={styles.findPassword}>
             <Text style={styles.leftBox}>비밀번호를 잊으셨나요?</Text>
-            <Pressable onPress={testClick}>
+            <Pressable onPress={() => navigation.navigate('PasswordReset')}>
               <Text style={styles.rightBox}>비밀번호 재설정</Text>
             </Pressable>
           </View>

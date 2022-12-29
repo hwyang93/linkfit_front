@@ -48,12 +48,16 @@ const common = StyleSheet.create({
     paddingVertical: 16,
   },
   containerHeader: {
+    flex: 1,
     width: '100%',
     paddingHorizontal: 16,
     paddingVertical: 16,
+    backgroundColor: '#fff',
   },
   // text area
   tac: {textAlign: 'center'},
+  tal: {textAlign: 'left'},
+  tar: {textAlign: 'right'},
   text: {
     fontFamily: 'NotoSansKR-Medium',
     fontSize: +width * 16,
