@@ -21,6 +21,10 @@ type InputProps = {
   keyboardType: any;
   secureTextEntry?: boolean;
   isEmail?: Boolean;
+  propStyles?: {
+    propStyles: string;
+  };
+  onSubmitEditing?: Function;
 };
 
 const Input = ({
@@ -28,10 +32,12 @@ const Input = ({
   placeholder,
   value,
   isEmail,
+  propStyles,
   // onChangeText,
   ...props
 }: InputProps) => {
   const [isFocused, setIsFocused] = useState(false);
+  console.log('style', propStyles);
 
   const onBlur = () => {
     setIsFocused(false);
@@ -41,7 +47,7 @@ const Input = ({
   };
 
   return (
-    <View style={common.inputWrapper}>
+    <View style={[common.inputWrapper, propStyles?.inputWrapper]}>
       <Text
         style={[
           common.label,

@@ -59,9 +59,10 @@ function SignIn({navigation}: SignInScreenProps) {
     Alert.alert('알림', '환영합니다. 회원님');
     navigation.navigate('LogIn');
     setIsMember(true);
+    // TODO : 가입 된 이메일인지 확인 후 로그인화면 또는 회원가입 화면으로 보낸다.
   };
 
-  const onSubmit = useCallback(async () => {}, []);
+  // const onSubmit = useCallback(async () => {}, []);
 
   // const canGoNext = email && password; // 이메일 그리고 비밀번호가 입력 되면 버튼 활성화
   // 이메일이 입력 되면 버튼 활성화
@@ -92,6 +93,7 @@ function SignIn({navigation}: SignInScreenProps) {
               returnKeyType={ReturnKeyTypes.DONE}
               isEmail={isEmail}
               onChangeText={onChangeEmail}
+              onSubmitEditing={checkMember}
             />
             {!isEmail && <Text style={styles.cautionText}>{emailMessage}</Text>}
           </View>
