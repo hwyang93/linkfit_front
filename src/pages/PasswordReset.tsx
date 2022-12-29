@@ -3,7 +3,7 @@ import {Text, View} from 'react-native';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import {RootStackParamList} from '../../AppInner';
 import common from '../styles/common';
-import Input from '../components/Input';
+import Input, {KeyboardTypes} from '../components/Input';
 
 type PasswordResetScreenProps = NativeStackScreenProps<
   RootStackParamList,
@@ -22,18 +22,18 @@ function PasswordReset({}: PasswordResetScreenProps) {
         <Input
           label={'이름'}
           onChangeText={() => {}}
-          // value={}
-          // placeholder={}
-          // keyboardType={}
+          value={'김링크'}
+          placeholder={'이름을 입력 하세요.'}
+          keyboardType={KeyboardTypes.DEFAULT}
           propStyles={{inputWrapper: {marginBottom: 16}}}
         />
 
         <Input
           label={'생년월일'}
           onChangeText={() => {}}
-          // value={}
-          // placeholder={}
-          // keyboardType={}
+          value={'2000.01.01'}
+          placeholder={'생년월일을 선택 하세요'}
+          keyboardType={KeyboardTypes.DEFAULT}
           propStyles={{inputWrapper: {marginBottom: 16}}}
         />
       </View>

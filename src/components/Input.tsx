@@ -22,7 +22,7 @@ type InputProps = {
   secureTextEntry?: boolean;
   isEmail?: Boolean;
   propStyles?: {
-    propStyles: string;
+    inputWrapper?: object;
   };
   onSubmitEditing?: Function;
 };
@@ -31,7 +31,6 @@ const Input = ({
   label,
   placeholder,
   value,
-  isEmail,
   propStyles,
   // onChangeText,
   ...props
