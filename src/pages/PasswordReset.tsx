@@ -40,11 +40,21 @@ function PasswordReset({}: PasswordResetScreenProps) {
             keyboardType={KeyboardTypes.DEFAULT}
           />
         </View>
-        <View style={common.mb16}>
-          <Text>남자/여자</Text>
+        <View style={[common.mb16, {flex: 0, flexDirection: 'row'}]}>
+          <View style={{backgroundColor: 'red', flex: 1}}>
+            <Text>남자</Text>
+          </View>
+          <View style={{backgroundColor: 'yellow', flex: 1}}>
+            <Text>여자</Text>
+          </View>
         </View>
-        <View style={common.mb16}>
-          <Text>통신사/전화번호</Text>
+        <View style={[common.mb16, {flex: 0, flexDirection: 'row'}]}>
+          <View style={{backgroundColor: 'red', flex: 1}}>
+            <Text>통신사</Text>
+          </View>
+          <View style={{backgroundColor: 'yellow', flex: 1}}>
+            <Text>휴대폰번호</Text>
+          </View>
         </View>
         <View style={common.mb16}>
           <Input
