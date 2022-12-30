@@ -38,6 +38,8 @@ const common = StyleSheet.create({
   mb20: {marginBottom: +height * 20},
   mb30: {marginBottom: +height * 30},
   mb40: {marginBottom: +height * 40},
+  ml8: {marginLeft: +width * 8},
+  mr8: {marginRight: +width * 8},
   // layout
   wrap: {
     width: '100%',
@@ -98,9 +100,27 @@ const common = StyleSheet.create({
     padding: 16,
     width: '100%',
     height: +height * 56,
+    fontSize: 16,
     borderWidth: 2,
     borderColor: INPUT.DEFAULT,
-    // borderColor: isEmail ? SUCCESS.success : CAUTION.caution,
+    borderRadius: 8,
+  },
+  // select box
+  selectWrapper: {
+    position: 'relative',
+  },
+  selectIcon: {
+    position: 'absolute',
+    top: 16,
+    right: 16,
+    alignItems: 'center',
+  },
+  // basic box
+  basicBox: {
+    padding: 16,
+    height: +height * 56,
+    borderWidth: 2,
+    borderColor: INPUT.DEFAULT,
     borderRadius: 8,
   },
 });

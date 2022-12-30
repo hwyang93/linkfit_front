@@ -1,10 +1,18 @@
 import React from 'react';
-import {ActivityIndicator, Pressable, Text, View} from 'react-native';
+import {
+  ActivityIndicator,
+  Pressable,
+  ScrollView,
+  Text,
+  View,
+} from 'react-native';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import {RootStackParamList} from '../../AppInner';
 import common from '../styles/common';
 import Input, {KeyboardTypes} from '../components/Input';
 import LinearGradient from 'react-native-linear-gradient';
+import Icon from 'react-native-vector-icons/FontAwesome';
+import {INPUT} from '../styles/colors';
 
 type PasswordResetScreenProps = NativeStackScreenProps<
   RootStackParamList,
@@ -15,7 +23,7 @@ function PasswordReset({}: PasswordResetScreenProps) {
   const loading = false;
   const canGoNext = true;
   return (
-    <View style={common.containerHeader}>
+    <ScrollView style={common.containerHeader} bounces={false}>
       <View>
         <Text style={[common.text, common.tal]}>
           비밀번호 재설정을 위해{'\n'} 가입한 정보를 입력해 주세요.
@@ -26,7 +34,7 @@ function PasswordReset({}: PasswordResetScreenProps) {
           <Input
             label={'이름'}
             onChangeText={() => {}}
-            value={'김링크'}
+            value={''}
             placeholder={'이름을 입력 하세요.'}
             keyboardType={KeyboardTypes.DEFAULT}
           />
@@ -40,20 +48,52 @@ function PasswordReset({}: PasswordResetScreenProps) {
             keyboardType={KeyboardTypes.DEFAULT}
           />
         </View>
-        <View style={[common.mb16, {flex: 0, flexDirection: 'row'}]}>
-          <View style={{backgroundColor: 'red', flex: 1}}>
+        <View
+          style={[
+            common.mb16,
+            {flex: 0, flexDirection: 'row', justifyContent: 'space-between'},
+          ]}>
+          <View style={[{flex: 1}, common.basicBox, common.mr8]}>
             <Text>남자</Text>
           </View>
-          <View style={{backgroundColor: 'yellow', flex: 1}}>
+          <View style={[{flex: 1}, common.basicBox]}>
             <Text>여자</Text>
           </View>
         </View>
-        <View style={[common.mb16, {flex: 0, flexDirection: 'row'}]}>
-          <View style={{backgroundColor: 'red', flex: 1}}>
-            <Text>통신사</Text>
+        <View
+          style={[
+            common.mb16,
+            {flex: 0, flexDirection: 'row', justifyContent: 'space-between'},
+          ]}>
+          <View
+            style={[
+              {flex: 1, justifyContent: 'center'},
+              common.mr8,
+              common.selectWrapper,
+              common.basicBox,
+            ]}>
+            <Text
+              style={{
+                fontSize: 16,
+                color: INPUT.DEFAULT,
+              }}>
+              통신사
+            </Text>
+            <Icon
+              name="angle-down"
+              size={24}
+              color="black"
+              style={common.selectIcon}
+            />
           </View>
-          <View style={{backgroundColor: 'yellow', flex: 1}}>
-            <Text>휴대폰번호</Text>
+          <View style={{flex: 2}}>
+            <Input
+              label={'휴대폰 번호'}
+              onChangeText={() => {}}
+              value={''}
+              placeholder={'01012345678'}
+              keyboardType={KeyboardTypes.DEFAULT}
+            />
           </View>
         </View>
         <View style={common.mb16}>
@@ -93,7 +133,7 @@ function PasswordReset({}: PasswordResetScreenProps) {
           </Pressable>
         </View>
       </View>
-    </View>
+    </ScrollView>
   );
 }
 
