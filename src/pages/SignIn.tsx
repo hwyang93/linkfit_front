@@ -6,18 +6,20 @@ import {
   Text,
   View,
   ActivityIndicator,
+  TouchableWithoutFeedback,
+  Keyboard,
 } from 'react-native';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
-import DismissKeyboardView from '../components/DismissKeyboardView';
 import {RootStackParamList} from '../../AppInner';
 // import {useAppDispatch} from '../store';
 import {validateEmail, removeWhitespace, validatePassword} from '../util/util';
 import Input, {KeyboardTypes, ReturnKeyTypes} from '../components/Input';
 import useInput from '../hooks/useInput';
-import common, {width} from '../styles/common';
+import common from '../styles/common';
 import SimpleLogin from '../components/SimpleLogin';
 import LinearGradient from 'react-native-linear-gradient';
 import Logo from '../components/Logo';
+import {useSafeAreaInsets} from 'react-native-safe-area-context';
 
 type SignInScreenProps = NativeStackScreenProps<RootStackParamList, 'SignIn'>;
 
@@ -77,10 +79,11 @@ function SignIn({navigation}: SignInScreenProps) {
   };
 
   return (
-    <DismissKeyboardView style={[common.wrap]}>
+    <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
       <View style={common.container}>
+        {/* 로고 컴포넌트 */}
         <Logo />
-
+        {/* 로고 컴포넌트 */}
         <View>
           {/* 이메일 입력 화면 && 회원가입 여부 확인 버튼 */}
           <View style={common.mt40}>
@@ -125,7 +128,7 @@ function SignIn({navigation}: SignInScreenProps) {
           </View>
         </View>
       </View>
-    </DismissKeyboardView>
+    </TouchableWithoutFeedback>
   );
 }
 
@@ -134,11 +137,11 @@ const styles = StyleSheet.create({
     paddingTop: 4,
     paddingLeft: 16,
     color: '#cc1212',
-    fontSize: +width * 12,
+    fontSize: 12,
   },
   easyLink: {
     color: '#3962f3',
-    fontSize: +width * 16,
+    fontSize: 16,
     textAlign: 'center',
     textDecorationLine: 'underline',
   },

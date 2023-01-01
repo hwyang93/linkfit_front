@@ -2,11 +2,12 @@ import React, {useState} from 'react';
 import {View, Text, Pressable, StyleSheet} from 'react-native';
 
 type TabProps = {
-  data: [{value: string}];
+  genderData: Array<any>;
+  value: string;
   onSelect: Function;
 };
 
-const TabButton = ({data, onSelect}: TabProps) => {
+const TabButton = ({genderData, onSelect}: TabProps) => {
   const [userOption, setUserOption] = useState('');
 
   const selectHandler = (value: any) => {
@@ -17,7 +18,7 @@ const TabButton = ({data, onSelect}: TabProps) => {
   return (
     <>
       <View style={styles.tabWrap}>
-        {data.map(item => {
+        {genderData.map(item => {
           return (
             <Pressable
               style={[
@@ -36,7 +37,7 @@ const TabButton = ({data, onSelect}: TabProps) => {
           );
         })}
       </View>
-      <Text>select option: {userOption}</Text>
+      {/*<Text>select option: {userOption}</Text>*/}
     </>
   );
 };

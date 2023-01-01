@@ -13,6 +13,7 @@ import Community from './src/pages/Community';
 import Message from './src/pages/Message';
 import Setting from './src/pages/Setting';
 import HeaderLeft from './src/components/HeaderLeft';
+import {WHITE} from './src/styles/colors';
 
 export type LoggedInParamList = {
   Link: undefined;
@@ -66,6 +67,7 @@ function AppInner() {
         headerTitleStyle: {
           fontWeight: '500',
         },
+        contentStyle: {backgroundColor: WHITE},
         headerLeft: HeaderLeft,
       }}>
       <Stack.Screen

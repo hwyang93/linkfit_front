@@ -6,7 +6,7 @@ import {INPUT} from '../styles/colors';
 export const KeyboardTypes = {
   DEFAULT: 'default',
   EMAIL: 'email-address',
-  PASSWORD: 'password',
+  PHONE: 'phone-pad',
 };
 export const ReturnKeyTypes = {
   DONE: 'done',
@@ -14,17 +14,19 @@ export const ReturnKeyTypes = {
 };
 
 type InputProps = {
+  pointerEvents?: string;
   label: string;
   placeholder: string;
   value: string;
-  onChangeText: any;
-  keyboardType: any;
+  onChangeText?: any;
+  keyboardType?: any;
   secureTextEntry?: boolean;
-  isEmail?: Boolean;
+  isEmail?: boolean;
   propStyles?: {
     inputWrapper?: object;
   };
   onSubmitEditing?: Function;
+  blurOnSubmit?: boolean;
 };
 
 const Input = ({
@@ -50,6 +52,7 @@ const Input = ({
         style={[
           common.label,
           {color: value || isFocused ? INPUT.SUCCESS : INPUT.DEFAULT},
+          // {color: value && !isFocused ? INPUT.DEFAULT : INPUT.DEFAULT},
         ]}>
         {label}
       </Text>
@@ -58,6 +61,7 @@ const Input = ({
         style={[
           common.textInput,
           {borderColor: value || isFocused ? INPUT.SUCCESS : INPUT.DEFAULT},
+          // {borderColor: value && !isFocused ? INPUT.DEFAULT : INPUT.DEFAULT},
         ]}
         value={value}
         placeholderTextColor="#acacac"

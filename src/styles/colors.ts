@@ -1,7 +1,10 @@
 export const WHITE = '#ffffff';
 export const BLACK = '#000000';
-export const CAUTION = '#e20823';
-export const SUCCESS = '#3962f3';
+
+export const TEXT = {
+  GRAY: '#292929',
+};
+
 export const INPUT = {
   DEFAULT: '#acacac',
   CAUTION: '#e20823',
@@ -25,6 +28,7 @@ export const BLUE = {
 };
 
 export const GRAY = {
+  DEFAULT: '#acacac',
   POINT1: '#292929',
   POINT2: '#666666',
   POINT3: '#999999',
