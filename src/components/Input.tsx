@@ -1,5 +1,5 @@
-import React, {useEffect, useState} from 'react';
-import {StyleSheet, Text, TextInput, View} from 'react-native';
+import React, {useState} from 'react';
+import {Text, TextInput, View} from 'react-native';
 import common from '../styles/common';
 import {INPUT} from '../styles/colors';
 
@@ -32,7 +32,6 @@ const Input = ({
   placeholder,
   value,
   propStyles,
-  // onChangeText,
   ...props
 }: InputProps) => {
   const [isFocused, setIsFocused] = useState(false);
