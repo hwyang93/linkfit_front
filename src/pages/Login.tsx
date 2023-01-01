@@ -3,9 +3,11 @@ import common from '../styles/common';
 import {
   ActivityIndicator,
   Alert,
+  Keyboard,
   Pressable,
   StyleSheet,
   Text,
+  TouchableWithoutFeedback,
   View,
 } from 'react-native';
 import Input, {KeyboardTypes, ReturnKeyTypes} from '../components/Input';
@@ -15,6 +17,7 @@ import Logo from '../components/Logo';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import {NavigationProp, useNavigation} from '@react-navigation/native';
 import {RootStackParamList} from '../../AppInner';
+import {BLACK} from '../styles/colors';
 
 function LogIn() {
   const navigation = useNavigation<NavigationProp<RootStackParamList>>();
@@ -33,17 +36,11 @@ function LogIn() {
   console.log(insets);
 
   return (
-    <DismissKeyboardView
-      style={[
-        common.wrap,
-        {
-          paddingTop: insets.top,
-          paddingBottom: insets.bottom,
-        },
-      ]}>
+    <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
       <View style={common.containerHeader}>
+        {/* 로고 컴포넌트 */}
         <Logo />
-
+        {/* 로고 컴포넌트 */}
         <View>
           {/* 비밀번호 입력 && 로그인 버튼 */}
           <View style={common.mt40}>
@@ -51,7 +48,7 @@ function LogIn() {
               value={password}
               label={'비밀번호'}
               placeholder={'비밀번호를 입력해 주세요.'}
-              keyboardType={KeyboardTypes.PASSWORD}
+              keyboardType={KeyboardTypes.DEFAULT}
               returnKeyType={ReturnKeyTypes.DONE}
               onChangeText={(text: string) => setPassword(text.trim())}
               secureTextEntry
@@ -83,7 +80,7 @@ function LogIn() {
           </View>
         </View>
       </View>
-    </DismissKeyboardView>
+    </TouchableWithoutFeedback>
   );
 }
 
@@ -95,6 +92,7 @@ const styles = StyleSheet.create({
   },
   leftBox: {
     flex: 1,
+    color: BLACK,
     fontSize: 16,
     textAlign: 'left',
   },

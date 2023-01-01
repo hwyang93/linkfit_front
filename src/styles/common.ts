@@ -23,23 +23,23 @@ export const width = // 가로 변환 작업
 
 const common = StyleSheet.create({
   // space area
-  mv10: {marginVertical: +height * 10},
-  mv16: {marginVertical: +height * 16},
-  mv20: {marginVertical: +height * 20},
-  mv30: {marginVertical: +height * 30},
-  mv40: {marginVertical: +height * 40},
-  mt10: {marginTop: +height * 10},
-  mt16: {marginTop: +height * 16},
-  mt20: {marginTop: +height * 20},
-  mt30: {marginTop: +height * 30},
-  mt40: {marginTop: +height * 40},
-  mb10: {marginBottom: +height * 10},
-  mb16: {marginBottom: +height * 16},
-  mb20: {marginBottom: +height * 20},
-  mb30: {marginBottom: +height * 30},
-  mb40: {marginBottom: +height * 40},
-  ml8: {marginLeft: +width * 8},
-  mr8: {marginRight: +width * 8},
+  mv10: {marginVertical: 10},
+  mv16: {marginVertical: 16},
+  mv20: {marginVertical: 20},
+  mv30: {marginVertical: 30},
+  mv40: {marginVertical: 40},
+  mt10: {marginTop: 10},
+  mt16: {marginTop: 16},
+  mt20: {marginTop: 20},
+  mt30: {marginTop: 30},
+  mt40: {marginTop: 40},
+  mb10: {marginBottom: 10},
+  mb16: {marginBottom: 16},
+  mb20: {marginBottom: 20},
+  mb30: {marginBottom: 30},
+  mb40: {marginBottom: 40},
+  ml8: {marginLeft: 8},
+  mr8: {marginRight: 8},
   // layout
   wrap: {
     width: '100%',
@@ -51,12 +51,14 @@ const common = StyleSheet.create({
     height: fullHeight,
     paddingHorizontal: 16,
     paddingVertical: 16,
+    backgroundColor: '#fff',
   },
   containerHeader: {
     flex: 1,
-    width: '100%',
+    justifyContent: 'center',
     paddingHorizontal: 16,
     paddingVertical: 16,
+    width: '100%',
     backgroundColor: '#fff',
   },
   // text area
@@ -65,7 +67,8 @@ const common = StyleSheet.create({
   tar: {textAlign: 'right'},
   text: {
     fontFamily: 'NotoSansKR-Medium',
-    fontSize: +width * 16,
+    color: '#292929',
+    fontSize: 16,
     textAlign: 'center',
   },
   // basic button
@@ -73,13 +76,13 @@ const common = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     width: '100%',
-    height: +height * 56,
+    height: 56,
     backgroundColor: '#dcdcdc',
     borderRadius: 28,
   },
   buttonText: {
     color: '#ffffff',
-    fontSize: +width * 16,
+    fontSize: 16,
   },
   // basic input
   inputWrapper: {
@@ -91,7 +94,7 @@ const common = StyleSheet.create({
     top: -4,
     left: 16,
     color: INPUT.DEFAULT,
-    fontSize: +width * 12,
+    fontSize: 12,
     fontWeight: 'bold',
     backgroundColor: '#ffffff',
     zIndex: 10,
@@ -99,7 +102,8 @@ const common = StyleSheet.create({
   textInput: {
     padding: 16,
     width: '100%',
-    height: +height * 56,
+    height: 56,
+    color: '#292929',
     fontSize: 16,
     borderWidth: 2,
     borderColor: INPUT.DEFAULT,
@@ -118,7 +122,7 @@ const common = StyleSheet.create({
   // basic box
   basicBox: {
     padding: 16,
-    height: +height * 56,
+    height: 56,
     borderWidth: 2,
     borderColor: INPUT.DEFAULT,
     borderRadius: 8,
