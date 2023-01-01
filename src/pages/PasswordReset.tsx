@@ -13,6 +13,7 @@ import Input, {KeyboardTypes} from '../components/Input';
 import LinearGradient from 'react-native-linear-gradient';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import {INPUT} from '../styles/colors';
+import TabButton from '../components/TabButton';
 
 type PasswordResetScreenProps = NativeStackScreenProps<
   RootStackParamList,
@@ -20,6 +21,7 @@ type PasswordResetScreenProps = NativeStackScreenProps<
 >;
 
 function PasswordReset({}: PasswordResetScreenProps) {
+  const data = [{value: '남자'}, {value: '여자'}];
   const loading = false;
   const canGoNext = true;
   return (
@@ -43,22 +45,13 @@ function PasswordReset({}: PasswordResetScreenProps) {
           <Input
             label={'생년월일'}
             onChangeText={() => {}}
-            value={'2000.01.01'}
+            value={''}
             placeholder={'생년월일을 선택 하세요'}
             keyboardType={KeyboardTypes.DEFAULT}
           />
         </View>
-        <View
-          style={[
-            common.mb16,
-            {flex: 0, flexDirection: 'row', justifyContent: 'space-between'},
-          ]}>
-          <View style={[{flex: 1}, common.basicBox, common.mr8]}>
-            <Text>남자</Text>
-          </View>
-          <View style={[{flex: 1}, common.basicBox]}>
-            <Text>여자</Text>
-          </View>
+        <View style={[common.mb16]}>
+          <TabButton data={data} onSelect={() => {}} />
         </View>
         <View
           style={[
