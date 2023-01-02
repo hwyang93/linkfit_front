@@ -7,8 +7,8 @@ export const TEXT = {
 
 export const INPUT = {
   DEFAULT: '#acacac',
+  FOCUS: '#3962f3',
   CAUTION: '#e20823',
-  SUCCESS: '#3962f3',
 };
 
 export const GREEN = {
