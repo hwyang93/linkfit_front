@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 import {
   ActivityIndicator,
   Pressable,
-  ScrollView,
+  StyleSheet,
   Text,
   TouchableOpacity,
   View,
@@ -18,6 +18,8 @@ import TabButton from '../components/TabButton';
 import DateTimePickerModal from 'react-native-modal-datetime-picker';
 import moment from 'moment';
 import DismissKeyboardView from '../components/DismissKeyboardView';
+import SelectDropdown from 'react-native-select-dropdown';
+import FontAwesome from 'react-native-vector-icons/FontAwesome';
 
 type PasswordResetScreenProps = NativeStackScreenProps<
   RootStackParamList,
@@ -33,6 +35,7 @@ function PasswordReset({}: PasswordResetScreenProps) {
   const [phoneNumber, setPhoneNumber] = useState('');
   const [password, setPassword] = useState('');
   const [passwordConfirm, setPasswordConfirm] = useState('');
+  const [focus, setFocus] = useState(false);
 
   const showDatePicker = () => {
     setDatePickerVisibility(true);
@@ -46,6 +49,7 @@ function PasswordReset({}: PasswordResetScreenProps) {
   };
 
   const genderData = [{value: '남자'}, {value: '여자'}];
+  const agencyData = ['SKT', 'KT', 'LG U+', '알뜰폰'];
   const loading = false;
   const canGoNext = true;
   return (
@@ -89,30 +93,48 @@ function PasswordReset({}: PasswordResetScreenProps) {
               value={gender}
             />
           </View>
+
           <View
             style={[
               common.mb16,
-              {flex: 0, flexDirection: 'row', justifyContent: 'space-between'},
+              {
+                flex: 1,
+                flexDirection: 'row',
+                justifyContent: 'space-between',
+              },
             ]}>
-            <View
-              style={[
-                {flex: 1, justifyContent: 'center'},
-                common.mr8,
-                common.selectWrapper,
-                common.basicBox,
-              ]}>
-              <Text
-                style={{
-                  fontSize: 16,
-                  color: INPUT.DEFAULT,
-                }}>
-                통신사
-              </Text>
-              <Icon
-                name="angle-down"
-                size={24}
-                color="black"
-                style={common.selectIcon}
+            <View style={{flex: 1, marginRight: 8}}>
+              <SelectDropdown
+                data={agencyData}
+                onSelect={selectedItem => {
+                  setAgency(selectedItem);
+                  console.log('selected : ', selectedItem);
+                }}
+                buttonTextAfterSelection={selectedItem => {
+                  return selectedItem;
+                }}
+                rowTextForSelection={item => {
+                  return item;
+                }}
+                defaultButtonText={'통신사'}
+                buttonStyle={focus ? styles.selectBoxFocus : styles.selectBox}
+                buttonTextStyle={
+                  focus ? styles.selectTextFocus : styles.selectText
+                }
+                renderDropdownIcon={isOpened => {
+                  return (
+                    <FontAwesome
+                      name={isOpened ? 'chevron-up' : 'chevron-down'}
+                      color={'#acacac'}
+                      size={16}
+                    />
+                  );
+                }}
+                dropdownIconPosition={'right'}
+                dropdownStyle={styles.dropBox}
+                rowStyle={styles.dropItem}
+                rowTextStyle={styles.dropText}
+                onFocus={() => setFocus(true)}
               />
             </View>
             <View style={{flex: 2}}>
@@ -125,16 +147,19 @@ function PasswordReset({}: PasswordResetScreenProps) {
               />
             </View>
           </View>
-          <View style={common.mb16}>
-            <Input
-              label={'비밀번호'}
-              onChangeText={(text: string) => setPassword(text.trim())}
-              value={password}
-              placeholder={'비밀번호를 입력하세요.'}
-              keyboardType={KeyboardTypes.DEFAULT}
-              secureTextEntry
-            />
+          <View>
+            <View style={common.mb16}>
+              <Input
+                label={'비밀번호'}
+                onChangeText={(text: string) => setPassword(text.trim())}
+                value={password}
+                placeholder={'비밀번호를 입력하세요.'}
+                keyboardType={KeyboardTypes.DEFAULT}
+                secureTextEntry
+              />
+            </View>
           </View>
+
           <View style={common.mb16}>
             <Input
               label={'비밀번호 확인'}
@@ -147,7 +172,7 @@ function PasswordReset({}: PasswordResetScreenProps) {
           </View>
 
           <View style={common.mt20}>
-            <Pressable disabled>
+            <Pressable onPress={() => console.log(agency)}>
               <LinearGradient
                 style={common.button}
                 start={{x: 0.1, y: 0.5}}
@@ -168,5 +193,43 @@ function PasswordReset({}: PasswordResetScreenProps) {
     </DismissKeyboardView>
   );
 }
+
+const styles = StyleSheet.create({
+  selectBox: {
+    width: '100%',
+    height: 56,
+    backgroundColor: '#fff',
+    borderRadius: 8,
+    borderWidth: 2,
+    borderColor: INPUT.DEFAULT,
+  },
+  selectText: {
+    color: '#acacac',
+    fontSize: 16,
+    textAlign: 'left',
+  },
+  dropBox: {
+    backgroundColor: '#fff',
+    borderRadius: 8,
+  },
+  dropItem: {
+    borderBottomWidth: 1,
+    borderBottomColor: INPUT.DEFAULT,
+  },
+  dropText: {},
+  selectBoxFocus: {
+    width: '100%',
+    height: 56,
+    backgroundColor: '#fff',
+    borderRadius: 8,
+    borderWidth: 2,
+    borderColor: INPUT.FOCUS,
+  },
+  selectTextFocus: {
+    color: '#292929',
+    fontSize: 16,
+    textAlign: 'left',
+  },
+});
 
 export default PasswordReset;

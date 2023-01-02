@@ -25,7 +25,7 @@ type InputProps = {
   propStyles?: {
     inputWrapper?: object;
   };
-  onSubmitEditing?: Function;
+  onSubmitEditing?: any;
   blurOnSubmit?: boolean;
 };
 
@@ -37,7 +37,7 @@ const Input = ({
   ...props
 }: InputProps) => {
   const [isFocused, setIsFocused] = useState(false);
-  console.log('style', propStyles);
+  console.log('style : ', propStyles);
 
   const onBlur = () => {
     setIsFocused(false);
@@ -51,7 +51,7 @@ const Input = ({
       <Text
         style={[
           common.label,
-          {color: value || isFocused ? INPUT.SUCCESS : INPUT.DEFAULT},
+          {color: value || isFocused ? INPUT.FOCUS : INPUT.DEFAULT},
           // {color: value && !isFocused ? INPUT.DEFAULT : INPUT.DEFAULT},
         ]}>
         {label}
@@ -60,7 +60,7 @@ const Input = ({
         {...props}
         style={[
           common.textInput,
-          {borderColor: value || isFocused ? INPUT.SUCCESS : INPUT.DEFAULT},
+          {borderColor: value || isFocused ? INPUT.FOCUS : INPUT.DEFAULT},
           // {borderColor: value && !isFocused ? INPUT.DEFAULT : INPUT.DEFAULT},
         ]}
         value={value}
@@ -70,7 +70,6 @@ const Input = ({
         autoCapitalize="none"
         blurOnSubmit={false}
         placeholder={placeholder}
-        // onChangeText={onChangeText}
         textContentType={'none'}
         onBlur={onBlur}
         onFocus={onFocus}
