@@ -1,7 +1,7 @@
 import React from 'react';
 import {Text, View} from 'react-native';
 
-function Setting() {
+function My() {
   return (
     <View>
       <Text>My setting 화면</Text>
@@ -9,4 +9,4 @@ function Setting() {
   );
 }
 
-export default Setting;
+export default My;
