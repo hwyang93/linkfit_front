@@ -12,7 +12,6 @@ import {RootStackParamList} from '../../AppInner';
 import common from '../styles/common';
 import Input, {KeyboardTypes} from '../components/Input';
 import LinearGradient from 'react-native-linear-gradient';
-import Icon from 'react-native-vector-icons/FontAwesome';
 import {INPUT} from '../styles/colors';
 import TabButton from '../components/TabButton';
 import DateTimePickerModal from 'react-native-modal-datetime-picker';
