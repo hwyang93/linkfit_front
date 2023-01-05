@@ -14,7 +14,7 @@ const AuthStack = () => {
   return (
     <Stack.Navigator
       screenOptions={{
-        headerTitleAlign: 'center',
+        headerTitleAlign: 'center', // 모든 홈 타이틀 가운데 정렬
         headerTintColor: '#000',
         headerTitleStyle: {
           fontWeight: '500',
