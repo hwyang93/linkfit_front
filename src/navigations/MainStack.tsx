@@ -42,6 +42,19 @@ const MainStack = () => {
           component={Link}
           options={{
             title: '링크',
+            headerTitle: () => {
+              return null;
+            },
+            headerLeft: props => {
+              console.log(props);
+              return (
+                <Image
+                  source={require('../assets/images/logo.png')}
+                  style={{marginLeft: 16, width: 116, height: 32}}
+                  resizeMode={'cover'}
+                />
+              );
+            },
             tabBarIcon: ({focused}) => (
               <Image
                 source={
