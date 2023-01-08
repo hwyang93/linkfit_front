@@ -14,7 +14,7 @@ export const ReturnKeyTypes = {
 };
 
 type InputProps = {
-  pointerEvents?: string;
+  pointerEvents?: any;
   label: string;
   placeholder: string;
   value: string;
@@ -34,6 +34,7 @@ const Input = ({
   placeholder,
   value,
   propStyles,
+  pointerEvents,
   ...props
 }: InputProps) => {
   const [isFocused, setIsFocused] = useState(false);
@@ -71,6 +72,7 @@ const Input = ({
         blurOnSubmit={false}
         placeholder={placeholder}
         textContentType={'none'}
+        pointerEvents={pointerEvents}
         onBlur={onBlur}
         onFocus={onFocus}
       />

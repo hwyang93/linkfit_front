@@ -5,8 +5,9 @@ import Message from '../pages/Message';
 import My from '../pages/My';
 import * as React from 'react';
 import {LoggedInParamList} from '../../AppInner';
-import {Animated, Dimensions, Image, Platform} from 'react-native';
-import {useRef} from 'react';
+import {Animated, Dimensions, Image, Platform, View} from 'react-native';
+import {useEffect, useRef} from 'react';
+import {fetchMember} from '../api/member';
 
 const Tab = createBottomTabNavigator<LoggedInParamList>();
 
@@ -17,6 +18,16 @@ const MainStack = () => {
     // width = width ;
     return width / 4;
   }
+
+  useEffect(() => {
+    getSomething().then(r => {
+      console.log(r);
+    });
+  }, []);
+  const getSomething = async () => {
+    const response = await fetchMember(1);
+    console.log(response);
+  };
   return (
     <>
       <Tab.Navigator
@@ -43,18 +54,61 @@ const MainStack = () => {
           options={{
             title: '링크',
             headerTitle: () => {
-              return null;
-            },
-            headerLeft: props => {
-              console.log(props);
+              // return null;
               return (
-                <Image
-                  source={require('../assets/images/logo.png')}
-                  style={{marginLeft: 16, width: 116, height: 32}}
-                  resizeMode={'cover'}
-                />
+                <View
+                  style={{
+                    flex: 1,
+                    width: '100%',
+                    alignItems: 'center',
+                    flexDirection: 'row',
+                    justifyContent: 'space-between',
+                  }}>
+                  <View style={{flex: 0}}>
+                    <Image
+                      source={require('../assets/images/logo.png')}
+                      style={{width: 116, height: 32}}
+                      resizeMode={'cover'}
+                    />
+                  </View>
+                  <View
+                    style={{
+                      flexDirection: 'row',
+                      justifyContent: 'space-between',
+                      alignItems: 'center',
+                    }}>
+                    <View style={{marginRight: 24}}>
+                      <Image
+                        source={require('../assets/images/bell.png')}
+                        style={{width: 17, height: 21}}
+                        resizeMode={'cover'}
+                      />
+                    </View>
+                    <View>
+                      <Image
+                        source={require('../assets/images/my.png')}
+                        style={{width: 16, height: 16}}
+                        resizeMode={'cover'}
+                      />
+                    </View>
+                  </View>
+                </View>
               );
             },
+            headerLeft: () => {
+              return null;
+            },
+            // headerLeft: props => {
+            //   console.log(props);
+            //   return (
+            //     <Image
+            //       source={require('../assets/images/logo.png')}
+            //       style={{marginLeft: 16, width: 116, height: 32}}
+            //       resizeMode={'cover'}
+            //     />
+            //   );
+            // },
+
             tabBarIcon: ({focused}) => (
               <Image
                 source={

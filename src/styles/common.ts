@@ -47,8 +47,8 @@ const common = StyleSheet.create({
     backgroundColor: '#ffffff',
   },
   container: {
+    flex: 1,
     justifyContent: 'center',
-    height: fullHeight,
     paddingHorizontal: 16,
     paddingVertical: 16,
     backgroundColor: '#fff',
@@ -65,11 +65,30 @@ const common = StyleSheet.create({
   tac: {textAlign: 'center'},
   tal: {textAlign: 'left'},
   tar: {textAlign: 'right'},
-  text: {
+  fwb: {fontWeight: '700'},
+  text_s: {
+    fontFamily: 'NotoSansKR-Medium',
+    color: '#292929',
+    fontSize: 14,
+    textAlign: 'left',
+  },
+  text_m: {
     fontFamily: 'NotoSansKR-Medium',
     color: '#292929',
     fontSize: 16,
-    textAlign: 'center',
+    textAlign: 'left',
+  },
+  text_l: {
+    fontFamily: 'NotoSansKR-Medium',
+    color: '#292929',
+    fontSize: 20,
+    textAlign: 'left',
+  },
+  title: {
+    color: '#000',
+    fontSize: 20,
+    fontWeight: '700',
+    textAlign: 'left',
   },
   // basic button
   button: {
