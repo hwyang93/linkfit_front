@@ -17,7 +17,7 @@ function Logo() {
           resizeMode={'cover'}
         />
       </View>
-      <Text style={[common.text, common.mt20]}>
+      <Text style={[common.text_m, common.tac, common.mt20]}>
         당신의 커리어를 위한 여정에{'\n'} Linkfit이 함께 할게요.
       </Text>
     </View>

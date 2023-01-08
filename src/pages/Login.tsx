@@ -28,16 +28,12 @@ function LogIn() {
 
   const onSubmit = useCallback(async () => {}, []);
 
-  const testClick = () => {
-    Alert.alert('알림', '클릭테스트에용');
-  };
-
   const insets = useSafeAreaInsets();
   console.log(insets);
 
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-      <View style={common.containerHeader}>
+      <View style={common.container}>
         {/* 로고 컴포넌트 */}
         <Logo />
         {/* 로고 컴포넌트 */}

@@ -53,9 +53,9 @@ function PasswordReset({}: PasswordResetScreenProps) {
   const canGoNext = true;
   return (
     <DismissKeyboardView>
-      <View style={common.containerHeader}>
+      <View style={common.container}>
         <View>
-          <Text style={[common.text, common.tal]}>
+          <Text style={[common.text_m, common.tal]}>
             비밀번호 재설정을 위해{'\n'} 가입한 정보를 입력해 주세요.
           </Text>
         </View>
