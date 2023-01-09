@@ -1,6 +1,7 @@
 import React from 'react';
 import {Image, StyleSheet, Text, View} from 'react-native';
 import common from '../styles/common';
+import {iconPath} from '../util/iconPath';
 
 type ListProps = {
   item: {
@@ -13,7 +14,7 @@ type ListProps = {
   };
 };
 
-function RecruitCarouselItem({item}: ListProps) {
+function RecruitListItem({item}: ListProps) {
   console.log(item);
   return (
     <View style={styles.slideBox}>
@@ -25,8 +26,8 @@ function RecruitCarouselItem({item}: ListProps) {
         <Text style={[common.text_s, common.fwb]}>{item.company}</Text>
         <Text style={common.text_s}>{item.area}</Text>
         <Image
-          source={require('../assets/images/icon/bookmark.png')}
-          style={styles.bookmark}
+          source={iconPath.BOOKMARK}
+          style={[common.BOOKMARK, styles.bookmark]}
         />
       </View>
     </View>
@@ -38,7 +39,7 @@ const styles = StyleSheet.create({
   slideBox: {marginRight: 8, width: 160},
   imgBox: {marginBottom: 8, width: 160, height: 104, borderRadius: 8},
   infoBox: {position: 'relative'},
-  bookmark: {position: 'absolute', top: 5, right: 0, width: 14, height: 18},
+  bookmark: {position: 'absolute', top: 5, right: 0},
 });
 
-export default RecruitCarouselItem;
+export default RecruitListItem;
