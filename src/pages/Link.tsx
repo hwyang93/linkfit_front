@@ -62,7 +62,7 @@ function Link() {
   ];
 
   return (
-    <ScrollView style={{backgroundColor: WHITE}}>
+    <ScrollView nestedScrollEnabled={true} style={{backgroundColor: WHITE}}>
       <View style={styles.container}>
         <View>
           <Text style={common.text_m}>구인 / 강사</Text>

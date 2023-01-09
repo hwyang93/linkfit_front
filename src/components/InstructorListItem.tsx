@@ -75,8 +75,8 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-start',
     alignItems: 'center',
     paddingVertical: 16,
-    borderBottomWidth: 1,
-    borderBottomColor: '#dcdcdc',
+    // borderBottomWidth: 1,
+    // borderBottomColor: '#dcdcdc',
   },
   rightBox: {
     position: 'absolute',

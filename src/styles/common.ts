@@ -1,7 +1,7 @@
 import {StyleSheet, Dimensions} from 'react-native';
 import {INPUT} from './colors';
 
-export const fonts = {
+export const Font = {
   regular: 'NotoSansKR-Regular',
   medium: 'NotoSansKR-Medium',
   bold: 'NotoSansKR-Bold',
@@ -43,6 +43,7 @@ const common = StyleSheet.create({
   mr8: {marginRight: 8},
   mr16: {marginRight: 16},
   // layout
+  separator: {height: 1, backgroundColor: '#dcdcdc'},
   wrap: {
     width: '100%',
     height: '100%',
@@ -71,26 +72,33 @@ const common = StyleSheet.create({
   text_s: {
     fontFamily: 'NotoSansKR-Medium',
     color: '#292929',
-    fontSize: 14,
+    fontSize: +width * 14,
+    fontWeight: 'normal',
     textAlign: 'left',
+    lineHeight: +width * 20,
   },
   text_m: {
     fontFamily: 'NotoSansKR-Medium',
     color: '#292929',
-    fontSize: 16,
+    fontSize: +width * 16,
+    fontWeight: 'normal',
     textAlign: 'left',
+    lineHeight: +width * 24,
   },
   text_l: {
     fontFamily: 'NotoSansKR-Medium',
     color: '#292929',
-    fontSize: 20,
+    fontSize: +width * 20,
+    fontWeight: 'normal',
     textAlign: 'left',
+    lineHeight: +width * 24,
   },
   title: {
     color: '#000',
-    fontSize: 20,
+    fontSize: +width * 20,
     fontWeight: '700',
     textAlign: 'left',
+    lineHeight: +width * 24,
   },
   // basic button
   button: {
