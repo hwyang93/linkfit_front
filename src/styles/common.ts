@@ -39,7 +39,9 @@ const common = StyleSheet.create({
   mb30: {marginBottom: 30},
   mb40: {marginBottom: 40},
   ml8: {marginLeft: 8},
+  ml16: {marginLeft: 16},
   mr8: {marginRight: 8},
+  mr16: {marginRight: 16},
   // layout
   wrap: {
     width: '100%',
@@ -146,5 +148,13 @@ const common = StyleSheet.create({
     borderColor: INPUT.DEFAULT,
     borderRadius: 8,
   },
+  // icon
+  MORE_VERT: {width: 4, height: 16},
+  MESSAGE: {width: 24, height: 24},
+  FAVORITE: {width: 24, height: 24},
+  BOOKMARK: {width: 14, height: 18},
+  TAB_BAR_ICON: {width: 24, height: 24},
+  BELL: {width: 17, height: 21},
+  MY: {width: 16, height: 16},
 });
 export default common;

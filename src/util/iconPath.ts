@@ -1,4 +1,18 @@
 export const iconPath = {
+  LOGO: require('../assets/images/logo.png'),
   FAVORITE: require('../assets/images/icon/favorite.png'),
   MESSAGE: require('../assets/images/icon/message.png'),
+  BOOKMARK: require('../assets/images/icon/bookmark.png'),
+  MORE_VERT: require('../assets/images/icon/more_vert.png'),
+  TAB_BAR_ICON_1: require('../assets/images/icon/tabBarIcon_1.png'),
+  TAB_BAR_ICON_1_ON: require('../assets/images/icon/tabBarIcon_1_on.png'),
+  TAB_BAR_ICON_2: require('../assets/images/icon/tabBarIcon_2.png'),
+  TAB_BAR_ICON_2_ON: require('../assets/images/icon/tabBarIcon_2_on.png'),
+  TAB_BAR_ICON_3: require('../assets/images/icon/tabBarIcon_3.png'),
+  TAB_BAR_ICON_3_ON: require('../assets/images/icon/tabBarIcon_3_on.png'),
+  TAB_BAR_ICON_4: require('../assets/images/icon/tabBarIcon_4.png'),
+  TAB_BAR_ICON_4_ON: require('../assets/images/icon/tabBarIcon_4_on.png'),
+  BELL: require('../assets/images/icon/bell.png'),
+  BELL_ON: require('../assets/images/icon/bell_on.png'),
+  MY: require('../assets/images/icon/my.png'),
 };

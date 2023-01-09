@@ -8,6 +8,8 @@ import {LoggedInParamList} from '../../AppInner';
 import {Animated, Dimensions, Image, Platform, View} from 'react-native';
 import {useEffect, useRef} from 'react';
 import {fetchMember, fetchMemberInfo} from '../api/member';
+import common from '../styles/common';
+import {iconPath} from '../util/iconPath';
 
 const Tab = createBottomTabNavigator<LoggedInParamList>();
 
@@ -61,9 +63,8 @@ const MainStack = () => {
                   }}>
                   <View style={{flex: 0}}>
                     <Image
-                      source={require('../assets/images/logo.png')}
+                      source={iconPath.LOGO}
                       style={{width: 116, height: 32}}
-                      resizeMode={'cover'}
                     />
                   </View>
                   <View
@@ -73,18 +74,10 @@ const MainStack = () => {
                       alignItems: 'center',
                     }}>
                     <View style={{marginRight: 24}}>
-                      <Image
-                        source={require('../assets/images/bell.png')}
-                        style={{width: 17, height: 21}}
-                        resizeMode={'cover'}
-                      />
+                      <Image source={iconPath.BELL} style={common.BELL} />
                     </View>
                     <View>
-                      <Image
-                        source={require('../assets/images/my.png')}
-                        style={{width: 16, height: 16}}
-                        resizeMode={'cover'}
-                      />
+                      <Image source={iconPath.MY} style={common.MY} />
                     </View>
                   </View>
                 </View>
@@ -96,14 +89,9 @@ const MainStack = () => {
             tabBarIcon: ({focused}) => (
               <Image
                 source={
-                  focused
-                    ? require('../assets/images/icon/tabBarIcon_1_on.png')
-                    : require('../assets/images/icon/tabBarIcon_1.png')
+                  focused ? iconPath.TAB_BAR_ICON_1_ON : iconPath.TAB_BAR_ICON_1
                 }
-                style={{
-                  width: 24,
-                  height: 24,
-                }}
+                style={common.TAB_BAR_ICON}
               />
             ),
           }}
@@ -124,14 +112,9 @@ const MainStack = () => {
             tabBarIcon: ({focused}) => (
               <Image
                 source={
-                  focused
-                    ? require('../assets/images/icon/tabBarIcon_2_on.png')
-                    : require('../assets/images/icon/tabBarIcon_2.png')
+                  focused ? iconPath.TAB_BAR_ICON_2_ON : iconPath.TAB_BAR_ICON_2
                 }
-                style={{
-                  width: 24,
-                  height: 24,
-                }}
+                style={common.TAB_BAR_ICON}
               />
             ),
           }}
@@ -152,14 +135,9 @@ const MainStack = () => {
             tabBarIcon: ({focused}) => (
               <Image
                 source={
-                  focused
-                    ? require('../assets/images/icon/tabBarIcon_3_on.png')
-                    : require('../assets/images/icon/tabBarIcon_3.png')
+                  focused ? iconPath.TAB_BAR_ICON_3_ON : iconPath.TAB_BAR_ICON_3
                 }
-                style={{
-                  width: 24,
-                  height: 24,
-                }}
+                style={common.TAB_BAR_ICON}
               />
             ),
           }}
@@ -180,14 +158,9 @@ const MainStack = () => {
             tabBarIcon: ({focused}) => (
               <Image
                 source={
-                  focused
-                    ? require('../assets/images/icon/tabBarIcon_4_on.png')
-                    : require('../assets/images/icon/tabBarIcon_4.png')
+                  focused ? iconPath.TAB_BAR_ICON_4_ON : iconPath.TAB_BAR_ICON_4
                 }
-                style={{
-                  width: 24,
-                  height: 24,
-                }}
+                style={common.TAB_BAR_ICON}
               />
             ),
           }}
