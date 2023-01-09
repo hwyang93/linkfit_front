@@ -1,6 +1,7 @@
 import React from 'react';
-import {FlatList} from 'react-native';
+import {FlatList, View} from 'react-native';
 import InstructorListItem from './InstructorListItem';
+import common from '../styles/common';
 
 type InstructorProps = {
   list: any[];
@@ -13,12 +14,14 @@ function InstructorComponent({list}: InstructorProps) {
 
   return (
     <FlatList
-      automaticallyAdjustContentInsets={false}
+      nestedScrollEnabled={true}
+      // automaticallyAdjustContentInsets={false}
       data={list}
       decelerationRate="fast"
       renderItem={renderItem}
       snapToAlignment="start"
-      showsHorizontalScrollIndicator={false}
+      ItemSeparatorComponent={() => <View style={common.separator} />}
+      // showsHorizontalScrollIndicator={false}
     />
   );
 }

@@ -22,8 +22,11 @@ function RecruitListItem({item}: ListProps) {
         <Image source={item.src} resizeMode={'cover'} />
       </View>
       <View style={styles.infoBox}>
+        {/* 포지션 */}
         <Text style={[common.text_m, common.fwb]}>{item.position}</Text>
+        {/* 업체명 */}
         <Text style={[common.text_s, common.fwb]}>{item.company}</Text>
+        {/* 지역 */}
         <Text style={common.text_s}>{item.area}</Text>
         <Image
           source={iconPath.BOOKMARK}
