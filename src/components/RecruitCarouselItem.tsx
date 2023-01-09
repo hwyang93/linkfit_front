@@ -1,5 +1,5 @@
 import React from 'react';
-import {Image, StyleSheet, Text, View, ViewStyle} from 'react-native';
+import {Image, StyleSheet, Text, View} from 'react-native';
 import common from '../styles/common';
 
 type ListProps = {
@@ -8,9 +8,9 @@ type ListProps = {
     position: string;
     company: string;
     area: string;
+    src: any;
     color: string;
   };
-  // style: ViewStyle;
 };
 
 function RecruitCarouselItem({item}: ListProps) {
@@ -18,10 +18,7 @@ function RecruitCarouselItem({item}: ListProps) {
   return (
     <View style={styles.slideBox}>
       <View style={styles.imgBox}>
-        <Image
-          source={require('../assets/images/sample_01.png')}
-          resizeMode={'cover'}
-        />
+        <Image source={item.src} resizeMode={'cover'} />
       </View>
       <View style={styles.infoBox}>
         <Text style={[common.text_m, common.fwb]}>{item.position}</Text>
@@ -41,7 +38,7 @@ const styles = StyleSheet.create({
   slideBox: {marginRight: 8, width: 160},
   imgBox: {marginBottom: 8, width: 160, height: 104, borderRadius: 8},
   infoBox: {position: 'relative'},
-  bookmark: {position: 'absolute', top: 0, right: 0, width: 14, height: 18},
+  bookmark: {position: 'absolute', top: 5, right: 0, width: 14, height: 18},
 });
 
 export default RecruitCarouselItem;
