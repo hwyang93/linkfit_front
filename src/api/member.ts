@@ -1,9 +1,13 @@
 import request from './request';
 
-export function newMember(data: string) {
+export function createMember(data: object) {
   return request.post('/member', data);
 }
 
-export function fetchMember(member_seq: number) {
-  return request.get(`/member/${member_seq}`);
+export function fetchMember(params: object) {
+  return request.get('/member/', params);
+}
+
+export function fetchMemberInfo(seq: number) {
+  return request.get(`/member/${seq}`);
 }

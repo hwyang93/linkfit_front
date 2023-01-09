@@ -1,5 +1,5 @@
-import React, {useState} from 'react';
-import {FlatList, StyleSheet, View} from 'react-native';
+import React from 'react';
+import {FlatList} from 'react-native';
 import RecruitCarouselItem from './RecruitCarouselItem';
 
 type CarouselProps = {
@@ -9,46 +9,23 @@ type CarouselProps = {
   pageWidth: number;
 };
 
-function Carousel({links, pageWidth, gap, offset}: CarouselProps) {
-  const [page, setPage] = useState(0);
-
+function Carousel({links, pageWidth, gap}: CarouselProps) {
   function renderItem({item}: any) {
-    return (
-      <RecruitCarouselItem
-        item={item}
-        key={item.num}
-        // style={{width: pageWidth, marginHorizontal: gap / 2}}
-      />
-    );
+    return <RecruitCarouselItem item={item} />;
   }
 
   return (
-    <View style={styles.container}>
-      <FlatList
-        automaticallyAdjustContentInsets={false}
-        contentContainerStyle={
-          {
-            // paddingHorizontal: offset + gap / 2,
-          }
-        }
-        data={links}
-        decelerationRate="fast"
-        horizontal
-        // keyExtractor={(item: any) => `page__${item.color}`}
-        keyExtractor={(item: any) => item.num}
-        // onScroll={onScroll}
-        // pagingEnabled
-        renderItem={renderItem}
-        snapToInterval={pageWidth + gap}
-        snapToAlignment="start"
-        showsHorizontalScrollIndicator={false}
-      />
-    </View>
+    <FlatList
+      automaticallyAdjustContentInsets={false}
+      data={links}
+      decelerationRate="fast"
+      horizontal
+      renderItem={renderItem}
+      snapToInterval={pageWidth + gap}
+      snapToAlignment="start"
+      showsHorizontalScrollIndicator={false}
+    />
   );
 }
-
-const styles = StyleSheet.create({
-  container: {},
-});
 
 export default Carousel;

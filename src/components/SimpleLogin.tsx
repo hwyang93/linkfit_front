@@ -9,7 +9,7 @@ const SimpleLogin = () => {
   return (
     <View>
       <View style={common.mv30}>
-        <Text style={common.text_m}>간편 로그인</Text>
+        <Text style={[common.text_m, common.tac]}>간편 로그인</Text>
         <View style={styles.iconBox}>
           <View style={styles.easyIcon}>
             <Pressable onPress={testClick}>

@@ -7,7 +7,7 @@ import * as React from 'react';
 import {LoggedInParamList} from '../../AppInner';
 import {Animated, Dimensions, Image, Platform, View} from 'react-native';
 import {useEffect, useRef} from 'react';
-import {fetchMember} from '../api/member';
+import {fetchMember, fetchMemberInfo} from '../api/member';
 
 const Tab = createBottomTabNavigator<LoggedInParamList>();
 
@@ -19,15 +19,15 @@ const MainStack = () => {
     return width / 4;
   }
 
-  useEffect(() => {
-    getSomething().then(r => {
-      console.log(r);
-    });
-  }, []);
-  const getSomething = async () => {
-    const response = await fetchMember(1);
-    console.log(response);
-  };
+  // useEffect(() => {
+  //   getSomething().then(r => {
+  //     console.log('무엇이 있나 ', r);
+  //   });
+  // }, []);
+  // const getSomething = async () => {
+  //   const response = await fetchMemberInfo(1);
+  //   console.log('get ', response);
+  // };
   return (
     <>
       <Tab.Navigator
@@ -39,11 +39,7 @@ const MainStack = () => {
           tabBarStyle: {
             height: Platform.OS === 'android' ? 80 : 100,
             backgroundColor: '#fff',
-            // position: 'absolute',
-            // bottom: 0,
             paddingVertical: 16,
-            // alignItems: 'center',
-            // justifyContent: 'center',
           },
           tabBarLabelStyle: {fontSize: 16, marginVertical: 10},
           tabBarAllowFontScaling: true,
@@ -54,7 +50,6 @@ const MainStack = () => {
           options={{
             title: '링크',
             headerTitle: () => {
-              // return null;
               return (
                 <View
                   style={{
@@ -98,17 +93,6 @@ const MainStack = () => {
             headerLeft: () => {
               return null;
             },
-            // headerLeft: props => {
-            //   console.log(props);
-            //   return (
-            //     <Image
-            //       source={require('../assets/images/logo.png')}
-            //       style={{marginLeft: 16, width: 116, height: 32}}
-            //       resizeMode={'cover'}
-            //     />
-            //   );
-            // },
-
             tabBarIcon: ({focused}) => (
               <Image
                 source={
