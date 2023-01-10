@@ -1,8 +1,7 @@
 import React, {useCallback, useState} from 'react';
-import common from '../styles/common';
+import common from '@styles/common';
 import {
   ActivityIndicator,
-  Alert,
   Keyboard,
   Pressable,
   StyleSheet,
@@ -10,14 +9,14 @@ import {
   TouchableWithoutFeedback,
   View,
 } from 'react-native';
-import Input, {KeyboardTypes, ReturnKeyTypes} from '../components/Input';
+import Input, {KeyboardTypes, ReturnKeyTypes} from '@components/Input';
 import LinearGradient from 'react-native-linear-gradient';
 import DismissKeyboardView from '../components/DismissKeyboardView';
-import Logo from '../components/Logo';
+import Logo from '@components/Logo';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import {NavigationProp, useNavigation} from '@react-navigation/native';
 import {RootStackParamList} from '../../AppInner';
-import {BLACK} from '../styles/colors';
+import {BLACK} from '@styles/colors';
 
 function LogIn() {
   const navigation = useNavigation<NavigationProp<RootStackParamList>>();

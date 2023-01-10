@@ -1,7 +1,7 @@
 import React from 'react';
 import {FlatList, View} from 'react-native';
 import InstructorListItem from './InstructorListItem';
-import common from '../styles/common';
+import common from '@styles/common';
 
 type InstructorProps = {
   list: any[];

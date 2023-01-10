@@ -12,13 +12,13 @@ import {
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import {RootStackParamList} from '../../AppInner';
 // import {useAppDispatch} from '../store';
-import {validateEmail, removeWhitespace, validatePassword} from '../util/util';
-import Input, {KeyboardTypes, ReturnKeyTypes} from '../components/Input';
+import {validateEmail, removeWhitespace, validatePassword} from '@util/util';
+import Input, {KeyboardTypes, ReturnKeyTypes} from '@components/Input';
 import useInput from '../hooks/useInput';
-import common from '../styles/common';
-import SimpleLogin from '../components/SimpleLogin';
+import common from '@styles/common';
+import SimpleLogin from '@components/SimpleLogin';
 import LinearGradient from 'react-native-linear-gradient';
-import Logo from '../components/Logo';
+import Logo from '@components/Logo';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 
 type SignInScreenProps = NativeStackScreenProps<RootStackParamList, 'SignIn'>;

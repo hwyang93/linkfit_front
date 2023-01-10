@@ -1,10 +1,10 @@
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {WHITE} from '../styles/colors';
 import HeaderLeft from '../components/HeaderLeft';
-import SignIn from '../pages/SignIn';
-import Login from '../pages/Login';
-import SignUp from '../pages/SignUp';
-import PasswordReset from '../pages/PasswordReset';
+import SignIn from '../screen/SignIn';
+import Login from '../screen/Login';
+import SignUp from '../screen/SignUp';
+import PasswordReset from '../screen/PasswordReset';
 import * as React from 'react';
 import {RootStackParamList} from '../../AppInner';
 

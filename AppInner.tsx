@@ -1,8 +1,8 @@
 import * as React from 'react';
 import {useSelector} from 'react-redux';
 import {RootState} from './src/store/reducer';
-import MainStack from './src/navigations/MainStack';
-import AuthStack from './src/navigations/AuthStack';
+import MainStack from '@navigations/MainStack';
+import AuthStack from '@navigations/AuthStack';
 
 export type LoggedInParamList = {
   Link: undefined;

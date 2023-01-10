@@ -9,14 +9,14 @@ import {
 } from 'react-native';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import {RootStackParamList} from '../../AppInner';
-import common from '../styles/common';
-import Input, {KeyboardTypes} from '../components/Input';
+import common from '@styles/common';
 import LinearGradient from 'react-native-linear-gradient';
-import {INPUT} from '../styles/colors';
-import TabButton from '../components/TabButton';
+import Input, {KeyboardTypes} from '@components/Input';
+import {INPUT} from '@styles/colors';
+import TabButton from '@components/TabButton';
+import DismissKeyboardView from '@components/DismissKeyboardView';
 import DateTimePickerModal from 'react-native-modal-datetime-picker';
 import moment from 'moment';
-import DismissKeyboardView from '../components/DismissKeyboardView';
 import SelectDropdown from 'react-native-select-dropdown';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 
