@@ -1,9 +1,9 @@
 import React from 'react';
 import {Dimensions, ScrollView, StyleSheet, Text, View} from 'react-native';
-import {WHITE} from '../styles/colors';
-import common from '../styles/common';
-import RecruitCarousel from '../components/RecruitCarousel';
-import InstructorComponent from '../components/InstructorComponent';
+import {WHITE} from '@styles/colors';
+import common from '@styles/common';
+import RecruitCarousel from '@components/RecruitCarousel';
+import InstructorComponent from '@components/InstructorComponent';
 
 function Link() {
   const screenWidth = Math.round(Dimensions.get('window').width);

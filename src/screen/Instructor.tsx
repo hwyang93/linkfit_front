@@ -1,6 +1,6 @@
 import React from 'react';
 import {Text, View} from 'react-native';
-import common from '../styles/common';
+import common from '@styles/common';
 
 function Instructor() {
   return (

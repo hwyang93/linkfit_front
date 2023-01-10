@@ -1,8 +1,8 @@
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
-import Link from '../pages/Link';
-import Community from '../pages/Community';
-import Message from '../pages/Message';
-import My from '../pages/My';
+import Link from '../screen/Link';
+import Community from '../screen/Community';
+import Message from '../screen/Message';
+import My from '../screen/My';
 import * as React from 'react';
 import {LoggedInParamList} from '../../AppInner';
 import {Animated, Dimensions, Image, Platform, View} from 'react-native';

@@ -1,7 +1,7 @@
 import React from 'react';
 import {Image, StyleSheet, Text, View} from 'react-native';
-import common from '../styles/common';
-import {iconPath} from '../util/iconPath';
+import common from '@styles/common';
+import {iconPath} from '@util/iconPath';
 
 type ListProps = {
   item: {
