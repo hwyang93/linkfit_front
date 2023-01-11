@@ -1,14 +1,15 @@
-import * as React from 'react';
 import {useSelector} from 'react-redux';
 import {RootState} from './src/store/reducer';
 import MainStack from '@navigations/MainStack';
 import AuthStack from '@navigations/AuthStack';
 
 export type LoggedInParamList = {
+  ContentTab: undefined;
   Link: undefined;
   Message: undefined;
   Community: undefined;
   My: undefined;
+  RecruitMap: undefined;
   // Complete: {orderId: string};
 };
 

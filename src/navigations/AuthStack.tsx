@@ -1,12 +1,11 @@
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
+import {RootStackParamList} from '../../AppInner';
 import {WHITE} from '@styles/colors';
 import HeaderLeft from '@components/HeaderLeft';
 import SignIn from '@screen/SignIn';
 import Login from '@screen/Login';
 import SignUp from '@screen/SignUp';
 import PasswordReset from '@screen/PasswordReset';
-import * as React from 'react';
-import {RootStackParamList} from '../../AppInner';
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
