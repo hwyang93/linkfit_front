@@ -1,9 +1,18 @@
-import React from 'react';
-import {Dimensions, ScrollView, StyleSheet, Text, View} from 'react-native';
+import {
+  Dimensions,
+  Pressable,
+  ScrollView,
+  StyleSheet,
+  Text,
+  View,
+} from 'react-native';
 import {WHITE} from '@styles/colors';
 import common from '@styles/common';
 import RecruitCarousel from '@components/RecruitCarousel';
 import InstructorComponent from '@components/InstructorComponent';
+import LinearGradient from 'react-native-linear-gradient';
+import {NavigationProp, useNavigation} from '@react-navigation/native';
+import {LoggedInParamList} from '../../AppInner';
 
 function Link() {
   const screenWidth = Math.round(Dimensions.get('window').width);
@@ -61,11 +70,31 @@ function Link() {
     },
   ];
 
+  const navigation = useNavigation<NavigationProp<LoggedInParamList>>();
+
   return (
     <ScrollView nestedScrollEnabled={true} style={{backgroundColor: WHITE}}>
       <View style={styles.container}>
         <View>
-          <Text style={common.text_m}>구인 / 강사</Text>
+          <LinearGradient
+            style={[styles.tabBox]}
+            start={{x: 0.1, y: 0.5}}
+            end={{x: 0.6, y: 1}}
+            colors={['#74ebe4', '#3962f3']}>
+            <Pressable
+              style={styles.tabItem}
+              onPress={() => navigation.navigate('RecruitMap')}>
+              <Text style={[common.text_m, common.fwb, {color: WHITE}]}>
+                구인
+              </Text>
+            </Pressable>
+            <Pressable style={styles.tabItem}>
+              <Text style={[common.text_m, common.fwb, {color: WHITE}]}>
+                강사
+              </Text>
+            </Pressable>
+            <View style={styles.centerLine} />
+          </LinearGradient>
         </View>
         {/* 채용 슬라이더 영역 */}
         <View style={common.mt40}>
@@ -102,6 +131,27 @@ const styles = StyleSheet.create({
     flex: 1,
     paddingHorizontal: 16,
     paddingVertical: 16,
+  },
+  tabBox: {
+    position: 'relative',
+    flexDirection: 'row',
+    justifyContent: 'center',
+    width: '100%',
+    height: 48,
+    borderRadius: 8,
+  },
+  tabItem: {
+    width: '50%',
+    height: '100%',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  centerLine: {
+    position: 'absolute',
+    top: 12,
+    height: 24,
+    width: 1,
+    backgroundColor: WHITE,
   },
 });
 

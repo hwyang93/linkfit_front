@@ -1,5 +1,3 @@
-import React, {useCallback, useState} from 'react';
-import common from '@styles/common';
 import {
   ActivityIndicator,
   Keyboard,
@@ -9,6 +7,8 @@ import {
   TouchableWithoutFeedback,
   View,
 } from 'react-native';
+import {useCallback, useState} from 'react';
+import common from '@styles/common';
 import Input, {KeyboardTypes, ReturnKeyTypes} from '@components/Input';
 import LinearGradient from 'react-native-linear-gradient';
 import DismissKeyboardView from '../components/DismissKeyboardView';
