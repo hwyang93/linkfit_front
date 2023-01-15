@@ -1,4 +1,12 @@
-import {Button, StyleSheet, Text, View} from 'react-native';
+import {
+  Button,
+  Image,
+  Platform,
+  Pressable,
+  StyleSheet,
+  Text,
+  View,
+} from 'react-native';
 import common from '@styles/common';
 import {NavigationProp, useNavigation} from '@react-navigation/native';
 import {LoggedInParamList} from '../../AppInner';
@@ -9,6 +17,8 @@ import NaverMapView, {
   Polyline,
   Polygon,
 } from 'react-native-nmap';
+import {WHITE} from '@styles/colors';
+import {iconPath} from '@util/iconPath';
 
 function RecruitMapScreen() {
   const navigation = useNavigation<NavigationProp<LoggedInParamList>>();
@@ -57,11 +67,12 @@ function RecruitMapScreen() {
           onClick={() => console.warn('onClick! polygon')}
         />
       </NaverMapView>
-      <Text style={common.text_m}>구인 지도 화면</Text>
-      <Button
-        title={'임시 리스트 링크'}
-        onPress={() => navigation.navigate('RecruitList')}
-      />
+      <Pressable
+        style={[styles.listButton]}
+        onPress={() => navigation.navigate('RecruitList')}>
+        <Image style={styles.listIcon} source={iconPath.LIST} />
+        <Text style={common.text_m}>목록보기</Text>
+      </Pressable>
     </View>
   );
 }
@@ -69,8 +80,35 @@ function RecruitMapScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    paddingHorizontal: 16,
-    paddingVertical: 16,
+  },
+  listButton: {
+    flexDirection: 'row',
+    position: 'absolute',
+    bottom: 16,
+    right: 16,
+    width: 127,
+    height: 40,
+    borderRadius: 20,
+    backgroundColor: WHITE,
+    alignItems: 'center',
+    justifyContent: 'center',
+    ...Platform.select({
+      ios: {
+        shadowColor: 'rgb(0,0,0)',
+        shadowOpacity: 0.3,
+        shadowRadius: 5,
+        shadowOffset: {
+          height: 1,
+          width: 0,
+        },
+      },
+      android: {elevation: 3},
+    }),
+  },
+  listIcon: {
+    marginRight: 4,
+    width: 20,
+    height: 20,
   },
 });
 

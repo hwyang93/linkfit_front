@@ -1,5 +1,6 @@
 import {Alert, Image, Pressable, StyleSheet, Text, View} from 'react-native';
 import common, {width} from '../styles/common';
+import {iconPath} from '@util/iconPath';
 
 const SimpleLogin = () => {
   const testClick = () => {
@@ -13,7 +14,7 @@ const SimpleLogin = () => {
           <View style={styles.easyIcon}>
             <Pressable onPress={testClick}>
               <Image
-                source={require('../assets/images/icon/Kakaotalk.png')}
+                source={iconPath.KAKAO}
                 style={styles.icon}
                 resizeMode={'cover'}
               />
@@ -22,7 +23,7 @@ const SimpleLogin = () => {
           <View style={styles.easyIcon}>
             <Pressable onPress={testClick}>
               <Image
-                source={require('../assets/images/icon/Naver.png')}
+                source={iconPath.NAVER}
                 style={styles.icon}
                 resizeMode={'cover'}
               />
@@ -31,7 +32,7 @@ const SimpleLogin = () => {
           <View style={styles.easyIcon}>
             <Pressable onPress={testClick}>
               <Image
-                source={require('../assets/images/icon/Google.png')}
+                source={iconPath.GOOGLE}
                 style={styles.icon}
                 resizeMode={'cover'}
               />
@@ -40,7 +41,7 @@ const SimpleLogin = () => {
           <View style={styles.easyIcon}>
             <Pressable onPress={testClick}>
               <Image
-                source={require('../assets/images/icon/Apple.png')}
+                source={iconPath.APPLE}
                 style={styles.icon}
                 resizeMode={'cover'}
               />
