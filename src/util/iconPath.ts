@@ -1,4 +1,8 @@
 export const iconPath = {
+  APPLE: require('@images/icon/apple.png'),
+  GOOGLE: require('@images/icon/google.png'),
+  KAKAO: require('@images/icon/kakaotalk.png'),
+  NAVER: require('@images/icon/naver.png'),
   LOGO: require('@images/logo.png'),
   FAVORITE: require('@images/icon/favorite.png'),
   MESSAGE: require('@images/icon/message.png'),
@@ -15,4 +19,6 @@ export const iconPath = {
   BELL: require('@images/icon/bell.png'),
   BELL_ON: require('@images/icon/bell_on.png'),
   MY: require('@images/icon/my.png'),
+  LIST: require('@images/icon/list.png'),
+  PENCIL: require('@images/icon/pencil.png'),
 };
