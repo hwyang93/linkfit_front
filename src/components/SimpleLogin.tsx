@@ -1,4 +1,3 @@
-import React from 'react';
 import {Alert, Image, Pressable, StyleSheet, Text, View} from 'react-native';
 import common, {width} from '../styles/common';
 

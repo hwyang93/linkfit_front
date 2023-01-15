@@ -1,4 +1,3 @@
-import React from 'react';
 import {Pressable, Text} from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import {useNavigation} from '@react-navigation/native';
