@@ -1,4 +1,3 @@
-import React from 'react';
 import {Image, StyleSheet, Text, View} from 'react-native';
 import common from '@styles/common';
 import {iconPath} from '@util/iconPath';
@@ -38,7 +37,6 @@ function RecruitListItem({item}: ListProps) {
 }
 
 const styles = StyleSheet.create({
-  slideWrap: {marginTop: 16},
   slideBox: {marginRight: 8, width: 160},
   imgBox: {marginBottom: 8, width: 160, height: 104, borderRadius: 8},
   infoBox: {position: 'relative'},

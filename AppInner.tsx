@@ -10,6 +10,7 @@ export type LoggedInParamList = {
   Community: undefined;
   My: undefined;
   RecruitMap: undefined;
+  RecruitList: undefined;
   // Complete: {orderId: string};
 };
 

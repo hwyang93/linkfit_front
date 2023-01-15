@@ -4,6 +4,7 @@ import {LoggedInParamList} from '../../AppInner';
 import HeaderLeft from '@components/HeaderLeft';
 import {WHITE} from '@styles/colors';
 import RecruitMapScreen from '@screen/RecruitMapScreen';
+import RecruitListScreen from '@screen/RecruitListScreen';
 
 const Stack = createNativeStackNavigator<LoggedInParamList>();
 
@@ -29,11 +30,11 @@ const MainStack = () => {
         component={RecruitMapScreen}
         options={{title: '구인'}}
       />
-      {/*<Stack.Screen*/}
-      {/*  name="Recruit"*/}
-      {/*  component={RecruitListScreen}*/}
-      {/*  options={{title: '구인'}}*/}
-      {/*/>*/}
+      <Stack.Screen
+        name="RecruitList"
+        component={RecruitListScreen}
+        options={{title: '구인'}}
+      />
     </Stack.Navigator>
   );
 };

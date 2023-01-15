@@ -1,7 +1,6 @@
 import {Image, Pressable, StyleSheet, Text, View} from 'react-native';
 import common from '@styles/common';
 import {iconPath} from '@util/iconPath';
-import React from 'react';
 
 type ListProps = {
   item: {
