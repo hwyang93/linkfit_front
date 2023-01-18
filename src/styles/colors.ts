@@ -1,39 +1,24 @@
 export const WHITE = '#ffffff';
 export const BLACK = '#000000';
 
-export const TEXT = {
-  GRAY: '#292929',
-};
-
 export const INPUT = {
   DEFAULT: '#acacac',
   FOCUS: '#3962f3',
   CAUTION: '#e20823',
 };
 
-export const GREEN = {
-  POINT1: '#1eddd2',
-  POINT2: '#4555e1',
-  POINT3: '#8feee9',
-  POINT4: '#d2f8f6',
-  POINT5: '#d2f8f6',
+export const RED = {
+  DEFAULT: '#e20823',
 };
 
 export const BLUE = {
-  POINT1: '#062db8',
-  POINT2: '#3962f3',
-  POINT3: '#9cb1fa',
-  POINT4: '#d7e0fd',
-  POINT5: '#d7e0fd',
+  DEFAULT: '#3962f3',
 };
 
 export const GRAY = {
+  LIGHT: '#dcdcdc',
   DEFAULT: '#acacac',
-  POINT1: '#292929',
-  POINT2: '#666666',
-  POINT3: '#999999',
-  POINT4: '#cccccc',
-  POINT5: '#f0f0f0',
+  DARK: '#666666',
 };
 
 export const SECONDARY = {

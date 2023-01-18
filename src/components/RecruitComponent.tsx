@@ -1,28 +1,27 @@
 import {FlatList, Text, View} from 'react-native';
-import InstructorListItem from './InstructorListItem';
+import RecruitListItem from '@components/RecruitListItem';
 import common from '@styles/common';
 
 type InstructorProps = {
   list: any[];
-  title?: string;
-  text?: string;
+  title: string;
+  text: string;
 };
 
-function InstructorComponent({list, title, text}: InstructorProps) {
+function RecruitComponent({list, title, text}: InstructorProps) {
   function renderItem({item}: any) {
-    return <InstructorListItem item={item} />;
+    return <RecruitListItem item={item} />;
   }
 
   return (
     <FlatList
-      nestedScrollEnabled={true}
       data={list}
       decelerationRate="fast"
       renderItem={renderItem}
       snapToAlignment="start"
-      ItemSeparatorComponent={() => <View style={common.separator} />}
+      numColumns={2}
       ListHeaderComponent={
-        <View style={common.mt16}>
+        <View style={{paddingVertical: 16}}>
           <Text style={[common.title]}>{title}</Text>
           <Text style={common.text_m}>{text}</Text>
         </View>
@@ -31,4 +30,4 @@ function InstructorComponent({list, title, text}: InstructorProps) {
   );
 }
 
-export default InstructorComponent;
+export default RecruitComponent;

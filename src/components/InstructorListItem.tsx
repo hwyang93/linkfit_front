@@ -1,6 +1,7 @@
-import {Image, Pressable, StyleSheet, Text, View} from 'react-native';
+import {Alert, Image, Pressable, StyleSheet, Text, View} from 'react-native';
 import common from '@styles/common';
 import {iconPath} from '@util/iconPath';
+import {BLUE} from '@styles/colors';
 
 type ListProps = {
   item: {
@@ -9,56 +10,66 @@ type ListProps = {
     nickname: string;
     area: string;
     hit: number;
+    certification: boolean;
   };
 };
 
 function InstructorListItem({item}: ListProps) {
   return (
     <View style={styles.listBox}>
-      <View style={{marginRight: 16}}>
+      <Pressable
+        style={common.mr16}
+        onPress={() => Alert.alert('click', 'test')}>
         <Image
           source={require('../assets/images/thumbnail.png')}
-          style={{width: 80, height: 80}}
+          style={styles.thumbnail}
         />
-      </View>
+      </Pressable>
       <View>
-        <View style={{flexDirection: 'row', alignItems: 'center'}}>
+        <View style={styles.rowBox}>
           <Text style={[common.text_s, common.fwb, common.mr8]}>
             {item.position}
           </Text>
           <Text style={[common.text_s]}>{item.career}</Text>
         </View>
 
-        <View style={{flexDirection: 'row', alignItems: 'center'}}>
+        <View style={styles.rowBox}>
           <Text style={[common.text_m, common.fwb, common.mr8]}>
             {item.nickname}
           </Text>
-          <Text style={[common.text_s, {color: '#3962f3'}]}>인증강사</Text>
+          {item.certification ? (
+            <View style={styles.rowBox}>
+              <Text style={[common.text_s, {color: BLUE.DEFAULT}]}>
+                인증강사
+              </Text>
+              <Image
+                style={{marginLeft: 2, width: 14, height: 14}}
+                source={iconPath.CERTIFICATION}
+              />
+            </View>
+          ) : (
+            <></>
+          )}
         </View>
         <Text style={[common.text_s]}>{item.area}</Text>
       </View>
-      <Image
-        source={iconPath.MORE_VERT}
-        style={[
-          common.MORE_VERT,
-          {
-            position: 'absolute',
-            top: 16,
-            right: 0,
-          },
-        ]}
-      />
+      <Pressable
+        style={styles.kebabIcon}
+        hitSlop={10}
+        onPress={() => Alert.alert('click', 'test')}>
+        <Image source={iconPath.KEBAB} style={[common.KEBAB]} />
+      </Pressable>
       <View style={styles.rightBox}>
-        <Pressable>
+        <Pressable onPress={() => Alert.alert('click', 'test')}>
           <Image
             source={iconPath.MESSAGE}
-            style={[common.MESSAGE, {marginRight: 8}]}
+            style={[common.MESSAGE, common.mr8]}
           />
         </Pressable>
-        <Pressable>
+        <Pressable onPress={() => Alert.alert('click', 'test')}>
           <Image
             source={iconPath.FAVORITE}
-            style={[common.FAVORITE, {marginRight: 8}]}
+            style={[common.FAVORITE, common.mr8]}
           />
         </Pressable>
         <Text style={[common.text_m, common.fwb]}>{item.hit}</Text>
@@ -74,9 +85,9 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-start',
     alignItems: 'center',
     paddingVertical: 16,
-    // borderBottomWidth: 1,
-    // borderBottomColor: '#dcdcdc',
   },
+  thumbnail: {width: 80, height: 80},
+  rowBox: {flexDirection: 'row', alignItems: 'center'},
   rightBox: {
     position: 'absolute',
     bottom: 16,
@@ -84,6 +95,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
   },
+  kebabIcon: {position: 'absolute', top: 16, right: 0},
 });
 
 export default InstructorListItem;

@@ -1,5 +1,5 @@
 import {FlatList} from 'react-native';
-import RecruitListItem from './RecruitListItem';
+import RecruitCarouselItem from '@components/RecruitCarouselItem';
 
 type CarouselProps = {
   gap: number;
@@ -10,7 +10,7 @@ type CarouselProps = {
 
 function Carousel({links, pageWidth, gap}: CarouselProps) {
   function renderItem({item}: any) {
-    return <RecruitListItem item={item} />;
+    return <RecruitCarouselItem item={item} />;
   }
 
   return (
