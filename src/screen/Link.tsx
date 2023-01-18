@@ -51,6 +51,7 @@ function Link() {
       position: '필라테스',
       career: '3년',
       nickname: '사오정',
+      certification: true,
       area: '서울 · 송파구 · 신천동',
       hit: 23,
     },
@@ -58,6 +59,7 @@ function Link() {
       position: '요가',
       career: '32년',
       nickname: '그램마',
+      certification: true,
       area: '서울 · 송파구 · 지옥동',
       hit: 444,
     },
@@ -65,6 +67,23 @@ function Link() {
       position: '태권',
       career: '1년',
       nickname: '박병장',
+      certification: false,
+      area: '서울 · 종로구 · 신길동',
+      hit: 36,
+    },
+    {
+      position: '태권',
+      career: '1년',
+      nickname: '박병장',
+      certification: true,
+      area: '서울 · 종로구 · 신길동',
+      hit: 36,
+    },
+    {
+      position: '태권',
+      career: '1년',
+      nickname: '박병장',
+      certification: false,
       area: '서울 · 종로구 · 신길동',
       hit: 36,
     },
@@ -88,7 +107,9 @@ function Link() {
                 구인
               </Text>
             </Pressable>
-            <Pressable style={styles.tabItem}>
+            <Pressable
+              style={styles.tabItem}
+              onPress={() => navigation.navigate('InstructorList')}>
               <Text style={[common.text_m, common.fwb, {color: WHITE}]}>
                 강사
               </Text>
@@ -104,6 +125,7 @@ function Link() {
           </Text>
 
           <View style={common.mt16}>
+            {/* 슬라이드 아이템 */}
             <RecruitCarousel
               gap={16}
               offset={0}
@@ -114,12 +136,12 @@ function Link() {
         </View>
         {/*  추천 강사 영역 */}
         <View style={common.mt40}>
-          <Text style={[common.title]}>추천 강사</Text>
-          <Text style={common.text_m}>
-            능력있는 강사들을 지금 바로 만나보세요!
-          </Text>
           {/* 강사 리스트 */}
-          <InstructorComponent list={INSTRUCTORS} />
+          <InstructorComponent
+            list={INSTRUCTORS}
+            title={'추천 강사'}
+            text={'능력있는 강사들을 지금 바로 만나보세요!'}
+          />
         </View>
       </View>
     </ScrollView>

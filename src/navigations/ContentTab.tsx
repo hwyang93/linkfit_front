@@ -1,5 +1,13 @@
 import {useRef} from 'react';
-import {Animated, Dimensions, Image, Platform, View} from 'react-native';
+import {
+  Alert,
+  Animated,
+  Dimensions,
+  Image,
+  Platform,
+  Pressable,
+  View,
+} from 'react-native';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import Link from '@screen/Link';
 import Community from '@screen/Community';
@@ -62,12 +70,14 @@ const ContentTab = () => {
                       justifyContent: 'space-between',
                       alignItems: 'center',
                     }}>
-                    <View style={{marginRight: 24}}>
+                    <Pressable
+                      style={{marginRight: 24}}
+                      onPress={() => Alert.alert('click', 'bell test')}>
                       <Image source={iconPath.BELL} style={common.BELL} />
-                    </View>
-                    <View>
+                    </Pressable>
+                    <Pressable onPress={() => Alert.alert('click', 'my test')}>
                       <Image source={iconPath.MY} style={common.MY} />
-                    </View>
+                    </Pressable>
                   </View>
                 </View>
               );

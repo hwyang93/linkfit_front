@@ -1,5 +1,5 @@
 import {StyleSheet, Dimensions} from 'react-native';
-import {INPUT} from './colors';
+import {BLACK, GRAY, INPUT, WHITE} from './colors';
 
 export const Font = {
   regular: 'NotoSansKR-Regular',
@@ -41,6 +41,7 @@ const common = StyleSheet.create({
   ml8: {marginLeft: 8},
   ml16: {marginLeft: 16},
   mr8: {marginRight: 8},
+  mr10: {marginRight: 10},
   mr16: {marginRight: 16},
   // layout
   separator: {height: 1, backgroundColor: '#dcdcdc'},
@@ -69,9 +70,17 @@ const common = StyleSheet.create({
   tal: {textAlign: 'left'},
   tar: {textAlign: 'right'},
   fwb: {fontWeight: '700'},
+  text: {
+    fontFamily: 'NotoSansKR-Medium',
+    color: GRAY.DARK,
+    fontSize: +width * 12,
+    fontWeight: 'normal',
+    textAlign: 'left',
+    lineHeight: +width * 18,
+  },
   text_s: {
     fontFamily: 'NotoSansKR-Medium',
-    color: '#292929',
+    color: BLACK,
     fontSize: +width * 14,
     fontWeight: 'normal',
     textAlign: 'left',
@@ -79,7 +88,7 @@ const common = StyleSheet.create({
   },
   text_m: {
     fontFamily: 'NotoSansKR-Medium',
-    color: '#292929',
+    color: BLACK,
     fontSize: +width * 16,
     fontWeight: 'normal',
     textAlign: 'left',
@@ -87,14 +96,14 @@ const common = StyleSheet.create({
   },
   text_l: {
     fontFamily: 'NotoSansKR-Medium',
-    color: '#292929',
+    color: BLACK,
     fontSize: +width * 20,
     fontWeight: 'normal',
     textAlign: 'left',
     lineHeight: +width * 24,
   },
   title: {
-    color: '#000',
+    color: BLACK,
     fontSize: +width * 20,
     fontWeight: '700',
     textAlign: 'left',
@@ -110,8 +119,8 @@ const common = StyleSheet.create({
     borderRadius: 28,
   },
   buttonText: {
-    color: '#ffffff',
-    fontSize: 16,
+    color: WHITE,
+    fontSize: +width * 16,
   },
   // basic input
   inputWrapper: {
@@ -157,12 +166,17 @@ const common = StyleSheet.create({
     borderRadius: 8,
   },
   // icon
-  MORE_VERT: {width: 4, height: 16},
+  KEBAB: {width: 4, height: 16},
   MESSAGE: {width: 24, height: 24},
   FAVORITE: {width: 24, height: 24},
   BOOKMARK: {width: 14, height: 18},
   TAB_BAR_ICON: {width: 24, height: 24},
   BELL: {width: 17, height: 21},
   MY: {width: 16, height: 16},
+  LOCATION: {width: 16, height: 16},
+  LINK: {width: 24, height: 24},
+  CHECK: {width: 24, height: 24},
+  PILATES: {width: 24, height: 24},
+  YOGA: {width: 24, height: 24},
 });
 export default common;

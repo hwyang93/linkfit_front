@@ -11,6 +11,7 @@ export type LoggedInParamList = {
   My: undefined;
   RecruitMap: undefined;
   RecruitList: undefined;
+  InstructorList: undefined;
   // Complete: {orderId: string};
 };
 

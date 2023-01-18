@@ -6,7 +6,6 @@ type ListProps = {
   item: {
     num: number;
     position: string;
-    title: string;
     company: string;
     area: string;
     src: any;
@@ -15,26 +14,21 @@ type ListProps = {
 };
 
 function RecruitListItem({item}: ListProps) {
+  console.log('뭐나오지', item);
   return (
     <Pressable
-      style={styles.itemBox}
+      style={styles.slideBox}
       onPress={() => Alert.alert('click', 'thumbnail')}>
       <View style={styles.imgBox}>
-        <Image style={styles.img} source={item.src} />
+        <Image source={item.src} resizeMode={'cover'} />
       </View>
-      <View>
+      <View style={styles.infoBox}>
         {/* 포지션 */}
-        <Text style={[common.text]}>{item.position}</Text>
-        {/* 제목 */}
-        <Text style={[common.text_m, common.fwb]}>
-          {item.title.length < 10
-            ? item.title
-            : item.title.slice(0, 10) + '...'}
-        </Text>
+        <Text style={[common.text_m, common.fwb]}>{item.position}</Text>
         {/* 업체명 */}
         <Text style={[common.text_s, common.fwb]}>{item.company}</Text>
         {/* 지역 */}
-        <Text style={common.text}>{item.area}</Text>
+        <Text style={common.text_s}>{item.area}</Text>
         <Pressable
           style={styles.bookmark}
           onPress={() => Alert.alert('click', 'bookmark')}>
@@ -46,15 +40,10 @@ function RecruitListItem({item}: ListProps) {
 }
 
 const styles = StyleSheet.create({
-  itemBox: {width: '48%', marginBottom: 16, marginHorizontal: '1%'},
-  imgBox: {
-    marginBottom: 8,
-    width: '100%',
-    height: 104,
-    borderRadius: 8,
-  },
-  img: {width: '100%', borderRadius: 8},
-  bookmark: {position: 'absolute', top: 3, right: 13},
+  slideBox: {marginRight: 8, width: 160},
+  imgBox: {marginBottom: 8, width: 160, height: 104, borderRadius: 8},
+  infoBox: {position: 'relative'},
+  bookmark: {position: 'absolute', top: 5, right: 0},
 });
 
 export default RecruitListItem;
