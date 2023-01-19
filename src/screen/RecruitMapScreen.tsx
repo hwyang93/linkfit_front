@@ -1,11 +1,5 @@
 import {Button, StyleSheet, View} from 'react-native';
-import NaverMapView, {
-  Circle,
-  Marker,
-  Path,
-  Polyline,
-  Polygon,
-} from 'react-native-nmap';
+import NaverMapView, {Marker} from 'react-native-nmap';
 import {iconPath} from '@util/iconPath';
 import Filter, {FilterTypes} from '@components/Filter';
 import LocationButton from '@components/LocationButton';
@@ -16,12 +10,65 @@ import {useState} from 'react';
 function RecruitMapScreen() {
   const P0 = {latitude: 37.564362, longitude: 126.977011};
   const P1 = {latitude: 37.565051, longitude: 126.978567};
-  const P2 = {latitude: 37.565383, longitude: 126.976292};
 
   const [modalVisible, setModalVisible] = useState(false);
   const pressButton = () => {
     setModalVisible(true);
   };
+
+  const filter = [
+    {
+      title: '포지션',
+      icon: true,
+      list: [
+        {
+          value: '전체',
+        },
+        {
+          value: '필라테스',
+        },
+        {
+          value: '요가',
+        },
+      ],
+    },
+    {
+      title: '채용형태',
+      icon: false,
+      list: [
+        {
+          value: '전임',
+        },
+        {
+          value: '파트타임',
+        },
+        {
+          value: '대강',
+        },
+        {
+          value: '실장',
+        },
+      ],
+    },
+    {
+      title: '수업시간',
+      icon: false,
+      list: [
+        {
+          value: '오전',
+        },
+        {
+          value: '오후',
+        },
+        {
+          value: '전일',
+        },
+        {
+          value: '협의',
+        },
+      ],
+    },
+  ];
 
   return (
     <View style={styles.container}>
@@ -34,7 +81,7 @@ function RecruitMapScreen() {
 
         {/*<Filter filterType={FilterTypes.TIME} />*/}
 
-        <Button title={'Open BottomSheet!'} onPress={pressButton} />
+        <Button title={'Open'} onPress={pressButton} />
         <BottomSheet
           modalVisible={modalVisible}
           setModalVisible={setModalVisible}
@@ -55,31 +102,6 @@ function RecruitMapScreen() {
           coordinate={P1}
           pinColor="blue"
           onClick={() => console.warn('onClick! p1')}
-        />
-        <Marker
-          coordinate={P2}
-          pinColor="red"
-          onClick={() => console.warn('onClick! p2')}
-        />
-        <Path
-          coordinates={[P0, P1]}
-          onClick={() => console.warn('onClick! path')}
-          width={10}
-        />
-        <Polyline
-          coordinates={[P1, P2]}
-          onClick={() => console.warn('onClick! polyline')}
-        />
-        <Circle
-          coordinate={P0}
-          color={'rgba(255,0,0,0.3)'}
-          radius={200}
-          onClick={() => console.warn('onClick! circle')}
-        />
-        <Polygon
-          coordinates={[P0, P1, P2]}
-          color={'rgba(0, 0, 0, 0.5)'}
-          onClick={() => console.warn('onClick! polygon')}
         />
       </NaverMapView>
       {/* Todo : 플로팅 버튼 컴포넌트 */}

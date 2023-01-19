@@ -41,7 +41,7 @@ export const FilterTypes = {
 // };
 
 function Filter({title, filterType}: titleProps) {
-  console.log(filterType);
+  // console.log(filterType);
   // const filterSelect() {
   //
   // }
