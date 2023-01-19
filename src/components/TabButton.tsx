@@ -16,35 +16,31 @@ const TabButton = ({genderData, onSelect}: TabProps) => {
   };
 
   return (
-    <>
-      <View style={styles.tabWrap}>
-        {genderData.map(item => {
-          return (
-            <Pressable
+    <View style={styles.tabWrap}>
+      {genderData.map(item => {
+        return (
+          <Pressable
+            style={[
+              styles.tabBox,
+              item.value === userOption ? styles.selected : styles.unSelected,
+            ]}
+            onPress={() => selectHandler(item.value)}>
+            <Text
               style={[
-                styles.tabBox,
-                item.value === userOption ? styles.selected : styles.unSelected,
-              ]}
-              onPress={() => selectHandler(item.value)}>
-              <Text
-                style={[
-                  styles.option,
-                  item.value === userOption && {color: '#fff'},
-                ]}>
-                {item.value}
-              </Text>
-            </Pressable>
-          );
-        })}
-      </View>
-      {/*<Text>select option: {userOption}</Text>*/}
-    </>
+                styles.option,
+                item.value === userOption && {color: '#fff'},
+              ]}>
+              {item.value}
+            </Text>
+          </Pressable>
+        );
+      })}
+    </View>
   );
 };
 
 const styles = StyleSheet.create({
   tabWrap: {
-    // flex: 1,
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
