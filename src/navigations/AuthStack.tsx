@@ -5,7 +5,9 @@ import HeaderLeft from '@components/HeaderLeft';
 import SignIn from '@screen/SignIn';
 import Login from '@screen/Login';
 import SignUp from '@screen/SignUp';
-import PasswordReset from '@screen/PasswordReset';
+import PasswordReset from '@screen/Registration/PasswordReset';
+import SignUpFormScreen from '@screen/Registration/SignUpFormScreen';
+import CompanySignUpFormScreen from '@screen/Registration/CompanySignUpFormScreen';
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
@@ -22,18 +24,28 @@ const AuthStack = () => {
         headerLeft: HeaderLeft,
       }}>
       <Stack.Screen
-        name="SignIn"
-        component={SignIn}
-        options={{headerShown: false}}
-      />
-      <Stack.Screen
         name="LogIn"
         component={Login}
         options={{title: '로그인'}}
       />
       <Stack.Screen
+        name="SignIn"
+        component={SignIn}
+        options={{headerShown: false}}
+      />
+      <Stack.Screen
         name="SignUp"
         component={SignUp}
+        options={{title: '회원가입'}}
+      />
+      <Stack.Screen
+        name="SignUpForm"
+        component={SignUpFormScreen}
+        options={{title: '회원가입'}}
+      />
+      <Stack.Screen
+        name="CompanySignUpForm"
+        component={CompanySignUpFormScreen}
         options={{title: '회원가입'}}
       />
       <Stack.Screen

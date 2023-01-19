@@ -1,190 +1,50 @@
-import {useCallback, useRef, useState} from 'react';
-import {
-  ActivityIndicator,
-  Alert,
-  Platform,
-  Pressable,
-  StyleSheet,
-  Text,
-  TextInput,
-  View,
-} from 'react-native';
+import {Pressable, StyleSheet, Text, View} from 'react-native';
+import common from '@styles/common';
+import LinearGradient from 'react-native-linear-gradient';
+import {BLUE, GRAY, WHITE} from '@styles/colors';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import {RootStackParamList} from '../../AppInner';
-import DismissKeyboardView from '../components/DismissKeyboardView';
-import axios, {AxiosError} from 'axios';
-// import Config from 'react-native-config';
+type SignInScreenProps = NativeStackScreenProps<RootStackParamList, 'SignUp'>;
 
-type SignUpScreenProps = NativeStackScreenProps<RootStackParamList, 'SignUp'>;
-
-function SignUp({navigation}: SignUpScreenProps) {
-  const [loading, setLoading] = useState(false);
-  const [email, setEmail] = useState('');
-  const [name, setName] = useState('');
-  const [password, setPassword] = useState('');
-  const emailRef = useRef<TextInput | null>(null);
-  const nameRef = useRef<TextInput | null>(null);
-  const passwordRef = useRef<TextInput | null>(null);
-
-  const onChangeEmail = useCallback((text: string) => {
-    setEmail(text.trim());
-  }, []);
-  const onChangeName = useCallback((text: string) => {
-    setName(text.trim());
-  }, []);
-  const onChangePassword = useCallback((text: string) => {
-    setPassword(text.trim());
-  }, []);
-  const onSubmit = useCallback(async () => {
-    if (loading) {
-      return;
-    }
-    if (!email || !email.trim()) {
-      return Alert.alert('알림', '이메일을 입력해주세요.');
-    }
-    if (!name || !name.trim()) {
-      return Alert.alert('알림', '이름을 입력해주세요.');
-    }
-    if (!password || !password.trim()) {
-      return Alert.alert('알림', '비밀번호를 입력해주세요.');
-    }
-    if (
-      !/^(([^<>()\[\]\.,;:\s@\"]+(\.[^<>()\[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/.test(
-        email,
-      )
-    ) {
-      return Alert.alert('알림', '올바른 이메일 주소가 아닙니다.');
-    }
-    if (!/^(?=.*[A-Za-z])(?=.*[0-9])(?=.*[$@^!%*#?&]).{8,50}$/.test(password)) {
-      return Alert.alert(
-        '알림',
-        '비밀번호는 영문,숫자,특수문자($@^!%*#?&)를 모두 포함하여 8자 이상 입력해야합니다.',
-      );
-    }
-    console.log(email, name, password);
-    try {
-      setLoading(true);
-      const response = await axios.post('', {
-        email,
-        name,
-        password,
-      });
-      console.log(response);
-      Alert.alert('알림', '회원가입 되었습니다.');
-      navigation.navigate('SignIn');
-    } catch (error) {
-      const errorResponse = (error as AxiosError<{message: string}>).response;
-      console.error((error as AxiosError).response);
-      if (errorResponse) {
-        Alert.alert('알림', errorResponse.data?.message);
-      }
-    } finally {
-      setLoading(false);
-    }
-  }, [navigation, loading, email, name, password]);
-
-  const canGoNext = email && name && password;
+function SignUp({navigation}: SignInScreenProps) {
   return (
-    <DismissKeyboardView>
-      <View style={styles.inputWrapper}>
-        <Text style={styles.label}>이메일</Text>
-        <TextInput
-          style={styles.textInput}
-          onChangeText={onChangeEmail}
-          placeholder="이메일을 입력해주세요"
-          placeholderTextColor="#666"
-          textContentType="emailAddress"
-          value={email}
-          returnKeyType="next"
-          clearButtonMode="while-editing"
-          ref={emailRef}
-          onSubmitEditing={() => nameRef.current?.focus()}
-          blurOnSubmit={false}
-        />
+    <View style={styles.container}>
+      <View style={common.mt40}>
+        <Text style={common.text_l}>
+          맞춤 서비스 이용을 위해{'\n'}회원 유형을 선택해 주세요.
+        </Text>
       </View>
-      <View style={styles.inputWrapper}>
-        <Text style={styles.label}>이름</Text>
-        <TextInput
-          style={styles.textInput}
-          placeholder="이름을 입력해주세요."
-          placeholderTextColor="#666"
-          onChangeText={onChangeName}
-          value={name}
-          textContentType="name"
-          returnKeyType="next"
-          clearButtonMode="while-editing"
-          ref={nameRef}
-          onSubmitEditing={() => passwordRef.current?.focus()}
-          blurOnSubmit={false}
-        />
-      </View>
-      <View style={styles.inputWrapper}>
-        <Text style={styles.label}>비밀번호</Text>
-        <TextInput
-          style={styles.textInput}
-          placeholder="비밀번호를 입력해주세요(영문,숫자,특수문자)"
-          placeholderTextColor="#666"
-          onChangeText={onChangePassword}
-          value={password}
-          keyboardType={Platform.OS === 'android' ? 'default' : 'ascii-capable'}
-          textContentType="password"
-          secureTextEntry
-          returnKeyType="send"
-          clearButtonMode="while-editing"
-          ref={passwordRef}
-          onSubmitEditing={onSubmit}
-        />
-      </View>
-      <View style={styles.buttonZone}>
-        <Pressable
-          style={
-            canGoNext
-              ? StyleSheet.compose(styles.loginButton, styles.loginButtonActive)
-              : styles.loginButton
-          }
-          disabled={!canGoNext || loading}
-          onPress={onSubmit}>
-          {loading ? (
-            <ActivityIndicator color="white" />
-          ) : (
-            <Text style={styles.loginButtonText}>회원가입</Text>
-          )}
+
+      <View style={common.mt40}>
+        <Pressable onPress={() => navigation.navigate('SignUpForm')}>
+          <LinearGradient
+            style={common.button}
+            start={{x: 0.1, y: 0.5}}
+            end={{x: 0.6, y: 1}}
+            colors={['#74ebe4', '#3962f3']}>
+            <Text style={common.buttonText}>일반 회원</Text>
+          </LinearGradient>
         </Pressable>
       </View>
-    </DismissKeyboardView>
+      <View style={common.mt16}>
+        <Pressable
+          style={[
+            common.button,
+            {backgroundColor: WHITE, borderWidth: 1, borderColor: GRAY.DARK},
+          ]}
+          onPress={() => navigation.navigate('CompanySignUpForm')}>
+          <Text style={[common.buttonText, {color: BLUE.DEFAULT}]}>
+            사업자 회원
+          </Text>
+        </Pressable>
+      </View>
+    </View>
   );
 }
-
 const styles = StyleSheet.create({
-  textInput: {
-    padding: 5,
-    borderBottomWidth: StyleSheet.hairlineWidth,
-  },
-  inputWrapper: {
-    padding: 20,
-  },
-  label: {
-    fontWeight: 'bold',
-    fontSize: 16,
-    marginBottom: 20,
-  },
-  buttonZone: {
-    alignItems: 'center',
-  },
-  loginButton: {
-    backgroundColor: 'gray',
-    paddingHorizontal: 20,
-    paddingVertical: 10,
-    borderRadius: 5,
-    marginBottom: 10,
-  },
-  loginButtonActive: {
-    backgroundColor: 'blue',
-  },
-  loginButtonText: {
-    color: 'white',
-    fontSize: 16,
+  container: {
+    flex: 1,
+    paddingHorizontal: 16,
   },
 });
-
 export default SignUp;

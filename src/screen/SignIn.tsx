@@ -125,6 +125,9 @@ function SignIn({navigation}: SignInScreenProps) {
             <Pressable onPress={testClick}>
               <Text style={styles.easyLink}>로그인없이 둘러보기</Text>
             </Pressable>
+            <Pressable onPress={() => navigation.navigate('SignUp')}>
+              <Text style={styles.easyLink}>회원가입페이지(임시)</Text>
+            </Pressable>
           </View>
         </View>
       </View>

@@ -22,7 +22,7 @@ type modalProps = {
   filterData: any[];
 };
 
-const BottomSheet = (props: modalProps) => {
+function BottomSheet(props: modalProps) {
   // console.log('무슨프롭', props.filterData);
   const {modalVisible, setModalVisible} = props;
   const screenHeight = Dimensions.get('screen').height;
@@ -178,7 +178,7 @@ const BottomSheet = (props: modalProps) => {
       </View>
     </Modal>
   );
-};
+}
 
 const styles = StyleSheet.create({
   overlay: {

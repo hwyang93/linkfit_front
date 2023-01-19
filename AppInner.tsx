@@ -1,5 +1,5 @@
 import {useSelector} from 'react-redux';
-import {RootState} from './src/store/reducer';
+import {RootState} from '@store/reducer';
 import MainStack from '@navigations/MainStack';
 import AuthStack from '@navigations/AuthStack';
 
@@ -16,9 +16,11 @@ export type LoggedInParamList = {
 };
 
 export type RootStackParamList = {
-  SignIn: undefined;
   LogIn: undefined;
+  SignIn: undefined;
   SignUp: undefined;
+  SignUpForm: undefined;
+  CompanySignUpForm: undefined;
   PasswordReset: undefined;
 };
 

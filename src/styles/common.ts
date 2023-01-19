@@ -121,6 +121,7 @@ const common = StyleSheet.create({
   buttonText: {
     color: WHITE,
     fontSize: +width * 16,
+    fontWeight: '700',
   },
   // basic input
   inputWrapper: {
