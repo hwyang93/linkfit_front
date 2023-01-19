@@ -26,10 +26,8 @@ function RecruitListItem({item}: ListProps) {
         {/* 포지션 */}
         <Text style={[common.text]}>{item.position}</Text>
         {/* 제목 */}
-        <Text style={[common.text_m, common.fwb]}>
-          {item.title.length < 10
-            ? item.title
-            : item.title.slice(0, 10) + '...'}
+        <Text style={[common.text_m, common.fwb]} numberOfLines={1}>
+          {item.title}
         </Text>
         {/* 업체명 */}
         <Text style={[common.text_s, common.fwb]}>{item.company}</Text>

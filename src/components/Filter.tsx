@@ -2,29 +2,14 @@ import {Image, Pressable, StyleSheet, Text, View} from 'react-native';
 import {iconPath} from '@util/iconPath';
 import common from '@styles/common';
 import {GRAY} from '@styles/colors';
+import {useState} from 'react';
 
-// const FilterProps = {
-//   POSITION: {
-//     title: '포지션',
-//   },
-//   RECRUITMENT_TYPE: {
-//     title: '채용형태',
-//   },
-//   TIME: {
-//     title: '수업시간',
-//   },
-// };
-
-// type FilterTypeProps = {
-//   // filterType: any;
-//   item: string;
-//   filterType: typeof FilterProps;
-//   // filterType: keyof typeof FilterProps;
-// };
 type titleProps = {
-  // pressed: boolean;
   title: string;
-  filterType: any;
+  index: number;
+  setModalVisible: (pressButton: boolean) => void;
+  setSelected: any;
+  filterType: string;
 };
 
 export const FilterTypes = {
@@ -34,20 +19,15 @@ export const FilterTypes = {
   RESET: 'RESET',
 };
 
-// const FilterIconProps = {
-//   YOGA: iconPath.YOGA,
-//   PILATES: iconPath.PILATES,
-//   ALL: iconPath.LINK,
-// };
-
-function Filter({title, filterType}: titleProps) {
-  // console.log(filterType);
-  // const filterSelect() {
-  //
-  // }
+function Filter({title, setModalVisible, setSelected, filterType}: titleProps) {
+  const pressButton = item => {
+    setSelected(item);
+    setModalVisible(true);
+    console.log('hi', filterType);
+  };
   return (
     <View style={styles.box}>
-      <Pressable onPress={() => {}} style={styles.item}>
+      <Pressable onPress={pressButton} style={styles.item}>
         <Text style={[common.text_m, {color: GRAY.DARK, marginRight: 8}]}>
           {title}
         </Text>

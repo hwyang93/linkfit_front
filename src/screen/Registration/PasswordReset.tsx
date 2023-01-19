@@ -8,7 +8,7 @@ import {
   View,
 } from 'react-native';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
-import {RootStackParamList} from '../../AppInner';
+import {RootStackParamList} from '../../../AppInner';
 import common from '@styles/common';
 import LinearGradient from 'react-native-linear-gradient';
 import Input, {KeyboardTypes} from '@components/Input';

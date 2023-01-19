@@ -5,19 +5,40 @@ import Filter, {FilterTypes} from '@components/Filter';
 import LocationButton from '@components/LocationButton';
 import FloatingLinkButton from '@components/FloatingLinkButton';
 import BottomSheet from '@components/BottomSheet';
-import {useState} from 'react';
+import {SetStateAction, useState} from 'react';
 
 function RecruitMapScreen() {
   const P0 = {latitude: 37.564362, longitude: 126.977011};
   const P1 = {latitude: 37.565051, longitude: 126.978567};
 
-  const [modalVisible, setModalVisible] = useState(false);
-  const pressButton = () => {
-    setModalVisible(true);
-  };
+  const [modalVisible, setModalVisible] =
+    useState<SetStateAction<boolean>>(false);
 
-  const filter = [
+  // const [filterType, setFilterType] = useState<Array<string>>([
+  //   '포지션',
+  //   '채용형태',
+  //   '수업시간',
+  // ]);
+  const filterType = [
     {
+      id: 1,
+      title: '포지션',
+    },
+    {
+      id: 2,
+      title: '채용형태',
+    },
+    {
+      id: 3,
+      title: '수업시간',
+    },
+  ];
+
+  const [selected, setSelected] = useState(2);
+
+  const filterData = [
+    {
+      id: 1,
       title: '포지션',
       icon: true,
       list: [
@@ -33,6 +54,7 @@ function RecruitMapScreen() {
       ],
     },
     {
+      id: 2,
       title: '채용형태',
       icon: false,
       list: [
@@ -51,6 +73,7 @@ function RecruitMapScreen() {
       ],
     },
     {
+      id: 3,
       title: '수업시간',
       icon: false,
       list: [
@@ -73,18 +96,23 @@ function RecruitMapScreen() {
   return (
     <View style={styles.container}>
       <View style={styles.filter}>
-        <Filter
-          title="포지션"
-          filterType={FilterTypes.POSITION}
-          // filterSelect={() => setIsPressed(true)}
-        />
+        {filterType.map(function (item, index) {
+          return (
+            <Filter
+              title={item.title}
+              index={index}
+              filterType={FilterTypes.POSITION}
+              setModalVisible={setModalVisible}
+              setSelected={setSelected}
+            />
+          );
+        })}
 
-        {/*<Filter filterType={FilterTypes.TIME} />*/}
-
-        <Button title={'Open'} onPress={pressButton} />
+        {/*<Button title={'Open'} onPress={pressButton} />*/}
         <BottomSheet
           modalVisible={modalVisible}
           setModalVisible={setModalVisible}
+          filterData={filterData}
         />
       </View>
       <NaverMapView

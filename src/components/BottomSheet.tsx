@@ -19,9 +19,11 @@ import LinearGradient from 'react-native-linear-gradient';
 type modalProps = {
   modalVisible: any;
   setModalVisible: any;
+  filterData: any[];
 };
 
-const BottomSheet = (props: modalProps) => {
+function BottomSheet(props: modalProps) {
+  // console.log('무슨프롭', props.filterData);
   const {modalVisible, setModalVisible} = props;
   const screenHeight = Dimensions.get('screen').height;
   const panY = useRef(new Animated.Value(screenHeight)).current;
@@ -75,7 +77,7 @@ const BottomSheet = (props: modalProps) => {
 
   const [selected, setSelected] = useState(false);
 
-  //todo : height 를 몇개 만들어놓고 셀렉트 항목 개수에 따라서 높이를 조절해야 겠다
+  //todo : height 를 몇개 만들어놓고 셀렉트 항목 개수에 따라서 높이를 조절해야겠다..?
 
   // filter 선택 함수
   const selectFilter = () => {
@@ -119,9 +121,7 @@ const BottomSheet = (props: modalProps) => {
                   <View style={styles.iconPosition}>
                     <Image style={common.CHECK} source={iconPath.CHECK} />
                   </View>
-                ) : (
-                  <></>
-                )}
+                ) : null}
               </Pressable>
             </View>
 
@@ -129,17 +129,18 @@ const BottomSheet = (props: modalProps) => {
               <View style={styles.filterItem}>
                 <Image
                   style={[common.PILATES, common.mr10]}
-                  source={iconPath.PILATES}
+                  source={selected ? iconPath.PILATES_ON : iconPath.PILATES}
                 />
-                <Text style={styles.modalText}>필라테스</Text>
+                <Text
+                  style={[styles.modalText, selected && {color: BLUE.DEFAULT}]}>
+                  필라테스
+                </Text>
                 {/* 클릭되면 보이는 아이콘 */}
                 {selected ? (
                   <View style={styles.iconPosition}>
                     <Image style={common.CHECK} source={iconPath.CHECK} />
                   </View>
-                ) : (
-                  <></>
-                )}
+                ) : null}
               </View>
             </Pressable>
 
@@ -147,17 +148,18 @@ const BottomSheet = (props: modalProps) => {
               <View style={styles.filterItem}>
                 <Image
                   style={[common.YOGA, common.mr10]}
-                  source={iconPath.YOGA}
+                  source={selected ? iconPath.YOGA_ON : iconPath.YOGA}
                 />
-                <Text style={styles.modalText}>요가</Text>
+                <Text
+                  style={[styles.modalText, selected && {color: BLUE.DEFAULT}]}>
+                  요가
+                </Text>
                 {/* 클릭되면 보이는 아이콘 */}
                 {selected ? (
                   <View style={styles.iconPosition}>
                     <Image style={common.CHECK} source={iconPath.CHECK} />
                   </View>
-                ) : (
-                  <></>
-                )}
+                ) : null}
               </View>
             </Pressable>
 
@@ -176,7 +178,7 @@ const BottomSheet = (props: modalProps) => {
       </View>
     </Modal>
   );
-};
+}
 
 const styles = StyleSheet.create({
   overlay: {
