@@ -177,7 +177,10 @@ const common = StyleSheet.create({
   LOCATION: {width: 16, height: 16},
   LINK: {width: 24, height: 24},
   CHECK: {width: 24, height: 24},
+  CHECK_BOX: {width: 24, height: 24},
+  CHECKED_BOX: {width: 24, height: 24},
   PILATES: {width: 24, height: 24},
   YOGA: {width: 24, height: 24},
+  CIRCLE_ARROW_RIGHT: {width: 16, height: 16},
 });
 export default common;

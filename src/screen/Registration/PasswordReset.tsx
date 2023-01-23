@@ -146,6 +146,7 @@ function PasswordReset({}: PasswordResetScreenProps) {
               />
             </View>
           </View>
+
           <View>
             <View style={common.mb16}>
               <Input

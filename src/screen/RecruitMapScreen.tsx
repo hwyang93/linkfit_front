@@ -14,11 +14,6 @@ function RecruitMapScreen() {
   const [modalVisible, setModalVisible] =
     useState<SetStateAction<boolean>>(false);
 
-  // const [filterType, setFilterType] = useState<Array<string>>([
-  //   '포지션',
-  //   '채용형태',
-  //   '수업시간',
-  // ]);
   const filterType = [
     {
       id: 1,

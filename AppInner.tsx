@@ -19,6 +19,7 @@ export type RootStackParamList = {
   LogIn: undefined;
   SignIn: undefined;
   SignUp: undefined;
+  Terms: undefined;
   SignUpForm: undefined;
   CompanySignUpForm: undefined;
   PasswordReset: undefined;
@@ -26,8 +27,8 @@ export type RootStackParamList = {
 
 function AppInner() {
   // const dispatch = useAppDispatch();
-  // const isLoggedIn = useSelector((state: RootState) => !!state.user.email);
-  const isLoggedIn = true;
+  const isLoggedIn = useSelector((state: RootState) => !!state.user.email);
+  // const isLoggedIn = true;
 
   return isLoggedIn ? <MainStack /> : <AuthStack />;
 }
