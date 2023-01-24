@@ -20,7 +20,7 @@ export const FilterTypes = {
 };
 
 function Filter({title, setModalVisible, setSelected, filterType}: titleProps) {
-  const pressButton = item => {
+  const pressButton = (item: any) => {
     setSelected(item);
     setModalVisible(true);
     console.log('hi', filterType);

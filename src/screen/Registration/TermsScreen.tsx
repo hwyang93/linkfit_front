@@ -16,22 +16,25 @@ import {RootStackParamList} from '../../../AppInner';
 type SignInScreenProps = NativeStackScreenProps<RootStackParamList, 'Terms'>;
 
 function SignUpFormScreen({navigation}: SignInScreenProps) {
-  const [checkItem, setCheckItem] = useState([]);
+  const [checkItem, setCheckItem] = useState<any>([]);
   const terms = [
-    {id: 1, require: true, title: '개인정보 수집 및 이용 동의'},
-    {id: 2, require: true, title: '서비스 이용약관 동의'},
-    {id: 3, require: true, title: '위치정보 이용약관'},
-    {id: 4, require: false, title: '마케팅 수신 동의'},
+    {id: 1, require: true, title: '개인정보 수집 및 이용 동의', checked: false},
+    {id: 2, require: true, title: '서비스 이용약관 동의', checked: false},
+    {id: 3, require: true, title: '위치정보 이용약관', checked: false},
+    {id: 4, require: false, title: '마케팅 수신 동의', checked: false},
   ];
 
-  function checkHandler(checkedItem: any) {
-    console.log(checkedItem);
-    if (checkItem.includes(checkedItem)) {
-      setCheckItem(checkItem.filter(item => item !== checkedItem));
-      return;
+  function checkHandler(id: any) {
+    let index = checkItem.findIndex((i: any) => i === id);
+    let arrSelected = [...checkItem];
+    if (index !== -1) {
+      arrSelected.splice(index, 1);
+    } else {
+      arrSelected.push(id);
     }
-    setCheckItem(item => item.concat(checkedItem));
+    setCheckItem(arrSelected);
   }
+
   return (
     <View style={styles.container}>
       <View>
@@ -40,35 +43,37 @@ function SignUpFormScreen({navigation}: SignInScreenProps) {
           정책 및 약관을 확인해 주세요.
         </Text>
       </View>
+
       <View style={common.mt40}>
-        <View style={{flexDirection: 'row', alignItems: 'center'}}>
-          <TouchableOpacity style={[common.mr8]}>
+        <View>
+          <TouchableOpacity style={[common.mr8, styles.touchWrap]}>
             <Image source={iconPath.CHECK_BOX} style={common.CHECK_BOX} />
+            <Text style={[common.text_m, common.ml8]}>필수 항목 전체동의</Text>
           </TouchableOpacity>
-          <Text style={common.text_m}>필수 항목 전체동의</Text>
         </View>
         <View style={styles.divideLine} />
 
         <View>
-          {terms.map(item => (
-            <View key={item.id} style={styles.terms}>
-              <View style={{flexDirection: 'row', alignItems: 'center'}}>
-                <TouchableOpacity
-                  style={common.mr8}
-                  onPress={() => checkHandler(item)}>
+          {terms.map((item, index) => (
+            <View key={index} style={styles.terms}>
+              <TouchableOpacity
+                style={styles.touchWrap}
+                onPress={() => checkHandler(item?.id)}>
+                {checkItem.findIndex((i: number) => i === item.id) !== -1 ? (
+                  <Image
+                    source={iconPath.CHECKED_BOX}
+                    style={common.CHECKED_BOX}
+                  />
+                ) : (
                   <Image source={iconPath.CHECK_BOX} style={common.CHECK_BOX} />
-                  {checkItem.includes(item) && (
-                    <Image
-                      source={iconPath.CHECKED_BOX}
-                      style={common.CHECKED_BOX}
-                    />
-                  )}
-                </TouchableOpacity>
-                <Text style={[common.text_m, {color: BLUE.DEFAULT}]}>
+                )}
+                <Text
+                  style={[common.text_m, common.ml8, {color: BLUE.DEFAULT}]}>
                   {item.require ? '(필수) ' : '(선택) '}
                 </Text>
                 <Text style={[common.text_m]}>{item.title}</Text>
-              </View>
+              </TouchableOpacity>
+
               <Pressable style={styles.link}>
                 <Text style={[common.text, common.mr8]}>보기</Text>
                 <Image
@@ -116,6 +121,7 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     marginVertical: 8,
   },
+  touchWrap: {flexDirection: 'row', alignItems: 'center'},
   link: {
     flexDirection: 'row',
     alignItems: 'center',
