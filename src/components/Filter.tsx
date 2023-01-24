@@ -2,7 +2,7 @@ import {Image, Pressable, StyleSheet, Text, View} from 'react-native';
 import {iconPath} from '@util/iconPath';
 import common from '@styles/common';
 import {GRAY} from '@styles/colors';
-import {useState} from 'react';
+// import {useState} from 'react';
 
 type titleProps = {
   title: string;
@@ -20,7 +20,7 @@ export const FilterTypes = {
 };
 
 function Filter({title, setModalVisible, setSelected, filterType}: titleProps) {
-  const pressButton = item => {
+  const pressButton = (item: any) => {
     setSelected(item);
     setModalVisible(true);
     console.log('hi', filterType);

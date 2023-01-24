@@ -16,7 +16,7 @@ function SignUp({navigation}: SignInScreenProps) {
       </View>
 
       <View style={common.mt40}>
-        <Pressable onPress={() => navigation.navigate('SignUpForm')}>
+        <Pressable onPress={() => navigation.navigate('Terms')}>
           <LinearGradient
             style={common.button}
             start={{x: 0.1, y: 0.5}}

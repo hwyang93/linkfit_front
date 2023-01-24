@@ -33,4 +33,7 @@ export const iconPath = {
   CERTIFICATION: require('@images/icon/certification.png'),
   LOCATION: require('@images/icon/location.png'),
   CHECK: require('@images/icon/check.png'),
+  CHECK_BOX: require('@images/icon/check_box.png'),
+  CHECKED_BOX: require('@images/icon/checked_box.png'),
+  CIRCLE_ARROW_RIGHT: require('@images/icon/circle_arrow_right.png'),
 };
