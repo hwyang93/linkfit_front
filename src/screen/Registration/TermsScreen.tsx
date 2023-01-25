@@ -15,6 +15,8 @@ import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import {RootStackParamList} from '../../../AppInner';
 type SignInScreenProps = NativeStackScreenProps<RootStackParamList, 'Terms'>;
 
+// todo: 필수항목 전체 동의, 필수 항목 체크 후 다음 버튼 동작, 보기 버튼 클릭 시 약관 확인
+
 function SignUpFormScreen({navigation}: SignInScreenProps) {
   const [checkItem, setCheckItem] = useState<any>([]);
   const terms = [
@@ -24,11 +26,14 @@ function SignUpFormScreen({navigation}: SignInScreenProps) {
     {id: 4, require: false, title: '마케팅 수신 동의', checked: false},
   ];
 
-  function checkHandler(id: any) {
-    let index = checkItem.findIndex((i: any) => i === id);
+  function checkHandler(id: number) {
+    console.log('값', checkItem);
+    let index = checkItem.findIndex((i: number) => i === id);
+    console.log('index', index, 'id', id);
     let arrSelected = [...checkItem];
     if (index !== -1) {
       arrSelected.splice(index, 1);
+      console.log(index);
     } else {
       arrSelected.push(id);
     }
