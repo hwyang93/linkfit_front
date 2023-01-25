@@ -1,5 +1,6 @@
 import {
   ActivityIndicator,
+  Alert,
   Keyboard,
   Pressable,
   StyleSheet,
@@ -14,18 +15,53 @@ import LinearGradient from 'react-native-linear-gradient';
 import DismissKeyboardView from '../components/DismissKeyboardView';
 import Logo from '@components/Logo';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
-import {NavigationProp, useNavigation} from '@react-navigation/native';
+import {
+  NavigationProp,
+  RouteProp,
+  useNavigation,
+  useRoute,
+} from '@react-navigation/native';
 import {RootStackParamList} from '../../AppInner';
 import {BLACK} from '@styles/colors';
+import {login} from '@api/auth';
+import {fetchMemberInfo} from '@api/member';
+import {useAppDispatch} from '@/store';
+import userSlice from '@slices/user';
 
 function LogIn() {
+  const dispatch = useAppDispatch();
   const navigation = useNavigation<NavigationProp<RootStackParamList>>();
+  const route = useRoute<RouteProp<RootStackParamList, 'LogIn'>>();
+
   const [password, setPassword] = useState<string>('');
   const [loading, setLoading] = useState<boolean>(false);
 
   const canGoNext = password;
 
-  const onSubmit = useCallback(async () => {}, []);
+  // const onSubmit = useCallback(async () => {}, []);
+
+  const onSubmit = async () => {
+    const loginInfo = {
+      email: route.params.email,
+      password: password,
+    };
+    await login(loginInfo)
+      .then(async ({data}) => {
+        console.log(data);
+        dispatch(
+          userSlice.actions.setUser({
+            accessToken: data.accessToken,
+          }),
+        );
+
+        // await fetchMemberInfo().then({data}=>{
+        //   console.log(data)
+        // })
+      })
+      .catch(() => {
+        Alert.alert('로그인에 실패하였습니다.');
+      });
+  };
 
   const insets = useSafeAreaInsets();
   console.log(insets);

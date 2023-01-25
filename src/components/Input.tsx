@@ -38,7 +38,7 @@ const Input = ({
   ...props
 }: InputProps) => {
   const [isFocused, setIsFocused] = useState(false);
-  console.log('style : ', propStyles);
+  // console.log('style : ', propStyles);
 
   const onBlur = () => {
     setIsFocused(false);

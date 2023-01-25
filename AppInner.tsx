@@ -16,7 +16,7 @@ export type LoggedInParamList = {
 };
 
 export type RootStackParamList = {
-  LogIn: undefined;
+  LogIn: {email: string};
   SignIn: undefined;
   SignUp: undefined;
   Terms: undefined;

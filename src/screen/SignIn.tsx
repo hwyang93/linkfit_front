@@ -20,6 +20,7 @@ import SimpleLogin from '@components/SimpleLogin';
 import LinearGradient from 'react-native-linear-gradient';
 import Logo from '@components/Logo';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
+import {fetchMemberInfoByEmail} from '@api/member';
 
 type SignInScreenProps = NativeStackScreenProps<RootStackParamList, 'SignIn'>;
 
@@ -57,11 +58,20 @@ function SignIn({navigation}: SignInScreenProps) {
     [isEmail],
   );
 
-  const checkMember = () => {
+  const checkMember = async () => {
     Alert.alert('알림', '환영합니다. 회원님');
-    navigation.navigate('LogIn');
-    setIsMember(true);
-    // TODO : 가입 된 이메일인지 확인 후 로그인화면 또는 회원가입 화면으로 보낸다.
+    await fetchMemberInfoByEmail(email)
+      .then(({data}) => {
+        if (data) {
+          navigation.navigate('LogIn', {email: email});
+          setIsMember(true);
+        } else {
+          navigation.navigate('SignUp');
+        }
+      })
+      .catch(e => {
+        console.log(e.message);
+      });
   };
 
   // const onSubmit = useCallback(async () => {}, []);
