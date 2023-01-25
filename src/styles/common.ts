@@ -65,6 +65,7 @@ const common = StyleSheet.create({
     width: '100%',
     backgroundColor: '#fff',
   },
+  rowCenter: {flexDirection: 'row', alignItems: 'center'},
   // text area
   tac: {textAlign: 'center'},
   tal: {textAlign: 'left'},

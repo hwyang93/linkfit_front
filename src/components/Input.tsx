@@ -15,9 +15,9 @@ export const ReturnKeyTypes = {
 
 type InputProps = {
   pointerEvents?: any;
-  label: string;
+  label?: string;
   placeholder: string;
-  value: string;
+  value?: any;
   onChangeText?: any;
   keyboardType?: any;
   secureTextEntry?: boolean;
@@ -27,6 +27,7 @@ type InputProps = {
   };
   onSubmitEditing?: any;
   blurOnSubmit?: boolean;
+  editable?: boolean;
 };
 
 const Input = ({
@@ -35,6 +36,7 @@ const Input = ({
   value,
   propStyles,
   pointerEvents,
+  editable,
   ...props
 }: InputProps) => {
   const [isFocused, setIsFocused] = useState(false);
@@ -49,14 +51,24 @@ const Input = ({
 
   return (
     <View style={[common.inputWrapper, propStyles?.inputWrapper]}>
-      <Text
-        style={[
-          common.label,
-          {color: value || isFocused ? INPUT.FOCUS : INPUT.DEFAULT},
-          // {color: value && !isFocused ? INPUT.DEFAULT : INPUT.DEFAULT},
-        ]}>
-        {label}
-      </Text>
+      {label ? (
+        <Text
+          style={[
+            common.label,
+            {color: value || isFocused ? INPUT.FOCUS : INPUT.DEFAULT},
+            // {color: value && !isFocused ? INPUT.DEFAULT : INPUT.DEFAULT},
+          ]}>
+          {label}
+        </Text>
+      ) : null}
+      {/*<Text*/}
+      {/*  style={[*/}
+      {/*    common.label,*/}
+      {/*    {color: value || isFocused ? INPUT.FOCUS : INPUT.DEFAULT},*/}
+      {/*    // {color: value && !isFocused ? INPUT.DEFAULT : INPUT.DEFAULT},*/}
+      {/*  ]}>*/}
+      {/*  {label}*/}
+      {/*</Text>*/}
       <TextInput
         {...props}
         style={[
@@ -75,6 +87,7 @@ const Input = ({
         pointerEvents={pointerEvents}
         onBlur={onBlur}
         onFocus={onFocus}
+        editable={editable}
       />
     </View>
   );
