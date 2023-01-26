@@ -31,7 +31,7 @@ import EncryptedStorage from 'react-native-encrypted-storage';
 
 function LogIn() {
   const dispatch = useAppDispatch();
-  // const rootNavigation = useNavigation<NavigationProp<RootStackParamList>>();
+  const rootNavigation = useNavigation<NavigationProp<RootStackParamList>>();
   const mainNavigation = useNavigation<NavigationProp<LoggedInParamList>>();
   const route = useRoute<RouteProp<RootStackParamList, 'LogIn'>>();
 
@@ -123,7 +123,7 @@ function LogIn() {
           </View>
           <View style={styles.findPassword}>
             <Text style={styles.leftBox}>비밀번호를 잊으셨나요?</Text>
-            <Pressable onPress={() => navigation.navigate('PasswordReset')}>
+            <Pressable onPress={() => rootNavigation.navigate('PasswordReset')}>
               <Text style={styles.rightBox}>비밀번호 재설정</Text>
             </Pressable>
           </View>
