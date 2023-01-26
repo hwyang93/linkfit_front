@@ -21,6 +21,7 @@ import LinearGradient from 'react-native-linear-gradient';
 import Logo from '@components/Logo';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import {fetchMemberInfoByEmail} from '@api/member';
+import EncryptedStorage from 'react-native-encrypted-storage';
 
 type SignInScreenProps = NativeStackScreenProps<RootStackParamList, 'SignIn'>;
 
@@ -59,17 +60,17 @@ function SignIn({navigation}: SignInScreenProps) {
   );
 
   const checkMember = async () => {
-    Alert.alert('알림', '환영합니다. 회원님');
     await fetchMemberInfoByEmail(email)
-      .then(({data}) => {
-        if (data) {
+      .then(({data}: any) => {
+        if (data.seq) {
+          Alert.alert('알림', '환영합니다. 회원님');
           navigation.navigate('LogIn', {email: email});
           setIsMember(true);
         } else {
           navigation.navigate('SignUp');
         }
       })
-      .catch(e => {
+      .catch((e: {message: any}): any => {
         console.log(e.message);
       });
   };

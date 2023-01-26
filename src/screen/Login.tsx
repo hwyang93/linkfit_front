@@ -21,16 +21,18 @@ import {
   useNavigation,
   useRoute,
 } from '@react-navigation/native';
-import {RootStackParamList} from '../../AppInner';
+import {LoggedInParamList, RootStackParamList} from '../../AppInner';
 import {BLACK} from '@styles/colors';
 import {login} from '@api/auth';
 import {fetchMemberInfo} from '@api/member';
 import {useAppDispatch} from '@/store';
 import userSlice from '@slices/user';
+import EncryptedStorage from 'react-native-encrypted-storage';
 
 function LogIn() {
   const dispatch = useAppDispatch();
-  const navigation = useNavigation<NavigationProp<RootStackParamList>>();
+  // const rootNavigation = useNavigation<NavigationProp<RootStackParamList>>();
+  const mainNavigation = useNavigation<NavigationProp<LoggedInParamList>>();
   const route = useRoute<RouteProp<RootStackParamList, 'LogIn'>>();
 
   const [password, setPassword] = useState<string>('');
@@ -46,23 +48,39 @@ function LogIn() {
       password: password,
     };
     await login(loginInfo)
-      .then(async ({data}) => {
+      .then(async ({data}: any) => {
         console.log(data);
         dispatch(
           userSlice.actions.setUser({
             accessToken: data.accessToken,
           }),
         );
-
+        await EncryptedStorage.setItem('accessToken', data.accessToken);
         // await fetchMemberInfo().then({data}=>{
         //   console.log(data)
         // })
+        await getMemberInfo();
       })
       .catch(() => {
         Alert.alert('로그인에 실패하였습니다.');
       });
   };
-
+  const getMemberInfo = async () => {
+    await fetchMemberInfo()
+      .then(({data}: any) => {
+        console.log(data);
+        dispatch(
+          userSlice.actions.setUser({
+            name: data.name,
+            email: data.email,
+          }),
+        );
+        mainNavigation.navigate('Link');
+      })
+      .catch((e: {message: any}) => {
+        console.log(e.message);
+      });
+  };
   const insets = useSafeAreaInsets();
   console.log(insets);
 
