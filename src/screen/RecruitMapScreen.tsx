@@ -1,4 +1,4 @@
-import {Button, StyleSheet, View} from 'react-native';
+import {StyleSheet, View} from 'react-native';
 import NaverMapView, {Marker} from 'react-native-nmap';
 import {iconPath} from '@util/iconPath';
 import Filter, {FilterTypes} from '@components/Filter';
@@ -103,7 +103,6 @@ function RecruitMapScreen() {
           );
         })}
 
-        {/*<Button title={'Open'} onPress={pressButton} />*/}
         <BottomSheet
           modalVisible={modalVisible}
           setModalVisible={setModalVisible}

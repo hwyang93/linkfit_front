@@ -1,21 +1,29 @@
-import {StyleSheet, Text, View} from 'react-native';
-import FontAwesome from 'react-native-vector-icons/FontAwesome';
-import SelectDropdown from 'react-native-select-dropdown';
-import {INPUT} from '@styles/colors';
 import {useState} from 'react';
+import {StyleSheet} from 'react-native';
+import SelectDropdown from 'react-native-select-dropdown';
+import FontAwesome from 'react-native-vector-icons/FontAwesome';
+import {INPUT} from '@styles/colors';
 
 type selectProps = {
-  data: object;
+  data: any;
+  onSelect: Function;
+  defaultButtonText: string;
 };
 
-const SelectBox = ({data}: selectProps) => {
+const SelectBox = ({data, onSelect, defaultButtonText}: selectProps) => {
   const [focus, setFocus] = useState(false);
+  const [, setSelectItem] = useState('');
+
+  const selectHandler = (value: any) => {
+    onSelect(value);
+    setSelectItem(value);
+  };
+
   return (
     <SelectDropdown
       data={data}
       onSelect={selectedItem => {
-        setAgency(selectedItem);
-        console.log('selected : ', selectedItem);
+        selectHandler(selectedItem);
       }}
       buttonTextAfterSelection={selectedItem => {
         return selectedItem;
@@ -23,7 +31,7 @@ const SelectBox = ({data}: selectProps) => {
       rowTextForSelection={item => {
         return item;
       }}
-      defaultButtonText={'통신사'}
+      defaultButtonText={defaultButtonText}
       buttonStyle={focus ? styles.selectBoxFocus : styles.selectBox}
       buttonTextStyle={focus ? styles.selectTextFocus : styles.selectText}
       renderDropdownIcon={isOpened => {

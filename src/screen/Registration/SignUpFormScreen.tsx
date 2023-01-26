@@ -15,6 +15,7 @@ import {INPUT} from '@styles/colors';
 import DismissKeyboardView from '@components/DismissKeyboardView';
 import LinearGradient from 'react-native-linear-gradient';
 import BirthdayPicker from '@components/BirthdayPicker';
+import SelectBox from '@components/SelectBox';
 
 function SignUpFormScreen() {
   const [userName, setUserName] = useState('');
@@ -23,7 +24,7 @@ function SignUpFormScreen() {
   const [phoneNumber, setPhoneNumber] = useState('');
   const [password, setPassword] = useState('');
   const [passwordConfirm, setPasswordConfirm] = useState('');
-  const [focus, setFocus] = useState(false);
+
   const genderData = [{value: '남자'}, {value: '여자'}];
   const agencyData = ['SKT', 'KT', 'LG U+', '알뜰폰'];
   const loading = false;
@@ -63,37 +64,10 @@ function SignUpFormScreen() {
               },
             ]}>
             <View style={{flex: 1, marginRight: 8}}>
-              <SelectDropdown
+              <SelectBox
                 data={agencyData}
-                onSelect={selectedItem => {
-                  setAgency(selectedItem);
-                  console.log('selected : ', selectedItem);
-                }}
-                buttonTextAfterSelection={selectedItem => {
-                  return selectedItem;
-                }}
-                rowTextForSelection={item => {
-                  return item;
-                }}
+                onSelect={(value: any) => setAgency(value)}
                 defaultButtonText={'통신사'}
-                buttonStyle={focus ? styles.selectBoxFocus : styles.selectBox}
-                buttonTextStyle={
-                  focus ? styles.selectTextFocus : styles.selectText
-                }
-                renderDropdownIcon={isOpened => {
-                  return (
-                    <FontAwesome
-                      name={isOpened ? 'chevron-up' : 'chevron-down'}
-                      color={'#acacac'}
-                      size={16}
-                    />
-                  );
-                }}
-                dropdownIconPosition={'right'}
-                dropdownStyle={styles.dropBox}
-                rowStyle={styles.dropItem}
-                rowTextStyle={styles.dropText}
-                onFocus={() => setFocus(true)}
               />
             </View>
             <View style={{flex: 2}}>

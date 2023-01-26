@@ -1,5 +1,5 @@
 import {Image, StyleSheet, Text, View} from 'react-native';
-import common, {width} from '../styles/common';
+import common, {width} from '@styles/common';
 
 function Logo() {
   return (
