@@ -17,9 +17,10 @@ const TabButton = ({genderData, onSelect}: TabProps) => {
 
   return (
     <View style={styles.tabWrap}>
-      {genderData.map(item => {
+      {genderData.map((item, index) => {
         return (
           <Pressable
+            key={index}
             style={[
               styles.tabBox,
               item.value === userOption ? styles.selected : styles.unSelected,
