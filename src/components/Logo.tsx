@@ -1,17 +1,18 @@
 import {Image, StyleSheet, Text, View} from 'react-native';
 import common, {width} from '@styles/common';
+import {iconPath} from '@util/iconPath';
 
 function Logo() {
   return (
     <View style={styles.logoArea}>
       <View style={styles.logoBox}>
         <Image
-          source={require('../assets/images/logoText.png')}
+          source={iconPath.LOGO_TEXT}
           style={styles.logoText}
           resizeMode={'cover'}
         />
         <Image
-          source={require('../assets/images/logo.png')}
+          source={iconPath.LOGO}
           style={styles.logoImage}
           resizeMode={'cover'}
         />

@@ -1,9 +1,10 @@
 export const iconPath = {
+  LOGO_TEXT: require('@images/logoText.png'),
+  LOGO: require('@images/logo.png'),
   APPLE: require('@images/icon/apple.png'),
   GOOGLE: require('@images/icon/google.png'),
   KAKAO: require('@images/icon/kakaotalk.png'),
   NAVER: require('@images/icon/naver.png'),
-  LOGO: require('@images/logo.png'),
   FAVORITE: require('@images/icon/favorite.png'),
   MESSAGE: require('@images/icon/message.png'),
   BOOKMARK: require('@images/icon/bookmark.png'),
