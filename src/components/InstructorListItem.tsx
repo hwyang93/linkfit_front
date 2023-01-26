@@ -5,12 +5,12 @@ import {BLUE} from '@styles/colors';
 
 type ListProps = {
   item: {
-    position: string;
+    seq: number;
+    field: string;
     career: string;
     nickname: string;
-    area: string;
+    address: string;
     hit: number;
-    certification: boolean;
   };
 };
 
@@ -28,7 +28,7 @@ function InstructorListItem({item}: ListProps) {
       <View>
         <View style={styles.rowBox}>
           <Text style={[common.text_s, common.fwb, common.mr8]}>
-            {item.position}
+            {item.field}
           </Text>
           <Text style={[common.text_s]}>{item.career}</Text>
         </View>
@@ -37,21 +37,15 @@ function InstructorListItem({item}: ListProps) {
           <Text style={[common.text_m, common.fwb, common.mr8]}>
             {item.nickname}
           </Text>
-          {item.certification ? (
-            <View style={styles.rowBox}>
-              <Text style={[common.text_s, {color: BLUE.DEFAULT}]}>
-                인증강사
-              </Text>
-              <Image
-                style={{marginLeft: 2, width: 14, height: 14}}
-                source={iconPath.CERTIFICATION}
-              />
-            </View>
-          ) : (
-            <></>
-          )}
+          <View style={styles.rowBox}>
+            <Text style={[common.text_s, {color: BLUE.DEFAULT}]}>인증강사</Text>
+            <Image
+              style={{marginLeft: 2, width: 14, height: 14}}
+              source={iconPath.CERTIFICATION}
+            />
+          </View>
         </View>
-        <Text style={[common.text_s]}>{item.area}</Text>
+        <Text style={[common.text_s]}>{item.address}</Text>
       </View>
       <Pressable
         style={styles.kebabIcon}
