@@ -27,10 +27,11 @@ export type RootStackParamList = {
 
 function AppInner() {
   // const dispatch = useAppDispatch();
-  const isLoggedIn = useSelector((state: RootState) => !!state.user.email);
+  // const isLoggedIn = useSelector((state: RootState) => !!state.user.email);
   // const isLoggedIn = true;
 
-  return isLoggedIn ? <MainStack /> : <AuthStack />;
+  // return isLoggedIn ? <MainStack /> : <AuthStack />;
+  return <MainStack />;
 }
 
 export default AppInner;

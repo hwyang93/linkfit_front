@@ -186,5 +186,9 @@ const common = StyleSheet.create({
   PILATES: {width: 24, height: 24},
   YOGA: {width: 24, height: 24},
   CIRCLE_ARROW_RIGHT: {width: 16, height: 16},
+  MARKER_YOGA: {width: 24, height: 24},
+  MARKER_PILATES: {width: 24, height: 24},
+  PENCIL_W: {width: 24, height: 24},
+  PENCIL_B: {width: 24, height: 24},
 });
 export default common;

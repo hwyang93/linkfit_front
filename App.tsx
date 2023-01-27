@@ -4,8 +4,10 @@ import AppInner from './AppInner';
 import {NavigationContainer} from '@react-navigation/native';
 import SplashScreen from 'react-native-splash-screen';
 import {useEffect} from 'react';
+import usePermissions from '@util/usePermissions';
 
 function App() {
+  usePermissions();
   useEffect(() => {
     setTimeout(() => {
       SplashScreen.hide();

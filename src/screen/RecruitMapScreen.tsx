@@ -1,18 +1,71 @@
-import {StyleSheet, View} from 'react-native';
+import {PermissionsAndroid, Platform, StyleSheet, View} from 'react-native';
 import NaverMapView, {Marker} from 'react-native-nmap';
 import {iconPath} from '@util/iconPath';
 import Filter, {FilterTypes} from '@components/Filter';
 import LocationButton from '@components/LocationButton';
 import FloatingLinkButton from '@components/FloatingLinkButton';
 import BottomSheet from '@components/BottomSheet';
-import {SetStateAction, useState} from 'react';
+import {SetStateAction, useEffect, useState} from 'react';
+import Geolocation from 'react-native-geolocation-service';
+
+async function requestPermission() {
+  try {
+    // IOS 위치 정보 수집 권한 요청
+    if (Platform.OS === 'ios') {
+      return await Geolocation.requestAuthorization('always');
+    }
+    // 안드로이드 위치 정보 수집 권한 요청
+    if (Platform.OS === 'android') {
+      return await PermissionsAndroid.request(
+        PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
+      );
+    }
+  } catch (e) {
+    console.log(e);
+  }
+}
 
 function RecruitMapScreen() {
-  const P0 = {latitude: 37.564362, longitude: 126.977011};
-  const P1 = {latitude: 37.565051, longitude: 126.978567};
+  // const [myLocation, setMyLocation] = useState({});
+  // const [myLocation, setMyLocation] = useState<
+  //   {latitude: number; longitude: number} | string
+  // >('');
+  const [myLocation, setMyLocation] = useState<{
+    latitude: number;
+    longitude: number;
+  } | null>(null);
 
   const [modalVisible, setModalVisible] =
     useState<SetStateAction<boolean>>(false);
+  const [selected, setSelected] = useState(2);
+
+  useEffect(() => {
+    requestPermission().then(result => {
+      if (result === 'granted') {
+        Geolocation.getCurrentPosition(
+          (pos: any) => {
+            console.log('지금위치', pos);
+            setMyLocation({
+              latitude: pos.coords.latitude,
+              longitude: pos.coords.longitude,
+            });
+            // console.log('로케이션 위치', myLocation);
+          },
+          error => {
+            console.log(error);
+          },
+          {
+            enableHighAccuracy: true,
+            timeout: 3600,
+            maximumAge: 3600,
+          },
+        );
+      }
+    });
+  }, []);
+
+  const P0 = {latitude: 37.564362, longitude: 126.977011};
+  // const P1 = {latitude: 37.565051, longitude: 126.978567};
 
   const filterType = [
     {
@@ -28,9 +81,6 @@ function RecruitMapScreen() {
       title: '수업시간',
     },
   ];
-
-  const [selected, setSelected] = useState(2);
-
   const filterData = [
     {
       id: 1,
@@ -119,12 +169,22 @@ function RecruitMapScreen() {
         }
         onCameraChange={e => console.warn('onCameraChange', JSON.stringify(e))}
         onMapClick={e => console.warn('onMapClick', JSON.stringify(e))}>
-        <Marker coordinate={P0} onClick={() => console.warn('onClick! p0')} />
-        <Marker
-          coordinate={P1}
-          pinColor="blue"
-          onClick={() => console.warn('onClick! p1')}
-        />
+        {/*<Marker coordinate={P0} onClick={() => console.warn('onClick! p0')} />*/}
+        {myLocation?.latitude && (
+          <Marker
+            coordinate={{
+              latitude: myLocation.latitude,
+              longitude: myLocation.longitude,
+            }}
+            pinColor="red"
+          />
+        )}
+        {/*<Marker coordinate={P0} onClick={() => console.warn('onClick! p0')} />*/}
+        {/*<Marker*/}
+        {/*  coordinate={P1}*/}
+        {/*  pinColor="blue"*/}
+        {/*  onClick={() => console.warn('onClick! p1')}*/}
+        {/*/>*/}
       </NaverMapView>
       {/* Todo : 플로팅 버튼 컴포넌트 */}
       {/* 현재 위치로 이동 버튼 */}

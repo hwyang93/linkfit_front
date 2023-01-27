@@ -37,4 +37,8 @@ export const iconPath = {
   CHECK_BOX: require('@images/icon/check_box.png'),
   CHECKED_BOX: require('@images/icon/checked_box.png'),
   CIRCLE_ARROW_RIGHT: require('@images/icon/circle_arrow_right.png'),
+  MARKER_YOGA: require('@images/icon/marker_yoga.png'),
+  MARKER_PILATES: require('@images/icon/marker_pilates.png'),
+  PENCIL_W: require('@images/icon/pencil_w.png'),
+  PENCIL_B: require('@images/icon/pencil_b.png'),
 };
