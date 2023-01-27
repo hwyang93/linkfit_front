@@ -23,6 +23,7 @@ export const width = // 가로 변환 작업
 
 const common = StyleSheet.create({
   // space area
+  mh4: {marginHorizontal: 4},
   mv10: {marginVertical: 10},
   mv16: {marginVertical: 16},
   mv20: {marginVertical: 20},
@@ -33,6 +34,7 @@ const common = StyleSheet.create({
   mt20: {marginTop: 20},
   mt30: {marginTop: 30},
   mt40: {marginTop: 40},
+  mb8: {marginBottom: 8},
   mb10: {marginBottom: 10},
   mb16: {marginBottom: 16},
   mb20: {marginBottom: 20},
@@ -190,5 +192,8 @@ const common = StyleSheet.create({
   MARKER_PILATES: {width: 24, height: 24},
   PENCIL_W: {width: 24, height: 24},
   PENCIL_B: {width: 24, height: 24},
+  LINK_URL: {width: 24, height: 24},
+  LINK_BLOG: {width: 24, height: 24},
+  LINK_BRUNCH: {width: 24, height: 24},
 });
 export default common;

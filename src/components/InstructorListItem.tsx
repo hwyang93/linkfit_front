@@ -2,6 +2,8 @@ import {Alert, Image, Pressable, StyleSheet, Text, View} from 'react-native';
 import common from '@styles/common';
 import {iconPath} from '@util/iconPath';
 import {BLUE} from '@styles/colors';
+import {NavigationProp, useNavigation} from '@react-navigation/native';
+import {LoggedInParamList} from '../../AppInner';
 
 type ListProps = {
   item: {
@@ -14,12 +16,16 @@ type ListProps = {
   };
 };
 
+// todo: field 전달되지 않는것 같다.
+// todo: 필라테스 요가에 따라 썸넹일 이미지 변경되게 세팅 해야함(참고 ProfileScreen.tsx)
+
 function InstructorListItem({item}: ListProps) {
+  const navigation = useNavigation<NavigationProp<LoggedInParamList>>();
   return (
     <View style={styles.listBox}>
       <Pressable
         style={common.mr16}
-        onPress={() => Alert.alert('click', 'test')}>
+        onPress={() => navigation.navigate('Profile')}>
         <Image
           source={require('../assets/images/thumbnail.png')}
           style={styles.thumbnail}

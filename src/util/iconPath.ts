@@ -23,7 +23,6 @@ export const iconPath = {
   BELL_ON: require('@images/icon/bell_on.png'),
   MY: require('@images/icon/my.png'),
   LIST: require('@images/icon/list.png'),
-  PENCIL: require('@images/icon/pencil.png'),
   MAP: require('@images/icon/map.png'),
   YOGA: require('@images/icon/yoga.png'),
   YOGA_ON: require('@images/icon/yoga_on.png'),
@@ -41,4 +40,7 @@ export const iconPath = {
   MARKER_PILATES: require('@images/icon/marker_pilates.png'),
   PENCIL_W: require('@images/icon/pencil_w.png'),
   PENCIL_B: require('@images/icon/pencil_b.png'),
+  LINK_URL: require('@images/icon/link_url.png'),
+  LINK_BLOG: require('@images/icon/link_blog.png'),
+  LINK_BRUNCH: require('@images/icon/link_brunch.png'),
 };
