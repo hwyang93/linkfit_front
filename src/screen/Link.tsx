@@ -71,27 +71,6 @@ const styles = StyleSheet.create({
     paddingVertical: 16,
     backgroundColor: WHITE,
   },
-  tabBox: {
-    position: 'relative',
-    flexDirection: 'row',
-    justifyContent: 'center',
-    width: '100%',
-    height: 48,
-    borderRadius: 8,
-  },
-  tabItem: {
-    width: '50%',
-    height: '100%',
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  centerLine: {
-    position: 'absolute',
-    top: 12,
-    height: 24,
-    width: 1,
-    backgroundColor: WHITE,
-  },
 });
 
 export default Link;
