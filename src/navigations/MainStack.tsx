@@ -6,6 +6,7 @@ import {WHITE} from '@styles/colors';
 import RecruitMapScreen from '@screen/RecruitMapScreen';
 import RecruitListScreen from '@screen/RecruitListScreen';
 import InstructorListScreen from '@screen/InstructorListScreen';
+import ProfileScreen from '@screen/ProfileScreen';
 
 const Stack = createNativeStackNavigator<LoggedInParamList>();
 
@@ -40,6 +41,11 @@ const MainStack = () => {
         name="InstructorList"
         component={InstructorListScreen}
         options={{title: '강사'}}
+      />
+      <Stack.Screen
+        name="Profile"
+        component={ProfileScreen}
+        options={{title: '프로필'}}
       />
     </Stack.Navigator>
   );
