@@ -9,6 +9,8 @@ import InstructorListScreen from '@screen/InstructorListScreen';
 import ProfileScreen from '@screen/ProfileScreen';
 import HeaderRight from '@components/HeaderRight';
 import SuggestionScreen from '@screen/SuggestionScreen';
+import CenterInfoScreen from '@screen/CenterInfoScreen';
+import JobPostScreen from '@screen/JobPostScreen';
 
 const Stack = createNativeStackNavigator<LoggedInParamList>();
 
@@ -53,6 +55,16 @@ const MainStack = () => {
         name="Suggestion"
         component={SuggestionScreen}
         options={{title: '포지션 제안하기'}}
+      />
+      <Stack.Screen
+        name="CenterInfo"
+        component={CenterInfoScreen}
+        options={{title: '센터 정보', headerRight: HeaderRight}}
+      />
+      <Stack.Screen
+        name="JobPost"
+        component={JobPostScreen}
+        options={{title: '구인 공고', headerRight: HeaderRight}}
       />
     </Stack.Navigator>
   );

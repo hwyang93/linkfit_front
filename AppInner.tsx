@@ -14,6 +14,8 @@ export type LoggedInParamList = {
   InstructorList: undefined;
   Profile: undefined;
   Suggestion: undefined;
+  CenterInfo: undefined;
+  JobPost: undefined;
   // Complete: {orderId: string};
 };
 

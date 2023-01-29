@@ -1,6 +1,8 @@
 import {Alert, Image, Pressable, StyleSheet, Text, View} from 'react-native';
 import common from '@styles/common';
 import {iconPath} from '@util/iconPath';
+import {NavigationProp, useNavigation} from '@react-navigation/native';
+import {LoggedInParamList} from '../../AppInner';
 
 type ListProps = {
   item: {
@@ -14,11 +16,12 @@ type ListProps = {
 };
 
 function RecruitListItem({item}: ListProps) {
-  console.log('뭐나오지', item);
+  // console.log('뭐나오지', item);
+  const navigation = useNavigation<NavigationProp<LoggedInParamList>>();
   return (
     <Pressable
       style={styles.slideBox}
-      onPress={() => Alert.alert('click', 'thumbnail')}>
+      onPress={() => navigation.navigate('CenterInfo')}>
       <View style={styles.imgBox}>
         <Image source={item.src} resizeMode={'cover'} />
       </View>
