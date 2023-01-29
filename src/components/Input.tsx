@@ -100,7 +100,12 @@ Input.defaultProps = {
 };
 
 const styles = StyleSheet.create({
-  multiline: {height: 276, textAlignVertical: 'top'},
+  multiline: {
+    height: 276,
+    textAlignVertical: 'top',
+    paddingTop: 16,
+    paddingBottom: 16,
+  },
 });
 
 export default Input;

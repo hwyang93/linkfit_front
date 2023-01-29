@@ -115,6 +115,13 @@ const common = StyleSheet.create({
     textAlign: 'left',
     lineHeight: +width * 24,
   },
+  title_l: {
+    color: BLACK,
+    fontSize: +width * 24,
+    fontWeight: '700',
+    textAlign: 'left',
+    lineHeight: +width * 30,
+  },
   fs18: {fontSize: +width * 18},
   // basic button
   button: {
