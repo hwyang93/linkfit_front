@@ -12,6 +12,7 @@ export type LoggedInParamList = {
   RecruitMap: undefined;
   RecruitList: undefined;
   InstructorList: undefined;
+  Profile: undefined;
   // Complete: {orderId: string};
 };
 
@@ -27,11 +28,10 @@ export type RootStackParamList = {
 
 function AppInner() {
   // const dispatch = useAppDispatch();
-  // const isLoggedIn = useSelector((state: RootState) => !!state.user.email);
+  const isLoggedIn = useSelector((state: RootState) => !!state.user.email);
   // const isLoggedIn = true;
 
-  // return isLoggedIn ? <MainStack /> : <AuthStack />;
-  return <MainStack />;
+  return isLoggedIn ? <MainStack /> : <AuthStack />;
 }
 
 export default AppInner;

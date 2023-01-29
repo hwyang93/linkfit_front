@@ -115,6 +115,7 @@ const common = StyleSheet.create({
     textAlign: 'left',
     lineHeight: +width * 24,
   },
+  fs18: {fontSize: +width * 18},
   // basic button
   button: {
     justifyContent: 'center',
@@ -195,5 +196,6 @@ const common = StyleSheet.create({
   LINK_URL: {width: 24, height: 24},
   LINK_BLOG: {width: 24, height: 24},
   LINK_BRUNCH: {width: 24, height: 24},
+  RESUME: {width: 24, height: 24},
 });
 export default common;
