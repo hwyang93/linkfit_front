@@ -13,12 +13,17 @@ import {iconPath} from '@util/iconPath';
 
 import ProfileBox from '@components/ProfileBox';
 import {useState} from 'react';
+import LinearGradient from 'react-native-linear-gradient';
+import {WHITE} from '@styles/colors';
+import {NavigationProp, useNavigation} from '@react-navigation/native';
+import {LoggedInParamList} from '../../AppInner';
 
 // todo: 제안하기 버튼
 // todo: 강사 소개, 강사 후기 탭
 // todo: 유저 정보 나오는 영역은 고정, 아래 소개와 후기는 스크롤 되게 제작
 
 function ProfileScreen() {
+  const navigation = useNavigation<NavigationProp<LoggedInParamList>>();
   const [showTab, setShowTab] = useState();
   const windowWidth = Dimensions.get('window').width;
   const imageSize = (windowWidth - 32) / 3;
@@ -57,7 +62,7 @@ function ProfileScreen() {
       nickname: '소다늠',
       type: '강사',
       date: '2023.1.12',
-      review: '젖가락이지만 유연해요. 깜짝 놀랐어요.',
+      review: '젓가락이지만 유연해요. 깜짝 놀랐어요.',
     },
   ];
 
@@ -128,34 +133,20 @@ function ProfileScreen() {
           ListHeaderComponent={<ProfileBox />}
           ListFooterComponent={<Resume />}
         />
-
-        {/*강사 후기*/}
-        {/*<View>*/}
-        {/*  <View style={{flexDirection: 'row'}}>*/}
-        {/*    <Text style={[common.text_m, common.fwb, common.fs18]}>닉네임</Text>*/}
-        {/*    <Text*/}
-        {/*      style={[*/}
-        {/*        common.text,*/}
-        {/*        {alignSelf: 'flex-end', marginHorizontal: 4},*/}
-        {/*      ]}>*/}
-        {/*      센터*/}
-        {/*    </Text>*/}
-        {/*    <Text style={[common.text, {alignSelf: 'flex-end'}]}>*/}
-        {/*      2022.12.12*/}
-        {/*    </Text>*/}
-        {/*  </View>*/}
-        {/*  <Text style={common.text_m} numberOfLines={2}>*/}
-        {/*    후기 내용입니다. 후기 내용입니다. 후기 내용입니다. 후기 내용입니다.*/}
-        {/*  </Text>*/}
-
-        {/*  <Pressable*/}
-        {/*    style={styles.kebabIcon}*/}
-        {/*    hitSlop={10}*/}
-        {/*    onPress={() => Alert.alert('click', 'test')}>*/}
-        {/*    <Image source={iconPath.KEBAB} style={[common.KEBAB]} />*/}
-        {/*  </Pressable>*/}
-        {/*</View>*/}
       </View>
+      <Pressable
+        style={styles.suggestion}
+        onPress={() => navigation.navigate('Suggestion')}>
+        <LinearGradient
+          style={[common.button, {height: 40}]}
+          start={{x: 0.1, y: 0.5}}
+          end={{x: 0.6, y: 1}}
+          colors={['#74ebe4', '#3962f3']}>
+          <Text style={[common.text_s, common.fwb, {color: WHITE}]}>
+            제안하기
+          </Text>
+        </LinearGradient>
+      </Pressable>
     </View>
   );
 }
@@ -165,6 +156,13 @@ const styles = StyleSheet.create({
     flex: 1,
     paddingHorizontal: 16,
     paddingVertical: 16,
+  },
+  suggestion: {
+    position: 'absolute',
+    right: 16,
+    bottom: 16,
+    width: 104,
+    height: 40,
   },
 
   kebabIcon: {position: 'absolute', top: 0, right: 0},
