@@ -7,6 +7,7 @@ import RecruitMapScreen from '@screen/RecruitMapScreen';
 import RecruitListScreen from '@screen/RecruitListScreen';
 import InstructorListScreen from '@screen/InstructorListScreen';
 import ProfileScreen from '@screen/ProfileScreen';
+import HeaderRight from '@components/HeaderRight';
 
 const Stack = createNativeStackNavigator<LoggedInParamList>();
 
@@ -45,7 +46,7 @@ const MainStack = () => {
       <Stack.Screen
         name="Profile"
         component={ProfileScreen}
-        options={{title: '프로필'}}
+        options={{title: '프로필', headerRight: HeaderRight}}
       />
     </Stack.Navigator>
   );
