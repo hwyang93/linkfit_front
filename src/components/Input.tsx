@@ -1,5 +1,5 @@
 import {useState} from 'react';
-import {Text, TextInput, View} from 'react-native';
+import {StyleSheet, Text, TextInput, View} from 'react-native';
 import common from '@styles/common';
 import {INPUT} from '@styles/colors';
 
@@ -28,6 +28,9 @@ type InputProps = {
   onSubmitEditing?: any;
   blurOnSubmit?: boolean;
   editable?: boolean;
+  multiline?: boolean;
+  numberOfLines?: number;
+  maxLength?: number;
 };
 
 const Input = ({
@@ -37,6 +40,9 @@ const Input = ({
   propStyles,
   pointerEvents,
   editable,
+  multiline,
+  numberOfLines,
+  maxLength,
   ...props
 }: InputProps) => {
   const [isFocused, setIsFocused] = useState(false);
@@ -66,6 +72,7 @@ const Input = ({
         style={[
           common.textInput,
           {borderColor: value || isFocused ? INPUT.FOCUS : INPUT.DEFAULT},
+          multiline && styles.multiline,
           // {borderColor: value && !isFocused ? INPUT.DEFAULT : INPUT.DEFAULT},
         ]}
         value={value}
@@ -80,6 +87,9 @@ const Input = ({
         onBlur={onBlur}
         onFocus={onFocus}
         editable={editable}
+        multiline={multiline}
+        numberOfLines={numberOfLines}
+        maxLength={maxLength}
       />
     </View>
   );
@@ -88,5 +98,9 @@ const Input = ({
 Input.defaultProps = {
   returnKeyType: ReturnKeyTypes.DONE,
 };
+
+const styles = StyleSheet.create({
+  multiline: {height: 276, textAlignVertical: 'top'},
+});
 
 export default Input;
