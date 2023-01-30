@@ -12,7 +12,7 @@ type ListProps = {
     career: string;
     nickname: string;
     address: string;
-    hit: number;
+    followerCount: number;
   };
 };
 
@@ -72,7 +72,7 @@ function InstructorListItem({item}: ListProps) {
             style={[common.FAVORITE, common.mr8]}
           />
         </Pressable>
-        <Text style={[common.text_m, common.fwb]}>{item.hit}</Text>
+        <Text style={[common.text_m, common.fwb]}>{item.followerCount}</Text>
       </View>
     </View>
   );
