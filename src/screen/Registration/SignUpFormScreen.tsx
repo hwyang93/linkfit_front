@@ -2,9 +2,7 @@ import {
   ActivityIndicator,
   Platform,
   Alert,
-  Platform,
   Pressable,
-  StyleSheet,
   Text,
   View,
 } from 'react-native';
@@ -12,7 +10,6 @@ import common from '@styles/common';
 import Input, {KeyboardTypes} from '@components/Input';
 import {useCallback, useState} from 'react';
 import TabButton from '@components/TabButton';
-import {INPUT} from '@styles/colors';
 import DismissKeyboardView from '@components/DismissKeyboardView';
 import LinearGradient from 'react-native-linear-gradient';
 import BirthdayPicker from '@components/BirthdayPicker';
