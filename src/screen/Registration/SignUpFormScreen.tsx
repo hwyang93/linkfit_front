@@ -1,8 +1,8 @@
 import {
   ActivityIndicator,
+  Platform,
   Alert,
   Pressable,
-  StyleSheet,
   Text,
   View,
 } from 'react-native';
@@ -10,9 +10,6 @@ import common from '@styles/common';
 import Input, {KeyboardTypes} from '@components/Input';
 import {useCallback, useState} from 'react';
 import TabButton from '@components/TabButton';
-import SelectDropdown from 'react-native-select-dropdown';
-import FontAwesome from 'react-native-vector-icons/FontAwesome';
-import {INPUT} from '@styles/colors';
 import DismissKeyboardView from '@components/DismissKeyboardView';
 import LinearGradient from 'react-native-linear-gradient';
 import BirthdayPicker from '@components/BirthdayPicker';
@@ -34,6 +31,7 @@ function SignUpFormScreen({navigation}: SignUpScreenProps) {
 
   const [email] = useState(route.params.email);
   const [userName, setUserName] = useState('');
+  const [birthday, setBirthday] = useState('');
   const [gender, setGender] = useState('');
   const [agency, setAgency] = useState('');
   const [phoneNumber, setPhoneNumber] = useState('');
@@ -72,7 +70,17 @@ function SignUpFormScreen({navigation}: SignUpScreenProps) {
             />
           </View>
           <View style={common.mb16}>
-            <BirthdayPicker />
+            {Platform.OS === 'ios' ? (
+              <BirthdayPicker />
+            ) : (
+              <Input
+                label={'생년월일'}
+                onChangeText={(text: any) => setBirthday(text)}
+                value={birthday}
+                placeholder={'YYYY.MM.DD'}
+                keyboardType={KeyboardTypes.NUMBER}
+              />
+            )}
           </View>
           <View style={[common.mb16]}>
             <TabButton
@@ -156,49 +164,5 @@ function SignUpFormScreen({navigation}: SignUpScreenProps) {
     </DismissKeyboardView>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    lex: 1,
-    paddingHorizontal: 16,
-    paddingVertical: 16,
-    backgroundColor: '#fff',
-  },
-  selectBox: {
-    width: '100%',
-    height: 56,
-    backgroundColor: '#fff',
-    borderRadius: 8,
-    borderWidth: 2,
-    borderColor: INPUT.DEFAULT,
-  },
-  selectText: {
-    color: '#acacac',
-    fontSize: 16,
-    textAlign: 'left',
-  },
-  dropBox: {
-    backgroundColor: '#fff',
-    borderRadius: 8,
-  },
-  dropItem: {
-    borderBottomWidth: 1,
-    borderBottomColor: INPUT.DEFAULT,
-  },
-  dropText: {},
-  selectBoxFocus: {
-    width: '100%',
-    height: 56,
-    backgroundColor: '#fff',
-    borderRadius: 8,
-    borderWidth: 2,
-    borderColor: INPUT.FOCUS,
-  },
-  selectTextFocus: {
-    color: '#292929',
-    fontSize: 16,
-    textAlign: 'left',
-  },
-});
 
 export default SignUpFormScreen;

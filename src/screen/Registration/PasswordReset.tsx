@@ -1,5 +1,5 @@
 import {useState} from 'react';
-import {ActivityIndicator, Pressable, Text, View} from 'react-native';
+import {ActivityIndicator, Platform, Pressable, Text, View} from 'react-native';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import {RootStackParamList} from '../../../AppInner';
 import common from '@styles/common';
@@ -19,6 +19,7 @@ type PasswordResetScreenProps = NativeStackScreenProps<
 
 function PasswordReset({}: PasswordResetScreenProps) {
   const [userName, setUserName] = useState('');
+  const [birthday, setBirthday] = useState('');
   const [gender, setGender] = useState('');
   const [agency, setAgency] = useState('');
   const [phoneNumber, setPhoneNumber] = useState('');
@@ -48,7 +49,17 @@ function PasswordReset({}: PasswordResetScreenProps) {
             />
           </View>
           <View style={common.mb16}>
-            <BirthdayPicker />
+            {Platform.OS === 'ios' ? (
+              <BirthdayPicker />
+            ) : (
+              <Input
+                label={'생년월일'}
+                onChangeText={(text: any) => setBirthday(text)}
+                value={birthday}
+                placeholder={'YYYY.MM.DD'}
+                keyboardType={KeyboardTypes.NUMBER}
+              />
+            )}
           </View>
           <View style={[common.mb16]}>
             <TabButton

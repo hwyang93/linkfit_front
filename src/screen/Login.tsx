@@ -101,6 +101,7 @@ function LogIn() {
               returnKeyType={ReturnKeyTypes.DONE}
               onChangeText={(text: string) => setPassword(text.trim())}
               secureTextEntry
+              onSubmitEditing={onSubmit}
             />
           </View>
 

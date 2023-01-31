@@ -15,6 +15,7 @@ function BirthdayPicker() {
   };
   const handleConfirm = (date: any) => {
     setBirthday(moment(date).format('YYYY.MM.DD'));
+    console.log('생일', birthday);
     hideDatePicker();
   };
 

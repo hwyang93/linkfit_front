@@ -65,3 +65,4 @@ buck-out/
 
 # temporary
 src/api/request.ts
+src/screen/ProfileScreen_bk.tsx
