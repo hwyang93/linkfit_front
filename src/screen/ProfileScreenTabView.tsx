@@ -32,8 +32,8 @@ const ProfileScreenTabView = () => {
   // stats
   const [tabIndex, setIndex] = useState(0);
   const [routes] = useState([
-    {key: 'tab1', title: '강사 소개'},
-    {key: 'tab2', title: '강사 후기'},
+    {key: 'tab1', title: '강사소개'},
+    {key: 'tab2', title: '강사후기'},
   ]);
   const [canScroll, setCanScroll] = useState(true);
   const tab1Data = [
@@ -360,7 +360,7 @@ const ProfileScreenTabView = () => {
     );
   };
 
-  const renderLabel = ({route, focused}) => {
+  const renderLabel = ({route, focused}: any) => {
     return (
       <Text
         style={[

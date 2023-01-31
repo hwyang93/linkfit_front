@@ -7,6 +7,7 @@ export const KeyboardTypes = {
   DEFAULT: 'default',
   EMAIL: 'email-address',
   PHONE: 'phone-pad',
+  NUMBER: 'number-pad',
 };
 export const ReturnKeyTypes = {
   DONE: 'done',

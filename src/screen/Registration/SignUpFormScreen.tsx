@@ -1,5 +1,6 @@
 import {
   ActivityIndicator,
+  Platform,
   Pressable,
   StyleSheet,
   Text,
@@ -9,8 +10,6 @@ import common from '@styles/common';
 import Input, {KeyboardTypes} from '@components/Input';
 import {useState} from 'react';
 import TabButton from '@components/TabButton';
-import SelectDropdown from 'react-native-select-dropdown';
-import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import {INPUT} from '@styles/colors';
 import DismissKeyboardView from '@components/DismissKeyboardView';
 import LinearGradient from 'react-native-linear-gradient';
@@ -19,6 +18,7 @@ import SelectBox from '@components/SelectBox';
 
 function SignUpFormScreen() {
   const [userName, setUserName] = useState('');
+  const [birthday, setBirthday] = useState('');
   const [gender, setGender] = useState('');
   const [agency, setAgency] = useState('');
   const [phoneNumber, setPhoneNumber] = useState('');
@@ -44,7 +44,17 @@ function SignUpFormScreen() {
             />
           </View>
           <View style={common.mb16}>
-            <BirthdayPicker />
+            {Platform.OS === 'ios' ? (
+              <BirthdayPicker />
+            ) : (
+              <Input
+                label={'생년월일'}
+                onChangeText={(text: any) => setBirthday(text)}
+                value={birthday}
+                placeholder={'YYYY.MM.DD'}
+                keyboardType={KeyboardTypes.NUMBER}
+              />
+            )}
           </View>
           <View style={[common.mb16]}>
             <TabButton
