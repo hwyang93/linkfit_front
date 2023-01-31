@@ -4,9 +4,12 @@ import LinearGradient from 'react-native-linear-gradient';
 import {BLUE, GRAY, WHITE} from '@styles/colors';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import {RootStackParamList} from '../../AppInner';
+import {RouteProp, useRoute} from '@react-navigation/native';
 type SignInScreenProps = NativeStackScreenProps<RootStackParamList, 'SignUp'>;
 
 function SignUp({navigation}: SignInScreenProps) {
+  const route = useRoute<RouteProp<RootStackParamList, 'SignUp'>>();
+  console.log('signup', route);
   return (
     <View style={styles.container}>
       <View style={common.mt40}>
@@ -16,7 +19,10 @@ function SignUp({navigation}: SignInScreenProps) {
       </View>
 
       <View style={common.mt40}>
-        <Pressable onPress={() => navigation.navigate('Terms')}>
+        <Pressable
+          onPress={() =>
+            navigation.navigate('Terms', {email: route.params.email})
+          }>
           <LinearGradient
             style={common.button}
             start={{x: 0.1, y: 0.5}}
@@ -32,7 +38,11 @@ function SignUp({navigation}: SignInScreenProps) {
             common.button,
             {backgroundColor: WHITE, borderWidth: 1, borderColor: GRAY.DARK},
           ]}
-          onPress={() => navigation.navigate('CompanySignUpForm')}>
+          onPress={() =>
+            navigation.navigate('CompanySignUpForm', {
+              email: route.params.email,
+            })
+          }>
           <Text style={[common.buttonText, {color: BLUE.DEFAULT}]}>
             사업자 회원
           </Text>

@@ -22,10 +22,10 @@ export type LoggedInParamList = {
 export type RootStackParamList = {
   LogIn: {email: string};
   SignIn: undefined;
-  SignUp: undefined;
-  Terms: undefined;
-  SignUpForm: undefined;
-  CompanySignUpForm: undefined;
+  SignUp: {email: string};
+  Terms: {email: string};
+  SignUpForm: {email: string};
+  CompanySignUpForm: {email: string};
   PasswordReset: undefined;
 };
 

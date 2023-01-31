@@ -1,5 +1,6 @@
 import {
   ActivityIndicator,
+  Alert,
   Pressable,
   StyleSheet,
   Text,
@@ -7,7 +8,7 @@ import {
 } from 'react-native';
 import common from '@styles/common';
 import Input, {KeyboardTypes} from '@components/Input';
-import {useState} from 'react';
+import {useCallback, useState} from 'react';
 import TabButton from '@components/TabButton';
 import SelectDropdown from 'react-native-select-dropdown';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
@@ -16,8 +17,22 @@ import DismissKeyboardView from '@components/DismissKeyboardView';
 import LinearGradient from 'react-native-linear-gradient';
 import BirthdayPicker from '@components/BirthdayPicker';
 import SelectBox from '@components/SelectBox';
+import {createMember} from '@api/member';
+import {RouteProp, useRoute} from '@react-navigation/native';
+import {RootStackParamList} from '../../../AppInner';
+import {NativeStackScreenProps} from '@react-navigation/native-stack';
 
-function SignUpFormScreen() {
+const genderData = [{value: '남자'}, {value: '여자'}];
+const agencyData = ['SKT', 'KT', 'LG U+', '알뜰폰'];
+const loading = false;
+const canGoNext = true;
+
+type SignUpScreenProps = NativeStackScreenProps<RootStackParamList, 'SignUp'>;
+
+function SignUpFormScreen({navigation}: SignUpScreenProps) {
+  const route = useRoute<RouteProp<RootStackParamList, 'LogIn'>>();
+
+  const [email] = useState(route.params.email);
   const [userName, setUserName] = useState('');
   const [gender, setGender] = useState('');
   const [agency, setAgency] = useState('');
@@ -25,10 +40,23 @@ function SignUpFormScreen() {
   const [password, setPassword] = useState('');
   const [passwordConfirm, setPasswordConfirm] = useState('');
 
-  const genderData = [{value: '남자'}, {value: '여자'}];
-  const agencyData = ['SKT', 'KT', 'LG U+', '알뜰폰'];
-  const loading = false;
-  const canGoNext = true;
+  const signIn = useCallback(async () => {
+    const data = {
+      email: email,
+      password: password,
+      name: userName,
+      gender: gender,
+      phone: phoneNumber,
+    };
+    await createMember(data)
+      .then(() => {
+        Alert.alert('회원가입이 완료되었어요!');
+        navigation.navigate('SignIn');
+      })
+      .catch((e: {message: string}) => {
+        Alert.alert(e.message);
+      });
+  }, [email, gender, navigation, password, phoneNumber, userName]);
 
   return (
     <DismissKeyboardView>
@@ -106,7 +134,7 @@ function SignUpFormScreen() {
           </View>
 
           <View style={common.mt20}>
-            <Pressable onPress={() => console.log(agency)}>
+            <Pressable onPress={signIn}>
               <LinearGradient
                 style={common.button}
                 start={{x: 0.1, y: 0.5}}
@@ -117,7 +145,8 @@ function SignUpFormScreen() {
                 {loading ? (
                   <ActivityIndicator color="white" />
                 ) : (
-                  <Text style={common.buttonText}>본인인증</Text>
+                  // <Text style={common.buttonText}>본인인증</Text>
+                  <Text style={common.buttonText}>회원가입</Text>
                 )}
               </LinearGradient>
             </Pressable>
