@@ -2,6 +2,7 @@ import {
   ActivityIndicator,
   Platform,
   Alert,
+  Platform,
   Pressable,
   StyleSheet,
   Text,
