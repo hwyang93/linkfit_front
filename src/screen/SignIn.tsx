@@ -31,33 +31,26 @@ function SignIn({navigation}: SignInScreenProps) {
 
   // 이메일, 비밀번호
   const [email, setEmail] = useState<string>('');
-  const [password, setPassword] = useState<string>('');
 
   const emailInput = useInput('', validateEmail);
-  const passwordInput = useInput('', validatePassword);
 
   // 오류메시지 상태저장
   const [emailMessage, setEmailMessage] = useState<string>('');
 
   // 유효성 검사
   const [isEmail, setIsEmail] = useState<boolean>(false);
-  // 회원 가입 여부
-  const [isMember, setIsMember] = useState<boolean>(false);
 
-  const onChangeEmail = useCallback(
-    (value: string) => {
-      console.log(value);
-      const checkEmail = removeWhitespace(value);
-      setEmail(checkEmail);
-      setIsEmail(validateEmail(checkEmail));
-      if (!isEmail) {
-        setEmailMessage('이메일 형식에 맞게 입력해 주세요.');
-      } else {
-        setEmailMessage('');
-      }
-    },
-    [isEmail],
-  );
+  const onChangeEmail = useCallback((value: string) => {
+    console.log(value);
+    const checkEmail = removeWhitespace(value);
+    setEmail(checkEmail);
+    setIsEmail(validateEmail(checkEmail));
+    if (!isEmail) {
+      setEmailMessage('이메일 형식에 맞게 입력해 주세요.');
+    } else {
+      setEmailMessage('');
+    }
+  }, []);
 
   const checkMember = async () => {
     await fetchMemberInfoByEmail(email)
@@ -65,9 +58,8 @@ function SignIn({navigation}: SignInScreenProps) {
         if (data.seq) {
           Alert.alert('알림', '환영합니다. 회원님');
           navigation.navigate('LogIn', {email: email});
-          setIsMember(true);
         } else {
-          navigation.navigate('SignUp');
+          navigation.navigate('SignUp', {email: email});
         }
       })
       .catch((e: {message: any}): any => {
@@ -136,9 +128,9 @@ function SignIn({navigation}: SignInScreenProps) {
             <Pressable onPress={testClick}>
               <Text style={styles.easyLink}>로그인없이 둘러보기</Text>
             </Pressable>
-            <Pressable onPress={() => navigation.navigate('SignUp')}>
-              <Text style={styles.easyLink}>회원가입페이지(임시)</Text>
-            </Pressable>
+            {/*<Pressable onPress={() => navigation.navigate('SignUp')}>*/}
+            {/*  <Text style={styles.easyLink}>회원가입페이지(임시)</Text>*/}
+            {/*</Pressable>*/}
           </View>
         </View>
       </View>
