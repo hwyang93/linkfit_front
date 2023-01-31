@@ -11,7 +11,9 @@ const ProfileScreen = () => {
   const navigation = useNavigation<NavigationProp<LoggedInParamList>>();
   return (
     <SafeAreaView style={{flex: 1}}>
+      {/* 탭뷰 컴포넌트 */}
       <ProfileScreenTabView />
+      {/* 제안하기 버튼 */}
       <Pressable
         style={styles.suggestion}
         onPress={() => navigation.navigate('Suggestion')}>
