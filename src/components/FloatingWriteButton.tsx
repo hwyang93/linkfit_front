@@ -18,7 +18,7 @@ const FloatingLinkButton = ({title, link, icon}: ButtonProps) => {
     <Pressable
       style={styles.floatingButton}
       onPress={() => Alert.alert('click', 'test')}>
-      <Image source={icon} style={common.PENCIL_B} />
+      <Image source={icon} style={common.size24} />
     </Pressable>
   );
 };

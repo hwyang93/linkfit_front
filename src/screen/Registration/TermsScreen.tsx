@@ -55,7 +55,7 @@ function SignUpFormScreen({navigation}: SignInScreenProps) {
       <View style={common.mt40}>
         <View>
           <TouchableOpacity style={[common.mr8, styles.touchWrap]}>
-            <Image source={iconPath.CHECK_BOX} style={common.CHECK_BOX} />
+            <Image source={iconPath.CHECK_BOX} style={common.size24} />
             <Text style={[common.text_m, common.ml8]}>필수 항목 전체동의</Text>
           </TouchableOpacity>
         </View>
@@ -68,12 +68,9 @@ function SignUpFormScreen({navigation}: SignInScreenProps) {
                 style={styles.touchWrap}
                 onPress={() => checkHandler(item?.id)}>
                 {checkItem.findIndex((i: number) => i === item.id) !== -1 ? (
-                  <Image
-                    source={iconPath.CHECKED_BOX}
-                    style={common.CHECKED_BOX}
-                  />
+                  <Image source={iconPath.CHECKED_BOX} style={common.size24} />
                 ) : (
-                  <Image source={iconPath.CHECK_BOX} style={common.CHECK_BOX} />
+                  <Image source={iconPath.CHECK_BOX} style={common.size24} />
                 )}
                 <Text
                   style={[common.text_m, common.ml8, {color: BLUE.DEFAULT}]}>

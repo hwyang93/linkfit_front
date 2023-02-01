@@ -71,7 +71,7 @@ const ContentTab = () => {
                       alignItems: 'center',
                     }}>
                     <Pressable
-                      style={{marginRight: 24}}
+                      style={{marginRight: 16}}
                       onPress={() => Alert.alert('click', 'bell test')}>
                       <Image source={iconPath.BELL} style={common.BELL} />
                     </Pressable>
@@ -90,7 +90,7 @@ const ContentTab = () => {
                 source={
                   focused ? iconPath.TAB_BAR_ICON_1_ON : iconPath.TAB_BAR_ICON_1
                 }
-                style={common.TAB_BAR_ICON}
+                style={common.size24}
               />
             ),
           }}
@@ -113,7 +113,7 @@ const ContentTab = () => {
                 source={
                   focused ? iconPath.TAB_BAR_ICON_2_ON : iconPath.TAB_BAR_ICON_2
                 }
-                style={common.TAB_BAR_ICON}
+                style={common.size24}
               />
             ),
           }}
@@ -136,7 +136,7 @@ const ContentTab = () => {
                 source={
                   focused ? iconPath.TAB_BAR_ICON_3_ON : iconPath.TAB_BAR_ICON_3
                 }
-                style={common.TAB_BAR_ICON}
+                style={common.size24}
               />
             ),
           }}
@@ -159,7 +159,7 @@ const ContentTab = () => {
                 source={
                   focused ? iconPath.TAB_BAR_ICON_4_ON : iconPath.TAB_BAR_ICON_4
                 }
-                style={common.TAB_BAR_ICON}
+                style={common.size24}
               />
             ),
           }}

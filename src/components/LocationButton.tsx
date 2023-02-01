@@ -6,7 +6,7 @@ import common from '@styles/common';
 const LocationButton = () => {
   return (
     <Pressable style={styles.locationButton}>
-      <Image style={common.LOCATION} source={iconPath.LOCATION} />
+      <Image style={common.size24} source={iconPath.LOCATION} />
     </Pressable>
   );
 };

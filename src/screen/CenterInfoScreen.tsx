@@ -1,27 +1,85 @@
-import {
-  Alert,
-  Image,
-  Pressable,
-  ScrollView,
-  StyleSheet,
-  Text,
-  View,
-} from 'react-native';
-import Icon from 'react-native-vector-icons/FontAwesome';
+import {Image, ScrollView, StyleSheet, Text, View} from 'react-native';
+
 import common from '@styles/common';
 import {GRAY, WHITE} from '@styles/colors';
 import LinkCollection from '@components/LinkCollection';
-import {iconPath} from '@util/iconPath';
-import {useState} from 'react';
+import OfferListItem from '@components/OfferListItem';
 
 function CenterInfoScreen() {
   // todo: 채용중 박스 클릭 시 구인 공고 JobPostScreen 으로 이동
-  const [isOpen, setIsOpen] = useState(false);
 
-  const moreLoad = () => {
-    setIsOpen(!isOpen);
-    // todo: 공고 더 불러오기
-  };
+  const OFFERS = [
+    {
+      id: 1,
+      title: '필라테스 강사님 모십니다.',
+      type: '파트',
+      date: '월,수,금',
+      time: '시간협의',
+    },
+    {
+      id: 2,
+      title: '오랫동안 함께 하실 필라테스 강사님 이라샤이마세이.',
+      type: '전임',
+      date: '월,수,금',
+      time: '시간협의',
+    },
+    {
+      id: 3,
+      title: '필라테스 강사님 모십니다.',
+      type: '파트',
+      date: '월,수,금',
+      time: '시간협의',
+    },
+    {
+      id: 4,
+      title: '오랫동안 함께 하실 필라테스 강사님 이라샤이마세이.',
+      type: '전임',
+      date: '월,수,금',
+      time: '시간협의',
+    },
+    {
+      id: 5,
+      title: '필라테스 강사님 모십니다.',
+      type: '파트',
+      date: '월,수,금',
+      time: '시간협의',
+    },
+    {
+      id: 6,
+      title: '오랫동안 함께 하실 필라테스 강사님 이라샤이마세이.',
+      type: '전임',
+      date: '월,수,금',
+      time: '시간협의',
+    },
+    {
+      id: 7,
+      title: '필라테스 강사님 모십니다.',
+      type: '파트',
+      date: '월,수,금',
+      time: '시간협의',
+    },
+    {
+      id: 8,
+      title: '오랫동안 함께 하실 필라테스 강사님 이라샤이마세이.',
+      type: '전임',
+      date: '월,수,금',
+      time: '시간협의',
+    },
+    {
+      id: 9,
+      title: '필라테스 강사님 모십니다.',
+      type: '파트',
+      date: '월,수,금',
+      time: '시간협의',
+    },
+    {
+      id: 10,
+      title: '오랫동안 함께 하실 필라테스 강사님 이라샤이마세이.',
+      type: '전임',
+      date: '월,수,금',
+      time: '시간협의',
+    },
+  ];
 
   return (
     <ScrollView>
@@ -52,30 +110,17 @@ function CenterInfoScreen() {
         <View style={common.mt40}>
           <Text style={[common.text_m, common.fwb, common.mb8]}>채용 중</Text>
 
-          <View style={styles.offer}>
-            <Text style={[common.text_l, common.fwb]}>
-              필라테스 강사님 모십니다.
-            </Text>
-            <Text style={[common.text_s, {color: GRAY.DARK}]}>
-              파트 · 월,수,금 · 시간협의
-            </Text>
-            <Pressable
-              onPress={() => Alert.alert('click', 'test')}
-              style={styles.iconPosition}>
-              <Image source={iconPath.BOOKMARK} style={common.BOOKMARK} />
-            </Pressable>
-          </View>
+          {/* 채용중인 항목 리스트 */}
+          <OfferListItem offer={OFFERS} button={true} />
 
-          <Pressable onPress={moreLoad} style={styles.moreButton}>
-            <Text style={[common.text_m, common.tac, common.mr8]}>
-              {isOpen ? '접기' : '더보기'}
-            </Text>
-            <Icon
-              name={isOpen ? 'angle-up' : 'angle-down'}
-              size={24}
-              color="black"
-            />
-          </Pressable>
+          <View style={common.mt40}>
+            <Text style={[common.text_m, common.fwb]}>센터 소개</Text>
+            <Text style={common.text_s}>센터 소개글.</Text>
+          </View>
+          <View style={common.mt24}>
+            <Text style={[common.text_m, common.fwb]}>센터 소개</Text>
+            <Text style={common.text_s}>센터 소개글.</Text>
+          </View>
         </View>
       </View>
     </ScrollView>
@@ -96,26 +141,5 @@ const styles = StyleSheet.create({
   },
   tagArea: {},
   tag: {marginRight: 8, color: GRAY.DARK},
-  iconPosition: {
-    position: 'absolute',
-    top: 30,
-    right: 30,
-  },
-  offer: {
-    padding: 16,
-    marginBottom: 8,
-    borderWidth: 1,
-    borderColor: GRAY.DEFAULT,
-    borderRadius: 8,
-  },
-  moreButton: {
-    flexDirection: 'row',
-    justifyContent: 'center',
-    alignItems: 'center',
-    paddingVertical: 12,
-    borderWidth: 1,
-    borderColor: GRAY.DEFAULT,
-    borderRadius: 8,
-  },
 });
 export default CenterInfoScreen;
