@@ -255,7 +255,7 @@ const ProfileScreenTabView = () => {
               <Pressable onPress={() => Alert.alert('click', 'test')}>
                 <Image
                   source={iconPath.FAVORITE}
-                  style={[common.FAVORITE, common.mr8]}
+                  style={[common.size24, common.mr8]}
                 />
               </Pressable>
               <Text style={[common.text_m, common.fwb, common.mr8]}>23</Text>
@@ -278,7 +278,7 @@ const ProfileScreenTabView = () => {
         </View>
 
         {/*링크 영역 */}
-        <View style={[styles.linkBox, common.mb20]}>
+        <View style={[common.rowCenterBetween, common.mb20]}>
           <Text style={[common.text_m, common.fwb, common.mb8]}>링크</Text>
           <LinkCollection />
         </View>

@@ -109,7 +109,7 @@ function BottomSheet(props: modalProps) {
             <View style={styles.filterBox}>
               <Pressable style={styles.filterItem} onPress={selectFilter}>
                 <Image
-                  style={[common.LINK, common.mr10]}
+                  style={[common.size24, common.mr10]}
                   source={selected ? iconPath.LINK_ON : iconPath.LINK}
                 />
                 <Text
@@ -119,7 +119,7 @@ function BottomSheet(props: modalProps) {
                 {/* 클릭되면 보이는 아이콘 */}
                 {selected ? (
                   <View style={styles.iconPosition}>
-                    <Image style={common.CHECK} source={iconPath.CHECK} />
+                    <Image style={common.size24} source={iconPath.CHECK} />
                   </View>
                 ) : null}
               </Pressable>
@@ -128,7 +128,7 @@ function BottomSheet(props: modalProps) {
             <Pressable style={styles.filterBox} onPress={selectFilter}>
               <View style={styles.filterItem}>
                 <Image
-                  style={[common.PILATES, common.mr10]}
+                  style={[common.size24, common.mr10]}
                   source={selected ? iconPath.PILATES_ON : iconPath.PILATES}
                 />
                 <Text
@@ -138,7 +138,7 @@ function BottomSheet(props: modalProps) {
                 {/* 클릭되면 보이는 아이콘 */}
                 {selected ? (
                   <View style={styles.iconPosition}>
-                    <Image style={common.CHECK} source={iconPath.CHECK} />
+                    <Image style={common.size24} source={iconPath.CHECK} />
                   </View>
                 ) : null}
               </View>
@@ -147,7 +147,7 @@ function BottomSheet(props: modalProps) {
             <Pressable style={styles.filterBox} onPress={selectFilter}>
               <View style={styles.filterItem}>
                 <Image
-                  style={[common.YOGA, common.mr10]}
+                  style={[common.size24, common.mr10]}
                   source={selected ? iconPath.YOGA_ON : iconPath.YOGA}
                 />
                 <Text
@@ -157,7 +157,7 @@ function BottomSheet(props: modalProps) {
                 {/* 클릭되면 보이는 아이콘 */}
                 {selected ? (
                   <View style={styles.iconPosition}>
-                    <Image style={common.CHECK} source={iconPath.CHECK} />
+                    <Image style={common.size24} source={iconPath.CHECK} />
                   </View>
                 ) : null}
               </View>

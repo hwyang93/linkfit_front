@@ -74,17 +74,17 @@ function ProfileBox() {
           <Pressable
             style={common.mh4}
             onPress={() => Alert.alert('알림', '클릭테스트에용')}>
-            <Image source={iconPath.LINK_URL} style={[common.LINK_URL]} />
+            <Image source={iconPath.LINK_URL} style={[common.size24]} />
           </Pressable>
           <Pressable
             style={common.mh4}
             onPress={() => Alert.alert('알림', '클릭테스트에용')}>
-            <Image source={iconPath.LINK_BLOG} style={[common.LINK_BLOG]} />
+            <Image source={iconPath.LINK_BLOG} style={[common.size24]} />
           </Pressable>
           <Pressable
             style={common.mh4}
             onPress={() => Alert.alert('알림', '클릭테스트에용')}>
-            <Image source={iconPath.LINK_BRUNCH} style={[common.LINK_BRUNCH]} />
+            <Image source={iconPath.LINK_BRUNCH} style={[common.size24]} />
           </Pressable>
         </View>
       </View>

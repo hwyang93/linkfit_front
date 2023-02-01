@@ -63,13 +63,13 @@ function InstructorListItem({item}: ListProps) {
         <Pressable onPress={() => Alert.alert('click', 'test')}>
           <Image
             source={iconPath.MESSAGE}
-            style={[common.MESSAGE, common.mr8]}
+            style={[common.size24, common.mr8]}
           />
         </Pressable>
         <Pressable onPress={() => Alert.alert('click', 'test')}>
           <Image
             source={iconPath.FAVORITE}
-            style={[common.FAVORITE, common.mr8]}
+            style={[common.size24, common.mr8]}
           />
         </Pressable>
         <Text style={[common.text_m, common.fwb]}>{item.followerCount}</Text>

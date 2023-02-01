@@ -7,6 +7,7 @@ export const iconPath = {
   NAVER: require('@images/icon/naver.png'),
   FAVORITE: require('@images/icon/favorite.png'),
   FAVORITE_ON: require('@images/icon/favorite_on.png'),
+  PHONE: require('@images/icon/phone.png'),
   MESSAGE: require('@images/icon/message.png'),
   BOOKMARK: require('@images/icon/bookmark.png'),
   BOOKMARK_ON: require('@images/icon/bookmark_on.png'),
