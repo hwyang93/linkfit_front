@@ -20,14 +20,14 @@ const HeaderLeft = ({}: HeaderRightProps) => {
         onPress={() => Alert.alert('알림', '쪽지 클릭테스트에용')}
         hitSlop={10}
         style={[common.mh4, common.size24]}>
-        <Image source={iconPath.MESSAGE} />
+        <Image source={iconPath.MESSAGE} style={common.size24} />
       </Pressable>
 
       <Pressable
         onPress={() => Alert.alert('알림', '하트 클릭테스트에용')}
         hitSlop={10}
         style={[common.mh4, common.size24]}>
-        <Image source={iconPath.FAVORITE} />
+        <Image source={iconPath.FAVORITE} style={common.size24} />
       </Pressable>
     </View>
   );

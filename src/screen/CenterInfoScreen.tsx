@@ -88,7 +88,7 @@ function CenterInfoScreen() {
           <Image
             source={require('../assets/images/center_01.png')}
             resizeMode={'cover'}
-            style={styles.imgBox}
+            style={common.imgBox}
           />
         </View>
 
@@ -133,11 +133,6 @@ const styles = StyleSheet.create({
     paddingHorizontal: 16,
     paddingVertical: 16,
     backgroundColor: WHITE,
-  },
-  imgBox: {
-    width: '100%',
-    height: 160,
-    borderRadius: 8,
   },
   tagArea: {},
   tag: {marginRight: 8, color: GRAY.DARK},
