@@ -16,6 +16,7 @@ import {TabView, TabBar} from 'react-native-tab-view';
 import common from '@styles/common';
 import {iconPath} from '@util/iconPath';
 import {BLUE, GRAY, WHITE} from '@styles/colors';
+import LinkCollection from '@components/LinkCollection';
 
 const windowHeight = Dimensions.get('window').height;
 const windowWidth = Dimensions.get('window').width;
@@ -279,26 +280,7 @@ const ProfileScreenTabView = () => {
         {/*링크 영역 */}
         <View style={[styles.linkBox, common.mb20]}>
           <Text style={[common.text_m, common.fwb, common.mb8]}>링크</Text>
-          <View style={[common.rowCenter, {justifyContent: 'space-around'}]}>
-            <Pressable
-              style={common.mh4}
-              onPress={() => Alert.alert('알림', '클릭테스트에용')}>
-              <Image source={iconPath.LINK_URL} style={[common.LINK_URL]} />
-            </Pressable>
-            <Pressable
-              style={common.mh4}
-              onPress={() => Alert.alert('알림', '클릭테스트에용')}>
-              <Image source={iconPath.LINK_BLOG} style={[common.LINK_BLOG]} />
-            </Pressable>
-            <Pressable
-              style={common.mh4}
-              onPress={() => Alert.alert('알림', '클릭테스트에용')}>
-              <Image
-                source={iconPath.LINK_BRUNCH}
-                style={[common.LINK_BRUNCH]}
-              />
-            </Pressable>
-          </View>
+          <LinkCollection />
         </View>
       </Animated.View>
     );
@@ -546,11 +528,6 @@ const styles = StyleSheet.create({
   },
   thumbnail: {width: '50%', height: '50%'},
   kebabIcon: {position: 'absolute', top: 0, right: 0},
-  linkBox: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-  },
 });
 
 export default ProfileScreenTabView;
