@@ -8,7 +8,7 @@ function usePermissions() {
     if (Platform.OS === 'android') {
       check(PERMISSIONS.ANDROID.ACCESS_FINE_LOCATION)
         .then(result => {
-          console.log('check location', result);
+          console.log('check location :', result);
           if (result === RESULTS.BLOCKED || result === RESULTS.DENIED) {
             Alert.alert(
               '이 앱은 위치 권한 허용이 필요합니다.',

@@ -9,9 +9,7 @@ import usePermissions from '@util/usePermissions';
 function App() {
   usePermissions();
   useEffect(() => {
-    setTimeout(() => {
-      SplashScreen.hide();
-    }, 1500);
+    SplashScreen.hide();
   }, []);
   return (
     <Provider store={store}>

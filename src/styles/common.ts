@@ -39,6 +39,7 @@ const common = StyleSheet.create({
   mb10: {marginBottom: 10},
   mb16: {marginBottom: 16},
   mb20: {marginBottom: 20},
+  mb24: {marginBottom: 24},
   mb30: {marginBottom: 30},
   mb40: {marginBottom: 40},
   ml8: {marginLeft: 8},
@@ -186,6 +187,8 @@ const common = StyleSheet.create({
     borderColor: INPUT.DEFAULT,
     borderRadius: 8,
   },
+  mapBox: {width: '100%', height: 180},
+  imgBox: {width: '100%', height: 160, borderRadius: 8},
   // icon
   KEBAB: {width: 4, height: 16},
   BOOKMARK: {width: 14, height: 18},

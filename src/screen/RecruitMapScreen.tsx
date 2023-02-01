@@ -7,6 +7,7 @@ import FloatingLinkButton from '@components/FloatingLinkButton';
 import BottomSheet from '@components/BottomSheet';
 import {SetStateAction, useEffect, useState} from 'react';
 import Geolocation from 'react-native-geolocation-service';
+import {useSafeAreaInsets} from 'react-native-safe-area-context';
 
 async function requestPermission() {
   try {
@@ -202,6 +203,7 @@ function RecruitMapScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    paddingBottom: 40,
   },
   filter: {flexDirection: 'row', paddingVertical: 8, paddingHorizontal: 16},
 });

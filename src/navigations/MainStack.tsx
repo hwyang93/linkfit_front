@@ -24,6 +24,7 @@ const MainStack = () => {
           fontWeight: '500',
         },
         contentStyle: {backgroundColor: WHITE},
+        headerShadowVisible: false,
         headerLeft: HeaderLeft,
       }}>
       <Stack.Screen
@@ -64,7 +65,10 @@ const MainStack = () => {
       <Stack.Screen
         name="JobPost"
         component={JobPostScreen}
-        options={{title: '구인 공고', headerRight: HeaderRight}}
+        options={{
+          title: '구인 공고',
+          headerRight: HeaderRight,
+        }}
       />
     </Stack.Navigator>
   );
