@@ -1,6 +1,8 @@
 import {Alert, Image, Pressable, StyleSheet, Text, View} from 'react-native';
 import common from '@styles/common';
 import {iconPath} from '@util/iconPath';
+import {NavigationProp, useNavigation} from '@react-navigation/native';
+import {LoggedInParamList} from '../../AppInner';
 
 type ListProps = {
   item: {
@@ -15,10 +17,11 @@ type ListProps = {
 };
 
 function RecruitListItem({item}: ListProps) {
+  const navigation = useNavigation<NavigationProp<LoggedInParamList>>();
   return (
     <Pressable
       style={styles.itemBox}
-      onPress={() => Alert.alert('click', 'thumbnail')}>
+      onPress={() => navigation.navigate('JobPost')}>
       <View style={styles.imgBox}>
         <Image style={styles.img} source={item.src} />
       </View>
