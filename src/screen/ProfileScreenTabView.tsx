@@ -17,6 +17,9 @@ import common from '@styles/common';
 import {iconPath} from '@util/iconPath';
 import {BLUE, GRAY, WHITE} from '@styles/colors';
 import LinkCollection from '@components/LinkCollection';
+import {RouteProp, useRoute} from '@react-navigation/native';
+import {LoggedInParamList, RootStackParamList} from '../../AppInner';
+import {fetchInstructor} from '@api/instructor';
 
 const windowHeight = Dimensions.get('window').height;
 const windowWidth = Dimensions.get('window').width;
@@ -29,7 +32,22 @@ const SafeStatusBar = Platform.select({
 
 const imageSize = (windowWidth - 32) / 3;
 
-const ProfileScreenTabView = () => {
+function ProfileScreenTabView() {
+  const route = useRoute<RouteProp<LoggedInParamList, 'Profile'>>();
+  console.log(route);
+  const [instructor, setInstructor] = useState({});
+  // @ts-ignore
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  useEffect(async () => {
+    await fetchInstructor(route.params.memberSeq)
+      .then(({data}: any) => {
+        console.log(data);
+        setInstructor(data);
+      })
+      .catch((e: any) => {
+        console.log(e);
+      });
+  }, [route.params.memberSeq]);
   // stats
   const [tabIndex, setIndex] = useState(0);
   const [routes] = useState([
@@ -229,7 +247,7 @@ const ProfileScreenTabView = () => {
           <View>
             <View style={common.rowCenter}>
               <Text style={[common.text_l, common.fwb, common.mr8]}>
-                닉네임
+                {instructor.nickname}
               </Text>
               <View style={common.rowCenter}>
                 <Text style={[common.text_s, {color: BLUE.DEFAULT}]}>
@@ -246,9 +264,11 @@ const ProfileScreenTabView = () => {
               <Text style={[common.text_m, common.fwb, common.mr8]}>
                 필라테스
               </Text>
-              <Text style={[common.text, {alignSelf: 'flex-end'}]}>3년</Text>
+              <Text style={[common.text, {alignSelf: 'flex-end'}]}>
+                {instructor.career}
+              </Text>
               <Text style={{marginHorizontal: 8}}>|</Text>
-              <Text style={[common.text_s]}>서울 송파구</Text>
+              <Text style={[common.text_s]}>{instructor.address}</Text>
             </View>
 
             <View style={common.rowCenter}>
@@ -258,7 +278,9 @@ const ProfileScreenTabView = () => {
                   style={[common.size24, common.mr8]}
                 />
               </Pressable>
-              <Text style={[common.text_m, common.fwb, common.mr8]}>23</Text>
+              <Text style={[common.text_m, common.fwb, common.mr8]}>
+                {instructor.follower}
+              </Text>
               <Text style={common.text}>3시간 전 접속</Text>
             </View>
           </View>
@@ -272,9 +294,7 @@ const ProfileScreenTabView = () => {
 
         <View style={common.mb16}>
           <Text style={[common.text_m, common.fwb, common.mb8]}>소개글</Text>
-          <Text style={common.text_m}>
-            안녕하세요. 3년차 필라테스 강사입니다.
-          </Text>
+          <Text style={common.text_m}>{instructor.intro}</Text>
         </View>
 
         {/*링크 영역 */}
@@ -479,7 +499,7 @@ const ProfileScreenTabView = () => {
       {renderHeader()}
     </View>
   );
-};
+}
 
 const styles = StyleSheet.create({
   container: {

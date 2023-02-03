@@ -25,7 +25,7 @@ function InstructorListItem({item}: ListProps) {
     <View style={styles.listBox}>
       <Pressable
         style={common.mr16}
-        onPress={() => navigation.navigate('Profile')}>
+        onPress={() => navigation.navigate('Profile', {memberSeq: item.seq})}>
         <Image
           source={require('../assets/images/thumbnail.png')}
           style={styles.thumbnail}
