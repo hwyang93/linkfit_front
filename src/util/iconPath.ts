@@ -47,4 +47,6 @@ export const iconPath = {
   LINK_BLOG: require('@images/icon/link_blog.png'),
   LINK_BRUNCH: require('@images/icon/link_brunch.png'),
   RESUME: require('@images/icon/resume.png'),
+  NEXT_BUTTON: require('@images/icon/next_button.png'),
+  PREV_BUTTON: require('@images/icon/prev_button.png'),
 };

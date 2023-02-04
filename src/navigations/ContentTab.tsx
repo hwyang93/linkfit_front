@@ -10,7 +10,7 @@ import {
 } from 'react-native';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import Link from '@screen/Link';
-import Community from '@screen/Community';
+import CommunityScreen from '@screen/CommunityScreen';
 import Message from '@screen/Message';
 import My from '@screen/My';
 import {LoggedInParamList} from '../../AppInner';
@@ -105,7 +105,7 @@ const ContentTab = () => {
         />
         <Tab.Screen
           name="Community"
-          component={Community}
+          component={CommunityScreen}
           options={{
             title: '커뮤니티',
             tabBarIcon: ({focused}) => (

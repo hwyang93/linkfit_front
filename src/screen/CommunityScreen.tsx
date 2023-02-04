@@ -1,6 +1,6 @@
 import {Text, View} from 'react-native';
 
-function Community() {
+function CommunityScreen() {
   return (
     <View>
       <Text>커뮤니티 화면</Text>
@@ -8,4 +8,4 @@ function Community() {
   );
 }
 
-export default Community;
+export default CommunityScreen;

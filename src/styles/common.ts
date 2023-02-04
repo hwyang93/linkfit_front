@@ -196,5 +196,6 @@ const common = StyleSheet.create({
   CIRCLE_ARROW_RIGHT: {width: 16, height: 16},
   MY: {width: 18, height: 18},
   size24: {width: 24, height: 24},
+  size32: {width: 32, height: 32},
 });
 export default common;

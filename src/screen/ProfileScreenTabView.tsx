@@ -17,7 +17,12 @@ import common from '@styles/common';
 import {iconPath} from '@util/iconPath';
 import {BLUE, GRAY, WHITE} from '@styles/colors';
 import LinkCollection from '@components/LinkCollection';
-import {RouteProp, useRoute} from '@react-navigation/native';
+import {
+  NavigationProp,
+  RouteProp,
+  useNavigation,
+  useRoute,
+} from '@react-navigation/native';
 import {LoggedInParamList, RootStackParamList} from '../../AppInner';
 import {fetchInstructor} from '@api/instructor';
 
@@ -34,6 +39,7 @@ const imageSize = (windowWidth - 32) / 3;
 
 function ProfileScreenTabView() {
   const route = useRoute<RouteProp<LoggedInParamList, 'Profile'>>();
+  const navigation = useNavigation<NavigationProp<LoggedInParamList>>();
   console.log(route);
   const [instructor, setInstructor] = useState({});
   // @ts-ignore
@@ -312,7 +318,7 @@ function ProfileScreenTabView() {
 
   const renderTab1Item = ({item}: imageProps) => {
     return (
-      <Pressable>
+      <Pressable onPress={() => navigation.navigate('Gallery')}>
         <Image
           source={item.src}
           style={{
