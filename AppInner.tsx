@@ -12,10 +12,11 @@ export type LoggedInParamList = {
   RecruitMap: undefined;
   RecruitList: undefined;
   InstructorList: undefined;
-  Profile: undefined;
+  Profile: {memberSeq: number};
   Suggestion: undefined;
   CenterInfo: undefined;
   JobPost: undefined;
+  Gallery: any;
   // Complete: {orderId: string};
 };
 

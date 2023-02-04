@@ -11,6 +11,7 @@ import HeaderRight from '@components/HeaderRight';
 import SuggestionScreen from '@screen/SuggestionScreen';
 import CenterInfoScreen from '@screen/CenterInfoScreen';
 import JobPostScreen from '@screen/JobPostScreen';
+import GalleryScreen from '@screen/GalleryScreen';
 
 const Stack = createNativeStackNavigator<LoggedInParamList>();
 
@@ -46,6 +47,15 @@ const MainStack = () => {
         name="InstructorList"
         component={InstructorListScreen}
         options={{title: '강사'}}
+      />
+      <Stack.Screen
+        name="Gallery"
+        component={GalleryScreen}
+        options={{
+          title: '3/5',
+          headerStyle: {backgroundColor: '#000'},
+          headerTintColor: '#fff',
+        }}
       />
       <Stack.Screen
         name="Profile"
