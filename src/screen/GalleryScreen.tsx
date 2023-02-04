@@ -1,11 +1,10 @@
-import {Dimensions, Image, StyleSheet, View} from 'react-native';
+import {Image, StyleSheet, View} from 'react-native';
 import Swiper from 'react-native-swiper';
 import {iconPath} from '@util/iconPath';
 import common from '@styles/common';
 import {SafeAreaView} from 'react-native-safe-area-context';
 
-const windowHeight = Dimensions.get('window').height;
-const windowWidth = Dimensions.get('window').width;
+// Todo: 헤더 텍스트를 조건에 맞춰서 수정 가능한지 알아보기
 
 function GalleryScreen() {
   const tab1Data = [
@@ -16,11 +15,10 @@ function GalleryScreen() {
     {src: require('@images/instructor_05.png')},
   ];
 
-  const imageSize = windowWidth;
-
   return (
     <SafeAreaView style={styles.container}>
       <Swiper
+        loop={false}
         showsPagination={false}
         showsButtons={true}
         dot={false}
@@ -36,11 +34,7 @@ function GalleryScreen() {
               <Image
                 source={item.src}
                 resizeMode={'cover'}
-                style={{
-                  width: imageSize,
-                  height: 275,
-                  backgroundColor: 'red',
-                }}
+                style={styles.photo}
               />
             </View>
           );

@@ -2,7 +2,7 @@ const axios = require('axios').default;
 import EncryptedStorage from 'react-native-encrypted-storage';
 
 const service = axios.create({
-  baseURL: 'http://127.0.0.1:3000/api/v1',
+  baseURL: 'http://10.0.2.2:3000/api/v1',
   timeout: 600000,
 });
 export const getHeaders = async () => {
