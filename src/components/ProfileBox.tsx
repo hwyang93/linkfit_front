@@ -45,7 +45,7 @@ function ProfileBox() {
             <Pressable onPress={() => Alert.alert('click', 'test')}>
               <Image
                 source={iconPath.FAVORITE}
-                style={[common.FAVORITE, common.mr8]}
+                style={[common.size24, common.mr8]}
               />
             </Pressable>
             <Text style={[common.text_m, common.fwb, common.mr8]}>23</Text>

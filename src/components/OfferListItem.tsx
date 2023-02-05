@@ -91,7 +91,6 @@ const styles = StyleSheet.create({
     top: 30,
     right: 30,
   },
-
   moreButton: {
     flexDirection: 'row',
     justifyContent: 'center',

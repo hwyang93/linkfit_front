@@ -4,6 +4,7 @@ import common from '@styles/common';
 import {GRAY, WHITE} from '@styles/colors';
 import LinkCollection from '@components/LinkCollection';
 import OfferListItem from '@components/OfferListItem';
+import {iconPath} from '@util/iconPath';
 
 function CenterInfoScreen() {
   // todo: 채용중 박스 클릭 시 구인 공고 JobPostScreen 으로 이동
@@ -84,7 +85,7 @@ function CenterInfoScreen() {
   return (
     <ScrollView>
       <View style={styles.container}>
-        <View style={common.mb16}>
+        <View>
           <Image
             source={require('../assets/images/center_01.png')}
             resizeMode={'cover'}
@@ -92,35 +93,40 @@ function CenterInfoScreen() {
           />
         </View>
 
-        <View style={[common.rowBetween, common.mb16]}>
+        <View style={[common.rowBetween, common.mt16]}>
           <View style={common.rowCenter}>
             <Text style={[common.title_l, common.mr8]}>링크 필라테스</Text>
-            <Text style={[common.text, {alignSelf: 'flex-start'}]}>
-              필라테스
-            </Text>
+            <Image source={iconPath.FAVORITE} style={common.size24} />
+            <Text style={[common.text_m, common.fwb]}>23</Text>
           </View>
+        </View>
+
+        <View style={[common.rowCenter, common.mt10]}>
+          <Text style={[common.text_m, common.fwb]}>필라테스</Text>
+          <Text style={[common.text_s, {color: GRAY.DARK}]}>
+            {' '}
+            | 서울 · 송파구
+          </Text>
+        </View>
+
+        <View style={common.mt16}>
+          <Text style={[common.text_m, common.fwb]}>소개글</Text>
+          <Text style={common.text_m}>
+            강남구 역삼동에 위치한 필라테스 센터입니다.
+          </Text>
+        </View>
+
+        <View style={[common.mt20, common.rowCenterBetween]}>
+          <Text style={[common.text_m, common.fwb]}>링크</Text>
           {/*링크 영역 */}
           <LinkCollection />
         </View>
-        <View style={common.row}>
-          <Text style={[common.text_s, styles.tag]}>#Tag</Text>
-          <Text style={[common.text_s, styles.tag]}>#Tag</Text>
-        </View>
 
-        <View style={common.mt40}>
+        <View style={[common.mt20, common.mb16]}>
           <Text style={[common.text_m, common.fwb, common.mb8]}>채용 중</Text>
 
           {/* 채용중인 항목 리스트 */}
           <OfferListItem offer={OFFERS} button={true} />
-
-          <View style={common.mt40}>
-            <Text style={[common.text_m, common.fwb]}>센터 소개</Text>
-            <Text style={common.text_s}>센터 소개글.</Text>
-          </View>
-          <View style={common.mt24}>
-            <Text style={[common.text_m, common.fwb]}>센터 소개</Text>
-            <Text style={common.text_s}>센터 소개글.</Text>
-          </View>
         </View>
       </View>
     </ScrollView>
