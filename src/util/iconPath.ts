@@ -7,6 +7,7 @@ export const iconPath = {
   NAVER: require('@images/icon/naver.png'),
   FAVORITE: require('@images/icon/favorite.png'),
   FAVORITE_ON: require('@images/icon/favorite_on.png'),
+  FAVORITE_FILL: require('@images/icon/favorite_fill.png'),
   PHONE: require('@images/icon/phone.png'),
   MESSAGE: require('@images/icon/message.png'),
   BOOKMARK: require('@images/icon/bookmark.png'),
@@ -49,4 +50,10 @@ export const iconPath = {
   RESUME: require('@images/icon/resume.png'),
   NEXT_BUTTON: require('@images/icon/next_button.png'),
   PREV_BUTTON: require('@images/icon/prev_button.png'),
+  MY_PLACE: require('@images/icon/my_place.png'),
+  MY_LICENSE: require('@images/icon/my_license.png'),
+  MY_REVIEWS: require('@images/icon/my_reviews.png'),
+  MY_FOLLOWING: require('@images/icon/my_following.png'),
+  MY_BOOKMARK: require('@images/icon/my_bookmark.png'),
+  MY_SETTINGS: require('@images/icon/my_settings.png'),
 };

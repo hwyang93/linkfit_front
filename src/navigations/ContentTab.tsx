@@ -12,10 +12,12 @@ import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import Link from '@screen/Link';
 import CommunityScreen from '@screen/CommunityScreen';
 import Message from '@screen/Message';
-import My from '@screen/My';
+import MyScreen from '@screen/MyScreen';
 import {LoggedInParamList} from '../../AppInner';
 import common from '@styles/common';
 import {iconPath} from '@util/iconPath';
+import MyHeader from '@components/Header/MyHeader';
+import LinkHeader from '@components/Header/LinkHeader';
 
 const Tab = createBottomTabNavigator<LoggedInParamList>();
 
@@ -42,6 +44,7 @@ const ContentTab = () => {
           },
           tabBarLabelStyle: {fontSize: 16, marginVertical: 10},
           tabBarAllowFontScaling: true,
+          headerShadowVisible: false,
         }}>
         <Tab.Screen
           name="Link"
@@ -49,38 +52,7 @@ const ContentTab = () => {
           options={{
             title: '링크',
             headerTitle: () => {
-              return (
-                <View
-                  style={{
-                    flex: 1,
-                    width: '100%',
-                    alignItems: 'center',
-                    flexDirection: 'row',
-                    justifyContent: 'space-between',
-                  }}>
-                  <View style={{flex: 0}}>
-                    <Image
-                      source={iconPath.LOGO}
-                      style={{width: 116, height: 32}}
-                    />
-                  </View>
-                  <View
-                    style={{
-                      flexDirection: 'row',
-                      justifyContent: 'space-between',
-                      alignItems: 'center',
-                    }}>
-                    <Pressable
-                      style={{marginRight: 16}}
-                      onPress={() => Alert.alert('click', 'bell test')}>
-                      <Image source={iconPath.BELL} style={common.BELL} />
-                    </Pressable>
-                    <Pressable onPress={() => Alert.alert('click', 'my test')}>
-                      <Image source={iconPath.MY} style={common.MY} />
-                    </Pressable>
-                  </View>
-                </View>
-              );
+              return <LinkHeader />;
             },
             headerLeft: () => {
               return null;
@@ -108,6 +80,9 @@ const ContentTab = () => {
           component={CommunityScreen}
           options={{
             title: '커뮤니티',
+            headerTitle: () => {
+              return <LinkHeader />;
+            },
             tabBarIcon: ({focused}) => (
               <Image
                 source={
@@ -131,6 +106,9 @@ const ContentTab = () => {
           component={Message}
           options={{
             title: '쪽지',
+            headerTitle: () => {
+              return <LinkHeader />;
+            },
             tabBarIcon: ({focused}) => (
               <Image
                 source={
@@ -151,9 +129,13 @@ const ContentTab = () => {
         />
         <Tab.Screen
           name="My"
-          component={My}
+          component={MyScreen}
           options={{
-            title: 'My',
+            title: 'MY',
+            headerTitleAlign: 'left',
+            headerTitle: () => {
+              return <MyHeader />;
+            },
             tabBarIcon: ({focused}) => (
               <Image
                 source={

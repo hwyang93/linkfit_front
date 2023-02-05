@@ -115,7 +115,16 @@ const common = StyleSheet.create({
     textAlign: 'left',
     lineHeight: +width * 24,
   },
+  title_s: {
+    fontFamily: 'NotoSansKR-Medium',
+    color: BLACK,
+    fontSize: +width * 16,
+    fontWeight: '700',
+    textAlign: 'left',
+    lineHeight: +width * 20,
+  },
   title: {
+    fontFamily: 'NotoSansKR-Medium',
     color: BLACK,
     fontSize: +width * 20,
     fontWeight: '700',
@@ -123,12 +132,14 @@ const common = StyleSheet.create({
     lineHeight: +width * 24,
   },
   title_l: {
+    fontFamily: 'NotoSansKR-Medium',
     color: BLACK,
     fontSize: +width * 24,
     fontWeight: '700',
     textAlign: 'left',
     lineHeight: +width * 30,
   },
+  fs10: {fontSize: +width * 10},
   fs18: {fontSize: +width * 18},
   // basic button
   button: {

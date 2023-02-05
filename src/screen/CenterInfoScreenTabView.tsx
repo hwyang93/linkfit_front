@@ -510,22 +510,6 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1,
     borderColor: GRAY.DEFAULT,
   },
-  profileBox: {
-    position: 'relative',
-    flexDirection: 'row',
-    justifyContent: 'flex-start',
-    alignItems: 'center',
-    paddingBottom: 16,
-  },
-  thumbnailBox: {
-    alignItems: 'center',
-    justifyContent: 'center',
-    width: 60,
-    height: 60,
-    borderRadius: 40,
-    backgroundColor: GRAY.LIGHT,
-  },
-  thumbnail: {width: '50%', height: '50%'},
   kebabIcon: {position: 'absolute', top: 0, right: 0},
 });
 
