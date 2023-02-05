@@ -529,6 +529,7 @@ const styles = StyleSheet.create({
     height: TabBarHeight,
     borderBottomWidth: 1,
     borderColor: GRAY.LIGHT,
+    marginHorizontal: 16,
   },
   indicator: {
     backgroundColor: BLUE.DEFAULT,
