@@ -16,7 +16,6 @@ import {TabView, TabBar} from 'react-native-tab-view';
 import common from '@styles/common';
 import {iconPath} from '@util/iconPath';
 import {BLUE, GRAY, WHITE} from '@styles/colors';
-import LinkCollection from '@components/LinkCollection';
 import {
   NavigationProp,
   RouteProp,
@@ -24,12 +23,12 @@ import {
   useRoute,
 } from '@react-navigation/native';
 import {LoggedInParamList} from '../../AppInner';
-import {fetchInstructor} from '@api/instructor';
+import CenterInfoTop from '@components/CenterInfoTop';
 
 const windowHeight = Dimensions.get('window').height;
 const windowWidth = Dimensions.get('window').width;
 const TabBarHeight = 48;
-const HeaderHeight = 240;
+const HeaderHeight = 580;
 const SafeStatusBar = Platform.select({
   ios: 44,
   android: StatusBar.currentHeight,
@@ -37,36 +36,23 @@ const SafeStatusBar = Platform.select({
 
 const imageSize = (windowWidth - 38) / 3;
 
-function ProfileScreenTabView() {
-  const route = useRoute<RouteProp<LoggedInParamList, 'Profile'>>();
+function CenterInfoScreenTabView() {
+  const route = useRoute<RouteProp<LoggedInParamList, 'CenterInfo'>>();
   const navigation = useNavigation<NavigationProp<LoggedInParamList>>();
-  console.log(route);
-  const [instructor, setInstructor] = useState({});
-  // @ts-ignore
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  useEffect(async () => {
-    await fetchInstructor(route.params.memberSeq)
-      .then(({data}: any) => {
-        console.log(data);
-        setInstructor(data);
-      })
-      .catch((e: any) => {
-        console.log(e);
-      });
-  }, [route.params.memberSeq]);
+
   // stats
   const [tabIndex, setIndex] = useState(0);
   const [routes] = useState([
-    {key: 'tab1', title: '강사소개'},
-    {key: 'tab2', title: '강사후기'},
+    {key: 'tab1', title: '센터소개'},
+    {key: 'tab2', title: '센터후기'},
   ]);
   const [canScroll, setCanScroll] = useState(true);
   const tab1Data = [
-    {src: require('@images/instructor_01.png')},
-    {src: require('@images/instructor_02.png')},
-    {src: require('@images/instructor_03.png')},
-    {src: require('@images/instructor_04.png')},
-    {src: require('@images/instructor_05.png')},
+    {src: require('@images/center_01.png')},
+    {src: require('@images/center_02.png')},
+    {src: require('@images/center_03.png')},
+    {src: require('@images/center_04.png')},
+    {src: require('@images/center_05.png')},
   ];
   const tab2Data = [
     {
@@ -246,67 +232,8 @@ function ProfileScreenTabView() {
       <Animated.View
         {...headerPanResponder.panHandlers}
         style={[styles.header, {transform: [{translateY: y}]}]}>
-        <View style={styles.profileBox}>
-          <View style={[common.mr16, styles.thumbnailBox]}>
-            <Image source={iconPath.PILATES} style={styles.thumbnail} />
-          </View>
-          <View>
-            <View style={common.rowCenter}>
-              <Text style={[common.text_l, common.fwb, common.mr8]}>
-                {instructor.nickname}
-              </Text>
-              <View style={common.rowCenter}>
-                <Text style={[common.text_s, {color: BLUE.DEFAULT}]}>
-                  인증강사
-                </Text>
-                <Image
-                  style={{marginLeft: 2, width: 14, height: 14}}
-                  source={iconPath.CERTIFICATION}
-                />
-              </View>
-            </View>
-
-            <View style={common.rowCenter}>
-              <Text style={[common.text_m, common.fwb, common.mr8]}>
-                필라테스
-              </Text>
-              <Text style={[common.text, {alignSelf: 'flex-end'}]}>
-                {instructor.career}
-              </Text>
-              <Text style={{marginHorizontal: 8}}>|</Text>
-              <Text style={[common.text_s]}>{instructor.address}</Text>
-            </View>
-
-            <View style={common.rowCenter}>
-              <Pressable onPress={() => Alert.alert('click', 'test')}>
-                <Image
-                  source={iconPath.FAVORITE}
-                  style={[common.size24, common.mr8]}
-                />
-              </Pressable>
-              <Text style={[common.text_m, common.fwb, common.mr8]}>
-                {instructor.follower}
-              </Text>
-              <Text style={common.text}>3시간 전 접속</Text>
-            </View>
-          </View>
-          <Pressable
-            style={styles.kebabIcon}
-            hitSlop={10}
-            onPress={() => Alert.alert('click', 'test')}>
-            <Image source={iconPath.KEBAB} style={[common.KEBAB]} />
-          </Pressable>
-        </View>
-
-        <View style={common.mb16}>
-          <Text style={[common.text_m, common.fwb, common.mb8]}>소개글</Text>
-          <Text style={common.text_m}>{instructor.intro}</Text>
-        </View>
-
-        {/*링크 영역 */}
-        <View style={[common.rowCenterBetween, common.mb20]}>
-          <Text style={[common.text_m, common.fwb, common.mb8]}>링크</Text>
-          <LinkCollection />
+        <View>
+          <CenterInfoTop />
         </View>
       </Animated.View>
     );
@@ -321,6 +248,7 @@ function ProfileScreenTabView() {
       <Pressable onPress={() => navigation.navigate('Gallery')}>
         <Image
           source={item.src}
+          resizeMode={'cover'}
           style={{
             width: imageSize,
             height: imageSize,
@@ -372,7 +300,7 @@ function ProfileScreenTabView() {
   const Tab1Header = () => {
     return (
       <View style={common.mb8}>
-        <Text style={[common.text_m, common.fwb]}>포트폴리오</Text>
+        <Text style={[common.text_m, common.fwb]}>센터 사진</Text>
       </View>
     );
   };
@@ -381,15 +309,22 @@ function ProfileScreenTabView() {
   };
   const Tab1Footer = () => {
     return (
-      <View
-        style={[common.mt16, common.rowCenter, {justifyContent: 'flex-end'}]}>
-        <Image source={iconPath.RESUME} style={common.size24} />
-        <Text style={common.text_m}>이력서 보기</Text>
+      <View style={common.mt16}>
+        <Text style={[common.text_m, common.fwb]}>센터 주소</Text>
+        <Text style={common.text_m}>서울특별시 강남구 봉은사로 12345</Text>
       </View>
     );
   };
   const Tab2Footer = () => {
-    return null;
+    return (
+      <View>
+        <View style={[common.separator, common.mv16]} />
+        <View>
+          <Text style={[common.text_m, common.fwb]}>센터 주소</Text>
+          <Text style={common.text_m}>서울특별시 강남구 봉은사로 12345</Text>
+        </View>
+      </View>
+    );
   };
   const Tab1Separator = () => {
     return null;
@@ -594,4 +529,4 @@ const styles = StyleSheet.create({
   kebabIcon: {position: 'absolute', top: 0, right: 0},
 });
 
-export default ProfileScreenTabView;
+export default CenterInfoScreenTabView;
