@@ -64,4 +64,4 @@ buck-out/
 /vendor/bundle/
 
 # temporary
-
+/src/api/request.ts
