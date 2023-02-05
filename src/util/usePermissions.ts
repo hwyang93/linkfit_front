@@ -12,7 +12,7 @@ function usePermissions() {
           if (result === RESULTS.BLOCKED || result === RESULTS.DENIED) {
             Alert.alert(
               '이 앱은 위치 권한 허용이 필요합니다.',
-              '앱 설정 화면을 열어서 항상 허용으로 바꿔주세요.',
+              '앱 설정 화면을 열어서 허용으로 바꿔주세요.',
               [
                 {
                   text: '네',
@@ -30,12 +30,12 @@ function usePermissions() {
         })
         .catch(console.error);
     } else if (Platform.OS === 'ios') {
-      check(PERMISSIONS.IOS.LOCATION_ALWAYS)
+      check(PERMISSIONS.IOS.LOCATION_WHEN_IN_USE)
         .then(result => {
           if (result === RESULTS.BLOCKED || result === RESULTS.DENIED) {
             Alert.alert(
-              '이 앱은 백그라운드 위치 권한 허용이 필요합니다.',
-              '앱 설정 화면을 열어서 항상 허용으로 바꿔주세요.',
+              '이 앱은 위치 권한 허용이 필요합니다.',
+              '앱 설정 화면을 열어서 허용으로 바꿔주세요.',
               [
                 {
                   text: '네',
