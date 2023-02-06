@@ -25,6 +25,8 @@ import {
 } from '@react-navigation/native';
 import {LoggedInParamList} from '../../AppInner';
 import {fetchInstructor} from '@api/instructor';
+import {useSelector} from 'react-redux';
+import {RootState} from '@store/reducer';
 
 const windowHeight = Dimensions.get('window').height;
 const windowWidth = Dimensions.get('window').width;
@@ -38,21 +40,25 @@ const SafeStatusBar = Platform.select({
 const imageSize = (windowWidth - 38) / 3;
 
 function ProfileScreenTabView() {
+  const memberInfo = useSelector((state: RootState) => state.user);
   const route = useRoute<RouteProp<LoggedInParamList, 'Profile'>>();
   const navigation = useNavigation<NavigationProp<LoggedInParamList>>();
   console.log(route);
   const [instructor, setInstructor] = useState({});
-  // @ts-ignore
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  useEffect(async () => {
-    await fetchInstructor(route.params.memberSeq)
-      .then(({data}: any) => {
-        console.log(data);
-        setInstructor(data);
-      })
-      .catch((e: any) => {
-        console.log(e);
-      });
+  const [reputation, setReputation] = useState({});
+
+  useEffect(() => {
+    const loadData = async () => {
+      await fetchInstructor(route.params.memberSeq)
+        .then(({data}: any) => {
+          setInstructor(data);
+          setReputation(data.reputations);
+        })
+        .catch((e: any) => {
+          console.log(e);
+        });
+    };
+    loadData();
   }, [route.params.memberSeq]);
   // stats
   const [tabIndex, setIndex] = useState(0);
@@ -290,6 +296,7 @@ function ProfileScreenTabView() {
               <Text style={common.text}>3시간 전 접속</Text>
             </View>
           </View>
+          {}
           <Pressable
             style={styles.kebabIcon}
             hitSlop={10}
@@ -333,11 +340,10 @@ function ProfileScreenTabView() {
 
   type reviewProps = {
     item: {
-      id: number;
-      nickname: string;
-      type: string;
-      date: string;
-      review: string;
+      seq: number;
+      updateAt: string;
+      evaluationMember: object;
+      comment: string;
     };
   };
 
@@ -346,25 +352,29 @@ function ProfileScreenTabView() {
       <View>
         <View style={{flexDirection: 'row'}}>
           <Text style={[common.text_m, common.fwb, common.fs18]}>
-            {item.nickname}
+            {item.evaluationMember.nickname}
           </Text>
           <Text
             style={[common.text, {alignSelf: 'flex-end', marginHorizontal: 4}]}>
-            {item.type}
+            {item.evaluationMember.type === 'INSTRUCTOR' ? '강사' : '센터'}
           </Text>
           <Text style={[common.text, {alignSelf: 'flex-end'}]}>
-            {item.date}
+            {item.updateAt}
           </Text>
         </View>
         <Text style={common.text_m} numberOfLines={2}>
-          {item.review}
+          {item.comment}
         </Text>
-        <Pressable
-          style={styles.kebabIcon}
-          hitSlop={10}
-          onPress={() => Alert.alert('click', 'test')}>
-          <Image source={iconPath.KEBAB} style={[common.KEBAB]} />
-        </Pressable>
+        {memberInfo.seq === item.evaluationMemberSeq ? (
+          <Pressable
+            style={styles.kebabIcon}
+            hitSlop={10}
+            onPress={() => Alert.alert('click', 'test')}>
+            <Image source={iconPath.KEBAB} style={[common.KEBAB]} />
+          </Pressable>
+        ) : (
+          ''
+        )}
       </View>
     );
   };
@@ -427,7 +437,7 @@ function ProfileScreenTabView() {
         break;
       case 'tab2':
         numCols = 1;
-        data = tab2Data;
+        data = reputation;
         renderItem = renderTab2Item;
         ListHeaderComponent = Tab2Header;
         ItemSeparatorComponent = Tab2Separator;
