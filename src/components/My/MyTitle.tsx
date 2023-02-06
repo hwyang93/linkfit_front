@@ -14,7 +14,7 @@ function MyTitle({title, button, link}: titleProps) {
       <Text style={common.title_s}>{title}</Text>
       {button && (
         <Pressable hitSlop={10} onPress={() => Alert.alert('click', 'test')}>
-          <FontAwesome name={'chevron-right'} />
+          <FontAwesome name={'chevron-right'} color="black" />
         </Pressable>
       )}
     </View>

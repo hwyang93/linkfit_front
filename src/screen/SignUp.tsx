@@ -3,12 +3,12 @@ import common from '@styles/common';
 import LinearGradient from 'react-native-linear-gradient';
 import {BLUE, GRAY, WHITE} from '@styles/colors';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
-import {RootStackParamList} from '../../AppInner';
+import {LoggedInParamList} from '../../AppInner';
 import {RouteProp, useRoute} from '@react-navigation/native';
-type SignInScreenProps = NativeStackScreenProps<RootStackParamList, 'SignUp'>;
+type SignInScreenProps = NativeStackScreenProps<LoggedInParamList, 'SignUp'>;
 
 function SignUp({navigation}: SignInScreenProps) {
-  const route = useRoute<RouteProp<RootStackParamList, 'SignUp'>>();
+  const route = useRoute<RouteProp<LoggedInParamList, 'SignUp'>>();
   console.log('signup', route);
   return (
     <View style={styles.container}>

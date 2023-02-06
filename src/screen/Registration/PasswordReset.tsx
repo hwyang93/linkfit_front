@@ -1,7 +1,7 @@
 import {useState} from 'react';
 import {ActivityIndicator, Platform, Pressable, Text, View} from 'react-native';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
-import {RootStackParamList} from '../../../AppInner';
+import {LoggedInParamList} from '../../../AppInner';
 import common from '@styles/common';
 import LinearGradient from 'react-native-linear-gradient';
 import Input, {KeyboardTypes} from '@components/Input';
@@ -13,7 +13,7 @@ import BirthdayPicker from '@components/BirthdayPicker';
 import SelectBox from '@components/SelectBox';
 
 type PasswordResetScreenProps = NativeStackScreenProps<
-  RootStackParamList,
+  LoggedInParamList,
   'PasswordReset'
 >;
 

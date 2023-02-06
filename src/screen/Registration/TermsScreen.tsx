@@ -12,14 +12,15 @@ import {iconPath} from '@util/iconPath';
 import {BLUE} from '@styles/colors';
 import LinearGradient from 'react-native-linear-gradient';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
-import {RootStackParamList} from '../../../AppInner';
+import {LoggedInParamList} from '../../../AppInner';
 import {RouteProp, useRoute} from '@react-navigation/native';
-type SignInScreenProps = NativeStackScreenProps<RootStackParamList, 'Terms'>;
+
+type SignInScreenProps = NativeStackScreenProps<LoggedInParamList, 'Terms'>;
 
 // todo: 필수항목 전체 동의, 필수 항목 체크 후 다음 버튼 동작, 보기 버튼 클릭 시 약관 확인
 
 function SignUpFormScreen({navigation}: SignInScreenProps) {
-  const route = useRoute<RouteProp<RootStackParamList, 'Terms'>>();
+  const route = useRoute<RouteProp<LoggedInParamList, 'Terms'>>();
   console.log('Terms', route);
   const [checkItem, setCheckItem] = useState<any>([]);
   const terms = [
