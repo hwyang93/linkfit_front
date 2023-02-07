@@ -43,7 +43,6 @@ function ProfileScreenTabView() {
   const memberInfo = useSelector((state: RootState) => state.user);
   const route = useRoute<RouteProp<LoggedInParamList, 'Profile'>>();
   const navigation = useNavigation<NavigationProp<LoggedInParamList>>();
-  console.log(route);
   const [instructor, setInstructor] = useState({});
   const [reputation, setReputation] = useState({});
 
@@ -73,22 +72,6 @@ function ProfileScreenTabView() {
     {src: require('@images/instructor_03.png')},
     {src: require('@images/instructor_04.png')},
     {src: require('@images/instructor_05.png')},
-  ];
-  const tab2Data = [
-    {
-      id: 1,
-      nickname: '저팔계',
-      type: '강사',
-      date: '2022.12.12',
-      review: '후기 내용 입니다. 저팔계지만 유연해요. 깜짝 놀랐어요.',
-    },
-    {
-      id: 2,
-      nickname: '소다늠',
-      type: '강사',
-      date: '2023.1.12',
-      review: '젓가락이지만 유연해요. 깜짝 놀랐어요.',
-    },
   ];
 
   // ref
