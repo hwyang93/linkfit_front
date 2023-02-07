@@ -5,6 +5,8 @@ import LinkTop from '@components/LinkTop';
 import InstructorListItem from '@components/InstructorListItem';
 import {iconPath} from '@util/iconPath';
 import FloatingWriteButton from '@components/FloatingWriteButton';
+import Modal from '@components/ModalSheet';
+import {SetStateAction, useState} from 'react';
 
 function Link() {
   const INSTRUCTORS = [
@@ -49,6 +51,20 @@ function Link() {
       hit: 36,
     },
   ];
+  // const DATA = ['구인 공고 등록', '구직 공고 등록'];
+  const DATA = [
+    {
+      value: '구인 공고 등록',
+      link: 'JobOfferForm',
+    },
+    {
+      value: '구직 공고 등록',
+      link: '',
+    },
+  ];
+
+  const [modalVisible, setModalVisible] =
+    useState<SetStateAction<boolean>>(false);
 
   function renderItem({item}: any) {
     return <InstructorListItem item={item} />;
@@ -62,7 +78,16 @@ function Link() {
         ListHeaderComponent={<LinkTop />}
         ItemSeparatorComponent={() => <View style={common.separator} />}
       />
-      <FloatingWriteButton icon={iconPath.PENCIL_B} />
+      <FloatingWriteButton
+        icon={iconPath.PENCIL_W}
+        setModalVisible={setModalVisible}
+      />
+      <Modal
+        modalVisible={modalVisible}
+        setModalVisible={setModalVisible}
+        title={'공고 등록하기'}
+        modalData={DATA}
+      />
     </View>
   );
 }

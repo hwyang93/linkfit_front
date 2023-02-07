@@ -9,6 +9,7 @@ export const iconPath = {
   FAVORITE_ON: require('@images/icon/favorite_on.png'),
   FAVORITE_FILL: require('@images/icon/favorite_fill.png'),
   PHONE: require('@images/icon/phone.png'),
+  PHOTO: require('@images/icon/photo.png'),
   MESSAGE: require('@images/icon/message.png'),
   BOOKMARK: require('@images/icon/bookmark.png'),
   BOOKMARK_ON: require('@images/icon/bookmark_on.png'),

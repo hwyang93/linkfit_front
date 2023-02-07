@@ -19,6 +19,7 @@ import SignUp from '@screen/SignUp';
 import SignUpFormScreen from '@screen/Registration/SignUpFormScreen';
 import CompanySignUpFormScreen from '@screen/Registration/CompanySignUpFormScreen';
 import PasswordReset from '@screen/Registration/PasswordReset';
+import JobOfferFormScreen from '@screen/JobOfferFormScreen';
 
 const Stack = createNativeStackNavigator<LoggedInParamList>();
 
@@ -86,6 +87,13 @@ const MainStack = () => {
           options={{
             title: '구인 공고',
             headerRight: HeaderRight,
+          }}
+        />
+        <Stack.Screen
+          name="JobOfferForm"
+          component={JobOfferFormScreen}
+          options={{
+            title: '채용 공고 등록',
           }}
         />
       </Stack.Group>

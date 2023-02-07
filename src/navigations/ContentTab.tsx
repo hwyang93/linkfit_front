@@ -32,6 +32,7 @@ const ContentTab = () => {
   return (
     <>
       <Tab.Navigator
+        initialRouteName={'Link'}
         screenOptions={{
           headerTitleAlign: 'center',
           headerTitleStyle: {

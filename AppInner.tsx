@@ -18,6 +18,7 @@ export type LoggedInParamList = {
   CenterInfo: undefined;
   JobPost: undefined;
   Gallery: any;
+  JobOfferForm: undefined;
   // Complete: {orderId: string};
   LogIn: {email: string};
   SignIn: undefined;

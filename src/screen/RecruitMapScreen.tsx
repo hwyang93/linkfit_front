@@ -7,7 +7,6 @@ import FloatingLinkButton from '@components/FloatingLinkButton';
 import BottomSheet from '@components/BottomSheet';
 import {SetStateAction, useEffect, useState} from 'react';
 import Geolocation from 'react-native-geolocation-service';
-import {useSafeAreaInsets} from 'react-native-safe-area-context';
 
 async function requestPermission() {
   try {
