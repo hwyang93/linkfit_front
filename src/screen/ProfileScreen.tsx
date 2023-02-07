@@ -4,11 +4,20 @@ import ProfileScreenTabView from '@screen/ProfileScreenTabView';
 import LinearGradient from 'react-native-linear-gradient';
 import {WHITE} from '@styles/colors';
 import common from '@styles/common';
-import {NavigationProp, useNavigation} from '@react-navigation/native';
+import {
+  NavigationProp,
+  RouteProp,
+  useNavigation,
+  useRoute,
+} from '@react-navigation/native';
 import {LoggedInParamList} from '../../AppInner';
+import {useEffect, useState} from 'react';
 
 const ProfileScreen = () => {
   const navigation = useNavigation<NavigationProp<LoggedInParamList>>();
+  const route = useRoute<RouteProp<LoggedInParamList, 'Profile'>>();
+  const [memberSeq] = useState(route.params.memberSeq);
+
   return (
     <SafeAreaView style={{flex: 1}}>
       {/* 탭뷰 컴포넌트 */}
@@ -16,7 +25,9 @@ const ProfileScreen = () => {
       {/* 제안하기 버튼 */}
       <Pressable
         style={styles.suggestion}
-        onPress={() => navigation.navigate('Suggestion')}>
+        onPress={() =>
+          navigation.navigate('Suggestion', {targetMemberSeq: memberSeq})
+        }>
         <LinearGradient
           style={[common.button, {height: 40}]}
           start={{x: 0.1, y: 0.5}}

@@ -13,7 +13,7 @@ export type LoggedInParamList = {
   RecruitList: undefined;
   InstructorList: undefined;
   Profile: {memberSeq: number};
-  Suggestion: undefined;
+  Suggestion: {targetMemberSeq: number};
   CenterInfo: undefined;
   JobPost: undefined;
   Gallery: any;
