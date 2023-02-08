@@ -17,13 +17,14 @@ import {iconPath} from '@util/iconPath';
 import LinearGradient from 'react-native-linear-gradient';
 
 type modalProps = {
+  title?: string;
   modalVisible: any;
   setModalVisible: any;
   filterData: any[];
 };
 
 function BottomSheet(props: modalProps) {
-  // console.log('무슨프롭', props.filterData);
+  // console.log('무슨프롭', props);
   const {modalVisible, setModalVisible} = props;
   const screenHeight = Dimensions.get('screen').height;
   const panY = useRef(new Animated.Value(screenHeight)).current;

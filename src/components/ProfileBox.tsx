@@ -59,7 +59,7 @@ function ProfileBox({memberInfo}: any) {
           style={styles.nextArrow}
           hitSlop={10}
           onPress={() => Alert.alert('click', 'test')}>
-          <FontAwesome name={'chevron-right'} />
+          <FontAwesome name={'chevron-right'} color="black" />
         </Pressable>
       </View>
     </View>

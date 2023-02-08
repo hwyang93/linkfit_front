@@ -21,7 +21,7 @@ import {
   useNavigation,
   useRoute,
 } from '@react-navigation/native';
-import {LoggedInParamList, RootStackParamList} from '../../AppInner';
+import {LoggedInParamList} from '../../AppInner';
 import {BLACK} from '@styles/colors';
 import {login} from '@api/auth';
 import {fetchMemberInfo} from '@api/member';
@@ -31,9 +31,9 @@ import EncryptedStorage from 'react-native-encrypted-storage';
 
 function LogIn() {
   const dispatch = useAppDispatch();
-  const rootNavigation = useNavigation<NavigationProp<RootStackParamList>>();
+  const rootNavigation = useNavigation<NavigationProp<LoggedInParamList>>();
   const mainNavigation = useNavigation<NavigationProp<LoggedInParamList>>();
-  const route = useRoute<RouteProp<RootStackParamList, 'LogIn'>>();
+  const route = useRoute<RouteProp<LoggedInParamList, 'LogIn'>>();
 
   const [password, setPassword] = useState<string>('');
   const [loading, setLoading] = useState<boolean>(false);

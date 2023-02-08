@@ -10,20 +10,19 @@ import {
   Keyboard,
 } from 'react-native';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
-import {RootStackParamList} from '../../AppInner';
+import {LoggedInParamList} from '../../AppInner';
 // import {useAppDispatch} from '../store';
-import {validateEmail, removeWhitespace, validatePassword} from '@util/util';
+import {validateEmail, removeWhitespace} from '@util/util';
 import Input, {KeyboardTypes, ReturnKeyTypes} from '@components/Input';
 import useInput from '../hooks/useInput';
 import common from '@styles/common';
 import SimpleLogin from '@components/SimpleLogin';
 import LinearGradient from 'react-native-linear-gradient';
 import Logo from '@components/Logo';
-import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import {fetchMemberInfoByEmail} from '@api/member';
-import EncryptedStorage from 'react-native-encrypted-storage';
+// import EncryptedStorage from 'react-native-encrypted-storage';
 
-type SignInScreenProps = NativeStackScreenProps<RootStackParamList, 'SignIn'>;
+type SignInScreenProps = NativeStackScreenProps<LoggedInParamList, 'SignIn'>;
 
 function SignIn({navigation}: SignInScreenProps) {
   // const dispatch = useAppDispatch();

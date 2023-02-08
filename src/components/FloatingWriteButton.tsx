@@ -1,37 +1,35 @@
-import {Alert, Image, Platform, Pressable, StyleSheet} from 'react-native';
+import {Image, Platform, Pressable, StyleSheet} from 'react-native';
 import common from '@styles/common';
-import {WHITE} from '@styles/colors';
-import {NavigationProp, useNavigation} from '@react-navigation/native';
-import {LoggedInParamList} from '../../AppInner';
-import {iconPath} from '@util/iconPath';
+import LinearGradient from 'react-native-linear-gradient';
 
 type ButtonProps = {
   title?: string;
   link?: any;
   icon: object;
+  setModalVisible: (pressButton: boolean) => void;
 };
 
-const FloatingLinkButton = ({title, link, icon}: ButtonProps) => {
-  const navigation = useNavigation<NavigationProp<LoggedInParamList>>();
-
+const FloatingLinkButton = ({icon, setModalVisible}: ButtonProps) => {
+  const pressButton = () => {
+    setModalVisible(true);
+  };
   return (
-    <Pressable
-      style={styles.floatingButton}
-      onPress={() => Alert.alert('click', 'test')}>
-      <Image source={icon} style={common.size24} />
+    <Pressable style={styles.buttonPosition} onPress={pressButton}>
+      <LinearGradient
+        style={styles.floatingButton}
+        start={{x: 0.1, y: 0.5}}
+        end={{x: 0.6, y: 1}}
+        colors={['#74ebe4', '#3962f3']}>
+        <Image source={icon} style={common.size24} />
+      </LinearGradient>
     </Pressable>
   );
 };
 const styles = StyleSheet.create({
-  floatingButton: {
+  buttonPosition: {
     position: 'absolute',
     bottom: 16,
     right: 16,
-    alignItems: 'center',
-    justifyContent: 'center',
-    width: 40,
-    height: 40,
-    backgroundColor: WHITE,
     ...Platform.select({
       ios: {
         shadowColor: 'rgb(0,0,0)',
@@ -44,6 +42,12 @@ const styles = StyleSheet.create({
       },
       android: {elevation: 3},
     }),
+  },
+  floatingButton: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    width: 40,
+    height: 40,
     borderRadius: 20,
   },
 });

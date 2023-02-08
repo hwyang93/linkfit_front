@@ -16,7 +16,7 @@ import BirthdayPicker from '@components/BirthdayPicker';
 import SelectBox from '@components/SelectBox';
 import {createMember} from '@api/member';
 import {RouteProp, useRoute} from '@react-navigation/native';
-import {RootStackParamList} from '../../../AppInner';
+import {LoggedInParamList} from '../../../AppInner';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
 
 const genderData = [{value: '남자'}, {value: '여자'}];
@@ -24,10 +24,13 @@ const agencyData = ['SKT', 'KT', 'LG U+', '알뜰폰'];
 const loading = false;
 const canGoNext = true;
 
-type SignUpScreenProps = NativeStackScreenProps<RootStackParamList, 'SignUp'>;
+type SignUpScreenProps = NativeStackScreenProps<
+  LoggedInParamList,
+  'SignUpForm'
+>;
 
 function SignUpFormScreen({navigation}: SignUpScreenProps) {
-  const route = useRoute<RouteProp<RootStackParamList, 'LogIn'>>();
+  const route = useRoute<RouteProp<LoggedInParamList, 'SignUpForm'>>();
 
   const [email] = useState(route.params.email);
   const [userName, setUserName] = useState('');
