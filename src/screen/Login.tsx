@@ -32,6 +32,7 @@ import EncryptedStorage from 'react-native-encrypted-storage';
 function LogIn() {
   const dispatch = useAppDispatch();
   const rootNavigation = useNavigation<NavigationProp<LoggedInParamList>>();
+  const navigation = useNavigation<NavigationProp<LoggedInParamList>>();
   const mainNavigation = useNavigation<NavigationProp<LoggedInParamList>>();
   const route = useRoute<RouteProp<LoggedInParamList, 'LogIn'>>();
 
@@ -75,7 +76,7 @@ function LogIn() {
             email: data.email,
           }),
         );
-        mainNavigation.navigate('Link');
+        navigation.navigate('ContentTab', {screen: 'Link'});
       })
       .catch((e: {message: any}) => {
         console.log(e.message);
