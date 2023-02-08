@@ -76,10 +76,6 @@ function SignIn({navigation}: SignInScreenProps) {
   //   navigation.navigate('SignUp');
   // }, [navigation]);
 
-  const testClick = () => {
-    Alert.alert('알림', '클릭테스트에용');
-  };
-
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
       <View style={common.container}>
@@ -124,12 +120,9 @@ function SignIn({navigation}: SignInScreenProps) {
           <SimpleLogin />
           {/* 간편 로그인 컴포넌트 */}
           <View>
-            <Pressable onPress={testClick}>
+            <Pressable onPress={() => navigation.navigate('Link')}>
               <Text style={styles.easyLink}>로그인없이 둘러보기</Text>
             </Pressable>
-            {/*<Pressable onPress={() => navigation.navigate('SignUp')}>*/}
-            {/*  <Text style={styles.easyLink}>회원가입페이지(임시)</Text>*/}
-            {/*</Pressable>*/}
           </View>
         </View>
       </View>
