@@ -1,4 +1,11 @@
-import {Image, StyleSheet, Text, View} from 'react-native';
+import {
+  ActivityIndicator,
+  Image,
+  Pressable,
+  StyleSheet,
+  Text,
+  View,
+} from 'react-native';
 import {GRAY, WHITE} from '@styles/colors';
 import DismissKeyboardView from '@components/DismissKeyboardView';
 import {iconPath} from '@util/iconPath';
@@ -6,21 +13,26 @@ import common from '@styles/common';
 import Input, {KeyboardTypes} from '@components/Input';
 import {useState} from 'react';
 import SelectBox from '@components/SelectBox';
+import LinearGradient from 'react-native-linear-gradient';
 
 function JobOfferFormScreen() {
   const [offerTitle, setOfferTitle] = useState('');
-  const [jobPosition, setJobPosition] = useState('');
+  const [position, setPosition] = useState('');
   const [education, setEducation] = useState('');
   const [career, setCareer] = useState('');
   const [time, setTime] = useState('');
   const [payType, setPayType] = useState('');
   const [pay, setPay] = useState('');
+  const [content, setContent] = useState('');
 
   const POSITION = ['실장', '필라테스', '요가'];
   const EDUCATION = ['학력 무관', '고졸 이상', '대졸 이상'];
   const CAREER = ['경력 무관', '신입', '1년 이상', '3년 이상', '5년 이상'];
   const TIME = ['평일 오전', '평일 오후', '주말 오전', '주말 오후'];
   const PAY_TYPE = ['시급', '주급', '월급', '연봉'];
+
+  const [loading, setLoading] = useState<boolean>(false);
+  const canGoNext = false;
 
   return (
     <DismissKeyboardView>
@@ -45,7 +57,7 @@ function JobOfferFormScreen() {
         <View style={common.mb16}>
           <SelectBox
             data={POSITION}
-            onSelect={(value: any) => setJobPosition(value)}
+            onSelect={(value: any) => setPosition(value)}
             defaultButtonText={'채용 포지션'}
           />
         </View>
@@ -80,6 +92,48 @@ function JobOfferFormScreen() {
             onSelect={(value: any) => setPayType(value)}
             defaultButtonText={'급여 형태를 선택하세요.'}
           />
+        </View>
+        {/* 급여 */}
+        <View style={common.mb16}>
+          <Input
+            label={'급여'}
+            onChangeText={(text: string) => setPay(text)}
+            value={pay}
+            placeholder={'급여를 입력하세요.'}
+            keyboardType={KeyboardTypes.DEFAULT}
+            editable={true}
+          />
+        </View>
+        {/* 상세 정보 */}
+        <View style={common.mb16}>
+          <Input
+            label={'상세 정보'}
+            onChangeText={(text: string) => setContent(text)}
+            value={content}
+            placeholder={'상세 정보를 작성해주세요.'}
+            keyboardType={KeyboardTypes.DEFAULT}
+            editable={true}
+            multiline={true}
+          />
+        </View>
+
+        {/* 채용 공고 등록 버튼 */}
+        <View style={common.mt40}>
+          <Pressable onPress={() => {}}>
+            <LinearGradient
+              style={common.button}
+              start={{x: 0.1, y: 0.5}}
+              end={{x: 0.6, y: 1}}
+              colors={
+                canGoNext ? ['#74ebe4', '#3962f3'] : ['#dcdcdc', '#dcdcdc']
+              }>
+              {loading ? (
+                <ActivityIndicator color="white" />
+              ) : (
+                <Text style={common.buttonText}>채용 공고 등록</Text>
+              )}
+            </LinearGradient>
+          </Pressable>
         </View>
       </View>
     </DismissKeyboardView>
