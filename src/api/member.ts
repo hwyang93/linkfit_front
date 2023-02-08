@@ -11,3 +11,7 @@ export function fetchMemberInfo() {
 export function fetchMemberInfoByEmail(email: string) {
   return request.get(`/member/check/email/${email}`);
 }
+
+export function fetchMemberMyInfo() {
+  return request.get('/member/my');
+}

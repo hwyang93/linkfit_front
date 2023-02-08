@@ -4,7 +4,7 @@ import {iconPath} from '@util/iconPath';
 import {BLUE, GRAY} from '@styles/colors';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 
-function ProfileBox() {
+function ProfileBox({memberInfo}: any) {
   return (
     <View>
       <View style={styles.profileBox}>
@@ -13,26 +13,34 @@ function ProfileBox() {
         </View>
         <View>
           <View style={common.rowCenter}>
-            <Text style={[common.text_l, common.fwb, common.mr8]}>닉네임</Text>
-            <View style={common.rowCenter}>
-              <Text style={[common.text_s, {color: BLUE.DEFAULT}]}>
-                인증강사
-              </Text>
-              <Image
-                style={{marginLeft: 2, width: 14, height: 14}}
-                source={iconPath.CERTIFICATION}
-              />
-            </View>
+            <Text style={[common.text_l, common.fwb, common.mr8]}>
+              {memberInfo.nickname}
+            </Text>
+            {memberInfo.type === 'INSTRUCTOR' ? (
+              <View style={common.rowCenter}>
+                <Text style={[common.text_s, {color: BLUE.DEFAULT}]}>
+                  인증강사
+                </Text>
+                <Image
+                  style={{marginLeft: 2, width: 14, height: 14}}
+                  source={iconPath.CERTIFICATION}
+                />
+              </View>
+            ) : (
+              ''
+            )}
           </View>
 
           <View style={common.rowCenter}>
             <Text style={[common.text_m, common.fwb, common.mr8]}>
-              필라테스
+              {memberInfo.field}
             </Text>
             <Text style={[common.text, common.mr8, {alignSelf: 'flex-end'}]}>
-              3년
+              {memberInfo.career}
             </Text>
-            <Text style={[common.text_s, {color: GRAY.DARK}]}>서울 송파구</Text>
+            <Text style={[common.text_s, {color: GRAY.DARK}]}>
+              {memberInfo.address}
+            </Text>
           </View>
 
           <View style={common.rowCenter}>
@@ -42,7 +50,9 @@ function ProfileBox() {
                 style={[common.size24, common.mr8]}
               />
             </Pressable>
-            <Text style={[common.text_m, common.fwb, common.mr8]}>23</Text>
+            <Text style={[common.text_m, common.fwb, common.mr8]}>
+              {memberInfo.followerCount}
+            </Text>
           </View>
         </View>
         <Pressable

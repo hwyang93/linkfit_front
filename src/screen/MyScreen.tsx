@@ -15,45 +15,78 @@ import common from '@styles/common';
 import {iconPath} from '@util/iconPath';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import MyTitle from '@components/My/MyTitle';
+import {useEffect, useState} from 'react';
+import {fetchMemberMyInfo} from '@api/member';
 
 const windowWidth = Dimensions.get('window').width;
 const columns3 = (windowWidth - 32) / 3;
 const columns4 = (windowWidth - 32) / 4;
+const MENU = [
+  {
+    icon: iconPath.MY_PLACE,
+    title: '지역 인증',
+  },
+  {
+    icon: iconPath.MY_LICENSE,
+    title: '강사 인증',
+  },
+  {
+    icon: iconPath.MY_REVIEWS,
+    title: '후기 관리',
+  },
+  {
+    icon: iconPath.MY_FOLLOWING,
+    title: '팔로잉 관리',
+  },
+  {
+    icon: iconPath.MY_BOOKMARK,
+    title: '북마크 관리',
+  },
+  {
+    icon: iconPath.MY_SETTINGS,
+    title: '설정',
+  },
+];
 
 function MyScreen() {
   const insets = useSafeAreaInsets();
-  const MENU = [
-    {
-      icon: iconPath.MY_PLACE,
-      title: '지역 인증',
+  const [myInfo, setMyInfo] = useState({
+    memberInfo: {},
+    masterResume: {
+      title: undefined,
     },
-    {
-      icon: iconPath.MY_LICENSE,
-      title: '강사 인증',
+    applyCountInfo: {
+      totalApplyCount: undefined,
+      passApplyCount: undefined,
+      failApplyCount: undefined,
+      cancelApplyCount: undefined,
     },
-    {
-      icon: iconPath.MY_REVIEWS,
-      title: '후기 관리',
+    suggestCountInfo: {
+      totalSuggestCount: undefined,
+      waitingSuggestCount: undefined,
+      completeSuggestCount: undefined,
+      closeSuggestCount: undefined,
     },
-    {
-      icon: iconPath.MY_FOLLOWING,
-      title: '팔로잉 관리',
+    noticeCountInfo: {
+      totalNoticeCount: undefined,
+      recruitCount: undefined,
+      seekCount: undefined,
     },
-    {
-      icon: iconPath.MY_BOOKMARK,
-      title: '북마크 관리',
-    },
-    {
-      icon: iconPath.MY_SETTINGS,
-      title: '설정',
-    },
-  ];
-
+  });
+  useEffect(() => {
+    fetchMemberMyInfo()
+      .then(({data}: any) => {
+        setMyInfo(data);
+      })
+      .catch((e: any) => {
+        console.log(e);
+      });
+  }, []);
   return (
     <ScrollView style={{flex: 1, backgroundColor: WHITE}}>
       <View style={[styles.container, {paddingBottom: insets.bottom}]}>
         <View style={common.mb20}>
-          <ProfileBox />
+          <ProfileBox memberInfo={myInfo.memberInfo} />
         </View>
 
         <View style={common.mb8}>
@@ -78,39 +111,45 @@ function MyScreen() {
         </View>
 
         {/* 이력서 박스 */}
-        <View style={common.mb8}>
-          <View style={styles.borderBox}>
-            <View
-              style={[
-                common.mb8,
-                {
-                  paddingVertical: 4,
-                  paddingHorizontal: 8,
-                  width: 45,
-                  backgroundColor: '#d7e0fd',
-                  borderRadius: 10,
-                },
-              ]}>
-              <Text
+        {myInfo.masterResume ? (
+          <View style={common.mb8}>
+            <View style={styles.borderBox}>
+              <View
                 style={[
-                  common.text,
-                  common.fs10,
-                  {color: BLUE.DEFAULT, textAlign: 'center'},
+                  common.mb8,
+                  {
+                    paddingVertical: 4,
+                    paddingHorizontal: 8,
+                    width: 45,
+                    backgroundColor: '#d7e0fd',
+                    borderRadius: 10,
+                  },
                 ]}>
-                대표
+                <Text
+                  style={[
+                    common.text,
+                    common.fs10,
+                    {color: BLUE.DEFAULT, textAlign: 'center'},
+                  ]}>
+                  대표
+                </Text>
+              </View>
+              <Text style={common.title}>{myInfo.masterResume.title}</Text>
+              <Text style={[common.text_s, {color: GRAY.DARK}]}>
+                2022.12.09
               </Text>
+              <Pressable
+                style={styles.kebabIcon}
+                hitSlop={10}
+                onPress={() => Alert.alert('click', 'test')}>
+                <Image source={iconPath.KEBAB} style={[common.KEBAB]} />
+              </Pressable>
             </View>
-            <Text style={common.title}>3년차 필라테스 강사입니다.</Text>
-            <Text style={[common.text_s, {color: GRAY.DARK}]}>2022.12.09</Text>
-            <Pressable
-              style={styles.kebabIcon}
-              hitSlop={10}
-              onPress={() => Alert.alert('click', 'test')}>
-              <Image source={iconPath.KEBAB} style={[common.KEBAB]} />
-            </Pressable>
           </View>
-        </View>
-        {/* 등록된 이력서 없을 경우 */}
+        ) : (
+          ''
+          /* 등록된 이력서 없을 경우 */
+        )}
         {/* 이력서 박스 */}
 
         <View style={[common.mb8]}>
@@ -130,7 +169,9 @@ function MyScreen() {
                 },
               ]}>
               <Text style={common.text_s}>지원 완료</Text>
-              <Text style={common.title_s}>3</Text>
+              <Text style={common.title_s}>
+                {myInfo.applyCountInfo.totalApplyCount}
+              </Text>
             </View>
             <View
               style={[
@@ -143,7 +184,9 @@ function MyScreen() {
                 },
               ]}>
               <Text style={common.text_s}>합격</Text>
-              <Text style={common.title_s}>1</Text>
+              <Text style={common.title_s}>
+                {myInfo.applyCountInfo.passApplyCount}
+              </Text>
             </View>
             <View
               style={[
@@ -156,7 +199,9 @@ function MyScreen() {
                 },
               ]}>
               <Text style={common.text_s}>불합격</Text>
-              <Text style={common.title_s}>2</Text>
+              <Text style={common.title_s}>
+                {myInfo.applyCountInfo.failApplyCount}
+              </Text>
             </View>
             <View
               style={[
@@ -167,7 +212,9 @@ function MyScreen() {
                 },
               ]}>
               <Text style={common.text_s}>지원 취소</Text>
-              <Text style={common.title_s}>0</Text>
+              <Text style={common.title_s}>
+                {myInfo.applyCountInfo.cancelApplyCount}
+              </Text>
             </View>
           </View>
         </View>
@@ -189,7 +236,9 @@ function MyScreen() {
                 },
               ]}>
               <Text style={common.text_s}>전체</Text>
-              <Text style={common.title_s}>3</Text>
+              <Text style={common.title_s}>
+                {myInfo.suggestCountInfo.totalSuggestCount}
+              </Text>
             </View>
             <View
               style={[
@@ -202,7 +251,9 @@ function MyScreen() {
                 },
               ]}>
               <Text style={common.text_s}>답변 대기중</Text>
-              <Text style={common.title_s}>1</Text>
+              <Text style={common.title_s}>
+                {myInfo.suggestCountInfo.waitingSuggestCount}
+              </Text>
             </View>
             <View
               style={[
@@ -215,7 +266,9 @@ function MyScreen() {
                 },
               ]}>
               <Text style={common.text_s}>답변 완료</Text>
-              <Text style={common.title_s}>2</Text>
+              <Text style={common.title_s}>
+                {myInfo.suggestCountInfo.completeSuggestCount}
+              </Text>
             </View>
             <View
               style={[
@@ -226,7 +279,9 @@ function MyScreen() {
                 },
               ]}>
               <Text style={common.text_s}>마감</Text>
-              <Text style={common.title_s}>0</Text>
+              <Text style={common.title_s}>
+                {myInfo.suggestCountInfo.closeSuggestCount}
+              </Text>
             </View>
           </View>
         </View>
@@ -248,7 +303,9 @@ function MyScreen() {
                 },
               ]}>
               <Text style={common.text_s}>등록 완료</Text>
-              <Text style={common.title_s}>3</Text>
+              <Text style={common.title_s}>
+                {myInfo.noticeCountInfo.totalNoticeCount}
+              </Text>
             </View>
             <View
               style={[
@@ -261,7 +318,9 @@ function MyScreen() {
                 },
               ]}>
               <Text style={common.text_s}>구인 공고</Text>
-              <Text style={common.title_s}>2</Text>
+              <Text style={common.title_s}>
+                {myInfo.noticeCountInfo.recruitCount}
+              </Text>
             </View>
             <View
               style={[
@@ -272,7 +331,9 @@ function MyScreen() {
                 },
               ]}>
               <Text style={common.text_s}>구직 공고</Text>
-              <Text style={[common.title_s]}>준비중</Text>
+              <Text style={[common.title_s]}>
+                {myInfo.noticeCountInfo.seekCount}
+              </Text>
             </View>
           </View>
         </View>

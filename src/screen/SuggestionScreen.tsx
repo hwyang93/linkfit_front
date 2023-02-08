@@ -15,6 +15,7 @@ import DismissKeyboardView from '@components/DismissKeyboardView';
 import {RouteProp, useRoute} from '@react-navigation/native';
 import {LoggedInParamList} from '../../AppInner';
 import {createInstructorSuggest} from '@api/instructor';
+import {NativeStackScreenProps} from '@react-navigation/native-stack';
 
 const SUGGESTION = [
   '필라테스 강사님 구합니다.',
@@ -29,8 +30,12 @@ const DEADLINE = [
   '2주 후',
   '한달 후',
 ];
+type SuggestionScreenProps = NativeStackScreenProps<
+  LoggedInParamList,
+  'Suggestion'
+>;
 
-function SuggestionScreen() {
+function SuggestionScreen({navigation}: SuggestionScreenProps) {
   const route = useRoute<RouteProp<LoggedInParamList, 'Suggestion'>>();
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
@@ -51,11 +56,19 @@ function SuggestionScreen() {
     await createInstructorSuggest(data)
       .then(() => {
         Alert.alert('제안 성공!!!');
+        navigation.pop();
       })
       .catch((e: {message: any}) => {
         console.log(e.message);
       });
-  }, [closingDate, content, recruitSeq, route.params.targetMemberSeq, title]);
+  }, [
+    closingDate,
+    content,
+    navigation,
+    recruitSeq,
+    route.params.targetMemberSeq,
+    title,
+  ]);
   return (
     <DismissKeyboardView>
       <View style={styles.container}>
