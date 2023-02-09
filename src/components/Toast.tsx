@@ -19,7 +19,7 @@ import {iconPath} from '@util/iconPath';
 const windowWidth = Dimensions.get('window').width;
 
 const Toast = forwardRef((props, ref: any) => {
-  const [message, setMessage] = useState('');
+  const [message, setMessage] = useState<any[]>([]);
   const [type, setType] = useState('');
   const toastOpacity = useSharedValue(0);
   const isShowed = useRef(false);
@@ -48,8 +48,8 @@ const Toast = forwardRef((props, ref: any) => {
         setType(message.type);
         isShowed.current = true;
         toastOpacity.value = withSequence(
-          withTiming(1, {duration: 500}),
-          withTiming(0, {duration: 2000}, () => {
+          withTiming(1, {duration: 600}),
+          withTiming(0, {duration: 3000}, () => {
             runOnJS(turnOnIsShow)();
           }),
         );
@@ -96,6 +96,9 @@ const styles = StyleSheet.create({
   message: {
     marginLeft: 8,
   },
+  error: {backgroundColor: '#ffd3d6'},
+  warn: {backgroundColor: '#ffeec3'},
+  success: {backgroundColor: '#cbf4d4'},
 });
 
 export default Toast;

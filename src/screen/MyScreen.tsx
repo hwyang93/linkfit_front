@@ -13,7 +13,6 @@ import {BLUE, GRAY, WHITE} from '@styles/colors';
 import ProfileBox from '@components/ProfileBox';
 import common from '@styles/common';
 import {iconPath} from '@util/iconPath';
-import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import MyTitle from '@components/My/MyTitle';
 import {useEffect, useState} from 'react';
 import {fetchMemberMyInfo} from '@api/member';
@@ -77,9 +76,10 @@ function MyScreen() {
     fetchMemberMyInfo()
       .then(({data}: any) => {
         setMyInfo(data);
+        console.log('보이는', setMyInfo);
       })
       .catch((e: any) => {
-        console.log(e);
+        console.log('이건가', e);
       });
   }, []);
   return (

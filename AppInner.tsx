@@ -17,6 +17,8 @@ export type LoggedInParamList = {
   Message: undefined;
   Community: undefined;
   My: undefined;
+  ProfileEdit: undefined;
+  LinkAdd: undefined;
   RecruitMap: undefined;
   RecruitList: undefined;
   InstructorList: undefined;
