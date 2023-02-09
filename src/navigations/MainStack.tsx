@@ -20,6 +20,8 @@ import SignUpFormScreen from '@screen/Registration/SignUpFormScreen';
 import CompanySignUpFormScreen from '@screen/Registration/CompanySignUpFormScreen';
 import PasswordReset from '@screen/Registration/PasswordReset';
 import JobOfferFormScreen from '@screen/JobOfferFormScreen';
+import ProfileEditScreen from '@screen/My/ProfileEditScreen';
+import LinkAddScreen from '@screen/My/LinkAddScreen';
 
 const Stack = createNativeStackNavigator<LoggedInParamList>();
 
@@ -70,6 +72,16 @@ const MainStack = () => {
           name="Profile"
           component={ProfileScreen}
           options={{title: '프로필', headerRight: HeaderRight}}
+        />
+        <Stack.Screen
+          name="ProfileEdit"
+          component={ProfileEditScreen}
+          options={{title: '프로필'}}
+        />
+        <Stack.Screen
+          name="LinkAdd"
+          component={LinkAddScreen}
+          options={{title: '링크 추가'}}
         />
         <Stack.Screen
           name="Suggestion"

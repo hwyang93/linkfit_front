@@ -3,8 +3,12 @@ import common from '@styles/common';
 import {iconPath} from '@util/iconPath';
 import {BLUE, GRAY} from '@styles/colors';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
+import {NavigationProp, useNavigation} from '@react-navigation/native';
+import {LoggedInParamList} from '../../AppInner';
 
 function ProfileBox({memberInfo}: any) {
+  const navigation = useNavigation<NavigationProp<LoggedInParamList>>();
+
   return (
     <View>
       <View style={styles.profileBox}>
@@ -58,7 +62,7 @@ function ProfileBox({memberInfo}: any) {
         <Pressable
           style={styles.nextArrow}
           hitSlop={10}
-          onPress={() => Alert.alert('click', 'test')}>
+          onPress={() => navigation.navigate('ProfileEdit')}>
           <FontAwesome name={'chevron-right'} color="black" />
         </Pressable>
       </View>

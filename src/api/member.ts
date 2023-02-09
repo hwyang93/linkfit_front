@@ -15,3 +15,7 @@ export function fetchMemberInfoByEmail(email: string) {
 export function fetchMemberMyInfo() {
   return request.get('/member/my');
 }
+
+export function editProfile() {
+  return request.patch('/member/profile');
+}

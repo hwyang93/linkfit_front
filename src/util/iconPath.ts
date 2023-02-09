@@ -25,6 +25,7 @@ export const iconPath = {
   TAB_BAR_ICON_4: require('@images/icon/tabBarIcon_4.png'),
   TAB_BAR_ICON_4_ON: require('@images/icon/tabBarIcon_4_on.png'),
   TOAST_ERROR: require('@images/icon/toast_error.png'),
+  TOAST_WARN: require('@images/icon/toast_warn.png'),
   TOAST_SUCCESS: require('@images/icon/toast_success.png'),
   BELL: require('@images/icon/bell.png'),
   BELL_ON: require('@images/icon/bell_on.png'),
