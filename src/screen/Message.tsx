@@ -5,6 +5,7 @@ import {WHITE} from '@styles/colors';
 
 function Message() {
   const navigation = useNavigation<NavigationProp<LoggedInParamList>>();
+
   return (
     <View style={styles.container}>
       <Text>쪽지 화면</Text>

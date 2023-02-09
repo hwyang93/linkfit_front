@@ -1,6 +1,5 @@
 import {
   ActivityIndicator,
-  Alert,
   Keyboard,
   Pressable,
   StyleSheet,
@@ -8,12 +7,11 @@ import {
   TouchableWithoutFeedback,
   View,
 } from 'react-native';
-import {useCallback, useState} from 'react';
+import {useRef, useState} from 'react';
 import common from '@styles/common';
 import Input, {KeyboardTypes, ReturnKeyTypes} from '@components/Input';
 import LinearGradient from 'react-native-linear-gradient';
 import Logo from '@components/Logo';
-import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import {
   NavigationProp,
   RouteProp,
@@ -26,7 +24,7 @@ import {login} from '@api/auth';
 import {fetchMemberInfo} from '@api/member';
 import {useAppDispatch} from '@/store';
 import userSlice from '@slices/user';
-
+import Toast from '../components/Toast';
 import EncryptedStorage from 'react-native-encrypted-storage';
 
 function LogIn() {
@@ -40,6 +38,7 @@ function LogIn() {
   const [loading, setLoading] = useState<boolean>(false);
 
   const canGoNext = password;
+  const toastRef = useRef([]);
 
   // const onSubmit = useCallback(async () => {}, []);
 
@@ -62,8 +61,9 @@ function LogIn() {
         // })
         await getMemberInfo();
       })
-      .catch(() => {
-        Alert.alert('로그인에 실패하였습니다.');
+      .catch((e: {message: any}) => {
+        // toastRef.current.show([e.message, error]);
+        toastRef.current.show({message: e.message, type: 'error'});
       });
   };
   const getMemberInfo = async () => {
@@ -82,8 +82,6 @@ function LogIn() {
         console.log(e.message);
       });
   };
-  const insets = useSafeAreaInsets();
-  console.log(insets);
 
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
@@ -130,6 +128,7 @@ function LogIn() {
             </Pressable>
           </View>
         </View>
+        <Toast ref={toastRef} />
       </View>
     </TouchableWithoutFeedback>
   );

@@ -1,11 +1,11 @@
-import React, {
+import {
   useState,
   useRef,
   useCallback,
   forwardRef,
   useImperativeHandle,
 } from 'react';
-import {View, StyleSheet, Text} from 'react-native';
+import {Dimensions, Image, StyleSheet, Text, View} from 'react-native';
 import Animated, {
   useSharedValue,
   useAnimatedStyle,
@@ -13,11 +13,17 @@ import Animated, {
   withSequence,
   runOnJS,
 } from 'react-native-reanimated';
+import common from '@styles/common';
+import {iconPath} from '@util/iconPath';
 
-const Toast = forwardRef((props, ref) => {
+const windowWidth = Dimensions.get('window').width;
+
+const Toast = forwardRef((props, ref: any) => {
   const [message, setMessage] = useState('');
+  const [type, setType] = useState('');
   const toastOpacity = useSharedValue(0);
   const isShowed = useRef(false);
+  const width = windowWidth - 32;
 
   const animatedStyle = useAnimatedStyle(() => {
     return {
@@ -33,22 +39,41 @@ const Toast = forwardRef((props, ref) => {
     isShowed.current = false;
   }, []);
 
-  const show = useCallback(message => {
-    if (!isShowed.current) {
-      setMessage(message);
-      isShowed.current = true;
-      toastOpacity.value = withSequence(
-        withTiming(1, {duration: 2000}),
-        withTiming(0, {duration: 2000}, () => {
-          runOnJS(turnOnIsShow)();
-        }),
-      );
-    }
-  }, []);
+  console.log(message);
+
+  const show = useCallback(
+    message => {
+      if (!isShowed.current) {
+        setMessage(message.message);
+        setType(message.type);
+        isShowed.current = true;
+        toastOpacity.value = withSequence(
+          withTiming(1, {duration: 500}),
+          withTiming(0, {duration: 2000}, () => {
+            runOnJS(turnOnIsShow)();
+          }),
+        );
+      }
+    },
+    [toastOpacity, turnOnIsShow],
+  );
 
   return (
-    <Animated.View style={[styles.rootContainer, animatedStyle]}>
-      <Text style={styles.message}>{message}</Text>
+    <Animated.View
+      style={[styles.rootContainer, animatedStyle, {width: width}]}>
+      <View
+        style={[
+          styles.toast,
+          type === 'error' && {backgroundColor: '#ffd3d6'},
+        ]}>
+        <Image
+          source={
+            type === 'error' ? iconPath.TOAST_ERROR : iconPath.TOAST_SUCCESS
+          }
+          style={common.size24}
+        />
+        <Text style={[common.text_m, styles.message]}>{message}</Text>
+      </View>
     </Animated.View>
   );
 });
@@ -56,14 +81,20 @@ const Toast = forwardRef((props, ref) => {
 const styles = StyleSheet.create({
   rootContainer: {
     position: 'absolute',
-    bottom: 100,
-    backgroundColor: 'rgb(95, 209, 251)',
-    paddingVertical: 9,
-    paddingHorizontal: 23,
-    borderRadius: 100,
+    left: 16,
+    bottom: 16,
+  },
+  toast: {
+    flex: 1,
+    flexDirection: 'row',
+    alignItems: 'center',
+    paddingVertical: 8,
+    paddingHorizontal: 16,
+    borderRadius: 8,
+    backgroundColor: '#cbf4d4',
   },
   message: {
-    color: 'rgb(255, 255, 255)',
+    marginLeft: 8,
   },
 });
 
