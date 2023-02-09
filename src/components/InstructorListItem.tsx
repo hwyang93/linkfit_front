@@ -16,7 +16,6 @@ type ListProps = {
   };
 };
 
-// todo: field 전달되지 않는것 같다.
 // todo: 필라테스 요가에 따라 썸넹일 이미지 변경되게 세팅 해야함(참고 ProfileScreen.tsx)
 
 function InstructorListItem({item}: ListProps) {

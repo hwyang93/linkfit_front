@@ -12,7 +12,6 @@ import {useCallback, useState} from 'react';
 import common from '@styles/common';
 import Input, {KeyboardTypes, ReturnKeyTypes} from '@components/Input';
 import LinearGradient from 'react-native-linear-gradient';
-import DismissKeyboardView from '../components/DismissKeyboardView';
 import Logo from '@components/Logo';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import {
@@ -27,6 +26,7 @@ import {login} from '@api/auth';
 import {fetchMemberInfo} from '@api/member';
 import {useAppDispatch} from '@/store';
 import userSlice from '@slices/user';
+
 import EncryptedStorage from 'react-native-encrypted-storage';
 
 function LogIn() {

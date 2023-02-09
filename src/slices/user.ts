@@ -9,7 +9,8 @@ const initialState = {
   name: '',
   email: '',
   accessToken: '',
-  money: 0,
+  lon: '',
+  lat: '',
 };
 const userSlice = createSlice({
   name: 'user',
@@ -24,8 +25,9 @@ const userSlice = createSlice({
     setAccessToken(state, action) {
       state.accessToken = action.payload;
     },
-    setMoney(state, action: PayloadAction<number>) {
-      state.money = action.payload;
+    setLocation(state, action) {
+      state.lon = action.payload.lon;
+      state.lat = action.payload.lat;
     },
     setEmail(state, action) {
       state.email = action.payload.email;

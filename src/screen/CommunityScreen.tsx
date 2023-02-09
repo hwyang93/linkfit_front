@@ -1,15 +1,23 @@
-import {Button, Text, View} from 'react-native';
-import {NavigationProp, useNavigation} from '@react-navigation/native';
-import {LoggedInParamList} from '../../AppInner';
+import {StyleSheet, Text, View} from 'react-native';
+
+import {WHITE} from '@styles/colors';
+
+// todo : 필터 컴포넌트
 
 function CommunityScreen() {
-  const navigation = useNavigation<NavigationProp<LoggedInParamList>>();
   return (
-    <View>
+    <View style={styles.container}>
       <Text>커뮤니티 화면</Text>
-      <Button title={'button'} onPress={() => navigation.navigate('SignIn')} />
     </View>
   );
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    padding: 16,
+    backgroundColor: WHITE,
+  },
+});
 
 export default CommunityScreen;
