@@ -16,6 +16,6 @@ export function fetchMemberMyInfo() {
   return request.get('/member/my');
 }
 
-export function editProfile() {
-  return request.patch('/member/profile');
+export function editProfile(data: object) {
+  return request.patch('/member/profile', data);
 }

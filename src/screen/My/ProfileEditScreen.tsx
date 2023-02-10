@@ -17,6 +17,7 @@ import LinearGradient from 'react-native-linear-gradient';
 import {editProfile} from '@api/member';
 import {NavigationProp, useNavigation} from '@react-navigation/native';
 import {LoggedInParamList} from '../../../AppInner';
+import ImagePicker from 'react-native-image-crop-picker';
 
 function ProfileEditScreen() {
   const navigation = useNavigation<NavigationProp<LoggedInParamList>>();
@@ -48,17 +49,27 @@ function ProfileEditScreen() {
       });
   }, [nickname, intro, field, links]);
 
+  const openGallery = () => {
+    ImagePicker.openPicker({
+      width: 300,
+      height: 400,
+      cropping: true,
+    }).then(image => {
+      console.log(image);
+    });
+  };
+
   const canGoNext = nickname && intro;
   return (
     <DismissKeyboardView>
       <View style={styles.container}>
-        <View style={styles.imageBox}>
+        <Pressable style={styles.imageBox} onPress={openGallery}>
           <Image
             source={require('../../assets/images/thumbnail.png')}
             style={styles.profileImage}
           />
           <Text style={[common.text, styles.textPosition]}>편집</Text>
-        </View>
+        </Pressable>
 
         <View style={common.mv16}>
           <Input
