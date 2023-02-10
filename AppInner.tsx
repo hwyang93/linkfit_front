@@ -7,6 +7,8 @@ import userSlice from '@slices/user';
 import {PermissionsAndroid, Platform} from 'react-native';
 import {useAppDispatch} from '@/store';
 import {RootState} from '@store/reducer';
+import EncryptedStorage from 'react-native-encrypted-storage';
+import {fetchMemberInfo} from '@/api/member';
 
 // import AuthStack from '@navigations/AuthStack';
 
@@ -70,7 +72,29 @@ async function requestPermission() {
 function AppInner() {
   const dispatch = useAppDispatch();
   const position = useSelector((state: RootState) => state.user.lon);
-  console.log('이렇게쓰는건가', position);
+
+  useEffect(() => {
+    const tokenCheck = async () => {
+      const token = await EncryptedStorage.getItem('accessToken');
+
+      if (token) {
+        await fetchMemberInfo()
+          .then(({data}: any) => {
+            console.log('임시 로그인');
+            dispatch(
+              userSlice.actions.setUser({
+                name: data.name,
+                email: data.email,
+              }),
+            );
+          })
+          .catch((e: {message: any}) => {
+            console.log(e.message);
+          });
+      }
+    };
+    tokenCheck();
+  }, [dispatch]);
 
   useEffect(() => {
     SplashScreen.hide();
