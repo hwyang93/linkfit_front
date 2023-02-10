@@ -19,6 +19,7 @@ export type LoggedInParamList = {
   My: undefined;
   ProfileEdit: undefined;
   CertifyForm: undefined;
+  CertifyLocation: undefined;
   LinkAdd: undefined;
   RecruitMap: undefined;
   RecruitList: undefined;
@@ -69,6 +70,7 @@ async function requestPermission() {
 function AppInner() {
   const dispatch = useAppDispatch();
   const position = useSelector((state: RootState) => state.user.lon);
+  console.log('이렇게쓰는건가', position);
 
   useEffect(() => {
     SplashScreen.hide();

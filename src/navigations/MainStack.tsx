@@ -23,6 +23,7 @@ import JobOfferFormScreen from '@screen/JobOfferFormScreen';
 import ProfileEditScreen from '@screen/My/ProfileEditScreen';
 import LinkAddScreen from '@screen/My/LinkAddScreen';
 import CertifyFormScreen from '@screen/My/CertifyFormScreen';
+import CertifyLocationScreen from '@screen/My/CertifyLocationScreen';
 
 const Stack = createNativeStackNavigator<LoggedInParamList>();
 
@@ -83,6 +84,11 @@ const MainStack = () => {
           name="CertifyForm"
           component={CertifyFormScreen}
           options={{title: '강사 인증'}}
+        />
+        <Stack.Screen
+          name="CertifyLocation"
+          component={CertifyLocationScreen}
+          options={{title: '지역 인증'}}
         />
         <Stack.Screen
           name="LinkAdd"
