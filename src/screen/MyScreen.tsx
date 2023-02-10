@@ -16,7 +16,11 @@ import {iconPath} from '@util/iconPath';
 import MyTitle from '@components/My/MyTitle';
 import {useEffect, useState} from 'react';
 import {fetchMemberMyInfo} from '@api/member';
-import {NavigationProp, useNavigation} from '@react-navigation/native';
+import {
+  NavigationProp,
+  useIsFocused,
+  useNavigation,
+} from '@react-navigation/native';
 import {LoggedInParamList} from '../../AppInner';
 
 const windowWidth = Dimensions.get('window').width;
@@ -57,6 +61,7 @@ const MENU = [
 
 function MyScreen() {
   const navigation = useNavigation<NavigationProp<LoggedInParamList>>();
+  const isFocused = useIsFocused();
   const insets = useSafeAreaInsets();
   const [myInfo, setMyInfo] = useState({
     memberInfo: {},
@@ -82,15 +87,17 @@ function MyScreen() {
     },
   });
   useEffect(() => {
-    fetchMemberMyInfo()
-      .then(({data}: any) => {
-        setMyInfo(data);
-        console.log('보이는', setMyInfo);
-      })
-      .catch((e: any) => {
-        console.log('이건가', e);
-      });
-  }, []);
+    if (isFocused) {
+      fetchMemberMyInfo()
+        .then(({data}: any) => {
+          console.log('focus');
+          setMyInfo(data);
+        })
+        .catch((e: any) => {
+          console.log('이건가', e);
+        });
+    }
+  }, [isFocused]);
   return (
     <ScrollView style={{flex: 1, backgroundColor: WHITE}}>
       <View style={[styles.container, {paddingBottom: insets.bottom}]}>
