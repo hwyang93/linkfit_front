@@ -16,6 +16,8 @@ import {iconPath} from '@util/iconPath';
 import MyTitle from '@components/My/MyTitle';
 import {useEffect, useState} from 'react';
 import {fetchMemberMyInfo} from '@api/member';
+import {NavigationProp, useNavigation} from '@react-navigation/native';
+import {LoggedInParamList} from '../../AppInner';
 
 const windowWidth = Dimensions.get('window').width;
 const columns3 = (windowWidth - 32) / 3;
@@ -24,30 +26,37 @@ const MENU = [
   {
     icon: iconPath.MY_PLACE,
     title: '지역 인증',
+    link: 'CertifyLocation',
   },
   {
     icon: iconPath.MY_LICENSE,
     title: '강사 인증',
+    link: '',
   },
   {
     icon: iconPath.MY_REVIEWS,
     title: '후기 관리',
+    link: '',
   },
   {
     icon: iconPath.MY_FOLLOWING,
     title: '팔로잉 관리',
+    link: '',
   },
   {
     icon: iconPath.MY_BOOKMARK,
     title: '북마크 관리',
+    link: '',
   },
   {
     icon: iconPath.MY_SETTINGS,
     title: '설정',
+    link: '',
   },
 ];
 
 function MyScreen() {
+  const navigation = useNavigation<NavigationProp<LoggedInParamList>>();
   const insets = useSafeAreaInsets();
   const [myInfo, setMyInfo] = useState({
     memberInfo: {},
@@ -92,14 +101,15 @@ function MyScreen() {
         <View style={common.mb8}>
           <Text style={[common.title_s]}>프로필 메뉴</Text>
           <View style={[common.rowCenter, {flexWrap: 'wrap'}]}>
-            {MENU.map((item, index) => {
+            {MENU.map((item: any, index) => {
               return (
-                <View
+                <Pressable
+                  onPress={() => navigation.navigate(item.link)}
                   key={index}
                   style={[styles.menuItem, {width: columns3, height: 80}]}>
                   <Image source={item.icon} style={common.size32} />
                   <Text style={common.text_s}>{item.title}</Text>
-                </View>
+                </Pressable>
               );
             })}
           </View>
