@@ -22,6 +22,7 @@ import PasswordReset from '@screen/Registration/PasswordReset';
 import JobOfferFormScreen from '@screen/JobOfferFormScreen';
 import ProfileEditScreen from '@screen/My/ProfileEditScreen';
 import LinkAddScreen from '@screen/My/LinkAddScreen';
+import CertifyFormScreen from '@screen/My/CertifyFormScreen';
 
 const Stack = createNativeStackNavigator<LoggedInParamList>();
 
@@ -77,6 +78,11 @@ const MainStack = () => {
           name="ProfileEdit"
           component={ProfileEditScreen}
           options={{title: '프로필'}}
+        />
+        <Stack.Screen
+          name="CertifyForm"
+          component={CertifyFormScreen}
+          options={{title: '강사 인증'}}
         />
         <Stack.Screen
           name="LinkAdd"
