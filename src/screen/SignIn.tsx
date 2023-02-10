@@ -20,6 +20,7 @@ import SimpleLogin from '@components/SimpleLogin';
 import LinearGradient from 'react-native-linear-gradient';
 import Logo from '@components/Logo';
 import {fetchMemberInfoByEmail} from '@api/member';
+import EncryptedStorage from 'react-native-encrypted-storage';
 // import EncryptedStorage from 'react-native-encrypted-storage';
 
 type SignInScreenProps = NativeStackScreenProps<LoggedInParamList, 'SignIn'>;
@@ -52,6 +53,7 @@ function SignIn({navigation}: SignInScreenProps) {
   }, []);
 
   const checkMember = async () => {
+    await EncryptedStorage.clear();
     await fetchMemberInfoByEmail(email)
       .then(({data}: any) => {
         if (data.seq) {
