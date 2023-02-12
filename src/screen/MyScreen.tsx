@@ -40,22 +40,22 @@ const MENU = [
   {
     icon: iconPath.MY_REVIEWS,
     title: '후기 관리',
-    link: '',
+    link: 'ReviewManage',
   },
   {
     icon: iconPath.MY_FOLLOWING,
     title: '팔로잉 관리',
-    link: '',
+    link: 'FollowingManage',
   },
   {
     icon: iconPath.MY_BOOKMARK,
     title: '북마크 관리',
-    link: '',
+    link: 'BookmarkManage',
   },
   {
     icon: iconPath.MY_SETTINGS,
     title: '설정',
-    link: '',
+    link: 'Setting',
   },
 ];
 
