@@ -11,7 +11,7 @@ type HeaderRightProps = {
 // todo : props 에 따른 헤더 형태 변경
 
 // const HeaderLeft: React.FC<HeaderLeftProps> = ({canGoBack, tintColor}) => {
-const HeaderLeft = ({}: HeaderRightProps) => {
+const HeaderRight = ({}: HeaderRightProps) => {
   // const navigation = useNavigation();
 
   return (
@@ -33,4 +33,4 @@ const HeaderLeft = ({}: HeaderRightProps) => {
   );
 };
 
-export default HeaderLeft;
+export default HeaderRight;

@@ -11,6 +11,7 @@ export const iconPath = {
   PHONE: require('@images/icon/phone.png'),
   PHOTO: require('@images/icon/photo.png'),
   MESSAGE: require('@images/icon/message.png'),
+  ADD_LICENSE: require('@images/icon/add_license.png'),
   BOOKMARK: require('@images/icon/bookmark.png'),
   BOOKMARK_ON: require('@images/icon/bookmark_on.png'),
   KEBAB: require('@images/icon/kebab.png'),

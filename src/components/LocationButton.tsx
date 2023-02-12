@@ -3,6 +3,8 @@ import {WHITE} from '@styles/colors';
 import {iconPath} from '@util/iconPath';
 import common from '@styles/common';
 
+// todo : 프롭스로 bottom 스타일 값 받아와서 적용하기
+
 const LocationButton = () => {
   return (
     <Pressable style={styles.locationButton}>

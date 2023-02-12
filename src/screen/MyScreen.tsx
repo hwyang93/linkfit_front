@@ -35,7 +35,7 @@ const MENU = [
   {
     icon: iconPath.MY_LICENSE,
     title: '강사 인증',
-    link: '',
+    link: 'CertifyInstructor',
   },
   {
     icon: iconPath.MY_REVIEWS,
