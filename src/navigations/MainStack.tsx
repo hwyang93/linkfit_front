@@ -29,6 +29,10 @@ import common from '@styles/common';
 import {iconPath} from '@util/iconPath';
 import {NavigationProp, useNavigation} from '@react-navigation/native';
 import CertifyInstructorFormScreen from '@screen/My/CertifyInstructorFormScreen';
+import ReviewManageScreen from '@screen/My/ReviewManageScreen';
+import FollowingManageScreen from '@screen/My/FollowingManageScreen';
+import BookmarkManageScreen from '@screen/My/BookmarkManageScreen';
+import SettingScreen from '@screen/My/SettingScreen';
 
 const Stack = createNativeStackNavigator<LoggedInParamList>();
 
@@ -107,9 +111,29 @@ const MainStack = () => {
           options={{title: '강사 인증'}}
         />
         <Stack.Screen
+          name="ReviewManage"
+          component={ReviewManageScreen}
+          options={{title: '작성 후기 관리'}}
+        />
+        <Stack.Screen
+          name="FollowingManage"
+          component={FollowingManageScreen}
+          options={{title: '팔로잉 관리'}}
+        />
+        <Stack.Screen
           name="CertifyLocation"
           component={CertifyLocationScreen}
           options={{title: '지역 인증'}}
+        />
+        <Stack.Screen
+          name="BookmarkManage"
+          component={BookmarkManageScreen}
+          options={{title: '북마크 관리'}}
+        />
+        <Stack.Screen
+          name="Setting"
+          component={SettingScreen}
+          options={{title: '설정'}}
         />
         <Stack.Screen
           name="LinkAdd"
