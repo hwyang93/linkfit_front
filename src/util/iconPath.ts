@@ -61,4 +61,11 @@ export const iconPath = {
   MY_FOLLOWING: require('@images/icon/my_following.png'),
   MY_BOOKMARK: require('@images/icon/my_bookmark.png'),
   MY_SETTINGS: require('@images/icon/my_settings.png'),
+  NOTIFICATION: require('@images/icon/notification.png'),
+  ACCOUNT: require('@images/icon/account.png'),
+  BLACKLIST: require('@images/icon/blacklist.png'),
+  NOTICE: require('@images/icon/notice.png'),
+  INQUIRY: require('@images/icon/inquiry.png'),
+  DOCUMENT: require('@images/icon/document.png'),
+  RULE: require('@images/icon/rule.png'),
 };

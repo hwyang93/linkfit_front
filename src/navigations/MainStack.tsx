@@ -33,6 +33,13 @@ import ReviewManageScreen from '@screen/My/ReviewManageScreen';
 import FollowingManageScreen from '@screen/My/FollowingManageScreen';
 import BookmarkManageScreen from '@screen/My/BookmarkManageScreen';
 import SettingScreen from '@screen/My/SettingScreen';
+import NotificationScreen from '@screen/My/NotificationScreen';
+import AccountScreen from '@screen/My/AccountScreen';
+import BlacklistScreen from '@screen/My/BlacklistScreen';
+import NoticeScreen from '@screen/My/NoticeScreen';
+import InquiryScreen from '@screen/My/InquiryScreen';
+import VersionScreen from '@screen/My/VersionScreen';
+import RulesScreen from '@screen/My/RulesScreen';
 
 const Stack = createNativeStackNavigator<LoggedInParamList>();
 
@@ -134,6 +141,41 @@ const MainStack = () => {
           name="Setting"
           component={SettingScreen}
           options={{title: '설정'}}
+        />
+        <Stack.Screen
+          name="Notification"
+          component={NotificationScreen}
+          options={{title: '알림 설정'}}
+        />
+        <Stack.Screen
+          name="Account"
+          component={AccountScreen}
+          options={{title: '계정 관리'}}
+        />
+        <Stack.Screen
+          name="Blacklist"
+          component={BlacklistScreen}
+          options={{title: '차단 사용 관리'}}
+        />
+        <Stack.Screen
+          name="Notice"
+          component={NoticeScreen}
+          options={{title: '공지사항'}}
+        />
+        <Stack.Screen
+          name="Inquiry"
+          component={InquiryScreen}
+          options={{title: '1:1 문의'}}
+        />
+        <Stack.Screen
+          name="Version"
+          component={VersionScreen}
+          options={{title: '버전 정보'}}
+        />
+        <Stack.Screen
+          name="Rule"
+          component={RulesScreen}
+          options={{title: '서비스 이용약관'}}
         />
         <Stack.Screen
           name="LinkAdd"
