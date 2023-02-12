@@ -12,10 +12,12 @@ import {RootState} from '@store/reducer';
 import {useEffect, useState} from 'react';
 import common from '@styles/common';
 import LinearGradient from 'react-native-linear-gradient';
+import LocationButton from '@components/LocationButton';
+import axios from 'axios/index';
 
 function CertifyLocationScreen() {
   const [loading, setLoading] = useState<boolean>(false);
-
+  const [locationObj, setLocationObj] = useState({});
   const [location, setLocation] = useState({
     latitude: '',
     longitude: '',
@@ -23,16 +25,76 @@ function CertifyLocationScreen() {
 
   let P0 = {latitude: 37.503979, longitude: 127.036201};
 
-  const myLat = useSelector((state: RootState) => state.user.lat);
-  const myLon = useSelector((state: RootState) => state.user.lon);
-  console.log('지금', location);
+  // const myLat = useSelector((state: RootState) => state.user.lat);
+  // const myLon = useSelector((state: RootState) => state.user.lon);
+  // console.log('지금', location);
+
+  // useEffect(() => {
+  //   setLocation({
+  //     latitude: myLat,
+  //     longitude: myLon,
+  //   });
+  // }, [myLat, myLon]);
 
   useEffect(() => {
-    setLocation({
-      latitude: myLat,
-      longitude: myLon,
-    });
-  }, [myLat, myLon]);
+    const x = '126.9539484';
+    const y = '37.3097165';
+
+    const _callApi = async () => {
+      try {
+        let res = await axios
+          .get(
+            `https://dapi.kakao.com/v2/local/geo/coord2address.json?input_coord=WGS84&x=${x}&y=${y}`,
+            {
+              headers: {
+                Authorization: 'KakaoAK 39e13da7b6ee3bc9291ca64a8c84ceb8', // REST API 키
+              },
+            },
+          )
+          .then(res => {
+            const location = res.data.documents[0];
+            setLocationObj({
+              si: location.address.region_1depth_name,
+              gu: location.address.region_2depth_name,
+              dong: location.address.region_3depth_name,
+              // locationX: location.address.x,
+              // locationY: location.address.y,
+            });
+          });
+        console.log(locationObj);
+      } catch (error) {
+        console.log(error.message);
+      }
+    };
+  }, [locationObj]);
+
+  // const x = '126.9539484';
+  // const y = '37.3097165';
+  //
+  // const mapApi = async () => {
+  //   try {
+  //     let response = await axios
+  //       .get(
+  //         `https://dapi.kakao.com/v2/local/geo/coord2address.json?input_coord=WGS84&x=${x}&y=${y}`,
+  //         {
+  //           headers: {
+  //             Authorization: 'KakaoAK 39e13da7b6ee3bc9291ca64a8c84ceb8',
+  //           },
+  //         },
+  //       )
+  //       .then(response => {
+  //         const data = response.data.documents[0];
+  //         setLocationObj({
+  //           si: data.address.region_1depth_name,
+  //           gu: data.address.region_2depth_name,
+  //           dong: data.address.region_3depth_name,
+  //         });
+  //       });
+  //     console.log(locationObj);
+  //   } catch (error) {
+  //     console.log(error.message);
+  //   }
+  // };
 
   const canGoNext = true;
 
@@ -56,6 +118,7 @@ function CertifyLocationScreen() {
             caption={{text: '현재 위치'}}
           />
         </NaverMapView>
+        <LocationButton />
       </View>
       <View>
         <Text style={[common.text_m, common.mb8]}>현재 위치는</Text>
@@ -97,7 +160,7 @@ const styles = StyleSheet.create({
   map: {
     marginBottom: 16,
     width: '100%',
-    height: 300,
+    height: 320,
   },
 });
 export default CertifyLocationScreen;
