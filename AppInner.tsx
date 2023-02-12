@@ -27,6 +27,13 @@ export type LoggedInParamList = {
   FollowingManage: undefined;
   BookmarkManage: undefined;
   Setting: undefined;
+  Notification: undefined;
+  Account: undefined;
+  Blacklist: undefined;
+  Notice: undefined;
+  Inquiry: undefined;
+  Version: undefined;
+  Rule: undefined;
   LinkAdd: undefined;
   RecruitMap: undefined;
   RecruitList: undefined;
