@@ -22,12 +22,18 @@ import PasswordReset from '@screen/Registration/PasswordReset';
 import JobOfferFormScreen from '@screen/JobOfferFormScreen';
 import ProfileEditScreen from '@screen/My/ProfileEditScreen';
 import LinkAddScreen from '@screen/My/LinkAddScreen';
-import CertifyFormScreen from '@screen/My/CertifyFormScreen';
+import CertifyInstructorScreen from '@screen/My/CertifyInstructorScreen';
 import CertifyLocationScreen from '@screen/My/CertifyLocationScreen';
+import {Image, Pressable} from 'react-native';
+import common from '@styles/common';
+import {iconPath} from '@util/iconPath';
+import {NavigationProp, useNavigation} from '@react-navigation/native';
+import CertifyInstructorFormScreen from '@screen/My/CertifyInstructorFormScreen';
 
 const Stack = createNativeStackNavigator<LoggedInParamList>();
 
 const MainStack = () => {
+  const navigation = useNavigation<NavigationProp<LoggedInParamList>>();
   return (
     <Stack.Navigator
       screenOptions={{
@@ -81,8 +87,23 @@ const MainStack = () => {
           options={{title: '프로필'}}
         />
         <Stack.Screen
-          name="CertifyForm"
-          component={CertifyFormScreen}
+          name="CertifyInstructor"
+          component={CertifyInstructorScreen}
+          options={{
+            title: '강사 인증 관리',
+            headerRight: () => (
+              <Pressable
+                onPress={() => navigation.navigate('CertifyInstructorForm')}
+                hitSlop={10}
+                style={[common.mh4, common.size24]}>
+                <Image source={iconPath.ADD_LICENSE} style={common.size24} />
+              </Pressable>
+            ),
+          }}
+        />
+        <Stack.Screen
+          name="CertifyInstructorForm"
+          component={CertifyInstructorFormScreen}
           options={{title: '강사 인증'}}
         />
         <Stack.Screen

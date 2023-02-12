@@ -1,5 +1,7 @@
 import {
   ActivityIndicator,
+  PermissionsAndroid,
+  Platform,
   Pressable,
   StyleSheet,
   Text,
@@ -7,94 +9,98 @@ import {
 } from 'react-native';
 import {WHITE} from '@styles/colors';
 import NaverMapView, {Marker} from 'react-native-nmap';
-import {useSelector} from 'react-redux';
-import {RootState} from '@store/reducer';
 import {useEffect, useState} from 'react';
 import common from '@styles/common';
 import LinearGradient from 'react-native-linear-gradient';
 import LocationButton from '@components/LocationButton';
 import axios from 'axios/index';
+import Geolocation from 'react-native-geolocation-service';
+
+async function requestPermission() {
+  try {
+    // IOS 위치 정보 수집 권한 요청
+    if (Platform.OS === 'ios') {
+      return await Geolocation.requestAuthorization('always');
+    }
+    // 안드로이드 위치 정보 수집 권한 요청
+    if (Platform.OS === 'android') {
+      return await PermissionsAndroid.request(
+        PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
+      );
+    }
+  } catch (e) {
+    console.log(e);
+  }
+}
+
+// todo : 화면 진입시 위치 좌표 가져오기
+// todo : 위치 좌표 현재위치에 바인딩
+// todo : 위치 버튼 클릭 시 좌표 재 조회
+// todo : 인증하기 버튼 기능
 
 function CertifyLocationScreen() {
   const [loading, setLoading] = useState<boolean>(false);
+  const [myLocation, setMyLocation] = useState<{
+    latitude: number;
+    longitude: number;
+  } | null>(null);
   const [locationObj, setLocationObj] = useState({});
-  const [location, setLocation] = useState({
-    latitude: '',
-    longitude: '',
-  });
 
   let P0 = {latitude: 37.503979, longitude: 127.036201};
 
-  // const myLat = useSelector((state: RootState) => state.user.lat);
-  // const myLon = useSelector((state: RootState) => state.user.lon);
-  // console.log('지금', location);
-
-  // useEffect(() => {
-  //   setLocation({
-  //     latitude: myLat,
-  //     longitude: myLon,
-  //   });
-  // }, [myLat, myLon]);
-
   useEffect(() => {
-    const x = '126.9539484';
-    const y = '37.3097165';
-
-    const _callApi = async () => {
-      try {
-        let res = await axios
-          .get(
-            `https://dapi.kakao.com/v2/local/geo/coord2address.json?input_coord=WGS84&x=${x}&y=${y}`,
-            {
-              headers: {
-                Authorization: 'KakaoAK 39e13da7b6ee3bc9291ca64a8c84ceb8', // REST API 키
-              },
-            },
-          )
-          .then(res => {
-            const location = res.data.documents[0];
-            setLocationObj({
-              si: location.address.region_1depth_name,
-              gu: location.address.region_2depth_name,
-              dong: location.address.region_3depth_name,
-              // locationX: location.address.x,
-              // locationY: location.address.y,
+    requestPermission().then(result => {
+      if (result === 'granted') {
+        Geolocation.getCurrentPosition(
+          (pos: any) => {
+            setMyLocation({
+              latitude: pos.coords.latitude,
+              longitude: pos.coords.longitude,
             });
-          });
-        console.log(locationObj);
-      } catch (error) {
-        console.log(error.message);
+          },
+          error => {
+            console.log(error);
+          },
+          {
+            enableHighAccuracy: true,
+            timeout: 3600,
+            maximumAge: 3600,
+          },
+        );
       }
-    };
-  }, [locationObj]);
+    });
+    mapApi();
+  }, []);
 
-  // const x = '126.9539484';
-  // const y = '37.3097165';
-  //
-  // const mapApi = async () => {
-  //   try {
-  //     let response = await axios
-  //       .get(
-  //         `https://dapi.kakao.com/v2/local/geo/coord2address.json?input_coord=WGS84&x=${x}&y=${y}`,
-  //         {
-  //           headers: {
-  //             Authorization: 'KakaoAK 39e13da7b6ee3bc9291ca64a8c84ceb8',
-  //           },
-  //         },
-  //       )
-  //       .then(response => {
-  //         const data = response.data.documents[0];
-  //         setLocationObj({
-  //           si: data.address.region_1depth_name,
-  //           gu: data.address.region_2depth_name,
-  //           dong: data.address.region_3depth_name,
-  //         });
-  //       });
-  //     console.log(locationObj);
-  //   } catch (error) {
-  //     console.log(error.message);
-  //   }
-  // };
+  console.log('어려워', myLocation);
+
+  const x = '126.9539484';
+  const y = '37.3097165';
+
+  const mapApi = async () => {
+    try {
+      let response = await axios
+        .get(
+          `https://dapi.kakao.com/v2/local/geo/coord2address.json?input_coord=WGS84&x=${x}&y=${y}`,
+          {
+            headers: {
+              Authorization: 'KakaoAK 39e13da7b6ee3bc9291ca64a8c84ceb8',
+            },
+          },
+        )
+        .then(response => {
+          const data = response.data.documents[0];
+          setLocationObj({
+            si: data.address.region_1depth_name,
+            gu: data.address.region_2depth_name,
+            dong: data.address.region_3depth_name,
+          });
+        });
+      console.log('지금 어디', locationObj);
+    } catch (error) {
+      console.log(error.message);
+    }
+  };
 
   const canGoNext = true;
 
@@ -106,11 +112,11 @@ function CertifyLocationScreen() {
           showsMyLocationButton={false}
           zoomControl={false}
           center={{...P0, zoom: 16}}
-          onTouch={e => console.warn('onTouch', JSON.stringify(e.nativeEvent))}
-          onCameraChange={e =>
-            console.warn('onCameraChange', JSON.stringify(e))
-          }
-          onMapClick={e => console.warn('onMapClick', JSON.stringify(e))}
+          // onTouch={e => console.warn('onTouch', JSON.stringify(e.nativeEvent))}
+          // onCameraChange={e =>
+          //   console.warn('onCameraChange', JSON.stringify(e))
+          // }
+          // onMapClick={e => console.warn('onMapClick', JSON.stringify(e))}
           useTextureView>
           <Marker
             coordinate={P0}
