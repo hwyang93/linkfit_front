@@ -24,6 +24,7 @@ export type LoggedInParamList = {
   CertifyInstructor: undefined;
   CertifyInstructorForm: undefined;
   ReviewManage: undefined;
+  ReviewForm: undefined;
   FollowingManage: undefined;
   BookmarkManage: undefined;
   Setting: undefined;

@@ -102,7 +102,7 @@ Input.defaultProps = {
 
 const styles = StyleSheet.create({
   multiline: {
-    height: 276,
+    minHeight: 276,
     textAlignVertical: 'top',
     paddingTop: 16,
     paddingBottom: 16,
