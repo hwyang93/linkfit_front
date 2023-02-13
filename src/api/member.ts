@@ -19,3 +19,11 @@ export function fetchMemberMyInfo() {
 export function editProfile(data: object) {
   return request.patch('/member/profile', data);
 }
+
+export function registerRegion(data: object) {
+  return request.post('/member/region', data);
+}
+
+export function registerReview(data: object) {
+  return request.post('/member/reputation', data);
+}

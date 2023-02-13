@@ -6,51 +6,10 @@ import InstructorListItem from '@components/InstructorListItem';
 import {iconPath} from '@util/iconPath';
 import FloatingWriteButton from '@components/FloatingWriteButton';
 import Modal from '@components/ModalSheet';
-import {SetStateAction, useState} from 'react';
+import {SetStateAction, useEffect, useState} from 'react';
+import {fetchInstructors} from '@api/instructor';
 
 function Link() {
-  const INSTRUCTORS = [
-    {
-      field: '필라테스',
-      career: '3년',
-      nickname: '사오정',
-      certification: true,
-      address: '서울 · 송파구 · 신천동',
-      hit: 23,
-    },
-    {
-      field: '요가',
-      career: '32년',
-      nickname: '그램마',
-      certification: true,
-      address: '서울 · 송파구 · 지옥동',
-      hit: 444,
-    },
-    {
-      field: '태권',
-      career: '1년',
-      nickname: '박병장',
-      certification: false,
-      address: '서울 · 종로구 · 신길동',
-      hit: 36,
-    },
-    {
-      field: '태권',
-      career: '1년',
-      nickname: '박병장',
-      certification: true,
-      address: '서울 · 종로구 · 신길동',
-      hit: 36,
-    },
-    {
-      field: '태권',
-      career: '1년',
-      nickname: '박병장',
-      certification: false,
-      address: '서울 · 종로구 · 신길동',
-      hit: 36,
-    },
-  ];
   // const DATA = ['구인 공고 등록', '구직 공고 등록'];
   const DATA = [
     {
@@ -66,6 +25,18 @@ function Link() {
   const [modalVisible, setModalVisible] =
     useState<SetStateAction<boolean>>(false);
 
+  const [instructors, setInstructors] = useState(() => []);
+  useEffect(() => {
+    fetchInstructors()
+      .then(({data}: any) => {
+        console.log('페치한 데이터', data);
+        setInstructors(data);
+      })
+      .catch((e: {message: () => any}) => {
+        console.log(e.message());
+      });
+  }, []);
+
   function renderItem({item}: any) {
     return <InstructorListItem item={item} />;
   }
@@ -73,7 +44,7 @@ function Link() {
   return (
     <View style={styles.container}>
       <FlatList
-        data={INSTRUCTORS}
+        data={instructors}
         renderItem={renderItem}
         ListHeaderComponent={<LinkTop />}
         ItemSeparatorComponent={() => <View style={common.separator} />}

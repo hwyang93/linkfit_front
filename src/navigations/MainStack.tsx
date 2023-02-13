@@ -40,6 +40,7 @@ import NoticeScreen from '@screen/My/NoticeScreen';
 import InquiryScreen from '@screen/My/InquiryScreen';
 import VersionScreen from '@screen/My/VersionScreen';
 import RulesScreen from '@screen/My/RulesScreen';
+import ReviewFormScreen from '@screen/My/ReviewFormScreen';
 
 const Stack = createNativeStackNavigator<LoggedInParamList>();
 
@@ -121,6 +122,11 @@ const MainStack = () => {
           name="ReviewManage"
           component={ReviewManageScreen}
           options={{title: '작성 후기 관리'}}
+        />
+        <Stack.Screen
+          name="ReviewForm"
+          component={ReviewFormScreen}
+          options={{title: '후기 작성'}}
         />
         <Stack.Screen
           name="FollowingManage"
