@@ -1,105 +1,55 @@
-import * as React from 'react';
-import {
-  Animated,
-  View,
-  TouchableOpacity,
-  StyleSheet,
-  StatusBar,
-} from 'react-native';
-import {TabView, SceneMap} from 'react-native-tab-view';
-import common from '@styles/common';
-import {BLUE, GRAY} from '@styles/colors';
-import {useState} from 'react';
+import {Dimensions, StyleSheet, View} from 'react-native';
+import {BLUE, GRAY, WHITE} from '@styles/colors';
+import {createMaterialTopTabNavigator} from '@react-navigation/material-top-tabs';
+import EmployerReviewComponent from '@components/My/EmployerReviewComponent';
+import EmployeeReviewComponent from '@components/My/EmployeeReviewComponent';
 
-const FirstRoute = () => (
-  <View style={[styles.container, {backgroundColor: '#ff4081'}]} />
-);
-const SecondRoute = () => (
-  <View style={[styles.container, {backgroundColor: '#673ab7'}]} />
-);
-//
-// function ReviewManageScreen() {
-//   return (
-//
-//   )
-// }
+const Tab = createMaterialTopTabNavigator();
+const windowWidth = Dimensions.get('window').width;
+const tabWidth = (windowWidth - 32) / 2;
 
-export default class TabViewExample extends React.Component {
-  state = {
-    index: 0,
-    routes: [
-      {key: 'first', title: '구직'},
-      {key: 'second', title: '구인'},
-    ],
-    selectedTab: 0,
-  };
+const First = () => {
+  return (
+    <View style={styles.container}>
+      <EmployeeReviewComponent />
+    </View>
+  );
+};
 
-  _handleIndexChange = index => this.setState({index});
+function Second() {
+  return (
+    <View style={styles.container}>
+      <EmployerReviewComponent />
+    </View>
+  );
+}
 
-  _renderTabBar = props => {
-    const inputRange = props.navigationState.routes.map((x, i) => i);
-    // const [selectedTab, setSelectedTab] = useState();
+function Tabs() {
+  return (
+    <>
+      <Tab.Navigator
+        screenOptions={{
+          tabBarLabelStyle: {fontSize: 16, fontWeight: '700'},
+          tabBarActiveTintColor: BLUE.DEFAULT,
+          tabBarInactiveTintColor: GRAY.DEFAULT,
+          tabBarItemStyle: {width: tabWidth},
+          tabBarContentContainerStyle: {
+            alignItems: 'center',
+            justifyContent: 'center',
+          },
+          tabBarIndicatorStyle: {width: tabWidth, marginLeft: 16},
+        }}>
+        <Tab.Screen name="구직" component={First} />
+        <Tab.Screen name="구인" component={Second} />
+      </Tab.Navigator>
+    </>
+  );
+}
 
-    return (
-      <View style={[styles.tabBar]}>
-        {props.navigationState.routes.map((route, i) => {
-          const opacity = props.position.interpolate({
-            inputRange,
-            outputRange: inputRange.map(inputIndex =>
-              inputIndex === i ? 1 : 0.5,
-            ),
-          });
-
-          return (
-            <TouchableOpacity
-              style={styles.tabItem}
-              onPress={() => this.setState({index: i, selectedTab: i})}>
-              <Animated.Text style={[common.text_m, {opacity}]}>
-                {route.title}
-              </Animated.Text>
-            </TouchableOpacity>
-          );
-        })}
-      </View>
-    );
-  };
-
-  _renderScene = SceneMap({
-    first: FirstRoute,
-    second: SecondRoute,
-  });
-
-  render() {
-    return (
-      <TabView
-        navigationState={this.state}
-        renderScene={this._renderScene}
-        renderTabBar={this._renderTabBar}
-        onIndexChange={this._handleIndexChange}
-      />
-    );
-  }
+export default function () {
+  return <Tabs />;
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    padding: 16,
-  },
-  tabBar: {
-    flexDirection: 'row',
-    paddingTop: StatusBar.currentHeight,
-  },
-  tabItem: {
-    flex: 1,
-    alignItems: 'center',
-    padding: 16,
-    borderBottomWidth: 1,
-    borderColor: GRAY.LIGHT,
-  },
-  active: {
-    color: BLUE.DEFAULT,
-    borderBottomWidth: 2,
-    borderColor: BLUE.DEFAULT,
-  },
+  container: {flex: 1, padding: 16, backgroundColor: WHITE, height: '100%'},
 });

@@ -12,6 +12,7 @@
   "dependencies": {
     "@react-native-community/datetimepicker": "^6.7.1",
     "@react-navigation/bottom-tabs": "^6.4.3",
+    "@react-navigation/material-top-tabs": "^6.5.3",
     "@react-navigation/native": "^6.0.16",
     "@react-navigation/native-stack": "^6.9.4",
     "@reduxjs/toolkit": "^1.9.1",
