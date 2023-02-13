@@ -31,7 +31,6 @@ function LogIn() {
   const dispatch = useAppDispatch();
   const rootNavigation = useNavigation<NavigationProp<LoggedInParamList>>();
   const navigation = useNavigation<NavigationProp<LoggedInParamList>>();
-  const mainNavigation = useNavigation<NavigationProp<LoggedInParamList>>();
   const route = useRoute<RouteProp<LoggedInParamList, 'LogIn'>>();
 
   const [password, setPassword] = useState<string>('');
@@ -55,15 +54,20 @@ function LogIn() {
             accessToken: data.accessToken,
           }),
         );
+
         await EncryptedStorage.setItem('accessToken', data.accessToken);
         // await fetchMemberInfo().then({data}=>{
         //   console.log(data)
         // })
+
         await getMemberInfo();
       })
       .catch((e: {message: any}) => {
         // toastRef.current.show([e.message, error]);
-        toastRef.current.show({message: e.message, type: 'error'});
+        toastRef.current.show({
+          message: e.message,
+          type: 'error',
+        });
       });
   };
   const getMemberInfo = async () => {
