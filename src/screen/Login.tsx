@@ -49,21 +49,19 @@ function LogIn() {
     await login(loginInfo)
       .then(async ({data}: any) => {
         console.log(data);
-        dispatch(
-          userSlice.actions.setUser({
-            accessToken: data.accessToken,
-          }),
-        );
-
+        // dispatch(
+        //   userSlice.actions.setUser({
+        //     accessToken: data.accessToken,
+        //   }),
+        // );
         await EncryptedStorage.setItem('accessToken', data.accessToken);
+        await EncryptedStorage.setItem('refreshToken', data.refreshToken);
         // await fetchMemberInfo().then({data}=>{
         //   console.log(data)
         // })
-
         await getMemberInfo();
       })
-      .catch((e: {message: any}) => {
-        // toastRef.current.show([e.message, error]);
+      .catch((e: any) => {
         toastRef.current.show({
           message: e.message,
           type: 'error',
