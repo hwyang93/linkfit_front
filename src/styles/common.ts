@@ -29,6 +29,7 @@ const common = StyleSheet.create({
   mv20: {marginVertical: 20},
   mv30: {marginVertical: 30},
   mv40: {marginVertical: 40},
+  mt8: {marginTop: 8},
   mt10: {marginTop: 10},
   mt16: {marginTop: 16},
   mt20: {marginTop: 20},

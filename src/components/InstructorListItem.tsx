@@ -31,18 +31,18 @@ function InstructorListItem({item}: ListProps) {
         />
       </Pressable>
       <View>
-        <View style={styles.rowBox}>
+        <View style={common.rowCenter}>
           <Text style={[common.text_s, common.fwb, common.mr8]}>
             {item.field}
           </Text>
           <Text style={[common.text_s]}>{item.career}</Text>
         </View>
 
-        <View style={styles.rowBox}>
+        <View style={common.rowCenter}>
           <Text style={[common.text_m, common.fwb, common.mr8]}>
             {item.nickname}
           </Text>
-          <View style={styles.rowBox}>
+          <View style={common.rowCenter}>
             <Text style={[common.text_s, {color: BLUE.DEFAULT}]}>인증강사</Text>
             <Image
               style={{marginLeft: 2, width: 14, height: 14}}
@@ -86,7 +86,6 @@ const styles = StyleSheet.create({
     paddingVertical: 16,
   },
   thumbnail: {width: 80, height: 80},
-  rowBox: {flexDirection: 'row', alignItems: 'center'},
   rightBox: {
     position: 'absolute',
     bottom: 16,
