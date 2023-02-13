@@ -30,7 +30,7 @@ const EMPLOYER = [
   },
 ];
 
-function EmployerReviewComponent() {
+function FollowingInstructorComponent() {
   return (
     <ScrollView>
       <View style={styles.reviewBox}>
@@ -39,7 +39,7 @@ function EmployerReviewComponent() {
             source={require('../../assets/images/thumbnail.png')}
             style={styles.thumbnail}
           />
-          <View>
+          <View style={{flex: 1}}>
             <View style={common.rowCenter}>
               <Text style={[common.text_m, common.fwb, common.mr8]}>
                 포지션
@@ -58,22 +58,19 @@ function EmployerReviewComponent() {
                 source={iconPath.CERTIFICATION}
               />
             </View>
-            <View
-              style={{
-                flex: 1,
-                width: '100%',
-                flexDirection: 'row',
-                backgroundColor: 'red',
-              }}>
-              <Text style={[common.text_s]}>지역</Text>
-              <View style={[common.row, {justifyContent: 'flex-end'}]}>
+            <View style={[common.rowCenterBetween]}>
+              <Text style={[common.text_s, {flex: 1}]}>지역</Text>
+              <View style={[common.rowCenter, {}]}>
                 <View>
                   <Image source={iconPath.MESSAGE} style={common.size24} />
                 </View>
                 <View>
-                  <Image source={iconPath.FAVORITE} style={common.size24} />
+                  <Image source={iconPath.FAVORITE_ON} style={common.size24} />
                 </View>
-                <Text style={[common.text_m, common.fwb]}>23</Text>
+                <Text
+                  style={[common.text_m, common.fwb, {alignSelf: 'flex-end'}]}>
+                  23
+                </Text>
               </View>
             </View>
           </View>
@@ -100,4 +97,4 @@ const styles = StyleSheet.create({
   kebabIcon: {position: 'absolute', top: 16, right: 0},
 });
 
-export default EmployerReviewComponent;
+export default FollowingInstructorComponent;
