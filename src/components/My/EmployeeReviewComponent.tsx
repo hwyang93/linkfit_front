@@ -1,5 +1,4 @@
 import {
-  Alert,
   Image,
   Pressable,
   ScrollView,
@@ -11,10 +10,28 @@ import {
 import common from '@styles/common';
 import {BLUE, GRAY, WHITE} from '@styles/colors';
 import {iconPath} from '@util/iconPath';
+import {SetStateAction, useState} from 'react';
+import Modal from '@components/ModalSheet';
 
 function EmployeeReviewComponent() {
+  const [modalVisible, setModalVisible] =
+    useState<SetStateAction<boolean>>(false);
+
+  const openModal = () => {
+    setModalVisible(true);
+  };
+
+  const DATA = [
+    {
+      value: '후기 수정하기',
+      link: 'ReviewForm',
+    },
+    {
+      value: '후기 삭제하기',
+    },
+  ];
   return (
-    <ScrollView>
+    <ScrollView style={styles.container}>
       <View style={styles.reviewBox}>
         <View style={common.rowCenter}>
           <Image
@@ -47,10 +64,7 @@ function EmployeeReviewComponent() {
           후기 내용입니다. 후기 내용입니다. 후기 내용입니다. 후기 내용입니다.
           후기 내용입니다. 후기 내용입니다.
         </Text>
-        <Pressable
-          style={styles.kebabIcon}
-          hitSlop={10}
-          onPress={() => Alert.alert('click', 'test')}>
+        <Pressable style={styles.kebabIcon} hitSlop={10} onPress={openModal}>
           <Image source={iconPath.KEBAB} style={[common.KEBAB]} />
         </Pressable>
       </View>
@@ -65,13 +79,16 @@ function EmployeeReviewComponent() {
           후기 내용입니다. 후기 내용입니다. 후기 내용입니다.
         </Text>
 
-        <Pressable
-          style={styles.kebabIcon}
-          hitSlop={10}
-          onPress={() => Alert.alert('click', 'test')}>
+        <Pressable style={styles.kebabIcon} hitSlop={10} onPress={openModal}>
           <Image source={iconPath.KEBAB} style={[common.KEBAB]} />
         </Pressable>
       </View>
+      <Modal
+        modalVisible={modalVisible}
+        setModalVisible={setModalVisible}
+        title={'더보기'}
+        modalData={DATA}
+      />
     </ScrollView>
   );
 }
