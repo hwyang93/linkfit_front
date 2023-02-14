@@ -48,6 +48,7 @@ const common = StyleSheet.create({
   mr8: {marginRight: 8},
   mr10: {marginRight: 10},
   mr16: {marginRight: 16},
+  pt16: {paddingTop: 16},
   // layout
   separator: {height: 1, backgroundColor: '#dcdcdc'},
   wrap: {

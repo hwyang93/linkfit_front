@@ -7,7 +7,8 @@ import {NavigationProp, useNavigation} from '@react-navigation/native';
 import {LoggedInParamList} from '../../AppInner';
 
 function LinkTop() {
-  const screenWidth = Math.round(Dimensions.get('window').width);
+  // const screenWidth = Math.round(Dimensions.get('window').width);
+  const screenWidth = Dimensions.get('window').width;
   const LINKS = [
     {
       num: 1,
@@ -39,6 +40,7 @@ function LinkTop() {
     },
   ];
   const navigation = useNavigation<NavigationProp<LoggedInParamList>>();
+
   return (
     <View>
       <View>
@@ -74,7 +76,7 @@ function LinkTop() {
         <View style={common.mt16}>
           {/* 슬라이드 아이템 */}
           <RecruitCarousel
-            gap={16}
+            gap={0}
             offset={0}
             links={LINKS}
             pageWidth={screenWidth - (16 + 36) * 2}

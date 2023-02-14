@@ -68,4 +68,5 @@ export const iconPath = {
   INQUIRY: require('@images/icon/inquiry.png'),
   DOCUMENT: require('@images/icon/document.png'),
   RULE: require('@images/icon/rule.png'),
+  COMMENT: require('@images/icon/comment.png'),
 };

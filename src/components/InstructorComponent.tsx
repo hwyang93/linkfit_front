@@ -17,6 +17,7 @@ function InstructorComponent({list, title, text}: InstructorProps) {
     <FlatList
       nestedScrollEnabled={true}
       data={list}
+      keyExtractor={(item, index) => index.toString()}
       decelerationRate="fast"
       renderItem={renderItem}
       snapToAlignment="start"
