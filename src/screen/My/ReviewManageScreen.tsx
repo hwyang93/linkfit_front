@@ -59,6 +59,13 @@ function Tabs() {
             justifyContent: 'center',
           },
           tabBarIndicatorStyle: {width: tabWidth, marginLeft: 16},
+          tabBarStyle: {
+            elevation: 0, // for Android
+            shadowOffset: {
+              width: 0,
+              height: 0, // for iOS
+            },
+          },
         }}>
         <Tab.Screen name="구직" component={First} />
         <Tab.Screen name="구인" component={Second} />

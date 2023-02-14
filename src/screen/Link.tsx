@@ -45,6 +45,7 @@ function Link() {
     <View style={styles.container}>
       <FlatList
         data={instructors}
+        keyExtractor={(item, index) => index.toString()}
         renderItem={renderItem}
         ListHeaderComponent={<LinkTop />}
         ItemSeparatorComponent={() => <View style={common.separator} />}

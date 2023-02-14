@@ -307,7 +307,7 @@ function MyScreen() {
           <MyTitle title={'내 공고'} button={true} />
         </View>
 
-        <View>
+        <View style={common.mb24}>
           <View style={[common.rowCenter, {flexWrap: 'wrap'}]}>
             <View
               style={[

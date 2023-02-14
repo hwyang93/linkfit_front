@@ -1,8 +1,19 @@
-import {Alert, Image, Pressable, StyleSheet, Text, View} from 'react-native';
+import {
+  Alert,
+  Dimensions,
+  Image,
+  Pressable,
+  StyleSheet,
+  Text,
+  View,
+} from 'react-native';
 import common from '@styles/common';
 import {iconPath} from '@util/iconPath';
 import {NavigationProp, useNavigation} from '@react-navigation/native';
 import {LoggedInParamList} from '../../AppInner';
+
+const windowWidth = Dimensions.get('window').width;
+const imageSize = (windowWidth - 40) / 2;
 
 type ListProps = {
   item: {
@@ -12,19 +23,22 @@ type ListProps = {
     area: string;
     src: any;
     color: string;
+    id: any;
   };
 };
 
 function RecruitListItem({item}: ListProps) {
+  console.log(imageSize);
   // console.log('뭐나오지', item);
   const navigation = useNavigation<NavigationProp<LoggedInParamList>>();
   return (
     <Pressable
       style={styles.slideBox}
       onPress={() => navigation.navigate('CenterInfo')}>
-      <View style={styles.imgBox}>
-        <Image source={item.src} resizeMode={'cover'} />
+      <View>
+        <Image source={item.src} style={styles.imgBox} resizeMode={'cover'} />
       </View>
+
       <View style={styles.infoBox}>
         {/* 포지션 */}
         <Text style={[common.text_m, common.fwb]}>{item.position}</Text>
@@ -43,10 +57,18 @@ function RecruitListItem({item}: ListProps) {
 }
 
 const styles = StyleSheet.create({
-  slideBox: {marginRight: 8, width: 160},
-  imgBox: {marginBottom: 8, width: 160, height: 104, borderRadius: 8},
+  slideBox: {
+    width: imageSize,
+    marginRight: 8,
+  },
+  imgBox: {
+    marginBottom: 8,
+    width: imageSize,
+    height: 104,
+    borderRadius: 8,
+  },
   infoBox: {position: 'relative'},
-  bookmark: {position: 'absolute', top: 5, right: 0},
+  bookmark: {position: 'absolute', top: 0, right: 0},
 });
 
 export default RecruitListItem;
