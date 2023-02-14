@@ -4,16 +4,14 @@ import RecruitCarouselItem from '@components/RecruitCarouselItem';
 type CarouselProps = {
   links: any[];
   gap: number;
-  offset: number;
+  offset?: number;
   pageWidth: number;
 };
 
-function Carousel({links, pageWidth, offset, gap}: CarouselProps) {
+function Carousel({links, pageWidth, gap}: CarouselProps) {
   function renderItem({item}: any) {
     return <RecruitCarouselItem item={item} />;
   }
-
-  console.log('page', pageWidth);
 
   return (
     <FlatList
@@ -25,9 +23,9 @@ function Carousel({links, pageWidth, offset, gap}: CarouselProps) {
       snapToInterval={pageWidth + gap}
       snapToAlignment="start"
       showsHorizontalScrollIndicator={false}
-      contentContainerStyle={{
-        paddingHorizontal: offset + gap / 2,
-      }}
+      // contentContainerStyle={{
+      //   paddingHorizontal: offset + gap / 2,
+      // }}
     />
   );
 }
