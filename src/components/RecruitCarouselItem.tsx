@@ -28,7 +28,6 @@ type ListProps = {
 };
 
 function RecruitListItem({item}: ListProps) {
-  console.log(imageSize);
   // console.log('뭐나오지', item);
   const navigation = useNavigation<NavigationProp<LoggedInParamList>>();
   return (

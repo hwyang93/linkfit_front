@@ -26,15 +26,15 @@ function Logo() {
 
 const styles = StyleSheet.create({
   logoArea: {
-    width: '100%',
     justifyContent: 'center',
     alignItems: 'center',
   },
   logoBox: {
     width: +width * 200,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   logoText: {
-    width: '100%',
     marginBottom: 8,
   },
   logoImage: {
