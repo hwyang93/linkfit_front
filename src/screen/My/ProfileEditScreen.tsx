@@ -17,7 +17,7 @@ import LinearGradient from 'react-native-linear-gradient';
 import {editProfile} from '@api/member';
 import {NavigationProp, useNavigation} from '@react-navigation/native';
 import {LoggedInParamList} from '../../../AppInner';
-import ImagePicker from 'react-native-image-crop-picker';
+import {launchImageLibrary} from 'react-native-image-picker';
 
 function ProfileEditScreen() {
   const navigation = useNavigation<NavigationProp<LoggedInParamList>>();
@@ -32,6 +32,7 @@ function ProfileEditScreen() {
     },
   ]);
   const [loading, setLoading] = useState<boolean>(false);
+  const [imageUri, setImageUri] = useState('');
 
   const confirm = useCallback(async () => {
     const data = {
@@ -49,13 +50,27 @@ function ProfileEditScreen() {
       });
   }, [nickname, intro, field, links]);
 
-  const openGallery = () => {
-    ImagePicker.openPicker({
-      width: 300,
-      height: 400,
-      cropping: true,
-    }).then(image => {
-      console.log(image);
+  const openCamera = async () => {
+    const options = {
+      storageOptions: {
+        path: 'images',
+        mediaType: 'photo',
+      },
+      includeBase64: true,
+    };
+    await launchImageLibrary(options, response => {
+      if (response.didCancel) {
+        console.log('User cancelled image picker');
+      } else if (response.error) {
+        console.log('ImagePicker Error: ', response.error);
+      } else if (response.customButton) {
+        console.log('User tapped custom button: ', response.customButton);
+      } else {
+        const source = {
+          uri: 'data:image/jpeg;base64,' + response.assets[0].base64,
+        };
+        setImageUri(source);
+      }
     });
   };
 
@@ -63,12 +78,16 @@ function ProfileEditScreen() {
   return (
     <DismissKeyboardView>
       <View style={styles.container}>
-        <Pressable style={styles.imageBox} onPress={openGallery}>
+        <Pressable style={styles.imageBox} onPress={openCamera}>
           <Image
-            source={require('../../assets/images/thumbnail.png')}
+            source={
+              imageUri ? imageUri : require('../../assets/images/thumbnail.png')
+            }
             style={styles.profileImage}
           />
-          <Text style={[common.text, styles.textPosition]}>편집</Text>
+          {!imageUri && (
+            <Text style={[common.text, styles.textPosition]}>편집</Text>
+          )}
         </Pressable>
 
         <View style={common.mv16}>
@@ -139,6 +158,7 @@ const styles = StyleSheet.create({
   profileImage: {
     width: 80,
     height: 80,
+    borderRadius: 200,
   },
   textPosition: {
     position: 'absolute',

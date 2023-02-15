@@ -321,6 +321,8 @@ PODS:
     - React-Core
   - react-native-geolocation-service (5.3.1):
     - React
+  - react-native-image-picker (5.0.2):
+    - React-Core
   - react-native-nmap (0.0.66):
     - NMapsMap
     - React
@@ -507,6 +509,7 @@ DEPENDENCIES:
   - React-logger (from `../node_modules/react-native/ReactCommon/logger`)
   - react-native-encrypted-storage (from `../node_modules/react-native-encrypted-storage`)
   - react-native-geolocation-service (from `../node_modules/react-native-geolocation-service`)
+  - react-native-image-picker (from `../node_modules/react-native-image-picker`)
   - react-native-nmap (from `../node_modules/react-native-nmap`)
   - react-native-pager-view (from `../node_modules/react-native-pager-view`)
   - react-native-safe-area-context (from `../node_modules/react-native-safe-area-context`)
@@ -612,6 +615,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native-encrypted-storage"
   react-native-geolocation-service:
     :path: "../node_modules/react-native-geolocation-service"
+  react-native-image-picker:
+    :path: "../node_modules/react-native-image-picker"
   react-native-nmap:
     :path: "../node_modules/react-native-nmap"
   react-native-pager-view:
@@ -704,6 +709,7 @@ SPEC CHECKSUMS:
   React-logger: 1623c216abaa88974afce404dc8f479406bbc3a0
   react-native-encrypted-storage: db300a3f2f0aba1e818417c1c0a6be549038deb7
   react-native-geolocation-service: 608e1da71a1ac31b4de64d9ef2815f697978c55b
+  react-native-image-picker: a5dddebb4d2955ac4712a4ed66b00a85f62a63ac
   react-native-nmap: cfcc5402746040494c544ea90a6062f49505acdf
   react-native-pager-view: 54bed894cecebe28cede54c01038d9d1e122de43
   react-native-safe-area-context: 99b24a0c5acd0d5dcac2b1a7f18c49ea317be99a
