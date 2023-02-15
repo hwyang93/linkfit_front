@@ -12,8 +12,6 @@ import {
 } from 'react-native';
 import {BLACK, GRAY} from '@styles/colors';
 import common, {width} from '@styles/common';
-import {NavigationProp, useNavigation} from '@react-navigation/native';
-import {LoggedInParamList} from '../../AppInner';
 
 type modalProps = {
   title?: string;
@@ -21,10 +19,12 @@ type modalProps = {
   modalVisible: any;
   setModalVisible: any;
   modalData: any[];
+  job?: () => void;
+  modalHeight?: number;
 };
 
 function ModalSheet(props: modalProps) {
-  console.log('아아아아아', props);
+  // console.log('모달에서 받는', props);
   const {modalVisible, setModalVisible} = props;
   const screenHeight = Dimensions.get('screen').height;
   const panY = useRef(new Animated.Value(screenHeight)).current;
@@ -73,13 +73,6 @@ function ModalSheet(props: modalProps) {
       setModalVisible(false);
     });
   };
-  const navigation = useNavigation<NavigationProp<LoggedInParamList>>();
-  const moveTo = (link: any) => {
-    closeBottomSheet.start(() => {
-      setModalVisible(false);
-    });
-    navigation.navigate(link);
-  };
 
   return (
     <Modal
@@ -92,10 +85,13 @@ function ModalSheet(props: modalProps) {
           <View style={styles.background} />
         </TouchableWithoutFeedback>
         <Animated.View
-          style={{
-            ...styles.bottomSheetContainer,
-            transform: [{translateY: translateY}],
-          }}
+          style={[
+            {
+              ...styles.bottomSheetContainer,
+              transform: [{translateY: translateY}],
+              height: props.modalHeight,
+            },
+          ]}
           {...panResponders.panHandlers}>
           <View style={styles.topBar} />
           {/* 모달 타이틀 */}
@@ -106,8 +102,7 @@ function ModalSheet(props: modalProps) {
           {props.modalData.map((item, index) => {
             return (
               <View key={index} style={styles.itemBox}>
-                {/*/todo: 클릭 시 각 페이지로 이동*/}
-                <Pressable onPress={() => moveTo(item.link)}>
+                <Pressable onPress={item.job}>
                   <Text style={[styles.modalText]}>{item.value}</Text>
                 </Pressable>
               </View>
@@ -142,7 +137,6 @@ const styles = StyleSheet.create({
     top: 16,
     justifyContent: 'center',
     marginBottom: 16,
-    // left: '50%',
     width: 40,
     height: 3,
     backgroundColor: GRAY.DEFAULT,

@@ -7,7 +7,6 @@ import {NavigationProp, useNavigation} from '@react-navigation/native';
 import {LoggedInParamList} from '../../AppInner';
 
 function LinkTop() {
-  // const screenWidth = Math.round(Dimensions.get('window').width);
   const screenWidth = Dimensions.get('window').width;
   const LINKS = [
     {

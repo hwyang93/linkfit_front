@@ -1,4 +1,5 @@
 import {
+  Alert,
   Image,
   Pressable,
   ScrollView,
@@ -12,24 +13,33 @@ import {BLUE, GRAY, WHITE} from '@styles/colors';
 import {iconPath} from '@util/iconPath';
 import {SetStateAction, useState} from 'react';
 import Modal from '@components/ModalSheet';
+import {NavigationProp, useNavigation} from '@react-navigation/native';
+import {LoggedInParamList} from '../../../AppInner';
 
 function EmployeeReviewComponent() {
   const [modalVisible, setModalVisible] =
     useState<SetStateAction<boolean>>(false);
+  const navigation = useNavigation<NavigationProp<LoggedInParamList>>();
 
   const openModal = () => {
     setModalVisible(true);
   };
 
+  // props 로 모달에 보낼 값
   const DATA = [
     {
       value: '후기 수정하기',
-      link: 'ReviewForm',
+      job: () => {
+        setModalVisible(false);
+        navigation.navigate('ReviewForm');
+      },
     },
     {
       value: '후기 삭제하기',
+      job: () => Alert.alert('text', '삭제하라!'),
     },
   ];
+
   return (
     <ScrollView style={styles.container}>
       <View style={styles.reviewBox}>

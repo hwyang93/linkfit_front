@@ -15,7 +15,7 @@ function BookmarkCommunityComponent() {
           </Text>
           <Text style={[common.text, {alignSelf: 'flex-end'}]}>2022.12.12</Text>
         </View>
-        <Text style={common.text_m}>
+        <Text style={[common.mb16, common.text_m]}>
           게시글 내용입니다. 게시글 내용입니다. 게시글 내용입니다. 게시글
           내용입니다.
         </Text>
