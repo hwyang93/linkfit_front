@@ -24,7 +24,6 @@ type modalProps = {
 };
 
 function ModalSheet(props: modalProps) {
-  // console.log('모달에서 받는', props);
   const {modalVisible, setModalVisible} = props;
   const screenHeight = Dimensions.get('screen').height;
   const panY = useRef(new Animated.Value(screenHeight)).current;
@@ -123,7 +122,6 @@ const styles = StyleSheet.create({
   background: {flex: 1},
   bottomSheetContainer: {
     width: '100%',
-    // justifyContent: 'center',
     alignItems: 'center',
     padding: 16,
     height: 320,

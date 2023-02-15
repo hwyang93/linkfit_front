@@ -16,6 +16,7 @@ import BirthdayPicker from '@components/BirthdayPicker';
 import SelectBox from '@components/SelectBox';
 import {iconPath} from '@util/iconPath';
 import LinearGradient from 'react-native-linear-gradient';
+import {launchImageLibrary} from 'react-native-image-picker';
 
 function CertifyInstructorFormScreen() {
   const [loading, setLoading] = useState<boolean>(false);
@@ -24,9 +25,35 @@ function CertifyInstructorFormScreen() {
   const [field, setField] = useState('');
   const [issuer, setIssuer] = useState('');
   const [licenseNumber, setLicenseNumber] = useState('');
-  const [licenseImage, setLicenseImage] = useState('');
+  const [licenseImage, setLicenseImage] = useState(''); // file 주소
+  const [licenseFileName, setLicenseFileName] = useState(''); // file 이름
 
   const FIELD = ['필라테스', '요가'];
+
+  const uploadImage = async () => {
+    const options = {
+      storageOptions: {
+        path: 'images',
+        mediaType: 'photo',
+      },
+      includeBase64: true,
+    };
+    await launchImageLibrary(options, response => {
+      if (response.didCancel) {
+        console.log('User cancelled image picker');
+      } else if (response.error) {
+        console.log('ImagePicker Error: ', response.error);
+      } else if (response.customButton) {
+        console.log('User tapped custom button: ', response.customButton);
+      } else {
+        const source = {
+          uri: 'data:image/jpeg;base64,' + response.assets[0].base64,
+        };
+        setLicenseImage(source);
+        setLicenseFileName(response.assets[0].fileName);
+      }
+    });
+  };
 
   const canGoNext = true;
   return (
@@ -88,11 +115,11 @@ function CertifyInstructorFormScreen() {
           <Input
             label={'자격증 이미지'}
             onChangeText={(text: string) => setLicenseImage(text.trim())}
-            value={licenseImage}
+            value={licenseFileName}
             placeholder={'자격증 이미지를 등록하세요.'}
             keyboardType={KeyboardTypes.DEFAULT}
           />
-          <Pressable style={styles.image}>
+          <Pressable style={styles.image} onPress={uploadImage}>
             <Image source={iconPath.PHOTO} style={[common.size24]} />
           </Pressable>
         </View>

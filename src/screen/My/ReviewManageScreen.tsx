@@ -1,5 +1,5 @@
-import {Dimensions, StyleSheet} from 'react-native';
-import {BLUE, GRAY, WHITE} from '@styles/colors';
+import {Dimensions} from 'react-native';
+import {BLUE, GRAY} from '@styles/colors';
 import {createMaterialTopTabNavigator} from '@react-navigation/material-top-tabs';
 import EmployerReviewComponent from '@components/My/EmployerReviewComponent';
 import EmployeeReviewComponent from '@components/My/EmployeeReviewComponent';

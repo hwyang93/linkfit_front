@@ -1,4 +1,4 @@
-import {FlatList, StyleSheet, View} from 'react-native';
+import {Alert, FlatList, StyleSheet, View} from 'react-native';
 import {WHITE} from '@styles/colors';
 import common from '@styles/common';
 import LinkTop from '@components/LinkTop';
@@ -8,17 +8,23 @@ import FloatingWriteButton from '@components/FloatingWriteButton';
 import Modal from '@components/ModalSheet';
 import {SetStateAction, useEffect, useState} from 'react';
 import {fetchInstructors} from '@api/instructor';
+import {NavigationProp, useNavigation} from '@react-navigation/native';
+import {LoggedInParamList} from '../../AppInner';
 
 function Link() {
-  // const DATA = ['구인 공고 등록', '구직 공고 등록'];
+  const navigation = useNavigation<NavigationProp<LoggedInParamList>>();
   const DATA = [
     {
       value: '구인 공고 등록',
       link: 'JobOfferForm',
+      job: () => {
+        setModalVisible(false);
+        navigation.navigate('JobOfferForm');
+      },
     },
     {
       value: '구직 공고 등록',
-      link: '',
+      job: () => Alert.alert('text', '아직 준비중이에요!'),
     },
   ];
 
@@ -29,7 +35,6 @@ function Link() {
   useEffect(() => {
     fetchInstructors()
       .then(({data}: any) => {
-        console.log('페치한 데이터', data);
         setInstructors(data);
       })
       .catch((e: {message: () => any}) => {
