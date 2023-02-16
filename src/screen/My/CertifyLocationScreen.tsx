@@ -1,5 +1,6 @@
 import {
   ActivityIndicator,
+  Alert,
   Image,
   PermissionsAndroid,
   Platform,
@@ -11,13 +12,14 @@ import {
 } from 'react-native';
 import {GRAY, WHITE} from '@styles/colors';
 import NaverMapView, {Marker} from 'react-native-nmap';
-import {useEffect, useState} from 'react';
+import {useCallback, useEffect, useState} from 'react';
 import common from '@styles/common';
 import LinearGradient from 'react-native-linear-gradient';
 import LocationButton from '@components/LocationButton';
 import axios from 'axios/index';
 import Geolocation from 'react-native-geolocation-service';
 import {iconPath} from '@util/iconPath';
+import {createRegionAuth, fetchRegionAuth} from '@api/member';
 
 async function requestPermission() {
   try {
@@ -47,9 +49,66 @@ function CertifyLocationScreen() {
     latitude: number;
     longitude: number;
   } | null>(null);
-  const [locationObj, setLocationObj] = useState({});
+  const [authInfo, setAuthInfo] = useState<{
+    seq: number;
+    region1depth: string;
+    region2depth: string;
+    region3depth: string;
+  } | null>(null);
+  const [locationObj, setLocationObj] = useState<{
+    region1depth: string;
+    region2depth: string;
+    region3depth: string;
+  } | null>(null);
 
   let P0 = {latitude: 37.503979, longitude: 127.036201};
+
+  useEffect(() => {
+    getAuthInfo();
+  }, []);
+
+  const getAuthInfo = useCallback(async () => {
+    console.log('1');
+    await fetchRegionAuth()
+      .then(({data}: any) => {
+        setAuthInfo({
+          seq: data.seq,
+          region1depth: data.region1depth,
+          region2depth: data.region2depth,
+          region3depth: data.region3depth,
+        });
+      })
+      .catch((e: any) => {
+        console.log(e);
+      });
+  }, []);
+
+  const onRegionAuth = useCallback(async () => {
+    const data = {
+      // lon: myLocation?.longitude,
+      // lat: myLocation?.latitude,
+      // 임시 위도 경도 지정
+      lon: P0.longitude,
+      lat: P0.latitude,
+      region1depth: locationObj?.region1depth,
+      region2depth: locationObj?.region2depth,
+      region3depth: locationObj?.region3depth,
+    };
+    await createRegionAuth(data)
+      .then(() => {
+        getAuthInfo();
+        Alert.alert('인증완료!');
+      })
+      .catch((e: any) => {
+        console.log(e);
+      });
+  }, [
+    locationObj?.region1depth,
+    locationObj?.region2depth,
+    locationObj?.region3depth,
+    myLocation?.latitude,
+    myLocation?.longitude,
+  ]);
 
   useEffect(() => {
     requestPermission().then(result => {
@@ -77,14 +136,14 @@ function CertifyLocationScreen() {
 
   console.log('어려워', myLocation);
 
-  const x = '126.9539484';
-  const y = '37.3097165';
+  // const x = '126.9539484';
+  // const y = '37.3097165';
 
   const mapApi = async () => {
     try {
-      let response = await axios
+      await axios
         .get(
-          `https://dapi.kakao.com/v2/local/geo/coord2address.json?input_coord=WGS84&x=${x}&y=${y}`,
+          `https://dapi.kakao.com/v2/local/geo/coord2regioncode.json?input_coord=WGS84&x=${P0.longitude}&y=${P0.latitude}`,
           {
             headers: {
               Authorization: 'KakaoAK 39e13da7b6ee3bc9291ca64a8c84ceb8',
@@ -92,15 +151,18 @@ function CertifyLocationScreen() {
           },
         )
         .then(response => {
-          const data = response.data.documents[0];
+          const regionInfo = response.data.documents.find((item: any) => {
+            return item.region_type === 'B';
+          });
+
           setLocationObj({
-            si: data.address.region_1depth_name,
-            gu: data.address.region_2depth_name,
-            dong: data.address.region_3depth_name,
+            region1depth: regionInfo.region_1depth_name,
+            region2depth: regionInfo.region_2depth_name,
+            region3depth: regionInfo.region_3depth_name,
           });
         });
       console.log('지금 어디', locationObj);
-    } catch (error) {
+    } catch (error: any) {
       console.log(error.message);
     }
   };
@@ -129,25 +191,33 @@ function CertifyLocationScreen() {
         </NaverMapView>
         <LocationButton />
       </View>
+      {authInfo ? (
+        <View style={common.mb16}>
+          <Text style={[common.text_m, common.fwb]}>인증 위치</Text>
 
-      <View style={common.mb16}>
-        <Text style={[common.text_m, common.fwb]}>인증 위치</Text>
-
-        <View style={styles.locationBox}>
-          <View style={common.rowCenter}>
-            <Image source={iconPath.MY_PLACE} style={common.size24} />
-            <Text style={common.text_m}>서울특별시 강남구 역삼동</Text>
+          <View style={styles.locationBox}>
+            <View style={common.rowCenter}>
+              <Image source={iconPath.MY_PLACE} style={common.size24} />
+              <Text style={common.text_m}>
+                {authInfo.region1depth} {authInfo.region2depth}{' '}
+                {authInfo.region3depth}
+              </Text>
+            </View>
+            <Pressable onPress={() => {}} hitSlop={10}>
+              <Image source={iconPath.CLOSE} style={common.size24} />
+            </Pressable>
           </View>
-          <Pressable onPress={() => {}} hitSlop={10}>
-            <Image source={iconPath.CLOSE} style={common.size24} />
-          </Pressable>
         </View>
-      </View>
+      ) : (
+        <></>
+      )}
+
       <View>
         <Text style={[common.text_m, common.mb8]}>현재 위치는</Text>
         <View style={common.row}>
           <Text style={[common.title, common.mr8]}>
-            서울특별시 강남구 역삼동
+            {locationObj?.region1depth} {locationObj?.region2depth}{' '}
+            {locationObj?.region3depth}
           </Text>
           <Text style={common.text_m}>입니다.</Text>
         </View>
@@ -155,7 +225,7 @@ function CertifyLocationScreen() {
 
       {/* 완료 버튼 */}
       <View style={common.mt40}>
-        <Pressable disabled={!canGoNext} onPress={() => {}}>
+        <Pressable disabled={!canGoNext} onPress={onRegionAuth}>
           <LinearGradient
             style={common.button}
             start={{x: 0.1, y: 0.5}}
@@ -166,7 +236,9 @@ function CertifyLocationScreen() {
             {loading ? (
               <ActivityIndicator color="white" />
             ) : (
-              <Text style={common.buttonText}>현위치로 인증하기</Text>
+              <Text style={common.buttonText}>
+                {authInfo ? '현위치로 재인증하기' : '현위치로 인증하기'}
+              </Text>
             )}
           </LinearGradient>
         </Pressable>
