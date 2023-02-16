@@ -75,10 +75,10 @@ function LinkTop() {
         <View style={common.mt16}>
           {/* 슬라이드 아이템 */}
           <RecruitCarousel
-            gap={0}
-            offset={0}
+            gap={8}
+            offset={32}
             links={LINKS}
-            pageWidth={screenWidth - (16 + 36) * 2}
+            pageWidth={screenWidth - (8 + 32) * 2}
           />
         </View>
       </View>
