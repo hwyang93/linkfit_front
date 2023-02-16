@@ -20,8 +20,12 @@ export function editProfile(data: object) {
   return request.patch('/member/profile', data);
 }
 
-export function registerRegion(data: object) {
+export function createRegionAuth(data: object) {
   return request.post('/member/region', data);
+}
+
+export function fetchRegionAuth() {
+  return request.get('/member/region');
 }
 
 export function registerReview(data: object) {
