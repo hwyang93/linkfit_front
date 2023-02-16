@@ -1,16 +1,16 @@
 import {FlatList} from 'react-native';
-import RecruitCarouselItem from '@components/RecruitCarouselItem';
+import PostCarouselItem from '@components/PostCarouselItem';
 
 type CarouselProps = {
   links: any[];
   gap: number;
-  offset: number;
+  offset?: number;
   pageWidth: number;
 };
 
-function RecruitCarousel({links, pageWidth, offset, gap}: CarouselProps) {
+function PostCarousel({links, pageWidth, gap}: CarouselProps) {
   function renderItem({item}: any) {
-    return <RecruitCarouselItem item={item} />;
+    return <PostCarouselItem item={item} />;
   }
 
   return (
@@ -31,4 +31,4 @@ function RecruitCarousel({links, pageWidth, offset, gap}: CarouselProps) {
   );
 }
 
-export default RecruitCarousel;
+export default PostCarousel;

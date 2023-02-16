@@ -74,6 +74,7 @@ const common = StyleSheet.create({
   row: {flexDirection: 'row'},
   column: {flexDirection: 'column'},
   rowCenter: {flexDirection: 'row', alignItems: 'center'},
+  rowEnd: {flexDirection: 'row', alignItems: 'flex-end'},
   rowBetween: {flexDirection: 'row', justifyContent: 'space-between'},
   rowCenterBetween: {
     flexDirection: 'row',
