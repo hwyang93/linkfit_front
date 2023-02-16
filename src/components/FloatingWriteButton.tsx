@@ -6,15 +6,12 @@ type ButtonProps = {
   title?: string;
   link?: any;
   icon: object;
-  setModalVisible: (pressButton: boolean) => void;
+  job: () => void;
 };
 
-const FloatingLinkButton = ({icon, setModalVisible}: ButtonProps) => {
-  const pressButton = () => {
-    setModalVisible(true);
-  };
+const FloatingLinkButton = ({icon, job}: ButtonProps) => {
   return (
-    <Pressable style={styles.buttonPosition} onPress={pressButton}>
+    <Pressable style={styles.buttonPosition} onPress={job}>
       <LinearGradient
         style={styles.floatingButton}
         start={{x: 0.1, y: 0.5}}

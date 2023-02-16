@@ -5,8 +5,13 @@ import common from '@styles/common';
 
 import CommunityTop from '@components/CommunityTop';
 import RecommendedPostItem from '@components/RecommendedPostItem';
+import {iconPath} from '@util/iconPath';
+import FloatingWriteButton from '@components/FloatingWriteButton';
+import {NavigationProp, useNavigation} from '@react-navigation/native';
+import {LoggedInParamList} from '../../AppInner';
 
 function CommunityScreen() {
+  const navigation = useNavigation<NavigationProp<LoggedInParamList>>();
   const FILTER = [
     {
       name: '전체',
@@ -73,6 +78,10 @@ function CommunityScreen() {
     return <RecommendedPostItem item={item} />;
   }
 
+  const moveToForm = () => {
+    navigation.navigate('PostForm');
+  };
+
   return (
     <View style={styles.container}>
       {/* 필터 영역 */}
@@ -106,7 +115,7 @@ function CommunityScreen() {
         )}
       />
 
-      <Text>커뮤니티 화면</Text>
+      <FloatingWriteButton icon={iconPath.PENCIL_W} job={moveToForm} />
     </View>
   );
 }

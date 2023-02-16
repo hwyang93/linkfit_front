@@ -78,7 +78,7 @@ function LinkTop() {
             gap={8}
             offset={32}
             links={LINKS}
-            pageWidth={screenWidth - (8 + 32) * 2}
+            pageWidth={screenWidth - (8 + 32) / 2}
           />
         </View>
       </View>

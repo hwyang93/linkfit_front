@@ -11,8 +11,11 @@ function InstructorListScreen() {
         console.log(data);
         setInstructors(data);
       })
-      .catch((e: {message: () => any}) => {
-        console.log(e.message());
+      // .catch((e: {message: () => any}) => {
+      //   console.log(e.message());
+      // });
+      .catch((message: any) => {
+        console.log(message);
       });
   }, []);
   return (

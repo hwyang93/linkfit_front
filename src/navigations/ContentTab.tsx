@@ -1,17 +1,9 @@
 import {useRef} from 'react';
-import {
-  Alert,
-  Animated,
-  Dimensions,
-  Image,
-  Platform,
-  Pressable,
-  View,
-} from 'react-native';
+import {Animated, Dimensions, Image, Platform} from 'react-native';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import Link from '@screen/Link';
 import CommunityScreen from '@screen/CommunityScreen';
-import Message from '@screen/Message';
+import MessageScreen from '@screen/MessageScreen';
 import MyScreen from '@screen/MyScreen';
 import {LoggedInParamList} from '../../AppInner';
 import common from '@styles/common';
@@ -104,7 +96,7 @@ const ContentTab = () => {
         />
         <Tab.Screen
           name="Message"
-          component={Message}
+          component={MessageScreen}
           options={{
             title: '쪽지',
             headerTitle: () => {
