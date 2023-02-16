@@ -1,5 +1,6 @@
 import {
   ActivityIndicator,
+  Image,
   PermissionsAndroid,
   Platform,
   Pressable,
@@ -7,7 +8,7 @@ import {
   Text,
   View,
 } from 'react-native';
-import {WHITE} from '@styles/colors';
+import {GRAY, WHITE} from '@styles/colors';
 import NaverMapView, {Marker} from 'react-native-nmap';
 import {useEffect, useState} from 'react';
 import common from '@styles/common';
@@ -15,6 +16,7 @@ import LinearGradient from 'react-native-linear-gradient';
 import LocationButton from '@components/LocationButton';
 import axios from 'axios/index';
 import Geolocation from 'react-native-geolocation-service';
+import {iconPath} from '@util/iconPath';
 
 async function requestPermission() {
   try {
@@ -126,6 +128,20 @@ function CertifyLocationScreen() {
         </NaverMapView>
         <LocationButton />
       </View>
+
+      <View style={common.mb16}>
+        <Text style={[common.text_m, common.fwb]}>인증 위치</Text>
+
+        <View style={styles.locationBox}>
+          <View style={common.rowCenter}>
+            <Image source={iconPath.MY_PLACE} style={common.size24} />
+            <Text style={common.text_m}>서울특별시 강남구 역삼동</Text>
+          </View>
+          <Pressable onPress={() => {}} hitSlop={10}>
+            <Image source={iconPath.CLOSE} style={common.size24} />
+          </Pressable>
+        </View>
+      </View>
       <View>
         <Text style={[common.text_m, common.mb8]}>현재 위치는</Text>
         <View style={common.row}>
@@ -167,6 +183,17 @@ const styles = StyleSheet.create({
     marginBottom: 16,
     width: '100%',
     height: 320,
+  },
+  locationBox: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    paddingVertical: 10,
+    paddingHorizontal: 16,
+    marginTop: 8,
+    borderWidth: 1,
+    borderColor: GRAY.LIGHT,
+    borderRadius: 8,
   },
 });
 export default CertifyLocationScreen;
