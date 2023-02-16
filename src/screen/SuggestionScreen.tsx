@@ -36,12 +36,12 @@ type SuggestionScreenProps = NativeStackScreenProps<
 >;
 
 function SuggestionScreen({navigation}: SuggestionScreenProps) {
+  const [loading, setLoading] = useState<boolean>(false);
   const route = useRoute<RouteProp<LoggedInParamList, 'Suggestion'>>();
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
   const [recruitSeq, setRecruitSeq] = useState('');
   const [closingDate, setClosingDate] = useState('');
-  const [loading, setLoading] = useState<boolean>(false);
 
   const canGoNext = title && content && closingDate;
 

@@ -92,7 +92,7 @@ const MainStack = () => {
         <Stack.Screen
           name="PostForm"
           component={CommunityPostFormScreen}
-          options={{title: '게시글 작성', headerRight: HeaderRight}}
+          options={{title: '게시글 작성'}}
         />
         <Stack.Screen
           name="Profile"
