@@ -5,6 +5,7 @@ import {
   ViewStyle,
 } from 'react-native';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scrollview';
+import React from 'react';
 
 type Component = {
   style?: StyleProp<ViewStyle>;

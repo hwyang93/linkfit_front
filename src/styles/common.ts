@@ -1,4 +1,4 @@
-import {StyleSheet, Dimensions} from 'react-native';
+import {StyleSheet, Dimensions, ProgressBarAndroid} from 'react-native';
 import {BLACK, GRAY, INPUT, WHITE} from './colors';
 
 export const Font = {
@@ -202,6 +202,28 @@ const common = StyleSheet.create({
   },
   mapBox: {width: '100%', height: 180},
   imgBox: {width: '100%', height: 160, borderRadius: 8},
+  // filter box
+  filterBox: {
+    paddingHorizontal: 12,
+    paddingVertical: 2,
+    marginRight: 8,
+    backgroundColor: '#fff',
+    borderRadius: 16,
+    borderWidth: 1,
+    borderColor: GRAY.LIGHT,
+  },
+  filterBoxActive: {
+    backgroundColor: '#d7e0fd',
+    borderWidth: 0,
+  },
+  filterText: {
+    color: GRAY.DARK,
+    fontSize: +width * 16,
+  },
+  filterTextActive: {
+    color: '#292929',
+    fontSize: +width * 16,
+  },
   // icon
   KEBAB: {width: 4, height: 16},
   BOOKMARK: {width: 14, height: 18},
