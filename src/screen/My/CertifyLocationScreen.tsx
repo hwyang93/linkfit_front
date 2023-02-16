@@ -4,6 +4,7 @@ import {
   PermissionsAndroid,
   Platform,
   Pressable,
+  ScrollView,
   StyleSheet,
   Text,
   View,
@@ -107,7 +108,7 @@ function CertifyLocationScreen() {
   const canGoNext = true;
 
   return (
-    <View style={styles.container}>
+    <ScrollView style={styles.container}>
       <View style={styles.map}>
         <NaverMapView
           style={{width: '100%', height: '100%'}}
@@ -170,7 +171,7 @@ function CertifyLocationScreen() {
           </LinearGradient>
         </Pressable>
       </View>
-    </View>
+    </ScrollView>
   );
 }
 const styles = StyleSheet.create({
