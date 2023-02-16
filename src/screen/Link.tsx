@@ -24,7 +24,10 @@ function Link() {
     },
     {
       value: '구직 공고 등록',
-      job: () => Alert.alert('text', '아직 준비중이에요!'),
+      job: () => {
+        setModalVisible(false);
+        Alert.alert('text', '아직 준비중이에요!');
+      },
     },
   ];
 
@@ -46,6 +49,10 @@ function Link() {
     return <InstructorListItem item={item} />;
   }
 
+  const openModal = () => {
+    setModalVisible(true);
+  };
+
   return (
     <View style={styles.container}>
       <FlatList
@@ -55,10 +62,7 @@ function Link() {
         ListHeaderComponent={<LinkTop />}
         ItemSeparatorComponent={() => <View style={common.separator} />}
       />
-      <FloatingWriteButton
-        icon={iconPath.PENCIL_W}
-        setModalVisible={setModalVisible}
-      />
+      <FloatingWriteButton icon={iconPath.PENCIL_W} job={openModal} />
       <Modal
         modalVisible={modalVisible}
         setModalVisible={setModalVisible}

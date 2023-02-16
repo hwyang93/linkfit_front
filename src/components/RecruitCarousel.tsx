@@ -1,4 +1,4 @@
-import {FlatList} from 'react-native';
+import {Dimensions, FlatList} from 'react-native';
 import RecruitCarouselItem from '@components/RecruitCarouselItem';
 
 type CarouselProps = {
@@ -21,7 +21,7 @@ function RecruitCarousel({links, pageWidth, offset, gap}: CarouselProps) {
       decelerationRate="fast"
       horizontal
       renderItem={renderItem}
-      snapToInterval={pageWidth + gap}
+      snapToInterval={pageWidth * 2 - 8}
       snapToAlignment="start"
       showsHorizontalScrollIndicator={false}
       // contentContainerStyle={{

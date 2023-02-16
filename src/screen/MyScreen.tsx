@@ -93,8 +93,11 @@ function MyScreen() {
           console.log('focus');
           setMyInfo(data);
         })
-        .catch((e: any) => {
-          console.log('이건가', e);
+        // .catch((e: any) => {
+        //   console.log('이건가', e);
+        // });
+        .catch((message: any) => {
+          console.log(message);
         });
     }
   }, [isFocused]);

@@ -41,6 +41,7 @@ import InquiryScreen from '@screen/My/InquiryScreen';
 import VersionScreen from '@screen/My/VersionScreen';
 import RulesScreen from '@screen/My/RulesScreen';
 import ReviewFormScreen from '@screen/My/ReviewFormScreen';
+import CommunityPostFormScreen from '@screen/Community/CommunityPostFormScreen';
 
 const Stack = createNativeStackNavigator<LoggedInParamList>();
 
@@ -87,6 +88,11 @@ const MainStack = () => {
             headerStyle: {backgroundColor: '#000'},
             headerTintColor: '#fff',
           }}
+        />
+        <Stack.Screen
+          name="PostForm"
+          component={CommunityPostFormScreen}
+          options={{title: '게시글 작성', headerRight: HeaderRight}}
         />
         <Stack.Screen
           name="Profile"

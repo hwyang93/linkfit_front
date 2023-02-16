@@ -46,7 +46,7 @@ function CommunityTop() {
           gap={12}
           offset={0}
           links={POP}
-          pageWidth={screenWidth - 12 * 2}
+          pageWidth={screenWidth - 220}
         />
       </View>
 

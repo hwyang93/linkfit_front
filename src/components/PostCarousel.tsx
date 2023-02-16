@@ -4,11 +4,11 @@ import PostCarouselItem from '@components/PostCarouselItem';
 type CarouselProps = {
   links: any[];
   gap: number;
-  offset?: number;
+  offset: number;
   pageWidth: number;
 };
 
-function PostCarousel({links, pageWidth, gap}: CarouselProps) {
+function PostCarousel({links, pageWidth, offset, gap}: CarouselProps) {
   function renderItem({item}: any) {
     return <PostCarouselItem item={item} />;
   }
@@ -24,9 +24,9 @@ function PostCarousel({links, pageWidth, gap}: CarouselProps) {
       snapToInterval={pageWidth + gap}
       snapToAlignment="start"
       showsHorizontalScrollIndicator={false}
-      // contentContainerStyle={{
-      //   paddingHorizontal: offset + gap / 2,
-      // }}
+      contentContainerStyle={{
+        paddingHorizontal: 0,
+      }}
     />
   );
 }
