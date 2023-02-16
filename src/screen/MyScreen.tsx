@@ -133,7 +133,7 @@ function MyScreen() {
         {/* 이력서 박스 */}
         {myInfo.masterResume ? (
           <View style={common.mb24}>
-            <View style={styles.borderBox}>
+            <View style={common.basicBox}>
               <View
                 style={[
                   common.mb8,

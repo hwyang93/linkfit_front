@@ -196,10 +196,9 @@ const common = StyleSheet.create({
   // basic box
   basicBox: {
     padding: 16,
-    height: 56,
-    borderWidth: 2,
-    borderColor: INPUT.DEFAULT,
+    borderWidth: 1,
     borderRadius: 8,
+    borderColor: GRAY.DEFAULT,
   },
   mapBox: {width: '100%', height: 180},
   imgBox: {width: '100%', height: 160, borderRadius: 8},

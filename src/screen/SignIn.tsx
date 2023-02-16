@@ -41,7 +41,6 @@ function SignIn({navigation}: SignInScreenProps) {
   const [isEmail, setIsEmail] = useState<boolean>(false);
 
   const onChangeEmail = useCallback((value: string) => {
-    console.log(value);
     const checkEmail = removeWhitespace(value);
     setEmail(checkEmail);
     setIsEmail(validateEmail(checkEmail));
@@ -68,15 +67,8 @@ function SignIn({navigation}: SignInScreenProps) {
       });
   };
 
-  // const onSubmit = useCallback(async () => {}, []);
-
-  // const canGoNext = email && password; // 이메일 그리고 비밀번호가 입력 되면 버튼 활성화
   // 이메일이 입력 되면 버튼 활성화
   const canGoNext = isEmail;
-
-  // const toSignUp = useCallback(() => {
-  //   navigation.navigate('SignUp');
-  // }, [navigation]);
 
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
