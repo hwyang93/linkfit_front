@@ -1,10 +1,11 @@
 import {StyleSheet, Text, View} from 'react-native';
 import {WHITE} from '@styles/colors';
+import common from '@styles/common';
 
 function CommunityPostScreen() {
   return (
-    <View>
-      <Text>test</Text>
+    <View style={styles.container}>
+      <Text style={common.text_m}>test</Text>
     </View>
   );
 }

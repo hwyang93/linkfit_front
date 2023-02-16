@@ -2,13 +2,14 @@ import {Button, StyleSheet, Text, View} from 'react-native';
 import {NavigationProp, useNavigation} from '@react-navigation/native';
 import {LoggedInParamList} from '../../AppInner';
 import {WHITE} from '@styles/colors';
+import common from '@styles/common';
 
 function MessageScreen() {
   const navigation = useNavigation<NavigationProp<LoggedInParamList>>();
 
   return (
     <View style={styles.container}>
-      <Text>쪽지 화면</Text>
+      <Text style={common.text_m}>쪽지 화면</Text>
       <Button title={'button'} onPress={() => navigation.navigate('SignIn')} />
     </View>
   );
