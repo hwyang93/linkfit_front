@@ -29,24 +29,24 @@ const SimpleLogin = () => {
               />
             </Pressable>
           </View>
-          <View style={styles.easyIcon}>
-            <Pressable onPress={testClick}>
-              <Image
-                source={iconPath.GOOGLE}
-                style={styles.icon}
-                resizeMode={'cover'}
-              />
-            </Pressable>
-          </View>
-          <View style={styles.easyIcon}>
-            <Pressable onPress={testClick}>
-              <Image
-                source={iconPath.APPLE}
-                style={styles.icon}
-                resizeMode={'cover'}
-              />
-            </Pressable>
-          </View>
+          {/*<View style={styles.easyIcon}>*/}
+          {/*  <Pressable onPress={testClick}>*/}
+          {/*    <Image*/}
+          {/*      source={iconPath.GOOGLE}*/}
+          {/*      style={styles.icon}*/}
+          {/*      resizeMode={'cover'}*/}
+          {/*    />*/}
+          {/*  </Pressable>*/}
+          {/*</View>*/}
+          {/*<View style={styles.easyIcon}>*/}
+          {/*  <Pressable onPress={testClick}>*/}
+          {/*    <Image*/}
+          {/*      source={iconPath.APPLE}*/}
+          {/*      style={styles.icon}*/}
+          {/*      resizeMode={'cover'}*/}
+          {/*    />*/}
+          {/*  </Pressable>*/}
+          {/*</View>*/}
         </View>
       </View>
     </View>

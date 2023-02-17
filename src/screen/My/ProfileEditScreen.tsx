@@ -90,14 +90,31 @@ function ProfileEditScreen() {
           )}
         </Pressable>
 
-        <View style={common.mv16}>
-          <Input
-            label={'닉네임'}
-            onChangeText={(text: string) => setNickName(text.trim())}
-            value={nickname}
-            placeholder={'김링크'}
-            keyboardType={KeyboardTypes.DEFAULT}
-          />
+        <View style={[common.mv16, common.rowCenter]}>
+          <View style={[common.mr8, {flex: 3}]}>
+            <Input
+              label={'닉네임'}
+              onChangeText={(text: string) => setNickName(text.trim())}
+              value={nickname}
+              placeholder={'김링크'}
+              keyboardType={KeyboardTypes.DEFAULT}
+            />
+          </View>
+          <Pressable style={[{flex: 1}]}>
+            <LinearGradient
+              style={[common.button, {height: 40}]}
+              start={{x: 0.1, y: 0.5}}
+              end={{x: 0.6, y: 1}}
+              colors={
+                canGoNext ? ['#74ebe4', '#3962f3'] : ['#dcdcdc', '#dcdcdc']
+              }>
+              {loading ? (
+                <ActivityIndicator color="white" />
+              ) : (
+                <Text style={[common.text_s, styles.confirm]}>확인</Text>
+              )}
+            </LinearGradient>
+          </Pressable>
         </View>
 
         <View style={common.mb16}>
@@ -112,14 +129,27 @@ function ProfileEditScreen() {
           />
         </View>
 
-        <Pressable
-          style={common.rowCenter}
-          onPress={() => navigation.navigate('LinkAdd')}>
-          <Image source={iconPath.LINK_URL} style={common.size24} />
-          <Text style={[common.ml8, common.text_m, {color: GRAY.DEFAULT}]}>
-            링크 추가하기
-          </Text>
-        </Pressable>
+        {/*<Pressable*/}
+        {/*  style={common.rowCenter}*/}
+        {/*  onPress={() => navigation.navigate('LinkAdd')}>*/}
+        {/*  <Image source={iconPath.LINK_URL} style={common.size24} />*/}
+        {/*  <Text style={[common.ml8, common.text_m, {color: GRAY.DEFAULT}]}>*/}
+        {/*    링크 추가하기*/}
+        {/*  </Text>*/}
+        {/*</Pressable>*/}
+
+        <View>
+          <View style={[common.basicBox, common.rowCenterBetween, common.mb8]}>
+            <View style={common.rowCenter}>
+              <Image
+                source={iconPath.MY_LICENSE}
+                style={[common.size24, common.mr8]}
+              />
+              <Text style={common.text_m}>필라테스</Text>
+            </View>
+            <Image source={iconPath.CHECK_BLACK} style={common.size24} />
+          </View>
+        </View>
 
         {/* 완료 버튼 */}
         <View style={common.mt40}>
@@ -163,6 +193,10 @@ const styles = StyleSheet.create({
   textPosition: {
     position: 'absolute',
     bottom: 20,
+  },
+  confirm: {
+    fontWeight: '700',
+    color: WHITE,
   },
 });
 
