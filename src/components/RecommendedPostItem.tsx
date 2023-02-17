@@ -1,6 +1,8 @@
 import {Alert, Image, Pressable, StyleSheet, Text, View} from 'react-native';
 import common from '@styles/common';
 import {iconPath} from '@util/iconPath';
+import BookmarkCounter from '@components/Counter/BookmarkCounter';
+import CommentCounter from '@components/Counter/CommentCounter';
 
 type listProps = {
   item: {
@@ -30,18 +32,8 @@ function RecommendedPostItem({item}: listProps) {
       <Text style={[common.mb8, common.text_m]}>{item.content}</Text>
       <View style={common.rowCenterBetween}>
         <View style={common.rowCenter}>
-          <View style={[common.rowCenter, common.mr8]}>
-            <Pressable onPress={() => Alert.alert('test', 'test')}>
-              <Image source={iconPath.BOOKMARK} style={common.size24} />
-            </Pressable>
-            <Text style={[common.text_m, common.fwb]}>23</Text>
-          </View>
-          <View style={common.rowCenter}>
-            <Pressable onPress={() => Alert.alert('test', 'test')}>
-              <Image source={iconPath.COMMENT} style={common.size24} />
-            </Pressable>
-            <Text style={[common.text_m, common.fwb]}>23</Text>
-          </View>
+          <BookmarkCounter counter={23} />
+          <CommentCounter counter={12} />
         </View>
         <View style={[styles.labelBox]}>
           <Text style={[common.text_m]}>채널명</Text>

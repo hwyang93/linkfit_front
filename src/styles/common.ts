@@ -238,8 +238,8 @@ const common = StyleSheet.create({
   },
   //
   thumbnail: {
-    width: 48,
-    height: 48,
+    width: +width * 48,
+    height: +width * 48,
     borderRadius: 200,
   },
 

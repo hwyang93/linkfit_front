@@ -1,7 +1,9 @@
-import {Alert, Image, Pressable, Text, View} from 'react-native';
+import {Image, Text, View} from 'react-native';
 import common from '@styles/common';
 import {iconPath} from '@util/iconPath';
 import CommunityUserComponent from '@components/Community/CommunityUserComponent';
+import BookmarkCounter from '@components/Counter/BookmarkCounter';
+import CommentCounter from '@components/Counter/CommentCounter';
 
 function CommunityPostTop() {
   const USER = {
@@ -51,18 +53,8 @@ function CommunityPostTop() {
 
       <View style={common.mb16}>
         <View style={common.rowCenter}>
-          <View style={[common.rowCenter, common.mr8]}>
-            <Pressable onPress={() => Alert.alert('test', 'test')}>
-              <Image source={iconPath.BOOKMARK} style={common.size24} />
-            </Pressable>
-            <Text style={[common.text_m, common.fwb]}>23</Text>
-          </View>
-          <View style={common.rowCenter}>
-            <Pressable onPress={() => Alert.alert('test', 'test')}>
-              <Image source={iconPath.COMMENT} style={common.size24} />
-            </Pressable>
-            <Text style={[common.text_m, common.fwb]}>23</Text>
-          </View>
+          <BookmarkCounter counter={23} />
+          <CommentCounter counter={12} />
         </View>
       </View>
     </View>
