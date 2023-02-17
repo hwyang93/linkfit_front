@@ -7,7 +7,7 @@ import {
   Text,
   View,
 } from 'react-native';
-import {GRAY, WHITE} from '@styles/colors';
+import {WHITE} from '@styles/colors';
 import DismissKeyboardView from '@components/DismissKeyboardView';
 import common from '@styles/common';
 import Input, {KeyboardTypes} from '@components/Input';
@@ -15,12 +15,9 @@ import {useCallback, useState} from 'react';
 import {iconPath} from '@util/iconPath';
 import LinearGradient from 'react-native-linear-gradient';
 import {editProfile} from '@api/member';
-import {NavigationProp, useNavigation} from '@react-navigation/native';
-import {LoggedInParamList} from '../../../AppInner';
 import {launchImageLibrary} from 'react-native-image-picker';
 
 function ProfileEditScreen() {
-  const navigation = useNavigation<NavigationProp<LoggedInParamList>>();
   const [nickname, setNickName] = useState('');
   const [intro, setIntro] = useState('');
   const [field, setField] = useState('');
