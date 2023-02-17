@@ -13,14 +13,14 @@ function ProfileBox({memberInfo}: any) {
     <View>
       <Pressable
         style={styles.profileBox}
-        onPress={() => navigation.navigate('ProfileEdit')}>
+        onPress={() => navigation.navigate('ProfileEdit', {memberInfo})}>
         <View style={[common.mr16, styles.thumbnailBox]}>
           <Image source={iconPath.PILATES} style={styles.thumbnail} />
         </View>
         <View>
           <View style={common.rowCenter}>
             <Text style={[common.text_l, common.fwb, common.mr8]}>
-              {memberInfo.nickname}
+              {!memberInfo.nickname ? memberInfo.name : memberInfo.nickname}
             </Text>
             {memberInfo.type === 'INSTRUCTOR' ? (
               <View style={common.rowCenter}>

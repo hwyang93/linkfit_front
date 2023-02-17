@@ -21,7 +21,7 @@ export type LoggedInParamList = {
   CommunityPostForm: undefined;
   CommunityPost: undefined;
   My: undefined;
-  ProfileEdit: undefined;
+  ProfileEdit: {memberInfo: object};
   CertifyLocation: undefined;
   CertifyInstructor: undefined;
   CertifyInstructorForm: undefined;
