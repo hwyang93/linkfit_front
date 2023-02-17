@@ -10,8 +10,12 @@ import {
 import {GRAY, WHITE} from '@styles/colors';
 import common from '@styles/common';
 import {iconPath} from '@util/iconPath';
+import Modal from '@components/ModalSheet';
+import {SetStateAction, useState} from 'react';
 
 function CertifyInstructorScreen() {
+  const [modalVisible, setModalVisible] =
+    useState<SetStateAction<boolean>>(false);
   const DATA = [
     {
       id: 1,
@@ -35,6 +39,16 @@ function CertifyInstructorScreen() {
       status: '인증 거부',
     },
   ];
+  const MODAL = [
+    {
+      value: '인증 취소하기',
+      job: () => {},
+    },
+  ];
+
+  const openModal = () => {
+    setModalVisible(true);
+  };
   return (
     <ScrollView>
       <View style={styles.container}>
@@ -49,13 +63,19 @@ function CertifyInstructorScreen() {
               <Pressable
                 style={styles.kebabIcon}
                 hitSlop={10}
-                onPress={() => Alert.alert('click', 'test')}>
+                onPress={openModal}>
                 <Image source={iconPath.KEBAB} style={[common.KEBAB]} />
               </Pressable>
             </View>
           );
         })}
       </View>
+      <Modal
+        modalVisible={modalVisible}
+        setModalVisible={setModalVisible}
+        title={'더보기'}
+        modalData={MODAL}
+      />
     </ScrollView>
   );
 }

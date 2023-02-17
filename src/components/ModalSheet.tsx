@@ -89,12 +89,13 @@ function ModalSheet(props: modalProps) {
               ...styles.bottomSheetContainer,
               transform: [{translateY: translateY}],
               height: props.modalHeight,
+              paddingBottom: 32,
             },
           ]}
           {...panResponders.panHandlers}>
           <View style={styles.topBar} />
           {/* 모달 타이틀 */}
-          <View style={common.mv16}>
+          <View style={common.mt16}>
             <Text style={styles.modalTitle}>{props.title}</Text>
           </View>
           {/* 모달 아이템 */}
