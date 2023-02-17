@@ -64,7 +64,12 @@ function MyScreen() {
   const isFocused = useIsFocused();
   const insets = useSafeAreaInsets();
   const [myInfo, setMyInfo] = useState({
-    memberInfo: {},
+    memberInfo: {
+      nickname: '',
+      intro: '',
+      field: '',
+      licences: {},
+    },
     masterResume: {
       title: undefined,
     },
@@ -90,12 +95,8 @@ function MyScreen() {
     if (isFocused) {
       fetchMemberMyInfo()
         .then(({data}: any) => {
-          console.log('focus');
           setMyInfo(data);
         })
-        // .catch((e: any) => {
-        //   console.log('이건가', e);
-        // });
         .catch((message: any) => {
           console.log(message);
         });
