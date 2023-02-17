@@ -61,6 +61,7 @@ function Link() {
         renderItem={renderItem}
         ListHeaderComponent={<LinkTop />}
         ItemSeparatorComponent={() => <View style={common.separator} />}
+        showsVerticalScrollIndicator={false}
       />
       <FloatingWriteButton icon={iconPath.PENCIL_W} job={openModal} />
       <Modal

@@ -45,6 +45,7 @@ const common = StyleSheet.create({
   mb40: {marginBottom: 40},
   ml8: {marginLeft: 8},
   ml16: {marginLeft: 16},
+  mr4: {marginRight: 4},
   mr8: {marginRight: 8},
   mr10: {marginRight: 10},
   mr16: {marginRight: 16},
@@ -205,7 +206,7 @@ const common = StyleSheet.create({
   // filter box
   filterBox: {
     paddingHorizontal: 12,
-    paddingVertical: 2,
+    paddingVertical: 6,
     marginRight: 8,
     backgroundColor: '#fff',
     borderRadius: 16,
@@ -224,6 +225,24 @@ const common = StyleSheet.create({
     color: '#292929',
     fontSize: +width * 16,
   },
+  // channel box
+  channelBox: {
+    paddingHorizontal: 12,
+    paddingVertical: 6,
+    borderRadius: 16,
+    backgroundColor: '#d7e0fd',
+  },
+  channelText: {
+    color: '#292929',
+    fontSize: +width * 16,
+  },
+  //
+  thumbnail: {
+    width: 48,
+    height: 48,
+    borderRadius: 200,
+  },
+
   // icon
   KEBAB: {width: 4, height: 16},
   BOOKMARK: {width: 14, height: 18},
