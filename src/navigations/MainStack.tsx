@@ -49,6 +49,7 @@ const MainStack = () => {
   const navigation = useNavigation<NavigationProp<LoggedInParamList>>();
   return (
     <Stack.Navigator
+      initialRouteName={'SignIn'}
       screenOptions={{
         headerTitleAlign: 'center',
         headerTintColor: '#000',

@@ -11,7 +11,9 @@ function ProfileBox({memberInfo}: any) {
 
   return (
     <View>
-      <View style={styles.profileBox}>
+      <Pressable
+        style={styles.profileBox}
+        onPress={() => navigation.navigate('ProfileEdit')}>
         <View style={[common.mr16, styles.thumbnailBox]}>
           <Image source={iconPath.PILATES} style={styles.thumbnail} />
         </View>
@@ -42,7 +44,7 @@ function ProfileBox({memberInfo}: any) {
             <Text style={[common.text, common.mr8, {alignSelf: 'flex-end'}]}>
               {memberInfo.career}
             </Text>
-            <Text style={[common.text_s, {color: GRAY.DARK}]}>
+            <Text style={[common.text, {color: GRAY.DARK}]}>
               {memberInfo.address}
             </Text>
           </View>
@@ -59,13 +61,10 @@ function ProfileBox({memberInfo}: any) {
             </Text>
           </View>
         </View>
-        <Pressable
-          style={styles.nextArrow}
-          hitSlop={10}
-          onPress={() => navigation.navigate('ProfileEdit')}>
+        <View style={styles.nextArrow}>
           <FontAwesome name={'chevron-right'} color="black" />
-        </Pressable>
-      </View>
+        </View>
+      </Pressable>
     </View>
   );
 }
