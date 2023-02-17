@@ -72,4 +72,5 @@ export const iconPath = {
   COMMENT: require('@images/icon/comment.png'),
   SHARE: require('@images/icon/share.png'),
   CLOSE: require('@images/icon/close.png'),
+  THUMBNAIL: require('@images/icon/thumbnail.png'),
 };

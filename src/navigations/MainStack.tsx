@@ -42,6 +42,7 @@ import VersionScreen from '@screen/My/VersionScreen';
 import RulesScreen from '@screen/My/RulesScreen';
 import ReviewFormScreen from '@screen/My/ReviewFormScreen';
 import CommunityPostFormScreen from '@screen/Community/CommunityPostFormScreen';
+import CommunityPostScreen from '@screen/Community/CommunityPostScreen';
 
 const Stack = createNativeStackNavigator<LoggedInParamList>();
 
@@ -90,10 +91,27 @@ const MainStack = () => {
             headerTintColor: '#fff',
           }}
         />
+        {/* 커뮤니티 게시글 작성 화면 */}
         <Stack.Screen
-          name="PostForm"
+          name="CommunityPostForm"
           component={CommunityPostFormScreen}
           options={{title: '게시글 작성'}}
+        />
+        {/* 커뮤니티 게시글 화면 */}
+        <Stack.Screen
+          name="CommunityPost"
+          component={CommunityPostScreen}
+          options={{
+            title: '게시글',
+            headerRight: () => (
+              <Pressable
+                onPress={() => {}}
+                hitSlop={10}
+                style={[common.mh4, common.size24]}>
+                <Image source={iconPath.BOOKMARK} style={common.size24} />
+              </Pressable>
+            ),
+          }}
         />
         <Stack.Screen
           name="Profile"

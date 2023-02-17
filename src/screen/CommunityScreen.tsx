@@ -79,7 +79,7 @@ function CommunityScreen() {
   }
 
   const moveToForm = () => {
-    navigation.navigate('PostForm');
+    navigation.navigate('CommunityPostForm');
   };
 
   return (

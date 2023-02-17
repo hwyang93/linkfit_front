@@ -1,7 +1,6 @@
-import {Image, StyleSheet, Text, View} from 'react-native';
+import {Alert, Image, Pressable, StyleSheet, Text, View} from 'react-native';
 import common from '@styles/common';
 import {iconPath} from '@util/iconPath';
-import {GRAY} from '@styles/colors';
 
 type listProps = {
   item: {
@@ -31,12 +30,16 @@ function RecommendedPostItem({item}: listProps) {
       <Text style={[common.mb8, common.text_m]}>{item.content}</Text>
       <View style={common.rowCenterBetween}>
         <View style={common.rowCenter}>
-          <View style={[common.rowCenter, common.mr10]}>
-            <Image source={iconPath.BOOKMARK} style={common.size24} />
+          <View style={[common.rowCenter, common.mr8]}>
+            <Pressable onPress={() => Alert.alert('test', 'test')}>
+              <Image source={iconPath.BOOKMARK} style={common.size24} />
+            </Pressable>
             <Text style={[common.text_m, common.fwb]}>23</Text>
           </View>
           <View style={common.rowCenter}>
-            <Image source={iconPath.COMMENT} style={common.size24} />
+            <Pressable onPress={() => Alert.alert('test', 'test')}>
+              <Image source={iconPath.COMMENT} style={common.size24} />
+            </Pressable>
             <Text style={[common.text_m, common.fwb]}>23</Text>
           </View>
         </View>

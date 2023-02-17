@@ -1,5 +1,7 @@
-import {StyleSheet, Text, View} from 'react-native';
+import {Alert, Pressable, StyleSheet, Text, View} from 'react-native';
 import common from '@styles/common';
+import {NavigationProp, useNavigation} from '@react-navigation/native';
+import {LoggedInParamList} from '../../AppInner';
 
 type listProps = {
   item: {
@@ -13,8 +15,11 @@ type listProps = {
 };
 
 function PostCarouselItem({item}: listProps) {
+  const navigation = useNavigation<NavigationProp<LoggedInParamList>>();
   return (
-    <View style={styles.postBox}>
+    <Pressable
+      style={styles.postBox}
+      onPress={() => navigation.navigate('CommunityPost')}>
       <Text numberOfLines={1} style={common.text_m}>
         {item.title}
       </Text>
@@ -27,7 +32,7 @@ function PostCarouselItem({item}: listProps) {
         <Text style={[common.text, common.mh4]}>{item.type}</Text>
         <Text style={common.text}>{item.date}</Text>
       </View>
-    </View>
+    </Pressable>
   );
 }
 const styles = StyleSheet.create({

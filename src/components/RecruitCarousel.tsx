@@ -1,4 +1,4 @@
-import {Dimensions, FlatList} from 'react-native';
+import {FlatList} from 'react-native';
 import RecruitCarouselItem from '@components/RecruitCarouselItem';
 
 type CarouselProps = {
