@@ -57,7 +57,7 @@ function CommunityUserComponent({data}: UserProps) {
 }
 
 const styles = StyleSheet.create({
-  kebabIcon: {position: 'absolute', top: 0, right: 0},
+  kebabIcon: {position: 'absolute', top: 16, right: 0},
 });
 
 export default CommunityUserComponent;

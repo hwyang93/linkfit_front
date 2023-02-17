@@ -101,6 +101,7 @@ function CommunityScreen() {
               </Text>
             </View>
           )}
+          showsHorizontalScrollIndicator={false}
         />
       </View>
       {/* 필터 영역 */}
@@ -113,6 +114,7 @@ function CommunityScreen() {
         ItemSeparatorComponent={() => (
           <View style={[common.separator, common.mv16]} />
         )}
+        showsVerticalScrollIndicator={false}
       />
 
       <FloatingWriteButton icon={iconPath.PENCIL_W} job={moveToForm} />
