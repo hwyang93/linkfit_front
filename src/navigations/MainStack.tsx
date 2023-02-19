@@ -24,7 +24,7 @@ import ProfileEditScreen from '@screen/My/ProfileEditScreen';
 import LinkAddScreen from '@screen/My/LinkAddScreen';
 import CertifyInstructorScreen from '@screen/My/CertifyInstructorScreen';
 import CertifyLocationScreen from '@screen/My/CertifyLocationScreen';
-import {Image, Pressable} from 'react-native';
+import {Alert, Image, Pressable} from 'react-native';
 import common from '@styles/common';
 import {iconPath} from '@util/iconPath';
 import {NavigationProp, useNavigation} from '@react-navigation/native';
@@ -47,6 +47,7 @@ import CommunityMyScreen from '@screen/Community/CommunityMyScreen';
 import MyCenterScreen from '@screen/MyCenterScreen';
 import ResumeManageScreen from '@screen/My/ResumeManageScreen';
 import ResumeFormScreen from '@screen/My/ResumeFormScreen';
+import ResumePreviewScreen from '@screen/My/ResumePreviewScreen';
 
 const Stack = createNativeStackNavigator<LoggedInParamList>();
 
@@ -183,6 +184,21 @@ const MainStack = () => {
           name="ResumeForm"
           component={ResumeFormScreen}
           options={{title: '이력서'}}
+        />
+        <Stack.Screen
+          name="ResumePreview"
+          component={ResumePreviewScreen}
+          options={{
+            title: '이력서 미리보기',
+            headerRight: () => (
+              <Pressable
+                onPress={() => Alert.alert('test', '좋아용')}
+                hitSlop={10}
+                style={[common.mh4, common.size24]}>
+                <Image source={iconPath.BOOKMARK} style={common.size24} />
+              </Pressable>
+            ),
+          }}
         />
         <Stack.Screen
           name="ReviewManage"

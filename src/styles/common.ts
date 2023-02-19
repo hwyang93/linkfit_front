@@ -24,6 +24,8 @@ export const width = // 가로 변환 작업
 const common = StyleSheet.create({
   // space area
   mh4: {marginHorizontal: 4},
+  mh8: {marginHorizontal: 8},
+  mv4: {marginVertical: 4},
   mv10: {marginVertical: 10},
   mv16: {marginVertical: 16},
   mv20: {marginVertical: 20},

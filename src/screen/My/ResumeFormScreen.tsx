@@ -1,4 +1,12 @@
-import {Dimensions, Image, StyleSheet, Text, View} from 'react-native';
+import {
+  ActivityIndicator,
+  Dimensions,
+  Image,
+  Pressable,
+  StyleSheet,
+  Text,
+  View,
+} from 'react-native';
 import {WHITE} from '@styles/colors';
 import DismissKeyboardView from '@components/DismissKeyboardView';
 import common from '@styles/common';
@@ -9,8 +17,10 @@ import TabButton from '@components/TabButton';
 import SelectBox from '@components/SelectBox';
 import DatePicker from '@components/DatePicker';
 import {iconPath} from '@util/iconPath';
+import LinearGradient from 'react-native-linear-gradient';
 
 function ResumeFormScreen() {
+  const [loading, setLoading] = useState<boolean>(false);
   const [title, setTitle] = useState('');
   const [name, setName] = useState('');
   const [gender, setGender] = useState('');
@@ -28,6 +38,8 @@ function ResumeFormScreen() {
 
   const windowWidth = Dimensions.get('window').width;
   const columns2 = (windowWidth - 40) / 2;
+
+  const canGoNext = true;
   return (
     <DismissKeyboardView>
       <View style={styles.container}>
@@ -178,6 +190,25 @@ function ResumeFormScreen() {
             editable={true}
             multiline={true}
           />
+        </View>
+
+        {/* 작성완료 버튼 */}
+        <View style={common.mt20}>
+          <Pressable disabled={!canGoNext} onPress={() => {}}>
+            <LinearGradient
+              style={common.button}
+              start={{x: 0.1, y: 0.5}}
+              end={{x: 0.6, y: 1}}
+              colors={
+                canGoNext ? ['#74ebe4', '#3962f3'] : ['#dcdcdc', '#dcdcdc']
+              }>
+              {loading ? (
+                <ActivityIndicator color="white" />
+              ) : (
+                <Text style={common.buttonText}>작성 완료</Text>
+              )}
+            </LinearGradient>
+          </Pressable>
         </View>
       </View>
     </DismissKeyboardView>
