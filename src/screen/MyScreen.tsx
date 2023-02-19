@@ -128,7 +128,7 @@ function MyScreen() {
 
         <View style={[common.mb8]}>
           {/* route 필요 */}
-          <MyTitle title={'이력서'} button={true} />
+          <MyTitle title={'이력서'} button={true} link={'ResumeManage'} />
         </View>
 
         {/* 이력서 박스 */}

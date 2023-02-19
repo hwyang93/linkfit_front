@@ -45,6 +45,8 @@ import CommunityPostFormScreen from '@screen/Community/CommunityPostFormScreen';
 import CommunityPostScreen from '@screen/Community/CommunityPostScreen';
 import CommunityMyScreen from '@screen/Community/CommunityMyScreen';
 import MyCenterScreen from '@screen/MyCenterScreen';
+import ResumeManageScreen from '@screen/My/ResumeManageScreen';
+import ResumeFormScreen from '@screen/My/ResumeFormScreen';
 
 const Stack = createNativeStackNavigator<LoggedInParamList>();
 
@@ -161,6 +163,26 @@ const MainStack = () => {
           name="CertifyInstructorForm"
           component={CertifyInstructorFormScreen}
           options={{title: '강사 인증'}}
+        />
+        <Stack.Screen
+          name="ResumeManage"
+          component={ResumeManageScreen}
+          options={{
+            title: '이력서 관리',
+            headerRight: () => (
+              <Pressable
+                onPress={() => navigation.navigate('ResumeForm')}
+                hitSlop={10}
+                style={[common.mh4, common.size24]}>
+                <Image source={iconPath.ADD_LICENSE} style={common.size24} />
+              </Pressable>
+            ),
+          }}
+        />
+        <Stack.Screen
+          name="ResumeForm"
+          component={ResumeFormScreen}
+          options={{title: '이력서'}}
         />
         <Stack.Screen
           name="ReviewManage"

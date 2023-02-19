@@ -318,11 +318,11 @@ function CenterInfoScreenTabView() {
   const Tab2Footer = () => {
     return (
       <View>
-        <View style={[common.separator, common.mv16]} />
-        <View>
-          <Text style={[common.text_m, common.fwb]}>센터 주소</Text>
-          <Text style={common.text_m}>서울특별시 강남구 봉은사로 12345</Text>
-        </View>
+        {/*<View style={[common.separator, common.mv16]} />*/}
+        {/*<View>*/}
+        {/*  <Text style={[common.text_m, common.fwb]}>센터 주소</Text>*/}
+        {/*  <Text style={common.text_m}>서울특별시 강남구 봉은사로 12345</Text>*/}
+        {/*</View>*/}
       </View>
     );
   };

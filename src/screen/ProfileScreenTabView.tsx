@@ -16,7 +16,7 @@ import {TabView, TabBar} from 'react-native-tab-view';
 import common from '@styles/common';
 import {iconPath} from '@util/iconPath';
 import {BLUE, GRAY, WHITE} from '@styles/colors';
-import LinkCollection from '@components/LinkCollection';
+// import LinkCollection from '@components/LinkCollection';
 import {
   NavigationProp,
   RouteProp,
@@ -31,7 +31,7 @@ import {RootState} from '@store/reducer';
 const windowHeight = Dimensions.get('window').height;
 const windowWidth = Dimensions.get('window').width;
 const TabBarHeight = 48;
-const HeaderHeight = 240;
+const HeaderHeight = 200;
 const SafeStatusBar = Platform.select({
   ios: 44,
   android: StatusBar.currentHeight,
@@ -294,10 +294,10 @@ function ProfileScreenTabView() {
         </View>
 
         {/*링크 영역 */}
-        <View style={[common.rowCenterBetween, common.mb20]}>
-          <Text style={[common.text_m, common.fwb, common.mb8]}>링크</Text>
-          <LinkCollection />
-        </View>
+        {/*<View style={[common.rowCenterBetween, common.mb20]}>*/}
+        {/*  <Text style={[common.text_m, common.fwb, common.mb8]}>링크</Text>*/}
+        {/*  <LinkCollection />*/}
+        {/*</View>*/}
       </Animated.View>
     );
   };

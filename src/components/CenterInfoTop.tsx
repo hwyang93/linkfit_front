@@ -2,7 +2,7 @@ import {Image, Text, View} from 'react-native';
 import common from '@styles/common';
 import {iconPath} from '@util/iconPath';
 import {GRAY} from '@styles/colors';
-import LinkCollection from '@components/LinkCollection';
+// import LinkCollection from '@components/LinkCollection';
 import OfferListItem from '@components/OfferListItem';
 
 function CenterInfoTop() {
@@ -111,11 +111,11 @@ function CenterInfoTop() {
         </Text>
       </View>
 
-      <View style={[common.mt20, common.rowCenterBetween]}>
-        <Text style={[common.text_m, common.fwb]}>링크</Text>
-        {/*링크 영역 */}
-        <LinkCollection />
-      </View>
+      {/*<View style={[common.mt20, common.rowCenterBetween]}>*/}
+      {/*  <Text style={[common.text_m, common.fwb]}>링크</Text>*/}
+      {/*  /!*링크 영역 *!/*/}
+      {/*  <LinkCollection />*/}
+      {/*</View>*/}
 
       <View style={[common.mt20, common.mb16]}>
         <Text style={[common.text_m, common.fwb, common.mb8]}>채용 중</Text>
