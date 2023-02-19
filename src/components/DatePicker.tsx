@@ -4,9 +4,16 @@ import DateTimePickerModal from 'react-native-modal-datetime-picker';
 import moment from 'moment';
 import {useState} from 'react';
 
-function BirthdayPicker() {
+type Props = {
+  label: string;
+  placeholder: string;
+};
+
+function DatePicker({label, placeholder}: Props) {
   const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
-  const [birthday, setBirthday] = useState('');
+  const [start, setStart] = useState('');
+  const [end, setEnd] = useState('');
+
   const showDatePicker = () => {
     setDatePickerVisibility(true);
   };
@@ -14,8 +21,8 @@ function BirthdayPicker() {
     setDatePickerVisibility(false);
   };
   const handleConfirm = (date: any) => {
-    setBirthday(moment(date).format('YYYY.MM.DD'));
-    // console.log('생일', birthday);
+    setStart(moment(date).format('YYYY.MM'));
+
     hideDatePicker();
   };
 
@@ -23,9 +30,9 @@ function BirthdayPicker() {
     <Pressable onPress={showDatePicker}>
       <Input
         pointerEvents={'none'}
-        label={'생년월일'}
-        value={birthday}
-        placeholder={'생년월일을 선택 하세요.'}
+        label={label}
+        value={start}
+        placeholder={placeholder}
       />
       <DateTimePickerModal
         isVisible={isDatePickerVisible}
@@ -37,4 +44,4 @@ function BirthdayPicker() {
   );
 }
 
-export default BirthdayPicker;
+export default DatePicker;

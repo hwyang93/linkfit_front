@@ -119,6 +119,7 @@ function SignUpFormScreen() {
         <View style={common.mb16}>
           <BirthdayPicker />
         </View>
+        {/* 성별 */}
         <View style={[common.mb16]}>
           <TabButton
             genderData={genderData}

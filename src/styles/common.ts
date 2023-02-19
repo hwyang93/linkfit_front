@@ -255,5 +255,6 @@ const common = StyleSheet.create({
   MY: {width: 18, height: 18},
   size24: {width: 24, height: 24},
   size32: {width: 32, height: 32},
+  size40: {width: 40, height: 40},
 });
 export default common;
