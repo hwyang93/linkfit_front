@@ -10,7 +10,15 @@ function MessageScreen() {
   return (
     <View style={styles.container}>
       <Text style={common.text_m}>쪽지 화면</Text>
-      <Button title={'button'} onPress={() => navigation.navigate('SignIn')} />
+      <Button
+        title={'로그인화면'}
+        onPress={() => navigation.navigate('SignIn')}
+      />
+
+      <Button
+        title={'My 센터'}
+        onPress={() => navigation.navigate('MyCenter')}
+      />
     </View>
   );
 }

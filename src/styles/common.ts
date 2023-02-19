@@ -38,6 +38,7 @@ const common = StyleSheet.create({
   mt40: {marginTop: 40},
   mb8: {marginBottom: 8},
   mb10: {marginBottom: 10},
+  mb12: {marginBottom: 12},
   mb16: {marginBottom: 16},
   mb20: {marginBottom: 20},
   mb24: {marginBottom: 24},
@@ -144,6 +145,9 @@ const common = StyleSheet.create({
     lineHeight: +width * 30,
   },
   fs10: {fontSize: +width * 10},
+  fs12: {fontSize: +width * 12},
+  fs14: {fontSize: +width * 14},
+  fs16: {fontSize: +width * 16},
   fs18: {fontSize: +width * 18},
   // basic button
   button: {

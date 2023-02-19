@@ -74,7 +74,7 @@ const ContentTab = () => {
           options={{
             title: '커뮤니티',
             headerTitle: () => {
-              return <LinkHeader />;
+              return <LinkHeader link={'CommunityMy'} />;
             },
             tabBarIcon: ({focused}) => (
               <Image

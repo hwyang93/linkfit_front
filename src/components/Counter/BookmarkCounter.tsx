@@ -3,7 +3,6 @@ import {Alert, Image, Pressable, Text, View} from 'react-native';
 import {iconPath} from '@util/iconPath';
 
 function BookmarkCounter(props: any) {
-  console.log(props.counter);
   return (
     <View style={common.rowCenter}>
       <Pressable onPress={() => Alert.alert('test', 'test')}>

@@ -43,6 +43,8 @@ import RulesScreen from '@screen/My/RulesScreen';
 import ReviewFormScreen from '@screen/My/ReviewFormScreen';
 import CommunityPostFormScreen from '@screen/Community/CommunityPostFormScreen';
 import CommunityPostScreen from '@screen/Community/CommunityPostScreen';
+import CommunityMyScreen from '@screen/Community/CommunityMyScreen';
+import MyCenterScreen from '@screen/MyCenterScreen';
 
 const Stack = createNativeStackNavigator<LoggedInParamList>();
 
@@ -112,6 +114,23 @@ const MainStack = () => {
               </Pressable>
             ),
           }}
+        />
+        {/* 커뮤니티 MY 화면 */}
+        <Stack.Screen
+          name="CommunityMy"
+          component={CommunityMyScreen}
+          options={{title: 'MY 커뮤니티'}}
+        />
+        {/* 임시 My 센터 */}
+        <Stack.Screen
+          name="MyCenter"
+          component={MyCenterScreen}
+          options={{title: 'MY 센터'}}
+        />
+        <Stack.Screen
+          name="MyCenterInfo"
+          component={CenterInfoScreen}
+          options={{title: '사업자 정보'}}
         />
         <Stack.Screen
           name="Profile"
