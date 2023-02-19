@@ -18,9 +18,12 @@ export type LoggedInParamList = {
   Link: undefined;
   Message: undefined;
   Community: undefined;
+  CommunityMy: undefined;
   CommunityPostForm: undefined;
   CommunityPost: undefined;
   My: undefined;
+  MyCenter: undefined;
+  MyCenterInfo: undefined;
   ProfileEdit: {memberInfo: object};
   CertifyLocation: undefined;
   CertifyInstructor: undefined;

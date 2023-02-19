@@ -1,5 +1,5 @@
 import common from '@styles/common';
-import {Alert, Image, Pressable, StyleSheet, Text, View} from 'react-native';
+import {Image, Pressable, StyleSheet, Text, View} from 'react-native';
 import {iconPath} from '@util/iconPath';
 import {BLUE} from '@styles/colors';
 
@@ -46,10 +46,7 @@ function CommunityUserComponent({data}: UserProps) {
           </Text>
         </View>
       </View>
-      <Pressable
-        style={styles.kebabIcon}
-        hitSlop={10}
-        onPress={() => Alert.alert('click', 'test')}>
+      <Pressable style={styles.kebabIcon} hitSlop={10}>
         <Image source={iconPath.KEBAB} style={[common.KEBAB]} />
       </Pressable>
     </View>

@@ -1,12 +1,16 @@
-import {FlatList, StyleSheet, View} from 'react-native';
+import {Alert, FlatList, StyleSheet, View} from 'react-native';
 import {WHITE} from '@styles/colors';
 import common from '@styles/common';
 import {iconPath} from '@util/iconPath';
 import communityPostTop from '@components/Community/CommunityPostTop';
 import ReplyComponent from '@components/Community/ReplyComponent';
 import CommunityUserComponent from '@components/Community/CommunityUserComponent';
+import Modal from '@components/ModalSheet';
+import {SetStateAction, useState} from 'react';
 
 function CommunityPostScreen() {
+  const [modalVisible, setModalVisible] =
+    useState<SetStateAction<boolean>>(false);
   const REPLY = [
     {
       id: 1,
@@ -32,6 +36,27 @@ function CommunityPostScreen() {
     },
   ];
 
+  const MODAL = [
+    {
+      value: '차단하기',
+      job: () => {
+        setModalVisible(false);
+        Alert.alert('text', '차단하라!!');
+      },
+    },
+    {
+      value: '신고하기',
+      job: () => {
+        setModalVisible(false);
+        Alert.alert('text', '신고하라!!');
+      },
+    },
+  ];
+
+  const openModal = () => {
+    setModalVisible(true);
+  };
+
   return (
     <View style={styles.container}>
       <FlatList
@@ -50,6 +75,12 @@ function CommunityPostScreen() {
         ItemSeparatorComponent={() => (
           <View style={[common.separator, common.mv16]} />
         )}
+      />
+      <Modal
+        modalVisible={modalVisible}
+        setModalVisible={setModalVisible}
+        title={'더보기'}
+        modalData={MODAL}
       />
     </View>
   );

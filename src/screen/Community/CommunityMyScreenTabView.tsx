@@ -2,7 +2,8 @@ import {Dimensions} from 'react-native';
 import {BLUE, GRAY} from '@styles/colors';
 import {createMaterialTopTabNavigator} from '@react-navigation/material-top-tabs';
 import EmployerReviewComponent from '@components/My/EmployerReviewComponent';
-import EmployeeReviewComponent from '@components/My/EmployeeReviewComponent';
+import CommunityMyPost from '@components/Community/CommunityMyPost';
+import CommunityMyBookmark from '@components/Community/CommunityMyBookmark';
 
 const Tab = createMaterialTopTabNavigator();
 const windowWidth = Dimensions.get('window').width;
@@ -30,8 +31,8 @@ function Tabs() {
             },
           },
         }}>
-        <Tab.Screen name="구직" component={EmployeeReviewComponent} />
-        <Tab.Screen name="구인" component={EmployerReviewComponent} />
+        <Tab.Screen name="작성 내역" component={CommunityMyPost} />
+        <Tab.Screen name="북마크" component={CommunityMyBookmark} />
       </Tab.Navigator>
     </>
   );
