@@ -1,5 +1,4 @@
 import {
-  Alert,
   Dimensions,
   Image,
   Pressable,
@@ -9,8 +8,7 @@ import {
   View,
 } from 'react-native';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
-import {BLUE, GRAY, WHITE} from '@styles/colors';
-import ProfileBox from '@components/ProfileBox';
+import {GRAY, WHITE} from '@styles/colors';
 import common from '@styles/common';
 import {iconPath} from '@util/iconPath';
 import MyTitle from '@components/My/MyTitle';

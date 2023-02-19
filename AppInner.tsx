@@ -30,6 +30,7 @@ export type LoggedInParamList = {
   CertifyInstructorForm: undefined;
   ResumeManage: undefined;
   ResumeForm: undefined;
+  ResumePreview: undefined;
   ReviewManage: undefined;
   ReviewForm: undefined;
   FollowingManage: undefined;

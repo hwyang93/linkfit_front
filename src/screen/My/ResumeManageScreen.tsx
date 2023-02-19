@@ -41,7 +41,10 @@ function ResumeManageScreen() {
     },
     {
       value: '미리보기',
-      job: () => {},
+      job: () => {
+        closeModel();
+        navigation.navigate('ResumePreview');
+      },
     },
     {
       value: '수정',
