@@ -2,7 +2,7 @@ import {Image, ScrollView, StyleSheet, Text, View} from 'react-native';
 import {GRAY, WHITE} from '@styles/colors';
 import common from '@styles/common';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
-import CenterComponent from '@components/CenterComponent';
+import CenterInfoComponent from '@components/CenterInfoComponent';
 
 function JobPostScreen() {
   const insets = useSafeAreaInsets();
@@ -81,16 +81,10 @@ function JobPostScreen() {
           source={require('../assets/images/map_sample.png')}
         />
       </View>
-      <View style={common.mb16}>
-        <Text style={[common.mb8, common.text_m, common.fwb]}>센터 정보</Text>
-        <Image
-          style={common.imgBox}
-          source={require('../assets/images/center_01.png')}
-        />
-      </View>
 
       <View style={common.mb40}>
-        <CenterComponent />
+        <Text style={[common.mb8, common.text_m, common.fwb]}>센터 정보</Text>
+        <CenterInfoComponent />
       </View>
     </ScrollView>
   );
