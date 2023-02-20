@@ -26,6 +26,7 @@ const common = StyleSheet.create({
   mh4: {marginHorizontal: 4},
   mh8: {marginHorizontal: 8},
   mv4: {marginVertical: 4},
+  mv8: {marginVertical: 8},
   mv10: {marginVertical: 10},
   mv16: {marginVertical: 16},
   mv20: {marginVertical: 20},
@@ -151,6 +152,7 @@ const common = StyleSheet.create({
   fs14: {fontSize: +width * 14},
   fs16: {fontSize: +width * 16},
   fs18: {fontSize: +width * 18},
+  fcg: {color: GRAY.DARK},
   // basic button
   button: {
     justifyContent: 'center',

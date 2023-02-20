@@ -1,11 +1,24 @@
-import {StyleSheet, Text, View} from 'react-native';
-import {GRAY, WHITE} from '@styles/colors';
+import {
+  Alert,
+  Image,
+  Pressable,
+  ScrollView,
+  StyleSheet,
+  Text,
+  View,
+} from 'react-native';
+import {WHITE} from '@styles/colors';
 
 import Modal from '@components/ModalSheet';
 import {SetStateAction, useState} from 'react';
 import TopFilter from '@components/TopFilter';
+import common from '@styles/common';
+import {iconPath} from '@util/iconPath';
+import {NavigationProp, useNavigation} from '@react-navigation/native';
+import {LoggedInParamList} from '../../../AppInner';
 
 function ReceivedSuggestionScreen() {
+  const navigation = useNavigation<NavigationProp<LoggedInParamList>>();
   const [modalVisible, setModalVisible] =
     useState<SetStateAction<boolean>>(false);
 
@@ -79,22 +92,66 @@ function ReceivedSuggestionScreen() {
       job: () => {},
     },
   ];
+  const DATA = [
+    {
+      id: 1,
+      registrationDate: '2022.12.09',
+      title: '필라테스 전임 강사 제안 드립니다.',
+      companyName: '링크 필라테스',
+      endDate: '~2022.12.09 마감',
+      status: '답변 대기 중',
+      job: () => {},
+    },
+    {
+      id: 2,
+      registrationDate: '2023.2.09',
+      title: '필라테스 전임 강사 제안을 드려볼까 합니다.',
+      companyName: '비와이테스',
+      endDate: '~2023.2.20 마감',
+      status: '답변 완료',
+      job: () => {},
+    },
+  ];
 
   const openModal = () => {
     setModalVisible(true);
   };
 
   return (
-    <View style={styles.container}>
+    <ScrollView style={styles.container}>
       {/* 필터 영역 */}
       <TopFilter data={FILTER} />
       {/* 필터 영역 */}
 
       {/* 컨텐츠 영역 */}
       <View>
-        <View>
-          <Text />
-        </View>
+        {DATA.map((item, index) => {
+          return (
+            <Pressable
+              key={index}
+              style={[common.basicBox, common.mv8]}
+              onPress={() => navigation.navigate('ReceivedSuggestionDetail')}>
+              <Text style={[common.text_s, common.fcg, common.mb12]}>
+                {item.registrationDate}
+              </Text>
+              <Text style={[common.title, common.mb12]} numberOfLines={1}>
+                {item.title}
+              </Text>
+              <Text style={[common.text_m, common.fwb, common.mb12]}>
+                {item.companyName}
+              </Text>
+              <Text style={[common.text_s, common.fcg]}>
+                {item.endDate} | {item.status}
+              </Text>
+              <Pressable
+                style={styles.kebabIcon}
+                hitSlop={10}
+                onPress={() => Alert.alert('text', '케밥 클릭')}>
+                <Image source={iconPath.KEBAB} style={[common.KEBAB]} />
+              </Pressable>
+            </Pressable>
+          );
+        })}
       </View>
       {/* 컨텐츠 영역 */}
 
@@ -105,7 +162,7 @@ function ReceivedSuggestionScreen() {
         title={modalTitle}
         modalData={modalData}
       />
-    </View>
+    </ScrollView>
   );
 }
 
@@ -115,31 +172,8 @@ const styles = StyleSheet.create({
     padding: 16,
     backgroundColor: WHITE,
   },
-  filterBox: {
-    flexDirection: 'row',
-    paddingVertical: 8,
-  },
-  filterItem: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    paddingVertical: 6,
-    paddingLeft: 12,
-    paddingRight: 30,
-    marginRight: 8,
-    borderWidth: 1,
-    borderColor: GRAY.LIGHT,
-    borderRadius: 16,
-  },
-  filterText: {
-    color: GRAY.DARK,
-  },
-  filterIcon: {
-    position: 'absolute',
-    top: 11,
-    right: 12,
-    width: 10,
-    height: 6,
-  },
+
+  kebabIcon: {position: 'absolute', top: 16, right: 16},
 });
 
 export default ReceivedSuggestionScreen;
