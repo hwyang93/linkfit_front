@@ -92,12 +92,12 @@ const styles = StyleSheet.create({
   thumbnailBox: {
     alignItems: 'center',
     justifyContent: 'center',
-    width: 60,
-    height: 60,
-    borderRadius: 40,
+    width: 64,
+    height: 64,
+    borderRadius: 200,
     backgroundColor: GRAY.LIGHT,
   },
-  thumbnail: {width: '50%', height: '50%'},
+  thumbnail: {width: 64, height: 64, borderRadius: 200},
   nextArrow: {
     position: 'absolute',
     top: '50%',

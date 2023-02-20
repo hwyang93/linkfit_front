@@ -25,7 +25,7 @@ type ListProps = {
 };
 
 const windowWidth = Dimensions.get('window').width;
-const columns2 = (windowWidth - 40) / 2;
+const columns2 = (windowWidth - 48) / 2;
 
 function RecruitListItem({item}: ListProps) {
   const navigation = useNavigation<NavigationProp<LoggedInParamList>>();
@@ -50,7 +50,7 @@ function RecruitListItem({item}: ListProps) {
         <Pressable
           style={styles.bookmark}
           onPress={() => Alert.alert('click', 'bookmark')}>
-          <Image source={iconPath.BOOKMARK} style={[common.BOOKMARK]} />
+          <Image source={iconPath.BOOKMARK} style={[common.size24]} />
         </Pressable>
       </View>
     </Pressable>
@@ -64,8 +64,8 @@ const styles = StyleSheet.create({
     height: 104,
     borderRadius: 8,
   },
-  img: {width: '100%', borderRadius: 8},
-  bookmark: {position: 'absolute', top: 3, right: 13},
+  img: {width: '100%', height: 104, borderRadius: 8},
+  bookmark: {position: 'absolute', top: 0, right: 13},
 });
 
 export default RecruitListItem;

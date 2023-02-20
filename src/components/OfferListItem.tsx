@@ -53,7 +53,7 @@ function OfferListItem({offer, button}: offerProps) {
               onPress={() => Alert.alert('북마크', 'test')}
               hitSlop={10}
               style={styles.iconPosition}>
-              <Image source={iconPath.BOOKMARK} style={common.BOOKMARK} />
+              <Image source={iconPath.BOOKMARK} style={common.size24} />
             </Pressable>
           </Pressable>
         );
