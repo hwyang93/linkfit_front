@@ -48,6 +48,9 @@ import MyCenterScreen from '@screen/MyCenterScreen';
 import ResumeManageScreen from '@screen/My/ResumeManageScreen';
 import ResumeFormScreen from '@screen/My/ResumeFormScreen';
 import ResumePreviewScreen from '@screen/My/ResumePreviewScreen';
+import ApplicationStatusScreen from '@screen/My/ApplicationStatusScreen';
+import ReceivedSuggestionScreen from '@screen/My/ReceivedSuggestionScreen';
+import MyPostScreen from '@screen/My/MyPostScreen';
 
 const Stack = createNativeStackNavigator<LoggedInParamList>();
 
@@ -199,6 +202,24 @@ const MainStack = () => {
               </Pressable>
             ),
           }}
+        />
+        {/* 지원 현황 */}
+        <Stack.Screen
+          name="ApplicationStatus"
+          component={ApplicationStatusScreen}
+          options={{title: '지원 현황'}}
+        />
+        {/* 받은 포지션 제안 */}
+        <Stack.Screen
+          name="ReceivedSuggestion"
+          component={ReceivedSuggestionScreen}
+          options={{title: '받은 포지션 제안'}}
+        />
+        {/* 내 공고 */}
+        <Stack.Screen
+          name="MyPost"
+          component={MyPostScreen}
+          options={{title: '작성 공고'}}
         />
         <Stack.Screen
           name="ReviewManage"

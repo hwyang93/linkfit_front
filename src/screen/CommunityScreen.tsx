@@ -14,35 +14,35 @@ function CommunityScreen() {
   const navigation = useNavigation<NavigationProp<LoggedInParamList>>();
   const FILTER = [
     {
-      name: '전체',
+      value: '전체',
       active: true,
     },
     {
-      name: '필라테스',
+      value: '필라테스',
       active: false,
     },
     {
-      name: '요가',
+      value: '요가',
       active: false,
     },
     {
-      name: '채널',
+      value: '채널',
       active: false,
     },
     {
-      name: '채널',
+      value: '채널',
       active: false,
     },
     {
-      name: '채널',
+      value: '채널',
       active: false,
     },
     {
-      name: '채널',
+      value: '채널',
       active: false,
     },
     {
-      name: '채널',
+      value: '채널',
       active: false,
     },
   ];
@@ -97,7 +97,7 @@ function CommunityScreen() {
                   common.filterText,
                   item.active && common.filterTextActive,
                 ]}>
-                {item.name}
+                {item.value}
               </Text>
             </View>
           )}

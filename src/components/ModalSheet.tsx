@@ -130,7 +130,6 @@ const styles = StyleSheet.create({
     borderTopLeftRadius: 16,
     borderTopRightRadius: 16,
   },
-
   topBar: {
     position: 'absolute',
     top: 16,

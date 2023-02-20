@@ -1,4 +1,12 @@
-import {Alert, Image, Pressable, StyleSheet, Text, View} from 'react-native';
+import {
+  Alert,
+  Dimensions,
+  Image,
+  Pressable,
+  StyleSheet,
+  Text,
+  View,
+} from 'react-native';
 import common from '@styles/common';
 import {iconPath} from '@util/iconPath';
 import {NavigationProp, useNavigation} from '@react-navigation/native';
@@ -15,6 +23,9 @@ type ListProps = {
     color: string;
   };
 };
+
+const windowWidth = Dimensions.get('window').width;
+const columns2 = (windowWidth - 40) / 2;
 
 function RecruitListItem({item}: ListProps) {
   const navigation = useNavigation<NavigationProp<LoggedInParamList>>();
@@ -47,10 +58,9 @@ function RecruitListItem({item}: ListProps) {
 }
 
 const styles = StyleSheet.create({
-  itemBox: {width: '48%', marginBottom: 16, marginHorizontal: '1%'},
+  itemBox: {width: columns2, marginBottom: 16, marginHorizontal: 4},
   imgBox: {
     marginBottom: 8,
-    width: '100%',
     height: 104,
     borderRadius: 8,
   },

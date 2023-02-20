@@ -14,14 +14,16 @@ function MyTitle({title, button, link}: titleProps) {
   const navigation = useNavigation<NavigationProp<LoggedInParamList>>();
 
   return (
-    <View style={[common.rowCenterBetween]}>
+    <Pressable
+      style={[common.rowCenterBetween]}
+      onPress={() => navigation.navigate(link)}>
       <Text style={common.title_s}>{title}</Text>
       {button && (
-        <Pressable hitSlop={10} onPress={() => navigation.navigate(link)}>
+        <View>
           <FontAwesome name={'chevron-right'} color="black" />
-        </Pressable>
+        </View>
       )}
-    </View>
+    </Pressable>
   );
 }
 

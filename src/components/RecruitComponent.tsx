@@ -26,6 +26,7 @@ function RecruitComponent({list, title, text}: InstructorProps) {
           <Text style={common.text_m}>{text}</Text>
         </View>
       }
+      showsVerticalScrollIndicator={false}
     />
   );
 }
