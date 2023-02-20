@@ -3,7 +3,7 @@ import {iconPath} from '@util/iconPath';
 import {GRAY} from '@styles/colors';
 import common from '@styles/common';
 
-function TopFilter({data}) {
+function TopFilter({data}: any) {
   console.log('확인이 필요행요', data);
   return (
     <>

@@ -51,6 +51,7 @@ import ResumePreviewScreen from '@screen/My/ResumePreviewScreen';
 import ApplicationStatusScreen from '@screen/My/ApplicationStatusScreen';
 import ReceivedSuggestionScreen from '@screen/My/ReceivedSuggestionScreen';
 import MyPostScreen from '@screen/My/MyPostScreen';
+import ReceivedSuggestionDetailScreen from '@screen/My/ReceivedSuggestionDetailScreen';
 
 const Stack = createNativeStackNavigator<LoggedInParamList>();
 
@@ -213,6 +214,11 @@ const MainStack = () => {
         <Stack.Screen
           name="ReceivedSuggestion"
           component={ReceivedSuggestionScreen}
+          options={{title: '받은 포지션 제안'}}
+        />
+        <Stack.Screen
+          name="ReceivedSuggestionDetail"
+          component={ReceivedSuggestionDetailScreen}
           options={{title: '받은 포지션 제안'}}
         />
         {/* 내 공고 */}
