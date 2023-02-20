@@ -33,6 +33,9 @@ export type LoggedInParamList = {
   ResumePreview: undefined;
   ReviewManage: undefined;
   ReviewForm: undefined;
+  ApplicationStatus: undefined;
+  ReceivedSuggestion: undefined;
+  MyPost: undefined;
   FollowingManage: undefined;
   BookmarkManage: undefined;
   Setting: undefined;

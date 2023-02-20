@@ -174,7 +174,11 @@ function MyScreen() {
         {/* 이력서 박스 */}
 
         <View style={[common.mb8]}>
-          <MyTitle title={'지원 현황'} button={true} />
+          <MyTitle
+            title={'지원 현황'}
+            button={true}
+            link={'ApplicationStatus'}
+          />
         </View>
 
         <View style={common.mb24}>
@@ -241,7 +245,11 @@ function MyScreen() {
         </View>
 
         <View style={[common.mb8]}>
-          <MyTitle title={'받은 포지션 제안'} button={true} />
+          <MyTitle
+            title={'받은 포지션 제안'}
+            button={true}
+            link={'ReceivedSuggestion'}
+          />
         </View>
 
         <View style={common.mb24}>
@@ -308,7 +316,7 @@ function MyScreen() {
         </View>
 
         <View style={[common.mb8]}>
-          <MyTitle title={'내 공고'} button={true} />
+          <MyTitle title={'내 공고'} button={true} link={'MyPost'} />
         </View>
 
         <View style={common.mb24}>
