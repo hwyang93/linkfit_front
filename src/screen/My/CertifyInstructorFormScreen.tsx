@@ -16,7 +16,7 @@ import BirthdayPicker from '@components/BirthdayPicker';
 import SelectBox from '@components/SelectBox';
 import {iconPath} from '@util/iconPath';
 import LinearGradient from 'react-native-linear-gradient';
-import {launchImageLibrary} from 'react-native-image-picker';
+import {Asset, launchImageLibrary, MediaType} from 'react-native-image-picker';
 
 function CertifyInstructorFormScreen() {
   const [loading, setLoading] = useState<boolean>(false);
@@ -32,20 +32,17 @@ function CertifyInstructorFormScreen() {
 
   const uploadImage = async () => {
     const options = {
-      storageOptions: {
-        path: 'images',
-        mediaType: 'photo',
-      },
+      mediaType: 'photo' as MediaType,
       includeBase64: true,
     };
     await launchImageLibrary(options, response => {
       if (response.didCancel) {
         console.log('User cancelled image picker');
-      } else if (response.error) {
-        console.log('ImagePicker Error: ', response.error);
-      } else if (response.customButton) {
-        console.log('User tapped custom button: ', response.customButton);
+      } else if (response.errorCode) {
+        console.log('ImagePicker Error: ', response.errorCode);
+        console.log('ImagePicker Message: ', response.errorMessage);
       } else {
+        let assets: Asset[] | undefined = response.assets;
         const source = {
           uri: 'data:image/jpeg;base64,' + response.assets[0].base64,
         };

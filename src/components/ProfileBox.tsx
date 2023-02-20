@@ -15,7 +15,14 @@ function ProfileBox({memberInfo}: any) {
         style={styles.profileBox}
         onPress={() => navigation.navigate('ProfileEdit', {memberInfo})}>
         <View style={[common.mr16, styles.thumbnailBox]}>
-          <Image source={iconPath.PILATES} style={styles.thumbnail} />
+          <Image
+            source={
+              memberInfo.profileImage
+                ? {uri: memberInfo.profileImage.originFileUrl}
+                : iconPath.PILATES
+            }
+            style={styles.thumbnail}
+          />
         </View>
         <View>
           <View style={common.rowCenter}>

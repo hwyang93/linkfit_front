@@ -69,6 +69,7 @@ function MyScreen() {
       intro: '',
       field: '',
       licences: {},
+      profileImage: {},
     },
     masterResume: {
       title: undefined,

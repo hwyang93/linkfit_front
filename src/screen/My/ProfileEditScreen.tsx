@@ -22,7 +22,12 @@ import {
   useRoute,
 } from '@react-navigation/native';
 import {LoggedInParamList} from '../../../AppInner';
-import {launchImageLibrary} from 'react-native-image-picker';
+import {
+  Asset,
+  ImagePickerResponse,
+  launchImageLibrary,
+  MediaType,
+} from 'react-native-image-picker';
 
 function ProfileEditScreen() {
   const navigation = useNavigation<NavigationProp<LoggedInParamList>>();
@@ -39,7 +44,12 @@ function ProfileEditScreen() {
     },
   ]);
   const [loading, setLoading] = useState<boolean>(false);
-  const [imageUri, setImageUri] = useState('');
+  const [imageUri, setImageUri] = useState<{uri: string}>({});
+  const [imageObj, setImageObj] = useState<{
+    name: string | undefined;
+    type: string | undefined;
+    uri: string | undefined;
+  }>({name: undefined, type: undefined, uri: undefined});
 
   useEffect(() => {
     const memberInfo = route.params.memberInfo;
@@ -47,26 +57,29 @@ function ProfileEditScreen() {
     setIntro(memberInfo.intro);
     setField(memberInfo.field);
     setLicences(memberInfo.licences);
+    if (memberInfo.profileImage) {
+      setImageUri({uri: memberInfo.profileImage.originFileUrl});
+    }
   }, [route.params.memberInfo]);
 
   const onUpdateProfile = useCallback(async () => {
-    const data = {
-      nickname: nickname,
-      intro: intro,
-      field: field,
-      links: links,
-      file: imageUri,
-    };
-    console.log(imageUri);
-    await updateProfile(data)
+    const formData = new FormData();
+    formData.append('nickname', nickname);
+    formData.append('intro', intro);
+    formData.append('field', field);
+    formData.append('links', links);
+    formData.append('file', imageObj);
+
+    await updateProfile(formData)
       .then(() => {
         Alert.alert('프로필이 수정되었습니다.');
         navigation.goBack();
       })
       .catch((e: {message: any}) => {
+        console.log(e);
         Alert.alert(e.message);
       });
-  }, [nickname, intro, field, links, imageUri, navigation]);
+  }, [nickname, intro, field, links, imageUri, imageObj, navigation]);
 
   const onCheckNickname = useCallback(async () => {
     await fetchCheckNickname(nickname)
@@ -84,24 +97,28 @@ function ProfileEditScreen() {
 
   const openCamera = async () => {
     const options = {
-      storageOptions: {
-        path: 'images',
-        mediaType: 'photo',
-      },
+      mediaType: 'photo' as MediaType,
       includeBase64: true,
     };
     await launchImageLibrary(options, response => {
       if (response.didCancel) {
         console.log('User cancelled image picker');
-      } else if (response.error) {
-        console.log('ImagePicker Error: ', response.error);
-      } else if (response.customButton) {
-        console.log('User tapped custom button: ', response.customButton);
+      } else if (response.errorCode) {
+        console.log('ImagePicker Error: ', response.errorCode);
+        console.log('ImagePicker Message: ', response.errorMessage);
       } else {
-        const source = {
-          uri: 'data:image/jpeg;base64,' + response.assets[0].base64,
-        };
-
+        let assets: Asset[] | undefined = response.assets;
+        let source;
+        if (assets) {
+          source = {
+            uri: 'data:image/jpeg;base64,' + assets[0].base64,
+          };
+          setImageObj({
+            name: assets[0].fileName,
+            type: assets[0].type,
+            uri: assets[0].uri,
+          });
+        }
         setImageUri(source);
       }
     });
