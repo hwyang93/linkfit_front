@@ -3,20 +3,27 @@ import common from '@styles/common';
 import {GRAY} from '@styles/colors';
 import {iconPath} from '@util/iconPath';
 
-type infoProps = {
+type CenterInfoProps = {
   title: string;
   type: string;
   location: string;
   tel: number;
 };
 
-function CenterComponent() {
+function CenterInfoComponent() {
   // todo: 전화걸기 (시뮬레이션 환경에선 안됨)
   // import { Linking } from 'react-native';
   // () => Linking.openURL(`tel:01099003171`)
   // {Linking.openURL(`tel:${phoneNumber}`)}
   return (
     <View>
+      <View style={common.mb16}>
+        <Image
+          source={require('../assets/images/center_01.png')}
+          resizeMode={'cover'}
+          style={common.imgBox}
+        />
+      </View>
       <Text style={common.title}>링크 필라테스</Text>
       <View style={common.rowCenterBetween}>
         <Text style={[common.text_s, {color: GRAY.DARK}]}>
@@ -43,4 +50,4 @@ function CenterComponent() {
     </View>
   );
 }
-export default CenterComponent;
+export default CenterInfoComponent;

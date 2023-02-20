@@ -2,6 +2,8 @@ import {ScrollView, StyleSheet, Text, View} from 'react-native';
 import {WHITE} from '@styles/colors';
 
 import common from '@styles/common';
+import CenterInfoComponent from '@components/CenterInfoComponent';
+import InstructorInfoComponent from '@components/InstructorInfoComponent';
 
 function ReceivedSuggestionDetailScreen() {
   return (
@@ -34,9 +36,23 @@ function ReceivedSuggestionDetailScreen() {
         <Text style={[common.text_m, common.mb24]}>채용시 마감</Text>
 
         {/* 센터 또는 강사 정보 */}
-        <Text style={[common.text_m, common.fwb, common.mb8]}>
-          제안한 센터 정보
-        </Text>
+        <View style={common.mb24}>
+          <Text style={[common.text_m, common.fwb, common.mb8]}>
+            제안한 센터 정보
+          </Text>
+          <View>
+            <CenterInfoComponent />
+          </View>
+        </View>
+
+        <View style={common.mb24}>
+          <Text style={[common.text_m, common.fwb, common.mb8]}>
+            제안한 강사 정보
+          </Text>
+          <View>
+            <InstructorInfoComponent />
+          </View>
+        </View>
       </View>
     </ScrollView>
   );

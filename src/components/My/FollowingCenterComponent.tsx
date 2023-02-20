@@ -1,6 +1,6 @@
 import {Image, ScrollView, StyleSheet, View} from 'react-native';
 import {GRAY} from '@styles/colors';
-import CenterComponent from '@components/CenterComponent';
+import CenterInfoComponent from '@components/CenterInfoComponent';
 import hairlineWidth = StyleSheet.hairlineWidth;
 
 function FollowingCenterComponent() {
@@ -18,24 +18,14 @@ function FollowingCenterComponent() {
   return (
     <ScrollView>
       <View style={styles.followingBox}>
-        <Image
-          source={require('../../assets/images/center_01.png')}
-          style={styles.thumbnail}
-        />
-
         <View>
-          <CenterComponent />
+          <CenterInfoComponent />
         </View>
       </View>
 
       <View style={styles.followingBox}>
-        <Image
-          source={require('../../assets/images/center_01.png')}
-          style={styles.thumbnail}
-        />
-
         <View>
-          <CenterComponent />
+          <CenterInfoComponent />
         </View>
       </View>
     </ScrollView>
