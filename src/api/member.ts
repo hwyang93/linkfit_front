@@ -21,7 +21,9 @@ export function fetchMemberMyInfo() {
 }
 
 export function updateProfile(data: object) {
-  return request.patch('/member/profile', data);
+  return request.patch('/member/profile', data, {
+    headers: {'content-type': 'multipart/form-data'},
+  });
 }
 
 export function createRegionAuth(data: object) {

@@ -71,7 +71,6 @@ function LogIn() {
   const getMemberInfo = async () => {
     await fetchMemberInfo()
       .then(({data}: any) => {
-        console.log(data);
         dispatch(
           userSlice.actions.setUser({
             name: data.name,
