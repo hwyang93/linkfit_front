@@ -34,7 +34,7 @@ function SignUpFormScreen({navigation}: SignUpScreenProps) {
 
   const [email] = useState(route.params.email);
   const [userName, setUserName] = useState('');
-  const [birthday, setBirthday] = useState('');
+  const [birth, setBirth] = useState('');
   const [gender, setGender] = useState('');
   const [agency, setAgency] = useState('');
   const [phoneNumber, setPhoneNumber] = useState('');
@@ -46,6 +46,7 @@ function SignUpFormScreen({navigation}: SignUpScreenProps) {
       email: email,
       password: password,
       name: userName,
+      birth: birth,
       gender: gender,
       phone: phoneNumber,
     };
@@ -78,8 +79,8 @@ function SignUpFormScreen({navigation}: SignUpScreenProps) {
             ) : (
               <Input
                 label={'생년월일'}
-                onChangeText={(text: any) => setBirthday(text)}
-                value={birthday}
+                onChangeText={(text: any) => setBirth(text)}
+                value={birth}
                 placeholder={'YYYY.MM.DD'}
                 keyboardType={KeyboardTypes.NUMBER}
               />

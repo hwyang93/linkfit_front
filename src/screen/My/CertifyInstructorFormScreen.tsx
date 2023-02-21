@@ -1,5 +1,6 @@
 import {
   ActivityIndicator,
+  Alert,
   Image,
   Platform,
   Pressable,
@@ -11,24 +12,53 @@ import {
 import {WHITE} from '@styles/colors';
 import common from '@styles/common';
 import Input, {KeyboardTypes} from '@components/Input';
-import {useState} from 'react';
+import {useCallback, useState} from 'react';
 import BirthdayPicker from '@components/BirthdayPicker';
 import SelectBox from '@components/SelectBox';
 import {iconPath} from '@util/iconPath';
 import LinearGradient from 'react-native-linear-gradient';
 import {Asset, launchImageLibrary, MediaType} from 'react-native-image-picker';
+import {useSelector} from 'react-redux';
+import {RootState} from '@store/reducer';
+import {createMemberLicence} from '@api/member';
+import {NavigationProp, useNavigation} from '@react-navigation/native';
+import {LoggedInParamList} from '../../../AppInner';
 
+const FIELD = ['필라테스', '요가'];
 function CertifyInstructorFormScreen() {
+  const navigation = useNavigation<NavigationProp<LoggedInParamList>>();
+  const memberInfo = useSelector((state: RootState) => state.user);
   const [loading, setLoading] = useState<boolean>(false);
-  const [name, setName] = useState('');
-  const [birthday, setBirthday] = useState('');
+  const [name, setName] = useState(memberInfo.name);
+  const [birthday, setBirthday] = useState(memberInfo.birth);
   const [field, setField] = useState('');
   const [issuer, setIssuer] = useState('');
-  const [licenseNumber, setLicenseNumber] = useState('');
-  const [licenseImage, setLicenseImage] = useState(''); // file 주소
-  const [licenseFileName, setLicenseFileName] = useState(''); // file 이름
+  const [licenceNumber, setLicenceNumber] = useState('');
+  const [licenceImageObj, setLicenceImageObj] = useState<{
+    name: string | undefined;
+    type: string | undefined;
+    uri: string | undefined;
+  }>({name: undefined, type: undefined, uri: undefined}); // file 주소
+  const [licenceFileName, setLicenceFileName] = useState(''); // file 이름
 
-  const FIELD = ['필라테스', '요가'];
+  const onRegisterLicence = useCallback(() => {
+    const formData = new FormData();
+
+    formData.append('field', field);
+    formData.append('licenceNumber', licenceNumber);
+    formData.append('issuer', issuer);
+    formData.append('file', licenceImageObj);
+
+    createMemberLicence(formData)
+      .then(() => {
+        Alert.alert('강사 인증이 신청되었어요!.');
+        navigation.goBack();
+      })
+      .catch((e: {message: any}) => {
+        console.log(e);
+        Alert.alert(e.message);
+      });
+  }, [field, issuer, licenceNumber, licenceImageObj, navigation]);
 
   const uploadImage = async () => {
     const options = {
@@ -43,11 +73,18 @@ function CertifyInstructorFormScreen() {
         console.log('ImagePicker Message: ', response.errorMessage);
       } else {
         let assets: Asset[] | undefined = response.assets;
-        const source = {
-          uri: 'data:image/jpeg;base64,' + response.assets[0].base64,
-        };
-        setLicenseImage(source);
-        setLicenseFileName(response.assets[0].fileName);
+        // let source;
+        if (assets) {
+          // source = {
+          //   uri: 'data:image/jpeg;base64,' + assets[0].base64,
+          // };
+          setLicenceImageObj({
+            name: assets[0].fileName,
+            type: assets[0].type,
+            uri: assets[0].uri,
+          });
+          setLicenceFileName(assets[0].fileName);
+        }
       }
     });
   };
@@ -91,8 +128,8 @@ function CertifyInstructorFormScreen() {
         <View style={common.mb16}>
           <Input
             label={'자격증 번호'}
-            onChangeText={(text: string) => setLicenseNumber(text.trim())}
-            value={licenseNumber}
+            onChangeText={(text: string) => setLicenceNumber(text.trim())}
+            value={licenceNumber}
             placeholder={'자격증 번호를 입력하세요.'}
             keyboardType={KeyboardTypes.DEFAULT}
           />
@@ -111,8 +148,7 @@ function CertifyInstructorFormScreen() {
         <View style={common.mb16}>
           <Input
             label={'자격증 이미지'}
-            onChangeText={(text: string) => setLicenseImage(text.trim())}
-            value={licenseFileName}
+            value={licenceFileName}
             placeholder={'자격증 이미지를 등록하세요.'}
             keyboardType={KeyboardTypes.DEFAULT}
           />
@@ -122,7 +158,7 @@ function CertifyInstructorFormScreen() {
         </View>
 
         <View style={common.mt40}>
-          <Pressable onPress={() => {}}>
+          <Pressable onPress={onRegisterLicence}>
             <LinearGradient
               style={common.button}
               start={{x: 0.1, y: 0.5}}
