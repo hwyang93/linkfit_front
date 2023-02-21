@@ -1,5 +1,4 @@
 import {
-  Alert,
   Image,
   Pressable,
   ScrollView,
@@ -50,7 +49,7 @@ function CertifyInstructorScreen() {
     setModalVisible(true);
   };
   return (
-    <ScrollView>
+    <ScrollView showsVerticalScrollIndicator={false}>
       <View style={styles.container}>
         {DATA.map((item, index) => {
           return (

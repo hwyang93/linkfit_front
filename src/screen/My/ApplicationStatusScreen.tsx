@@ -101,116 +101,117 @@ function ApplicationStatusScreen() {
     setModalVisible(true);
   };
   return (
-    <ScrollView style={styles.container}>
+    <View style={styles.container}>
       {/* 필터 영역 */}
       <TopFilter data={FILTER} />
       {/* 필터 영역 */}
-
-      {/* 컨첸츠 영역 */}
-      <View
-        style={{flexWrap: 'wrap', flexDirection: 'row', paddingVertical: 8}}>
-        <Pressable
-          style={styles.itemBox}
-          onPress={() => navigation.navigate('JobPost')}>
-          <View style={styles.imgBox}>
-            <Image
-              style={styles.img}
-              source={require('assets/images/sample_02.png')}
-            />
-            <View style={[styles.statusBox]}>
-              <Text style={[styles.statusText]}>열람</Text>
+      <ScrollView showsVerticalScrollIndicator={false}>
+        {/* 컨첸츠 영역 */}
+        <View
+          style={{flexWrap: 'wrap', flexDirection: 'row', paddingVertical: 8}}>
+          <Pressable
+            style={styles.itemBox}
+            onPress={() => navigation.navigate('JobPost')}>
+            <View style={styles.imgBox}>
+              <Image
+                style={styles.img}
+                source={require('assets/images/sample_02.png')}
+              />
+              <View style={[styles.statusBox]}>
+                <Text style={[styles.statusText]}>열람</Text>
+              </View>
             </View>
-          </View>
-          <View>
-            {/* 포지션 */}
-            <Text style={[common.text]}>필라테스</Text>
-            {/* 제목 */}
-            <Text style={[common.text_m, common.fwb]} numberOfLines={1}>
-              필라테스 강사님 모셔요 모셔요 오셔요.
-            </Text>
-            {/* 업체명 */}
-            <Text style={[common.text_s, common.fwb]}>링크 필라테스</Text>
-            {/* 지역 */}
-            <Text style={common.text}>2022.12.29 지원</Text>
-            <Pressable
-              style={styles.resume}
-              onPress={() => Alert.alert('click', 'Resume')}>
-              <Image source={iconPath.RESUME} style={[common.size24]} />
-            </Pressable>
-          </View>
-        </Pressable>
-
-        <Pressable
-          style={styles.itemBox}
-          onPress={() => navigation.navigate('JobPost')}>
-          <View style={styles.imgBox}>
-            <Image
-              style={styles.img}
-              source={require('assets/images/sample_02.png')}
-            />
-            <View style={[styles.statusBox]}>
-              <Text style={[styles.statusText]}>지원 취소</Text>
+            <View>
+              {/* 포지션 */}
+              <Text style={[common.text]}>필라테스</Text>
+              {/* 제목 */}
+              <Text style={[common.text_m, common.fwb]} numberOfLines={1}>
+                필라테스 강사님 모셔요 모셔요 오셔요.
+              </Text>
+              {/* 업체명 */}
+              <Text style={[common.text_s, common.fwb]}>링크 필라테스</Text>
+              {/* 지역 */}
+              <Text style={common.text}>2022.12.29 지원</Text>
+              <Pressable
+                style={styles.resume}
+                onPress={() => Alert.alert('click', 'Resume')}>
+                <Image source={iconPath.RESUME} style={[common.size24]} />
+              </Pressable>
             </View>
-          </View>
-          <View>
-            {/* 포지션 */}
-            <Text style={[common.text]}>필라테스</Text>
-            {/* 제목 */}
-            <Text style={[common.text_m, common.fwb]} numberOfLines={1}>
-              필라테스 강사님 모셔요 모셔요 오셔요.
-            </Text>
-            {/* 업체명 */}
-            <Text style={[common.text_s, common.fwb]}>링크 필라테스</Text>
-            {/* 지역 */}
-            <Text style={common.text}>2022.12.29 지원</Text>
-            <Pressable
-              style={styles.resume}
-              onPress={() => Alert.alert('click', 'Resume')}>
-              <Image source={iconPath.RESUME} style={[common.size24]} />
-            </Pressable>
-          </View>
-        </Pressable>
+          </Pressable>
 
-        <Pressable
-          style={styles.itemBox}
-          onPress={() => navigation.navigate('JobPost')}>
-          <View style={styles.imgBox}>
-            <Image
-              style={styles.img}
-              source={require('assets/images/sample_02.png')}
-            />
-            <View style={[styles.statusBox]}>
-              <Text style={[styles.statusText]}>지원 완료</Text>
+          <Pressable
+            style={styles.itemBox}
+            onPress={() => navigation.navigate('JobPost')}>
+            <View style={styles.imgBox}>
+              <Image
+                style={styles.img}
+                source={require('assets/images/sample_02.png')}
+              />
+              <View style={[styles.statusBox]}>
+                <Text style={[styles.statusText]}>지원 취소</Text>
+              </View>
             </View>
-          </View>
-          <View>
-            {/* 포지션 */}
-            <Text style={[common.text]}>필라테스</Text>
-            {/* 제목 */}
-            <Text style={[common.text_m, common.fwb]} numberOfLines={1}>
-              필라테스 강사님 모셔요 모셔요 오셔요.
-            </Text>
-            {/* 업체명 */}
-            <Text style={[common.text_s, common.fwb]}>링크 필라테스</Text>
-            {/* 지역 */}
-            <Text style={common.text}>2022.12.29 지원</Text>
-            <Pressable
-              style={styles.resume}
-              onPress={() => Alert.alert('click', 'Resume')}>
-              <Image source={iconPath.RESUME} style={[common.size24]} />
-            </Pressable>
-          </View>
-        </Pressable>
-      </View>
+            <View>
+              {/* 포지션 */}
+              <Text style={[common.text]}>필라테스</Text>
+              {/* 제목 */}
+              <Text style={[common.text_m, common.fwb]} numberOfLines={1}>
+                필라테스 강사님 모셔요 모셔요 오셔요.
+              </Text>
+              {/* 업체명 */}
+              <Text style={[common.text_s, common.fwb]}>링크 필라테스</Text>
+              {/* 지역 */}
+              <Text style={common.text}>2022.12.29 지원</Text>
+              <Pressable
+                style={styles.resume}
+                onPress={() => Alert.alert('click', 'Resume')}>
+                <Image source={iconPath.RESUME} style={[common.size24]} />
+              </Pressable>
+            </View>
+          </Pressable>
 
-      {/* 모달 */}
-      <Modal
-        modalVisible={modalVisible}
-        setModalVisible={setModalVisible}
-        title={modalTitle}
-        modalData={modalData}
-      />
-    </ScrollView>
+          <Pressable
+            style={styles.itemBox}
+            onPress={() => navigation.navigate('JobPost')}>
+            <View style={styles.imgBox}>
+              <Image
+                style={styles.img}
+                source={require('assets/images/sample_02.png')}
+              />
+              <View style={[styles.statusBox]}>
+                <Text style={[styles.statusText]}>지원 완료</Text>
+              </View>
+            </View>
+            <View>
+              {/* 포지션 */}
+              <Text style={[common.text]}>필라테스</Text>
+              {/* 제목 */}
+              <Text style={[common.text_m, common.fwb]} numberOfLines={1}>
+                필라테스 강사님 모셔요 모셔요 오셔요.
+              </Text>
+              {/* 업체명 */}
+              <Text style={[common.text_s, common.fwb]}>링크 필라테스</Text>
+              {/* 지역 */}
+              <Text style={common.text}>2022.12.29 지원</Text>
+              <Pressable
+                style={styles.resume}
+                onPress={() => Alert.alert('click', 'Resume')}>
+                <Image source={iconPath.RESUME} style={[common.size24]} />
+              </Pressable>
+            </View>
+          </Pressable>
+        </View>
+
+        {/* 모달 */}
+        <Modal
+          modalVisible={modalVisible}
+          setModalVisible={setModalVisible}
+          title={modalTitle}
+          modalData={modalData}
+        />
+      </ScrollView>
+    </View>
   );
 }
 

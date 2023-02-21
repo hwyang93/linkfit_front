@@ -32,7 +32,7 @@ function EmployerReviewComponent() {
     },
   ];
   return (
-    <ScrollView style={styles.container}>
+    <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
       <View style={styles.reviewBox}>
         <View style={common.rowCenter}>
           <Image

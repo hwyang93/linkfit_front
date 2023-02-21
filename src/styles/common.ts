@@ -28,6 +28,7 @@ const common = StyleSheet.create({
   mv4: {marginVertical: 4},
   mv8: {marginVertical: 8},
   mv10: {marginVertical: 10},
+  mv12: {marginVertical: 12},
   mv16: {marginVertical: 16},
   mv20: {marginVertical: 20},
   mv30: {marginVertical: 30},
@@ -52,6 +53,7 @@ const common = StyleSheet.create({
   mr4: {marginRight: 4},
   mr8: {marginRight: 8},
   mr10: {marginRight: 10},
+  mr12: {marginRight: 12},
   mr16: {marginRight: 16},
   pt16: {paddingTop: 16},
   // layout

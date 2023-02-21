@@ -54,7 +54,7 @@ function CertifyInstructorFormScreen() {
 
   const canGoNext = true;
   return (
-    <ScrollView>
+    <ScrollView showsVerticalScrollIndicator={false}>
       <View style={styles.container}>
         <View style={common.mb16}>
           <Input
