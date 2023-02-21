@@ -34,6 +34,16 @@ export function fetchRegionAuth() {
   return request.get('/member/region');
 }
 
+export function fetchMemberLicences() {
+  return request.get('/member/licence');
+}
+
+export function createMemberLicence(data: object) {
+  return request.post('/member/licence', data, {
+    headers: {'content-type': 'multipart/form-data'},
+  });
+}
+
 export function createReview(data: object) {
   return request.post('/member/reputation', data);
 }

@@ -48,17 +48,13 @@ function LogIn() {
     };
     await login(loginInfo)
       .then(async ({data}: any) => {
-        console.log(data);
-        // dispatch(
-        //   userSlice.actions.setUser({
-        //     accessToken: data.accessToken,
-        //   }),
-        // );
+        dispatch(
+          userSlice.actions.setAccessToken({
+            accessToken: data.accessToken,
+          }),
+        );
         await EncryptedStorage.setItem('accessToken', data.accessToken);
         await EncryptedStorage.setItem('refreshToken', data.refreshToken);
-        // await fetchMemberInfo().then({data}=>{
-        //   console.log(data)
-        // })
         await getMemberInfo();
       })
       .catch((e: any) => {
@@ -71,12 +67,7 @@ function LogIn() {
   const getMemberInfo = async () => {
     await fetchMemberInfo()
       .then(({data}: any) => {
-        dispatch(
-          userSlice.actions.setUser({
-            name: data.name,
-            email: data.email,
-          }),
-        );
+        dispatch(userSlice.actions.setUser(data));
         navigation.navigate('ContentTab', {screen: 'Link'});
       })
       .catch((e: {message: any}) => {

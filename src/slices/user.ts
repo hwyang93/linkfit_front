@@ -1,16 +1,29 @@
-import {createSlice, PayloadAction} from '@reduxjs/toolkit';
+import {createSlice} from '@reduxjs/toolkit';
 
 // action : state 바꾸는 행위/동작
 // dispatch: 그 액션을 실제로 행하는 함수
 // reducer: 액션이 실행되면 state 바꾸는 로직
 
-const initialState = {
-  seq: '',
+export interface memberState {
+  seq: number;
+  name: string;
+  nickname: string;
+  birth: string;
+  email: string;
+  accessToken: string;
+  lon: number;
+  lat: number;
+}
+
+const initialState: memberState = {
+  seq: 0,
   name: '',
+  nickname: '',
+  birth: '',
   email: '',
   accessToken: '',
-  lon: '',
-  lat: '',
+  lon: 0,
+  lat: 0,
 };
 const userSlice = createSlice({
   name: 'user',
@@ -20,6 +33,8 @@ const userSlice = createSlice({
       state.seq = action.payload.seq;
       state.email = action.payload.email;
       state.name = action.payload.name;
+      state.nickname = action.payload.nickname;
+      state.birth = action.payload.birth;
       state.accessToken = action.payload.accessToken;
     },
     setAccessToken(state, action) {
@@ -33,7 +48,7 @@ const userSlice = createSlice({
       state.email = action.payload.email;
     },
   },
-  extraReducers: builder => {},
+  // extraReducers: builder => {},
 });
 
 export default userSlice;

@@ -58,8 +58,8 @@ const Toast = forwardRef((props, ref: any) => {
     [toastOpacity, turnOnIsShow],
   );
 
-  console.log('토스트 메시지는 뭔데', message);
-  console.log('형식이 뭔데', type);
+  // console.log('토스트 메시지는 뭔데', message);
+  // console.log('형식이 뭔데', type);
 
   return (
     <Animated.View

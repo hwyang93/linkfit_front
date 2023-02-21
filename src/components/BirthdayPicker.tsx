@@ -6,7 +6,7 @@ import {useState} from 'react';
 
 function BirthdayPicker() {
   const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
-  const [birthday, setBirthday] = useState('');
+  const [birth, setBirth] = useState('');
   const showDatePicker = () => {
     setDatePickerVisibility(true);
   };
@@ -14,7 +14,7 @@ function BirthdayPicker() {
     setDatePickerVisibility(false);
   };
   const handleConfirm = (date: any) => {
-    setBirthday(moment(date).format('YYYY.MM.DD'));
+    setBirth(moment(date).format('YYYY.MM.DD'));
     // console.log('생일', birthday);
     hideDatePicker();
   };
@@ -24,7 +24,7 @@ function BirthdayPicker() {
       <Input
         pointerEvents={'none'}
         label={'생년월일'}
-        value={birthday}
+        value={birth}
         placeholder={'생년월일을 선택 하세요.'}
       />
       <DateTimePickerModal

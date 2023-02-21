@@ -10,34 +10,36 @@ import {GRAY, WHITE} from '@styles/colors';
 import common from '@styles/common';
 import {iconPath} from '@util/iconPath';
 import Modal from '@components/ModalSheet';
-import {SetStateAction, useState} from 'react';
+import {SetStateAction, useEffect, useState} from 'react';
+import {fetchMemberLicences} from '@api/member';
 
 function CertifyInstructorScreen() {
   const [modalVisible, setModalVisible] =
     useState<SetStateAction<boolean>>(false);
-  const DATA = [
-    {
-      id: 1,
-      field: '필라테스',
-      issuer: '자격증 발급기관',
-      date: '2022.12.21 발급',
-      status: '인증 대기중',
-    },
-    {
-      id: 2,
-      field: '요가',
-      issuer: '자격증 발급기관',
-      date: '2022.12.21 발급',
-      status: '인증 승인',
-    },
-    {
-      id: 3,
-      field: '필라테스',
-      issuer: '자격증 발급기관',
-      date: '2022.12.21 발급',
-      status: '인증 거부',
-    },
-  ];
+
+  const [licences, setLicenses] = useState<
+    [
+      {
+        updatedAt: string;
+        seq: number;
+        field: string;
+        licenceNumber: string;
+        issuer: string;
+        status: string;
+        licenceFileSeq: number;
+      },
+    ]
+  >([]);
+
+  useEffect(() => {
+    fetchMemberLicences()
+      .then(({data}: any) => {
+        setLicenses(data);
+      })
+      .catch((e: any) => {
+        console.log(e);
+      });
+  }, []);
   const MODAL = [
     {
       value: '인증 취소하기',
@@ -51,13 +53,18 @@ function CertifyInstructorScreen() {
   return (
     <ScrollView showsVerticalScrollIndicator={false}>
       <View style={styles.container}>
-        {DATA.map((item, index) => {
+        {licences.map((item, index) => {
           return (
             <View key={index} style={styles.box}>
               <Text style={[common.title, common.mb8]}>{item.field}</Text>
               <Text style={[common.title_s, common.mb8]}>{item.issuer}</Text>
               <Text style={common.text_s}>
-                {item.date} | {item.status}
+                {item.updatedAt} |{' '}
+                {item.status === 'PROCESS'
+                  ? '인증대기'
+                  : item.status === 'APPROVAL'
+                  ? '승인'
+                  : '거부'}
               </Text>
               <Pressable
                 style={styles.kebabIcon}

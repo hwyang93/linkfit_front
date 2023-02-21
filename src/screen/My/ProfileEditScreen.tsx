@@ -79,7 +79,7 @@ function ProfileEditScreen() {
         console.log(e);
         Alert.alert(e.message);
       });
-  }, [nickname, intro, field, links, imageUri, imageObj, navigation]);
+  }, [nickname, intro, field, links, imageObj, navigation]);
 
   const onCheckNickname = useCallback(async () => {
     await fetchCheckNickname(nickname)
