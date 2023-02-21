@@ -1,4 +1,12 @@
-import {Alert, Image, Pressable, StyleSheet, Text, View} from 'react-native';
+import {
+  Alert,
+  Image,
+  Pressable,
+  ScrollView,
+  StyleSheet,
+  Text,
+  View,
+} from 'react-native';
 import {BLUE, WHITE} from '@styles/colors';
 import common from '@styles/common';
 import {iconPath} from '@util/iconPath';
@@ -14,7 +22,7 @@ function SettingScreen() {
     {
       icon: iconPath.NOTIFICATION,
       title: '알림 설정',
-      link: 'Notification',
+      link: 'NotificationSetting',
     },
     {
       icon: iconPath.ACCOUNT,
@@ -49,7 +57,7 @@ function SettingScreen() {
   ];
 
   return (
-    <View style={styles.container}>
+    <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
       {DATA.map((item: any, index) => (
         <Pressable
           key={index}
@@ -79,7 +87,7 @@ function SettingScreen() {
           <Text style={[common.text_m, styles.linkText]}>캐시 데이터 삭제</Text>
         </Pressable>
       </View>
-    </View>
+    </ScrollView>
   );
 }
 const styles = StyleSheet.create({

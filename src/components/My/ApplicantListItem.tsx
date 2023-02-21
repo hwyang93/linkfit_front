@@ -1,7 +1,6 @@
 import common from '@styles/common';
-import {Image, Pressable, StyleSheet, Text, View} from 'react-native';
+import {Image, Pressable, Text, View} from 'react-native';
 import {iconPath} from '@util/iconPath';
-import {WHITE} from '@styles/colors';
 
 function ApplicantListItem({data}: any) {
   return (
@@ -26,26 +25,11 @@ function ApplicantListItem({data}: any) {
                 {item.title}
               </Text>
             </View>
-            <Pressable
-              style={styles.kebabIcon}
-              hitSlop={10}
-              onPress={item.kebab}>
-              <Image source={iconPath.KEBAB} style={[common.KEBAB]} />
-            </Pressable>
           </Pressable>
         );
       })}
     </View>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    padding: 16,
-    backgroundColor: WHITE,
-  },
-  kebabIcon: {position: 'absolute', top: 16, right: 16},
-});
 
 export default ApplicantListItem;

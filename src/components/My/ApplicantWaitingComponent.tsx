@@ -31,8 +31,9 @@ function ApplicantWaitingComponent() {
       status: '대기중',
       title: '이력서 제목',
       field: '',
-      job: () => {},
-      kebab: () => {},
+      job: () => {
+        navigation.navigate('ResumePreview');
+      },
     },
     {
       id: 2,
@@ -40,26 +41,9 @@ function ApplicantWaitingComponent() {
       status: '대기중',
       title: '이력서 제목',
       field: '',
-      job: () => {},
-      kebab: () => {},
-    },
-    {
-      id: 3,
-      date: '2023.02.09 작성',
-      status: '대기중',
-      title: '이력서 제목',
-      field: '',
-      job: () => {},
-      kebab: () => {},
-    },
-    {
-      id: 4,
-      date: '2023.02.09 작성',
-      status: '대기중',
-      title: '이력서 제목',
-      field: '',
-      job: () => {},
-      kebab: () => {},
+      job: () => {
+        navigation.navigate('ResumePreview');
+      },
     },
   ];
   const MODAL = [
