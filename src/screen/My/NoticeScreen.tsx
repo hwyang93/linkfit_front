@@ -5,7 +5,7 @@ import common from '@styles/common';
 function NoticeScreen() {
   return (
     <View style={styles.container}>
-      <Text style={common.text_m}>test</Text>
+      <Text style={common.text_m}>공지사항</Text>
     </View>
   );
 }

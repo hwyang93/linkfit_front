@@ -41,7 +41,7 @@ export type LoggedInParamList = {
   FollowingManage: undefined;
   BookmarkManage: undefined;
   Setting: undefined;
-  Notification: undefined;
+  NotificationSetting: undefined;
   Account: undefined;
   Blacklist: undefined;
   Notice: undefined;

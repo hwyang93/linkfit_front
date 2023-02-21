@@ -32,7 +32,6 @@ function ApplicantFinishComponent() {
       title: '이력서 제목',
       field: '',
       job: () => {},
-      kebab: () => {},
     },
     {
       id: 2,
@@ -41,7 +40,6 @@ function ApplicantFinishComponent() {
       title: '이력서 제목',
       field: '',
       job: () => {},
-      kebab: () => {},
     },
     {
       id: 3,
@@ -50,7 +48,6 @@ function ApplicantFinishComponent() {
       title: '이력서 제목',
       field: '',
       job: () => {},
-      kebab: () => {},
     },
     {
       id: 4,
@@ -59,7 +56,6 @@ function ApplicantFinishComponent() {
       title: '이력서 제목',
       field: '',
       job: () => {},
-      kebab: () => {},
     },
   ];
   const MODAL = [

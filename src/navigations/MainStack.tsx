@@ -33,7 +33,7 @@ import ReviewManageScreen from '@screen/My/ReviewManageScreen';
 import FollowingManageScreen from '@screen/My/FollowingManageScreen';
 import BookmarkManageScreen from '@screen/My/BookmarkManageScreen';
 import SettingScreen from '@screen/My/SettingScreen';
-import NotificationScreen from '@screen/My/NotificationScreen';
+import NotificationSettingScreen from '@screen/My/NotificationSettingScreen';
 import AccountScreen from '@screen/My/AccountScreen';
 import BlacklistScreen from '@screen/My/BlacklistScreen';
 import NoticeScreen from '@screen/My/NoticeScreen';
@@ -265,8 +265,8 @@ const MainStack = () => {
           options={{title: '설정'}}
         />
         <Stack.Screen
-          name="Notification"
-          component={NotificationScreen}
+          name="NotificationSetting"
+          component={NotificationSettingScreen}
           options={{title: '알림 설정'}}
         />
         <Stack.Screen
