@@ -47,7 +47,7 @@ function RecruitListItem({item}: ListProps) {
         <Pressable
           style={styles.bookmark}
           onPress={() => Alert.alert('click', 'bookmark')}>
-          <Image source={iconPath.BOOKMARK} style={[common.BOOKMARK]} />
+          <Image source={iconPath.BOOKMARK} style={[common.size24]} />
         </Pressable>
       </View>
     </Pressable>

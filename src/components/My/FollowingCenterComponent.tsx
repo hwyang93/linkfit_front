@@ -1,4 +1,4 @@
-import {Image, ScrollView, StyleSheet, View} from 'react-native';
+import {ScrollView, StyleSheet, View} from 'react-native';
 import {GRAY} from '@styles/colors';
 import CenterInfoComponent from '@components/CenterInfoComponent';
 import hairlineWidth = StyleSheet.hairlineWidth;
@@ -16,7 +16,7 @@ function FollowingCenterComponent() {
     },
   ];
   return (
-    <ScrollView>
+    <ScrollView showsVerticalScrollIndicator={false}>
       <View style={styles.followingBox}>
         <View>
           <CenterInfoComponent />

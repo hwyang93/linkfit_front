@@ -50,8 +50,9 @@ import ResumeFormScreen from '@screen/My/ResumeFormScreen';
 import ResumePreviewScreen from '@screen/My/ResumePreviewScreen';
 import ApplicationStatusScreen from '@screen/My/ApplicationStatusScreen';
 import ReceivedSuggestionScreen from '@screen/My/ReceivedSuggestionScreen';
-import MyPostScreen from '@screen/My/MyPostScreen';
+import MyRecruitmentScreen from '@screen/My/MyRecruitmentScreen';
 import ReceivedSuggestionDetailScreen from '@screen/My/ReceivedSuggestionDetailScreen';
+import ApplicantStatusScreen from '@screen/My/ApplicantStatusScreen';
 
 const Stack = createNativeStackNavigator<LoggedInParamList>();
 
@@ -64,7 +65,8 @@ const MainStack = () => {
         headerTitleAlign: 'center',
         headerTintColor: '#000',
         headerTitleStyle: {
-          fontWeight: '500',
+          fontSize: 20,
+          fontWeight: '400',
         },
         contentStyle: {backgroundColor: WHITE},
         headerShadowVisible: false,
@@ -224,8 +226,13 @@ const MainStack = () => {
         {/* 내 공고 */}
         <Stack.Screen
           name="MyPost"
-          component={MyPostScreen}
+          component={MyRecruitmentScreen}
           options={{title: '작성 공고'}}
+        />
+        <Stack.Screen
+          name="ApplicantStatus"
+          component={ApplicantStatusScreen}
+          options={{title: '지원자 현황'}}
         />
         <Stack.Screen
           name="ReviewManage"
@@ -305,7 +312,17 @@ const MainStack = () => {
         <Stack.Screen
           name="CenterInfo"
           component={CenterInfoScreen}
-          options={{title: '센터 정보', headerRight: HeaderRight}}
+          options={{
+            title: '센터 정보',
+            headerRight: () => (
+              <Pressable
+                onPress={() => Alert.alert('test', '좋아용')}
+                hitSlop={10}
+                style={[common.mh4, common.size24]}>
+                <Image source={iconPath.BOOKMARK} style={common.size24} />
+              </Pressable>
+            ),
+          }}
         />
         <Stack.Screen
           name="JobPost"

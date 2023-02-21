@@ -92,7 +92,9 @@ function MyCenterScreen() {
     }
   }, [isFocused]);
   return (
-    <ScrollView style={{flex: 1, backgroundColor: WHITE}}>
+    <ScrollView
+      style={{flex: 1, backgroundColor: WHITE}}
+      showsVerticalScrollIndicator={false}>
       <View style={[styles.container, {paddingBottom: insets.bottom}]}>
         <View style={common.mb20}>
           <CenterProfileBox />

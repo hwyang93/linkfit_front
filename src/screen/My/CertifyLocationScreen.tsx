@@ -134,8 +134,6 @@ function CertifyLocationScreen() {
     mapApi();
   }, []);
 
-  console.log('어려워', myLocation);
-
   // const x = '126.9539484';
   // const y = '37.3097165';
 
@@ -161,7 +159,6 @@ function CertifyLocationScreen() {
             region3depth: regionInfo.region_3depth_name,
           });
         });
-      console.log('지금 어디', locationObj);
     } catch (error: any) {
       console.log(error.message);
     }

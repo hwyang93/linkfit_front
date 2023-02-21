@@ -5,7 +5,7 @@ import {iconPath} from '@util/iconPath';
 
 function BookmarkCommunityComponent() {
   return (
-    <ScrollView>
+    <ScrollView showsVerticalScrollIndicator={false}>
       <View style={styles.listBox}>
         <Text style={[common.title, common.fs18, common.mb8]}>게시글 제목</Text>
         <View style={common.row}>

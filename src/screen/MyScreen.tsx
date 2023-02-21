@@ -104,7 +104,9 @@ function MyScreen() {
     }
   }, [isFocused]);
   return (
-    <ScrollView style={{flex: 1, backgroundColor: WHITE}}>
+    <ScrollView
+      style={{flex: 1, backgroundColor: WHITE}}
+      showsVerticalScrollIndicator={false}>
       <View style={[styles.container, {paddingBottom: insets.bottom}]}>
         <View style={common.mb20}>
           <ProfileBox memberInfo={myInfo.memberInfo} />
@@ -320,7 +322,7 @@ function MyScreen() {
           <MyTitle title={'내 공고'} button={true} link={'MyPost'} />
         </View>
 
-        <View style={common.mb24}>
+        <View style={common.mb16}>
           <View style={[common.rowCenter, {flexWrap: 'wrap'}]}>
             <View
               style={[

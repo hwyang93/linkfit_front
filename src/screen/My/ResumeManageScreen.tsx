@@ -81,7 +81,7 @@ function ResumeManageScreen() {
   };
 
   return (
-    <ScrollView style={styles.container}>
+    <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
       {RESUME.map((item, index) => {
         return (
           <View key={index} style={[common.basicBox, common.mb8]}>

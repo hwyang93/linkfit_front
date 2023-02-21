@@ -7,7 +7,7 @@ import InstructorInfoComponent from '@components/InstructorInfoComponent';
 
 function ReceivedSuggestionDetailScreen() {
   return (
-    <ScrollView style={styles.container}>
+    <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
       <View>
         <Text style={[common.title_l, common.mt16, common.mb24]}>
           필라테스 전임 강사 제안

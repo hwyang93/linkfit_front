@@ -12,7 +12,7 @@ import {iconPath} from '@util/iconPath';
 
 function ResumePreviewScreen() {
   return (
-    <ScrollView style={styles.container}>
+    <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
       <View style={common.row}>
         <View style={[styles.box, common.mb8]}>
           <Text style={[common.text, common.fs10, {color: BLUE.DEFAULT}]}>
