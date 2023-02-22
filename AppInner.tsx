@@ -32,7 +32,7 @@ export type LoggedInParamList = {
   ResumeForm: undefined;
   ResumePreview: undefined;
   ReviewManage: undefined;
-  ReviewForm: undefined;
+  ReviewForm: {reputationInfo: object};
   ApplicationStatus: undefined;
   ApplicantStatus: undefined;
   ReceivedSuggestion: undefined;

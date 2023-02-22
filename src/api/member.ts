@@ -48,6 +48,18 @@ export function cancelMemberLicence(seq: number) {
   return request.patch(`/member/licence/${seq}`);
 }
 
+export function fetchMemberReputations() {
+  return request.get('/member/reputation');
+}
+
+export function updateMemberReputation(seq: number, data: object) {
+  return request.patch(`/member/reputation/${seq}`, data);
+}
+
+export function deleteMemberReputation(seq: number) {
+  return request.delete(`/member/reputation/${seq}`);
+}
+
 export function createReview(data: object) {
   return request.post('/member/reputation', data);
 }

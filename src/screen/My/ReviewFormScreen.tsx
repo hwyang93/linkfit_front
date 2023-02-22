@@ -10,11 +10,14 @@ import {WHITE} from '@styles/colors';
 import Input, {KeyboardTypes} from '@components/Input';
 import {useState} from 'react';
 import LinearGradient from 'react-native-linear-gradient';
+import {RouteProp, useRoute} from '@react-navigation/native';
+import {LoggedInParamList} from '../../../AppInner';
 
 function ReviewFormScreen() {
   const [loading, setLoading] = useState<boolean>(false);
-  const [comment, setComment] = useState('');
-
+  const route = useRoute<RouteProp<LoggedInParamList, 'ReviewForm'>>();
+  const [reputationInfo] = useState<any>(route.params.reputationInfo);
+  const [comment, setComment] = useState(reputationInfo.comment);
   const canGoNext = comment;
   return (
     <View style={styles.container}>

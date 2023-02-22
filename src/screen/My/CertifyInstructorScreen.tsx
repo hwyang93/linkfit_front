@@ -11,7 +11,7 @@ import {GRAY, WHITE} from '@styles/colors';
 import common from '@styles/common';
 import {iconPath} from '@util/iconPath';
 import Modal from '@components/ModalSheet';
-import {SetStateAction, useCallback, useEffect, useRef, useState} from 'react';
+import {SetStateAction, useCallback, useEffect, useState} from 'react';
 import {cancelMemberLicence, fetchMemberLicences} from '@api/member';
 import {useIsFocused} from '@react-navigation/native';
 
@@ -20,7 +20,6 @@ function CertifyInstructorScreen() {
   const [modalVisible, setModalVisible] =
     useState<SetStateAction<boolean>>(false);
   const [selectedLicenceSeq, setSelectedLicenceSeq] = useState<number>(0);
-
   const [licences, setLicenses] = useState<
     [
       {

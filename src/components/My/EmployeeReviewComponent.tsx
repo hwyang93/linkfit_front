@@ -11,19 +11,56 @@ import {
 import common from '@styles/common';
 import {BLUE, GRAY, WHITE} from '@styles/colors';
 import {iconPath} from '@util/iconPath';
-import {SetStateAction, useState} from 'react';
+import {SetStateAction, useCallback, useEffect, useState} from 'react';
 import Modal from '@components/ModalSheet';
-import {NavigationProp, useNavigation} from '@react-navigation/native';
+import {
+  NavigationProp,
+  useIsFocused,
+  useNavigation,
+} from '@react-navigation/native';
 import {LoggedInParamList} from '../../../AppInner';
+import {deleteMemberReputation, fetchMemberReputations} from '@api/member';
 
 function EmployeeReviewComponent() {
+  const isFocused = useIsFocused();
+  const navigation = useNavigation<NavigationProp<LoggedInParamList>>();
   const [modalVisible, setModalVisible] =
     useState<SetStateAction<boolean>>(false);
-  const navigation = useNavigation<NavigationProp<LoggedInParamList>>();
-
+  const [reputations, setReputations] = useState<any[]>([]);
+  const [selectedReputation, setSelectedReputation] = useState({
+    seq: 0,
+  });
   const openModal = () => {
     setModalVisible(true);
   };
+
+  const getReputations = useCallback(() => {
+    fetchMemberReputations()
+      .then(({data}: any) => {
+        setReputations(data);
+      })
+      .catch((e: any) => {
+        console.log(e.message);
+      });
+  }, []);
+
+  useEffect(() => {
+    if (isFocused) {
+      getReputations();
+    }
+  }, [isFocused, getReputations]);
+
+  const onDeleteReputation = useCallback(() => {
+    deleteMemberReputation(selectedReputation.seq)
+      .then(() => {
+        Alert.alert('후기 삭제가 완료되었어요!');
+        setModalVisible(false);
+        getReputations();
+      })
+      .catch((e: any) => {
+        console.log(e.message);
+      });
+  }, [selectedReputation.seq, getReputations]);
 
   // props 로 모달에 보낼 값
   const DATA = [
@@ -31,68 +68,85 @@ function EmployeeReviewComponent() {
       value: '후기 수정하기',
       job: () => {
         setModalVisible(false);
-        navigation.navigate('ReviewForm');
+        navigation.navigate('ReviewForm', {reputationInfo: selectedReputation});
       },
     },
     {
       value: '후기 삭제하기',
-      job: () => Alert.alert('text', '삭제하라!'),
+      job: () => {
+        onDeleteReputation();
+      },
     },
   ];
 
   return (
     <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
-      <View style={styles.reviewBox}>
-        <View style={common.rowCenter}>
-          <Image
-            source={require('../../assets/images/thumbnail.png')}
-            style={styles.thumbnail}
-          />
-          <View>
+      {reputations.map((item, index) => {
+        return item.targetMember.type === 'INSTRUCTOR' ? (
+          <View key={index} style={styles.reviewBox}>
+            <View style={common.rowCenter}>
+              <Image
+                source={require('../../assets/images/thumbnail.png')}
+                style={styles.thumbnail}
+              />
+              <View>
+                <View style={common.rowCenter}>
+                  <Text style={[common.text_m, common.fwb, common.mr8]}>
+                    {item.targetMember.nickname
+                      ? item.targetMember.nickname
+                      : item.targetMember.name}
+                  </Text>
+                  <Text style={[common.text_s, {color: BLUE.DEFAULT}]}>
+                    인증강사
+                  </Text>
+                  <Image
+                    style={{marginLeft: 2, width: 14, height: 14}}
+                    source={iconPath.CERTIFICATION}
+                  />
+                </View>
+                <View style={common.row}>
+                  <Text style={[common.text_s, common.fwb, common.mr8]}>
+                    {item.targetMember.field}
+                  </Text>
+                  {/*<Text style={[common.text]}>3년</Text>*/}
+                </View>
+              </View>
+            </View>
+            <Text style={[common.mt8, common.text]}>{item.updatedAt}</Text>
+            <Text style={common.text_m}>{item.comment}</Text>
+            <Pressable
+              style={styles.kebabIcon}
+              hitSlop={10}
+              onPress={() => {
+                setSelectedReputation(item);
+                openModal();
+              }}>
+              <Image source={iconPath.KEBAB} style={[common.KEBAB]} />
+            </Pressable>
+          </View>
+        ) : (
+          <View style={styles.reviewBox}>
             <View style={common.rowCenter}>
               <Text style={[common.text_m, common.fwb, common.mr8]}>
-                닉네임
+                {item.targetMember.company.companyName}
               </Text>
-              <Text style={[common.text_s, {color: BLUE.DEFAULT}]}>
-                인증강사
-              </Text>
-              <Image
-                style={{marginLeft: 2, width: 14, height: 14}}
-                source={iconPath.CERTIFICATION}
-              />
+              <Text style={common.text}>{item.targetMember.company}</Text>
             </View>
-            <View style={common.row}>
-              <Text style={[common.text_s, common.fwb, common.mr8]}>
-                필라테스
-              </Text>
-              <Text style={[common.text]}>3년</Text>
-            </View>
+            <Text style={[common.mt8, common.text]}>{item.updatedAt}</Text>
+            <Text style={common.text_m}>{item.comment}</Text>
+            <Pressable
+              style={styles.kebabIcon}
+              hitSlop={10}
+              onPress={() => {
+                setSelectedReputation(item);
+                openModal();
+              }}>
+              <Image source={iconPath.KEBAB} style={[common.KEBAB]} />
+            </Pressable>
           </View>
-        </View>
-        <Text style={[common.mt8, common.text]}>2022.12.12</Text>
-        <Text style={common.text_m}>
-          후기 내용입니다. 후기 내용입니다. 후기 내용입니다. 후기 내용입니다.
-          후기 내용입니다. 후기 내용입니다.
-        </Text>
-        <Pressable style={styles.kebabIcon} hitSlop={10} onPress={openModal}>
-          <Image source={iconPath.KEBAB} style={[common.KEBAB]} />
-        </Pressable>
-      </View>
+        );
+      })}
 
-      <View style={styles.reviewBox}>
-        <View style={common.rowCenter}>
-          <Text style={[common.text_m, common.fwb, common.mr8]}>센터명</Text>
-          <Text style={common.text}>포지션</Text>
-        </View>
-        <Text style={[common.mt8, common.text]}>2022.12.12</Text>
-        <Text style={common.text_m}>
-          후기 내용입니다. 후기 내용입니다. 후기 내용입니다.
-        </Text>
-
-        <Pressable style={styles.kebabIcon} hitSlop={10} onPress={openModal}>
-          <Image source={iconPath.KEBAB} style={[common.KEBAB]} />
-        </Pressable>
-      </View>
       <Modal
         modalVisible={modalVisible}
         setModalVisible={setModalVisible}
