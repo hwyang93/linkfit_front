@@ -44,6 +44,10 @@ export function createMemberLicence(data: object) {
   });
 }
 
+export function cancelMemberLicence(seq: number) {
+  return request.patch(`/member/licence/${seq}`);
+}
+
 export function createReview(data: object) {
   return request.post('/member/reputation', data);
 }
