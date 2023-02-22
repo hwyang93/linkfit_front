@@ -51,7 +51,7 @@ function CertifyInstructorFormScreen() {
 
     createMemberLicence(formData)
       .then(() => {
-        Alert.alert('강사 인증이 신청되었어요!.');
+        Alert.alert('강사 인증이 신청되었어요!');
         navigation.goBack();
       })
       .catch((e: {message: any}) => {
@@ -153,7 +153,7 @@ function CertifyInstructorFormScreen() {
               value={licenceFileName}
               placeholder={'자격증 이미지를 등록하세요.'}
               keyboardType={KeyboardTypes.DEFAULT}
-              editable={true}
+              editable={false}
             />
 
             <View style={styles.cameraIcon}>

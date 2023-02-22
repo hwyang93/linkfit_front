@@ -1,4 +1,5 @@
 import {
+  Alert,
   Image,
   Pressable,
   ScrollView,
@@ -10,12 +11,15 @@ import {GRAY, WHITE} from '@styles/colors';
 import common from '@styles/common';
 import {iconPath} from '@util/iconPath';
 import Modal from '@components/ModalSheet';
-import {SetStateAction, useEffect, useState} from 'react';
-import {fetchMemberLicences} from '@api/member';
+import {SetStateAction, useCallback, useEffect, useRef, useState} from 'react';
+import {cancelMemberLicence, fetchMemberLicences} from '@api/member';
+import {useIsFocused} from "@react-navigation/native";
 
 function CertifyInstructorScreen() {
+  const isFocused = useIsFocused();
   const [modalVisible, setModalVisible] =
     useState<SetStateAction<boolean>>(false);
+  const [selectedLicenceSeq, setSelectedLicenceSeq] = useState<number>(0);
 
   const [licences, setLicenses] = useState<
     [
@@ -31,7 +35,7 @@ function CertifyInstructorScreen() {
     ]
   >([]);
 
-  useEffect(() => {
+  const getMemberLicences = useCallback(() => {
     fetchMemberLicences()
       .then(({data}: any) => {
         setLicenses(data);
@@ -40,10 +44,38 @@ function CertifyInstructorScreen() {
         console.log(e);
       });
   }, []);
+
+  useEffect(() => {
+    if (isFocused) {
+    fetchMemberLicences()
+      .then(({data}: any) => {
+
+        setLicenses(data);
+      })
+      .catch((e: any) => {
+        console.log(e);
+      });
+    }
+  }, [isFocused]);
+
+  const onCancelLicence = useCallback(() => {
+    cancelMemberLicence(selectedLicenceSeq)
+      .then(() => {
+        Alert.alert('강사 인증취소되었어요!');
+        setModalVisible(false)
+        getMemberLicences();
+      })
+      .catch((e: any) => {
+        console.log(e);
+      });
+  }, [getMemberLicences, selectedLicenceSeq]);
+
   const MODAL = [
     {
       value: '인증 취소하기',
-      job: () => {},
+      job: () => {
+        onCancelLicence();
+      },
     },
   ];
 
@@ -61,17 +93,21 @@ function CertifyInstructorScreen() {
               <Text style={common.text_s}>
                 {item.updatedAt} |{' '}
                 {item.status === 'PROCESS'
-                  ? '인증대기'
+                  ? '인증 대기중'
                   : item.status === 'APPROVAL'
-                  ? '승인'
-                  : '거부'}
+                  ? '인증 승인'
+                  : item.status === 'CANCEL'
+                  ? '인증 취소'
+                  : '인증 거부'}
               </Text>
-              <Pressable
-                style={styles.kebabIcon}
-                hitSlop={10}
-                onPress={openModal}>
-                <Image source={iconPath.KEBAB} style={[common.KEBAB]} />
-              </Pressable>
+              {item.status === 'PROCESS' && (
+                <Pressable
+                  style={styles.kebabIcon}
+                  hitSlop={10}
+                  onPress={()=>{setSelectedLicenceSeq(item.seq); openModal();}}>
+                  <Image source={iconPath.KEBAB} style={[common.KEBAB]} />
+                </Pressable>
+              )}
             </View>
           );
         })}
