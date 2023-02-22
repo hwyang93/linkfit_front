@@ -13,7 +13,7 @@ import {iconPath} from '@util/iconPath';
 import Modal from '@components/ModalSheet';
 import {SetStateAction, useCallback, useEffect, useRef, useState} from 'react';
 import {cancelMemberLicence, fetchMemberLicences} from '@api/member';
-import {useIsFocused} from "@react-navigation/native";
+import {useIsFocused} from '@react-navigation/native';
 
 function CertifyInstructorScreen() {
   const isFocused = useIsFocused();
@@ -47,14 +47,13 @@ function CertifyInstructorScreen() {
 
   useEffect(() => {
     if (isFocused) {
-    fetchMemberLicences()
-      .then(({data}: any) => {
-
-        setLicenses(data);
-      })
-      .catch((e: any) => {
-        console.log(e);
-      });
+      fetchMemberLicences()
+        .then(({data}: any) => {
+          setLicenses(data);
+        })
+        .catch((e: any) => {
+          console.log(e);
+        });
     }
   }, [isFocused]);
 
@@ -62,7 +61,7 @@ function CertifyInstructorScreen() {
     cancelMemberLicence(selectedLicenceSeq)
       .then(() => {
         Alert.alert('강사 인증취소되었어요!');
-        setModalVisible(false)
+        setModalVisible(false);
         getMemberLicences();
       })
       .catch((e: any) => {
@@ -104,7 +103,10 @@ function CertifyInstructorScreen() {
                 <Pressable
                   style={styles.kebabIcon}
                   hitSlop={10}
-                  onPress={()=>{setSelectedLicenceSeq(item.seq); openModal();}}>
+                  onPress={() => {
+                    setSelectedLicenceSeq(item.seq);
+                    openModal();
+                  }}>
                   <Image source={iconPath.KEBAB} style={[common.KEBAB]} />
                 </Pressable>
               )}
