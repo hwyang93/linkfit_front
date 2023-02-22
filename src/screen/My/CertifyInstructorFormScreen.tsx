@@ -146,14 +146,19 @@ function CertifyInstructorFormScreen() {
         </View>
 
         <View style={common.mb16}>
-          <Input
-            label={'자격증 이미지'}
-            value={licenceFileName}
-            placeholder={'자격증 이미지를 등록하세요.'}
-            keyboardType={KeyboardTypes.DEFAULT}
-          />
-          <Pressable style={styles.image} onPress={uploadImage}>
-            <Image source={iconPath.PHOTO} style={[common.size24]} />
+          <Pressable onPress={uploadImage} hitSlop={10}>
+            <Input
+              label={'자격증 이미지'}
+              onChangeText={(text: string) => setLicenceFileName(text.trim())}
+              value={licenceFileName}
+              placeholder={'자격증 이미지를 등록하세요.'}
+              keyboardType={KeyboardTypes.DEFAULT}
+              editable={true}
+            />
+
+            <View style={styles.cameraIcon}>
+              <Image source={iconPath.PHOTO} style={[common.size24]} />
+            </View>
           </Pressable>
         </View>
 
@@ -184,10 +189,13 @@ const styles = StyleSheet.create({
     padding: 16,
     backgroundColor: WHITE,
   },
-  image: {
+  cameraIcon: {
     position: 'absolute',
+    width: 30,
+    height: 30,
     right: 16,
     top: 16,
+    backgroundColor: WHITE,
   },
 });
 export default CertifyInstructorFormScreen;

@@ -52,12 +52,12 @@ function CommunityMyScreen() {
                 서울 · 송파구
               </Text>
             </View>
-            <Pressable style={styles.kebabIcon} hitSlop={10}>
-              <Image source={iconPath.KEBAB} style={[common.KEBAB]} />
-            </Pressable>
+            {/*<Pressable style={styles.kebabIcon} hitSlop={10}>*/}
+            {/*  <Image source={iconPath.KEBAB} style={[common.KEBAB]} />*/}
+            {/*</Pressable>*/}
           </View>
 
-          {/* 제안하기 버튼 */}
+          {/* MY 프로필 수정하기 버튼 */}
           <View style={common.mt16}>
             <Pressable>
               <LinearGradient
