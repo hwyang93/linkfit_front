@@ -6,12 +6,25 @@ import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import {NavigationProp, useNavigation} from '@react-navigation/native';
 import {LoggedInParamList} from '../../AppInner';
 
-function ProfileBox({memberInfo}: any) {
+type dataProps = {
+  data: {
+    id: number;
+    title: string;
+    favoriteCount: number;
+    field: string;
+    location: string;
+    link: any;
+  };
+};
+
+function ProfileBox({data}: dataProps) {
   const navigation = useNavigation<NavigationProp<LoggedInParamList>>();
 
   return (
     <View>
-      <Pressable style={styles.profileBox} onPress={() => {}}>
+      <Pressable
+        style={styles.profileBox}
+        onPress={() => navigation.navigate(data.link)}>
         <View>
           <View style={common.rowCenter}>
             <Text style={[common.text_l, common.fwb, common.mr8]}>
@@ -37,6 +50,12 @@ function ProfileBox({memberInfo}: any) {
         <View style={styles.nextArrow}>
           <FontAwesome name={'chevron-right'} color="black" />
         </View>
+
+        {/*<Pressable*/}
+        {/*  style={styles.pencil}*/}
+        {/*  onPress={() => Alert.alert('click', 'bookmark')}>*/}
+        {/*  <Image source={iconPath.PENCIL_B} style={[common.size24]} />*/}
+        {/*</Pressable>*/}
       </Pressable>
     </View>
   );
@@ -55,13 +74,13 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     paddingBottom: 16,
   },
-
   thumbnail: {width: '50%', height: '50%'},
   nextArrow: {
     position: 'absolute',
     top: '50%',
     right: 0,
   },
+  // pencil: {position: 'absolute', top: 0, right: 0},
 });
 
 export default ProfileBox;
