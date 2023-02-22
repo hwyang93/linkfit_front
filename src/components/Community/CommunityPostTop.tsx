@@ -13,6 +13,7 @@ function CommunityPostTop() {
     certified: true,
     field: '필라테스',
     career: '경력',
+    job: () => {},
   };
 
   return (

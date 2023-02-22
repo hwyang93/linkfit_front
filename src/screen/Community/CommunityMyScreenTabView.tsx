@@ -1,7 +1,6 @@
 import {Dimensions} from 'react-native';
 import {BLUE, GRAY} from '@styles/colors';
 import {createMaterialTopTabNavigator} from '@react-navigation/material-top-tabs';
-import EmployerReviewComponent from '@components/My/EmployerReviewComponent';
 import CommunityMyPost from '@components/Community/CommunityMyPost';
 import CommunityMyBookmark from '@components/Community/CommunityMyBookmark';
 
@@ -22,7 +21,10 @@ function Tabs() {
             alignItems: 'center',
             justifyContent: 'center',
           },
-          tabBarIndicatorStyle: {width: tabWidth, marginLeft: 16},
+          tabBarIndicatorStyle: {
+            width: tabWidth,
+            marginLeft: 16,
+          },
           tabBarStyle: {
             elevation: 0, // for Android
             shadowOffset: {

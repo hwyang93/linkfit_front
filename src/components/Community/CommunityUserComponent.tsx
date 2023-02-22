@@ -11,6 +11,7 @@ type UserProps = {
     certified: boolean;
     field: string;
     career: string;
+    job: () => void;
   };
 };
 
@@ -46,7 +47,7 @@ function CommunityUserComponent({data}: UserProps) {
           </Text>
         </View>
       </View>
-      <Pressable style={styles.kebabIcon} hitSlop={10}>
+      <Pressable style={styles.kebabIcon} hitSlop={10} onPress={data.job}>
         <Image source={iconPath.KEBAB} style={[common.KEBAB]} />
       </Pressable>
     </View>
