@@ -326,7 +326,7 @@ PODS:
   - react-native-nmap (0.0.66):
     - NMapsMap
     - React
-  - react-native-pager-view (6.1.2):
+  - react-native-pager-view (5.4.25):
     - React-Core
   - react-native-safe-area-context (4.4.1):
     - RCT-Folly
@@ -415,7 +415,7 @@ PODS:
     - TOCropViewController
   - RNPermissions (3.6.1):
     - React-Core
-  - RNReanimated (3.0.0-rc.10):
+  - RNReanimated (2.14.4):
     - DoubleConversion
     - FBLazyVector
     - FBReactNativeSpec
@@ -711,7 +711,7 @@ SPEC CHECKSUMS:
   react-native-geolocation-service: 608e1da71a1ac31b4de64d9ef2815f697978c55b
   react-native-image-picker: a5dddebb4d2955ac4712a4ed66b00a85f62a63ac
   react-native-nmap: cfcc5402746040494c544ea90a6062f49505acdf
-  react-native-pager-view: 54bed894cecebe28cede54c01038d9d1e122de43
+  react-native-pager-view: da490aa1f902c9a5aeecf0909cc975ad0e92e53e
   react-native-safe-area-context: 99b24a0c5acd0d5dcac2b1a7f18c49ea317be99a
   react-native-splash-screen: 4312f786b13a81b5169ef346d76d33bc0c6dc457
   React-perflogger: 8c79399b0500a30ee8152d0f9f11beae7fc36595
@@ -729,7 +729,7 @@ SPEC CHECKSUMS:
   RNDateTimePicker: 0530a73a6f3a1a85814cbde0802736993b9e675e
   RNImageCropPicker: ffbba608264885c241cbf3a8f78eb7aeeb978241
   RNPermissions: dcdb7b99796bbeda6975a6e79ad519c41b251b1c
-  RNReanimated: 3eb05867410b44acaa81dd423945af3093305bd4
+  RNReanimated: 6668b0587bebd4b15dd849b99e5a9c70fc12ed95
   RNScreens: 34cc502acf1b916c582c60003dc3089fa01dc66d
   RNVectorIcons: fcc2f6cb32f5735b586e66d14103a74ce6ad61f8
   SocketRocket: fccef3f9c5cedea1353a9ef6ada904fde10d6608

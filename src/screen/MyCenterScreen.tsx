@@ -12,8 +12,6 @@ import {GRAY, WHITE} from '@styles/colors';
 import common from '@styles/common';
 import {iconPath} from '@util/iconPath';
 import MyTitle from '@components/My/MyTitle';
-import {useEffect, useState} from 'react';
-import {fetchMemberMyInfo} from '@api/member';
 import {
   NavigationProp,
   useIsFocused,
@@ -50,54 +48,24 @@ const MENU = [
 
 function MyCenterScreen() {
   const navigation = useNavigation<NavigationProp<LoggedInParamList>>();
-  const isFocused = useIsFocused();
   const insets = useSafeAreaInsets();
-  const [myInfo, setMyInfo] = useState({
-    memberInfo: {
-      nickname: '',
-      intro: '',
-      field: '',
-      licences: {},
-    },
-    masterResume: {
-      title: undefined,
-    },
-    applyCountInfo: {
-      totalApplyCount: undefined,
-      passApplyCount: undefined,
-      failApplyCount: undefined,
-      cancelApplyCount: undefined,
-    },
-    suggestCountInfo: {
-      totalSuggestCount: undefined,
-      waitingSuggestCount: undefined,
-      completeSuggestCount: undefined,
-      closeSuggestCount: undefined,
-    },
-    noticeCountInfo: {
-      totalNoticeCount: undefined,
-      recruitCount: undefined,
-      seekCount: undefined,
-    },
-  });
-  useEffect(() => {
-    if (isFocused) {
-      fetchMemberMyInfo()
-        .then(({data}: any) => {
-          setMyInfo(data);
-        })
-        .catch((message: any) => {
-          console.log(message);
-        });
-    }
-  }, [isFocused]);
+
+  const centerData = {
+    id: 1,
+    title: '링크 필라테스',
+    favoriteCount: 23,
+    field: '필라테스',
+    location: '서울 · 송파구',
+    link: 'CenterProfile',
+  };
+
   return (
     <ScrollView
       style={{flex: 1, backgroundColor: WHITE}}
       showsVerticalScrollIndicator={false}>
       <View style={[styles.container, {paddingBottom: insets.bottom}]}>
         <View style={common.mb20}>
-          <CenterProfileBox />
+          <CenterProfileBox data={centerData} />
         </View>
 
         <View style={common.mb8}>
@@ -116,8 +84,6 @@ function MyCenterScreen() {
             })}
           </View>
         </View>
-
-        {/* 이력서 박스 */}
 
         <View style={[common.mb8]}>
           <MyTitle title={'채용 공고'} button={true} />
