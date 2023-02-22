@@ -22,6 +22,9 @@ function CommunityPostScreen() {
       date: '2022.12.12',
       comment:
         '후기 내용입니다. 후기 내용입니다. 후기 내용입니다. 후기 내용입니다. 후기 내용입니다. 후기 내용입니다.후기 내용입니다. 후기 내용입니다. 후기 내용입니다.',
+      job: () => {
+        openModal();
+      },
     },
     {
       id: 2,
@@ -33,6 +36,9 @@ function CommunityPostScreen() {
       date: '2023.1.12',
       comment:
         '후기 내용입니다. 후기 내용입니다. 후기 내용입니다. 후기 내용입니다. 후기 내용입니다. 후기 내용입니다.',
+      job: () => {
+        openModal();
+      },
     },
   ];
 

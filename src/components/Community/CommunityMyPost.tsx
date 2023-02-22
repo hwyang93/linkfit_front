@@ -3,14 +3,13 @@ import {
   FlatList,
   Image,
   Pressable,
-  ScrollView,
   StyleSheet,
   Text,
   View,
 } from 'react-native';
 
 import common from '@styles/common';
-import {BLUE, GRAY, WHITE} from '@styles/colors';
+import {GRAY, WHITE} from '@styles/colors';
 import {iconPath} from '@util/iconPath';
 import {SetStateAction, useState} from 'react';
 import Modal from '@components/ModalSheet';
