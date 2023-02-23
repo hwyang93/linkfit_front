@@ -46,7 +46,7 @@ function RecruitListItem({item}: any) {
           {recruitInfo.companyName}
         </Text>
         {/* 지역 */}
-        <Text style={common.text_s}>지역표출할거임</Text>
+        <Text style={[common.text_s, common.fcg]}>지역표출할거임</Text>
         <Pressable
           style={styles.bookmark}
           onPress={() => Alert.alert('click', 'bookmark')}>
