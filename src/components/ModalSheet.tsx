@@ -1,4 +1,4 @@
-import {useEffect, useRef} from 'react';
+import {useEffect, useRef, useState} from 'react';
 import {
   View,
   StyleSheet,
@@ -9,9 +9,11 @@ import {
   Dimensions,
   PanResponder,
   Pressable,
+  ActivityIndicator,
 } from 'react-native';
 import {BLACK, GRAY} from '@styles/colors';
 import common, {width} from '@styles/common';
+import LinearGradient from 'react-native-linear-gradient';
 
 type modalProps = {
   title?: string;
@@ -21,9 +23,11 @@ type modalProps = {
   modalData: any[];
   job?: () => void;
   modalHeight?: number;
+  type?: string;
 };
 
 function ModalSheet(props: modalProps) {
+  const [loading, setLoading] = useState<boolean>(false);
   const {modalVisible, setModalVisible} = props;
   const screenHeight = Dimensions.get('screen').height;
   const panY = useRef(new Animated.Value(screenHeight)).current;
@@ -61,11 +65,16 @@ function ModalSheet(props: modalProps) {
     }),
   ).current;
 
+  const [modalType, setModalType] = useState('string');
+
   useEffect(() => {
     if (props.modalVisible) {
       resetBottomSheet.start();
     }
-  }, [props.modalVisible]);
+    if (props.type === 'button') {
+      setModalType('button');
+    }
+  }, [props.modalVisible, props.type]);
 
   const closeModal = () => {
     closeBottomSheet.start(() => {
@@ -96,18 +105,47 @@ function ModalSheet(props: modalProps) {
           <View style={styles.topBar} />
           {/* 모달 타이틀 */}
           <View style={common.mt16}>
-            <Text style={styles.modalTitle}>{props.title}</Text>
+            <Text
+              style={[
+                styles.modalTitle,
+                modalType === 'button' && {marginBottom: 16},
+              ]}>
+              {props.title}
+            </Text>
           </View>
-          {/* 모달 아이템 */}
-          {props.modalData.map((item, index) => {
-            return (
-              <View key={index} style={styles.itemBox}>
-                <Pressable onPress={item.job}>
-                  <Text style={[styles.modalText]}>{item.value}</Text>
-                </Pressable>
-              </View>
-            );
-          })}
+          {/* string type modal */}
+          {modalType === 'string' &&
+            props.modalData.map((item, index) => {
+              return (
+                <View key={index} style={styles.itemBox}>
+                  <Pressable onPress={item.job}>
+                    <Text style={[styles.modalText]}>{item.value}</Text>
+                  </Pressable>
+                </View>
+              );
+            })}
+
+          {/* button type modal */}
+          {props.type === 'button' &&
+            props.modalData.map((item, index) => {
+              return (
+                <View key={index} style={[common.mv8, {width: '100%'}]}>
+                  <Pressable onPress={() => {}}>
+                    <LinearGradient
+                      style={common.button}
+                      start={{x: 0.1, y: 0.5}}
+                      end={{x: 0.6, y: 1}}
+                      colors={['#74ebe4', '#3962f3']}>
+                      {loading ? (
+                        <ActivityIndicator color="white" />
+                      ) : (
+                        <Text style={common.buttonText}>{item.value}</Text>
+                      )}
+                    </LinearGradient>
+                  </Pressable>
+                </View>
+              );
+            })}
         </Animated.View>
       </View>
     </Modal>
