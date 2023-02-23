@@ -27,7 +27,7 @@ export type LoggedInParamList = {
 
   CenterProfile: undefined;
 
-  ProfileEdit: {memberInfo: object};
+  ProfileEdit: {memberInfo: any};
   CertifyLocation: undefined;
   CertifyInstructor: undefined;
   CertifyInstructorForm: undefined;
@@ -35,7 +35,7 @@ export type LoggedInParamList = {
   ResumeForm: undefined;
   ResumePreview: undefined;
   ReviewManage: undefined;
-  ReviewForm: {reputationInfo: object};
+  ReviewForm: {reputationInfo: any};
   ApplicationStatus: undefined;
   ApplicantStatus: undefined;
   ReceivedSuggestion: undefined;
@@ -58,7 +58,7 @@ export type LoggedInParamList = {
   Profile: {memberSeq: number};
   Suggestion: {targetMemberSeq: number};
   CenterInfo: undefined;
-  JobPost: undefined;
+  JobPost: {recruitSeq: number};
   Gallery: any;
   JobOfferForm: undefined;
   // Complete: {orderId: string};

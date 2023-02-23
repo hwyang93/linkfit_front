@@ -1,23 +1,32 @@
-import {FlatList, View} from 'react-native';
+import {Alert, FlatList, View} from 'react-native';
 import RecruitCarouselItem from '@components/RecruitCarouselItem';
+import {useCallback, useEffect, useState} from 'react';
+import {fetchBookmarkRecruits} from '@api/recruit';
 
-type dataProps = {
-  data: any[];
-  num: number;
-  position: string;
-  company: string;
-  area: string;
-  src: string;
-};
+function BookmarkJobOfferComponent() {
+  const [bookmarkedRecruits, setBookmarkedRecruits] = useState<any[]>();
 
-function BookmarkJobOfferComponent({data}: dataProps) {
+  const getBookmarkRecruits = useCallback(() => {
+    fetchBookmarkRecruits()
+      .then(({data}: any) => {
+        setBookmarkedRecruits(data);
+      })
+      .catch((e: any) => {
+        Alert.alert(e.message);
+      });
+  }, []);
+
+  useEffect(() => {
+    getBookmarkRecruits();
+  }, [getBookmarkRecruits]);
+
   function renderItem({item}: any) {
     return <RecruitCarouselItem item={item} />;
   }
 
   return (
     <FlatList
-      data={data}
+      data={bookmarkedRecruits}
       renderItem={renderItem}
       numColumns={2}
       keyExtractor={item => item.id}
