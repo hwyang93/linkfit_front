@@ -27,6 +27,7 @@ import {
   launchImageLibrary,
   MediaType,
 } from 'react-native-image-picker';
+import {SafeAreaView} from 'react-native-safe-area-context';
 
 function CenterProfileEditScreen() {
   const [loading, setLoading] = useState<boolean>(false);
@@ -75,8 +76,8 @@ function CenterProfileEditScreen() {
 
   const canGoNext = true;
   return (
-    <DismissKeyboardView>
-      <View style={styles.container}>
+    <SafeAreaView edges={['bottom', 'left', 'right']} style={styles.container}>
+      <DismissKeyboardView>
         <Pressable style={styles.imageBox} onPress={openCamera}>
           <Image
             resizeMode={'cover'}
@@ -111,7 +112,7 @@ function CenterProfileEditScreen() {
           />
         </View>
 
-        <View style={common.mb16}>
+        <View style={common.mb40}>
           <Input
             label={'소개글'}
             onChangeText={(text: string) => setComment(text)}
@@ -124,7 +125,7 @@ function CenterProfileEditScreen() {
         </View>
 
         {/* 완료 버튼 */}
-        <View style={common.mv40}>
+        <View style={common.mb16}>
           <Pressable disabled={!canGoNext} onPress={() => {}}>
             <LinearGradient
               style={common.button}
@@ -141,21 +142,21 @@ function CenterProfileEditScreen() {
             </LinearGradient>
           </Pressable>
         </View>
-      </View>
-    </DismissKeyboardView>
+      </DismissKeyboardView>
+    </SafeAreaView>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    padding: 16,
+    paddingHorizontal: 16,
     backgroundColor: WHITE,
   },
   imageBox: {
     flex: 1,
     alignItems: 'center',
-    paddingVertical: 16,
+    paddingVertical: 8,
   },
   profileImage: {
     width: '100%',
