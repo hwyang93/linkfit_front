@@ -1,11 +1,29 @@
-import {Image, ScrollView, StyleSheet, Text, View} from 'react-native';
+import {Alert, Image, ScrollView, StyleSheet, Text, View} from 'react-native';
 import {GRAY, WHITE} from '@styles/colors';
 import common from '@styles/common';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import CenterInfoComponent from '@components/CenterInfoComponent';
+import {NativeStackScreenProps} from '@react-navigation/native-stack';
+import {LoggedInParamList} from '../../AppInner';
+import {useEffect, useState} from 'react';
+import {fetchRecruit} from '@api/recruit';
 
-function JobPostScreen() {
+type Props = NativeStackScreenProps<LoggedInParamList, 'JobPost'>;
+
+function JobPostScreen({route}: Props) {
   const insets = useSafeAreaInsets();
+  const {recruitSeq} = route.params;
+  const [recruitInfo, setRecruitInfo] = useState<any>({});
+
+  useEffect(() => {
+    fetchRecruit(recruitSeq)
+      .then(({data}: any) => {
+        setRecruitInfo(data);
+      })
+      .catch((e: any) => {
+        Alert.alert(e.message);
+      });
+  }, []);
 
   // todo: 지원을 안했으면 지원하기 버튼 표시 || 지원을 했으면 지원완료 메시지 표시
   return (
@@ -23,16 +41,14 @@ function JobPostScreen() {
             style={styles.imgBox}
           />
         </View>
-        <Text style={[common.mb16, common.title_l]}>
-          필라테스 강사님 모십니다.
-        </Text>
+        <Text style={[common.mb16, common.title_l]}>{recruitInfo.title}</Text>
         <Text style={[common.mb16, common.text_s, {color: GRAY.DARK}]}>
-          링크 필라테스 | 서울 · 송파구
+          {recruitInfo.companyName} | 서울 · 송파구
         </Text>
-        <View style={[common.mb16, common.row]}>
-          <Text style={[common.text_s, styles.tag]}>#Tag</Text>
-          <Text style={[common.text_s, styles.tag]}>#Tag</Text>
-        </View>
+        {/*<View style={[common.mb16, common.row]}>*/}
+        {/*  <Text style={[common.text_s, styles.tag]}>#Tag</Text>*/}
+        {/*  <Text style={[common.text_s, styles.tag]}>#Tag</Text>*/}
+        {/*</View>*/}
         <Text style={[common.text_s, {color: GRAY.DARK}]}>
           2022.10.01 지원 완료
         </Text>
@@ -42,37 +58,51 @@ function JobPostScreen() {
       {/* 공고 내용 */}
       <View style={common.mb24}>
         <Text style={[common.mb8, common.text_m, common.fwb]}>채용형태</Text>
-        <Text style={common.text_m}>전임</Text>
+        <Text style={common.text_m}>{recruitInfo.recruitType}</Text>
       </View>
-      <View style={common.mb24}>
-        <Text style={[common.mb8, common.text_m, common.fwb]}>수업날짜</Text>
-        <Text style={common.text_m}>월,수,금</Text>
-      </View>
-      <View style={common.mb24}>
-        <Text style={[common.mb8, common.text_m, common.fwb]}>수업시간</Text>
-        <Text style={common.text_m}>14:00 ~ 18:00</Text>
-      </View>
+      {recruitInfo.recruitType === 'FILL-IN' ? (
+        <View style={common.mb24}>
+          <Text style={[common.mb8, common.text_m, common.fwb]}>
+            수업날짜 및 시간
+          </Text>
+          <Text style={common.text_m}>월,수,금 14:00 ~ 18:00</Text>
+        </View>
+      ) : (
+        <View>
+          <View style={common.mb24}>
+            <Text style={[common.mb8, common.text_m, common.fwb]}>
+              수업날짜
+            </Text>
+            <Text style={common.text_m}>월,수,금</Text>
+          </View>
+          <View style={common.mb24}>
+            <Text style={[common.mb8, common.text_m, common.fwb]}>
+              수업시간
+            </Text>
+            <Text style={common.text_m}>14:00 ~ 18:00</Text>
+          </View>
+        </View>
+      )}
+
       <View style={common.mb24}>
         <Text style={[common.mb8, common.text_m, common.fwb]}>수업내용</Text>
-        <Text style={common.text_m}>
-          양손을 땅바닥에 대고 양 다리를 하늘로 들면 그게 뭐야 무서워.
-        </Text>
+        <Text style={common.text_m}>{recruitInfo.content}</Text>
       </View>
       <View style={common.mb24}>
         <Text style={[common.mb8, common.text_m, common.fwb]}>경력</Text>
-        <Text style={common.text_m}>1년 이상</Text>
+        <Text style={common.text_m}>{recruitInfo.career}</Text>
       </View>
       <View style={common.mb24}>
         <Text style={[common.mb8, common.text_m, common.fwb]}>학력</Text>
-        <Text style={common.text_m}>학력 무관. 체육 분야 전공자 우대.</Text>
+        <Text style={common.text_m}>{recruitInfo.education}</Text>
       </View>
       <View style={common.mb24}>
         <Text style={[common.mb8, common.text_m, common.fwb]}>급여</Text>
-        <Text style={common.text_m}>협의 후 결정</Text>
+        <Text style={common.text_m}>{recruitInfo.pay}</Text>
       </View>
       <View style={common.mb8}>
         <Text style={[common.mb8, common.text_m, common.fwb]}>센터 위치</Text>
-        <Text style={common.text_m}>서울특별시 강남구 봉은사로 12345</Text>
+        <Text style={common.text_m}>{recruitInfo.address}</Text>
       </View>
 
       <View style={common.mb24}>

@@ -22,12 +22,7 @@ import {
   useRoute,
 } from '@react-navigation/native';
 import {LoggedInParamList} from '../../../AppInner';
-import {
-  Asset,
-  ImagePickerResponse,
-  launchImageLibrary,
-  MediaType,
-} from 'react-native-image-picker';
+import {Asset, launchImageLibrary, MediaType} from 'react-native-image-picker';
 
 function ProfileEditScreen() {
   const navigation = useNavigation<NavigationProp<LoggedInParamList>>();
