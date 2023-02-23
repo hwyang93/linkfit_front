@@ -13,6 +13,7 @@ import common from '@styles/common';
 import {iconPath} from '@util/iconPath';
 import {NavigationProp, useNavigation} from '@react-navigation/native';
 import {LoggedInParamList} from '../../AppInner';
+import {useCallback, useState} from 'react';
 
 // const HEADER_HEIGHT = 250;
 
@@ -21,7 +22,8 @@ const tabWidth = width / 2;
 const imageSize = (width - 6) / 3;
 
 // 센터 프로필 상단 영역 시작
-const Header = () => {
+function Header() {
+  const navigation = useNavigation<NavigationProp<LoggedInParamList>>();
   return (
     <View>
       <View style={common.mb16}>
@@ -42,7 +44,7 @@ const Header = () => {
         </View>
         <Pressable
           style={styles.pencil}
-          onPress={() => Alert.alert('click', '연필')}>
+          onPress={() => navigation.navigate('CenterProfileEdit')}>
           <Image source={iconPath.PENCIL_B} style={[common.size24]} />
         </Pressable>
       </View>
@@ -54,23 +56,24 @@ const Header = () => {
       <View style={common.mb16}>
         <Text style={[common.text_m, common.fwb]}>소개글</Text>
         <Text style={common.text_m}>
-          강남구 역삼동에 위치한 필라테스 센터입니다.
+          강남구 역삼동에 위치한 필라테스 센터입니다. 근처에서 젤 좋아요.
+          진짜진짜 진짜루.
         </Text>
       </View>
     </View>
   );
-};
+}
 // 센터 프로필 상단 영역 끝
 
 function MyCenterProfileScreen() {
   const navigation = useNavigation<NavigationProp<LoggedInParamList>>();
 
   const tab1Data = [
-    {src: require('../assets/images/center_01.png')},
-    {src: require('../assets/images/center_02.png')},
-    {src: require('../assets/images/center_03.png')},
-    {src: require('../assets/images/center_04.png')},
-    {src: require('../assets/images/center_05.png')},
+    {src: require('@images/center_01.png')},
+    {src: require('@images/center_02.png')},
+    {src: require('@images/center_03.png')},
+    {src: require('@images/center_04.png')},
+    {src: require('@images/center_05.png')},
   ];
   const tab2Data = [
     {
@@ -78,7 +81,8 @@ function MyCenterProfileScreen() {
       nickname: '저팔계',
       type: '강사',
       date: '2022.12.12',
-      review: '후기 내용 입니다. 저팔계지만 유연해요. 깜짝 놀랐어요.',
+      review:
+        '후기 내용 입니다. 저팔계지만 유연해요. 깜짝 놀랐어요. 오늘 점심은 뭐 먹을까요. 매일매일 고민해요. 왜 때문이죠.',
     },
     {
       id: 2,
@@ -105,23 +109,33 @@ function MyCenterProfileScreen() {
       inactiveColor={GRAY.DEFAULT}
       activeColor={BLUE.DEFAULT}
       labelStyle={{fontSize: 16, fontWeight: '700'}}
-      tabContainerStyle={{
-        width: tabWidth,
-        elevation: 0, // for Android
-        shadowOffset: {
-          width: 0,
-          height: 0, // for iOS
-        },
-      }}
-      contentContainerStyle={{
-        width: width,
-        elevation: 0, // for Android
-        shadowOffset: {
-          width: 0,
-          height: 0, // for iOS
-        },
-      }}
+      contentContainerStyle={{width: width}}
     />
+  );
+
+  type imageProps = {
+    item: any;
+  };
+
+  const IntroduceTab = useCallback(
+    ({item}: imageProps) => {
+      return (
+        <>
+          <Pressable onPress={() => navigation.navigate('Gallery')}>
+            <Image
+              source={item.src}
+              resizeMode={'cover'}
+              style={{
+                width: imageSize,
+                height: imageSize,
+                margin: 1,
+              }}
+            />
+          </Pressable>
+        </>
+      );
+    },
+    [navigation],
   );
 
   type reviewProps = {
@@ -134,12 +148,55 @@ function MyCenterProfileScreen() {
     };
   };
 
+  const [textLine, setTextLine] = useState(2);
+
+  const ReviewTab = useCallback(
+    ({item}: reviewProps) => {
+      const textExpansion = () => {
+        if (textLine === 2) {
+          setTextLine(0);
+        } else {
+          setTextLine(2);
+        }
+      };
+      return (
+        <View
+          style={{
+            width: width,
+          }}>
+          <View style={[common.row, common.mb8]}>
+            <Text style={[common.text_m, common.fwb, common.fs18]}>
+              {item.nickname}
+            </Text>
+            <Text
+              style={[
+                common.text,
+                {alignSelf: 'flex-end', marginHorizontal: 4},
+              ]}>
+              {item.type}
+            </Text>
+            <Text style={[common.text, {alignSelf: 'flex-end'}]}>
+              {item.date}
+            </Text>
+          </View>
+          <Pressable onPress={textExpansion}>
+            <Text style={common.text_m} numberOfLines={textLine}>
+              {item.review}
+            </Text>
+          </Pressable>
+        </View>
+      );
+    },
+    [textLine],
+  );
+
   return (
     <Tabs.Container
       renderHeader={Header}
       headerContainerStyle={{
         paddingHorizontal: 16,
         shadowOpacity: 0,
+        elevation: 0,
       }}
       // headerHeight={HEADER_HEIGHT}
       renderTabBar={tabBar}>
@@ -148,25 +205,7 @@ function MyCenterProfileScreen() {
           <Tabs.FlatList
             data={tab1Data}
             ListHeaderComponent={IntroduceTabHeader}
-            renderItem={(item: any) => {
-              console.log('이미지가', item);
-              return (
-                <>
-                  <Pressable onPress={() => navigation.navigate('Gallery')}>
-                    <Image
-                      source={item.src}
-                      resizeMode={'cover'}
-                      style={{
-                        width: imageSize,
-                        height: imageSize,
-                        margin: 1,
-                        backgroundColor: 'red',
-                      }}
-                    />
-                  </Pressable>
-                </>
-              );
-            }}
+            renderItem={IntroduceTab}
             numColumns={3}
             keyExtractor={(item: any) => item.id}
           />
@@ -182,33 +221,7 @@ function MyCenterProfileScreen() {
                 <View style={[common.separator, common.mv16, {width: width}]} />
               );
             }}
-            renderItem={({item}: reviewProps) => {
-              return (
-                <View
-                  style={{
-                    width: width,
-                  }}>
-                  <View style={{flexDirection: 'row'}}>
-                    <Text style={[common.text_m, common.fwb, common.fs18]}>
-                      {item.nickname}
-                    </Text>
-                    <Text
-                      style={[
-                        common.text,
-                        {alignSelf: 'flex-end', marginHorizontal: 4},
-                      ]}>
-                      {item.type}
-                    </Text>
-                    <Text style={[common.text, {alignSelf: 'flex-end'}]}>
-                      {item.date}
-                    </Text>
-                  </View>
-                  <Text style={common.text_m} numberOfLines={2}>
-                    {item.review}
-                  </Text>
-                </View>
-              );
-            }}
+            renderItem={ReviewTab}
             keyExtractor={(item: any) => item.id}
           />
         </View>

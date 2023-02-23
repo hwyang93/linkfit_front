@@ -54,6 +54,7 @@ import MyRecruitmentScreen from '@screen/My/MyRecruitmentScreen';
 import ReceivedSuggestionDetailScreen from '@screen/My/ReceivedSuggestionDetailScreen';
 import ApplicantStatusScreen from '@screen/My/ApplicantStatusScreen';
 import MyCenterProfileScreen from '@screen/MyCenterProfileScreen';
+import CenterProfileEditScreen from '@screen/My/CenterProfileEditScreen';
 
 const Stack = createNativeStackNavigator<LoggedInParamList>();
 
@@ -140,7 +141,22 @@ const MainStack = () => {
         <Stack.Screen
           name="CenterProfile"
           component={MyCenterProfileScreen}
-          options={{title: '프로필'}}
+          options={{
+            title: '프로필',
+            headerRight: () => (
+              <Pressable
+                onPress={() => {}}
+                hitSlop={10}
+                style={[common.mh4, common.size24]}>
+                <Image source={iconPath.ADD_BUTTON} style={common.size24} />
+              </Pressable>
+            ),
+          }}
+        />
+        <Stack.Screen
+          name="CenterProfileEdit"
+          component={CenterProfileEditScreen}
+          options={{title: '센터 프로필'}}
         />
         <Stack.Screen
           name="MyCenterInfo"
