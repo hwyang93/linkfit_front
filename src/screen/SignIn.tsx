@@ -11,7 +11,6 @@ import {
 } from 'react-native';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import {LoggedInParamList} from '../../AppInner';
-// import {useAppDispatch} from '../store';
 import {validateEmail, removeWhitespace} from '@util/util';
 import Input, {KeyboardTypes, ReturnKeyTypes} from '@components/Input';
 import useInput from '../hooks/useInput';
@@ -21,44 +20,44 @@ import LinearGradient from 'react-native-linear-gradient';
 import Logo from '@components/Logo';
 import {fetchMemberInfoByEmail} from '@api/member';
 import EncryptedStorage from 'react-native-encrypted-storage';
-// import EncryptedStorage from 'react-native-encrypted-storage';
 
 type SignInScreenProps = NativeStackScreenProps<LoggedInParamList, 'SignIn'>;
 
 function SignIn({navigation}: SignInScreenProps) {
-  // const dispatch = useAppDispatch();
   const [loading, setLoading] = useState<boolean>(false);
-
   // 이메일, 비밀번호
   const [email, setEmail] = useState<string>('');
-
   const emailInput = useInput('', validateEmail);
-
   // 오류메시지 상태저장
   const [emailMessage, setEmailMessage] = useState<string>('');
-
   // 유효성 검사
   const [isEmail, setIsEmail] = useState<boolean>(false);
 
-  const onChangeEmail = useCallback((value: string) => {
-    const checkEmail = removeWhitespace(value);
-    setEmail(checkEmail);
-    setIsEmail(validateEmail(checkEmail));
-    if (!isEmail) {
-      setEmailMessage('이메일 형식에 맞게 입력해 주세요.');
-    } else {
-      setEmailMessage('');
-    }
-  }, []);
+  const onChangeEmail = useCallback(
+    (value: string) => {
+      const checkEmail = removeWhitespace(value);
+      setEmail(checkEmail);
+      setIsEmail(validateEmail(checkEmail));
+      if (!isEmail) {
+        setEmailMessage('이메일 형식에 맞게 입력해 주세요.');
+      } else {
+        setEmailMessage('');
+      }
+    },
+    [isEmail],
+  );
 
   const checkMember = async () => {
     await EncryptedStorage.clear();
     await fetchMemberInfoByEmail(email)
       .then(({data}: any) => {
         if (data.seq) {
+          setLoading(true);
           Alert.alert('알림', '환영합니다. 회원님');
           navigation.navigate('LogIn', {email: email});
+          setLoading(false);
         } else {
+          setLoading(false);
           navigation.navigate('SignUp', {email: email});
         }
       })

@@ -26,6 +26,7 @@ import {useAppDispatch} from '@/store';
 import userSlice from '@slices/user';
 import Toast from '../components/Toast';
 import EncryptedStorage from 'react-native-encrypted-storage';
+import {SafeAreaView} from 'react-native-safe-area-context';
 
 function LogIn() {
   const dispatch = useAppDispatch();
@@ -39,8 +40,6 @@ function LogIn() {
   const canGoNext = password;
   const toastRef = useRef([]);
 
-  // const onSubmit = useCallback(async () => {}, []);
-
   const onSubmit = async () => {
     const loginInfo = {
       email: route.params.email,
@@ -48,6 +47,7 @@ function LogIn() {
     };
     await login(loginInfo)
       .then(async ({data}: any) => {
+        setLoading(true);
         dispatch(
           userSlice.actions.setAccessToken({
             accessToken: data.accessToken,
@@ -56,8 +56,10 @@ function LogIn() {
         await EncryptedStorage.setItem('accessToken', data.accessToken);
         await EncryptedStorage.setItem('refreshToken', data.refreshToken);
         await getMemberInfo();
+        setLoading(false);
       })
       .catch((e: any) => {
+        setLoading(false);
         toastRef.current.show({
           message: e.message,
           type: 'error',
@@ -76,53 +78,56 @@ function LogIn() {
   };
 
   return (
-    <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-      <View style={common.container}>
-        {/* 로고 컴포넌트 */}
-        <Logo />
-        {/* 로고 컴포넌트 */}
-        <View>
-          {/* 비밀번호 입력 && 로그인 버튼 */}
-          <View style={common.mt40}>
-            <Input
-              value={password}
-              label={'비밀번호'}
-              placeholder={'비밀번호를 입력해 주세요.'}
-              keyboardType={KeyboardTypes.DEFAULT}
-              returnKeyType={ReturnKeyTypes.DONE}
-              onChangeText={(text: string) => setPassword(text.trim())}
-              secureTextEntry
-              onSubmitEditing={onSubmit}
-            />
-          </View>
+    <SafeAreaView edges={['bottom', 'left', 'right']} style={{flex: 1}}>
+      <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+        <View style={common.container}>
+          {/* 로고 컴포넌트 */}
+          <Logo />
+          {/* 로고 컴포넌트 */}
+          <View>
+            {/* 비밀번호 입력 && 로그인 버튼 */}
+            <View style={common.mt40}>
+              <Input
+                value={password}
+                label={'비밀번호'}
+                placeholder={'비밀번호를 입력해 주세요.'}
+                keyboardType={KeyboardTypes.DEFAULT}
+                returnKeyType={ReturnKeyTypes.DONE}
+                onChangeText={(text: string) => setPassword(text.trim())}
+                secureTextEntry
+                onSubmitEditing={onSubmit}
+              />
+            </View>
 
-          <View style={common.mt30}>
-            <Pressable disabled={!canGoNext || loading} onPress={onSubmit}>
-              <LinearGradient
-                style={common.button}
-                start={{x: 0.1, y: 0.5}}
-                end={{x: 0.6, y: 1}}
-                colors={
-                  canGoNext ? ['#74ebe4', '#3962f3'] : ['#dcdcdc', '#dcdcdc']
-                }>
-                {loading ? (
-                  <ActivityIndicator color="white" />
-                ) : (
-                  <Text style={common.buttonText}>로그인</Text>
-                )}
-              </LinearGradient>
-            </Pressable>
+            <View style={common.mt30}>
+              <Pressable disabled={!canGoNext || loading} onPress={onSubmit}>
+                <LinearGradient
+                  style={common.button}
+                  start={{x: 0.1, y: 0.5}}
+                  end={{x: 0.6, y: 1}}
+                  colors={
+                    canGoNext ? ['#74ebe4', '#3962f3'] : ['#dcdcdc', '#dcdcdc']
+                  }>
+                  {loading ? (
+                    <ActivityIndicator color="white" />
+                  ) : (
+                    <Text style={common.buttonText}>로그인</Text>
+                  )}
+                </LinearGradient>
+              </Pressable>
+            </View>
+            <View style={styles.findPassword}>
+              <Text style={styles.leftBox}>비밀번호를 잊으셨나요?</Text>
+              <Pressable
+                onPress={() => rootNavigation.navigate('PasswordReset')}>
+                <Text style={styles.rightBox}>비밀번호 재설정</Text>
+              </Pressable>
+            </View>
           </View>
-          <View style={styles.findPassword}>
-            <Text style={styles.leftBox}>비밀번호를 잊으셨나요?</Text>
-            <Pressable onPress={() => rootNavigation.navigate('PasswordReset')}>
-              <Text style={styles.rightBox}>비밀번호 재설정</Text>
-            </Pressable>
-          </View>
+          <Toast ref={toastRef} />
         </View>
-        <Toast ref={toastRef} />
-      </View>
-    </TouchableWithoutFeedback>
+      </TouchableWithoutFeedback>
+    </SafeAreaView>
   );
 }
 
