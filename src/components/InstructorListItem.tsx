@@ -32,16 +32,14 @@ function InstructorListItem({item}: ListProps) {
       </Pressable>
       <View>
         <View style={common.rowCenter}>
-          <Text style={[common.text_s, common.fwb, common.mr8]}>
+          <Text style={[common.text_m, common.fwb, common.mr8]}>
             {item.field}
           </Text>
-          <Text style={[common.text_s]}>{item.career}</Text>
+          <Text style={[common.text]}>{item.career}</Text>
         </View>
 
         <View style={common.rowCenter}>
-          <Text style={[common.text_m, common.fwb, common.mr8]}>
-            {item.nickname}
-          </Text>
+          <Text style={[common.title, common.mr8]}>{item.nickname}</Text>
           <View style={common.rowCenter}>
             <Text style={[common.text_s, {color: BLUE.DEFAULT}]}>인증강사</Text>
             <Image
@@ -50,7 +48,7 @@ function InstructorListItem({item}: ListProps) {
             />
           </View>
         </View>
-        <Text style={[common.text_s]}>{item.address}</Text>
+        <Text style={[common.text_s, common.fcg]}>{item.address}</Text>
       </View>
       <Pressable
         style={styles.kebabIcon}
