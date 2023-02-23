@@ -1,5 +1,4 @@
 import {
-  Alert,
   Image,
   Pressable,
   ScrollView,
@@ -16,6 +15,7 @@ import {LoggedInParamList} from '../../../AppInner';
 import {SetStateAction, useState} from 'react';
 import Modal from '@components/ModalSheet';
 import {iconPath} from '@util/iconPath';
+import {SafeAreaView} from 'react-native-safe-area-context';
 
 function MyRecruitmentScreen() {
   const navigation = useNavigation<NavigationProp<LoggedInParamList>>();
@@ -135,8 +135,9 @@ function MyRecruitmentScreen() {
     setModalData(MODAL3);
     openModal();
   };
+
   return (
-    <View style={styles.container}>
+    <SafeAreaView edges={['bottom', 'left', 'right']} style={styles.container}>
       {/* 필터 영역 */}
       <TopFilter data={FILTER} />
       {/* 필터 영역 */}
@@ -178,7 +179,7 @@ function MyRecruitmentScreen() {
           modalData={modalData}
         />
       </ScrollView>
-    </View>
+    </SafeAreaView>
   );
 }
 

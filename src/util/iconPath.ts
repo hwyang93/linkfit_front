@@ -74,4 +74,5 @@ export const iconPath = {
   CLOSE: require('@images/icon/close.png'),
   THUMBNAIL: require('@images/icon/thumbnail.png'),
   ADD_BUTTON: require('@images/icon/add_button.png'),
+  EMPTY: require('@images/icon/empty.png'),
 };
