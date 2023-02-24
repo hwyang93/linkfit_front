@@ -37,7 +37,7 @@ const MENU = [
   {
     icon: iconPath.MY_LICENSE,
     title: '사업자 정보',
-    link: 'CertifyInstructor',
+    link: 'CompanyInfo',
   },
   {
     icon: iconPath.MY_REVIEWS,

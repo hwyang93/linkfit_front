@@ -68,7 +68,7 @@ function ResumePreviewScreen() {
 
         {/* 인적사항 */}
         <View style={common.mb24}>
-          <View style={[common.rowCenter]}>
+          <View style={[common.rowCenter, common.mb8]}>
             <Text style={[common.title, common.mr8]}>이름</Text>
             <View style={common.rowCenter}>
               <Text style={[common.text_s, {color: BLUE.DEFAULT}]}>
@@ -81,19 +81,18 @@ function ResumePreviewScreen() {
             </View>
           </View>
 
-          <View style={[common.rowCenter]}>
+          <View style={[common.rowCenter, common.mb8]}>
             <Text style={[common.text_m, common.fwb, common.mr8]}>
               필라테스
             </Text>
             <Text style={[common.text, {alignSelf: 'flex-end'}]}>
               2년 6개월
             </Text>
-            <Text style={[common.text_m, common.mh8, styles.divider]}>|</Text>
+            <Text style={[common.text_m, common.mh8, common.fcg]}>|</Text>
             <Text style={[common.text_m, common.fwb]}>24세</Text>
-            <Text style={[common.text_m, common.mh8, styles.divider]}>|</Text>
+            <Text style={[common.text_m, common.mh8, common.fcg]}>|</Text>
             <Text style={[common.text_m, common.fwb]}>남</Text>
           </View>
-
           <Text style={[common.text_s, {color: GRAY.DARK}]}>
             서울 · 강남구 · 역삼동
           </Text>
@@ -106,41 +105,39 @@ function ResumePreviewScreen() {
           </Pressable>
         </View>
 
-        <View style={common.mb24}>
-          <Text style={[common.title, common.mr8]}>경력</Text>
-          <Text style={[common.text_m, common.mv4]}>
-            필라테스 전임 2022.10.11 ~ 2023.01.10
-          </Text>
-          <Text style={[common.text_m, common.mv4]}>
-            필라테스 전임 2022.10.11 ~ 2023.01.10
-          </Text>
-          <Text style={[common.text_m, common.mv4]}>
-            필라테스 전임 2022.10.11 ~ 2023.01.10
-          </Text>
-        </View>
-
-        <View style={common.mb24}>
-          <Text style={[common.title, common.mr8]}>학력</Text>
-          <Text style={[common.text_m, common.mv4]}>
-            링크 고등학교 2011.03 ~ 2014.02
-          </Text>
-          <Text style={[common.text_m, common.mv4]}>
-            링크 대학교 2014.02 ~ 2018.02
-          </Text>
-        </View>
-
-        <View style={common.mb24}>
-          <Text style={[common.title, common.mr8]}>자격증</Text>
-          <Text style={[common.text_m, common.mv4]}>
-            자격증 명 2022.01.30 취득
-          </Text>
-        </View>
-
         <View style={common.mb20}>
-          <Text style={[common.title, common.mr8]}>소개글</Text>
+          <Text style={[common.text_m, common.fwb, common.mr8]}>소개글</Text>
+          <View style={styles.line} />
           <Text style={[common.text_m, common.mv4]}>
             저는 어려서부터 남들 다하는 외식 몇 번 한 적이 잦았고. 일터에 나가신
             어머니 집에 없으면 언제나 알프레도가 해주던 저녁.
+          </Text>
+        </View>
+
+        <View style={common.mb24}>
+          <Text style={[common.text_m, common.fwb, common.mr8]}>경력</Text>
+          <View style={styles.line} />
+          <Text style={[common.text_m, common.mv4]}>필라테스 전임</Text>
+          <Text style={[common.text_m, common.mv4, common.fcg]}>
+            2022.10.11 ~ 2023.01.10
+          </Text>
+        </View>
+
+        <View style={common.mb24}>
+          <Text style={[common.text_m, common.fwb, common.mr8]}>학력</Text>
+          <View style={styles.line} />
+          <Text style={[common.text_m, common.mv4]}>링크 고등학교</Text>
+          <Text style={[common.text_m, common.mv4, common.fcg]}>
+            2011.03 ~ 2014.02
+          </Text>
+        </View>
+
+        <View style={common.mb24}>
+          <Text style={[common.text_m, common.fwb, common.mr8]}>자격증</Text>
+          <View style={styles.line} />
+          <Text style={[common.text_m, common.mv4]}>자격증 명</Text>
+          <Text style={[common.text_m, common.mv4, common.fcg]}>
+            2022.01.30 취득
           </Text>
         </View>
 
@@ -205,7 +202,12 @@ const styles = StyleSheet.create({
   },
   kebabIcon: {position: 'absolute', top: 0, right: 16},
   phoneIcon: {position: 'absolute', bottom: 0, right: 8},
-  divider: {color: GRAY.DARK},
+  line: {
+    marginTop: 8,
+    marginBottom: 12,
+    height: 1,
+    backgroundColor: GRAY.DARK,
+  },
 });
 
 export default ResumePreviewScreen;

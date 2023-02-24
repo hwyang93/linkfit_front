@@ -16,6 +16,7 @@ import common from '@styles/common';
 import {iconPath} from '@util/iconPath';
 import {NavigationProp, useNavigation} from '@react-navigation/native';
 import {LoggedInParamList} from '../../../AppInner';
+import {SafeAreaView} from 'react-native-safe-area-context';
 
 function ReceivedSuggestionScreen() {
   const navigation = useNavigation<NavigationProp<LoggedInParamList>>();
@@ -36,9 +37,9 @@ function ReceivedSuggestionScreen() {
       },
     },
     {
-      value: '지원 상태',
+      value: '답변 여부',
       job: () => {
-        setModalTitle('지원상태');
+        setModalTitle('답변 여부');
         setModalData(MODAL2);
         openModal();
       },
@@ -66,29 +67,21 @@ function ReceivedSuggestionScreen() {
   ];
   const MODAL2 = [
     {
-      value: '지원완료',
+      value: '답변 대기중',
       job: () => {
-        console.log('지원완료 눌렸나요');
+        console.log('답변 대기중 눌렸나요');
       },
     },
     {
-      value: '지원취소',
+      value: '답변 수락',
       job: () => {},
     },
     {
-      value: '열람',
+      value: '답변 거절',
       job: () => {},
     },
     {
-      value: '미열람',
-      job: () => {},
-    },
-    {
-      value: '합격',
-      job: () => {},
-    },
-    {
-      value: '불합격',
+      value: '제안 마감',
       job: () => {},
     },
   ];
@@ -118,7 +111,7 @@ function ReceivedSuggestionScreen() {
   };
 
   return (
-    <View style={styles.container}>
+    <SafeAreaView edges={['bottom', 'left', 'right']} style={styles.container}>
       {/* 필터 영역 */}
       <TopFilter data={FILTER} />
       {/* 필터 영역 */}
@@ -143,12 +136,6 @@ function ReceivedSuggestionScreen() {
                 <Text style={[common.text_s, common.fcg]}>
                   {item.endDate} | {item.status}
                 </Text>
-                <Pressable
-                  style={styles.kebabIcon}
-                  hitSlop={10}
-                  onPress={() => Alert.alert('text', '케밥 클릭')}>
-                  <Image source={iconPath.KEBAB} style={[common.KEBAB]} />
-                </Pressable>
               </Pressable>
             );
           })}
@@ -163,7 +150,7 @@ function ReceivedSuggestionScreen() {
           modalData={modalData}
         />
       </ScrollView>
-    </View>
+    </SafeAreaView>
   );
 }
 
@@ -173,8 +160,6 @@ const styles = StyleSheet.create({
     padding: 16,
     backgroundColor: WHITE,
   },
-
-  kebabIcon: {position: 'absolute', top: 16, right: 16},
 });
 
 export default ReceivedSuggestionScreen;

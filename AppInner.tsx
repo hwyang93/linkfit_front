@@ -27,6 +27,7 @@ export type LoggedInParamList = {
 
   CenterProfile: undefined;
   CenterProfileEdit: undefined;
+  CompanyInfo: undefined;
 
   ProfileEdit: {memberInfo: any};
   CertifyLocation: undefined;

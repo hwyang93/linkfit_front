@@ -2,7 +2,7 @@ import {StyleSheet, Text, View} from 'react-native';
 import {WHITE} from '@styles/colors';
 import common from '@styles/common';
 
-function MyCenterInfoScreen() {
+function CompanyInfoScreen() {
   return (
     <View style={styles.container}>
       <Text style={common.text_m}>test</Text>
@@ -18,4 +18,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default MyCenterInfoScreen;
+export default CompanyInfoScreen;
