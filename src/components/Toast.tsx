@@ -41,7 +41,7 @@ const Toast = forwardRef((props, ref: any) => {
   }, []);
 
   const show = useCallback(
-    message => {
+    (message: any) => {
       if (!isShowed.current) {
         setMessage(message.message);
         setType(message.type);
