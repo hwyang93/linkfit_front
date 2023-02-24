@@ -32,7 +32,7 @@ function RecruitListItem({item}: ListProps) {
   return (
     <Pressable
       style={styles.itemBox}
-      onPress={() => navigation.navigate('JobPost')}>
+      onPress={() => navigation.navigate('JobPost', {recruitSeq: 1})}>
       <View style={styles.imgBox}>
         <Image style={styles.img} source={item.src} />
       </View>

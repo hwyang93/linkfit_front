@@ -111,7 +111,7 @@ function ApplicationStatusScreen() {
           style={{flexWrap: 'wrap', flexDirection: 'row', paddingVertical: 8}}>
           <Pressable
             style={styles.itemBox}
-            onPress={() => navigation.navigate('JobPost')}>
+            onPress={() => navigation.navigate('JobPost', {recruitSeq: 1})}>
             <View style={styles.imgBox}>
               <Image
                 style={styles.img}
@@ -142,7 +142,7 @@ function ApplicationStatusScreen() {
 
           <Pressable
             style={styles.itemBox}
-            onPress={() => navigation.navigate('JobPost')}>
+            onPress={() => navigation.navigate('JobPost', {recruitSeq: 1})}>
             <View style={styles.imgBox}>
               <Image
                 style={styles.img}
@@ -173,7 +173,7 @@ function ApplicationStatusScreen() {
 
           <Pressable
             style={styles.itemBox}
-            onPress={() => navigation.navigate('JobPost')}>
+            onPress={() => navigation.navigate('JobPost', {recruitSeq: 1})}>
             <View style={styles.imgBox}>
               <Image
                 style={styles.img}

@@ -1,4 +1,5 @@
 import {
+  Alert,
   Image,
   Pressable,
   ScrollView,
@@ -11,14 +12,34 @@ import {BLUE, GRAY, WHITE} from '@styles/colors';
 import common from '@styles/common';
 import {iconPath} from '@util/iconPath';
 import Modal from '@components/ModalSheet';
-import {SetStateAction, useState} from 'react';
+import {SetStateAction, useCallback, useEffect, useState} from 'react';
 import {NavigationProp, useNavigation} from '@react-navigation/native';
 import {LoggedInParamList} from '../../../AppInner';
+import {fetchResumes} from '@api/resume';
 
 function ResumeManageScreen() {
   const navigation = useNavigation<NavigationProp<LoggedInParamList>>();
   const [modalVisible, setModalVisible] =
     useState<SetStateAction<boolean>>(false);
+
+  const [resumes, setResumes] = useState<any[]>([]);
+
+  const [selectedResume, setSelectedResume] = useState<any>({});
+
+  const getResumes = useCallback(() => {
+    fetchResumes()
+      .then(({data}: any) => {
+        setResumes(data);
+      })
+      .catch((e: any) => {
+        Alert.alert(e.message);
+      });
+  }, []);
+
+  useEffect(() => {
+    getResumes();
+  }, []);
+
   const MODAL = [
     {
       value: '새 이력서 작성',
@@ -43,7 +64,7 @@ function ResumeManageScreen() {
       value: '미리보기',
       job: () => {
         closeModel();
-        navigation.navigate('ResumePreview');
+        navigation.navigate('ResumePreview', {resumeSeq: selectedResume.seq});
       },
     },
     {
@@ -56,23 +77,6 @@ function ResumeManageScreen() {
     },
   ];
 
-  const RESUME = [
-    {
-      id: 1,
-      representative: true,
-      title: '서당개 4년이면 요가로 파이어',
-      date: '2022.12.09',
-      openModal: () => openModal,
-    },
-    {
-      id: 2,
-      representative: false,
-      title: '너에게 나를 보낸다.',
-      date: '2022.12.09',
-      openModal: () => openModal,
-    },
-  ];
-
   const openModal = () => {
     setModalVisible(true);
   };
@@ -82,11 +86,11 @@ function ResumeManageScreen() {
 
   return (
     <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
-      {RESUME.map((item, index) => {
+      {resumes.map((resume, index) => {
         return (
           <View key={index} style={[common.basicBox, common.mb8]}>
             <View style={common.rowCenter}>
-              {item.representative && (
+              {resume.isMaster === 'Y' && (
                 <View style={[styles.box, common.mb8]}>
                   <Text
                     style={[common.text, common.fs10, {color: BLUE.DEFAULT}]}>
@@ -97,13 +101,18 @@ function ResumeManageScreen() {
             </View>
 
             <Text style={[common.title, common.mb12]} numberOfLines={1}>
-              {item.title}
+              {resume.title}
             </Text>
-            <Text style={[common.text_s, {color: GRAY.DARK}]}>{item.date}</Text>
+            <Text style={[common.text_s, {color: GRAY.DARK}]}>
+              {resume.updatedAt}
+            </Text>
             <Pressable
               style={styles.kebabIcon}
               hitSlop={10}
-              onPress={openModal}>
+              onPress={() => {
+                setSelectedResume(resume);
+                openModal();
+              }}>
               <Image source={iconPath.KEBAB} style={[common.KEBAB]} />
             </Pressable>
           </View>
