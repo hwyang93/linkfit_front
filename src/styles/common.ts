@@ -25,6 +25,7 @@ const common = StyleSheet.create({
   // space area
   mh4: {marginHorizontal: 4},
   mh8: {marginHorizontal: 8},
+  mv2: {marginVertical: 2},
   mv4: {marginVertical: 4},
   mv8: {marginVertical: 8},
   mv10: {marginVertical: 10},

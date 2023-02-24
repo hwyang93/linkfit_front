@@ -108,7 +108,7 @@ function ResumePreviewScreen() {
         <View style={common.mb20}>
           <Text style={[common.text_m, common.fwb, common.mr8]}>소개글</Text>
           <View style={styles.line} />
-          <Text style={[common.text_m, common.mv4]}>
+          <Text style={[common.text_m, common.mv2]}>
             저는 어려서부터 남들 다하는 외식 몇 번 한 적이 잦았고. 일터에 나가신
             어머니 집에 없으면 언제나 알프레도가 해주던 저녁.
           </Text>
@@ -117,8 +117,8 @@ function ResumePreviewScreen() {
         <View style={common.mb24}>
           <Text style={[common.text_m, common.fwb, common.mr8]}>경력</Text>
           <View style={styles.line} />
-          <Text style={[common.text_m, common.mv4]}>필라테스 전임</Text>
-          <Text style={[common.text_m, common.mv4, common.fcg]}>
+          <Text style={[common.text_m, common.mv2]}>필라테스 전임</Text>
+          <Text style={[common.text_m, common.mv2, common.fcg]}>
             2022.10.11 ~ 2023.01.10
           </Text>
         </View>
@@ -126,8 +126,8 @@ function ResumePreviewScreen() {
         <View style={common.mb24}>
           <Text style={[common.text_m, common.fwb, common.mr8]}>학력</Text>
           <View style={styles.line} />
-          <Text style={[common.text_m, common.mv4]}>링크 고등학교</Text>
-          <Text style={[common.text_m, common.mv4, common.fcg]}>
+          <Text style={[common.text_m, common.mv2]}>링크 고등학교</Text>
+          <Text style={[common.text_m, common.mv2, common.fcg]}>
             2011.03 ~ 2014.02
           </Text>
         </View>
@@ -135,8 +135,8 @@ function ResumePreviewScreen() {
         <View style={common.mb24}>
           <Text style={[common.text_m, common.fwb, common.mr8]}>자격증</Text>
           <View style={styles.line} />
-          <Text style={[common.text_m, common.mv4]}>자격증 명</Text>
-          <Text style={[common.text_m, common.mv4, common.fcg]}>
+          <Text style={[common.text_m, common.mv2]}>자격증 명</Text>
+          <Text style={[common.text_m, common.mv2, common.fcg]}>
             2022.01.30 취득
           </Text>
         </View>
