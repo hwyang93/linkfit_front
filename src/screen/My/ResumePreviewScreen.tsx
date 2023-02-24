@@ -1,5 +1,6 @@
 import {
   ActivityIndicator,
+  Alert,
   Image,
   Pressable,
   ScrollView,
@@ -12,18 +13,38 @@ import common from '@styles/common';
 import {iconPath} from '@util/iconPath';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import LinearGradient from 'react-native-linear-gradient';
-import {SetStateAction, useState} from 'react';
+import {SetStateAction, useCallback, useEffect, useState} from 'react';
 import Modal from '@components/ModalSheet';
 import {NavigationProp, useNavigation} from '@react-navigation/native';
 import {LoggedInParamList} from '../../../AppInner';
+import {NativeStackScreenProps} from '@react-navigation/native-stack';
+import {fetchResume} from '@api/resume';
 
-function ResumePreviewScreen() {
+type Props = NativeStackScreenProps<LoggedInParamList, 'ResumePreview'>;
+
+function ResumePreviewScreen({route}: Props) {
   const [loading, setLoading] = useState<boolean>(false);
   const navigation = useNavigation<NavigationProp<LoggedInParamList>>();
   const [modalVisible, setModalVisible] =
     useState<SetStateAction<boolean>>(false);
   const [modalTitle, setModalTitle] = useState('');
   const [modalData, setModalData] = useState<any[]>([]);
+  const [resume, setResume] = useState<any>({});
+
+  const getResume = useCallback(() => {
+    fetchResume(route.params.resumeSeq)
+      .then(({data}: any) => {
+        setResume(data);
+        console.log(data);
+      })
+      .catch((e: any) => {
+        Alert.alert(e.message);
+      });
+  }, [route.params.resumeSeq]);
+
+  useEffect(() => {
+    getResume();
+  }, []);
 
   const MODAL = [
     {
@@ -54,22 +75,26 @@ function ResumePreviewScreen() {
   return (
     <SafeAreaView edges={['bottom', 'left', 'right']} style={styles.container}>
       <ScrollView showsVerticalScrollIndicator={false}>
-        <View style={common.row}>
-          <View style={[styles.box, common.mb8]}>
-            <Text style={[common.text, common.fs10, {color: BLUE.DEFAULT}]}>
-              대표
-            </Text>
+        {resume.isMaster === 'Y' && (
+          <View style={common.row}>
+            <View style={[styles.box, common.mb8]}>
+              <Text style={[common.text, common.fs10, {color: BLUE.DEFAULT}]}>
+                대표
+              </Text>
+            </View>
           </View>
-        </View>
+        )}
 
         <View style={common.mb24}>
-          <Text style={common.title_l}>이력서 제목</Text>
+          <Text style={common.title_l}>{resume.title}</Text>
         </View>
 
         {/* 인적사항 */}
         <View style={common.mb24}>
           <View style={[common.rowCenter, common.mb8]}>
-            <Text style={[common.title, common.mr8]}>이름</Text>
+            <Text style={[common.title, common.mr8]}>{resume.name}</Text>
+            {/*{resume.writer.type === 'INSTRUCTOR' && (*/}
+            {/*)}*/}
             <View style={common.rowCenter}>
               <Text style={[common.text_s, {color: BLUE.DEFAULT}]}>
                 인증강사
@@ -91,7 +116,9 @@ function ResumePreviewScreen() {
             <Text style={[common.text_m, common.mh8, common.fcg]}>|</Text>
             <Text style={[common.text_m, common.fwb]}>24세</Text>
             <Text style={[common.text_m, common.mh8, common.fcg]}>|</Text>
-            <Text style={[common.text_m, common.fwb]}>남</Text>
+            <Text style={[common.text_m, common.fwb]}>
+              {/*{resume.writer.gender}*/}
+            </Text>
           </View>
           <Text style={[common.text_s, {color: GRAY.DARK}]}>
             서울 · 강남구 · 역삼동
@@ -108,10 +135,7 @@ function ResumePreviewScreen() {
         <View style={common.mb20}>
           <Text style={[common.text_m, common.fwb, common.mr8]}>소개글</Text>
           <View style={styles.line} />
-          <Text style={[common.text_m, common.mv2]}>
-            저는 어려서부터 남들 다하는 외식 몇 번 한 적이 잦았고. 일터에 나가신
-            어머니 집에 없으면 언제나 알프레도가 해주던 저녁.
-          </Text>
+          <Text style={[common.text_m, common.mv2]}>{resume.intro}</Text>
         </View>
 
         <View style={common.mb24}>
