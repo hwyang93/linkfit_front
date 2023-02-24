@@ -28,6 +28,7 @@ type modalProps = {
 
 function ModalSheet(props: modalProps) {
   const [loading, setLoading] = useState<boolean>(false);
+  const [modalType, setModalType] = useState<any>();
   const {modalVisible, setModalVisible} = props;
   const screenHeight = Dimensions.get('screen').height;
   const panY = useRef(new Animated.Value(screenHeight)).current;
@@ -65,16 +66,16 @@ function ModalSheet(props: modalProps) {
     }),
   ).current;
 
-  const [modalType, setModalType] = useState('string');
-
   useEffect(() => {
     if (props.modalVisible) {
       resetBottomSheet.start();
     }
-    if (props.type === 'button') {
+    if (props.type === undefined) {
+      setModalType('string');
+    } else if (props.type === 'button') {
       setModalType('button');
     }
-  }, [props.modalVisible, props.type]);
+  }, [props.modalVisible, props.type, resetBottomSheet]);
 
   const closeModal = () => {
     closeBottomSheet.start(() => {
@@ -126,7 +127,7 @@ function ModalSheet(props: modalProps) {
             })}
 
           {/* button type modal */}
-          {props.type === 'button' &&
+          {modalType === 'button' &&
             props.modalData.map((item, index) => {
               return (
                 <View key={index} style={[common.mv8, {width: '100%'}]}>
