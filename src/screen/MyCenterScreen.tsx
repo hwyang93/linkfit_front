@@ -12,11 +12,7 @@ import {GRAY, WHITE} from '@styles/colors';
 import common from '@styles/common';
 import {iconPath} from '@util/iconPath';
 import MyTitle from '@components/My/MyTitle';
-import {
-  NavigationProp,
-  useIsFocused,
-  useNavigation,
-} from '@react-navigation/native';
+import {NavigationProp, useNavigation} from '@react-navigation/native';
 import {LoggedInParamList} from '../../AppInner';
 import CenterProfileBox from '@components/CenterProfileBox';
 
@@ -86,7 +82,11 @@ function MyCenterScreen() {
         </View>
 
         <View style={[common.mb8]}>
-          <MyTitle title={'채용 공고'} button={true} />
+          <MyTitle
+            title={'채용 공고'}
+            button={true}
+            link={'CenterRecruitment'}
+          />
         </View>
 
         <View style={common.mb24}>
@@ -120,7 +120,11 @@ function MyCenterScreen() {
         </View>
 
         <View style={[common.mb8]}>
-          <MyTitle title={'포지션 제안'} button={true} />
+          <MyTitle
+            title={'포지션 제안'}
+            button={true}
+            link={'SendSuggestion'}
+          />
         </View>
 
         <View style={common.mb24}>

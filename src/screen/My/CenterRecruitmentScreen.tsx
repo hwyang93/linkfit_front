@@ -1,15 +1,23 @@
-import {Pressable, ScrollView, StyleSheet, Text, View} from 'react-native';
+import {
+  Image,
+  Pressable,
+  ScrollView,
+  StyleSheet,
+  Text,
+  View,
+} from 'react-native';
 import {WHITE} from '@styles/colors';
 
-import Modal from '@components/ModalSheet';
-import {SetStateAction, useState} from 'react';
-import TopFilter from '@components/TopFilter';
 import common from '@styles/common';
+import TopFilter from '@components/TopFilter';
 import {NavigationProp, useNavigation} from '@react-navigation/native';
 import {LoggedInParamList} from '../../../AppInner';
+import {SetStateAction, useState} from 'react';
+import Modal from '@components/ModalSheet';
+import {iconPath} from '@util/iconPath';
 import {SafeAreaView} from 'react-native-safe-area-context';
 
-function ReceivedSuggestionScreen() {
+function CenterRecruitmentScreen() {
   const navigation = useNavigation<NavigationProp<LoggedInParamList>>();
   const [modalVisible, setModalVisible] =
     useState<SetStateAction<boolean>>(false);
@@ -21,16 +29,15 @@ function ReceivedSuggestionScreen() {
     {
       value: '기간',
       job: () => {
-        console.log('눌렸나요');
         setModalTitle('기간');
         setModalData(MODAL);
         openModal();
       },
     },
     {
-      value: '답변 여부',
+      value: '진행 여부',
       job: () => {
-        setModalTitle('답변 여부');
+        setModalTitle('진행 여부');
         setModalData(MODAL2);
         openModal();
       },
@@ -58,47 +65,79 @@ function ReceivedSuggestionScreen() {
   ];
   const MODAL2 = [
     {
-      value: '답변 대기중',
+      value: '진행 중',
       job: () => {
-        console.log('답변 대기중 눌렸나요');
+        console.log('지원완료 눌렸나요');
       },
     },
     {
-      value: '답변 수락',
+      value: '마감',
+      job: () => {},
+    },
+  ];
+  const MODAL3 = [
+    {
+      value: '지원자 현황보기',
       job: () => {},
     },
     {
-      value: '답변 거절',
+      value: '공고 수정하기',
       job: () => {},
     },
     {
-      value: '제안 마감',
+      value: '공고 복사하기',
       job: () => {},
     },
   ];
   const DATA = [
     {
       id: 1,
-      registrationDate: '2022.12.09',
-      title: '필라테스 전임 강사 제안 드립니다.',
-      companyName: '링크 필라테스',
-      endDate: '~2022.12.09 마감',
-      status: '답변 대기 중',
-      job: () => {},
+      date: '2022.12.09 작성',
+      status: '진행 중',
+      title: '공고 제목',
+      field: '필라테스',
+      job: () => {
+        navigation.navigate('ApplicantStatus');
+      },
+      kebab: () => {
+        clickKebab();
+      },
     },
     {
       id: 2,
-      registrationDate: '2023.2.09',
-      title: '필라테스 전임 강사 제안을 드려볼까 합니다.',
-      companyName: '비와이테스',
-      endDate: '~2023.2.20 마감',
-      status: '답변 완료',
-      job: () => {},
+      date: '2022.1.09 작성',
+      status: '진행 중',
+      title: '공고 제목',
+      field: '필라테스',
+      job: () => {
+        navigation.navigate('ApplicantStatus');
+      },
+      kebab: () => {
+        clickKebab();
+      },
+    },
+    {
+      id: 3,
+      date: '2022.2.09 작성',
+      status: '진행 중',
+      title: '오늘부터 우리는 같이 일하는 건가요',
+      field: '요가',
+      job: () => {
+        navigation.navigate('ApplicantStatus');
+      },
+      kebab: () => {
+        clickKebab();
+      },
     },
   ];
 
   const openModal = () => {
     setModalVisible(true);
+  };
+  const clickKebab = () => {
+    setModalTitle('더보기');
+    setModalData(MODAL3);
+    openModal();
   };
 
   return (
@@ -114,19 +153,22 @@ function ReceivedSuggestionScreen() {
               <Pressable
                 key={index}
                 style={[common.basicBox, common.mv8]}
-                onPress={() => navigation.navigate('ReceivedSuggestionDetail')}>
-                <Text style={[common.text_s, common.fcg, common.mb12]}>
-                  {item.registrationDate}
-                </Text>
-                <Text style={[common.title, common.mb12]} numberOfLines={1}>
+                onPress={item.job}>
+                <View style={common.rowCenter}>
+                  <Text style={[common.text_s, common.fcg]}>{item.date}</Text>
+                  <Text style={[common.mh8, common.fcg]}>|</Text>
+                  <Text style={[common.text_s, common.fcg]}>{item.status}</Text>
+                </View>
+                <Text style={[common.title, common.mv12]} numberOfLines={1}>
                   {item.title}
                 </Text>
-                <Text style={[common.text_m, common.fwb, common.mb12]}>
-                  {item.companyName}
-                </Text>
-                <Text style={[common.text_s, common.fcg]}>
-                  {item.endDate} | {item.status}
-                </Text>
+                <Text style={[common.text_m, common.fwb]}>{item.field}</Text>
+                <Pressable
+                  style={styles.kebabIcon}
+                  hitSlop={10}
+                  onPress={item.kebab}>
+                  <Image source={iconPath.KEBAB} style={[common.KEBAB]} />
+                </Pressable>
               </Pressable>
             );
           })}
@@ -151,6 +193,7 @@ const styles = StyleSheet.create({
     padding: 16,
     backgroundColor: WHITE,
   },
+  kebabIcon: {position: 'absolute', top: 16, right: 16},
 });
 
-export default ReceivedSuggestionScreen;
+export default CenterRecruitmentScreen;
