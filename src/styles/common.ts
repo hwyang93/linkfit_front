@@ -1,5 +1,5 @@
 import {StyleSheet, Dimensions, ProgressBarAndroid} from 'react-native';
-import {BLACK, GRAY, INPUT, WHITE} from './colors';
+import {BLACK, BLUE, GRAY, INPUT, WHITE} from './colors';
 
 export const Font = {
   regular: 'NotoSansKR-Regular',
@@ -156,6 +156,7 @@ const common = StyleSheet.create({
   fs16: {fontSize: +width * 16},
   fs18: {fontSize: +width * 18},
   fcg: {color: GRAY.DARK},
+  fcb: {color: BLUE.DEFAULT},
   // basic button
   button: {
     justifyContent: 'center',
@@ -251,6 +252,11 @@ const common = StyleSheet.create({
   thumbnail: {
     width: +width * 48,
     height: +width * 48,
+    borderRadius: 200,
+  },
+  thumbnail_l: {
+    width: +width * 64,
+    height: +width * 64,
     borderRadius: 200,
   },
 

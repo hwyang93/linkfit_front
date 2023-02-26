@@ -56,6 +56,8 @@ import ApplicantStatusScreen from '@screen/My/ApplicantStatusScreen';
 import MyCenterProfileScreen from '@screen/MyCenterProfileScreen';
 import CenterProfileEditScreen from '@screen/My/CenterProfileEditScreen';
 import CompanyInfoScreen from '@screen/My/CompanyInfoScreen';
+import CenterRecruitmentScreen from '@screen/My/CenterRecruitmentScreen';
+import SendSuggestionScreen from '@screen/My/SendSuggestionScreen';
 
 const Stack = createNativeStackNavigator<LoggedInParamList>();
 
@@ -163,6 +165,16 @@ const MainStack = () => {
           name="CompanyInfo"
           component={CompanyInfoScreen}
           options={{title: '사업자 정보'}}
+        />
+        <Stack.Screen
+          name="CenterRecruitment"
+          component={CenterRecruitmentScreen}
+          options={{title: '채용 공고'}}
+        />
+        <Stack.Screen
+          name="SendSuggestion"
+          component={SendSuggestionScreen}
+          options={{title: '보낸 포지션 제안'}}
         />
         <Stack.Screen
           name="Profile"
