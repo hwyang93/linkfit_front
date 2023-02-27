@@ -6,12 +6,13 @@ type ButtonProps = {
   title?: string;
   link?: any;
   icon: object;
-  job: () => void;
+  job?: () => void;
+  bottom?: number;
 };
 
-const FloatingLinkButton = ({icon, job}: ButtonProps) => {
+const FloatingLinkButton = ({icon, job, bottom}: ButtonProps) => {
   return (
-    <Pressable style={styles.buttonPosition} onPress={job}>
+    <Pressable style={[styles.buttonPosition, {bottom}]} onPress={job}>
       <LinearGradient
         style={styles.floatingButton}
         start={{x: 0.1, y: 0.5}}

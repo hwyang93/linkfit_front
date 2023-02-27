@@ -5,9 +5,10 @@ import common from '@styles/common';
 
 // todo : 프롭스로 bottom 스타일 값 받아와서 적용하기
 
-const LocationButton = () => {
+const LocationButton = (props: any) => {
+  console.log('그래서', props);
   return (
-    <Pressable style={styles.locationButton}>
+    <Pressable style={[styles.locationButton, {bottom: props.bottom}]}>
       <Image style={common.size24} source={iconPath.LOCATION} />
     </Pressable>
   );
@@ -15,7 +16,7 @@ const LocationButton = () => {
 const styles = StyleSheet.create({
   locationButton: {
     position: 'absolute',
-    bottom: 72,
+    bottom: 88,
     right: 16,
     alignItems: 'center',
     justifyContent: 'center',
