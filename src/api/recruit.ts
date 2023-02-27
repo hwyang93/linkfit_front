@@ -8,6 +8,18 @@ export function fetchRecruit(seq: number) {
   return request.get(`/recruit/${seq}`);
 }
 
+export function fetchRecruits(params: object) {
+  return request.get('/recruit', {params});
+}
+
 export function fetchBookmarkRecruits() {
   return request.get('/recruit/bookmark');
+}
+
+export function fetchRecruitApplicationsMy() {
+  return request.get('/recruit/apply');
+}
+
+export function fetchRecruitApplications(seq: number) {
+  return request.get(`/recruit/${seq}/apply`);
 }

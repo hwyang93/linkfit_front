@@ -1,4 +1,5 @@
 import {
+  Alert,
   Image,
   Pressable,
   ScrollView,
@@ -12,18 +13,34 @@ import common from '@styles/common';
 import TopFilter from '@components/TopFilter';
 import {NavigationProp, useNavigation} from '@react-navigation/native';
 import {LoggedInParamList} from '../../../AppInner';
-import {SetStateAction, useState} from 'react';
+import {SetStateAction, useCallback, useEffect, useState} from 'react';
 import Modal from '@components/ModalSheet';
 import {iconPath} from '@util/iconPath';
 import {SafeAreaView} from 'react-native-safe-area-context';
+import {fetchRecruits} from '@api/recruit';
 
 function MyRecruitmentScreen() {
   const navigation = useNavigation<NavigationProp<LoggedInParamList>>();
   const [modalVisible, setModalVisible] =
     useState<SetStateAction<boolean>>(false);
-
   const [modalTitle, setModalTitle] = useState('');
   const [modalData, setModalData] = useState<any[]>([]);
+  const [recruits, setRecruits] = useState<any[]>([]);
+
+  const getRecruits = useCallback(() => {
+    const params = {isWriter: 'Y'};
+    fetchRecruits(params)
+      .then(({data}: any) => {
+        setRecruits(data);
+      })
+      .catch((e: any) => {
+        Alert.alert(e.message);
+      });
+  }, []);
+
+  useEffect(() => {
+    getRecruits();
+  }, []);
 
   const FILTER = [
     {
@@ -144,25 +161,35 @@ function MyRecruitmentScreen() {
       <ScrollView showsVerticalScrollIndicator={false}>
         {/* 컨텐츠 영역 */}
         <View style={common.mb24}>
-          {DATA.map((item, index) => {
+          {recruits.map((recruit, index) => {
             return (
               <Pressable
                 key={index}
                 style={[common.basicBox, common.mv8]}
-                onPress={item.job}>
+                onPress={() => {
+                  navigation.navigate('ApplicantStatus', {
+                    recruitSeq: recruit.seq,
+                  });
+                }}>
                 <View style={common.rowCenter}>
-                  <Text style={[common.text_s, common.fcg]}>{item.date}</Text>
+                  <Text style={[common.text_s, common.fcg]}>
+                    {recruit.createdAt}
+                  </Text>
                   <Text style={[common.mh8, common.fcg]}>|</Text>
-                  <Text style={[common.text_s, common.fcg]}>{item.status}</Text>
+                  <Text style={[common.text_s, common.fcg]}>
+                    {recruit.status === 'ING' ? '진행중' : '마감'}
+                  </Text>
                 </View>
                 <Text style={[common.title, common.mv12]} numberOfLines={1}>
-                  {item.title}
+                  {recruit.title}
                 </Text>
-                <Text style={[common.text_m, common.fwb]}>{item.field}</Text>
+                <Text style={[common.text_m, common.fwb]}>
+                  {recruit.position}
+                </Text>
                 <Pressable
                   style={styles.kebabIcon}
                   hitSlop={10}
-                  onPress={item.kebab}>
+                  onPress={() => {}}>
                   <Image source={iconPath.KEBAB} style={[common.size24]} />
                 </Pressable>
               </Pressable>

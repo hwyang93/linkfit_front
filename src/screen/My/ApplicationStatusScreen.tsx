@@ -14,9 +14,10 @@ import common, {width} from '@styles/common';
 import TopFilter from '@components/TopFilter';
 import {NavigationProp, useNavigation} from '@react-navigation/native';
 import {LoggedInParamList} from '../../../AppInner';
-import {SetStateAction, useState} from 'react';
+import {SetStateAction, useEffect, useState} from 'react';
 import Modal from '@components/ModalSheet';
 import {iconPath} from '@util/iconPath';
+import {fetchRecruitApplicationsMy} from '@api/recruit';
 
 const windowWidth = Dimensions.get('window').width;
 const columns2 = (windowWidth - 48) / 2;
@@ -25,9 +26,20 @@ function ApplicationStatusScreen() {
   const navigation = useNavigation<NavigationProp<LoggedInParamList>>();
   const [modalVisible, setModalVisible] =
     useState<SetStateAction<boolean>>(false);
-
   const [modalTitle, setModalTitle] = useState('');
   const [modalData, setModalData] = useState<any[]>([]);
+  const [applications, setApplications] = useState<any[]>([]);
+
+  useEffect(() => {
+    fetchRecruitApplicationsMy()
+      .then(({data}: any) => {
+        setApplications(data);
+        console.log(data);
+      })
+      .catch((e: any) => {
+        Alert.alert(e.message);
+      });
+  }, []);
 
   const FILTER = [
     {
@@ -109,98 +121,68 @@ function ApplicationStatusScreen() {
         {/* 컨첸츠 영역 */}
         <View
           style={{flexWrap: 'wrap', flexDirection: 'row', paddingVertical: 8}}>
-          <Pressable
-            style={styles.itemBox}
-            onPress={() => navigation.navigate('JobPost', {recruitSeq: 1})}>
-            <View style={styles.imgBox}>
-              <Image
-                style={styles.img}
-                source={require('assets/images/sample_02.png')}
-              />
-              <View style={[styles.statusBox]}>
-                <Text style={[styles.statusText]}>열람</Text>
-              </View>
-            </View>
-            <View>
-              {/* 포지션 */}
-              <Text style={[common.text]}>필라테스</Text>
-              {/* 제목 */}
-              <Text style={[common.text_m, common.fwb]} numberOfLines={1}>
-                필라테스 강사님 모셔요 모셔요 오셔요.
-              </Text>
-              {/* 업체명 */}
-              <Text style={[common.text_s, common.fwb]}>링크 필라테스</Text>
-              {/* 지역 */}
-              <Text style={common.text}>2022.12.29 지원</Text>
+          {applications.map((application, index) => {
+            return (
               <Pressable
-                style={styles.resume}
-                onPress={() => Alert.alert('click', 'Resume')}>
-                <Image source={iconPath.RESUME} style={[common.size24]} />
+                key={`application${index}`}
+                style={styles.itemBox}
+                onPress={() =>
+                  navigation.navigate('JobPost', {
+                    recruitSeq: application.recruit.seq,
+                  })
+                }>
+                <View style={styles.imgBox}>
+                  <Image
+                    style={styles.img}
+                    source={require('assets/images/sample_02.png')}
+                  />
+                  <View style={[styles.statusBox]}>
+                    <Text style={[styles.statusText]}>
+                      {(() => {
+                        switch (application.status) {
+                          case 'APPLY':
+                            return '지원 완료';
+                          case 'CANCEL':
+                            return '지원 취소';
+                          case 'OPEN':
+                            return '열람';
+                          case 'PASS':
+                            return '합격';
+                          case 'FAIL':
+                            return '불합격';
+                        }
+                      })()}
+                    </Text>
+                  </View>
+                </View>
+                <View>
+                  {/* 포지션 */}
+                  <Text style={[common.text]}>
+                    {application.recruit.position}
+                  </Text>
+                  {/* 제목 */}
+                  <Text style={[common.text_m, common.fwb]} numberOfLines={1}>
+                    {application.recruit.title}
+                  </Text>
+                  {/* 업체명 */}
+                  <Text style={[common.text_s, common.fwb]}>
+                    {application.recruit.companyName}
+                  </Text>
+                  {/* 지역 */}
+                  <Text style={common.text}>{application.createdAt} 지원</Text>
+                  <Pressable
+                    style={styles.resume}
+                    onPress={() =>
+                      navigation.navigate('ResumePreview', {
+                        resumeSeq: application.resumeSeq,
+                      })
+                    }>
+                    <Image source={iconPath.RESUME} style={[common.size24]} />
+                  </Pressable>
+                </View>
               </Pressable>
-            </View>
-          </Pressable>
-
-          <Pressable
-            style={styles.itemBox}
-            onPress={() => navigation.navigate('JobPost', {recruitSeq: 1})}>
-            <View style={styles.imgBox}>
-              <Image
-                style={styles.img}
-                source={require('assets/images/sample_02.png')}
-              />
-              <View style={[styles.statusBox]}>
-                <Text style={[styles.statusText]}>지원 취소</Text>
-              </View>
-            </View>
-            <View>
-              {/* 포지션 */}
-              <Text style={[common.text]}>필라테스</Text>
-              {/* 제목 */}
-              <Text style={[common.text_m, common.fwb]} numberOfLines={1}>
-                필라테스 강사님 모셔요 모셔요 오셔요.
-              </Text>
-              {/* 업체명 */}
-              <Text style={[common.text_s, common.fwb]}>링크 필라테스</Text>
-              {/* 지역 */}
-              <Text style={common.text}>2022.12.29 지원</Text>
-              <Pressable
-                style={styles.resume}
-                onPress={() => Alert.alert('click', 'Resume')}>
-                <Image source={iconPath.RESUME} style={[common.size24]} />
-              </Pressable>
-            </View>
-          </Pressable>
-
-          <Pressable
-            style={styles.itemBox}
-            onPress={() => navigation.navigate('JobPost', {recruitSeq: 1})}>
-            <View style={styles.imgBox}>
-              <Image
-                style={styles.img}
-                source={require('assets/images/sample_02.png')}
-              />
-              <View style={[styles.statusBox]}>
-                <Text style={[styles.statusText]}>지원 완료</Text>
-              </View>
-            </View>
-            <View>
-              {/* 포지션 */}
-              <Text style={[common.text]}>필라테스</Text>
-              {/* 제목 */}
-              <Text style={[common.text_m, common.fwb]} numberOfLines={1}>
-                필라테스 강사님 모셔요 모셔요 오셔요.
-              </Text>
-              {/* 업체명 */}
-              <Text style={[common.text_s, common.fwb]}>링크 필라테스</Text>
-              {/* 지역 */}
-              <Text style={common.text}>2022.12.29 지원</Text>
-              <Pressable
-                style={styles.resume}
-                onPress={() => Alert.alert('click', 'Resume')}>
-                <Image source={iconPath.RESUME} style={[common.size24]} />
-              </Pressable>
-            </View>
-          </Pressable>
+            );
+          })}
         </View>
 
         {/* 모달 */}
