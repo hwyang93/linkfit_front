@@ -1,14 +1,15 @@
-import {Alert, Image, Pressable, View} from 'react-native';
+import {Image, Pressable, View} from 'react-native';
 import {iconPath} from '@util/iconPath';
 import common from '@styles/common';
 import {NavigationProp, useNavigation} from '@react-navigation/native';
 import {LoggedInParamList} from '../../../AppInner';
 
 type HeaderProps = {
-  link?: any;
+  toPush?: any;
+  toMy?: any;
 };
 
-function LinkHeader({link}: HeaderProps) {
+function LinkHeader({toPush, toMy}: HeaderProps) {
   const navigation = useNavigation<NavigationProp<LoggedInParamList>>();
   return (
     <View
@@ -30,10 +31,10 @@ function LinkHeader({link}: HeaderProps) {
         }}>
         <Pressable
           style={{marginRight: 8}}
-          onPress={() => Alert.alert('click', 'bell test')}>
+          onPress={() => navigation.navigate(toPush)}>
           <Image source={iconPath.BELL} style={common.size24} />
         </Pressable>
-        <Pressable onPress={() => navigation.navigate(link)}>
+        <Pressable onPress={() => navigation.navigate(toMy)}>
           <Image source={iconPath.MY} style={common.size24} />
         </Pressable>
       </View>
