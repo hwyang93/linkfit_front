@@ -32,7 +32,7 @@ function ApplicantWaitingComponent() {
       title: '이력서 제목',
       field: '',
       job: () => {
-        navigation.navigate('ResumePreview');
+        // navigation.navigate('ResumePreview');
       },
     },
     {
@@ -42,7 +42,7 @@ function ApplicantWaitingComponent() {
       title: '이력서 제목',
       field: '',
       job: () => {
-        navigation.navigate('ResumePreview');
+        // navigation.navigate('ResumePreview');
       },
     },
   ];
