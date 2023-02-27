@@ -61,6 +61,7 @@ import SendSuggestionScreen from '@screen/My/SendSuggestionScreen';
 import SendSuggestionDetailScreen from '@screen/My/SendSuggestionDetailScreen';
 import {SetStateAction, useState} from 'react';
 import Modal from '@components/ModalSheet';
+import MyNotificationScreen from '@screen/My/MyNotificationScreen';
 
 const Stack = createNativeStackNavigator<LoggedInParamList>();
 
@@ -225,6 +226,11 @@ const MainStack = () => {
           name="ProfileEdit"
           component={ProfileEditScreen}
           options={{title: '프로필'}}
+        />
+        <Stack.Screen
+          name="MyNotification"
+          component={MyNotificationScreen}
+          options={{title: '알림'}}
         />
         <Stack.Screen
           name="CertifyInstructor"

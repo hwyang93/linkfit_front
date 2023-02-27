@@ -1,8 +1,15 @@
-import {Alert, Image, Pressable, View} from 'react-native';
+import {Image, Pressable, View} from 'react-native';
 import {iconPath} from '@util/iconPath';
 import common from '@styles/common';
+import {NavigationProp, useNavigation} from '@react-navigation/native';
+import {LoggedInParamList} from '../../../AppInner';
 
-function MyHeader() {
+type HeaderProps = {
+  link?: any;
+};
+
+function MyHeader({link}: HeaderProps) {
+  const navigation = useNavigation<NavigationProp<LoggedInParamList>>();
   return (
     <View
       style={{
@@ -21,7 +28,7 @@ function MyHeader() {
           justifyContent: 'space-between',
           alignItems: 'center',
         }}>
-        <Pressable onPress={() => Alert.alert('click', 'bell test')}>
+        <Pressable onPress={() => navigation.navigate(link)}>
           <Image source={iconPath.BELL} style={common.size24} />
         </Pressable>
       </View>

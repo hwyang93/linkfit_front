@@ -45,7 +45,7 @@ const ContentTab = () => {
           options={{
             title: '채용',
             headerTitle: () => {
-              return <LinkHeader />;
+              return <LinkHeader toPush={'MyNotification'} toMy={'My'} />;
             },
             headerLeft: () => {
               return null;
@@ -74,7 +74,9 @@ const ContentTab = () => {
           options={{
             title: '커뮤니티',
             headerTitle: () => {
-              return <LinkHeader link={'CommunityMy'} />;
+              return (
+                <LinkHeader toPush={'MyNotification'} toMy={'CommunityMy'} />
+              );
             },
             tabBarIcon: ({focused}) => (
               <Image
@@ -100,7 +102,7 @@ const ContentTab = () => {
           options={{
             title: '쪽지',
             headerTitle: () => {
-              return <LinkHeader />;
+              return <LinkHeader toPush={'MyNotification'} toMy={'My'} />;
             },
             tabBarIcon: ({focused}) => (
               <Image
@@ -127,7 +129,7 @@ const ContentTab = () => {
             title: 'MY',
             headerTitleAlign: 'left',
             headerTitle: () => {
-              return <MyHeader />;
+              return <MyHeader link={'MyNotification'} />;
             },
             tabBarIcon: ({focused}) => (
               <Image

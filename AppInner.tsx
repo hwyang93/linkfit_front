@@ -24,6 +24,7 @@ export type LoggedInParamList = {
   My: undefined;
   MyCenter: undefined;
   MyCenterInfo: undefined;
+  MyNotification: undefined;
 
   CenterProfile: undefined;
   CenterProfileEdit: undefined;
@@ -66,7 +67,6 @@ export type LoggedInParamList = {
   JobPost: {recruitSeq: number};
   Gallery: any;
   JobOfferForm: undefined;
-  // Complete: {orderId: string};
   LogIn: {email: string};
   SignIn: undefined;
   SignUp: {email: string};

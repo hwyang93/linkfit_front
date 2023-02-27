@@ -3,10 +3,15 @@ import {iconPath} from '@util/iconPath';
 import common from '@styles/common';
 import {GRAY} from '@styles/colors';
 
-function EmptySet(text: string) {
+type Props = {
+  text: string;
+};
+
+function EmptySet({text}: Props) {
+  console.log(text);
   return (
     <View style={styles.container}>
-      <Image source={require(iconPath.EMPTY)} style={styles.empty} />
+      <Image source={iconPath.EMPTY} style={styles.empty} />
       <Text style={[common.text_m, {color: GRAY.DARK}]}>{text}</Text>
     </View>
   );
