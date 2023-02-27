@@ -7,6 +7,8 @@ import FloatingLinkButton from '@components/FloatingLinkButton';
 import BottomSheet from '@components/BottomSheet';
 import {SetStateAction, useEffect, useState} from 'react';
 import Geolocation from 'react-native-geolocation-service';
+import {SafeAreaView} from 'react-native-safe-area-context';
+import FloatingWriteButton from '@components/FloatingWriteButton';
 
 async function requestPermission() {
   try {
@@ -139,7 +141,7 @@ function RecruitMapScreen() {
   ];
 
   return (
-    <View style={styles.container}>
+    <SafeAreaView edges={['bottom', 'left', 'right']} style={styles.container}>
       <View style={styles.filter}>
         {filterType.map(function (item, index) {
           return (
@@ -187,15 +189,16 @@ function RecruitMapScreen() {
         {/*/>*/}
       </NaverMapView>
       {/* Todo : 플로팅 버튼 컴포넌트 */}
+      <FloatingWriteButton bottom={144} icon={iconPath.PENCIL_W} />
       {/* 현재 위치로 이동 버튼 */}
-      <LocationButton />
+      <LocationButton bottom={88} />
       {/* 페이지 이동 버튼 */}
       <FloatingLinkButton
         link={'RecruitList'}
         title={'목록보기'}
         icon={iconPath.LIST}
       />
-    </View>
+    </SafeAreaView>
   );
 }
 

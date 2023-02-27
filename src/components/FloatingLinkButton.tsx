@@ -26,7 +26,7 @@ const styles = StyleSheet.create({
   listButton: {
     flexDirection: 'row',
     position: 'absolute',
-    bottom: 16,
+    bottom: 32,
     right: 16,
     width: 127,
     height: 40,
