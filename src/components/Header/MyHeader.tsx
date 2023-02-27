@@ -22,7 +22,7 @@ function MyHeader() {
           alignItems: 'center',
         }}>
         <Pressable onPress={() => Alert.alert('click', 'bell test')}>
-          <Image source={iconPath.BELL} style={common.BELL} />
+          <Image source={iconPath.BELL} style={common.size24} />
         </Pressable>
       </View>
     </View>

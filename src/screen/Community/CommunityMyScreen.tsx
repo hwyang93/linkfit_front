@@ -53,7 +53,7 @@ function CommunityMyScreen() {
               </Text>
             </View>
             {/*<Pressable style={styles.kebabIcon} hitSlop={10}>*/}
-            {/*  <Image source={iconPath.KEBAB} style={[common.KEBAB]} />*/}
+            {/*  <Image source={iconPath.KEBAB} style={[common.size24]} />*/}
             {/*</Pressable>*/}
           </View>
 

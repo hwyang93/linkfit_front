@@ -54,7 +54,7 @@ function InstructorListItem({item}: ListProps) {
         style={styles.kebabIcon}
         hitSlop={10}
         onPress={() => Alert.alert('click', 'test')}>
-        <Image source={iconPath.KEBAB} style={[common.KEBAB]} />
+        <Image source={iconPath.KEBAB} style={[common.size24]} />
       </Pressable>
       <View style={styles.rightBox}>
         <Pressable onPress={() => Alert.alert('click', 'test')}>

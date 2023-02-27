@@ -66,7 +66,7 @@ function EmployerReviewComponent() {
           후기 내용입니다. 후기 내용입니다.
         </Text>
         <Pressable style={styles.kebabIcon} hitSlop={10} onPress={openModal}>
-          <Image source={iconPath.KEBAB} style={[common.KEBAB]} />
+          <Image source={iconPath.KEBAB} style={[common.size24]} />
         </Pressable>
       </View>
 
@@ -81,7 +81,7 @@ function EmployerReviewComponent() {
         </Text>
 
         <Pressable style={styles.kebabIcon} hitSlop={10} onPress={openModal}>
-          <Image source={iconPath.KEBAB} style={[common.KEBAB]} />
+          <Image source={iconPath.KEBAB} style={[common.size24]} />
         </Pressable>
       </View>
       <Modal

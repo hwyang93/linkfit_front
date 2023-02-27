@@ -33,9 +33,9 @@ const ContentTab = () => {
           tabBarStyle: {
             height: Platform.OS === 'android' ? 80 : 100,
             backgroundColor: '#fff',
-            paddingVertical: 16,
+            paddingTop: 20,
           },
-          tabBarLabelStyle: {fontSize: 16, marginVertical: 10},
+          tabBarLabelStyle: {fontSize: 16, marginVertical: 0},
           tabBarAllowFontScaling: true,
           headerShadowVisible: false,
         }}>
@@ -43,7 +43,7 @@ const ContentTab = () => {
           name="Link"
           component={Link}
           options={{
-            title: '링크',
+            title: '채용',
             headerTitle: () => {
               return <LinkHeader />;
             },

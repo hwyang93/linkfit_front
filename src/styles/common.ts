@@ -248,7 +248,7 @@ const common = StyleSheet.create({
     color: '#292929',
     fontSize: +width * 16,
   },
-  //
+  // thumbnail size
   thumbnail: {
     width: +width * 48,
     height: +width * 48,
@@ -259,13 +259,8 @@ const common = StyleSheet.create({
     height: +width * 64,
     borderRadius: 200,
   },
-
   // icon
-  KEBAB: {width: 4, height: 16},
-  BOOKMARK: {width: 14, height: 18},
-  BELL: {width: 17, height: 21},
   CIRCLE_ARROW_RIGHT: {width: 16, height: 16},
-  MY: {width: 18, height: 18},
   size24: {width: 24, height: 24},
   size32: {width: 32, height: 32},
   size40: {width: 40, height: 40},

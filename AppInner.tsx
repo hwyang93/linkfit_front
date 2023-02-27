@@ -30,6 +30,7 @@ export type LoggedInParamList = {
   CompanyInfo: undefined;
   CenterRecruitment: undefined;
   SendSuggestion: undefined;
+  SendSuggestionDetail: undefined;
 
   ProfileEdit: {memberInfo: any};
   CertifyLocation: undefined;

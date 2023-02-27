@@ -121,7 +121,7 @@ function EmployeeReviewComponent() {
                 setSelectedReputation(item);
                 openModal();
               }}>
-              <Image source={iconPath.KEBAB} style={[common.KEBAB]} />
+              <Image source={iconPath.KEBAB} style={[common.size24]} />
             </Pressable>
           </View>
         ) : (
@@ -141,7 +141,7 @@ function EmployeeReviewComponent() {
                 setSelectedReputation(item);
                 openModal();
               }}>
-              <Image source={iconPath.KEBAB} style={[common.KEBAB]} />
+              <Image source={iconPath.KEBAB} style={[common.size24]} />
             </Pressable>
           </View>
         );

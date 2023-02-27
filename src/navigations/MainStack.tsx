@@ -58,10 +58,15 @@ import CenterProfileEditScreen from '@screen/My/CenterProfileEditScreen';
 import CompanyInfoScreen from '@screen/My/CompanyInfoScreen';
 import CenterRecruitmentScreen from '@screen/My/CenterRecruitmentScreen';
 import SendSuggestionScreen from '@screen/My/SendSuggestionScreen';
+import SendSuggestionDetailScreen from '@screen/My/SendSuggestionDetailScreen';
+import {SetStateAction, useState} from 'react';
+import Modal from '@components/ModalSheet';
 
 const Stack = createNativeStackNavigator<LoggedInParamList>();
 
 const MainStack = () => {
+  const [modalVisible, setModalVisible] =
+    useState<SetStateAction<boolean>>(false);
   const navigation = useNavigation<NavigationProp<LoggedInParamList>>();
   return (
     <Stack.Navigator
@@ -175,6 +180,41 @@ const MainStack = () => {
           name="SendSuggestion"
           component={SendSuggestionScreen}
           options={{title: '보낸 포지션 제안'}}
+        />
+        <Stack.Screen
+          name="SendSuggestionDetail"
+          component={SendSuggestionDetailScreen}
+          options={{
+            title: '포지션 제안',
+            headerRight: () => {
+              const MODAL = [
+                {
+                  value: '제안 수정하기',
+                  job: () => {},
+                },
+                {
+                  value: '제안 취소하기',
+                  job: () => {},
+                },
+              ];
+              return (
+                <>
+                  <Pressable
+                    onPress={() => setModalVisible(true)}
+                    hitSlop={10}
+                    style={[common.mh4, common.size24]}>
+                    <Image source={iconPath.KEBAB} style={common.size24} />
+                  </Pressable>
+                  <Modal
+                    modalVisible={modalVisible}
+                    setModalVisible={setModalVisible}
+                    title={'더보기'}
+                    modalData={MODAL}
+                  />
+                </>
+              );
+            },
+          }}
         />
         <Stack.Screen
           name="Profile"
