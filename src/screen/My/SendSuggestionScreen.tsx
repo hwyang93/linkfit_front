@@ -171,7 +171,10 @@ function SendSuggestionScreen() {
         {/* 컨텐츠 영역 */}
         {DATA.map((item, index) => {
           return (
-            <Pressable key={index} style={[common.basicBox, common.mv8]}>
+            <Pressable
+              key={index}
+              style={[common.basicBox, common.mv8]}
+              onPress={() => navigation.navigate('SendSuggestionDetail')}>
               <Text style={[common.text_s, common.fcg, common.mb12]}>
                 {item.registrationDate}
               </Text>
@@ -235,7 +238,7 @@ function SendSuggestionScreen() {
                 style={styles.kebabIcon}
                 hitSlop={10}
                 onPress={item.job}>
-                <Image source={iconPath.KEBAB} style={[common.KEBAB]} />
+                <Image source={iconPath.KEBAB} style={[common.size24]} />
               </Pressable>
             </Pressable>
           );

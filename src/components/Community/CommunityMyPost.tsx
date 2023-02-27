@@ -97,7 +97,7 @@ function CommunityMyPost() {
                 style={styles.kebabIcon}
                 hitSlop={10}
                 onPress={openModal}>
-                <Image source={iconPath.KEBAB} style={[common.KEBAB]} />
+                <Image source={iconPath.KEBAB} style={[common.size24]} />
               </Pressable>
             </View>
           );

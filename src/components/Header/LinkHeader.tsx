@@ -29,12 +29,12 @@ function LinkHeader({link}: HeaderProps) {
           alignItems: 'center',
         }}>
         <Pressable
-          style={{marginRight: 16}}
+          style={{marginRight: 8}}
           onPress={() => Alert.alert('click', 'bell test')}>
-          <Image source={iconPath.BELL} style={common.BELL} />
+          <Image source={iconPath.BELL} style={common.size24} />
         </Pressable>
         <Pressable onPress={() => navigation.navigate(link)}>
-          <Image source={iconPath.MY} style={common.MY} />
+          <Image source={iconPath.MY} style={common.size24} />
         </Pressable>
       </View>
     </View>

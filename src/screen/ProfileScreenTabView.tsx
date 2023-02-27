@@ -284,7 +284,7 @@ function ProfileScreenTabView() {
             style={styles.kebabIcon}
             hitSlop={10}
             onPress={() => Alert.alert('click', 'test')}>
-            <Image source={iconPath.KEBAB} style={[common.KEBAB]} />
+            <Image source={iconPath.KEBAB} style={[common.size24]} />
           </Pressable>
         </View>
 
@@ -353,7 +353,7 @@ function ProfileScreenTabView() {
             style={styles.kebabIcon}
             hitSlop={10}
             onPress={() => Alert.alert('click', 'test')}>
-            <Image source={iconPath.KEBAB} style={[common.KEBAB]} />
+            <Image source={iconPath.KEBAB} style={[common.size24]} />
           </Pressable>
         ) : (
           ''

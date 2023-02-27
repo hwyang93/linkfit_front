@@ -125,7 +125,7 @@ function ResumePreviewScreen({route}: Props) {
           </Text>
 
           <Pressable style={styles.kebabIcon} hitSlop={10} onPress={() => {}}>
-            <Image source={iconPath.KEBAB} style={[common.KEBAB]} />
+            <Image source={iconPath.KEBAB} style={[common.size24]} />
           </Pressable>
           <Pressable style={styles.phoneIcon} hitSlop={10} onPress={() => {}}>
             <Image source={iconPath.PHONE} style={[common.size24]} />

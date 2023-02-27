@@ -39,7 +39,7 @@ function ApplicantStatusScreen() {
               style={styles.kebabIcon}
               hitSlop={10}
               onPress={() => Alert.alert('text', '케밥 클릭')}>
-              <Image source={iconPath.KEBAB} style={[common.KEBAB]} />
+              <Image source={iconPath.KEBAB} style={[common.size24]} />
             </Pressable>
           </View>
         </View>

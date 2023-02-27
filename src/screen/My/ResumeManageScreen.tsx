@@ -113,7 +113,7 @@ function ResumeManageScreen() {
                 setSelectedResume(resume);
                 openModal();
               }}>
-              <Image source={iconPath.KEBAB} style={[common.KEBAB]} />
+              <Image source={iconPath.KEBAB} style={[common.size24]} />
             </Pressable>
           </View>
         );

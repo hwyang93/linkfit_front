@@ -48,7 +48,7 @@ function CommunityUserComponent({data}: UserProps) {
         </View>
       </View>
       <Pressable style={styles.kebabIcon} hitSlop={10} onPress={data.job}>
-        <Image source={iconPath.KEBAB} style={[common.KEBAB]} />
+        <Image source={iconPath.KEBAB} style={[common.size24]} />
       </Pressable>
     </View>
   );
