@@ -129,7 +129,7 @@ function ModalSheet(props: modalProps) {
             props.modalData.map((item, index) => {
               return (
                 <View key={index} style={styles.itemBox}>
-                  <Pressable onPress={item.job}>
+                  <Pressable onPress={item.job} style={{width: '100%'}}>
                     <Text style={[styles.modalText]}>{item.value}</Text>
                   </Pressable>
                 </View>

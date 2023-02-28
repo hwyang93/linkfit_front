@@ -5869,11 +5869,6 @@ react-native-gradle-plugin@^0.70.3:
   resolved "https://registry.npmjs.org/react-native-gradle-plugin/-/react-native-gradle-plugin-0.70.3.tgz"
   integrity sha512-oOanj84fJEXUg9FoEAQomA8ISG+DVIrTZ3qF7m69VQUJyOGYyDZmPqKcjvRku4KXlEH6hWO9i4ACLzNBh8gC0A==
 
-react-native-image-crop-picker@^0.38.0:
-  version "0.38.0"
-  resolved "https://registry.npmjs.org/react-native-image-crop-picker/-/react-native-image-crop-picker-0.38.0.tgz"
-  integrity sha512-FaLASXOP7R23pi20vMiVlXl0Y7cwTdl7y7yBqrlrsSH9gl9ibsU5y4mYWPYRbe8x9F/3zPGUE+1F0Gj/QF/peg==
-
 react-native-image-picker@^5.0.2:
   version "5.0.2"
   resolved "https://registry.yarnpkg.com/react-native-image-picker/-/react-native-image-picker-5.0.2.tgz#f7071893df36fd40dec996040e3dfb4e58b4d93a"
@@ -5960,11 +5955,6 @@ react-native-tab-view@^3.3.4:
   integrity sha512-rceAYWpHa6knA7tsTnnjlcOxlCErR4F+yXQPpNm125IvYFyv09YRhE5uMU2IzyPIQ1CJvADCHurF3KySzVI+4Q==
   dependencies:
     use-latest-callback "^0.1.5"
-
-react-native-toast-message@^2.1.5:
-  version "2.1.5"
-  resolved "https://registry.npmjs.org/react-native-toast-message/-/react-native-toast-message-2.1.5.tgz"
-  integrity sha512-mk3rELtBEhrhWBCN6CTaw0gypgL9ZNauX3xx1LUs4uee9vc0pVsghrKxO57vroUCcNL2hDeZSLJWdQNMCkGeaQ==
 
 react-native-vector-icons@^9.2.0:
   version "9.2.0"

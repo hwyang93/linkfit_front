@@ -35,6 +35,7 @@ function ResumeFormScreen() {
   const genderData = [{value: '남자'}, {value: '여자'}];
   const careerData = ['필라테스', '요가'];
   const workData = ['정규직', '계약직'];
+  const licenseData = [''];
 
   const windowWidth = Dimensions.get('window').width;
   const columns2 = (windowWidth - 40) / 2;
@@ -43,6 +44,7 @@ function ResumeFormScreen() {
   return (
     <DismissKeyboardView>
       <View style={styles.container}>
+        {/* 제목  */}
         <View style={common.mb16}>
           <Input
             label={'제목'}
@@ -53,6 +55,7 @@ function ResumeFormScreen() {
           />
         </View>
 
+        {/* 이름 */}
         <View style={common.mb16}>
           <Input
             label={'이름'}
@@ -64,10 +67,11 @@ function ResumeFormScreen() {
           />
         </View>
 
-        {/* 생년월일  */}
+        {/* 생년월일 */}
         <View style={common.mb16}>
           <BirthdayPicker />
         </View>
+
         {/* 성별 */}
         <View style={[common.mb16]}>
           <TabButton
@@ -77,6 +81,7 @@ function ResumeFormScreen() {
           />
         </View>
 
+        {/* 주소 */}
         <View style={common.mb16}>
           <Input
             label={'주소'}
@@ -88,6 +93,7 @@ function ResumeFormScreen() {
           />
         </View>
 
+        {/* 연락처 */}
         <View style={common.mb16}>
           <Input
             label={'연락처'}
@@ -108,6 +114,7 @@ function ResumeFormScreen() {
           />
         </View>
 
+        {/* 근무 형태 */}
         <View style={common.mb16}>
           <SelectBox
             data={workData}
@@ -116,14 +123,15 @@ function ResumeFormScreen() {
           />
         </View>
 
+        {/* 입사일 퇴사일 */}
         <View style={common.mb16}>
           <View style={common.row}>
             <View style={[common.mr8, {width: columns2}]}>
-              <DatePicker label={'입사'} placeholder={'입사 년월'} />
+              <DatePicker label={'입사'} placeholder={'입사 날짜'} />
             </View>
 
             <View style={{width: columns2}}>
-              <DatePicker label={'퇴사'} placeholder={'퇴사 년월'} />
+              <DatePicker label={'퇴사'} placeholder={'퇴사 날짜'} />
             </View>
           </View>
         </View>
@@ -171,15 +179,14 @@ function ResumeFormScreen() {
 
         {/* 자격증 */}
         <View style={common.mb16}>
-          <Input
-            label={'자격증'}
-            onChangeText={(text: string) => setLicense(text)}
-            value={license}
-            placeholder={'자격증 디테일'}
-            keyboardType={KeyboardTypes.DEFAULT}
+          <SelectBox
+            data={licenseData}
+            onSelect={(value: any) => setLicense(value)}
+            defaultButtonText={'자격증을 선택하세요.'}
           />
         </View>
 
+        {/* 소개글 */}
         <View style={common.mb16}>
           <Input
             label={'소개글'}
