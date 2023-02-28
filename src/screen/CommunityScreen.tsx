@@ -117,7 +117,11 @@ function CommunityScreen() {
         showsVerticalScrollIndicator={false}
       />
 
-      <FloatingWriteButton icon={iconPath.PENCIL_W} job={moveToForm} />
+      <FloatingWriteButton
+        icon={iconPath.PENCIL_W}
+        job={moveToForm}
+        bottom={16}
+      />
     </View>
   );
 }

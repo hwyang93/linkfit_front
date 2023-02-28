@@ -2,6 +2,7 @@ import {StyleSheet, View} from 'react-native';
 import {iconPath} from '@util/iconPath';
 import RecruitComponent from '@components/RecruitComponent';
 import FloatingLinkButton from '@components/FloatingLinkButton';
+import {SafeAreaView} from 'react-native-safe-area-context';
 
 function RecruitListScreen() {
   const LINKS = [
@@ -71,7 +72,7 @@ function RecruitListScreen() {
     },
   ];
   return (
-    <View style={styles.container}>
+    <SafeAreaView edges={['bottom', 'left', 'right']} style={styles.container}>
       {/* 구인공고 */}
       <RecruitComponent
         list={LINKS}
@@ -84,7 +85,7 @@ function RecruitListScreen() {
         title={'지도보기'}
         icon={iconPath.MAP}
       />
-    </View>
+    </SafeAreaView>
   );
 }
 const styles = StyleSheet.create({

@@ -12,7 +12,7 @@ import {
   ActivityIndicator,
   Image,
 } from 'react-native';
-import {BLACK, GRAY} from '@styles/colors';
+import {BLACK, BLUE, GRAY} from '@styles/colors';
 import common, {width} from '@styles/common';
 import LinearGradient from 'react-native-linear-gradient';
 import {iconPath} from '@util/iconPath';
@@ -79,6 +79,8 @@ function ModalSheet(props: modalProps) {
       setModalType('button');
     } else if (props.type === 'check') {
       setModalType('check');
+    } else if (props.type === 'select') {
+      setModalType('select');
     }
   }, [props.modalVisible, props.type, resetBottomSheet]);
 
@@ -117,6 +119,7 @@ function ModalSheet(props: modalProps) {
               style={[
                 styles.modalTitle,
                 modalType === 'button' && {marginBottom: 16},
+                modalType === 'select' && {marginBottom: 16},
               ]}>
               {props.title}
             </Text>
@@ -156,7 +159,6 @@ function ModalSheet(props: modalProps) {
             })}
 
           {/* check type modal */}
-
           {modalType === 'check' && (
             <>
               {props.modalData.map((item, index) => {
@@ -195,6 +197,33 @@ function ModalSheet(props: modalProps) {
               </Pressable>
             </>
           )}
+
+          {/* select type modal */}
+          {modalType === 'select' &&
+            props.modalData.map((item, index) => {
+              return (
+                <Pressable
+                  onPress={item.job}
+                  disabled={item.disabled}
+                  key={index}
+                  style={[
+                    styles.selectBox,
+                    item.selected && {borderColor: BLUE.DEFAULT},
+                    item.disabled && {opacity: 0.5},
+                  ]}>
+                  <View style={[common.rowCenter]}>
+                    <Image
+                      source={iconPath.CALENDAR}
+                      style={[common.size24, common.mr8]}
+                    />
+                    <Text style={styles.modalText}>{item.value}</Text>
+                  </View>
+                  {item.selected ? (
+                    <Image style={common.size24} source={iconPath.CHECK} />
+                  ) : null}
+                </Pressable>
+              );
+            })}
         </Animated.View>
       </View>
     </Modal>
@@ -245,6 +274,17 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     width: '100%',
     paddingVertical: 19,
+  },
+  selectBox: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    width: '100%',
+    paddingVertical: 8,
+    paddingHorizontal: 16,
+    marginVertical: 8,
+    borderWidth: 2,
+    borderColor: GRAY.LIGHT,
+    borderRadius: 8,
   },
 });
 
