@@ -3,17 +3,24 @@ import {WHITE} from '@styles/colors';
 import ApplicantListItem from '@components/My/ApplicantListItem';
 import {NavigationProp, useNavigation} from '@react-navigation/native';
 import {LoggedInParamList} from '../../../AppInner';
-import {SetStateAction, useState} from 'react';
+import {SetStateAction, useEffect, useState} from 'react';
 import Modal from '@components/ModalSheet';
 import TopFilter from '@components/TopFilter';
 
-function ApplicantWaitingComponent() {
+function ApplicantWaitingComponent(props: any) {
   const navigation = useNavigation<NavigationProp<LoggedInParamList>>();
   const [modalVisible, setModalVisible] =
     useState<SetStateAction<boolean>>(false);
 
   const [modalTitle, setModalTitle] = useState('');
   const [modalData, setModalData] = useState<any[]>([]);
+
+  const [applications, setApplications] = useState<any[]>([]);
+
+  useEffect(() => {
+    console.log(props.route.params.list);
+    setApplications(props.route.params.list);
+  }, [props.route.params.list]);
   const FILTER = [
     {
       value: '기간',
@@ -75,7 +82,7 @@ function ApplicantWaitingComponent() {
         <TopFilter data={FILTER} />
       </View>
       <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
-        <ApplicantListItem data={DATA} />
+        <ApplicantListItem list={applications} />
         <View style={{paddingBottom: 24}} />
       </ScrollView>
 

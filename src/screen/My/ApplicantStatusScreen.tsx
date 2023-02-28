@@ -15,7 +15,7 @@ import {createMaterialTopTabNavigator} from '@react-navigation/material-top-tabs
 import ApplicantWaitingComponent from '@components/My/ApplicantWaitingComponent';
 import ApplicantFinishComponent from '@components/My/ApplicantFinishComponent';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
-import {LoggedInParamList, RootStackParamList} from '../../../AppInner';
+import {LoggedInParamList} from '../../../AppInner';
 import {useEffect, useState} from 'react';
 import {fetchRecruitApplications} from '@api/recruit';
 
@@ -23,6 +23,9 @@ const Tab = createMaterialTopTabNavigator();
 const windowWidth = Dimensions.get('window').width;
 const tabWidth = (windowWidth - 32) / 2;
 type props = NativeStackScreenProps<LoggedInParamList, 'ApplicantStatus'>;
+
+type tabProps = {waitingList: any; finishApplications: any};
+
 function ApplicantStatusScreen({route}: props) {
   const [recruitInfo, setRecruitInfo] = useState<any>({});
   const [waitingApplications, setWaitingApplications] = useState<any[]>([]);
@@ -31,13 +34,21 @@ function ApplicantStatusScreen({route}: props) {
   useEffect(() => {
     fetchRecruitApplications(route.params.recruitSeq)
       .then(({data}: any) => {
-        setRecruitInfo(data?.recruit);
-        console.log(data);
+        const waitingList = data.recruitApply.filter((item: any) => {
+          return item.status === 'APPLY';
+        });
+
+        const finishList = data.recruitApply.filter((item: any) => {
+          return item.status !== 'APPLY';
+        });
+        setRecruitInfo(data.recruit);
+        setWaitingApplications(waitingList);
+        setFinishApplications(finishList);
       })
       .catch((e: any) => {
         Alert.alert(e.message);
       });
-  }, []);
+  }, [route.params.recruitSeq]);
 
   return (
     <>
@@ -47,18 +58,18 @@ function ApplicantStatusScreen({route}: props) {
           <View style={[common.basicBox, common.mv8]}>
             <View style={common.rowCenter}>
               <Text style={[common.text_s, common.fcg]}>
-                {recruitInfo?.createdAt} 작성
+                {recruitInfo.createdAt} 작성
               </Text>
               <Text style={[common.mh8, common.fcg]}>|</Text>
               <Text style={[common.text_s, common.fcg]}>
-                {recruitInfo?.status === 'ING' ? '진행중' : '마감'}
+                {recruitInfo.status === 'ING' ? '진행중' : '마감'}
               </Text>
             </View>
             <Text style={[common.title, common.mv12]} numberOfLines={1}>
-              {recruitInfo?.title}
+              {recruitInfo.title}
             </Text>
             <Text style={[common.text_m, common.fwb]}>
-              {recruitInfo?.position}
+              {recruitInfo.position}
             </Text>
             <Pressable
               style={styles.kebabIcon}
@@ -70,39 +81,48 @@ function ApplicantStatusScreen({route}: props) {
         </View>
         {/* 컨텐츠 영역 */}
       </View>
-      <Tabs />
+      <Tabs
+        waitingList={waitingApplications}
+        finishApplications={finishApplications}
+      />
     </>
   );
 }
 
-export function Tabs() {
+export function Tabs({waitingList, finishApplications}: tabProps) {
   return (
-    <>
-      <Tab.Navigator
-        screenOptions={{
-          tabBarLabelStyle: {fontSize: 16, fontWeight: '700'},
-          tabBarActiveTintColor: BLUE.DEFAULT,
-          tabBarInactiveTintColor: GRAY.DEFAULT,
-          tabBarItemStyle: {
-            width: tabWidth,
+    <Tab.Navigator
+      screenOptions={{
+        tabBarLabelStyle: {fontSize: 16, fontWeight: '700'},
+        tabBarActiveTintColor: BLUE.DEFAULT,
+        tabBarInactiveTintColor: GRAY.DEFAULT,
+        tabBarItemStyle: {
+          width: tabWidth,
+        },
+        tabBarContentContainerStyle: {
+          alignItems: 'center',
+          justifyContent: 'center',
+        },
+        tabBarIndicatorStyle: {width: tabWidth, marginLeft: 16},
+        tabBarStyle: {
+          elevation: 0, // for Android
+          shadowOffset: {
+            width: 0,
+            height: 0, // for iOS
           },
-          tabBarContentContainerStyle: {
-            alignItems: 'center',
-            justifyContent: 'center',
-          },
-          tabBarIndicatorStyle: {width: tabWidth, marginLeft: 16},
-          tabBarStyle: {
-            elevation: 0, // for Android
-            shadowOffset: {
-              width: 0,
-              height: 0, // for iOS
-            },
-          },
-        }}>
-        <Tab.Screen name="대기중" component={ApplicantWaitingComponent} />
-        <Tab.Screen name="완료" component={ApplicantFinishComponent} />
-      </Tab.Navigator>
-    </>
+        },
+      }}>
+      <Tab.Screen
+        name="대기중"
+        component={ApplicantWaitingComponent}
+        initialParams={{list: waitingList}}
+      />
+      <Tab.Screen
+        name="완료"
+        component={ApplicantFinishComponent}
+        initialParams={{list: finishApplications}}
+      />
+    </Tab.Navigator>
   );
 }
 

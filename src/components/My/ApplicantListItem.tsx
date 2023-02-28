@@ -1,20 +1,31 @@
 import common from '@styles/common';
 import {Image, Pressable, Text, View} from 'react-native';
 import {iconPath} from '@util/iconPath';
+import {useEffect, useState} from 'react';
 
-function ApplicantListItem({data}: any) {
+function ApplicantListItem({list}: any) {
+  const [applications, setApplications] = useState<any[]>([]);
+
+  useEffect(() => {
+    setApplications(list);
+    console.log(list);
+  }, [list]);
   return (
     <View>
-      {data.map((item: any, index: number) => {
+      {applications?.map((application: any, index: number) => {
         return (
           <Pressable
             key={index}
             style={[common.basicBox, common.mb8]}
-            onPress={item.job}>
+            onPress={() => {}}>
             <View style={[common.rowCenter, common.mb8]}>
-              <Text style={[common.text_s, common.fcg]}>{item.date}</Text>
+              <Text style={[common.text_s, common.fcg]}>
+                {application.createdAt}
+              </Text>
               <Text style={[common.text_s, common.fcg, common.mh8]}>|</Text>
-              <Text style={[common.text_s, common.fcg]}>{item.status}</Text>
+              <Text style={[common.text_s, common.fcg]}>
+                {application.status}
+              </Text>
             </View>
             <View style={common.rowCenter}>
               <Image
@@ -22,7 +33,7 @@ function ApplicantListItem({data}: any) {
                 style={[common.thumbnail, common.mr12]}
               />
               <Text style={common.title} numberOfLines={1}>
-                {item.title}
+                {application.resume.title}
               </Text>
             </View>
           </Pressable>
