@@ -4,7 +4,6 @@ import {GRAY} from '@styles/colors';
 import common from '@styles/common';
 
 function TopFilter({data}: any) {
-  console.log('확인이 필요행요', data);
   return (
     <>
       <View style={styles.filterBox}>
@@ -14,9 +13,7 @@ function TopFilter({data}: any) {
           horizontal={true}
           renderItem={({item}) => (
             <Pressable style={styles.filterItem} onPress={item.job}>
-              <Text style={[common.text_m, styles.filterText]}>
-                {item.value}
-              </Text>
+              <Text style={[common.text_m, common.fcg]}>{item.value}</Text>
               <Image
                 style={styles.filterIcon}
                 source={iconPath.MORE_ARROW_DOWN}
@@ -45,9 +42,6 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: GRAY.LIGHT,
     borderRadius: 16,
-  },
-  filterText: {
-    color: GRAY.DARK,
   },
   filterIcon: {
     position: 'absolute',
