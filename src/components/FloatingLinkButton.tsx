@@ -3,23 +3,48 @@ import common from '@styles/common';
 import {WHITE} from '@styles/colors';
 import {NavigationProp, useNavigation} from '@react-navigation/native';
 import {LoggedInParamList} from '../../AppInner';
+import LinearGradient from 'react-native-linear-gradient';
 
 type ButtonProps = {
   title: string;
-  link: any;
-  icon: object;
+  link?: any;
+  icon?: object;
+  type?: string;
+  bottom?: any;
+  job?: () => void;
 };
 
-const FloatingLinkButton = ({title, link, icon}: ButtonProps) => {
+const FloatingLinkButton = ({
+  title,
+  link,
+  icon,
+  type,
+  bottom,
+  job,
+}: ButtonProps) => {
   const navigation = useNavigation<NavigationProp<LoggedInParamList>>();
 
   return (
-    <Pressable
-      style={[styles.listButton]}
-      onPress={() => navigation.navigate(link)}>
-      <Image style={styles.listIcon} source={icon} />
-      <Text style={common.text_m}>{title}</Text>
-    </Pressable>
+    <>
+      {type === 'gradient' ? (
+        <Pressable onPress={job}>
+          <LinearGradient
+            style={[styles.listButton, {bottom: bottom}]}
+            start={{x: 0.1, y: 0.5}}
+            end={{x: 0.6, y: 1}}
+            colors={['#74ebe4', '#3962f3']}>
+            <Text style={common.buttonText}>{title}</Text>
+          </LinearGradient>
+        </Pressable>
+      ) : (
+        <Pressable
+          style={[styles.listButton]}
+          onPress={() => navigation.navigate(link)}>
+          <Image style={styles.listIcon} source={icon} />
+          <Text style={common.text_m}>{title}</Text>
+        </Pressable>
+      )}
+    </>
   );
 };
 const styles = StyleSheet.create({

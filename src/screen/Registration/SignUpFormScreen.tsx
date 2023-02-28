@@ -58,7 +58,7 @@ function SignUpFormScreen({navigation}: SignUpScreenProps) {
       .catch((e: {message: string}) => {
         Alert.alert(e.message);
       });
-  }, [email, gender, navigation, password, phoneNumber, userName]);
+  }, [email, birth, gender, navigation, password, phoneNumber, userName]);
 
   return (
     <DismissKeyboardView>
