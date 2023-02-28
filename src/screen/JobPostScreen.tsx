@@ -1,8 +1,10 @@
 import {
+  ActivityIndicator,
   Alert,
   Image,
   NativeScrollEvent,
   NativeSyntheticEvent,
+  Pressable,
   ScrollView,
   StyleSheet,
   Text,
@@ -18,12 +20,16 @@ import {SetStateAction, useEffect, useState} from 'react';
 import {fetchRecruit} from '@api/recruit';
 import FloatingLinkButton from '@components/FloatingLinkButton';
 import Modal from '@components/ModalSheet';
+import LinearGradient from 'react-native-linear-gradient';
 
 type Props = NativeStackScreenProps<LoggedInParamList, 'JobPost'>;
 
 function JobPostScreen({route}: Props) {
+  const [loading, setLoading] = useState<boolean>(false);
   const [modalVisible, setModalVisible] =
     useState<SetStateAction<boolean>>(false);
+  const [modalTitle, setModalTitle] = useState('');
+  const [modalData, setModalData] = useState<any[]>([]);
   const {recruitSeq} = route.params;
   const [recruitInfo, setRecruitInfo] = useState<any>({});
 
@@ -63,6 +69,37 @@ function JobPostScreen({route}: Props) {
       job: () => {},
     },
   ];
+  const CANCEL_MODAL = [
+    {
+      value: '2023.12.31 / 14:00 ~ 18:00',
+      disabled: false,
+      selected: false,
+      job: () => {},
+    },
+    {
+      value: '2023.12.31 / 14:00 ~ 18:00',
+      disabled: true,
+      selected: false,
+      job: () => {},
+    },
+    {
+      value: '2023.12.31 / 14:00 ~ 18:00',
+      disabled: false,
+      selected: true,
+      job: () => {},
+    },
+  ];
+
+  const apply = () => {
+    setModalTitle('지원할 날짜 및 시간을 선택하세요.');
+    setModalData(MODAL);
+    openModal();
+  };
+  const cancel = () => {
+    setModalTitle('지원 취소할 날짜 및 시간을 선택하세요. ');
+    setModalData(CANCEL_MODAL);
+    openModal();
+  };
 
   const openModal = () => {
     setModalVisible(true);
@@ -76,6 +113,7 @@ function JobPostScreen({route}: Props) {
         style={styles.container}>
         <ScrollView
           showsVerticalScrollIndicator={false}
+          scrollEventThrottle={0}
           onScroll={onScrollHandler}>
           {/* 구인공고 탑 메인 */}
           <View style={common.mb40}>
@@ -167,6 +205,23 @@ function JobPostScreen({route}: Props) {
             </Text>
             <CenterInfoComponent />
           </View>
+
+          {/* 지원 취소하기 버튼 */}
+          <View style={common.mt40}>
+            <Pressable onPress={cancel}>
+              <LinearGradient
+                style={common.button}
+                start={{x: 0.1, y: 0.5}}
+                end={{x: 0.6, y: 1}}
+                colors={['#74ebe4', '#3962f3']}>
+                {loading ? (
+                  <ActivityIndicator color="white" />
+                ) : (
+                  <Text style={common.buttonText}>지원 취소하기</Text>
+                )}
+              </LinearGradient>
+            </Pressable>
+          </View>
         </ScrollView>
       </SafeAreaView>
       {contentVerticalOffset <= 500 && (
@@ -174,14 +229,14 @@ function JobPostScreen({route}: Props) {
           title={'지원하기'}
           type={'gradient'}
           bottom={32}
-          job={openModal}
+          job={apply}
         />
       )}
       <Modal
         modalVisible={modalVisible}
         setModalVisible={setModalVisible}
-        title={'지원할 날짜 및 시간을 선택하세요.'}
-        modalData={MODAL}
+        title={modalTitle}
+        modalData={modalData}
         type={'select'}
       />
     </>
