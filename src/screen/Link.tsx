@@ -63,7 +63,11 @@ function Link() {
         ItemSeparatorComponent={() => <View style={common.separator} />}
         showsVerticalScrollIndicator={false}
       />
-      <FloatingWriteButton icon={iconPath.PENCIL_W} job={openModal} />
+      <FloatingWriteButton
+        bottom={16}
+        icon={iconPath.PENCIL_W}
+        job={openModal}
+      />
       <Modal
         modalVisible={modalVisible}
         setModalVisible={setModalVisible}

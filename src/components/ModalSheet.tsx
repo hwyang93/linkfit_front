@@ -10,10 +10,12 @@ import {
   PanResponder,
   Pressable,
   ActivityIndicator,
+  Image,
 } from 'react-native';
 import {BLACK, GRAY} from '@styles/colors';
 import common, {width} from '@styles/common';
 import LinearGradient from 'react-native-linear-gradient';
+import {iconPath} from '@util/iconPath';
 
 type modalProps = {
   title?: string;
@@ -24,6 +26,7 @@ type modalProps = {
   job?: () => void;
   modalHeight?: number;
   type?: string;
+  onFilter?: () => void;
 };
 
 function ModalSheet(props: modalProps) {
@@ -74,6 +77,8 @@ function ModalSheet(props: modalProps) {
       setModalType('string');
     } else if (props.type === 'button') {
       setModalType('button');
+    } else if (props.type === 'check') {
+      setModalType('check');
     }
   }, [props.modalVisible, props.type, resetBottomSheet]);
 
@@ -82,6 +87,8 @@ function ModalSheet(props: modalProps) {
       setModalVisible(false);
     });
   };
+
+  const [selected, setSelected] = useState(false);
 
   return (
     <Modal
@@ -147,6 +154,47 @@ function ModalSheet(props: modalProps) {
                 </View>
               );
             })}
+
+          {/* check type modal */}
+
+          {modalType === 'check' && (
+            <>
+              {props.modalData.map((item, index) => {
+                return (
+                  <Pressable
+                    key={index}
+                    onPress={item.job}
+                    style={[styles.itemBox, {justifyContent: 'space-between'}]}>
+                    <View style={[common.rowCenter]}>
+                      {item.icon ? (
+                        <Image
+                          style={[common.size24, common.mr10]}
+                          source={selected ? item.iconOn : item.icon}
+                        />
+                      ) : null}
+
+                      <Text style={[styles.modalText]}>{item.value}</Text>
+                    </View>
+                    {selected ? (
+                      <Image style={common.size24} source={iconPath.CHECK} />
+                    ) : null}
+                  </Pressable>
+                );
+              })}
+              {/* button */}
+              <Pressable
+                onPress={props.onFilter}
+                style={{width: '100%', marginTop: 40}}>
+                <LinearGradient
+                  style={common.button}
+                  start={{x: 0.1, y: 0.5}}
+                  end={{x: 0.6, y: 1}}
+                  colors={['#74ebe4', '#3962f3']}>
+                  <Text style={common.buttonText}>필터 적용</Text>
+                </LinearGradient>
+              </Pressable>
+            </>
+          )}
         </Animated.View>
       </View>
     </Modal>
@@ -194,6 +242,7 @@ const styles = StyleSheet.create({
     lineHeight: +width * 24,
   },
   itemBox: {
+    flexDirection: 'row',
     width: '100%',
     paddingVertical: 19,
   },

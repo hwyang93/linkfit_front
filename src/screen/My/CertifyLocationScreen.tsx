@@ -186,7 +186,7 @@ function CertifyLocationScreen() {
             caption={{text: '현재 위치'}}
           />
         </NaverMapView>
-        <LocationButton />
+        <LocationButton bottom={16} />
       </View>
       {authInfo ? (
         <View style={common.mb16}>

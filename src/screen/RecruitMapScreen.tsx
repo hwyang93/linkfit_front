@@ -1,14 +1,21 @@
-import {PermissionsAndroid, Platform, StyleSheet, View} from 'react-native';
+import {
+  Alert,
+  PermissionsAndroid,
+  Platform,
+  StyleSheet,
+  View,
+} from 'react-native';
 import NaverMapView, {Marker} from 'react-native-nmap';
 import {iconPath} from '@util/iconPath';
-import Filter, {FilterTypes} from '@components/Filter';
 import LocationButton from '@components/LocationButton';
 import FloatingLinkButton from '@components/FloatingLinkButton';
-import BottomSheet from '@components/BottomSheet';
 import {SetStateAction, useEffect, useState} from 'react';
 import Geolocation from 'react-native-geolocation-service';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import FloatingWriteButton from '@components/FloatingWriteButton';
+import Modal from '@components/ModalSheet';
+
+import TopFilter from '@components/TopFilter';
 
 async function requestPermission() {
   try {
@@ -28,6 +35,10 @@ async function requestPermission() {
 }
 
 function RecruitMapScreen() {
+  const [modalVisible, setModalVisible] =
+    useState<SetStateAction<boolean>>(false);
+  const [modalTitle, setModalTitle] = useState('');
+  const [modalData, setModalData] = useState<any[]>([]);
   // const [myLocation, setMyLocation] = useState({});
   // const [myLocation, setMyLocation] = useState<
   //   {latitude: number; longitude: number} | string
@@ -37,8 +48,6 @@ function RecruitMapScreen() {
     longitude: number;
   } | null>(null);
 
-  const [modalVisible, setModalVisible] =
-    useState<SetStateAction<boolean>>(false);
   const [selected, setSelected] = useState(2);
 
   useEffect(() => {
@@ -69,97 +78,128 @@ function RecruitMapScreen() {
   const P0 = {latitude: 37.564362, longitude: 126.977011};
   // const P1 = {latitude: 37.565051, longitude: 126.978567};
 
-  const filterType = [
+  const FILTER = [
     {
-      id: 1,
-      title: '포지션',
+      value: '포지션',
+      job: () => {
+        setModalTitle('포지션');
+        setModalData(MODAL);
+        openModal();
+      },
     },
     {
-      id: 2,
-      title: '채용형태',
+      value: '채용형태',
+      job: () => {
+        setModalTitle('채용형태');
+        setModalData(MODAL2);
+        openModal();
+      },
     },
     {
-      id: 3,
-      title: '수업시간',
-    },
-  ];
-  const filterData = [
-    {
-      id: 1,
-      title: '포지션',
-      icon: true,
-      list: [
-        {
-          value: '전체',
-        },
-        {
-          value: '필라테스',
-        },
-        {
-          value: '요가',
-        },
-      ],
-    },
-    {
-      id: 2,
-      title: '채용형태',
-      icon: false,
-      list: [
-        {
-          value: '전임',
-        },
-        {
-          value: '파트타임',
-        },
-        {
-          value: '대강',
-        },
-        {
-          value: '실장',
-        },
-      ],
-    },
-    {
-      id: 3,
-      title: '수업시간',
-      icon: false,
-      list: [
-        {
-          value: '오전',
-        },
-        {
-          value: '오후',
-        },
-        {
-          value: '전일',
-        },
-        {
-          value: '협의',
-        },
-      ],
+      value: '수업시간',
+      job: () => {
+        setModalTitle('수업시간');
+        setModalData(MODAL3);
+        openModal();
+      },
     },
   ];
+
+  const MODAL = [
+    {
+      icon: iconPath.LINK,
+      iconOn: iconPath.LINK_ON,
+      value: '전체',
+      job: () => {
+        let checked = false;
+        MODAL.forEach(item => {
+          if (item.value !== '전체') {
+            if (item.checked) {
+              checked = true;
+              console.log(checked);
+            }
+          }
+        });
+        return checked;
+
+        // Alert.alert('test', 'test');
+      },
+    },
+    {
+      icon: iconPath.PILATES,
+      iconOn: iconPath.PILATES_ON,
+      value: '필라테스',
+      checked: false,
+      job: () => {
+        const index = MODAL.findIndex(item => {
+          return item.value === '1개월';
+        });
+        MODAL[index].checked = !MODAL[index].checked;
+      },
+    },
+    {
+      icon: iconPath.YOGA,
+      iconOn: iconPath.YOGA_ON,
+      value: '요가',
+      job: () => {},
+    },
+  ];
+  const MODAL2 = [
+    {
+      value: '전임',
+      job: () => {},
+    },
+    {
+      value: '파트타임',
+      job: () => {},
+    },
+    {
+      value: '대강',
+      job: () => {},
+    },
+    {
+      value: '실장',
+      job: () => {},
+    },
+  ];
+  const MODAL3 = [
+    {
+      value: '오전',
+      job: () => {},
+    },
+    {
+      value: '오후',
+      job: () => {},
+    },
+    {
+      value: '전일',
+      job: () => {},
+    },
+    {
+      value: '협의',
+      job: () => {},
+    },
+  ];
+
+  const openModal = () => {
+    setModalVisible(true);
+  };
+  const onFilter = () => {
+    Alert.alert('text', 'filter!');
+  };
 
   return (
     <SafeAreaView edges={['bottom', 'left', 'right']} style={styles.container}>
-      <View style={styles.filter}>
-        {filterType.map(function (item, index) {
-          return (
-            <Filter
-              title={item.title}
-              index={index}
-              filterType={FilterTypes.POSITION}
-              setModalVisible={setModalVisible}
-              setSelected={setSelected}
-            />
-          );
-        })}
+      <View style={{paddingHorizontal: 16}}>
+        {/* 필터 영역 */}
+        <TopFilter data={FILTER} />
+        {/* 필터 영역 */}
 
-        <BottomSheet
-          modalVisible={modalVisible}
-          setModalVisible={setModalVisible}
-          filterData={filterData}
-        />
+        {/*<BottomSheet*/}
+        {/*  modalVisible={modalVisible}*/}
+        {/*  setModalVisible={setModalVisible}*/}
+        {/*  filterData={filterData}*/}
+        {/*/>*/}
       </View>
       <NaverMapView
         style={{width: '100%', height: '100%'}}
@@ -198,6 +238,14 @@ function RecruitMapScreen() {
         title={'목록보기'}
         icon={iconPath.LIST}
       />
+      <Modal
+        modalVisible={modalVisible}
+        setModalVisible={setModalVisible}
+        title={modalTitle}
+        modalData={modalData}
+        type={'check'}
+        onFilter={onFilter}
+      />
     </SafeAreaView>
   );
 }
@@ -205,7 +253,7 @@ function RecruitMapScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    paddingBottom: 40,
+    // paddingBottom: 40,
   },
   filter: {flexDirection: 'row', paddingVertical: 8, paddingHorizontal: 16},
 });
