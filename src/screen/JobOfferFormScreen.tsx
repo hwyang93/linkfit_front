@@ -14,6 +14,9 @@ import Input, {KeyboardTypes} from '@components/Input';
 import {useState} from 'react';
 import SelectBox from '@components/SelectBox';
 import LinearGradient from 'react-native-linear-gradient';
+import MultipleImagePicker, {
+  MediaType,
+} from '@baronha/react-native-multiple-image-picker';
 
 function JobOfferFormScreen() {
   const [offerTitle, setOfferTitle] = useState('');
@@ -34,13 +37,34 @@ function JobOfferFormScreen() {
   const [loading, setLoading] = useState<boolean>(false);
   const canGoNext = false;
 
+  const [images, setImages] = useState<any>([]);
+
+  const openPicker = async () => {
+    try {
+      const response = await MultipleImagePicker.openPicker({
+        mediaType: 'image',
+        selectedAssets: images,
+        isExportThumbnail: true,
+        maxSelectedAssets: 5,
+        maxVideo: 0,
+        usedCameraButton: false,
+        isCrop: true,
+        isCropCircle: true,
+      });
+      console.log('response: ', response);
+      setImages(response);
+    } catch (e: any) {
+      console.log(e.code, e.message);
+    }
+  };
+
   return (
     <DismissKeyboardView>
       <View style={styles.container}>
-        <View style={[styles.photoBox, common.mb16]}>
+        <Pressable style={[styles.photoBox, common.mb16]} onPress={openPicker}>
           <Image source={iconPath.PHOTO} style={[common.size24]} />
           <Text style={common.text_s}>0/5</Text>
-        </View>
+        </Pressable>
 
         {/* 글 제목 */}
         <View style={common.mb16}>
