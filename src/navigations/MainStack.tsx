@@ -62,6 +62,7 @@ import SendSuggestionDetailScreen from '@screen/My/SendSuggestionDetailScreen';
 import {SetStateAction, useState} from 'react';
 import Modal from '@components/ModalSheet';
 import MyNotificationScreen from '@screen/My/MyNotificationScreen';
+import MyProfileScreen from '@screen/My/MyProfileScreen';
 
 const Stack = createNativeStackNavigator<LoggedInParamList>();
 
@@ -217,10 +218,27 @@ const MainStack = () => {
             },
           }}
         />
+        {/* 강사 프로필 화면 */}
         <Stack.Screen
           name="Profile"
           component={ProfileScreen}
           options={{title: '프로필', headerRight: HeaderRight}}
+        />
+        {/* 나의 프로필 화면 */}
+        <Stack.Screen
+          name="MyProfile"
+          component={MyProfileScreen}
+          options={{
+            title: '프로필',
+            headerRight: () => (
+              <Pressable
+                onPress={() => {}}
+                hitSlop={10}
+                style={[common.mh4, common.size24]}>
+                <Image source={iconPath.ADD_BUTTON} style={common.size24} />
+              </Pressable>
+            ),
+          }}
         />
         <Stack.Screen
           name="ProfileEdit"

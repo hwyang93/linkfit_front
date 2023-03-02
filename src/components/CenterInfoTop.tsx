@@ -4,7 +4,6 @@ import {iconPath} from '@util/iconPath';
 import {GRAY} from '@styles/colors';
 // import LinkCollection from '@components/LinkCollection';
 import OfferListItem from '@components/OfferListItem';
-import React from 'react';
 
 function CenterInfoTop() {
   const OFFERS = [
@@ -115,7 +114,6 @@ function CenterInfoTop() {
 
       <View style={[common.mt20, common.mb16]}>
         <Text style={[common.text_m, common.fwb, common.mb8]}>채용 중</Text>
-
         {/* 채용중인 항목 리스트 */}
         <OfferListItem offer={OFFERS} button={true} />
       </View>

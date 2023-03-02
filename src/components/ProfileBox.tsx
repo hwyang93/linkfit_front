@@ -8,12 +8,16 @@ import {LoggedInParamList} from '../../AppInner';
 
 function ProfileBox({memberInfo}: any) {
   const navigation = useNavigation<NavigationProp<LoggedInParamList>>();
+  console.log('마이 스크린에서 받은 ', memberInfo);
 
   return (
     <View>
       <Pressable
         style={styles.profileBox}
-        onPress={() => navigation.navigate('ProfileEdit', {memberInfo})}>
+        onPress={() => navigation.navigate('MyProfile', {memberInfo})}
+        // onPress={() => navigation.navigate('MyProfile')}
+        // onPress={() => navigation.navigate('ProfileEdit', {memberInfo})}
+      >
         <View style={[common.mr16, styles.thumbnailBox]}>
           <Image
             source={

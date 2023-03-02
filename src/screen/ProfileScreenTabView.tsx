@@ -262,8 +262,10 @@ function ProfileScreenTabView() {
               <Text style={[common.text, {alignSelf: 'flex-end'}]}>
                 {instructor.career}
               </Text>
-              <Text style={{marginHorizontal: 8}}>|</Text>
-              <Text style={[common.text_s]}>{instructor.address}</Text>
+              <Text style={[common.mh8, common.fcg]}>|</Text>
+              <Text style={[common.text_s, common.fcg]}>
+                {instructor.address}
+              </Text>
             </View>
 
             <View style={common.rowCenter}>

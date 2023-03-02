@@ -1,5 +1,4 @@
 import {
-  Alert,
   Image,
   Pressable,
   ScrollView,
