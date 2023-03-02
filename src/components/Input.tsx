@@ -1,7 +1,7 @@
 import {useState} from 'react';
 import {StyleSheet, Text, TextInput, View} from 'react-native';
 import common from '@styles/common';
-import {INPUT} from '@styles/colors';
+import {GRAY, INPUT} from '@styles/colors';
 
 export const KeyboardTypes = {
   DEFAULT: 'default',
@@ -62,7 +62,7 @@ const Input = ({
         <Text
           style={[
             common.label,
-            {color: value || isFocused ? INPUT.FOCUS : INPUT.DEFAULT},
+            {color: value || isFocused ? INPUT.FOCUS : GRAY.LIGHT},
             // {color: value && !isFocused ? INPUT.DEFAULT : INPUT.DEFAULT},
           ]}>
           {label}
@@ -72,7 +72,7 @@ const Input = ({
         {...props}
         style={[
           common.textInput,
-          {borderColor: value || isFocused ? INPUT.FOCUS : INPUT.DEFAULT},
+          {borderColor: value || isFocused ? INPUT.FOCUS : GRAY.LIGHT},
           multiline && styles.multiline,
           // {borderColor: value && !isFocused ? INPUT.DEFAULT : INPUT.DEFAULT},
         ]}

@@ -32,7 +32,9 @@ function Tabs() {
           tabBarLabelStyle: {fontSize: 16, fontWeight: '700'},
           tabBarActiveTintColor: BLUE.DEFAULT,
           tabBarInactiveTintColor: GRAY.DEFAULT,
-          tabBarItemStyle: {width: tabWidth},
+          tabBarItemStyle: {
+            width: tabWidth,
+          },
           tabBarContentContainerStyle: {
             alignItems: 'center',
             justifyContent: 'center',
