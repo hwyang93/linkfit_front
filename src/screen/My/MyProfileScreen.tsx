@@ -5,14 +5,22 @@ import {
   Image,
   Text,
   Pressable,
+  Alert,
 } from 'react-native';
 import {Tabs, MaterialTabBar} from 'react-native-collapsible-tab-view';
 import {BLUE, GRAY, WHITE} from '@styles/colors';
 import common from '@styles/common';
 import {iconPath} from '@util/iconPath';
-import {NavigationProp, useNavigation} from '@react-navigation/native';
-import {LoggedInParamList} from '../../AppInner';
-import {useCallback, useState} from 'react';
+import {
+  NavigationProp,
+  RouteProp,
+  useNavigation,
+  useRoute,
+} from '@react-navigation/native';
+import {LoggedInParamList} from '../../../AppInner';
+import {useCallback, useEffect, useState} from 'react';
+import {useSelector} from 'react-redux';
+import {RootState} from '@store/reducer';
 
 // const HEADER_HEIGHT = 250;
 
@@ -22,57 +30,91 @@ const imageSize = (width - 6) / 3;
 
 // 센터 프로필 상단 영역 시작
 function Header() {
+  // const memberInfo = useSelector((state: RootState) => state.user);
+  // const route = useRoute<RouteProp<LoggedInParamList, 'Profile'>>();
   const navigation = useNavigation<NavigationProp<LoggedInParamList>>();
+  // const [instructor, setInstructor] = useState({});
+  // const [reputation, setReputation] = useState({});
+
+  // console.log('member', memberInfo);
+
   return (
     <View>
-      <View style={common.mb16}>
-        <Image
-          source={require('../assets/images/center_01.png')}
-          resizeMode={'cover'}
-          style={common.imgBox}
-        />
-      </View>
-      <View style={[common.rowBetween, common.mb8]}>
-        <View style={common.rowCenter}>
-          <Text style={[common.title_l, common.mr8]}>링크 필라테스</Text>
+      <View style={styles.profileBox}>
+        <View style={[common.mr16, styles.thumbnailBox]}>
           <Image
-            source={iconPath.FAVORITE_FILL}
-            style={[common.size24, common.mr4]}
+            source={require('../../assets/images/thumbnail.png')}
+            style={common.thumbnail_l}
           />
-          <Text style={[common.text_m, common.fwb]}>23</Text>
         </View>
+        <View>
+          <View style={common.rowCenter}>
+            <Text style={[common.text_l, common.fwb, common.mr8]}>
+              {/*{instructor.nickname}*/}
+              닉네임
+            </Text>
+            <View style={common.rowCenter}>
+              <Text style={[common.text_s, {color: BLUE.DEFAULT}]}>
+                인증강사
+              </Text>
+              <Image
+                style={{marginLeft: 2, width: 14, height: 14}}
+                source={iconPath.CERTIFICATION}
+              />
+            </View>
+          </View>
+
+          <View style={common.rowCenter}>
+            <Text style={[common.text_m, common.fwb, common.mr8]}>
+              필라테스
+            </Text>
+            <Text style={[common.text]}>
+              {/*{instructor.career}*/}
+              3년
+            </Text>
+            <Text style={[common.mh8]}>|</Text>
+            <Text style={[common.text_s, common.fcg]}>
+              {/*{instructor.address}*/}
+              서울 · 송파구
+            </Text>
+          </View>
+
+          <View style={common.rowCenter}>
+            <Pressable onPress={() => Alert.alert('click', 'test')}>
+              <Image
+                source={iconPath.FAVORITE_FILL}
+                style={[common.size24, common.mr8]}
+              />
+            </Pressable>
+            <Text style={[common.text_m, common.fwb, common.mr8]}>
+              {/*{instructor.follower}*/}
+              23
+            </Text>
+          </View>
+        </View>
+
         <Pressable
           style={styles.pencil}
           onPress={() => navigation.navigate('CenterProfileEdit')}>
           <Image source={iconPath.PENCIL_B} style={[common.size24]} />
         </Pressable>
       </View>
-      <View style={[common.rowCenter, common.mb16]}>
-        <Text style={[common.text_m, common.fwb]}>필라테스</Text>
-        <Text style={[common.mh8, common.fcg]}>|</Text>
-        <Text style={[common.text_s, {color: GRAY.DARK}]}>서울 · 송파구</Text>
-      </View>
-      <View style={common.mb16}>
-        <Text style={[common.text_m, common.fwb]}>소개글</Text>
-        <Text style={common.text_m}>
-          강남구 역삼동에 위치한 필라테스 센터입니다. 근처에서 젤 좋아요.
-          진짜진짜 진짜루.
-        </Text>
-      </View>
     </View>
   );
 }
 // 센터 프로필 상단 영역 끝
 
-function MyCenterProfileScreen() {
+function MyProfileScreen({memberInfo}: any) {
   const navigation = useNavigation<NavigationProp<LoggedInParamList>>();
 
+  console.log('그럼 여기는', memberInfo);
+
   const tab1Data = [
-    {src: require('@images/center_01.png')},
-    {src: require('@images/center_02.png')},
-    {src: require('@images/center_03.png')},
-    {src: require('@images/center_04.png')},
-    {src: require('@images/center_05.png')},
+    {src: require('@images/instructor_01.png')},
+    {src: require('@images/instructor_02.png')},
+    {src: require('@images/instructor_03.png')},
+    {src: require('@images/instructor_04.png')},
+    {src: require('@images/instructor_05.png')},
   ];
   const tab2Data = [
     {
@@ -94,8 +136,8 @@ function MyCenterProfileScreen() {
 
   const IntroduceTabHeader = () => {
     return (
-      <View style={common.mb8}>
-        <Text style={[common.text_m, common.fwb]}>센터 사진</Text>
+      <View style={common.mv8}>
+        <Text style={[common.text_m, common.fwb]}>포트폴리오</Text>
       </View>
     );
   };
@@ -206,7 +248,7 @@ function MyCenterProfileScreen() {
       }}
       // headerHeight={HEADER_HEIGHT}
       renderTabBar={tabBar}>
-      <Tabs.Tab name="센터 소개">
+      <Tabs.Tab name="내 소개">
         <View style={{padding: 16}}>
           <Tabs.FlatList
             data={tab1Data}
@@ -217,7 +259,7 @@ function MyCenterProfileScreen() {
           />
         </View>
       </Tabs.Tab>
-      <Tabs.Tab name="후기 관리">
+      <Tabs.Tab name="받은 후기">
         <View style={{padding: 16}}>
           <Tabs.FlatList
             data={tab2Data}
@@ -247,6 +289,23 @@ const styles = StyleSheet.create({
     width: tabWidth,
     backgroundColor: BLUE.DEFAULT,
   },
+  profileBox: {
+    position: 'relative',
+    flexDirection: 'row',
+    justifyContent: 'flex-start',
+    alignItems: 'center',
+    paddingBottom: 16,
+  },
+  thumbnailBox: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    width: 60,
+    height: 60,
+    borderRadius: 40,
+    backgroundColor: GRAY.LIGHT,
+  },
+  // thumbnail: {width: '50%', height: '50%'},
+  kebabIcon: {position: 'absolute', top: 0, right: 0},
 });
 
-export default MyCenterProfileScreen;
+export default MyProfileScreen;

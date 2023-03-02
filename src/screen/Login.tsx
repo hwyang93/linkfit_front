@@ -60,6 +60,7 @@ function LogIn() {
       })
       .catch((e: any) => {
         setLoading(false);
+        // @ts-ignore
         toastRef.current.show({
           message: e.message,
           type: 'error',

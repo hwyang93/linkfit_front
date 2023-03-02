@@ -16,7 +16,7 @@ type ListProps = {
   };
 };
 
-// todo: 필라테스 요가에 따라 썸넹일 이미지 변경되게 세팅 해야함(참고 ProfileScreen.tsx)
+// todo: 필라테스 요가에 따라 썸넹일 이미지 변경되게 세팅 해야함(참고 MyProfileScreen.tsx)
 
 function InstructorListItem({item}: ListProps) {
   const navigation = useNavigation<NavigationProp<LoggedInParamList>>();

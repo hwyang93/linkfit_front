@@ -103,6 +103,9 @@ function MyScreen() {
         });
     }
   }, [isFocused]);
+
+  console.log('myInfo 내용', myInfo);
+
   return (
     <ScrollView
       style={{flex: 1, backgroundColor: WHITE}}
@@ -130,7 +133,6 @@ function MyScreen() {
         </View>
 
         <View style={[common.mb8]}>
-          {/* route 필요 */}
           <MyTitle title={'이력서'} button={true} link={'ResumeManage'} />
         </View>
 

@@ -2,21 +2,25 @@ import {Alert, Image, Pressable, Text, View} from 'react-native';
 import common from '@styles/common';
 import {GRAY} from '@styles/colors';
 import {iconPath} from '@util/iconPath';
+import {NavigationProp, useNavigation} from '@react-navigation/native';
+import {LoggedInParamList} from '../../AppInner';
 
 type CenterInfoProps = {
-  title: string;
-  type: string;
-  location: string;
-  tel: number;
+  title?: string;
+  type?: string;
+  location?: string;
+  tel?: number;
+  link?: any;
 };
 
-function CenterInfoComponent() {
+function CenterInfoComponent({link}: CenterInfoProps) {
+  const navigation = useNavigation<NavigationProp<LoggedInParamList>>();
   // todo: 전화걸기 (시뮬레이션 환경에선 안됨)
   // import { Linking } from 'react-native';
   // () => Linking.openURL(`tel:01099003171`)
   // {Linking.openURL(`tel:${phoneNumber}`)}
   return (
-    <View>
+    <Pressable onPress={() => navigation.navigate(link)}>
       <View style={common.mb16}>
         <Image
           source={require('../assets/images/center_01.png')}
@@ -47,7 +51,7 @@ function CenterInfoComponent() {
           </Pressable>
         </View>
       </View>
-    </View>
+    </Pressable>
   );
 }
 export default CenterInfoComponent;
