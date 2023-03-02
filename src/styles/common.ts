@@ -1,4 +1,4 @@
-import {StyleSheet, Dimensions, ProgressBarAndroid} from 'react-native';
+import {StyleSheet, Dimensions} from 'react-native';
 import {BLACK, BLUE, GRAY, INPUT, WHITE} from './colors';
 
 export const Font = {
@@ -163,6 +163,8 @@ const common = StyleSheet.create({
     alignItems: 'center',
     width: '100%',
     height: 56,
+    paddingVertical: 10,
+    paddingHorizontal: 24,
     backgroundColor: '#dcdcdc',
     borderRadius: 28,
   },
@@ -180,7 +182,7 @@ const common = StyleSheet.create({
     paddingHorizontal: 4,
     top: -4,
     left: 16,
-    color: INPUT.DEFAULT,
+    color: GRAY.LIGHT,
     fontSize: 12,
     fontWeight: 'bold',
     backgroundColor: '#ffffff',
@@ -193,7 +195,7 @@ const common = StyleSheet.create({
     color: '#292929',
     fontSize: 16,
     borderWidth: 2,
-    borderColor: INPUT.DEFAULT,
+    borderColor: GRAY.LIGHT,
     borderRadius: 8,
   },
   // select box

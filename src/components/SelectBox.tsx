@@ -2,7 +2,7 @@ import {useState} from 'react';
 import {StyleSheet} from 'react-native';
 import SelectDropdown from 'react-native-select-dropdown';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
-import {INPUT} from '@styles/colors';
+import {GRAY, INPUT} from '@styles/colors';
 
 type selectProps = {
   data: any;
@@ -59,7 +59,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     borderRadius: 8,
     borderWidth: 2,
-    borderColor: INPUT.DEFAULT,
+    borderColor: GRAY.LIGHT,
   },
   selectText: {
     color: '#acacac',
