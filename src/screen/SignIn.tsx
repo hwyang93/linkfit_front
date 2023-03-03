@@ -26,7 +26,7 @@ type SignInScreenProps = NativeStackScreenProps<LoggedInParamList, 'SignIn'>;
 function SignIn({navigation}: SignInScreenProps) {
   const [loading, setLoading] = useState<boolean>(false);
   // 이메일, 비밀번호
-  const [email, setEmail] = useState<string>('');
+  const [email, setEmail] = useState<string>('test@test.com');
   const emailInput = useInput('', validateEmail);
   // 오류메시지 상태저장
   const [emailMessage, setEmailMessage] = useState<string>('');

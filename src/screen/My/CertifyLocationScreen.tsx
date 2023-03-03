@@ -68,7 +68,6 @@ function CertifyLocationScreen() {
   }, []);
 
   const getAuthInfo = useCallback(async () => {
-    console.log('1');
     await fetchRegionAuth()
       .then(({data}: any) => {
         setAuthInfo({

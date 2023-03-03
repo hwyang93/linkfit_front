@@ -175,6 +175,7 @@ function ApplicationStatusScreen() {
                     onPress={() =>
                       navigation.navigate('ResumePreview', {
                         resumeSeq: application.resumeSeq,
+                        applySeq: application.seq,
                       })
                     }>
                     <Image source={iconPath.RESUME} style={[common.size24]} />

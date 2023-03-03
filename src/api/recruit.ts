@@ -23,3 +23,11 @@ export function fetchRecruitApplicationsMy() {
 export function fetchRecruitApplications(seq: number) {
   return request.get(`/recruit/${seq}/apply`);
 }
+
+export function fetchRecruitApplication(seq: number) {
+  return request.get(`/recruit/apply/${seq}`);
+}
+
+export function updateRecruitApplyStatus(seq: number, data: object) {
+  return request.patch(`/recruit/${seq}/apply`, data);
+}

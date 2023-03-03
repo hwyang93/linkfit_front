@@ -24,7 +24,7 @@ const windowWidth = Dimensions.get('window').width;
 const tabWidth = (windowWidth - 32) / 2;
 type props = NativeStackScreenProps<LoggedInParamList, 'ApplicantStatus'>;
 
-type tabProps = {waitingList: any; finishApplications: any};
+type tabProps = {waitingApplications: any[]; finishApplications: any[]};
 
 function ApplicantStatusScreen({route}: props) {
   const [recruitInfo, setRecruitInfo] = useState<any>({});
@@ -82,14 +82,14 @@ function ApplicantStatusScreen({route}: props) {
         {/* 컨텐츠 영역 */}
       </View>
       <Tabs
-        waitingList={waitingApplications}
+        waitingApplications={waitingApplications}
         finishApplications={finishApplications}
       />
     </>
   );
 }
 
-export function Tabs({waitingList, finishApplications}: tabProps) {
+export function Tabs({waitingApplications, finishApplications}: tabProps) {
   return (
     <Tab.Navigator
       screenOptions={{
@@ -114,13 +114,13 @@ export function Tabs({waitingList, finishApplications}: tabProps) {
       }}>
       <Tab.Screen
         name="대기중"
-        component={ApplicantWaitingComponent}
-        initialParams={{list: waitingList}}
+        children={() => (
+          <ApplicantWaitingComponent list={waitingApplications} />
+        )}
       />
       <Tab.Screen
         name="완료"
-        component={ApplicantFinishComponent}
-        initialParams={{list: finishApplications}}
+        children={() => <ApplicantFinishComponent list={finishApplications} />}
       />
     </Tab.Navigator>
   );

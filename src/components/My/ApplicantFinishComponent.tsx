@@ -14,7 +14,9 @@ function ApplicantFinishComponent({list}: any) {
 
   const [modalTitle, setModalTitle] = useState('');
   const [modalData, setModalData] = useState<any[]>([]);
+
   const [applications, setApplications] = useState<any[]>([]);
+
   useEffect(() => {
     setApplications(list);
   }, [list]);
@@ -28,40 +30,7 @@ function ApplicantFinishComponent({list}: any) {
       },
     },
   ];
-  const DATA = [
-    {
-      id: 1,
-      date: '2022.12.09 작성',
-      status: '대기중',
-      title: '이력서 제목',
-      field: '',
-      job: () => {},
-    },
-    {
-      id: 2,
-      date: '2023.01.09 작성',
-      status: '대기중',
-      title: '이력서 제목',
-      field: '',
-      job: () => {},
-    },
-    {
-      id: 3,
-      date: '2023.02.09 작성',
-      status: '대기중',
-      title: '이력서 제목',
-      field: '',
-      job: () => {},
-    },
-    {
-      id: 4,
-      date: '2023.02.09 작성',
-      status: '대기중',
-      title: '이력서 제목',
-      field: '',
-      job: () => {},
-    },
-  ];
+
   const MODAL = [
     {
       value: '일주일',
@@ -91,7 +60,7 @@ function ApplicantFinishComponent({list}: any) {
         <TopFilter data={FILTER} />
       </View>
       <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
-        <ApplicantListItem data={list} />
+        <ApplicantListItem list={applications} />
         <View style={{paddingBottom: 24}} />
       </ScrollView>
 

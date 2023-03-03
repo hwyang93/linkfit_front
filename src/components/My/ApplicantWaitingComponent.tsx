@@ -7,7 +7,7 @@ import {SetStateAction, useEffect, useState} from 'react';
 import Modal from '@components/ModalSheet';
 import TopFilter from '@components/TopFilter';
 
-function ApplicantWaitingComponent(props: any) {
+function ApplicantWaitingComponent({list}: any) {
   const navigation = useNavigation<NavigationProp<LoggedInParamList>>();
   const [modalVisible, setModalVisible] =
     useState<SetStateAction<boolean>>(false);
@@ -18,9 +18,8 @@ function ApplicantWaitingComponent(props: any) {
   const [applications, setApplications] = useState<any[]>([]);
 
   useEffect(() => {
-    console.log(props.route.params.list);
-    setApplications(props.route.params.list);
-  }, [props.route.params.list]);
+    setApplications(list);
+  }, [list]);
   const FILTER = [
     {
       value: '기간',
@@ -31,28 +30,7 @@ function ApplicantWaitingComponent(props: any) {
       },
     },
   ];
-  const DATA = [
-    {
-      id: 1,
-      date: '2022.12.09 작성',
-      status: '대기중',
-      title: '이력서 제목',
-      field: '',
-      job: () => {
-        // navigation.navigate('ResumePreview');
-      },
-    },
-    {
-      id: 2,
-      date: '2023.01.09 작성',
-      status: '대기중',
-      title: '이력서 제목',
-      field: '',
-      job: () => {
-        // navigation.navigate('ResumePreview');
-      },
-    },
-  ];
+
   const MODAL = [
     {
       value: '일주일',
