@@ -2,13 +2,14 @@ import common from '@styles/common';
 import {Image, Pressable, Text, View} from 'react-native';
 import {iconPath} from '@util/iconPath';
 import {useEffect, useState} from 'react';
+import {NavigationProp, useNavigation} from '@react-navigation/native';
+import {LoggedInParamList} from '../../../AppInner';
 
 function ApplicantListItem({list}: any) {
+  const navigation = useNavigation<NavigationProp<LoggedInParamList>>();
   const [applications, setApplications] = useState<any[]>([]);
-
   useEffect(() => {
     setApplications(list);
-    console.log(list);
   }, [list]);
   return (
     <View>
@@ -17,7 +18,12 @@ function ApplicantListItem({list}: any) {
           <Pressable
             key={index}
             style={[common.basicBox, common.mb8]}
-            onPress={() => {}}>
+            onPress={() => {
+              navigation.navigate('ResumePreview', {
+                resumeSeq: application.resumeSeq,
+                applySeq: application.seq,
+              });
+            }}>
             <View style={[common.rowCenter, common.mb8]}>
               <Text style={[common.text_s, common.fcg]}>
                 {application.createdAt}

@@ -19,28 +19,60 @@ import {NavigationProp, useNavigation} from '@react-navigation/native';
 import {LoggedInParamList} from '../../../AppInner';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import {fetchResume} from '@api/resume';
+import {fetchRecruitApplication, updateRecruitApplyStatus} from '@api/recruit';
 
 type Props = NativeStackScreenProps<LoggedInParamList, 'ResumePreview'>;
 
-function ResumePreviewScreen({route}: Props) {
+function ResumePreviewScreen({route, navigation}: Props) {
   const [loading, setLoading] = useState<boolean>(false);
-  const navigation = useNavigation<NavigationProp<LoggedInParamList>>();
+
   const [modalVisible, setModalVisible] =
     useState<SetStateAction<boolean>>(false);
   const [modalTitle, setModalTitle] = useState('');
   const [modalData, setModalData] = useState<any[]>([]);
   const [resume, setResume] = useState<any>({});
+  const [applyResult, setApplyResult] = useState('');
 
   const getResume = useCallback(() => {
+    if (route.params.applySeq) {
+      fetchRecruitApplication(route.params.applySeq)
+        .then(({data}: any) => {
+          if (data.status === 'APPLY') {
+            setApplyResult(data.status);
+          }
+          if (data.status === 'PASS') {
+            setApplyResult(data.status);
+          }
+        })
+        .catch((e: any) => {
+          Alert.alert(e.message);
+          navigation.goBack();
+        });
+    }
     fetchResume(route.params.resumeSeq)
       .then(({data}: any) => {
         setResume(data);
-        console.log(data);
       })
       .catch((e: any) => {
         Alert.alert(e.message);
+        navigation.goBack();
       });
-  }, [route.params.resumeSeq]);
+  }, [route.params.applySeq, route.params.resumeSeq, navigation]);
+
+  const onUpdatePassOrNot = useCallback(
+    (status: string) => {
+      updateRecruitApplyStatus(route.params.applySeq, {status: status})
+        .then(({data}: any) => {
+          console.log(data);
+          Alert.alert('합격 여부 전달이 완료되었어요!');
+          navigation.goBack();
+        })
+        .catch((e: any) => {
+          Alert.alert(e.message);
+        });
+    },
+    [navigation, route.params.applySeq],
+  );
 
   useEffect(() => {
     getResume();
@@ -49,11 +81,11 @@ function ResumePreviewScreen({route}: Props) {
   const MODAL = [
     {
       value: '합격',
-      job: () => {},
+      job: onUpdatePassOrNot('PASS'),
     },
     {
       value: '불합격',
-      job: () => {},
+      job: onUpdatePassOrNot('FAIL'),
     },
   ];
 
@@ -166,38 +198,42 @@ function ResumePreviewScreen({route}: Props) {
         </View>
 
         {/* 합격 여부 전달하기 버튼 */}
-        <View style={common.mt20}>
-          <Pressable onPress={passModal}>
-            <LinearGradient
-              style={common.button}
-              start={{x: 0.1, y: 0.5}}
-              end={{x: 0.6, y: 1}}
-              colors={['#74ebe4', '#3962f3']}>
-              {loading ? (
-                <ActivityIndicator color="white" />
-              ) : (
-                <Text style={common.buttonText}>합격 여부 전달하기</Text>
-              )}
-            </LinearGradient>
-          </Pressable>
-        </View>
+        {applyResult === 'APPLY' && (
+          <View style={common.mt20}>
+            <Pressable onPress={passModal}>
+              <LinearGradient
+                style={common.button}
+                start={{x: 0.1, y: 0.5}}
+                end={{x: 0.6, y: 1}}
+                colors={['#74ebe4', '#3962f3']}>
+                {loading ? (
+                  <ActivityIndicator color="white" />
+                ) : (
+                  <Text style={common.buttonText}>합격 여부 전달하기</Text>
+                )}
+              </LinearGradient>
+            </Pressable>
+          </View>
+        )}
 
         {/* todo: 합격 일 경우 후기 작성하기 버튼 표시 */}
-        <View style={common.mt20}>
-          <Pressable onPress={toReview}>
-            <LinearGradient
-              style={common.button}
-              start={{x: 0.1, y: 0.5}}
-              end={{x: 0.6, y: 1}}
-              colors={['#74ebe4', '#3962f3']}>
-              {loading ? (
-                <ActivityIndicator color="white" />
-              ) : (
-                <Text style={common.buttonText}>후기 작성하기</Text>
-              )}
-            </LinearGradient>
-          </Pressable>
-        </View>
+        {applyResult === 'PASS' && (
+          <View style={common.mt20}>
+            <Pressable onPress={toReview}>
+              <LinearGradient
+                style={common.button}
+                start={{x: 0.1, y: 0.5}}
+                end={{x: 0.6, y: 1}}
+                colors={['#74ebe4', '#3962f3']}>
+                {loading ? (
+                  <ActivityIndicator color="white" />
+                ) : (
+                  <Text style={common.buttonText}>후기 작성하기</Text>
+                )}
+              </LinearGradient>
+            </Pressable>
+          </View>
+        )}
 
         {/* 모달 */}
         <Modal

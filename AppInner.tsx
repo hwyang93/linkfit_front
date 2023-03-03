@@ -33,14 +33,13 @@ export type LoggedInParamList = {
   SendSuggestion: undefined;
   SendSuggestionDetail: undefined;
 
-  MyProfile: {memberInfo: any};
   ProfileEdit: {memberInfo: any};
   CertifyLocation: undefined;
   CertifyInstructor: undefined;
   CertifyInstructorForm: undefined;
   ResumeManage: undefined;
   ResumeForm: undefined;
-  ResumePreview: {resumeSeq: number};
+  ResumePreview: {resumeSeq: number; applySeq: any};
   ReviewManage: undefined;
   ReviewForm: {reputationInfo: any};
   ApplicationStatus: undefined;

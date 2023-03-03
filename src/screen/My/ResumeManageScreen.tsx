@@ -64,7 +64,9 @@ function ResumeManageScreen() {
       value: '미리보기',
       job: () => {
         closeModel();
-        navigation.navigate('ResumePreview', {resumeSeq: selectedResume.seq});
+        navigation.navigate('ResumePreview', {
+          resumeSeq: selectedResume.seq,
+        });
       },
     },
     {

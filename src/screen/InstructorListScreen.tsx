@@ -8,7 +8,6 @@ function InstructorListScreen() {
   useEffect(() => {
     fetchInstructors()
       .then(({data}: any) => {
-        console.log(data);
         setInstructors(data);
       })
       // .catch((e: {message: () => any}) => {

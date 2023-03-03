@@ -102,47 +102,6 @@ function MyRecruitmentScreen() {
       job: () => {},
     },
   ];
-  const DATA = [
-    {
-      id: 1,
-      date: '2022.12.09 작성',
-      status: '진행 중',
-      title: '공고 제목',
-      field: '필라테스',
-      job: () => {
-        navigation.navigate('ApplicantStatus');
-      },
-      kebab: () => {
-        clickKebab();
-      },
-    },
-    {
-      id: 2,
-      date: '2022.1.09 작성',
-      status: '진행 중',
-      title: '공고 제목',
-      field: '필라테스',
-      job: () => {
-        navigation.navigate('ApplicantStatus');
-      },
-      kebab: () => {
-        clickKebab();
-      },
-    },
-    {
-      id: 3,
-      date: '2022.2.09 작성',
-      status: '진행 중',
-      title: '오늘부터 우리는 같이 일하는 건가요',
-      field: '요가',
-      job: () => {
-        navigation.navigate('ApplicantStatus');
-      },
-      kebab: () => {
-        clickKebab();
-      },
-    },
-  ];
 
   const openModal = () => {
     setModalVisible(true);
