@@ -8,10 +8,8 @@ import {
   View,
 } from 'react-native';
 import {GRAY} from '@styles/colors';
-import CenterInfoComponent from '@components/CenterInfoComponent';
 import hairlineWidth = StyleSheet.hairlineWidth;
 import common from '@styles/common';
-import {iconPath} from '@util/iconPath';
 import {NavigationProp, useNavigation} from '@react-navigation/native';
 import {LoggedInParamList} from '../../../AppInner';
 import BlockButton from '@components/BlockButton';
@@ -43,16 +41,9 @@ function BlockCenterComponent() {
   ];
   const onBlock = () => {};
   return (
-    <ScrollView showsVerticalScrollIndicator={false}>
-      {/*<View style={styles.followingBox}>*/}
-      {/*  <View>*/}
-      {/*    <CenterInfoComponent />*/}
-      {/*  </View>*/}
-      {/*</View>*/}
-      {BLACKLIST.length === 0 ? (
-        <EmptySet text={'차단 중인 센터가 없어요.'} />
-      ) : (
-        <>
+    <>
+      {BLACKLIST.length > 0 ? (
+        <ScrollView showsVerticalScrollIndicator={false}>
           {BLACKLIST.map((item, index) => {
             return (
               <View key={index} style={styles.listBox}>
@@ -87,10 +78,11 @@ function BlockCenterComponent() {
               </View>
             );
           })}
-        </>
+        </ScrollView>
+      ) : (
+        <EmptySet text={'차단 중인 센터가 없어요.'} />
       )}
-      <EmptySet text={'차단 중인 센터가 없어요.'} />
-    </ScrollView>
+    </>
   );
 }
 const styles = StyleSheet.create({

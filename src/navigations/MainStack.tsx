@@ -63,6 +63,7 @@ import {SetStateAction, useState} from 'react';
 import Modal from '@components/ModalSheet';
 import MyNotificationScreen from '@screen/My/MyNotificationScreen';
 import MyProfileScreen from '@screen/My/MyProfileScreen';
+import InquiryFormScreen from '@screen/My/InquiryFormScreen';
 
 const Stack = createNativeStackNavigator<LoggedInParamList>();
 
@@ -386,7 +387,12 @@ const MainStack = () => {
         <Stack.Screen
           name="Inquiry"
           component={InquiryScreen}
-          options={{title: '1:1 문의'}}
+          options={{title: '1:1 문의 내역'}}
+        />
+        <Stack.Screen
+          name="InquiryForm"
+          component={InquiryFormScreen}
+          options={{title: '문의하기'}}
         />
         <Stack.Screen
           name="Version"

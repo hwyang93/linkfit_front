@@ -21,7 +21,7 @@ export type LoggedInParamList = {
   CommunityMy: undefined;
   CommunityPostForm: undefined;
   CommunityPost: undefined;
-  My: undefined;
+  // My: undefined;
   MyCenter: undefined;
   MyCenterInfo: undefined;
   MyNotification: undefined;
@@ -33,6 +33,7 @@ export type LoggedInParamList = {
   SendSuggestion: undefined;
   SendSuggestionDetail: undefined;
 
+  MyProfile: undefined;
   ProfileEdit: {memberInfo: any};
   CertifyLocation: undefined;
   CertifyInstructor: undefined;
@@ -55,6 +56,7 @@ export type LoggedInParamList = {
   Blacklist: undefined;
   Notice: undefined;
   Inquiry: undefined;
+  InquiryForm: undefined;
   Version: undefined;
   Rule: undefined;
   LinkAdd: undefined;

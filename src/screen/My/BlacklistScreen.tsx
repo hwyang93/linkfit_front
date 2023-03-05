@@ -3,6 +3,7 @@ import {BLUE, GRAY, WHITE} from '@styles/colors';
 import {createMaterialTopTabNavigator} from '@react-navigation/material-top-tabs';
 import BlockInstructorComponent from '@components/My/BlockInstructorComponent';
 import BlockCenterComponent from '@components/My/BlockCenterComponent';
+import {SafeAreaView} from 'react-native-safe-area-context';
 
 const Tab = createMaterialTopTabNavigator();
 const windowWidth = Dimensions.get('window').width;
@@ -10,17 +11,17 @@ const tabWidth = (windowWidth - 32) / 2;
 
 const First = () => {
   return (
-    <View style={styles.container}>
+    <SafeAreaView edges={['bottom', 'left', 'right']} style={styles.container}>
       <BlockCenterComponent />
-    </View>
+    </SafeAreaView>
   );
 };
 
 function Second() {
   return (
-    <View style={styles.container}>
+    <SafeAreaView edges={['bottom', 'left', 'right']} style={styles.container}>
       <BlockInstructorComponent />
-    </View>
+    </SafeAreaView>
   );
 }
 
@@ -63,6 +64,6 @@ const styles = StyleSheet.create({
     paddingHorizontal: 16,
     paddingBottom: 16,
     backgroundColor: WHITE,
-    height: '100%',
+    // height: '100%',
   },
 });

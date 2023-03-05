@@ -10,7 +10,8 @@ type ButtonProps = {
   link?: any;
   icon?: object;
   type?: string;
-  bottom?: any;
+  right?: number;
+  bottom?: number;
   job?: () => void;
 };
 
@@ -19,6 +20,7 @@ const FloatingLinkButton = ({
   link,
   icon,
   type,
+  right,
   bottom,
   job,
 }: ButtonProps) => {
@@ -29,7 +31,7 @@ const FloatingLinkButton = ({
       {type === 'gradient' ? (
         <Pressable onPress={job}>
           <LinearGradient
-            style={[styles.listButton, {bottom: bottom}]}
+            style={[styles.listButton, {bottom: bottom, right: right}]}
             start={{x: 0.1, y: 0.5}}
             end={{x: 0.6, y: 1}}
             colors={['#74ebe4', '#3962f3']}>
