@@ -19,6 +19,7 @@ import MultipleImagePicker, {
 } from '@baronha/react-native-multiple-image-picker';
 
 function JobOfferFormScreen() {
+  const [loading, setLoading] = useState<boolean>(false);
   const [offerTitle, setOfferTitle] = useState('');
   const [position, setPosition] = useState('');
   const [education, setEducation] = useState('');
@@ -34,7 +35,6 @@ function JobOfferFormScreen() {
   const TIME = ['평일 오전', '평일 오후', '주말 오전', '주말 오후'];
   const PAY_TYPE = ['시급', '주급', '월급', '연봉'];
 
-  const [loading, setLoading] = useState<boolean>(false);
   const canGoNext = false;
 
   const [images, setImages] = useState<any>([]);

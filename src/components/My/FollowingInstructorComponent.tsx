@@ -32,7 +32,7 @@ const EMPLOYER = [
 
 function FollowingInstructorComponent() {
   return (
-    <ScrollView>
+    <ScrollView showsVerticalScrollIndicator={false}>
       <View style={styles.reviewBox}>
         <View style={common.rowCenter}>
           <Image

@@ -3,6 +3,7 @@ import {BLUE, GRAY, WHITE} from '@styles/colors';
 import {createMaterialTopTabNavigator} from '@react-navigation/material-top-tabs';
 import FollowingCenterComponent from '@components/My/FollowingCenterComponent';
 import FollowingInstructorComponent from '@components/My/FollowingInstructorComponent';
+import {SafeAreaView} from 'react-native-safe-area-context';
 
 const Tab = createMaterialTopTabNavigator();
 const windowWidth = Dimensions.get('window').width;
@@ -10,17 +11,17 @@ const tabWidth = (windowWidth - 32) / 2;
 
 const First = () => {
   return (
-    <View style={styles.container}>
+    <SafeAreaView edges={['bottom', 'left', 'right']} style={styles.container}>
       <FollowingCenterComponent />
-    </View>
+    </SafeAreaView>
   );
 };
 
 function Second() {
   return (
-    <View style={styles.container}>
+    <SafeAreaView edges={['bottom', 'left', 'right']} style={styles.container}>
       <FollowingInstructorComponent />
-    </View>
+    </SafeAreaView>
   );
 }
 

@@ -228,6 +228,7 @@ function JobPostScreen({route}: Props) {
         <FloatingLinkButton
           title={'지원하기'}
           type={'gradient'}
+          right={16}
           bottom={32}
           job={apply}
         />

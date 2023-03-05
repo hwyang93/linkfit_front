@@ -23,7 +23,7 @@ function ProfileBox({memberInfo}: any) {
             source={
               memberInfo.profileImage
                 ? {uri: memberInfo.profileImage.originFileUrl}
-                : iconPath.PILATES
+                : iconPath.THUMBNAIL
             }
             style={styles.thumbnail}
           />
