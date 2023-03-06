@@ -9,7 +9,7 @@ import {
 import common from '@styles/common';
 import {WHITE} from '@styles/colors';
 import Input, {KeyboardTypes} from '@components/Input';
-import {useCallback, useState} from 'react';
+import {useCallback, useEffect, useState} from 'react';
 import LinearGradient from 'react-native-linear-gradient';
 import {
   NavigationProp,
@@ -18,14 +18,33 @@ import {
   useRoute,
 } from '@react-navigation/native';
 import {LoggedInParamList} from '../../../AppInner';
-import {updateMemberReputation} from '@api/member';
+import {createReview, updateMemberReputation} from '@api/member';
 
 function ReviewFormScreen() {
   const [loading, setLoading] = useState<boolean>(false);
   const navigation = useNavigation<NavigationProp<LoggedInParamList>>();
   const route = useRoute<RouteProp<LoggedInParamList, 'ReviewForm'>>();
   const [reputationInfo] = useState<any>(route.params.reputationInfo);
-  const [comment, setComment] = useState(reputationInfo.comment);
+  const [comment, setComment] = useState(reputationInfo?.comment);
+  const [status, setStatus] = useState('');
+
+  const onCreateReputation = useCallback(() => {
+    const data = {
+      recruitSeq: reputationInfo.recruitSeq,
+      comment: comment,
+      evaluationMemberSeq: reputationInfo.evaluationMemberSeq,
+      targetMemberSeq: reputationInfo.targetMemberSeq,
+    };
+    console.log(data);
+    createReview(data)
+      .then(() => {
+        Alert.alert('후기 작성이 완료되었어요!');
+        navigation.goBack();
+      })
+      .catch((e: any) => {
+        Alert.alert(e.message);
+      });
+  }, [comment, reputationInfo?.seq]);
 
   const onUpdateReputation = useCallback(() => {
     const data = {comment: comment};
@@ -37,7 +56,23 @@ function ReviewFormScreen() {
       .catch((e: any) => {
         Alert.alert(e.message);
       });
-  }, [comment, reputationInfo.seq]);
+  }, [comment, reputationInfo?.seq]);
+
+  const onSubmitHandler = useCallback(() => {
+    if (status === 'create') {
+      onCreateReputation();
+    } else if (status === 'update') {
+      onUpdateReputation();
+    }
+  }, [onCreateReputation, onUpdateReputation, status]);
+
+  useEffect(() => {
+    if (reputationInfo.seq) {
+      setStatus('update');
+    } else {
+      setStatus('create');
+    }
+  }, [reputationInfo]);
 
   const canGoNext = comment;
   return (
@@ -56,7 +91,7 @@ function ReviewFormScreen() {
 
       {/* 수정하기 버튼 */}
       <View style={common.mt20}>
-        <Pressable disabled={!canGoNext} onPress={onUpdateReputation}>
+        <Pressable disabled={!canGoNext} onPress={onSubmitHandler}>
           <LinearGradient
             style={common.button}
             start={{x: 0.1, y: 0.5}}
@@ -67,7 +102,9 @@ function ReviewFormScreen() {
             {loading ? (
               <ActivityIndicator color="white" />
             ) : (
-              <Text style={common.buttonText}>후기 수정하기</Text>
+              <Text style={common.buttonText}>
+                {status === 'create' ? '후기 작성하기' : '후기 수정하기'}
+              </Text>
             )}
           </LinearGradient>
         </Pressable>

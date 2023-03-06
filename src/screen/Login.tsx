@@ -34,7 +34,7 @@ function LogIn() {
   const navigation = useNavigation<NavigationProp<LoggedInParamList>>();
   const route = useRoute<RouteProp<LoggedInParamList, 'LogIn'>>();
 
-  const [password, setPassword] = useState<string>('string');
+  const [password, setPassword] = useState<string>('');
   const [loading, setLoading] = useState<boolean>(false);
 
   const canGoNext = password;

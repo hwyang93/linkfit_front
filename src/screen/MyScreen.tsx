@@ -104,7 +104,7 @@ function MyScreen() {
     }
   }, [isFocused]);
 
-  console.log('myInfo 내용', myInfo);
+  // console.log('myInfo 내용', myInfo);
 
   return (
     <ScrollView

@@ -16,22 +16,28 @@ import ApplicantWaitingComponent from '@components/My/ApplicantWaitingComponent'
 import ApplicantFinishComponent from '@components/My/ApplicantFinishComponent';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import {LoggedInParamList} from '../../../AppInner';
-import {useEffect, useState} from 'react';
+import {useCallback, useEffect, useState} from 'react';
 import {fetchRecruitApplications} from '@api/recruit';
+import {useIsFocused} from '@react-navigation/native';
 
 const Tab = createMaterialTopTabNavigator();
 const windowWidth = Dimensions.get('window').width;
 const tabWidth = (windowWidth - 32) / 2;
 type props = NativeStackScreenProps<LoggedInParamList, 'ApplicantStatus'>;
 
-type tabProps = {waitingApplications: any[]; finishApplications: any[]};
+type tabProps = {
+  waitingApplications: any[];
+  finishApplications: any[];
+  initList: object;
+};
 
 function ApplicantStatusScreen({route}: props) {
+  const isFocused = useIsFocused();
   const [recruitInfo, setRecruitInfo] = useState<any>({});
   const [waitingApplications, setWaitingApplications] = useState<any[]>([]);
   const [finishApplications, setFinishApplications] = useState<any[]>([]);
 
-  useEffect(() => {
+  const getRecruitApplications = useCallback(() => {
     fetchRecruitApplications(route.params.recruitSeq)
       .then(({data}: any) => {
         const waitingList = data.recruitApply.filter((item: any) => {
@@ -49,6 +55,12 @@ function ApplicantStatusScreen({route}: props) {
         Alert.alert(e.message);
       });
   }, [route.params.recruitSeq]);
+
+  useEffect(() => {
+    if (isFocused) {
+      getRecruitApplications();
+    }
+  }, [isFocused, route.params.recruitSeq]);
 
   return (
     <>
@@ -84,12 +96,17 @@ function ApplicantStatusScreen({route}: props) {
       <Tabs
         waitingApplications={waitingApplications}
         finishApplications={finishApplications}
+        initList={getRecruitApplications}
       />
     </>
   );
 }
 
-export function Tabs({waitingApplications, finishApplications}: tabProps) {
+export function Tabs({
+  waitingApplications,
+  finishApplications,
+  initList,
+}: tabProps) {
   return (
     <Tab.Navigator
       screenOptions={{
@@ -115,12 +132,20 @@ export function Tabs({waitingApplications, finishApplications}: tabProps) {
       <Tab.Screen
         name="대기중"
         children={() => (
-          <ApplicantWaitingComponent list={waitingApplications} />
+          <ApplicantWaitingComponent
+            list={waitingApplications}
+            initList={initList}
+          />
         )}
       />
       <Tab.Screen
         name="완료"
-        children={() => <ApplicantFinishComponent list={finishApplications} />}
+        children={() => (
+          <ApplicantFinishComponent
+            list={finishApplications}
+            initList={initList}
+          />
+        )}
       />
     </Tab.Navigator>
   );

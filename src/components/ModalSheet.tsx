@@ -141,7 +141,7 @@ function ModalSheet(props: modalProps) {
             props.modalData.map((item, index) => {
               return (
                 <View key={index} style={[common.mv8, {width: '100%'}]}>
-                  <Pressable onPress={() => {}}>
+                  <Pressable onPress={item.job}>
                     <LinearGradient
                       style={common.button}
                       start={{x: 0.1, y: 0.5}}
