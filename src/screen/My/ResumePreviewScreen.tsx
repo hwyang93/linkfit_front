@@ -15,28 +15,32 @@ import {SafeAreaView} from 'react-native-safe-area-context';
 import LinearGradient from 'react-native-linear-gradient';
 import {SetStateAction, useCallback, useEffect, useState} from 'react';
 import Modal from '@components/ModalSheet';
-import {NavigationProp, useNavigation} from '@react-navigation/native';
+
 import {LoggedInParamList} from '../../../AppInner';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import {fetchResume} from '@api/resume';
 import {fetchRecruitApplication, updateRecruitApplyStatus} from '@api/recruit';
+import {useSelector} from 'react-redux';
+import {RootState} from '@store/reducer';
 
 type Props = NativeStackScreenProps<LoggedInParamList, 'ResumePreview'>;
 
 function ResumePreviewScreen({route, navigation}: Props) {
   const [loading, setLoading] = useState<boolean>(false);
-
   const [modalVisible, setModalVisible] =
     useState<SetStateAction<boolean>>(false);
   const [modalTitle, setModalTitle] = useState('');
   const [modalData, setModalData] = useState<any[]>([]);
   const [resume, setResume] = useState<any>({});
   const [applyResult, setApplyResult] = useState('');
+  const [application, setApplication] = useState<any>({});
+  const memberInfo = useSelector((state: RootState) => state.user);
 
   const getResume = useCallback(() => {
     if (route.params.applySeq) {
       fetchRecruitApplication(route.params.applySeq)
         .then(({data}: any) => {
+          setApplication(data);
           if (data.status === 'APPLY') {
             setApplyResult(data.status);
           }
@@ -62,10 +66,11 @@ function ResumePreviewScreen({route, navigation}: Props) {
   const onUpdatePassOrNot = useCallback(
     (status: string) => {
       updateRecruitApplyStatus(route.params.applySeq, {status: status})
-        .then(({data}: any) => {
-          console.log(data);
+        .then(() => {
           Alert.alert('합격 여부 전달이 완료되었어요!');
-          navigation.goBack();
+          navigation.navigate('ApplicantStatus', {
+            recruitSeq: route.params.recruitSeq,
+          });
         })
         .catch((e: any) => {
           Alert.alert(e.message);
@@ -81,11 +86,15 @@ function ResumePreviewScreen({route, navigation}: Props) {
   const MODAL = [
     {
       value: '합격',
-      job: onUpdatePassOrNot('PASS'),
+      job: () => {
+        onUpdatePassOrNot('PASS');
+      },
     },
     {
       value: '불합격',
-      job: onUpdatePassOrNot('FAIL'),
+      job: () => {
+        onUpdatePassOrNot('FAIL');
+      },
     },
   ];
 
@@ -100,8 +109,12 @@ function ResumePreviewScreen({route, navigation}: Props) {
   };
 
   const toReview = () => {
-    // 리뷰 작성 화면으로 가기
-    // navigation.navigate('ReviewForm')
+    const params = {
+      recruitSeq: application.recruitSeq,
+      evaluationMemberSeq: memberInfo.seq,
+      targetMemberSeq: application.memberSeq,
+    };
+    navigation.navigate('ReviewForm', {reputationInfo: params});
   };
 
   return (
@@ -216,7 +229,6 @@ function ResumePreviewScreen({route, navigation}: Props) {
           </View>
         )}
 
-        {/* todo: 합격 일 경우 후기 작성하기 버튼 표시 */}
         {applyResult === 'PASS' && (
           <View style={common.mt20}>
             <Pressable onPress={toReview}>

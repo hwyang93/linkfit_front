@@ -8,7 +8,7 @@ import {LoggedInParamList} from '../../AppInner';
 
 function ProfileBox({memberInfo}: any) {
   const navigation = useNavigation<NavigationProp<LoggedInParamList>>();
-  console.log('마이 스크린에서 받은 ', memberInfo);
+  // console.log('마이 스크린에서 받은 ', memberInfo);
 
   return (
     <View>

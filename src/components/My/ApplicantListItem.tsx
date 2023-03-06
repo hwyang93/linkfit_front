@@ -22,6 +22,7 @@ function ApplicantListItem({list}: any) {
               navigation.navigate('ResumePreview', {
                 resumeSeq: application.resumeSeq,
                 applySeq: application.seq,
+                recruitSeq: application.recruitSeq,
               });
             }}>
             <View style={[common.rowCenter, common.mb8]}>

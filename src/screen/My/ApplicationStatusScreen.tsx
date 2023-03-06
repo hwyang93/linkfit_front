@@ -34,7 +34,6 @@ function ApplicationStatusScreen() {
     fetchRecruitApplicationsMy()
       .then(({data}: any) => {
         setApplications(data);
-        console.log(data);
       })
       .catch((e: any) => {
         Alert.alert(e.message);
@@ -176,6 +175,7 @@ function ApplicationStatusScreen() {
                       navigation.navigate('ResumePreview', {
                         resumeSeq: application.resumeSeq,
                         applySeq: application.seq,
+                        recruitSeq: application.recruitSeq,
                       })
                     }>
                     <Image source={iconPath.RESUME} style={[common.size24]} />

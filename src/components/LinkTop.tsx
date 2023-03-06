@@ -10,7 +10,7 @@ function LinkTop() {
   const screenWidth = Dimensions.get('window').width;
   const LINKS = [
     {
-      num: 1,
+      seq: 1,
       position: '요가',
       title: '공고 타이틀',
       companyName: '신바람요가',
@@ -18,7 +18,7 @@ function LinkTop() {
       src: require('../assets/images/sample_01.png'),
     },
     {
-      num: 2,
+      seq: 2,
       position: '필라테스',
       title: '공고 타이틀',
       companyName: '어느날테스',
@@ -26,7 +26,7 @@ function LinkTop() {
       src: require('../assets/images/sample_01.png'),
     },
     {
-      num: 3,
+      seq: 3,
       position: '필라요가',
       title: '공고 타이틀',
       companyName: '요를레이',
@@ -34,7 +34,7 @@ function LinkTop() {
       src: require('../assets/images/sample_01.png'),
     },
     {
-      num: 4,
+      seq: 4,
       position: '요가파이어',
       title: '공고 타이틀',
       companyName: '달심',
