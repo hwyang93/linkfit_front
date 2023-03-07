@@ -40,7 +40,8 @@ function OfferListItem({offer, button}: offerProps) {
           <Pressable
             style={styles.offer}
             key={index}
-            onPress={() => Alert.alert('리스트', '링크이동')}>
+            // onPress={() => Alert.alert('리스트', '링크이동')}
+          >
             <Text
               style={[common.text_l, common.fwb, {width: '85%'}]}
               numberOfLines={1}>

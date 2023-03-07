@@ -42,7 +42,8 @@
     "react-native-tab-view": "^3.3.4",
     "react-native-vector-icons": "^9.2.0",
     "react-redux": "^8.0.5",
-    "redux-flipper": "^2.0.2"
+    "redux-flipper": "^2.0.2",
+    "zustand": "^4.3.6"
   },
   "devDependencies": {
     "@babel/core": "^7.12.9",

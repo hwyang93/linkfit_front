@@ -1,10 +1,4 @@
-import {
-  Alert,
-  PermissionsAndroid,
-  Platform,
-  StyleSheet,
-  View,
-} from 'react-native';
+import {PermissionsAndroid, Platform, StyleSheet, View} from 'react-native';
 import NaverMapView, {Marker} from 'react-native-nmap';
 import {iconPath} from '@util/iconPath';
 import LocationButton from '@components/LocationButton';
@@ -16,6 +10,7 @@ import FloatingWriteButton from '@components/FloatingWriteButton';
 import Modal from '@components/ModalSheet';
 
 import TopFilter from '@components/TopFilter';
+import {recruitStore, recruitAction} from '@/zustand/recruitStore';
 
 async function requestPermission() {
   try {
@@ -35,6 +30,10 @@ async function requestPermission() {
 }
 
 function RecruitMapScreen() {
+  // 컴포넌트에서 Zustand 불러오기
+  const recruitState = recruitStore(state => state);
+  const filters = recruitState.filters;
+
   const [modalVisible, setModalVisible] =
     useState<SetStateAction<boolean>>(false);
   const [modalTitle, setModalTitle] = useState('');
@@ -55,12 +54,11 @@ function RecruitMapScreen() {
       if (result === 'granted') {
         Geolocation.getCurrentPosition(
           (pos: any) => {
-            console.log('지금위치', pos);
+            // console.log('지금위치', pos);
             setMyLocation({
               latitude: pos.coords.latitude,
               longitude: pos.coords.longitude,
             });
-            // console.log('로케이션 위치', myLocation);
           },
           error => {
             console.log(error);
@@ -85,6 +83,9 @@ function RecruitMapScreen() {
         setModalTitle('포지션');
         setModalData(MODAL);
         openModal();
+        // zustand 필터값 탭번호 1번으로 수정
+        filters.currentTab = 1;
+        recruitAction.filtersSet(filters);
       },
     },
     {
@@ -93,6 +94,8 @@ function RecruitMapScreen() {
         setModalTitle('채용형태');
         setModalData(MODAL2);
         openModal();
+        filters.currentTab = 2;
+        recruitAction.filtersSet(filters);
       },
     },
     {
@@ -101,6 +104,8 @@ function RecruitMapScreen() {
         setModalTitle('수업시간');
         setModalData(MODAL3);
         openModal();
+        filters.currentTab = 3;
+        recruitAction.filtersSet(filters);
       },
     },
   ];
@@ -111,18 +116,8 @@ function RecruitMapScreen() {
       iconOn: iconPath.LINK_ON,
       value: '전체',
       job: () => {
-        let checked = false;
-        MODAL.forEach(item => {
-          if (item.value !== '전체') {
-            if (item.checked) {
-              checked = true;
-              console.log(checked);
-            }
-          }
-        });
-        return checked;
-
-        // Alert.alert('test', 'test');
+        recruitState.filters.currentPosition = '전체';
+        recruitAction.filtersSet(recruitState.filters);
       },
     },
     {
@@ -131,17 +126,18 @@ function RecruitMapScreen() {
       value: '필라테스',
       checked: false,
       job: () => {
-        const index = MODAL.findIndex(item => {
-          return item.value === '1개월';
-        });
-        MODAL[index].checked = !MODAL[index].checked;
+        recruitState.filters.currentPosition = '필라테스';
+        recruitAction.filtersSet(recruitState.filters);
       },
     },
     {
       icon: iconPath.YOGA,
       iconOn: iconPath.YOGA_ON,
       value: '요가',
-      job: () => {},
+      job: () => {
+        recruitState.filters.currentPosition = '요가';
+        recruitAction.filtersSet(recruitState.filters);
+      },
     },
   ];
   const MODAL2 = [
@@ -184,22 +180,24 @@ function RecruitMapScreen() {
   const openModal = () => {
     setModalVisible(true);
   };
-  const onFilter = () => {
-    Alert.alert('text', 'filter!');
-  };
-
+  useEffect(() => {
+    // zustand 재방문시 filter 초기화
+    recruitAction.filtersSet({
+      currentTab: 1,
+      position: '포지션',
+      currentPosition: '포지션',
+      type: '채용형태',
+      currentType: '채용형태',
+      date: '수업시간',
+      currentDate: '수업시간',
+    });
+  }, []);
   return (
     <SafeAreaView edges={['bottom', 'left', 'right']} style={styles.container}>
       <View style={{paddingHorizontal: 16}}>
         {/* 필터 영역 */}
         <TopFilter data={FILTER} />
         {/* 필터 영역 */}
-
-        {/*<BottomSheet*/}
-        {/*  modalVisible={modalVisible}*/}
-        {/*  setModalVisible={setModalVisible}*/}
-        {/*  filterData={filterData}*/}
-        {/*/>*/}
       </View>
       <NaverMapView
         style={{width: '100%', height: '100%'}}
@@ -244,7 +242,7 @@ function RecruitMapScreen() {
         title={modalTitle}
         modalData={modalData}
         type={'check'}
-        onFilter={onFilter}
+        onFilter={recruitAction.onFilter}
       />
     </SafeAreaView>
   );

@@ -23,7 +23,7 @@ type modalProps = {
   modalVisible: any;
   setModalVisible: any;
   modalData: any[];
-  job?: () => void;
+  // job?: () => void;
   modalHeight?: number;
   type?: string;
   onFilter?: () => void;
