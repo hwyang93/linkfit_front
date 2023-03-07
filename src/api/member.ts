@@ -63,3 +63,19 @@ export function updateMemberReputation(seq: number, data: object) {
 export function deleteMemberReputation(seq: number) {
   return request.delete(`/member/reputation/${seq}`);
 }
+
+export function fetchReceivePositionSuggests() {
+  return request.get('/member/suggest/to');
+}
+
+export function fetchSendPositionSuggests() {
+  return request.get('/member/suggest/from');
+}
+
+export function fetchPositionSuggest(seq: number) {
+  return request.get(`/member/suggest/${seq}`);
+}
+
+export function updatePositionSuggestStatus(seq: number, data: object) {
+  return request.patch(`/member/suggest/${seq}`, data);
+}

@@ -21,7 +21,7 @@ export type LoggedInParamList = {
   CommunityMy: undefined;
   CommunityPostForm: undefined;
   CommunityPost: undefined;
-  // My: undefined;
+  My: undefined;
   MyCenter: undefined;
   MyCenterInfo: undefined;
   MyNotification: undefined;
@@ -46,7 +46,7 @@ export type LoggedInParamList = {
   ApplicationStatus: undefined;
   ApplicantStatus: {recruitSeq: number};
   ReceivedSuggestion: undefined;
-  ReceivedSuggestionDetail: undefined;
+  ReceivedSuggestionDetail: {suggestSeq: number};
   MyPost: undefined;
   FollowingManage: undefined;
   BookmarkManage: undefined;
