@@ -5,6 +5,7 @@ import {
   Image,
   Text,
   Pressable,
+  ScrollView,
 } from 'react-native';
 import {Tabs, MaterialTabBar} from 'react-native-collapsible-tab-view';
 import {BLUE, GRAY, WHITE} from '@styles/colors';
@@ -24,9 +25,9 @@ const imageSize = (width - 6) / 3;
 function Header() {
   const navigation = useNavigation<NavigationProp<LoggedInParamList>>();
   return (
-    <View>
+    <ScrollView>
       <CenterInfoTop />
-    </View>
+    </ScrollView>
   );
 }
 // 센터 프로필 상단 영역 끝
