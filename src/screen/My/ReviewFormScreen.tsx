@@ -35,7 +35,6 @@ function ReviewFormScreen() {
       evaluationMemberSeq: reputationInfo.evaluationMemberSeq,
       targetMemberSeq: reputationInfo.targetMemberSeq,
     };
-    console.log(data);
     createReview(data)
       .then(() => {
         Alert.alert('후기 작성이 완료되었어요!');

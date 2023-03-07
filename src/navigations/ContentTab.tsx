@@ -10,10 +10,14 @@ import common from '@styles/common';
 import {iconPath} from '@util/iconPath';
 import MyHeader from '@components/Header/MyHeader';
 import LinkHeader from '@components/Header/LinkHeader';
+import {useSelector} from 'react-redux';
+import {RootState} from '@store/reducer';
+import MyCenterScreen from '@screen/MyCenterScreen';
 
 const Tab = createBottomTabNavigator<LoggedInParamList>();
 
 const ContentTab = () => {
+  const memberInfo = useSelector((state: RootState) => state.user);
   const tabOffsetValue = useRef(new Animated.Value(0)).current;
   function getWidth() {
     let width = Dimensions.get('window').width;
@@ -122,33 +126,67 @@ const ContentTab = () => {
             },
           })}
         />
-        <Tab.Screen
-          name="My"
-          component={MyScreen}
-          options={{
-            title: 'MY',
-            headerTitleAlign: 'left',
-            headerTitle: () => {
-              return <MyHeader link={'MyNotification'} />;
-            },
-            tabBarIcon: ({focused}) => (
-              <Image
-                source={
-                  focused ? iconPath.TAB_BAR_ICON_4_ON : iconPath.TAB_BAR_ICON_4
-                }
-                style={common.size24}
-              />
-            ),
-          }}
-          listeners={() => ({
-            tabPress: () => {
-              Animated.spring(tabOffsetValue, {
-                toValue: getWidth() * 3,
-                useNativeDriver: true,
-              }).start();
-            },
-          })}
-        />
+        {memberInfo.type !== 'COMPANY' ? (
+          <Tab.Screen
+            name="My"
+            component={MyScreen}
+            options={{
+              title: 'MY',
+              headerTitleAlign: 'left',
+              headerTitle: () => {
+                return <MyHeader link={'MyNotification'} />;
+              },
+              tabBarIcon: ({focused}) => (
+                <Image
+                  source={
+                    focused
+                      ? iconPath.TAB_BAR_ICON_4_ON
+                      : iconPath.TAB_BAR_ICON_4
+                  }
+                  style={common.size24}
+                />
+              ),
+            }}
+            listeners={() => ({
+              tabPress: () => {
+                Animated.spring(tabOffsetValue, {
+                  toValue: getWidth() * 3,
+                  useNativeDriver: true,
+                }).start();
+              },
+            })}
+          />
+        ) : (
+          <Tab.Screen
+            name="My"
+            component={MyCenterScreen}
+            options={{
+              title: 'MY',
+              headerTitleAlign: 'left',
+              headerTitle: () => {
+                return <MyHeader link={'MyNotification'} />;
+              },
+              tabBarIcon: ({focused}) => (
+                <Image
+                  source={
+                    focused
+                      ? iconPath.TAB_BAR_ICON_4_ON
+                      : iconPath.TAB_BAR_ICON_4
+                  }
+                  style={common.size24}
+                />
+              ),
+            }}
+            listeners={() => ({
+              tabPress: () => {
+                Animated.spring(tabOffsetValue, {
+                  toValue: getWidth() * 3,
+                  useNativeDriver: true,
+                }).start();
+              },
+            })}
+          />
+        )}
       </Tab.Navigator>
       <Animated.View
         style={{

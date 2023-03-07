@@ -14,10 +14,7 @@ function ProfileBox({memberInfo}: any) {
     <View>
       <Pressable
         style={styles.profileBox}
-        onPress={() => navigation.navigate('MyProfile', {memberInfo})}
-        // onPress={() => navigation.navigate('MyProfile')}
-        // onPress={() => navigation.navigate('ProfileEdit', {memberInfo})}
-      >
+        onPress={() => navigation.navigate('MyProfile')}>
         <View style={[common.mr16, styles.thumbnailBox]}>
           <Image
             source={

@@ -6,29 +6,18 @@ import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import {NavigationProp, useNavigation} from '@react-navigation/native';
 import {LoggedInParamList} from '../../AppInner';
 
-type dataProps = {
-  data: {
-    id: number;
-    title: string;
-    favoriteCount: number;
-    field: string;
-    location: string;
-    link: any;
-  };
-};
-
-function ProfileBox({data}: dataProps) {
+function ProfileBox({memberInfo}: any) {
   const navigation = useNavigation<NavigationProp<LoggedInParamList>>();
 
   return (
     <View>
       <Pressable
         style={styles.profileBox}
-        onPress={() => navigation.navigate(data.link)}>
+        onPress={() => navigation.navigate('CenterProfile')}>
         <View>
           <View style={common.rowCenter}>
             <Text style={[common.text_l, common.fwb, common.mr8]}>
-              링크 필라테스
+              {memberInfo?.company.companyName}
             </Text>
             <View style={common.rowCenter}>
               <Pressable onPress={() => Alert.alert('click', 'test')}>
@@ -37,14 +26,19 @@ function ProfileBox({data}: dataProps) {
                   style={[common.size24, common.mr4]}
                 />
               </Pressable>
-              <Text style={[common.text_m, common.fwb, common.mr8]}>23</Text>
+              <Text style={[common.text_m, common.fwb, common.mr8]}>
+                {memberInfo?.followerCount}
+              </Text>
             </View>
           </View>
           <View style={common.rowCenter}>
             <Text style={[common.text_m, common.fwb, common.mr8]}>
-              필라테스
+              {memberInfo?.company.field}
             </Text>
-            <Text style={[common.text, {color: GRAY.DARK}]}>서울 · 송파구</Text>
+            <Text style={[common.text, {color: GRAY.DARK}]}>
+              {memberInfo?.company.address} ·{' '}
+              {memberInfo?.company.addressDetail}
+            </Text>
           </View>
         </View>
         <View style={styles.nextArrow}>

@@ -12,9 +12,15 @@ import {GRAY, WHITE} from '@styles/colors';
 import common from '@styles/common';
 import {iconPath} from '@util/iconPath';
 import MyTitle from '@components/My/MyTitle';
-import {NavigationProp, useNavigation} from '@react-navigation/native';
+import {
+  NavigationProp,
+  useIsFocused,
+  useNavigation,
+} from '@react-navigation/native';
 import {LoggedInParamList} from '../../AppInner';
 import CenterProfileBox from '@components/CenterProfileBox';
+import {useEffect, useState} from 'react';
+import {fetchMemberMyInfo} from '@api/member';
 
 const windowWidth = Dimensions.get('window').width;
 const columns2 = (windowWidth - 32) / 2;
@@ -45,6 +51,20 @@ const MENU = [
 function MyCenterScreen() {
   const navigation = useNavigation<NavigationProp<LoggedInParamList>>();
   const insets = useSafeAreaInsets();
+  const isFocused = useIsFocused();
+  const [myInfo, setMyInfo] = useState<any>({});
+
+  useEffect(() => {
+    if (isFocused) {
+      fetchMemberMyInfo()
+        .then(({data}: any) => {
+          setMyInfo(data);
+        })
+        .catch((message: any) => {
+          console.log(message);
+        });
+    }
+  }, [isFocused]);
 
   const centerData = {
     id: 1,
@@ -61,7 +81,7 @@ function MyCenterScreen() {
       showsVerticalScrollIndicator={false}>
       <View style={[styles.container, {paddingBottom: insets.bottom}]}>
         <View style={common.mb20}>
-          <CenterProfileBox data={centerData} />
+          <CenterProfileBox memberInfo={myInfo.memberInfo} />
         </View>
 
         <View style={common.mb8}>
@@ -82,11 +102,7 @@ function MyCenterScreen() {
         </View>
 
         <View style={[common.mb8]}>
-          <MyTitle
-            title={'채용 공고'}
-            button={true}
-            link={'CenterRecruitment'}
-          />
+          <MyTitle title={'채용 공고'} button={true} link={'MyPost'} />
         </View>
 
         <View style={common.mb24}>

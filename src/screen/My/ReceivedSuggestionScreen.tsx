@@ -1,21 +1,50 @@
-import {Pressable, ScrollView, StyleSheet, Text, View} from 'react-native';
+import {
+  Alert,
+  Pressable,
+  ScrollView,
+  StyleSheet,
+  Text,
+  View,
+} from 'react-native';
 import {WHITE} from '@styles/colors';
 
 import Modal from '@components/ModalSheet';
-import {SetStateAction, useState} from 'react';
+import {SetStateAction, useCallback, useEffect, useState} from 'react';
 import TopFilter from '@components/TopFilter';
 import common from '@styles/common';
-import {NavigationProp, useNavigation} from '@react-navigation/native';
+import {
+  NavigationProp,
+  useIsFocused,
+  useNavigation,
+} from '@react-navigation/native';
 import {LoggedInParamList} from '../../../AppInner';
 import {SafeAreaView} from 'react-native-safe-area-context';
+import {fetchReceivePositionSuggests} from '@api/member';
 
 function ReceivedSuggestionScreen() {
+  const isFocused = useIsFocused();
   const navigation = useNavigation<NavigationProp<LoggedInParamList>>();
   const [modalVisible, setModalVisible] =
     useState<SetStateAction<boolean>>(false);
-
   const [modalTitle, setModalTitle] = useState('');
   const [modalData, setModalData] = useState<any[]>([]);
+  const [suggests, setSuggests] = useState<any[]>([]);
+
+  const getPositionSuggests = useCallback(() => {
+    fetchReceivePositionSuggests()
+      .then(({data}: any) => {
+        setSuggests(data);
+      })
+      .catch((e: any) => {
+        Alert.alert(e.message);
+      });
+  }, []);
+
+  useEffect(() => {
+    if (isFocused) {
+      getPositionSuggests();
+    }
+  }, [isFocused]);
 
   const FILTER = [
     {
@@ -76,26 +105,6 @@ function ReceivedSuggestionScreen() {
       job: () => {},
     },
   ];
-  const DATA = [
-    {
-      id: 1,
-      registrationDate: '2022.12.09',
-      title: '필라테스 전임 강사 제안 드립니다.',
-      companyName: '링크 필라테스',
-      endDate: '~2022.12.09 마감',
-      status: '답변 대기 중',
-      job: () => {},
-    },
-    {
-      id: 2,
-      registrationDate: '2023.2.09',
-      title: '필라테스 전임 강사 제안을 드려볼까 합니다.',
-      companyName: '비와이테스',
-      endDate: '~2023.2.20 마감',
-      status: '답변 완료',
-      job: () => {},
-    },
-  ];
 
   const openModal = () => {
     setModalVisible(true);
@@ -109,23 +118,30 @@ function ReceivedSuggestionScreen() {
       <ScrollView showsVerticalScrollIndicator={false}>
         {/* 컨텐츠 영역 */}
         <View style={common.mb24}>
-          {DATA.map((item, index) => {
+          {suggests.map((suggest, index) => {
             return (
               <Pressable
                 key={index}
                 style={[common.basicBox, common.mv8]}
-                onPress={() => navigation.navigate('ReceivedSuggestionDetail')}>
+                onPress={() =>
+                  navigation.navigate('ReceivedSuggestionDetail', {
+                    suggestSeq: suggest.seq,
+                  })
+                }>
                 <Text style={[common.text_s, common.fcg, common.mb12]}>
-                  {item.registrationDate}
+                  {suggest.createdAt}
                 </Text>
                 <Text style={[common.title, common.mb12]} numberOfLines={1}>
-                  {item.title}
+                  {suggest.title}
                 </Text>
                 <Text style={[common.text_m, common.fwb, common.mb12]}>
-                  {item.companyName}
+                  {suggest.writer.type === 'COMPANY'
+                    ? suggest.writer.company.companyName
+                    : suggest.writer.name}
                 </Text>
                 <Text style={[common.text_s, common.fcg]}>
-                  {item.endDate} | {item.status}
+                  {!suggest.closingDate ? '채용시 마감' : suggest.closingDate} |{' '}
+                  {suggest.status}
                 </Text>
               </Pressable>
             );
