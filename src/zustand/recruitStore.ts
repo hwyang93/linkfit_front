@@ -35,5 +35,13 @@ export const recruitAction = {
       filters.position = filters.currentPosition;
       recruitStore.setState({filters});
     }
+    if (filters.currentTab === 2) {
+      filters.type = filters.currentType;
+      recruitStore.setState({filters});
+    }
+    if (filters.currentTab === 3) {
+      filters.date = filters.currentDate;
+      recruitStore.setState({filters});
+    }
   },
 };
