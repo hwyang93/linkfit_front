@@ -27,12 +27,14 @@ type modalProps = {
   modalHeight?: number;
   type?: string;
   onFilter?: () => void;
+  selected?: boolean;
 };
 
 function ModalSheet(props: modalProps) {
   const [loading, setLoading] = useState<boolean>(false);
   const [modalType, setModalType] = useState<any>();
   const {modalVisible, setModalVisible} = props;
+  const [selected, setSelected] = useState();
   const screenHeight = Dimensions.get('screen').height;
   const panY = useRef(new Animated.Value(screenHeight)).current;
   const translateY = panY.interpolate({
@@ -89,8 +91,6 @@ function ModalSheet(props: modalProps) {
       setModalVisible(false);
     });
   };
-
-  const [selected, setSelected] = useState(false);
 
   return (
     <Modal

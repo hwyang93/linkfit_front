@@ -30,7 +30,7 @@ function ApplicantListItem({list}: any) {
                 {application.createdAt}
               </Text>
               <Text style={[common.text_s, common.fcg, common.mh8]}>|</Text>
-              <Text style={[common.text_s, common.fcg]}>
+              <Text style={[common.text_s, common.fcb]}>
                 {application.status}
               </Text>
             </View>
