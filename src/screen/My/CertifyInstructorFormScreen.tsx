@@ -119,6 +119,7 @@ function CertifyInstructorFormScreen() {
 
         <View style={common.mb16}>
           <SelectBox
+            label={'자격명'}
             data={FIELD}
             onSelect={(value: any) => setField(value)}
             defaultButtonText={'자격 인증 분야를 선택하세요.'}

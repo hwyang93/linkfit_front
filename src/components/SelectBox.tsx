@@ -1,16 +1,18 @@
 import {useState} from 'react';
-import {StyleSheet} from 'react-native';
+import {StyleSheet, Text, View} from 'react-native';
 import SelectDropdown from 'react-native-select-dropdown';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
-import {GRAY, INPUT} from '@styles/colors';
+import {GRAY, INPUT, WHITE} from '@styles/colors';
+import common from '@styles/common';
 
 type selectProps = {
   data: any;
   onSelect: Function;
   defaultButtonText: string;
+  label?: string;
 };
 
-const SelectBox = ({data, onSelect, defaultButtonText}: selectProps) => {
+const SelectBox = ({data, onSelect, defaultButtonText, label}: selectProps) => {
   const [focus, setFocus] = useState(false);
   const [, setSelectItem] = useState('');
 
@@ -20,35 +22,41 @@ const SelectBox = ({data, onSelect, defaultButtonText}: selectProps) => {
   };
 
   return (
-    <SelectDropdown
-      data={data}
-      onSelect={selectedItem => {
-        selectHandler(selectedItem);
-      }}
-      buttonTextAfterSelection={selectedItem => {
-        return selectedItem;
-      }}
-      rowTextForSelection={item => {
-        return item;
-      }}
-      defaultButtonText={defaultButtonText}
-      buttonStyle={focus ? styles.selectBoxFocus : styles.selectBox}
-      buttonTextStyle={focus ? styles.selectTextFocus : styles.selectText}
-      renderDropdownIcon={isOpened => {
-        return (
-          <FontAwesome
-            name={isOpened ? 'chevron-up' : 'chevron-down'}
-            color={'#acacac'}
-            size={16}
-          />
-        );
-      }}
-      dropdownIconPosition={'right'}
-      dropdownStyle={styles.dropBox}
-      rowStyle={styles.dropItem}
-      rowTextStyle={styles.dropText}
-      onFocus={() => setFocus(true)}
-    />
+    <View>
+      <SelectDropdown
+        data={data}
+        onSelect={selectedItem => {
+          selectHandler(selectedItem);
+        }}
+        buttonTextAfterSelection={selectedItem => {
+          return selectedItem;
+        }}
+        rowTextForSelection={item => {
+          return item;
+        }}
+        defaultButtonText={defaultButtonText}
+        // buttonStyle={{width: '100%', backgroundColor: WHITE}}
+        buttonStyle={focus ? styles.selectBoxFocus : styles.selectBox}
+        buttonTextStyle={focus ? styles.selectTextFocus : styles.selectText}
+        renderDropdownIcon={isOpened => {
+          return (
+            <FontAwesome
+              name={isOpened ? 'chevron-up' : 'chevron-down'}
+              color={'#acacac'}
+              size={16}
+            />
+          );
+        }}
+        dropdownIconPosition={'right'}
+        dropdownStyle={styles.dropBox}
+        rowStyle={styles.dropItem}
+        rowTextStyle={styles.dropText}
+        onFocus={() => setFocus(true)}
+      />
+      <Text style={[common.label, {color: focus ? INPUT.FOCUS : GRAY.LIGHT}]}>
+        {label}
+      </Text>
+    </View>
   );
 };
 

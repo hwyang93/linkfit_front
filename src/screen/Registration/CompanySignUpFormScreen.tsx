@@ -110,9 +110,10 @@ function SignUpFormScreen() {
         {/* 업종 */}
         <View style={common.mb16}>
           <SelectBox
+            label={'업종'}
             data={categoryData}
             onSelect={(value: any) => setCategory(value)}
-            defaultButtonText={'업종'}
+            defaultButtonText={'업종을 선택해주세요.'}
           />
         </View>
         {/* 생년월일  */}

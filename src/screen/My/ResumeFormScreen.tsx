@@ -1,6 +1,6 @@
 import {
   ActivityIndicator,
-  Dimensions,
+  Animated,
   Image,
   Pressable,
   StyleSheet,
@@ -11,13 +11,14 @@ import {WHITE} from '@styles/colors';
 import DismissKeyboardView from '@components/DismissKeyboardView';
 import common from '@styles/common';
 import Input, {KeyboardTypes} from '@components/Input';
-import {useState} from 'react';
+import {useRef, useState} from 'react';
 import BirthdayPicker from '@components/BirthdayPicker';
 import TabButton from '@components/TabButton';
 import SelectBox from '@components/SelectBox';
-import DatePicker from '@components/DatePicker';
 import {iconPath} from '@util/iconPath';
 import LinearGradient from 'react-native-linear-gradient';
+import CareerComponent from '@components/Resume/CareerComponent';
+import EducationComponent from '@components/Resume/EducationComponent';
 
 function ResumeFormScreen() {
   const [loading, setLoading] = useState<boolean>(false);
@@ -26,21 +27,40 @@ function ResumeFormScreen() {
   const [gender, setGender] = useState('');
   const [address, setAddress] = useState('');
   const [phoneNumber, setPhoneNumber] = useState('');
-  const [career, setCareer] = useState('');
-  const [workType, setWorkType] = useState('');
-  const [school, setSchool] = useState('');
   const [license, setLicense] = useState('');
   const [introduce, setIntroduce] = useState('');
-
   const genderData = [{value: '남자'}, {value: '여자'}];
-  const careerData = ['필라테스', '요가'];
-  const workData = ['정규직', '계약직'];
   const licenseData = [''];
 
-  const windowWidth = Dimensions.get('window').width;
-  const columns2 = (windowWidth - 40) / 2;
+  const [careerForm, setCareerForm] = useState<any>([]);
+  const [educationForm, setEducationForm] = useState<any>([]);
+
+  const animation = useRef(new Animated.Value(0)).current;
+  const addCareerForm = () => {
+    setCareerForm([...careerForm, {}]);
+    Animated.timing(animation, {
+      toValue: 1,
+      duration: 2000,
+      useNativeDriver: true,
+    }).start();
+  };
+  const removeCareerForm = (index: number) => {
+    const newCareerForm = [...careerForm];
+    newCareerForm.splice(index, 1);
+    setCareerForm(newCareerForm);
+  };
+
+  const addEducationForm = () => {
+    setEducationForm([...educationForm, {}]);
+  };
+  const removeEducationForm = (index: number) => {
+    const newEducationForm = [...educationForm];
+    newEducationForm.splice(index, 1);
+    setEducationForm(newEducationForm);
+  };
 
   const canGoNext = true;
+
   return (
     <DismissKeyboardView>
       <View style={styles.container}>
@@ -94,7 +114,7 @@ function ResumeFormScreen() {
         </View>
 
         {/* 연락처 */}
-        <View style={common.mb16}>
+        <View style={common.mb20}>
           <Input
             label={'연락처'}
             onChangeText={(text: string) => setPhoneNumber(text.trim())}
@@ -106,80 +126,63 @@ function ResumeFormScreen() {
         </View>
 
         {/* 경력 */}
-        <View style={common.mb16}>
-          <SelectBox
-            data={careerData}
-            onSelect={(value: any) => setCareer(value)}
-            defaultButtonText={'포지션을 선택하세요. (ex. 필라테스)'}
-          />
+        <View style={common.mv20}>
+          <CareerComponent />
         </View>
 
-        {/* 근무 형태 */}
-        <View style={common.mb16}>
-          <SelectBox
-            data={workData}
-            onSelect={(value: any) => setWorkType(value)}
-            defaultButtonText={'근무 형태를 선택하세요.'}
-          />
-        </View>
-
-        {/* 입사일 퇴사일 */}
-        <View style={common.mb16}>
-          <View style={common.row}>
-            <View style={[common.mr8, {width: columns2}]}>
-              <DatePicker label={'입사'} placeholder={'입사 날짜'} />
-            </View>
-
-            <View style={{width: columns2}}>
-              <DatePicker label={'퇴사'} placeholder={'퇴사 날짜'} />
-            </View>
-          </View>
-        </View>
+        {careerForm.map((item, index) => {
+          return (
+            <Animated.View
+              key={index}
+              style={[common.mv20, {opacity: animation}]}>
+              <Pressable onPress={removeCareerForm} style={styles.removeButton}>
+                <Image source={iconPath.CANCEL} style={[common.size24]} />
+              </Pressable>
+              <View>
+                <CareerComponent />
+              </View>
+            </Animated.View>
+          );
+        })}
 
         {/* 경력 추가 버튼*/}
-        <View style={[common.row, common.mb16, {justifyContent: 'center'}]}>
-          <Image source={iconPath.ADD_BUTTON} style={common.size40} />
+        <View style={common.mb16}>
+          <Pressable onPress={addCareerForm} style={{alignSelf: 'center'}}>
+            <Image source={iconPath.ADD_BUTTON} style={common.size40} />
+          </Pressable>
         </View>
 
         {/* 학력 */}
-        <View style={common.mb16}>
-          <SelectBox
-            data={careerData}
-            onSelect={(value: any) => setCareer(value)}
-            defaultButtonText={'학력을 선택하세요.'}
-          />
+        <View style={common.mv20}>
+          <EducationComponent />
         </View>
 
-        <View style={common.mb16}>
-          <Input
-            label={'학교명'}
-            onChangeText={(text: string) => setSchool(text)}
-            value={school}
-            placeholder={'학교명을 입력하세요.'}
-            keyboardType={KeyboardTypes.DEFAULT}
-          />
-        </View>
-
-        <View style={common.mb16}>
-          <View style={common.row}>
-            <View style={[common.mr8, {width: columns2}]}>
-              <DatePicker label={'입학'} placeholder={'입학 년월'} />
+        {educationForm.map((item, index) => {
+          return (
+            <View key={index} style={common.mv20}>
+              <Pressable
+                onPress={removeEducationForm}
+                style={styles.removeButton}>
+                <Image source={iconPath.CANCEL} style={[common.size24]} />
+              </Pressable>
+              <View>
+                <EducationComponent />
+              </View>
             </View>
-
-            <View style={{width: columns2}}>
-              <DatePicker label={'졸업'} placeholder={'졸업 년월'} />
-            </View>
-          </View>
-        </View>
+          );
+        })}
 
         {/* 학력 추가 버튼 */}
-        <View style={[common.row, common.mb16, {justifyContent: 'center'}]}>
-          <Image source={iconPath.ADD_BUTTON} style={common.size40} />
+        <View style={common.mb16}>
+          <Pressable onPress={addEducationForm} style={{alignSelf: 'center'}}>
+            <Image source={iconPath.ADD_BUTTON} style={common.size40} />
+          </Pressable>
         </View>
 
         {/* 자격증 */}
         <View style={common.mb16}>
           <SelectBox
+            label={'자격증'}
             data={licenseData}
             onSelect={(value: any) => setLicense(value)}
             defaultButtonText={'자격증을 선택하세요.'}
@@ -228,6 +231,7 @@ const styles = StyleSheet.create({
     padding: 16,
     backgroundColor: WHITE,
   },
+  removeButton: {marginBottom: 8, alignItems: 'flex-end'},
 });
 
 export default ResumeFormScreen;

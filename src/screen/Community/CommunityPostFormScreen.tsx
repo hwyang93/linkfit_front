@@ -39,9 +39,10 @@ function CommunityPostFormScreen() {
 
         <View style={common.mb16}>
           <SelectBox
+            label={'채널'}
             data={CHANNEL}
             onSelect={(value: any) => setChannel(value)}
-            defaultButtonText={'제안할 구인 공고를 선택하세요.'}
+            defaultButtonText={'채널을 선택하세요.'}
           />
         </View>
 

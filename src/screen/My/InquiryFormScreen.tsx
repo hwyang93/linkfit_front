@@ -25,8 +25,9 @@ function InquiryFormScreen() {
   return (
     <SafeAreaView edges={['bottom', 'left', 'right']} style={styles.container}>
       <DismissKeyboardView>
-        <View style={common.mb16}>
+        <View style={common.mv16}>
           <SelectBox
+            label={'문의'}
             data={DATA}
             onSelect={(value: any) => setSelect(value)}
             defaultButtonText={'문의할 항목을 선택하세요'}
