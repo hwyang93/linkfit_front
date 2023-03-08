@@ -1,111 +1,164 @@
+import {useCallback, useEffect, useRef, useState} from 'react';
 import {
-  useState,
-  useRef,
-  useCallback,
-  forwardRef,
-  useImperativeHandle,
-} from 'react';
-import {Dimensions, Image, StyleSheet, Text, View} from 'react-native';
+  Text,
+  DeviceEventEmitter,
+  TouchableOpacity,
+  Platform,
+  ToastAndroid,
+  StyleSheet,
+  Image,
+  View,
+} from 'react-native';
+import {SHOW_TOAST_MESSAGE} from '@util/toast';
+
 import Animated, {
+  withTiming,
   useSharedValue,
   useAnimatedStyle,
-  withTiming,
-  withSequence,
-  runOnJS,
 } from 'react-native-reanimated';
-import common from '@styles/common';
 import {iconPath} from '@util/iconPath';
+import common from '@styles/common';
 
-const windowWidth = Dimensions.get('window').width;
+type Colors = {
+  info: string;
+  success: string;
+  warn: string;
+  error: string;
+};
+type Icons = {
+  info: any;
+  success: any;
+  warn: any;
+  error: any;
+};
+const colors = {
+  info: '#cae9ff',
+  success: '#cbf4d4',
+  warn: '#ffeec3',
+  error: '#ffd3d6',
+} as Colors;
+const icons = {
+  info: iconPath.TOAST_INFO,
+  success: iconPath.TOAST_SUCCESS,
+  warn: iconPath.TOAST_INFO,
+  error: iconPath.TOAST_ERROR,
+} as Icons;
 
-const Toast = forwardRef((props, ref: any) => {
-  const [message, setMessage] = useState<any[]>([]);
-  const [type, setType] = useState('');
+type ToastData = {
+  useNativeToast?: boolean;
+  message: string;
+  duration?: number;
+  type: keyof Colors | keyof Icons;
+};
 
-  const toastOpacity = useSharedValue(0);
-  const isShowed = useRef(false);
-  const width = windowWidth - 32;
+const Toast = () => {
+  const [messageType, setMessageType] = useState<
+    null | keyof Colors | keyof Icons
+  >(null);
+  const timeOutRef = useRef<null | NodeJS.Timer>(null);
+
+  const animatedOpacity = useSharedValue(0);
 
   const animatedStyle = useAnimatedStyle(() => {
     return {
-      opacity: toastOpacity.value,
+      opacity: animatedOpacity.value,
     };
   }, []);
 
-  useImperativeHandle(ref, () => ({
-    show: show,
-  }));
+  const [timeOutDuration, setTimeOutDuration] = useState(2000);
 
-  const turnOnIsShow = useCallback(() => {
-    isShowed.current = false;
+  const [message, setMessage] = useState<null | string>(null);
+
+  const onNewToast = (data: ToastData) => {
+    if (Platform.OS === 'android' && data.useNativeToast) {
+      return ToastAndroid.show(data.message, ToastAndroid.LONG);
+    }
+    if (data.duration) {
+      setTimeOutDuration(data.duration);
+    }
+    setMessage(data.message);
+    setMessageType(data.type);
+  };
+
+  const closeToast = useCallback(() => {
+    setMessage(null);
+    setTimeOutDuration(2000);
+    animatedOpacity.value = withTiming(0);
+    clearInterval(timeOutRef.current as NodeJS.Timeout);
+  }, [animatedOpacity]);
+
+  useEffect(() => {
+    if (message) {
+      timeOutRef.current = setInterval(() => {
+        if (timeOutDuration === 0) {
+          closeToast();
+        } else {
+          setTimeOutDuration(prev => prev - 1000);
+        }
+      }, 1000);
+    }
+
+    return () => {
+      clearInterval(timeOutRef.current as NodeJS.Timeout);
+    };
+  }, [closeToast, message, timeOutDuration]);
+
+  useEffect(() => {
+    if (message) {
+      animatedOpacity.value = withTiming(1, {duration: 1000});
+    }
+  }, [message, animatedOpacity]);
+
+  useEffect(() => {
+    DeviceEventEmitter.addListener(SHOW_TOAST_MESSAGE, onNewToast);
+
+    return () => {
+      DeviceEventEmitter.removeAllListeners();
+    };
   }, []);
 
-  const show = useCallback(
-    (message: any) => {
-      if (!isShowed.current) {
-        setMessage(message.message);
-        setType(message.type);
-
-        isShowed.current = true;
-        toastOpacity.value = withSequence(
-          withTiming(1, {duration: 600}),
-          withTiming(0, {duration: 3000}, () => {
-            runOnJS(turnOnIsShow)();
-          }),
-        );
-      }
-    },
-    [toastOpacity, turnOnIsShow],
-  );
-
-  // console.log('토스트 메시지는 뭔데', message);
-  // console.log('형식이 뭔데', type);
+  if (!message) {
+    return null;
+  }
 
   return (
     <Animated.View
-      style={[styles.rootContainer, animatedStyle, {width: width}]}>
-      <View
-        style={[
-          styles.toast,
-          type === 'error' && styles.error,
-          type === 'success' && styles.success,
-          type === 'warn' && styles.warn,
-        ]}>
-        {type === 'error' && (
-          <Image source={iconPath.TOAST_ERROR} style={common.size24} />
-        )}
-        {type === 'success' && (
-          <Image source={iconPath.TOAST_SUCCESS} style={common.size24} />
-        )}
-        {type === 'warn' && (
-          <Image source={iconPath.TOAST_WARN} style={common.size24} />
-        )}
-
-        <Text style={[common.text_m, styles.message]}>{message}</Text>
-      </View>
+      style={[
+        styles.wrapper,
+        {backgroundColor: messageType ? colors[messageType] : 'blue'},
+        animatedStyle,
+      ]}>
+      <TouchableOpacity onPress={closeToast} style={common.rowCenterBetween}>
+        <View style={common.rowCenter}>
+          <Image
+            source={messageType ? icons[messageType] : null}
+            style={common.size24}
+          />
+          <Text style={[styles.text, common.text_m]}>{message}</Text>
+        </View>
+        <Image source={iconPath.TOAST_CLOSE} style={common.size24} />
+      </TouchableOpacity>
     </Animated.View>
   );
-});
-
+};
 const styles = StyleSheet.create({
-  rootContainer: {
+  wrapper: {
     position: 'absolute',
-    left: 16,
-    bottom: 16,
-  },
-  toast: {
-    flex: 1,
-    flexDirection: 'row',
-    alignItems: 'center',
-    paddingVertical: 8,
+    bottom: '4%',
+    left: '4%',
+    right: '4%',
+    zIndex: 1,
+    paddingVertical: 10,
     paddingHorizontal: 16,
+    elevation: 1,
     borderRadius: 8,
-    backgroundColor: '#cbf4d4',
   },
-  message: {marginLeft: 8},
-  error: {backgroundColor: '#ffd3d6'},
-  warn: {backgroundColor: '#ffeec3'},
-  success: {backgroundColor: '#cbf4d4'},
-});
 
+  text: {
+    marginLeft: 8,
+    color: '#292929',
+    fontSize: 16,
+    textAlign: 'left',
+  },
+});
 export default Toast;
