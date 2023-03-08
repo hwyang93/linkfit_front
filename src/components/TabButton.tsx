@@ -1,5 +1,6 @@
 import {useState} from 'react';
 import {View, Text, Pressable, StyleSheet} from 'react-native';
+import {GRAY} from '@styles/colors';
 
 type TabProps = {
   genderData: Array<any>;
@@ -48,7 +49,7 @@ const styles = StyleSheet.create({
     height: 48,
     borderWidth: 2,
     borderRadius: 8,
-    borderColor: '#acacac',
+    borderColor: GRAY.LIGHT,
     backgroundColor: '#fff',
   },
   tabBox: {

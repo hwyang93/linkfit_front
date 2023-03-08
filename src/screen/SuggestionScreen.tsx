@@ -98,6 +98,7 @@ function SuggestionScreen({navigation}: SuggestionScreenProps) {
         {/* 셀렉트 */}
         <View style={common.mb16}>
           <SelectBox
+            label={'구인 공고'}
             data={SUGGESTION}
             onSelect={(value: any) => setRecruitSeq(value)}
             defaultButtonText={'제안할 구인 공고를 선택하세요.'}
@@ -106,6 +107,7 @@ function SuggestionScreen({navigation}: SuggestionScreenProps) {
 
         <View style={common.mb16}>
           <SelectBox
+            label={'마감 기간'}
             data={DEADLINE}
             onSelect={(value: any) => setClosingDate(value)}
             defaultButtonText={'마감 기간을 선택하세요.'}

@@ -113,12 +113,6 @@ function SignIn({navigation}: SignInScreenProps) {
           {/* 간편 로그인 컴포넌트 */}
           <SimpleLogin />
           {/* 간편 로그인 컴포넌트 */}
-          {/*<View>*/}
-          {/*  <Pressable onPress={() => navigation.navigate('Link')}>*/}
-          {/*    <Text style={styles.easyLink}>로그인없이 둘러보기</Text>*/}
-          {/*  </Pressable>*/}
-          {/*</View>*/}
-          {/*<Button title="test" onPress={() => toast.info({message: 'hello'})} />*/}
         </View>
       </View>
     </TouchableWithoutFeedback>

@@ -1,11 +1,4 @@
-import {
-  ActivityIndicator,
-  Platform,
-  Alert,
-  Pressable,
-  Text,
-  View,
-} from 'react-native';
+import {ActivityIndicator, Platform, Pressable, Text, View} from 'react-native';
 import common from '@styles/common';
 import Input, {KeyboardTypes} from '@components/Input';
 import {useCallback, useState} from 'react';
@@ -18,6 +11,7 @@ import {createMember} from '@api/member';
 import {RouteProp, useRoute} from '@react-navigation/native';
 import {LoggedInParamList} from '../../../AppInner';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
+import toast from '@hooks/toast';
 
 const genderData = [{value: '남자'}, {value: '여자'}];
 const agencyData = ['SKT', 'KT', 'LG U+', '알뜰폰'];
@@ -52,11 +46,11 @@ function SignUpFormScreen({navigation}: SignUpScreenProps) {
     };
     await createMember(data)
       .then(() => {
-        Alert.alert('회원가입이 완료되었어요!');
+        toast.success({message: '회원가입이 완료되었어요!'});
         navigation.navigate('SignIn');
       })
       .catch((e: {message: string}) => {
-        Alert.alert(e.message);
+        toast.error({message: e.message});
       });
   }, [email, birth, gender, navigation, password, phoneNumber, userName]);
 

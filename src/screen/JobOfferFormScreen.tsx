@@ -80,6 +80,7 @@ function JobOfferFormScreen() {
         {/* 채용 포지션 */}
         <View style={common.mb16}>
           <SelectBox
+            label={'채용 포지션'}
             data={POSITION}
             onSelect={(value: any) => setPosition(value)}
             defaultButtonText={'채용 포지션'}
@@ -88,6 +89,7 @@ function JobOfferFormScreen() {
         {/* 학력 */}
         <View style={common.mb16}>
           <SelectBox
+            label={'학력'}
             data={EDUCATION}
             onSelect={(value: any) => setEducation(value)}
             defaultButtonText={'학력을 선택하세요.'}
@@ -96,6 +98,7 @@ function JobOfferFormScreen() {
         {/* 경력 */}
         <View style={common.mb16}>
           <SelectBox
+            label={'경력'}
             data={CAREER}
             onSelect={(value: any) => setCareer(value)}
             defaultButtonText={'경력을 선택하세요.'}
@@ -104,6 +107,7 @@ function JobOfferFormScreen() {
         {/* 시간 */}
         <View style={common.mb16}>
           <SelectBox
+            label={'시간'}
             data={TIME}
             onSelect={(value: any) => setTime(value)}
             defaultButtonText={'시간을 선택하세요.'}
@@ -112,6 +116,7 @@ function JobOfferFormScreen() {
         {/* 급여 형태 */}
         <View style={common.mb16}>
           <SelectBox
+            label={'급여 형태'}
             data={PAY_TYPE}
             onSelect={(value: any) => setPayType(value)}
             defaultButtonText={'급여 형태를 선택하세요.'}
