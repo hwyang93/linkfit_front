@@ -84,7 +84,7 @@ function MyScreen() {
       totalSuggestCount: undefined,
       waitingSuggestCount: undefined,
       completeSuggestCount: undefined,
-      closeSuggestCount: undefined,
+      closedSuggestCount: undefined,
     },
     noticeCountInfo: {
       totalNoticeCount: undefined,
@@ -314,7 +314,7 @@ function MyScreen() {
               ]}>
               <Text style={common.text_s}>마감</Text>
               <Text style={common.title_s}>
-                {myInfo.suggestCountInfo.closeSuggestCount}
+                {myInfo.suggestCountInfo.closedSuggestCount}
               </Text>
             </View>
           </View>
