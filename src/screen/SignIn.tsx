@@ -1,6 +1,5 @@
 import {useCallback, useState} from 'react';
 import {
-  Alert,
   Pressable,
   StyleSheet,
   Text,
@@ -20,6 +19,7 @@ import LinearGradient from 'react-native-linear-gradient';
 import Logo from '@components/Logo';
 import {fetchMemberInfoByEmail} from '@api/member';
 import EncryptedStorage from 'react-native-encrypted-storage';
+import toast from '@hooks/toast';
 
 type SignInScreenProps = NativeStackScreenProps<LoggedInParamList, 'SignIn'>;
 
@@ -53,7 +53,8 @@ function SignIn({navigation}: SignInScreenProps) {
       .then(({data}: any) => {
         if (data.seq) {
           setLoading(true);
-          Alert.alert('알림', '환영합니다. 회원님');
+          // Alert.alert('알림', '환영합니다. 회원님');
+          toast.success({message: '환영합니다. 회원님'});
           navigation.navigate('LogIn', {email: email});
           setLoading(false);
         } else {
@@ -117,6 +118,7 @@ function SignIn({navigation}: SignInScreenProps) {
           {/*    <Text style={styles.easyLink}>로그인없이 둘러보기</Text>*/}
           {/*  </Pressable>*/}
           {/*</View>*/}
+          {/*<Button title="test" onPress={() => toast.info({message: 'hello'})} />*/}
         </View>
       </View>
     </TouchableWithoutFeedback>

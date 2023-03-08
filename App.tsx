@@ -5,6 +5,7 @@ import {NavigationContainer} from '@react-navigation/native';
 import SplashScreen from 'react-native-splash-screen';
 import {useEffect} from 'react';
 import usePermissions from '@util/usePermissions';
+import Toast from '@components/Toast';
 
 function App() {
   usePermissions();
@@ -14,6 +15,7 @@ function App() {
 
   return (
     <Provider store={store}>
+      <Toast />
       <NavigationContainer>
         <AppInner />
       </NavigationContainer>

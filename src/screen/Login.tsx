@@ -24,9 +24,9 @@ import {login} from '@api/auth';
 import {fetchMemberInfo} from '@api/member';
 import {useAppDispatch} from '@/store';
 import userSlice from '@slices/user';
-import Toast from '../components/Toast';
 import EncryptedStorage from 'react-native-encrypted-storage';
 import {SafeAreaView} from 'react-native-safe-area-context';
+import toast from '@hooks/toast';
 
 function LogIn() {
   const dispatch = useAppDispatch();
@@ -38,7 +38,6 @@ function LogIn() {
   const [loading, setLoading] = useState<boolean>(false);
 
   const canGoNext = password;
-  const toastRef = useRef([]);
 
   const onSubmit = async () => {
     const loginInfo = {
@@ -56,15 +55,12 @@ function LogIn() {
         await EncryptedStorage.setItem('accessToken', data.accessToken);
         await EncryptedStorage.setItem('refreshToken', data.refreshToken);
         await getMemberInfo();
+        toast.success({message: '로그인이 완료되었어요!'});
         setLoading(false);
       })
       .catch((e: any) => {
         setLoading(false);
-        // @ts-ignore
-        toastRef.current.show({
-          message: e.message,
-          type: 'error',
-        });
+        toast.error({message: e.message});
       });
   };
   const getMemberInfo = async () => {
@@ -125,7 +121,6 @@ function LogIn() {
               </Pressable>
             </View>
           </View>
-          <Toast ref={toastRef} />
         </View>
       </TouchableWithoutFeedback>
     </SafeAreaView>
