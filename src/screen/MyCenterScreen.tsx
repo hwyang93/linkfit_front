@@ -110,7 +110,7 @@ function MyCenterScreen() {
               ]}>
               <Text style={common.text_s}>진행중</Text>
               <Text style={common.title_s}>
-                {myInfo.recruitCountInfo.ingRecruitCount}
+                {myInfo.recruitCountInfo?.ingRecruitCount}
               </Text>
             </View>
 
@@ -124,7 +124,7 @@ function MyCenterScreen() {
               ]}>
               <Text style={common.text_s}>마감</Text>
               <Text style={common.title_s}>
-                {myInfo.recruitCountInfo.closedRecruitCount}
+                {myInfo?.recruitCountInfo?.closedRecruitCount}
               </Text>
             </View>
           </View>
@@ -151,7 +151,9 @@ function MyCenterScreen() {
                 },
               ]}>
               <Text style={common.text_s}>대기중</Text>
-              <Text style={common.title_s}>3</Text>
+              <Text style={common.title_s}>
+                {myInfo.suggestCountInfo?.waitingSuggestCount}
+              </Text>
             </View>
 
             <View
@@ -165,7 +167,9 @@ function MyCenterScreen() {
                 },
               ]}>
               <Text style={common.text_s}>완료</Text>
-              <Text style={common.title_s}>1</Text>
+              <Text style={common.title_s}>
+                {myInfo.suggestCountInfo?.completedSuggestCount}
+              </Text>
             </View>
             <View
               style={[
@@ -176,7 +180,9 @@ function MyCenterScreen() {
                 },
               ]}>
               <Text style={common.text_s}>마감</Text>
-              <Text style={common.title_s}>2</Text>
+              <Text style={common.title_s}>
+                {myInfo.suggestCountInfo?.closedSuggestCount}
+              </Text>
             </View>
           </View>
         </View>

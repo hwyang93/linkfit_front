@@ -63,7 +63,7 @@ function MyScreen() {
   const navigation = useNavigation<NavigationProp<LoggedInParamList>>();
   const isFocused = useIsFocused();
   const insets = useSafeAreaInsets();
-  const [myInfo, setMyInfo] = useState({
+  const [myInfo, setMyInfo] = useState<any>({
     memberInfo: {
       nickname: '',
       intro: '',
@@ -83,7 +83,7 @@ function MyScreen() {
     suggestCountInfo: {
       totalSuggestCount: undefined,
       waitingSuggestCount: undefined,
-      completeSuggestCount: undefined,
+      completedSuggestCount: undefined,
       closedSuggestCount: undefined,
     },
     noticeCountInfo: {
@@ -301,7 +301,7 @@ function MyScreen() {
               ]}>
               <Text style={common.text_s}>답변 완료</Text>
               <Text style={common.title_s}>
-                {myInfo.suggestCountInfo.completeSuggestCount}
+                {myInfo.suggestCountInfo.completedSuggestCount}
               </Text>
             </View>
             <View
