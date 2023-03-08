@@ -66,15 +66,6 @@ function MyCenterScreen() {
     }
   }, [isFocused]);
 
-  const centerData = {
-    id: 1,
-    title: '링크 필라테스',
-    favoriteCount: 23,
-    field: '필라테스',
-    location: '서울 · 송파구',
-    link: 'CenterProfile',
-  };
-
   return (
     <ScrollView
       style={{flex: 1, backgroundColor: WHITE}}
@@ -118,7 +109,9 @@ function MyCenterScreen() {
                 },
               ]}>
               <Text style={common.text_s}>진행중</Text>
-              <Text style={common.title_s}>3</Text>
+              <Text style={common.title_s}>
+                {myInfo.recruitCountInfo.ingRecruitCount}
+              </Text>
             </View>
 
             <View
@@ -130,7 +123,9 @@ function MyCenterScreen() {
                 },
               ]}>
               <Text style={common.text_s}>마감</Text>
-              <Text style={common.title_s}>1</Text>
+              <Text style={common.title_s}>
+                {myInfo.recruitCountInfo.closedRecruitCount}
+              </Text>
             </View>
           </View>
         </View>
