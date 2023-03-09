@@ -139,7 +139,7 @@ function MyRecruitmentScreen() {
                     {recruit.status === 'ING' ? '진행중' : '마감'}
                   </Text>
                 </View>
-                <Text style={[common.title, common.mv12]} numberOfLines={1}>
+                <Text style={[common.title, common.mv8]} numberOfLines={1}>
                   {recruit.title}
                 </Text>
                 <Text style={[common.text_m, common.fwb]}>
