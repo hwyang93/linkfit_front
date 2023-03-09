@@ -1,6 +1,5 @@
 import {
   ActivityIndicator,
-  Animated,
   Image,
   Pressable,
   StyleSheet,
@@ -11,7 +10,7 @@ import {WHITE} from '@styles/colors';
 import DismissKeyboardView from '@components/DismissKeyboardView';
 import common from '@styles/common';
 import Input, {KeyboardTypes} from '@components/Input';
-import {useRef, useState} from 'react';
+import {useState} from 'react';
 import BirthdayPicker from '@components/BirthdayPicker';
 import TabButton from '@components/TabButton';
 import SelectBox from '@components/SelectBox';
@@ -35,14 +34,8 @@ function ResumeFormScreen() {
   const [careerForm, setCareerForm] = useState<any>([]);
   const [educationForm, setEducationForm] = useState<any>([]);
 
-  const animation = useRef(new Animated.Value(0)).current;
   const addCareerForm = () => {
     setCareerForm([...careerForm, {}]);
-    Animated.timing(animation, {
-      toValue: 1,
-      duration: 2000,
-      useNativeDriver: true,
-    }).start();
   };
   const removeCareerForm = (index: number) => {
     const newCareerForm = [...careerForm];
@@ -132,16 +125,14 @@ function ResumeFormScreen() {
 
         {careerForm.map((item, index) => {
           return (
-            <Animated.View
-              key={index}
-              style={[common.mv20, {opacity: animation}]}>
+            <View key={index} style={[common.mv20ㅌ]}>
               <Pressable onPress={removeCareerForm} style={styles.removeButton}>
                 <Image source={iconPath.CANCEL} style={[common.size24]} />
               </Pressable>
               <View>
                 <CareerComponent />
               </View>
-            </Animated.View>
+            </View>
           );
         })}
 
