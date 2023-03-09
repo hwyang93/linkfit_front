@@ -1,6 +1,5 @@
 import {
   ActivityIndicator,
-  Animated,
   Image,
   Pressable,
   StyleSheet,
@@ -11,7 +10,7 @@ import {WHITE} from '@styles/colors';
 import DismissKeyboardView from '@components/DismissKeyboardView';
 import common from '@styles/common';
 import Input, {KeyboardTypes} from '@components/Input';
-import {useRef, useState} from 'react';
+import {Key, useState} from 'react';
 import BirthdayPicker from '@components/BirthdayPicker';
 import TabButton from '@components/TabButton';
 import SelectBox from '@components/SelectBox';
@@ -35,16 +34,10 @@ function ResumeFormScreen() {
   const [careerForm, setCareerForm] = useState<any>([]);
   const [educationForm, setEducationForm] = useState<any>([]);
 
-  const animation = useRef(new Animated.Value(0)).current;
   const addCareerForm = () => {
     setCareerForm([...careerForm, {}]);
-    Animated.timing(animation, {
-      toValue: 1,
-      duration: 2000,
-      useNativeDriver: true,
-    }).start();
   };
-  const removeCareerForm = (index: number) => {
+  const removeCareerForm = (index: any) => {
     const newCareerForm = [...careerForm];
     newCareerForm.splice(index, 1);
     setCareerForm(newCareerForm);
@@ -53,7 +46,7 @@ function ResumeFormScreen() {
   const addEducationForm = () => {
     setEducationForm([...educationForm, {}]);
   };
-  const removeEducationForm = (index: number) => {
+  const removeEducationForm = (index: any) => {
     const newEducationForm = [...educationForm];
     newEducationForm.splice(index, 1);
     setEducationForm(newEducationForm);
@@ -130,18 +123,16 @@ function ResumeFormScreen() {
           <CareerComponent />
         </View>
 
-        {careerForm.map((item, index) => {
+        {careerForm.map((item: any, index: Key | null | undefined) => {
           return (
-            <Animated.View
-              key={index}
-              style={[common.mv20, {opacity: animation}]}>
+            <View key={index} style={[common.mv20]}>
               <Pressable onPress={removeCareerForm} style={styles.removeButton}>
                 <Image source={iconPath.CANCEL} style={[common.size24]} />
               </Pressable>
               <View>
                 <CareerComponent />
               </View>
-            </Animated.View>
+            </View>
           );
         })}
 
@@ -157,7 +148,7 @@ function ResumeFormScreen() {
           <EducationComponent />
         </View>
 
-        {educationForm.map((item, index) => {
+        {educationForm.map((item: any, index: Key | null | undefined) => {
           return (
             <View key={index} style={common.mv20}>
               <Pressable

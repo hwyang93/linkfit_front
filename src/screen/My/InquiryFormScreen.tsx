@@ -16,8 +16,8 @@ import {SafeAreaView} from 'react-native-safe-area-context';
 
 function InquiryFormScreen() {
   const [loading, setLoading] = useState<boolean>(false);
-  const [select, setSelect] = useState();
-  const [title, setTitle] = useState();
+  const [select, setSelect] = useState('');
+  const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
   const DATA = [''];
 
