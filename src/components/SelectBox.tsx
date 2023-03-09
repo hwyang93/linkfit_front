@@ -53,9 +53,11 @@ const SelectBox = ({data, onSelect, defaultButtonText, label}: selectProps) => {
         rowTextStyle={styles.dropText}
         onFocus={() => setFocus(true)}
       />
-      <Text style={[common.label, {color: focus ? INPUT.FOCUS : GRAY.LIGHT}]}>
-        {label}
-      </Text>
+      {label && (
+        <Text style={[common.label, {color: focus ? INPUT.FOCUS : GRAY.LIGHT}]}>
+          {label}
+        </Text>
+      )}
     </View>
   );
 };
