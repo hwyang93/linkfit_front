@@ -14,13 +14,14 @@ import {LoggedInParamList} from '../../AppInner';
 
 type ListProps = {
   item: {
-    num: number;
+    seq: number;
     position: string;
     title: string;
-    company: string;
-    area: string;
+    companyName: string;
+    address: string;
     src: any;
-    color: string;
+    // color: string;
+    writer: any;
   };
 };
 
@@ -32,10 +33,18 @@ function RecruitListItem({item}: ListProps) {
   return (
     <Pressable
       style={styles.itemBox}
-      onPress={() => navigation.navigate('JobPost', {recruitSeq: 1})}>
+      onPress={() => navigation.navigate('JobPost', {recruitSeq: item.seq})}>
       <View style={styles.imgBox}>
-        <Image style={styles.img} source={item.src} />
+        <Image
+          style={styles.img}
+          source={
+            item.writer.profileImage
+              ? {uri: item.writer.profileImage.originFileUrl}
+              : iconPath.THUMBNAIL
+          }
+        />
       </View>
+
       <View>
         {/* 포지션 */}
         <Text style={[common.text]}>{item.position}</Text>
@@ -44,9 +53,9 @@ function RecruitListItem({item}: ListProps) {
           {item.title}
         </Text>
         {/* 업체명 */}
-        <Text style={[common.text_s, common.fwb]}>{item.company}</Text>
+        <Text style={[common.text_s, common.fwb]}>{item.companyName}</Text>
         {/* 지역 */}
-        <Text style={common.text}>{item.area}</Text>
+        <Text style={common.text}>{item.address}</Text>
         <Pressable
           style={styles.bookmark}
           onPress={() => Alert.alert('click', 'bookmark')}>
