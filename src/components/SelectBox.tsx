@@ -2,7 +2,7 @@ import {useState} from 'react';
 import {StyleSheet, Text, View} from 'react-native';
 import SelectDropdown from 'react-native-select-dropdown';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
-import {GRAY, INPUT, WHITE} from '@styles/colors';
+import {GRAY, INPUT} from '@styles/colors';
 import common from '@styles/common';
 
 type selectProps = {
