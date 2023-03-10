@@ -1,4 +1,4 @@
-import {ActivityIndicator, Platform, Pressable, Text, View} from 'react-native';
+import {ActivityIndicator, Pressable, Text, View} from 'react-native';
 import common from '@styles/common';
 import Input, {KeyboardTypes} from '@components/Input';
 import {useCallback, useState} from 'react';
@@ -15,8 +15,6 @@ import toast from '@hooks/toast';
 
 const genderData = [{value: '남자'}, {value: '여자'}];
 const agencyData = ['SKT', 'KT', 'LG U+', '알뜰폰'];
-const loading = false;
-const canGoNext = true;
 
 type SignUpScreenProps = NativeStackScreenProps<
   LoggedInParamList,
@@ -24,6 +22,7 @@ type SignUpScreenProps = NativeStackScreenProps<
 >;
 
 function SignUpFormScreen({navigation}: SignUpScreenProps) {
+  const [loading, setLoading] = useState<boolean>(false);
   const route = useRoute<RouteProp<LoggedInParamList, 'SignUpForm'>>();
 
   const [email] = useState(route.params.email);
@@ -46,13 +45,19 @@ function SignUpFormScreen({navigation}: SignUpScreenProps) {
     };
     await createMember(data)
       .then(() => {
+        setLoading(true);
         toast.success({message: '회원가입이 완료되었어요!'});
         navigation.navigate('SignIn');
+        setLoading(false);
       })
       .catch((e: {message: string}) => {
         toast.error({message: e.message});
       });
   }, [email, birth, gender, navigation, password, phoneNumber, userName]);
+
+  // const canGoNext = true;
+  const canGoNext =
+    userName && gender && birth && phoneNumber && password && passwordConfirm;
 
   return (
     <DismissKeyboardView>
@@ -68,17 +73,12 @@ function SignUpFormScreen({navigation}: SignUpScreenProps) {
             />
           </View>
           <View style={common.mb16}>
-            {Platform.OS === 'ios' ? (
-              <BirthdayPicker />
-            ) : (
-              <Input
-                label={'생년월일'}
-                onChangeText={(text: any) => setBirth(text)}
-                value={birth}
-                placeholder={'YYYY.MM.DD'}
-                keyboardType={KeyboardTypes.NUMBER}
-              />
-            )}
+            <BirthdayPicker
+              label={'생년월일'}
+              onSelect={(value: any) => setBirth(value)}
+              placeholder={'생년월일을 선택하세요.'}
+              value={birth}
+            />
           </View>
           <View style={[common.mb16]}>
             <TabButton
@@ -140,7 +140,7 @@ function SignUpFormScreen({navigation}: SignUpScreenProps) {
           </View>
 
           <View style={common.mt20}>
-            <Pressable onPress={signIn}>
+            <Pressable disabled={!canGoNext} onPress={signIn}>
               <LinearGradient
                 style={common.button}
                 start={{x: 0.1, y: 0.5}}
@@ -151,7 +151,6 @@ function SignUpFormScreen({navigation}: SignUpScreenProps) {
                 {loading ? (
                   <ActivityIndicator color="white" />
                 ) : (
-                  // <Text style={common.buttonText}>본인인증</Text>
                   <Text style={common.buttonText}>회원가입</Text>
                 )}
               </LinearGradient>

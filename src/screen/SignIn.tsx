@@ -53,7 +53,6 @@ function SignIn({navigation}: SignInScreenProps) {
       .then(({data}: any) => {
         if (data.seq) {
           setLoading(true);
-          // Alert.alert('알림', '환영합니다. 회원님');
           toast.success({message: '환영합니다. 회원님'});
           navigation.navigate('LogIn', {email: email});
           setLoading(false);

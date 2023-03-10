@@ -1,8 +1,6 @@
 import {
   ActivityIndicator,
-  Alert,
   Image,
-  Platform,
   Pressable,
   ScrollView,
   StyleSheet,
@@ -23,6 +21,7 @@ import {RootState} from '@store/reducer';
 import {createMemberLicence} from '@api/member';
 import {NavigationProp, useNavigation} from '@react-navigation/native';
 import {LoggedInParamList} from '../../../AppInner';
+import toast from '@hooks/toast';
 
 const FIELD = ['필라테스', '요가'];
 function CertifyInstructorFormScreen() {
@@ -30,7 +29,7 @@ function CertifyInstructorFormScreen() {
   const memberInfo = useSelector((state: RootState) => state.user);
   const [loading, setLoading] = useState<boolean>(false);
   const [name, setName] = useState(memberInfo.name);
-  const [birthday, setBirthday] = useState(memberInfo.birth);
+  const [birth, setBirth] = useState(memberInfo.birth);
   const [field, setField] = useState('');
   const [issuer, setIssuer] = useState('');
   const [licenceNumber, setLicenceNumber] = useState('');
@@ -51,12 +50,12 @@ function CertifyInstructorFormScreen() {
 
     createMemberLicence(formData)
       .then(() => {
-        Alert.alert('강사 인증이 신청되었어요!');
+        toast.success('강사 인증이 신청되었어요!');
         navigation.goBack();
       })
       .catch((e: {message: any}) => {
         console.log(e);
-        Alert.alert(e.message);
+        toast.error({message: e.message});
       });
   }, [field, issuer, licenceNumber, licenceImageObj, navigation]);
 
@@ -104,17 +103,12 @@ function CertifyInstructorFormScreen() {
         </View>
 
         <View style={common.mb16}>
-          {Platform.OS === 'ios' ? (
-            <BirthdayPicker />
-          ) : (
-            <Input
-              label={'생년월일'}
-              onChangeText={(text: any) => setBirthday(text)}
-              value={birthday}
-              placeholder={'YYYY.MM.DD'}
-              keyboardType={KeyboardTypes.NUMBER}
-            />
-          )}
+          <BirthdayPicker
+            label={'생년월일'}
+            onSelect={(value: any) => setBirth(value)}
+            value={birth}
+            placeholder={'생년월일을 선택하세요.'}
+          />
         </View>
 
         <View style={common.mb16}>

@@ -1,14 +1,12 @@
 import {useState} from 'react';
-import {ActivityIndicator, Platform, Pressable, Text, View} from 'react-native';
+import {ActivityIndicator, Pressable, Text, View} from 'react-native';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import {LoggedInParamList} from '../../../AppInner';
 import common from '@styles/common';
 import LinearGradient from 'react-native-linear-gradient';
 import Input, {KeyboardTypes} from '@components/Input';
-
 import TabButton from '@components/TabButton';
 import DismissKeyboardView from '@components/DismissKeyboardView';
-
 import BirthdayPicker from '@components/BirthdayPicker';
 import SelectBox from '@components/SelectBox';
 
@@ -19,7 +17,7 @@ type PasswordResetScreenProps = NativeStackScreenProps<
 
 function PasswordReset({}: PasswordResetScreenProps) {
   const [userName, setUserName] = useState('');
-  const [birthday, setBirthday] = useState('');
+  const [birth, setBirth] = useState('');
   const [gender, setGender] = useState('');
   const [agency, setAgency] = useState('');
   const [phoneNumber, setPhoneNumber] = useState('');
@@ -49,17 +47,12 @@ function PasswordReset({}: PasswordResetScreenProps) {
             />
           </View>
           <View style={common.mb16}>
-            {Platform.OS === 'ios' ? (
-              <BirthdayPicker />
-            ) : (
-              <Input
-                label={'생년월일'}
-                onChangeText={(text: any) => setBirthday(text)}
-                value={birthday}
-                placeholder={'YYYY.MM.DD'}
-                keyboardType={KeyboardTypes.NUMBER}
-              />
-            )}
+            <BirthdayPicker
+              label={'생년월일'}
+              onSelect={(value: any) => setBirth(value)}
+              placeholder={'생년월일을 선택하세요.'}
+              value={birth}
+            />
           </View>
           <View style={[common.mb16]}>
             <TabButton
