@@ -21,6 +21,7 @@ function SignUpFormScreen() {
   const [ownerName, setOwnerName] = useState<string>('');
   const [postNumber, setPostNumber] = useState<number>();
   const [companyAddress, setCompanyAddress] = useState<string>('');
+  const [birth, setBirth] = useState('');
 
   const [gender, setGender] = useState('');
   const [agency, setAgency] = useState('');
@@ -118,7 +119,12 @@ function SignUpFormScreen() {
         </View>
         {/* 생년월일  */}
         <View style={common.mb16}>
-          <BirthdayPicker />
+          <BirthdayPicker
+            label={'생년월일'}
+            onSelect={(value: any) => setBirth(value)}
+            placeholder={'생년월일을 선택하세요.'}
+            value={birth}
+          />
         </View>
         {/* 성별 */}
         <View style={[common.mb16]}>

@@ -405,7 +405,7 @@ PODS:
     - React-jsi (= 0.70.6)
     - React-logger (= 0.70.6)
     - React-perflogger (= 0.70.6)
-  - RNDateTimePicker (6.7.1):
+  - RNDateTimePicker (6.7.5):
     - React-Core
   - RNPermissions (3.6.1):
     - React-Core
@@ -721,7 +721,7 @@ SPEC CHECKSUMS:
   React-RCTVibration: c75ceef7aa60a33b2d5731ebe5800ddde40cefc4
   React-runtimeexecutor: 15437b576139df27635400de0599d9844f1ab817
   ReactCommon: 349be31adeecffc7986a0de875d7fb0dcf4e251c
-  RNDateTimePicker: 0530a73a6f3a1a85814cbde0802736993b9e675e
+  RNDateTimePicker: 65e1d202799460b286ff5e741d8baf54695e8abd
   RNPermissions: dcdb7b99796bbeda6975a6e79ad519c41b251b1c
   RNReanimated: 6668b0587bebd4b15dd849b99e5a9c70fc12ed95
   RNScreens: 34cc502acf1b916c582c60003dc3089fa01dc66d

@@ -23,6 +23,7 @@ function ResumeFormScreen() {
   const [loading, setLoading] = useState<boolean>(false);
   const [title, setTitle] = useState('');
   const [name, setName] = useState('');
+  const [birth, setBirth] = useState('');
   const [gender, setGender] = useState('');
   const [address, setAddress] = useState('');
   const [phoneNumber, setPhoneNumber] = useState('');
@@ -82,15 +83,12 @@ function ResumeFormScreen() {
 
         {/* 생년월일 */}
         <View style={common.mb16}>
-          <BirthdayPicker />
-        </View>
-
-        {/* 성별 */}
-        <View style={[common.mb16]}>
-          <TabButton
-            genderData={genderData}
-            onSelect={(value: any) => setGender(value)}
-            value={gender}
+          <BirthdayPicker
+            label={'생년월일'}
+            onSelect={(value: any) => setBirth(value)}
+            placeholder={'자동입력'}
+            value={birth}
+            disabled={true}
           />
         </View>
 
@@ -115,6 +113,15 @@ function ResumeFormScreen() {
             placeholder={'자동입력'}
             keyboardType={KeyboardTypes.DEFAULT}
             editable={false}
+          />
+        </View>
+
+        {/* 성별 */}
+        <View style={[common.mb16]}>
+          <TabButton
+            genderData={genderData}
+            onSelect={(value: any) => setGender(value)}
+            value={gender}
           />
         </View>
 

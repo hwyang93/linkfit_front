@@ -39,7 +39,7 @@ const ContentTab = () => {
             backgroundColor: '#fff',
             paddingTop: 20,
           },
-          tabBarLabelStyle: {fontSize: 16, marginVertical: 0},
+          tabBarLabelStyle: {fontSize: 16, marginVertical: 16},
           tabBarAllowFontScaling: true,
           headerShadowVisible: false,
         }}>
@@ -191,7 +191,7 @@ const ContentTab = () => {
       <Animated.View
         style={{
           position: 'absolute',
-          bottom: Platform.OS === 'android' ? 78 : 98,
+          bottom: Platform.OS === 'android' ? 79 : 99,
           left: 0,
           width: getWidth(),
           height: 2,
