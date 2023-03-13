@@ -24,14 +24,16 @@ import LinearGradient from 'react-native-linear-gradient';
 
 type Props = NativeStackScreenProps<LoggedInParamList, 'JobPost'>;
 
-function JobPostScreen({route}: Props) {
+function JobPostScreen({route, navigation}: Props) {
   const [loading, setLoading] = useState<boolean>(false);
   const [modalVisible, setModalVisible] =
     useState<SetStateAction<boolean>>(false);
   const [modalTitle, setModalTitle] = useState('');
   const [modalData, setModalData] = useState<any[]>([]);
   const {recruitSeq} = route.params;
-  const [recruitInfo, setRecruitInfo] = useState<any>({});
+  const [recruitInfo, setRecruitInfo] = useState<any>({
+    dates: [{day: '', time: ''}],
+  });
 
   const [contentVerticalOffset, setContentVerticalOffset] = useState(0);
 
@@ -130,9 +132,11 @@ function JobPostScreen({route}: Props) {
             <Text style={[common.mb16, common.text_s, {color: GRAY.DARK}]}>
               {recruitInfo.companyName} | 서울 · 송파구
             </Text>
-            <Text style={[common.text_s, {color: GRAY.DARK}]}>
-              2022.10.01 지원 완료
-            </Text>
+            {recruitInfo.applyInfo?.length > 0 && (
+              <Text style={[common.text_s, {color: GRAY.DARK}]}>
+                {recruitInfo.applyInfo[0].updatedAt} 지원 완료
+              </Text>
+            )}
           </View>
           {/* 구인공고 탑 메인 */}
 
@@ -143,12 +147,18 @@ function JobPostScreen({route}: Props) {
             </Text>
             <Text style={common.text_m}>{recruitInfo.recruitType}</Text>
           </View>
-          {recruitInfo.recruitType === 'FILL-IN' ? (
+          {recruitInfo.recruitType === '대강' ? (
             <View style={common.mb24}>
               <Text style={[common.mb8, common.text_m, common.fwb]}>
                 수업날짜 및 시간
               </Text>
-              <Text style={common.text_m}>월,수,금 14:00 ~ 18:00</Text>
+              {recruitInfo.dates.map((item: any) => {
+                return (
+                  <Text key={item.day + ' ' + item.time} style={common.text_m}>
+                    {item.day} {item.time}
+                  </Text>
+                );
+              })}
             </View>
           ) : (
             <View>
@@ -156,13 +166,13 @@ function JobPostScreen({route}: Props) {
                 <Text style={[common.mb8, common.text_m, common.fwb]}>
                   수업날짜
                 </Text>
-                <Text style={common.text_m}>월,수,금</Text>
+                <Text style={common.text_m}>{recruitInfo.dates[0].day}</Text>
               </View>
               <View style={common.mb24}>
                 <Text style={[common.mb8, common.text_m, common.fwb]}>
                   수업시간
                 </Text>
-                <Text style={common.text_m}>14:00 ~ 18:00</Text>
+                <Text style={common.text_m}>{recruitInfo.dates[0].time}</Text>
               </View>
             </View>
           )}
