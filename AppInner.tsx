@@ -20,7 +20,7 @@ export type LoggedInParamList = {
   Community: undefined;
   CommunityMy: undefined;
   CommunityPostForm: undefined;
-  CommunityPost: undefined;
+  CommunityPost: {postSeq: number};
   My: undefined;
   MyCenter: undefined;
   MyCenterInfo: undefined;

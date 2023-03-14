@@ -9,9 +9,29 @@ import {iconPath} from '@util/iconPath';
 import FloatingWriteButton from '@components/FloatingWriteButton';
 import {NavigationProp, useNavigation} from '@react-navigation/native';
 import {LoggedInParamList} from '../../AppInner';
+import {useCallback, useEffect, useState} from 'react';
+import {fetchCommunityPosts} from '@api/community';
+import toast from '@hooks/toast';
 
 function CommunityScreen() {
   const navigation = useNavigation<NavigationProp<LoggedInParamList>>();
+  const [posts, setPosts] = useState<any[]>([]);
+
+  const getPosts = useCallback(() => {
+    const params = {};
+    fetchCommunityPosts(params)
+      .then(({data}: any) => {
+        console.log(data);
+        setPosts(data);
+      })
+      .catch((e: any) => {
+        toast.error({message: e.message});
+      });
+  }, []);
+  useEffect(() => {
+    getPosts();
+  }, []);
+
   const FILTER = [
     {
       value: '전체',
@@ -44,33 +64,6 @@ function CommunityScreen() {
     {
       value: '채널',
       active: false,
-    },
-  ];
-
-  const RECOMMENDED = [
-    {
-      seq: 1,
-      title: '나랏말싸미듕국에달다달아',
-      type: '센터',
-      companyName: '비와이프테스',
-      date: '2022.12.12',
-      content: '좋게말할때 등록해라. 한달에 20만원 세달하면 할인해서 80만원.',
-    },
-    {
-      seq: 2,
-      title: '게시글 제목어르신이라고',
-      type: '강사',
-      nickname: '요를레이킴',
-      date: '2022.12.12',
-      content: '좋게말할때 등록해라. 한달에 20만원 세달하면 할인해서 80만원.',
-    },
-    {
-      seq: 3,
-      title: '게시글 제목이라고라고',
-      type: '강사',
-      nickname: '요가프레임',
-      date: '2022.12.12',
-      content: '좋게말할때 등록해라. 한달에 20만원 세달하면 할인해서 80만원.',
     },
   ];
 
@@ -107,10 +100,14 @@ function CommunityScreen() {
       {/* 필터 영역 */}
 
       <FlatList
-        data={RECOMMENDED}
+        data={posts}
         keyExtractor={(item, index) => index.toString()}
         renderItem={renderItem}
-        ListHeaderComponent={<CommunityTop />}
+        ListHeaderComponent={() => (
+          <View style={common.mb16}>
+            <Text style={[common.title]}>추천 게시글</Text>
+          </View>
+        )}
         ItemSeparatorComponent={() => (
           <View style={[common.separator, common.mv16]} />
         )}

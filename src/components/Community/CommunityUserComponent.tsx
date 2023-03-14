@@ -15,16 +15,19 @@ type UserProps = {
   };
 };
 
-function CommunityUserComponent({data}: UserProps) {
+function CommunityUserComponent({writerInfo}: any) {
   return (
     <View style={common.row}>
-      <Image source={data.image} style={[common.thumbnail, common.mr8]} />
+      <Image
+        source={iconPath.THUMBNAIL}
+        style={[common.thumbnail, common.mr8]}
+      />
       <View>
         <View style={common.rowCenter}>
           <Text style={[common.text_m, common.fwb, common.mr8]}>
-            {data.nickname}
+            {writerInfo?.nickname ? writerInfo?.nickname : writerInfo?.name}
           </Text>
-          {data.certified ? (
+          {writerInfo?.type === 'INSTRUCTOR' ? (
             <View>
               <View style={common.rowCenter}>
                 <Text style={[common.text_s, {color: BLUE.DEFAULT}]}>
@@ -36,18 +39,29 @@ function CommunityUserComponent({data}: UserProps) {
                 />
               </View>
             </View>
+          ) : writerInfo?.type === 'COMPANY' ? (
+            <View>
+              <View style={common.rowCenter}>
+                <Text>센터</Text>
+              </View>
+            </View>
           ) : null}
         </View>
         <View style={common.row}>
           <Text style={[common.text_m, common.fwb, common.mr4]}>
-            {data.field}
+            {writerInfo?.type === 'COMPANY'
+              ? writerInfo?.company.field
+              : writerInfo?.field}
           </Text>
           <Text style={[common.text, {alignSelf: 'flex-end'}]}>
-            {data.career}
+            {writerInfo?.career}
           </Text>
         </View>
       </View>
-      <Pressable style={styles.kebabIcon} hitSlop={10} onPress={data.job}>
+      <Pressable
+        style={styles.kebabIcon}
+        hitSlop={10}
+        onPress={writerInfo?.job}>
         <Image source={iconPath.KEBAB} style={[common.size24]} />
       </Pressable>
     </View>
