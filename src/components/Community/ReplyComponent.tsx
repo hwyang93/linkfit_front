@@ -9,7 +9,7 @@ type ReplyProps = {
   };
 };
 
-function ReplyComponent({item}: ReplyProps) {
+function ReplyComponent({commentInfo}: any) {
   const [textLine, setTextLine] = useState(2);
   const textExpansion = () => {
     if (textLine === 2) {
@@ -21,12 +21,12 @@ function ReplyComponent({item}: ReplyProps) {
   return (
     <View>
       <View style={common.mt8}>
-        <Text style={common.text_s}>{item.date}</Text>
+        <Text style={common.text_s}>{commentInfo.updatedAt}</Text>
       </View>
       <View style={common.mt8}>
         <Pressable onPress={textExpansion}>
           <Text numberOfLines={textLine} style={common.text_m}>
-            {item.comment}
+            {commentInfo.contents}
           </Text>
         </Pressable>
       </View>

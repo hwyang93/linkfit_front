@@ -6,41 +6,34 @@ import communityPostTop from '@components/Community/CommunityPostTop';
 import ReplyComponent from '@components/Community/ReplyComponent';
 import CommunityUserComponent from '@components/Community/CommunityUserComponent';
 import Modal from '@components/ModalSheet';
-import {SetStateAction, useState} from 'react';
+import {SetStateAction, useCallback, useEffect, useState} from 'react';
+import {NativeStackScreenProps} from '@react-navigation/native-stack';
+import {LoggedInParamList} from '../../../AppInner';
+import {fetchCommunityPost} from '@api/community';
+import toast from '@hooks/toast';
+import CommunityPostTop from '@components/Community/CommunityPostTop';
 
-function CommunityPostScreen() {
+type Props = NativeStackScreenProps<LoggedInParamList, 'CommunityPost'>;
+
+function CommunityPostScreen({route, navigation}: Props) {
   const [modalVisible, setModalVisible] =
     useState<SetStateAction<boolean>>(false);
-  const REPLY = [
-    {
-      id: 1,
-      image: iconPath.THUMBNAIL,
-      nickname: '이런이름',
-      certified: false,
-      field: '필라테스',
-      career: '경력',
-      date: '2022.12.12',
-      comment:
-        '후기 내용입니다. 후기 내용입니다. 후기 내용입니다. 후기 내용입니다. 후기 내용입니다. 후기 내용입니다.후기 내용입니다. 후기 내용입니다. 후기 내용입니다.',
-      job: () => {
-        openModal();
-      },
-    },
-    {
-      id: 2,
-      image: iconPath.THUMBNAIL,
-      nickname: '오늘내일',
-      certified: true,
-      field: '요가',
-      career: '3년',
-      date: '2023.1.12',
-      comment:
-        '후기 내용입니다. 후기 내용입니다. 후기 내용입니다. 후기 내용입니다. 후기 내용입니다. 후기 내용입니다.',
-      job: () => {
-        openModal();
-      },
-    },
-  ];
+
+  const [post, setPost] = useState<any>({});
+
+  const getPost = useCallback(() => {
+    fetchCommunityPost(route.params.postSeq)
+      .then(({data}: any) => {
+        setPost(data);
+      })
+      .catch((e: any) => {
+        toast.error({message: e.message});
+      });
+  }, [route.params.postSeq]);
+
+  useEffect(() => {
+    getPost();
+  }, []);
 
   const MODAL = [
     {
@@ -66,17 +59,17 @@ function CommunityPostScreen() {
   return (
     <View style={styles.container}>
       <FlatList
-        data={REPLY}
+        data={post.comments}
         keyExtractor={(item, index) => index.toString()}
         renderItem={({item}) => {
           return (
             <View>
-              <CommunityUserComponent data={item} />
-              <ReplyComponent item={item} />
+              <CommunityUserComponent writerInfo={item.writer} />
+              <ReplyComponent commentInfo={item} />
             </View>
           );
         }}
-        ListHeaderComponent={communityPostTop}
+        ListHeaderComponent={<CommunityPostTop postInfo={post} />}
         showsVerticalScrollIndicator={false}
         ItemSeparatorComponent={() => (
           <View style={[common.separator, common.mv16]} />

@@ -5,57 +5,35 @@ import CommunityUserComponent from '@components/Community/CommunityUserComponent
 import BookmarkCounter from '@components/Counter/BookmarkCounter';
 import CommentCounter from '@components/Counter/CommentCounter';
 
-function CommunityPostTop() {
-  const USER = {
-    id: 1,
-    image: iconPath.THUMBNAIL,
-    nickname: '이런이름',
-    certified: true,
-    field: '필라테스',
-    career: '경력',
-    job: () => {},
-  };
-
+function CommunityPostTop({postInfo}: any) {
   return (
     <View>
       <View>
         <View style={[common.rowCenterBetween, common.mb8]}>
-          <Text style={common.title_l}>게시글 제목</Text>
+          <Text style={common.title_l}>{postInfo.title}</Text>
           <Image source={iconPath.SHARE} style={common.size24} />
         </View>
-        <Text style={common.text_s}>2012.12.12</Text>
+        <Text style={common.text_s}>{postInfo.updatedAt}</Text>
       </View>
 
       <View style={[common.mv16, common.row]}>
         <View style={common.channelBox}>
-          <Text style={common.channelText}>채널명</Text>
+          <Text style={common.channelText}>{postInfo.category}</Text>
         </View>
       </View>
 
       <View>
-        <CommunityUserComponent data={USER} />
+        <CommunityUserComponent writerInfo={postInfo.writer} />
       </View>
 
       <View style={common.mv16}>
-        <Text style={common.text_m}>
-          게시글 내용입니다. 게시글 내용입니다. 게시글 내용입니다. 게시글
-          내용입니다. 게시글 내용입니다. 게시글 내용입니다. 게시글 내용입니다.
-          게시글 내용입니다. 게시글 내용입니다. 게시글 내용입니다. 게시글
-          내용입니다. 게시글 내용입니다. 게시글 내용입니다. 게시글 내용입니다.
-          게시글 내용입니다. 게시글 내용입니다. 게시글 내용입니다. 게시글
-          내용입니다. 게시글 내용입니다. 게시글 내용입니다. 게시글 내용입니다.
-          게시글 내용입니다. 게시글 내용입니다. 게시글 내용입니다. 게시글
-          내용입니다. 게시글 내용입니다. 게시글 내용입니다. 게시글 내용입니다.
-          게시글 내용입니다. 게시글 내용입니다. 게시글 내용입니다. 게시글
-          내용입니다. 게시글 내용입니다. 게시글 내용입니다. 게시글 내용입니다.
-          게시글 내용입니다. 게시글 내용입니다. 게시글 내용입니다.
-        </Text>
+        <Text style={common.text_m}>{postInfo.contents}</Text>
       </View>
 
       <View style={common.mb16}>
         <View style={common.rowCenter}>
-          <BookmarkCounter counter={23} />
-          <CommentCounter counter={12} />
+          <BookmarkCounter counter={postInfo.bookmarks?.length} />
+          <CommentCounter counter={postInfo.comments?.length} />
         </View>
       </View>
     </View>
