@@ -1,5 +1,9 @@
 import request from './request';
 
+export function createCommunityPost(data: object) {
+  return request.post('/community', data);
+}
+
 export function fetchCommunityPosts(params: object) {
   return request.get('/community', params);
 }

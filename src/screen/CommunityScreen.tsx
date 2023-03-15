@@ -7,13 +7,18 @@ import CommunityTop from '@components/CommunityTop';
 import RecommendedPostItem from '@components/RecommendedPostItem';
 import {iconPath} from '@util/iconPath';
 import FloatingWriteButton from '@components/FloatingWriteButton';
-import {NavigationProp, useNavigation} from '@react-navigation/native';
+import {
+  NavigationProp,
+  useIsFocused,
+  useNavigation,
+} from '@react-navigation/native';
 import {LoggedInParamList} from '../../AppInner';
 import {useCallback, useEffect, useState} from 'react';
 import {fetchCommunityPosts} from '@api/community';
 import toast from '@hooks/toast';
 
 function CommunityScreen() {
+  const isFocused = useIsFocused();
   const navigation = useNavigation<NavigationProp<LoggedInParamList>>();
   const [posts, setPosts] = useState<any[]>([]);
 
@@ -21,7 +26,6 @@ function CommunityScreen() {
     const params = {};
     fetchCommunityPosts(params)
       .then(({data}: any) => {
-        console.log(data);
         setPosts(data);
       })
       .catch((e: any) => {
@@ -29,8 +33,10 @@ function CommunityScreen() {
       });
   }, []);
   useEffect(() => {
-    getPosts();
-  }, []);
+    if (isFocused) {
+      getPosts();
+    }
+  }, [getPosts, isFocused]);
 
   const FILTER = [
     {

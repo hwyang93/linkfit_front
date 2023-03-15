@@ -19,7 +19,11 @@ function CommunityUserComponent({writerInfo}: any) {
   return (
     <View style={common.row}>
       <Image
-        source={iconPath.THUMBNAIL}
+        source={
+          writerInfo?.profileImage
+            ? {uri: writerInfo?.profileImage.originFileUrl}
+            : iconPath.THUMBNAIL
+        }
         style={[common.thumbnail, common.mr8]}
       />
       <View>
