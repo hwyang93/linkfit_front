@@ -9,6 +9,8 @@ import {useAppDispatch} from '@/store';
 import {RootState} from '@store/reducer';
 import EncryptedStorage from 'react-native-encrypted-storage';
 import {fetchMemberInfo} from '@/api/member';
+import {NavigationProp, useNavigation} from '@react-navigation/native';
+import toast from '@hooks/toast';
 
 // import AuthStack from '@navigations/AuthStack';
 
@@ -108,29 +110,25 @@ async function requestPermission() {
 function AppInner() {
   const dispatch = useAppDispatch();
   const position = useSelector((state: RootState) => state.user.lon);
+  const navigation = useNavigation<NavigationProp<LoggedInParamList>>();
 
   useEffect(() => {
     const tokenCheck = async () => {
-      const token = await EncryptedStorage.getItem('accessToken');
+      const token = await EncryptedStorage.getItem('refreshToken');
 
       if (token) {
         await fetchMemberInfo()
           .then(({data}: any) => {
-            console.log('임시 로그인');
-            dispatch(
-              userSlice.actions.setUser({
-                name: data.name,
-                email: data.email,
-              }),
-            );
+            dispatch(userSlice.actions.setUser(data));
+            navigation.navigate('ContentTab', {screen: 'Link'});
           })
           .catch((e: {message: any}) => {
-            console.log(e.message);
+            toast.error({message: e.message});
           });
       }
     };
     tokenCheck();
-  }, [dispatch]);
+  }, [dispatch, navigation]);
 
   useEffect(() => {
     SplashScreen.hide();

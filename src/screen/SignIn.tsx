@@ -1,4 +1,4 @@
-import {useCallback, useState} from 'react';
+import {useCallback, useEffect, useState} from 'react';
 import {
   Pressable,
   StyleSheet,
@@ -20,10 +20,12 @@ import Logo from '@components/Logo';
 import {fetchMemberInfoByEmail} from '@api/member';
 import EncryptedStorage from 'react-native-encrypted-storage';
 import toast from '@hooks/toast';
+import {useFocusEffect, useIsFocused} from '@react-navigation/native';
 
 type SignInScreenProps = NativeStackScreenProps<LoggedInParamList, 'SignIn'>;
 
 function SignIn({navigation}: SignInScreenProps) {
+  const isFocused = useIsFocused();
   const [loading, setLoading] = useState<boolean>(false);
   // 이메일, 비밀번호
   const [email, setEmail] = useState<string>('');
@@ -32,6 +34,12 @@ function SignIn({navigation}: SignInScreenProps) {
   const [emailMessage, setEmailMessage] = useState<string>('');
   // 유효성 검사
   const [isEmail, setIsEmail] = useState<boolean>(false);
+
+  useEffect(() => {
+    if (isFocused) {
+      setEmail('');
+    }
+  }, [isFocused]);
 
   const onChangeEmail = useCallback(
     (value: string) => {

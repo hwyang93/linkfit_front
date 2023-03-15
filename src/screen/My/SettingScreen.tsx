@@ -14,9 +14,17 @@ import {GRAY} from '@styles/colors';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import {NavigationProp, useNavigation} from '@react-navigation/native';
 import {LoggedInParamList} from '../../../AppInner';
+import {useCallback} from 'react';
+import EncryptedStorage from 'react-native-encrypted-storage';
 
 function SettingScreen() {
   const navigation = useNavigation<NavigationProp<LoggedInParamList>>();
+
+  const onLogout = useCallback(async () => {
+    await EncryptedStorage.removeItem('accessToken');
+    await EncryptedStorage.removeItem('refreshToken');
+    navigation.navigate('SignIn');
+  }, [navigation]);
 
   const DATA = [
     {
@@ -74,9 +82,7 @@ function SettingScreen() {
       ))}
 
       <View>
-        <Pressable
-          style={common.mv20}
-          onPress={() => Alert.alert('테스트', '로그아웃이 되지 않아용')}>
+        <Pressable style={common.mv20} onPress={onLogout}>
           <Text style={[common.text_m, styles.linkText]}>로그아웃</Text>
         </Pressable>
         <Pressable
