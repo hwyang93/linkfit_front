@@ -10,11 +10,30 @@ import {BLUE, GRAY, WHITE} from '@styles/colors';
 import common from '@styles/common';
 import {iconPath} from '@util/iconPath';
 import LinearGradient from 'react-native-linear-gradient';
-import {useState} from 'react';
+import {useCallback, useEffect, useState} from 'react';
 import CommunityMyScreenTabView from '@screen/Community/CommunityMyScreenTabView';
+import {fetchMemberInfo} from '@api/member';
+import toast from '@hooks/toast';
+import {fetchBookmarkCommunities, fetchCommunityPosts} from '@api/community';
 
 function CommunityMyScreen() {
   const [loading, setLoading] = useState<boolean>(false);
+  const [memberInfo, setMemberInfo] = useState<any>({});
+
+  const getMemberInfo = useCallback(() => {
+    fetchMemberInfo()
+      .then(({data}: any) => {
+        setMemberInfo(data);
+      })
+      .catch((e: any) => {
+        toast.error({message: e.message});
+      });
+  }, []);
+
+  useEffect(() => {
+    getMemberInfo();
+  }, []);
+
   return (
     <>
       <View style={styles.container}>
@@ -27,26 +46,38 @@ function CommunityMyScreen() {
             <View>
               <View style={common.rowCenter}>
                 <Text style={[common.text_m, common.fwb, common.mr8]}>
-                  니넥임
+                  {memberInfo.nickname ? memberInfo.nickname : memberInfo.name}
                 </Text>
 
                 <View>
-                  <View style={common.rowCenter}>
-                    <Text style={[common.text_s, {color: BLUE.DEFAULT}]}>
-                      인증강사
-                    </Text>
-                    <Image
-                      style={{marginLeft: 2, width: 14, height: 14}}
-                      source={iconPath.CERTIFICATION}
-                    />
-                  </View>
+                  {memberInfo.type === 'INSTRUCTOR' ? (
+                    <View style={common.rowCenter}>
+                      <Text style={[common.text_s, {color: BLUE.DEFAULT}]}>
+                        인증강사
+                      </Text>
+                      <Image
+                        style={{marginLeft: 2, width: 14, height: 14}}
+                        source={iconPath.CERTIFICATION}
+                      />
+                    </View>
+                  ) : (
+                    <View style={common.rowCenter}>
+                      <Text style={[common.text_s, {color: BLUE.DEFAULT}]}>
+                        {memberInfo.type === 'COMPANY' ? '센터' : '일반인'}
+                      </Text>
+                    </View>
+                  )}
                 </View>
               </View>
               <View style={common.row}>
                 <Text style={[common.text_m, common.fwb, common.mr4]}>
-                  포지션
+                  {memberInfo.type === 'COMPANY'
+                    ? memberInfo.company.field
+                    : memberInfo.field}
                 </Text>
-                <Text style={[common.text, {alignSelf: 'flex-end'}]}>3년</Text>
+                <Text style={[common.text, {alignSelf: 'flex-end'}]}>
+                  {memberInfo.career}
+                </Text>
               </View>
               <Text style={[common.text_s, {color: GRAY.DARK}]}>
                 서울 · 송파구

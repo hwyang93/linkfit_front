@@ -11,44 +11,38 @@ import {
 import common from '@styles/common';
 import {BLUE, GRAY, WHITE} from '@styles/colors';
 import {iconPath} from '@util/iconPath';
-import {SetStateAction, useState} from 'react';
+import {SetStateAction, useCallback, useEffect, useState} from 'react';
 import Modal from '@components/ModalSheet';
 import {NavigationProp, useNavigation} from '@react-navigation/native';
 import {LoggedInParamList} from '../../../AppInner';
 import BookmarkCounter from '@components/Counter/BookmarkCounter';
 import CommentCounter from '@components/Counter/CommentCounter';
+import {fetchBookmarkCommunities} from '@api/community';
+import toast from '@hooks/toast';
 
 function CommunityMyPost() {
+  const navigation = useNavigation<NavigationProp<LoggedInParamList>>();
   const [modalVisible, setModalVisible] =
     useState<SetStateAction<boolean>>(false);
-  const navigation = useNavigation<NavigationProp<LoggedInParamList>>();
+  const [bookmarks, setBookmarks] = useState<any[]>([]);
 
   const openModal = () => {
     setModalVisible(true);
   };
 
-  const DATA = [
-    {
-      id: 1,
-      type: '센터',
-      title: '게시글 제목',
-      companyName: '호랑이요가',
-      date: '2022.12.12',
-      content:
-        '게시글 내용입니다. 게시글 내용입니다. 게시글 내용입니다. 게시글 내용입니다. 게시글 내용입니다. 게시글 내용입니다.',
-      channel: '요가',
-    },
-    {
-      id: 2,
-      type: '강사',
-      title: '게시글 제목인겨 아닌겨',
-      nickname: '서당개4년',
-      date: '2022.12.12',
-      content:
-        '게시글 내용입니다. 게시글 내용입니다. 게시글 내용입니다. 게시글 내용입니다. 게시글 내용입니다. ',
-      channel: '필라테스',
-    },
-  ];
+  const getBookmarks = useCallback(() => {
+    fetchBookmarkCommunities()
+      .then(({data}: any) => {
+        setBookmarks(data);
+      })
+      .catch((e: any) => {
+        toast.error({message: e.message});
+      });
+  }, []);
+
+  useEffect(() => {
+    getBookmarks();
+  }, []);
 
   const MODAL = [
     {
@@ -80,47 +74,57 @@ function CommunityMyPost() {
   return (
     <View style={styles.container}>
       <FlatList
-        data={DATA}
+        data={bookmarks}
         renderItem={({item}) => {
           return (
             <View style={styles.postBox}>
               <View>
                 <Text style={[common.title, common.fs18, common.mb8]}>
-                  {item.title}
+                  {item.community.title}
                 </Text>
                 <View style={[common.rowCenter, common.mb12]}>
-                  {item.type === '센터' ? (
+                  {item.community.writer.type === 'COMPANY' ? (
                     <Text style={[common.text_m, common.fwb]}>
-                      {item.companyName}
+                      {item.community.writer.company.companyName}
                     </Text>
                   ) : (
                     <Text style={[common.text_m, common.fwb]}>
-                      {item.nickname}
+                      {item.community.writer.nickname
+                        ? item.community.writer.nickname
+                        : item.community.writer.name}
                     </Text>
                   )}
 
                   <Text
                     style={[common.text, common.mh4, {alignSelf: 'flex-end'}]}>
-                    {item.type}
+                    {item.community.writer.type === 'COMPANY'
+                      ? '센터'
+                      : item.community.writer.type === 'INSTRUCTOR'
+                      ? '강사'
+                      : '일반인'}
                   </Text>
                   <Text style={[common.text, {alignSelf: 'flex-end'}]}>
-                    {item.date}
+                    {item.community.updatedAt}
                   </Text>
                 </View>
 
                 <Pressable style={common.mb10} onPress={textExpansion}>
                   <Text style={common.text_m} numberOfLines={textLine}>
-                    {item.content}
+                    {item.community.contents}
                   </Text>
                 </Pressable>
 
                 <View style={common.rowCenterBetween}>
                   <View style={common.rowCenter}>
-                    <BookmarkCounter counter={23} />
-                    <CommentCounter counter={12} />
+                    <BookmarkCounter
+                      counter={item.community.bookmarks.length}
+                    />
+                    <CommentCounter counter={item.community.comments.length} />
                   </View>
                   <View style={common.channelBox}>
-                    <Text style={common.channelText}>{item.channel}</Text>
+                    <Text style={common.channelText}>
+                      {item.community.category}
+                    </Text>
                   </View>
                 </View>
               </View>

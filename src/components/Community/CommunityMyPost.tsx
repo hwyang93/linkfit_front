@@ -11,38 +11,36 @@ import {
 import common from '@styles/common';
 import {GRAY, WHITE} from '@styles/colors';
 import {iconPath} from '@util/iconPath';
-import {SetStateAction, useState} from 'react';
+import {SetStateAction, useCallback, useEffect, useState} from 'react';
 import Modal from '@components/ModalSheet';
 import {NavigationProp, useNavigation} from '@react-navigation/native';
 import {LoggedInParamList} from '../../../AppInner';
+import {fetchCommunityPosts} from '@api/community';
+import toast from '@hooks/toast';
 
 function CommunityMyPost() {
+  const navigation = useNavigation<NavigationProp<LoggedInParamList>>();
   const [modalVisible, setModalVisible] =
     useState<SetStateAction<boolean>>(false);
-  const navigation = useNavigation<NavigationProp<LoggedInParamList>>();
+  const [posts, setPosts] = useState<any[]>([]);
 
   const openModal = () => {
     setModalVisible(true);
   };
 
-  const DATA = [
-    {
-      id: 1,
-      type: '게시글',
-      title: '게시글 제목',
-      date: '2022.12.12',
-      content:
-        '게시글 내용입니다. 게시글 내용입니다. 게시글 내용입니다. 게시글 내용입니다. 게시글 내용입니다. 게시글 내용입니다.',
-    },
-    {
-      id: 2,
-      type: '댓글',
-      title: '게시글 인겨 아닌겨',
-      date: '2022.12.12',
-      content:
-        '댓글 내용입니다. 댓글 내용입니다. 댓글 내용입니다. 댓글 내용입니다. 댓글 내용입니다. ',
-    },
-  ];
+  const getPosts = useCallback(() => {
+    fetchCommunityPosts({isWriter: 'Y'})
+      .then(({data}: any) => {
+        setPosts(data);
+      })
+      .catch((e: any) => {
+        toast.error({message: e.message});
+      });
+  }, []);
+
+  useEffect(() => {
+    getPosts();
+  }, []);
 
   const MODAL = [
     {
@@ -74,22 +72,20 @@ function CommunityMyPost() {
   return (
     <View style={styles.container}>
       <FlatList
-        data={DATA}
+        data={posts}
         renderItem={({item}) => {
           return (
             <View style={styles.postBox}>
               <View style={[common.rowCenter, common.mb12]}>
-                {item.type === '게시글' && (
-                  <Text style={[common.text_m, common.fwb, common.mr8]}>
-                    {item.title}
-                  </Text>
-                )}
-                <Text style={[common.text]}>{item.date}</Text>
+                <Text style={[common.text_m, common.fwb, common.mr8]}>
+                  {item.title}
+                </Text>
+                <Text style={[common.text]}>{item.updatedAt}</Text>
               </View>
 
               <Pressable onPress={textExpansion}>
                 <Text style={common.text_m} numberOfLines={textLine}>
-                  {item.content}
+                  {item.contents}
                 </Text>
               </Pressable>
 
