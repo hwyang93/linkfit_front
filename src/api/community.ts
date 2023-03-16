@@ -5,7 +5,7 @@ export function createCommunityPost(data: object) {
 }
 
 export function fetchCommunityPosts(params: object) {
-  return request.get('/community', params);
+  return request.get('/community', {params});
 }
 
 export function fetchCommunityPost(seq: number) {
