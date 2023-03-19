@@ -84,12 +84,13 @@ const MainStack = () => {
         contentStyle: {backgroundColor: WHITE},
         headerShadowVisible: false,
         headerLeft: HeaderLeft,
+        gestureEnabled: false,
       }}>
       <Stack.Group>
         <Stack.Screen
           name="ContentTab"
           component={ContentTab}
-          options={{headerShown: false}}
+          options={{headerShown: false, gestureEnabled: false}}
         />
         <Stack.Screen
           name="RecruitMap"

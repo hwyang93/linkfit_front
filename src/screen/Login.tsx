@@ -7,7 +7,7 @@ import {
   TouchableWithoutFeedback,
   View,
 } from 'react-native';
-import {useRef, useState} from 'react';
+import {useEffect, useRef, useState} from 'react';
 import common from '@styles/common';
 import Input, {KeyboardTypes, ReturnKeyTypes} from '@components/Input';
 import LinearGradient from 'react-native-linear-gradient';
@@ -73,6 +73,11 @@ function LogIn() {
         console.log(e.message);
       });
   };
+
+  const routesParams = useRoute();
+  useEffect(() => {
+    console.log(routesParams.name);
+  });
 
   return (
     <SafeAreaView edges={['bottom', 'left', 'right']} style={{flex: 1}}>
