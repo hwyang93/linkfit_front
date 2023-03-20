@@ -10,40 +10,6 @@ const windowWidth = Dimensions.get('window').width;
 const tabWidth = (windowWidth - 32) / 2;
 
 const First = () => {
-  const LINKS = [
-    {
-      seq: 1,
-      position: '요가',
-      title: '공고타이틀',
-      companyName: '신바람요가',
-      area: '신림',
-      src: require('../../assets/images/sample_01.png'),
-    },
-    {
-      seq: 2,
-      position: '필라테스',
-      title: '공고타이틀',
-      companyName: '어느날테스',
-      area: '강남',
-      src: require('../../assets/images/sample_01.png'),
-    },
-    {
-      seq: 3,
-      position: '필라요가',
-      title: '공고타이틀',
-      companyName: '요를레이',
-      area: '역삼',
-      src: require('../../assets/images/sample_01.png'),
-    },
-    {
-      seq: 4,
-      position: '요가파이어',
-      title: '공고타이틀',
-      companyName: '달심',
-      area: '인도',
-      src: require('../../assets/images/sample_01.png'),
-    },
-  ];
   return (
     <View style={[styles.container, common.pt16]}>
       <BookmarkJobOfferComponent />

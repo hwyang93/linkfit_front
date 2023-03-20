@@ -68,11 +68,15 @@ function BookmarkCommunityComponent() {
               <View style={common.rowCenter}>
                 <View style={[common.rowCenter, common.mr10]}>
                   <Image source={iconPath.BOOKMARK_ON} style={common.size24} />
-                  <Text style={[common.text_m, common.fwb]}>23</Text>
+                  <Text style={[common.text_m, common.fwb]}>
+                    {bookmark.community.bookmarks.length}
+                  </Text>
                 </View>
                 <View style={common.rowCenter}>
                   <Image source={iconPath.COMMENT} style={common.size24} />
-                  <Text style={[common.text_m, common.fwb]}>23</Text>
+                  <Text style={[common.text_m, common.fwb]}>
+                    {bookmark.community.comments.length}
+                  </Text>
                 </View>
               </View>
               <View style={[styles.labelBox]}>
