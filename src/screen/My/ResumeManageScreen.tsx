@@ -93,7 +93,7 @@ function ResumeManageScreen() {
           <View key={index} style={[common.basicBox, common.mb8]}>
             <View style={common.rowCenter}>
               {resume.isMaster === 'Y' && (
-                <View style={[styles.box, common.mb8]}>
+                <View style={common.resumeBadge}>
                   <Text
                     style={[common.text, common.fs10, {color: BLUE.DEFAULT}]}>
                     대표
@@ -140,7 +140,7 @@ const styles = StyleSheet.create({
   box: {
     paddingHorizontal: 8,
     paddingVertical: 4,
-    borderRadius: 16,
+    borderRadius: 12,
     backgroundColor: '#d7e0fd',
   },
   kebabIcon: {position: 'absolute', top: 16, right: 16},

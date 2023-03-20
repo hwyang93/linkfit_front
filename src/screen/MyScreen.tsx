@@ -137,45 +137,35 @@ function MyScreen() {
         </View>
 
         {/* 이력서 박스 */}
-        {myInfo.masterResume ? (
-          <View style={common.mb24}>
-            <View style={common.basicBox}>
-              <View
-                style={[
-                  common.mb8,
-                  {
-                    paddingVertical: 4,
-                    paddingHorizontal: 8,
-                    width: 45,
-                    backgroundColor: '#d7e0fd',
-                    borderRadius: 10,
-                  },
-                ]}>
-                <Text
-                  style={[
-                    common.text,
-                    common.fs10,
-                    {color: BLUE.DEFAULT, textAlign: 'center'},
-                  ]}>
-                  대표
+        {
+          myInfo.masterResume ? (
+            <View style={common.mb24}>
+              <View style={common.basicBox}>
+                <View style={[common.resumeBadge]}>
+                  <Text
+                    style={[
+                      common.text,
+                      common.fs10,
+                      {color: BLUE.DEFAULT, textAlign: 'center'},
+                    ]}>
+                    대표
+                  </Text>
+                </View>
+                <Text style={common.title}>{myInfo.masterResume.title}</Text>
+                <Text style={[common.text_s, {color: GRAY.DARK}]}>
+                  2022.12.09
                 </Text>
+                <Pressable
+                  style={styles.kebabIcon}
+                  hitSlop={10}
+                  onPress={() => Alert.alert('click', 'test')}>
+                  <Image source={iconPath.KEBAB} style={[common.size24]} />
+                </Pressable>
               </View>
-              <Text style={common.title}>{myInfo.masterResume.title}</Text>
-              <Text style={[common.text_s, {color: GRAY.DARK}]}>
-                2022.12.09
-              </Text>
-              <Pressable
-                style={styles.kebabIcon}
-                hitSlop={10}
-                onPress={() => Alert.alert('click', 'test')}>
-                <Image source={iconPath.KEBAB} style={[common.size24]} />
-              </Pressable>
             </View>
-          </View>
-        ) : (
-          ''
+          ) : null
           /* 등록된 이력서 없을 경우 */
-        )}
+        }
         {/* 이력서 박스 */}
 
         <View style={[common.mb8]}>
@@ -384,12 +374,6 @@ const styles = StyleSheet.create({
   menuItem: {
     alignItems: 'center',
     justifyContent: 'center',
-  },
-  borderBox: {
-    padding: 16,
-    borderWidth: 1,
-    borderRadius: 8,
-    borderColor: GRAY.DEFAULT,
   },
   kebabIcon: {
     position: 'absolute',
