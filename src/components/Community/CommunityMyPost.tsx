@@ -76,11 +76,13 @@ function CommunityMyPost() {
         renderItem={({item}) => {
           return (
             <View style={styles.postBox}>
-              <View style={[common.rowCenter, common.mb12]}>
-                <Text style={[common.text_m, common.fwb, common.mr8]}>
+              <View style={[common.row, common.mb12]}>
+                <Text style={[common.text_m, common.fwb, common.mr4]}>
                   {item.title}
                 </Text>
-                <Text style={[common.text]}>{item.updatedAt}</Text>
+                <Text style={[common.text, {alignSelf: 'flex-end'}]}>
+                  {item.updatedAt}
+                </Text>
               </View>
 
               <Pressable onPress={textExpansion}>

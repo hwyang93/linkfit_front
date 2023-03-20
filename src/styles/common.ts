@@ -198,6 +198,15 @@ const common = StyleSheet.create({
     borderColor: GRAY.LIGHT,
     borderRadius: 8,
   },
+  // resume badge
+  resumeBadge: {
+    paddingVertical: 4,
+    paddingHorizontal: 8,
+    marginBottom: 8,
+    width: 45,
+    backgroundColor: '#d7e0fd',
+    borderRadius: 12,
+  },
   // select box
   selectWrapper: {
     position: 'relative',

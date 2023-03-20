@@ -1,4 +1,4 @@
-import {Image, Text, View} from 'react-native';
+import {Alert, Image, Pressable, Text, View} from 'react-native';
 import common from '@styles/common';
 import {iconPath} from '@util/iconPath';
 import CommunityUserComponent from '@components/Community/CommunityUserComponent';
@@ -11,9 +11,12 @@ function CommunityPostTop({postInfo}: any) {
       <View>
         <View style={[common.rowCenterBetween, common.mb8]}>
           <Text style={common.title_l}>{postInfo.title}</Text>
-          <Image source={iconPath.SHARE} style={common.size24} />
+          <Pressable
+            onPress={() => Alert.alert('공유', '공유 버튼을 누르셨어요.')}>
+            <Image source={iconPath.SHARE} style={common.size24} />
+          </Pressable>
         </View>
-        <Text style={common.text_s}>{postInfo.updatedAt}</Text>
+        <Text style={[common.text_s, common.fcg]}>{postInfo.updatedAt}</Text>
       </View>
 
       <View style={[common.mv16, common.row]}>
