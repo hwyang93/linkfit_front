@@ -17,13 +17,13 @@ function RecommendedPostItem({item}: listProps) {
       <View>
         <Text style={[common.title, common.fs18]}>{item.title}</Text>
         <View style={[common.rowEnd, common.mb8]}>
-          {item.writer.type === 'INSTRUCTOR' ? (
+          {item.writer.type === 'COMPANY' ? (
             <Text style={[common.text_m, common.fwb]}>
-              {item.writer.nickname ? item.writer.nickname : item.writer.name}
+              {item.writer.company?.companyName}
             </Text>
           ) : (
             <Text style={[common.text_m, common.fwb]}>
-              {item.writer.company.companyName}
+              {item.writer.nickname ? item.writer.nickname : item.writer.name}
             </Text>
           )}
           <Text style={[common.text, common.mh4]}>
