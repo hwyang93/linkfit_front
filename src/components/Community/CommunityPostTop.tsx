@@ -20,7 +20,7 @@ import {useState} from 'react';
 function CommunityPostTop({postInfo}: any) {
   const [loading, setLoading] = useState<boolean>(false);
   const canGoNext = true;
-  const [reply, setReply] = useState('');
+  const [comment, setComment] = useState('');
 
   return (
     <View>
@@ -63,10 +63,10 @@ function CommunityPostTop({postInfo}: any) {
         </View>
         <View style={[{flex: 1, marginHorizontal: 6}]}>
           <Input
-            onChangeText={(text: string) => setReply(text)}
-            value={reply}
+            onChangeText={(text: string) => setComment(text)}
+            value={comment}
             placeholder={'댓글을 입력하세요.'}
-            reply={true}
+            comment={true}
             keyboardType={KeyboardTypes.DEFAULT}
           />
         </View>

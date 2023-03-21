@@ -16,6 +16,6 @@ export function fetchBookmarkCommunities() {
   return request.get('/community/bookmark');
 }
 
-export function createCommunityReply(seq: number, data: object) {
+export function createCommunityComment(seq: number, data: object) {
   return request.post(`/community/${seq}/comment`, data);
 }
