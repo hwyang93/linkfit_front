@@ -15,12 +15,31 @@ import CommentCounter from '@components/Counter/CommentCounter';
 import Input, {KeyboardTypes} from '@components/Input';
 import LinearGradient from 'react-native-linear-gradient';
 import {WHITE} from '@styles/colors';
-import {useState} from 'react';
+import {useCallback, useState} from 'react';
+import {createCommunityComment} from '@api/community';
+import toast from '@hooks/toast';
 
 function CommunityPostTop({postInfo}: any) {
   const [loading, setLoading] = useState<boolean>(false);
-  const canGoNext = true;
   const [comment, setComment] = useState('');
+  const canGoNext = comment;
+
+  const createComment = useCallback(() => {
+    const data = {
+      contents: comment,
+    };
+    createCommunityComment(postInfo.seq, data)
+      .then(() => {
+        setLoading(true);
+        toast.success({message: '댓글이 작성 되었습니다!'});
+        setComment('');
+        setLoading(false);
+      })
+      .catch((e: any) => {
+        setLoading(false);
+        toast.error({message: e.message});
+      });
+  }, [postInfo.seq, comment]);
 
   return (
     <View>
@@ -71,7 +90,7 @@ function CommunityPostTop({postInfo}: any) {
           />
         </View>
 
-        <Pressable style={[{flex: 0}]}>
+        <Pressable style={[{flex: 0}]} onPress={createComment}>
           <LinearGradient
             style={[common.button, {height: 40}]}
             start={{x: 0.1, y: 0.5}}
