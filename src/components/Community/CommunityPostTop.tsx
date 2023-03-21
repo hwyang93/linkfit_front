@@ -1,11 +1,27 @@
-import {Alert, Image, Pressable, Text, View} from 'react-native';
+import {
+  ActivityIndicator,
+  Alert,
+  Image,
+  Pressable,
+  StyleSheet,
+  Text,
+  View,
+} from 'react-native';
 import common from '@styles/common';
 import {iconPath} from '@util/iconPath';
 import CommunityUserComponent from '@components/Community/CommunityUserComponent';
 import BookmarkCounter from '@components/Counter/BookmarkCounter';
 import CommentCounter from '@components/Counter/CommentCounter';
+import Input, {KeyboardTypes} from '@components/Input';
+import LinearGradient from 'react-native-linear-gradient';
+import {WHITE} from '@styles/colors';
+import {useState} from 'react';
 
 function CommunityPostTop({postInfo}: any) {
+  const [loading, setLoading] = useState<boolean>(false);
+  const canGoNext = true;
+  const [reply, setReply] = useState('');
+
   return (
     <View>
       <View>
@@ -39,8 +55,47 @@ function CommunityPostTop({postInfo}: any) {
           <CommentCounter counter={postInfo.comments?.length} />
         </View>
       </View>
+
+      {/* 댓글 입력 */}
+      <View style={[common.mb16, common.rowCenter]}>
+        <View>
+          <Image source={iconPath.THUMBNAIL} style={common.size32} />
+        </View>
+        <View style={[{flex: 1, marginHorizontal: 6}]}>
+          <Input
+            onChangeText={(text: string) => setReply(text)}
+            value={reply}
+            placeholder={'댓글을 입력하세요.'}
+            reply={true}
+            keyboardType={KeyboardTypes.DEFAULT}
+          />
+        </View>
+
+        <Pressable style={[{flex: 0}]}>
+          <LinearGradient
+            style={[common.button, {height: 40}]}
+            start={{x: 0.1, y: 0.5}}
+            end={{x: 0.6, y: 1}}
+            colors={
+              canGoNext ? ['#74ebe4', '#3962f3'] : ['#dcdcdc', '#dcdcdc']
+            }>
+            {loading ? (
+              <ActivityIndicator color="white" />
+            ) : (
+              <Text style={[common.text_s, styles.confirm]}>작성</Text>
+            )}
+          </LinearGradient>
+        </Pressable>
+      </View>
     </View>
   );
 }
+
+const styles = StyleSheet.create({
+  confirm: {
+    fontWeight: '700',
+    color: WHITE,
+  },
+});
 
 export default CommunityPostTop;

@@ -1,8 +1,6 @@
 import {Alert, FlatList, StyleSheet, View} from 'react-native';
 import {WHITE} from '@styles/colors';
 import common from '@styles/common';
-import {iconPath} from '@util/iconPath';
-import communityPostTop from '@components/Community/CommunityPostTop';
 import ReplyComponent from '@components/Community/ReplyComponent';
 import CommunityUserComponent from '@components/Community/CommunityUserComponent';
 import Modal from '@components/ModalSheet';
