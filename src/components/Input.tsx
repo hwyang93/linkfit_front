@@ -32,7 +32,7 @@ type InputProps = {
   multiline?: boolean;
   numberOfLines?: number;
   maxLength?: number;
-  reply?: boolean;
+  comment?: boolean;
 };
 
 const Input = ({
@@ -45,7 +45,7 @@ const Input = ({
   multiline,
   numberOfLines,
   maxLength,
-  reply,
+  comment,
   ...props
 }: InputProps) => {
   const [isFocused, setIsFocused] = useState(false);
@@ -76,7 +76,7 @@ const Input = ({
           common.textInput,
           {borderColor: value || isFocused ? INPUT.FOCUS : GRAY.LIGHT},
           multiline && styles.multiline,
-          reply && styles.reply,
+          comment && styles.comment,
           // {borderColor: value && !isFocused ? INPUT.DEFAULT : INPUT.DEFAULT},
         ]}
         value={value}
@@ -109,7 +109,7 @@ const styles = StyleSheet.create({
     textAlignVertical: 'top',
     paddingVertical: 16,
   },
-  reply: {
+  comment: {
     height: 40,
     paddingVertical: 0,
   },
