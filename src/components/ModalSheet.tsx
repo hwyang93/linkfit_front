@@ -1,4 +1,4 @@
-import {useEffect, useRef, useState} from 'react';
+import {useCallback, useEffect, useRef, useState} from 'react';
 import {
   View,
   StyleSheet,
@@ -28,11 +28,13 @@ type modalProps = {
   type?: string;
   onFilter?: () => void;
   selected?: boolean;
+  onSelect: any;
 };
 
 function ModalSheet(props: modalProps) {
   const [loading, setLoading] = useState<boolean>(false);
   const [modalType, setModalType] = useState<any>();
+  const [modalData, setModalData] = useState<any[]>([]);
   const {modalVisible, setModalVisible} = props;
   const [selected, setSelected] = useState();
   const screenHeight = Dimensions.get('screen').height;
@@ -75,7 +77,8 @@ function ModalSheet(props: modalProps) {
     if (props.modalVisible) {
       resetBottomSheet.start();
     }
-    if (props.type === undefined) {
+    setModalData(props.modalData);
+    if (props.type === undefined || props.type === 'string') {
       setModalType('string');
     } else if (props.type === 'button') {
       setModalType('button');
@@ -84,7 +87,24 @@ function ModalSheet(props: modalProps) {
     } else if (props.type === 'select') {
       setModalType('select');
     }
-  }, [props.modalVisible, props.type, resetBottomSheet]);
+  }, [props.modalData, props.modalVisible, props.type, resetBottomSheet]);
+
+  const onClickItem = useCallback(
+    (item: any) => {
+      const newData = modalData.map(modalItem => {
+        if (modalItem.value === item.value) {
+          modalItem.selected = !modalItem.selected;
+          return item;
+        } else {
+          modalItem.selected = false;
+          return modalItem;
+        }
+      });
+      props.onSelect(newData);
+      setModalData(newData);
+    },
+    [modalData, props],
+  );
 
   const closeModal = () => {
     closeBottomSheet.start(() => {
@@ -126,11 +146,15 @@ function ModalSheet(props: modalProps) {
           </View>
           {/* string type modal */}
           {modalType === 'string' &&
-            props.modalData.map((item, index) => {
+            modalData.map((item, index) => {
               return (
                 <View key={index} style={styles.itemBox}>
-                  <Pressable onPress={item.job} style={{width: '100%'}}>
-                    <Text style={[styles.modalText]}>{item.value}</Text>
+                  <Pressable
+                    onPress={() => onClickItem(item)}
+                    style={{width: '100%'}}>
+                    <Text style={[styles.modalText]}>
+                      {item.value} {item.selected + ''}
+                    </Text>
                   </Pressable>
                 </View>
               );

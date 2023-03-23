@@ -14,7 +14,7 @@ import common, {width} from '@styles/common';
 import TopFilter from '@components/TopFilter';
 import {NavigationProp, useNavigation} from '@react-navigation/native';
 import {LoggedInParamList} from '../../../AppInner';
-import {SetStateAction, useEffect, useState} from 'react';
+import {SetStateAction, useCallback, useEffect, useState} from 'react';
 import Modal from '@components/ModalSheet';
 import {iconPath} from '@util/iconPath';
 import {fetchRecruitApplicationsMy} from '@api/recruit';
@@ -29,6 +29,7 @@ function ApplicationStatusScreen() {
   const [modalTitle, setModalTitle] = useState('');
   const [modalData, setModalData] = useState<any[]>([]);
   const [applications, setApplications] = useState<any[]>([]);
+  const [selectedFilter, setSelectedFilter] = useState('');
 
   useEffect(() => {
     fetchRecruitApplicationsMy()
@@ -40,77 +41,111 @@ function ApplicationStatusScreen() {
       });
   }, []);
 
-  const FILTER = [
+  const [FILTER, setFILTER] = useState([
     {
+      key: 'period',
       value: '기간',
       job: () => {
-        console.log('눌렸나요');
+        setSelectedFilter('period');
         setModalTitle('기간');
         setModalData(MODAL);
         openModal();
       },
     },
     {
+      key: 'status',
       value: '지원 상태',
       job: () => {
+        setSelectedFilter('status');
         setModalTitle('지원상태');
         setModalData(MODAL2);
         openModal();
       },
     },
-  ];
-  const MODAL = [
+  ]);
+
+  const [MODAL, setMODAL] = useState([
     {
       value: '일주일',
-      job: () => {
-        console.log('일주일 눌렸나요');
-      },
+      selected: false,
     },
     {
       value: '1개월',
-      job: () => {},
+      selected: false,
     },
     {
       value: '2개월',
-      job: () => {},
+      selected: false,
     },
     {
       value: '3개월 이상',
-      job: () => {},
+      selected: false,
     },
-  ];
-  const MODAL2 = [
+  ]);
+  const [MODAL2, setMODAL2] = useState([
     {
       value: '지원완료',
-      job: () => {
-        console.log('지원완료 눌렸나요');
-      },
+      selected: false,
     },
     {
       value: '지원취소',
-      job: () => {},
+      selected: false,
     },
     {
       value: '열람',
-      job: () => {},
+      selected: false,
     },
     {
       value: '미열람',
-      job: () => {},
+      selected: false,
     },
     {
       value: '합격',
-      job: () => {},
+      selected: false,
     },
     {
       value: '불합격',
-      job: () => {},
+      selected: false,
     },
-  ];
+  ]);
 
   const openModal = () => {
     setModalVisible(true);
   };
+
+  const onSelect = useCallback(
+    (modalData: any) => {
+      if (selectedFilter === 'period') {
+        setMODAL(modalData);
+        setFILTER(() => {
+          return FILTER.map(filter => {
+            if (filter.key === 'period') {
+              const value = modalData.find((item: any) => {
+                return item.selected;
+              })?.value;
+              filter.value = value ? value : '기간';
+            }
+            return filter;
+          });
+        });
+      } else if (selectedFilter === 'status') {
+        setMODAL2(modalData);
+        setFILTER(() => {
+          return FILTER.map(filter => {
+            if (filter.key === 'status') {
+              const value = modalData.find((item: any) => {
+                return item.selected;
+              })?.value;
+              filter.value = value ? value : '지원 상태';
+            }
+            return filter;
+          });
+        });
+      }
+      setModalVisible(false);
+    },
+    [FILTER, selectedFilter],
+  );
   return (
     <View style={styles.container}>
       {/* 필터 영역 */}
@@ -192,6 +227,7 @@ function ApplicationStatusScreen() {
           setModalVisible={setModalVisible}
           title={modalTitle}
           modalData={modalData}
+          onSelect={onSelect}
         />
       </ScrollView>
     </View>
