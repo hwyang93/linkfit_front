@@ -151,10 +151,17 @@ function ModalSheet(props: modalProps) {
                 <View key={index} style={styles.itemBox}>
                   <Pressable
                     onPress={() => onClickItem(item)}
-                    style={{width: '100%'}}>
-                    <Text style={[styles.modalText]}>
-                      {item.value} {item.selected + ''}
+                    style={[common.rowCenterBetween, {width: '100%'}]}>
+                    <Text
+                      style={[
+                        styles.modalText,
+                        item.selected && {color: BLUE.DEFAULT},
+                      ]}>
+                      {item.value}
                     </Text>
+                    {item.selected && (
+                      <Image source={iconPath.CHECK} style={common.size24} />
+                    )}
                   </Pressable>
                 </View>
               );
@@ -287,6 +294,7 @@ const styles = StyleSheet.create({
     textAlign: 'left',
     lineHeight: +width * 24,
   },
+
   modalTitle: {
     color: BLACK,
     fontSize: +width * 16,

@@ -1,6 +1,5 @@
 import {
   ActivityIndicator,
-  Alert,
   Pressable,
   StyleSheet,
   Text,
@@ -19,6 +18,7 @@ import {
 } from '@react-navigation/native';
 import {LoggedInParamList} from '../../../AppInner';
 import {createReview, updateMemberReputation} from '@api/member';
+import toast from '@hooks/toast';
 
 function ReviewFormScreen() {
   const [loading, setLoading] = useState<boolean>(false);
@@ -37,11 +37,14 @@ function ReviewFormScreen() {
     };
     createReview(data)
       .then(() => {
-        Alert.alert('후기 작성이 완료되었어요!');
+        setLoading(true);
+        toast.success({message: '후기 작성이 완료되었어요!'});
         navigation.goBack();
+        setLoading(false);
       })
       .catch((e: any) => {
-        Alert.alert(e.message);
+        setLoading(false);
+        toast.error({message: e.message});
       });
   }, [comment, reputationInfo?.seq]);
 
@@ -49,11 +52,14 @@ function ReviewFormScreen() {
     const data = {comment: comment};
     updateMemberReputation(reputationInfo.seq, data)
       .then(() => {
-        Alert.alert('후기 수정이 완료되었어요!');
+        setLoading(true);
+        toast.success({message: '후기 수정이 완료되었어요!'});
         navigation.goBack();
+        setLoading(false);
       })
       .catch((e: any) => {
-        Alert.alert(e.message);
+        setLoading(false);
+        toast.error({message: e.message});
       });
   }, [comment, reputationInfo?.seq]);
 

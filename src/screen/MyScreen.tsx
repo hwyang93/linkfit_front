@@ -104,7 +104,7 @@ function MyScreen() {
     }
   }, [isFocused]);
 
-  // console.log('myInfo 내용', myInfo);
+  console.log('myInfo 내용', myInfo.masterResume);
 
   return (
     <ScrollView
@@ -137,35 +137,32 @@ function MyScreen() {
         </View>
 
         {/* 이력서 박스 */}
-        {
-          myInfo.masterResume ? (
-            <View style={common.mb24}>
-              <View style={common.basicBox}>
-                <View style={[common.resumeBadge]}>
-                  <Text
-                    style={[
-                      common.text,
-                      common.fs10,
-                      {color: BLUE.DEFAULT, textAlign: 'center'},
-                    ]}>
-                    대표
-                  </Text>
-                </View>
-                <Text style={common.title}>{myInfo.masterResume.title}</Text>
-                <Text style={[common.text_s, {color: GRAY.DARK}]}>
-                  2022.12.09
+        {myInfo.masterResume.seq && (
+          <View style={common.mb24}>
+            <View style={common.basicBox}>
+              <View style={[common.resumeBadge]}>
+                <Text
+                  style={[
+                    common.text,
+                    common.fs10,
+                    {color: BLUE.DEFAULT, textAlign: 'center'},
+                  ]}>
+                  대표
                 </Text>
-                <Pressable
-                  style={styles.kebabIcon}
-                  hitSlop={10}
-                  onPress={() => Alert.alert('click', 'test')}>
-                  <Image source={iconPath.KEBAB} style={[common.size24]} />
-                </Pressable>
               </View>
+              <Text style={common.title}>{myInfo.masterResume.title}</Text>
+              <Text style={[common.text_s, {color: GRAY.DARK}]}>
+                {myInfo.masterResume.updatedAt}
+              </Text>
+              <Pressable
+                style={styles.kebabIcon}
+                hitSlop={10}
+                onPress={() => Alert.alert('click', 'test')}>
+                <Image source={iconPath.KEBAB} style={[common.size24]} />
+              </Pressable>
             </View>
-          ) : null
-          /* 등록된 이력서 없을 경우 */
-        }
+          </View>
+        )}
         {/* 이력서 박스 */}
 
         <View style={[common.mb8]}>
