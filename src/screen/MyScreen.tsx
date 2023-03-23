@@ -104,8 +104,6 @@ function MyScreen() {
     }
   }, [isFocused]);
 
-  console.log('myInfo 내용', myInfo.masterResume);
-
   return (
     <ScrollView
       style={{flex: 1, backgroundColor: WHITE}}

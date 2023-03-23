@@ -64,7 +64,7 @@ const ContentTab = () => {
             ),
           }}
           listeners={() => ({
-            tabPress: () => {
+            focus: () => {
               Animated.spring(tabOffsetValue, {
                 toValue: 0,
                 useNativeDriver: true,
@@ -92,7 +92,7 @@ const ContentTab = () => {
             ),
           }}
           listeners={() => ({
-            tabPress: () => {
+            focus: () => {
               Animated.spring(tabOffsetValue, {
                 toValue: getWidth(),
                 useNativeDriver: true,
@@ -118,7 +118,7 @@ const ContentTab = () => {
             ),
           }}
           listeners={() => ({
-            tabPress: () => {
+            focus: () => {
               Animated.spring(tabOffsetValue, {
                 toValue: getWidth() * 2,
                 useNativeDriver: true,
@@ -148,7 +148,7 @@ const ContentTab = () => {
               ),
             }}
             listeners={() => ({
-              tabPress: () => {
+              focus: () => {
                 Animated.spring(tabOffsetValue, {
                   toValue: getWidth() * 3,
                   useNativeDriver: true,
@@ -178,7 +178,7 @@ const ContentTab = () => {
               ),
             }}
             listeners={() => ({
-              tabPress: () => {
+              focus: () => {
                 Animated.spring(tabOffsetValue, {
                   toValue: getWidth() * 3,
                   useNativeDriver: true,

@@ -1,4 +1,4 @@
-import {Alert, FlatList, StyleSheet, View} from 'react-native';
+import {Alert, BackHandler, FlatList, StyleSheet, View} from 'react-native';
 import {WHITE} from '@styles/colors';
 import common from '@styles/common';
 import LinkTop from '@components/LinkTop';
@@ -52,6 +52,20 @@ function Link() {
   const openModal = () => {
     setModalVisible(true);
   };
+
+  useEffect(() => {
+    return navigation.addListener('beforeRemove', e => {
+      e.preventDefault();
+      // Alert.alert('back clicked');
+      Alert.alert('잠시만요!', '앱을 종료하시겠습니까?', [
+        {
+          text: '취소',
+          onPress: () => null,
+        },
+        {text: '확인', onPress: () => BackHandler.exitApp()},
+      ]);
+    });
+  }, [navigation]);
 
   return (
     <View style={styles.container}>
