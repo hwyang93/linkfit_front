@@ -28,14 +28,20 @@ function JobOfferFormScreen() {
   const [payType, setPayType] = useState('');
   const [pay, setPay] = useState('');
   const [content, setContent] = useState('');
+  const [recruitType, setRecruitType] = useState(''); // 채용 형태
+  const [day, setDay] = useState([]); // 요일
 
   const POSITION = ['실장', '필라테스', '요가'];
   const EDUCATION = ['학력 무관', '고졸 이상', '대졸 이상'];
   const CAREER = ['경력 무관', '신입', '1년 이상', '3년 이상', '5년 이상'];
   const TIME = ['평일 오전', '평일 오후', '주말 오전', '주말 오후'];
+  const TIME2 = ['오전', '오후', '전일', '시간 협의'];
   const PAY_TYPE = ['시급', '주급', '월급', '연봉'];
 
-  const canGoNext = false;
+  // 채용포지션이 필라테스 요가의 경우
+  const RECRUIT_TYPE = ['전임', '파트', '대강'];
+
+  const canGoNext = true;
 
   const [images, setImages] = useState<any>([]);
 
@@ -58,6 +64,8 @@ function JobOfferFormScreen() {
     }
   };
 
+  console.log(position);
+
   return (
     <DismissKeyboardView>
       <View style={styles.container}>
@@ -72,7 +80,7 @@ function JobOfferFormScreen() {
             label={'글 제목'}
             onChangeText={(text: string) => setOfferTitle(text)}
             value={offerTitle}
-            placeholder={'필라테스 센터 실장님 구합니다.'}
+            placeholder={'공고 제목을 입력하세요.'}
             keyboardType={KeyboardTypes.DEFAULT}
             editable={true}
           />
@@ -86,6 +94,19 @@ function JobOfferFormScreen() {
             defaultButtonText={'채용 포지션'}
           />
         </View>
+
+        {/* 요가, 필라테스의 경우 표시 */}
+        {position === '실장' ? null : (
+          <View style={common.mb16}>
+            <SelectBox
+              label={'채용 형태'}
+              data={RECRUIT_TYPE}
+              onSelect={(value: any) => setRecruitType(value)}
+              defaultButtonText={'채용 형태'}
+            />
+          </View>
+        )}
+
         {/* 학력 */}
         <View style={common.mb16}>
           <SelectBox
@@ -95,6 +116,7 @@ function JobOfferFormScreen() {
             defaultButtonText={'학력을 선택하세요.'}
           />
         </View>
+
         {/* 경력 */}
         <View style={common.mb16}>
           <SelectBox
@@ -104,6 +126,9 @@ function JobOfferFormScreen() {
             defaultButtonText={'경력을 선택하세요.'}
           />
         </View>
+
+        {/* 요일 */}
+
         {/* 시간 */}
         <View style={common.mb16}>
           <SelectBox
