@@ -1,4 +1,4 @@
-import {Alert, FlatList, StyleSheet, View} from 'react-native';
+import {Alert, BackHandler, FlatList, StyleSheet, View} from 'react-native';
 import {WHITE} from '@styles/colors';
 import common from '@styles/common';
 import LinkTop from '@components/LinkTop';
@@ -6,9 +6,13 @@ import InstructorListItem from '@components/InstructorListItem';
 import {iconPath} from '@util/iconPath';
 import FloatingWriteButton from '@components/FloatingWriteButton';
 import Modal from '@components/ModalSheet';
-import {SetStateAction, useEffect, useState} from 'react';
+import {SetStateAction, useCallback, useEffect, useState} from 'react';
 import {fetchInstructors} from '@api/instructor';
-import {NavigationProp, useNavigation} from '@react-navigation/native';
+import {
+  NavigationProp,
+  useFocusEffect,
+  useNavigation,
+} from '@react-navigation/native';
 import {LoggedInParamList} from '../../AppInner';
 
 function Link() {
@@ -44,6 +48,21 @@ function Link() {
         console.log(e.message());
       });
   }, []);
+
+  useFocusEffect(
+    useCallback(() => {
+      return navigation.addListener('beforeRemove', e => {
+        e.preventDefault();
+        Alert.alert('잠시만요!', '앱을 종료하시겠습니까?', [
+          {
+            text: '취소',
+            onPress: () => null,
+          },
+          {text: '확인', onPress: () => BackHandler.exitApp()},
+        ]);
+      });
+    }, [navigation]),
+  );
 
   function renderItem({item}: any) {
     return <InstructorListItem item={item} />;
