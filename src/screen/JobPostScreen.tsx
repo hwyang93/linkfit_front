@@ -220,40 +220,14 @@ function JobPostScreen({route, navigation}: Props) {
           {/* 지원 취소하기 버튼 */}
           <View style={common.mt40}>
             <LinearGradient
-              style={[
-                {
-                  height: 56,
-                  width: '100%',
-                  justifyContent: 'center',
-                  alignSelf: 'center',
-                  borderRadius: 16,
-                },
-              ]}
+              style={common.gradientBorderBox}
               start={{x: 0, y: 1}}
               end={{x: 1, y: 1}}
               colors={['#74ebe4', '#3962f3']}>
-              <Pressable
-                onPress={cancel}
-                style={{
-                  flex: 1,
-                  alignSelf: 'center',
-                  justifyContent: 'center',
-                  backgroundColor: '#ffffff',
-                  width: '99%',
-                  margin: 1,
-                  borderRadius: 14,
-                }}>
-                {loading ? (
-                  <ActivityIndicator color="white" />
-                ) : (
-                  <Text
-                    style={[
-                      common.text_m,
-                      {color: BLUE.DEFAULT, textAlign: 'center'},
-                    ]}>
-                    지원 취소하기
-                  </Text>
-                )}
+              <Pressable onPress={cancel} style={common.borderInnerBox}>
+                <Text style={[common.text_m, common.innerText]}>
+                  지원 취소하기
+                </Text>
               </Pressable>
             </LinearGradient>
           </View>
