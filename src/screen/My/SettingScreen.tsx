@@ -17,6 +17,44 @@ import {LoggedInParamList} from '../../../AppInner';
 import {useCallback} from 'react';
 import EncryptedStorage from 'react-native-encrypted-storage';
 
+const DATA = [
+  {
+    icon: iconPath.NOTIFICATION,
+    title: '알림 설정',
+    link: 'NotificationSetting',
+  },
+  {
+    icon: iconPath.ACCOUNT,
+    title: '계정 관리',
+    link: 'Account',
+  },
+  {
+    icon: iconPath.BLACKLIST,
+    title: '차단 사용자 관리',
+    link: 'Blacklist',
+  },
+  {
+    icon: iconPath.NOTICE,
+    title: '공지사항',
+    link: 'Notice',
+  },
+  {
+    icon: iconPath.INQUIRY,
+    title: '1:1 문의',
+    link: 'Inquiry',
+  },
+  {
+    icon: iconPath.DOCUMENT,
+    title: '버전 정보',
+    link: 'Version',
+  },
+  {
+    icon: iconPath.RULE,
+    title: '서비스 이용약관',
+    link: 'Rule',
+  },
+];
+
 function SettingScreen() {
   const navigation = useNavigation<NavigationProp<LoggedInParamList>>();
 
@@ -25,44 +63,6 @@ function SettingScreen() {
     await EncryptedStorage.removeItem('refreshToken');
     navigation.navigate('SignIn');
   }, [navigation]);
-
-  const DATA = [
-    {
-      icon: iconPath.NOTIFICATION,
-      title: '알림 설정',
-      link: 'NotificationSetting',
-    },
-    {
-      icon: iconPath.ACCOUNT,
-      title: '계정 관리',
-      link: 'Account',
-    },
-    {
-      icon: iconPath.BLACKLIST,
-      title: '차단 사용자 관리',
-      link: 'Blacklist',
-    },
-    {
-      icon: iconPath.NOTICE,
-      title: '공지사항',
-      link: 'Notice',
-    },
-    {
-      icon: iconPath.INQUIRY,
-      title: '1:1 문의',
-      link: 'Inquiry',
-    },
-    {
-      icon: iconPath.DOCUMENT,
-      title: '버전 정보',
-      link: 'Version',
-    },
-    {
-      icon: iconPath.RULE,
-      title: '서비스 이용약관',
-      link: 'Rule',
-    },
-  ];
 
   return (
     <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
