@@ -43,39 +43,41 @@ function ResumeManageScreen() {
   const MODAL = [
     {
       value: '새 이력서 작성',
-      job: () => {
-        closeModel();
-        navigation.navigate('ResumeForm');
-      },
+      selected: false,
+      // job: () => {
+      //   closeModel();
+      //   navigation.navigate('ResumeForm');
+      // },
     },
     {
       value: '대표 이력서로 설정',
-      job: () => {},
+      selected: false,
     },
     {
       value: '이려서 이름 변경',
-      job: () => {},
+      selected: false,
     },
     {
       value: '이력서 복제',
-      job: () => {},
+      selected: false,
     },
     {
       value: '미리보기',
-      job: () => {
-        closeModel();
-        navigation.navigate('ResumePreview', {
-          resumeSeq: selectedResume.seq,
-        });
-      },
+      selected: false,
+      // job: () => {
+      //   closeModel();
+      //   navigation.navigate('ResumePreview', {
+      //     resumeSeq: selectedResume.seq,
+      //   });
+      // },
     },
     {
       value: '수정',
-      job: () => {},
+      selected: false,
     },
     {
       value: '삭제',
-      job: () => {},
+      selected: false,
     },
   ];
 
@@ -125,7 +127,30 @@ function ResumeManageScreen() {
         modalVisible={modalVisible}
         setModalVisible={setModalVisible}
         title={'더보기'}
-        modalData={MODAL}
+        content={
+          <View>
+            {MODAL.map((item, index) => {
+              return (
+                <View key={index} style={common.modalItemBox}>
+                  <Pressable
+                    // onPress={() => onClickItem(item)}
+                    style={[common.rowCenterBetween, {width: '100%'}]}>
+                    <Text
+                      style={[
+                        common.modalText,
+                        item.selected && {color: BLUE.DEFAULT},
+                      ]}>
+                      {item.value}
+                    </Text>
+                    {item.selected && (
+                      <Image source={iconPath.CHECK} style={common.size24} />
+                    )}
+                  </Pressable>
+                </View>
+              );
+            })}
+          </View>
+        }
       />
     </ScrollView>
   );

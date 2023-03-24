@@ -83,7 +83,11 @@ const common = StyleSheet.create({
   column: {flexDirection: 'column'},
   rowCenter: {flexDirection: 'row', alignItems: 'center'},
   rowEnd: {flexDirection: 'row', alignItems: 'flex-end'},
-  rowBetween: {flexDirection: 'row', justifyContent: 'space-between'},
+  rowBetween: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    width: '100%',
+  },
   rowCenterBetween: {
     flexDirection: 'row',
     alignItems: 'center',
@@ -275,5 +279,19 @@ const common = StyleSheet.create({
   size24: {width: 24, height: 24},
   size32: {width: 32, height: 32},
   size40: {width: 40, height: 40},
+  // modal
+  modalItemBox: {
+    flexDirection: 'row',
+    width: '100%',
+    paddingVertical: 19,
+  },
+  modalText: {
+    fontFamily: 'NotoSansKR-Medium',
+    color: BLACK,
+    fontSize: +width * 18,
+    fontWeight: 'normal',
+    textAlign: 'left',
+    lineHeight: +width * 24,
+  },
 });
 export default common;
