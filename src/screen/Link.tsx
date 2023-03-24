@@ -1,5 +1,14 @@
-import {Alert, BackHandler, FlatList, StyleSheet, View} from 'react-native';
-import {WHITE} from '@styles/colors';
+import {
+  Alert,
+  BackHandler,
+  FlatList,
+  StyleSheet,
+  View,
+  Pressable,
+  Text,
+  Image,
+} from 'react-native';
+import {BLUE, WHITE} from '@styles/colors';
 import common from '@styles/common';
 import LinkTop from '@components/LinkTop';
 import InstructorListItem from '@components/InstructorListItem';
@@ -17,9 +26,10 @@ import {LoggedInParamList} from '../../AppInner';
 
 function Link() {
   const navigation = useNavigation<NavigationProp<LoggedInParamList>>();
-  const DATA = [
+  const MODAL = [
     {
       value: '구인 공고 등록',
+      selected: false,
       link: 'JobOfferForm',
       job: () => {
         setModalVisible(false);
@@ -28,6 +38,7 @@ function Link() {
     },
     {
       value: '구직 공고 등록',
+      selected: false,
       job: () => {
         setModalVisible(false);
         Alert.alert('text', '아직 준비중이에요!');
@@ -91,7 +102,30 @@ function Link() {
         modalVisible={modalVisible}
         setModalVisible={setModalVisible}
         title={'공고 등록하기'}
-        modalData={DATA}
+        content={
+          <View>
+            {MODAL.map((item, index) => {
+              return (
+                <View key={index} style={common.modalItemBox}>
+                  <Pressable
+                    // onPress={() => onClickItem(item)}
+                    style={[common.rowCenterBetween, {width: '100%'}]}>
+                    <Text
+                      style={[
+                        common.modalText,
+                        item.selected && {color: BLUE.DEFAULT},
+                      ]}>
+                      {item.value}
+                    </Text>
+                    {item.selected && (
+                      <Image source={iconPath.CHECK} style={common.size24} />
+                    )}
+                  </Pressable>
+                </View>
+              );
+            })}
+          </View>
+        }
       />
     </View>
   );

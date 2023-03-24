@@ -29,7 +29,7 @@ const FloatingLinkButton = ({
   return (
     <>
       {type === 'gradient' ? (
-        <Pressable onPress={job}>
+        <Pressable onPress={job} hitSlop={10}>
           <LinearGradient
             style={[styles.listButton, {bottom: bottom, right: right}]}
             start={{x: 0.1, y: 0.5}}
@@ -71,8 +71,9 @@ const styles = StyleSheet.create({
           width: 0,
         },
       },
-      android: {elevation: 3},
+      // android: {elevation: 3},
     }),
+    zIndex: 100,
   },
   listIcon: {
     marginRight: 4,

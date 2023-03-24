@@ -10,7 +10,7 @@ import {
   Text,
   View,
 } from 'react-native';
-import {GRAY, WHITE} from '@styles/colors';
+import {BLUE, GRAY, WHITE} from '@styles/colors';
 import common from '@styles/common';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import CenterInfoComponent from '@components/CenterInfoComponent';
@@ -21,6 +21,7 @@ import {fetchRecruit} from '@api/recruit';
 import FloatingLinkButton from '@components/FloatingLinkButton';
 import Modal from '@components/ModalSheet';
 import LinearGradient from 'react-native-linear-gradient';
+import {iconPath} from '@util/iconPath';
 
 type Props = NativeStackScreenProps<LoggedInParamList, 'JobPost'>;
 
@@ -218,19 +219,43 @@ function JobPostScreen({route, navigation}: Props) {
 
           {/* 지원 취소하기 버튼 */}
           <View style={common.mt40}>
-            <Pressable onPress={cancel}>
-              <LinearGradient
-                style={common.button}
-                start={{x: 0.1, y: 0.5}}
-                end={{x: 0.6, y: 1}}
-                colors={['#74ebe4', '#3962f3']}>
+            <LinearGradient
+              style={[
+                {
+                  height: 56,
+                  width: '100%',
+                  justifyContent: 'center',
+                  alignSelf: 'center',
+                  borderRadius: 16,
+                },
+              ]}
+              start={{x: 0, y: 1}}
+              end={{x: 1, y: 1}}
+              colors={['#74ebe4', '#3962f3']}>
+              <Pressable
+                onPress={cancel}
+                style={{
+                  flex: 1,
+                  alignSelf: 'center',
+                  justifyContent: 'center',
+                  backgroundColor: '#ffffff',
+                  width: '99%',
+                  margin: 1,
+                  borderRadius: 14,
+                }}>
                 {loading ? (
                   <ActivityIndicator color="white" />
                 ) : (
-                  <Text style={common.buttonText}>지원 취소하기</Text>
+                  <Text
+                    style={[
+                      common.text_m,
+                      {color: BLUE.DEFAULT, textAlign: 'center'},
+                    ]}>
+                    지원 취소하기
+                  </Text>
                 )}
-              </LinearGradient>
-            </Pressable>
+              </Pressable>
+            </LinearGradient>
           </View>
         </ScrollView>
       </SafeAreaView>
@@ -249,6 +274,30 @@ function JobPostScreen({route, navigation}: Props) {
         title={modalTitle}
         modalData={modalData}
         type={'select'}
+        content={
+          <View>
+            {modalData.map((item, index) => {
+              return (
+                <View key={index} style={common.modalItemBox}>
+                  <Pressable
+                    // onPress={() => onClickItem(item)}
+                    style={[common.rowCenterBetween, {width: '100%'}]}>
+                    <Text
+                      style={[
+                        common.modalText,
+                        item.selected && {color: BLUE.DEFAULT},
+                      ]}>
+                      {item.value}
+                    </Text>
+                    {item.selected && (
+                      <Image source={iconPath.CHECK} style={common.size24} />
+                    )}
+                  </Pressable>
+                </View>
+              );
+            })}
+          </View>
+        }
       />
     </>
   );

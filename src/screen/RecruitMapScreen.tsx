@@ -1,4 +1,12 @@
-import {PermissionsAndroid, Platform, StyleSheet, View} from 'react-native';
+import {
+  Image,
+  PermissionsAndroid,
+  Platform,
+  Pressable,
+  StyleSheet,
+  Text,
+  View,
+} from 'react-native';
 import NaverMapView, {Marker} from 'react-native-nmap';
 import {iconPath} from '@util/iconPath';
 import LocationButton from '@components/LocationButton';
@@ -11,6 +19,9 @@ import Modal from '@components/ModalSheet';
 
 import {recruitStore, recruitAction} from '@/zustand/recruitStore';
 import TopFilter2 from '@components/TopFilter2';
+import common from '@styles/common';
+import {BLUE} from '@styles/colors';
+import LinearGradient from 'react-native-linear-gradient';
 
 async function requestPermission() {
   try {
@@ -149,6 +160,7 @@ function RecruitMapScreen() {
   const MODAL2 = [
     {
       value: '전임',
+      selected: false,
       job: () => {
         recruitState.filters.currentType = '전임';
         recruitAction.filtersSet(recruitState.filters);
@@ -156,6 +168,7 @@ function RecruitMapScreen() {
     },
     {
       value: '파트타임',
+      selected: false,
       job: () => {
         recruitState.filters.currentType = '파트타임';
         recruitAction.filtersSet(recruitState.filters);
@@ -163,6 +176,7 @@ function RecruitMapScreen() {
     },
     {
       value: '대강',
+      selected: false,
       job: () => {
         recruitState.filters.currentType = '대강';
         recruitAction.filtersSet(recruitState.filters);
@@ -170,6 +184,7 @@ function RecruitMapScreen() {
     },
     {
       value: '실장',
+      selected: false,
       job: () => {
         recruitState.filters.currentType = '실장';
         recruitAction.filtersSet(recruitState.filters);
@@ -179,6 +194,7 @@ function RecruitMapScreen() {
   const MODAL3 = [
     {
       value: '오전',
+      selected: false,
       job: () => {
         recruitState.filters.currentDate = '오전';
         recruitAction.filtersSet(recruitState.filters);
@@ -186,6 +202,7 @@ function RecruitMapScreen() {
     },
     {
       value: '오후',
+      selected: false,
       job: () => {
         recruitState.filters.currentDate = '오후';
         recruitAction.filtersSet(recruitState.filters);
@@ -193,6 +210,7 @@ function RecruitMapScreen() {
     },
     {
       value: '전일',
+      selected: false,
       job: () => {
         recruitState.filters.currentDate = '전일';
         recruitAction.filtersSet(recruitState.filters);
@@ -200,6 +218,7 @@ function RecruitMapScreen() {
     },
     {
       value: '협의',
+      selected: false,
       job: () => {
         recruitState.filters.currentDate = '협의';
         recruitAction.filtersSet(recruitState.filters);
@@ -278,6 +297,51 @@ function RecruitMapScreen() {
         type={'check'}
         onFilter={onFilter}
         selected={selected}
+        content={
+          <View>
+            {modalData.map((item, index) => {
+              return (
+                <View key={index} style={common.modalItemBox}>
+                  <Pressable
+                    key={index}
+                    onPress={item.job}
+                    style={[common.rowBetween]}>
+                    <View style={[common.rowCenter]}>
+                      {item.icon ? (
+                        <Image
+                          style={[common.size24, common.mr10]}
+                          source={selected ? item.iconOn : item.icon}
+                        />
+                      ) : null}
+                      <Text
+                        style={[
+                          common.modalText,
+                          selected && {color: BLUE.DEFAULT},
+                        ]}>
+                        {item.value}
+                      </Text>
+                    </View>
+                    {selected ? (
+                      <Image style={common.size24} source={iconPath.CHECK} />
+                    ) : null}
+                  </Pressable>
+                </View>
+              );
+            })}
+            {/* button */}
+            <View>
+              <Pressable style={{width: '100%', marginTop: 40}}>
+                <LinearGradient
+                  style={common.button}
+                  start={{x: 0.1, y: 0.5}}
+                  end={{x: 0.6, y: 1}}
+                  colors={['#74ebe4', '#3962f3']}>
+                  <Text style={common.buttonText}>필터 적용</Text>
+                </LinearGradient>
+              </Pressable>
+            </View>
+          </View>
+        }
       />
     </SafeAreaView>
   );
@@ -286,7 +350,6 @@ function RecruitMapScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    // paddingBottom: 40,
   },
   filter: {flexDirection: 'row', paddingVertical: 8, paddingHorizontal: 16},
 });
