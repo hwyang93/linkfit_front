@@ -18,6 +18,16 @@ import MultipleImagePicker, {
   MediaType,
 } from '@baronha/react-native-multiple-image-picker';
 
+const POSITION = ['실장', '필라테스', '요가'];
+const EDUCATION = ['학력 무관', '고졸 이상', '대졸 이상'];
+const CAREER = ['경력 무관', '신입', '1년 이상', '3년 이상', '5년 이상'];
+const TIME = ['평일 오전', '평일 오후', '주말 오전', '주말 오후'];
+const TIME2 = ['오전', '오후', '전일', '시간 협의'];
+const PAY_TYPE = ['시급', '주급', '월급', '연봉'];
+
+// 채용포지션이 필라테스 요가의 경우
+const RECRUIT_TYPE = ['전임', '파트', '대강'];
+
 function JobOfferFormScreen() {
   const [loading, setLoading] = useState<boolean>(false);
   const [offerTitle, setOfferTitle] = useState('');
@@ -30,16 +40,6 @@ function JobOfferFormScreen() {
   const [content, setContent] = useState('');
   const [recruitType, setRecruitType] = useState(''); // 채용 형태
   const [day, setDay] = useState([]); // 요일
-
-  const POSITION = ['실장', '필라테스', '요가'];
-  const EDUCATION = ['학력 무관', '고졸 이상', '대졸 이상'];
-  const CAREER = ['경력 무관', '신입', '1년 이상', '3년 이상', '5년 이상'];
-  const TIME = ['평일 오전', '평일 오후', '주말 오전', '주말 오후'];
-  const TIME2 = ['오전', '오후', '전일', '시간 협의'];
-  const PAY_TYPE = ['시급', '주급', '월급', '연봉'];
-
-  // 채용포지션이 필라테스 요가의 경우
-  const RECRUIT_TYPE = ['전임', '파트', '대강'];
 
   const canGoNext = true;
 

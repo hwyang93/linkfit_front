@@ -70,14 +70,9 @@ function LogIn() {
         navigation.navigate('ContentTab', {screen: 'Link'});
       })
       .catch((e: {message: any}) => {
-        console.log(e.message);
+        toast.error({message: e.message});
       });
   };
-
-  const routesParams = useRoute();
-  useEffect(() => {
-    console.log(routesParams.name);
-  });
 
   return (
     <SafeAreaView edges={['bottom', 'left', 'right']} style={{flex: 1}}>

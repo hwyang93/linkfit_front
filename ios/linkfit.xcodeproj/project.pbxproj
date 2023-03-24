@@ -8,16 +8,16 @@
 
 /* Begin PBXBuildFile section */
 		00E356F31AD99517003FC87E /* linkfitTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E356F21AD99517003FC87E /* linkfitTests.m */; };
+		0F2B9477CF9BEECDDFDA79A5 /* libPods-linkfit-linkfitTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 10717E0C99860CD8913ECC40 /* libPods-linkfit-linkfitTests.a */; };
 		13B07FBC1A68108700A75B9A /* AppDelegate.mm in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.mm */; };
 		13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
 		18F728B1E89C4CD5B5047DBF /* NotoSansKR-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 656E7BB95D12449A83E49C68 /* NotoSansKR-Bold.otf */; };
-		231ECD528DC72668B0EB3B31 /* libPods-linkfit-linkfitTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 6A444B776D8200C09CA056D1 /* libPods-linkfit-linkfitTests.a */; };
 		513E3E4363EE44FBB7B4F70A /* NotoSansKR-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = 644B9B853CB0471CA679F6BD /* NotoSansKR-Regular.otf */; };
 		558DBD5229824B7D00421889 /* File.swift in Sources */ = {isa = PBXBuildFile; fileRef = 558DBD5129824B7D00421889 /* File.swift */; };
 		81804486C0DE496FB18BF0A0 /* NotoSansKR-Medium.otf in Resources */ = {isa = PBXBuildFile; fileRef = DA09DBF8A4914A939B10AF61 /* NotoSansKR-Medium.otf */; };
 		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
-		A018339479F4F9B728FCA57A /* libPods-linkfit.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 63B6898C9F74E0AE9102938F /* libPods-linkfit.a */; };
+		F56AC9270D1BD97C7565163A /* libPods-linkfit.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B6AB2E6A1747195A4DFB1772 /* libPods-linkfit.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -34,14 +34,16 @@
 		00E356EE1AD99517003FC87E /* linkfitTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = linkfitTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		00E356F11AD99517003FC87E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		00E356F21AD99517003FC87E /* linkfitTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = linkfitTests.m; sourceTree = "<group>"; };
-		0549442964FD1AEDAC728C48 /* Pods-linkfit-linkfitTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-linkfit-linkfitTests.release.xcconfig"; path = "Target Support Files/Pods-linkfit-linkfitTests/Pods-linkfit-linkfitTests.release.xcconfig"; sourceTree = "<group>"; };
+		10717E0C99860CD8913ECC40 /* libPods-linkfit-linkfitTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-linkfit-linkfitTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		13B07F961A680F5B00A75B9A /* linkfit.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = linkfit.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		13B07FAF1A68108700A75B9A /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppDelegate.h; path = linkfit/AppDelegate.h; sourceTree = "<group>"; };
 		13B07FB01A68108700A75B9A /* AppDelegate.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = AppDelegate.mm; path = linkfit/AppDelegate.mm; sourceTree = "<group>"; };
 		13B07FB51A68108700A75B9A /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = linkfit/Images.xcassets; sourceTree = "<group>"; };
 		13B07FB61A68108700A75B9A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = linkfit/Info.plist; sourceTree = "<group>"; };
 		13B07FB71A68108700A75B9A /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = linkfit/main.m; sourceTree = "<group>"; };
-		24CB6FD0B6DF45FB01160B7B /* Pods-linkfit-linkfitTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-linkfit-linkfitTests.debug.xcconfig"; path = "Target Support Files/Pods-linkfit-linkfitTests/Pods-linkfit-linkfitTests.debug.xcconfig"; sourceTree = "<group>"; };
+		156E68712C11683F53CDFFAD /* Pods-linkfit-linkfitTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-linkfit-linkfitTests.debug.xcconfig"; path = "Target Support Files/Pods-linkfit-linkfitTests/Pods-linkfit-linkfitTests.debug.xcconfig"; sourceTree = "<group>"; };
+		29C7014034F25ABE646AB680 /* Pods-linkfit.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-linkfit.debug.xcconfig"; path = "Target Support Files/Pods-linkfit/Pods-linkfit.debug.xcconfig"; sourceTree = "<group>"; };
+		4D7DA55292AD43DB220408BC /* Pods-linkfit.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-linkfit.release.xcconfig"; path = "Target Support Files/Pods-linkfit/Pods-linkfit.release.xcconfig"; sourceTree = "<group>"; };
 		551C0F912959C20A00562283 /* FontAwesome5_Brands.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = FontAwesome5_Brands.ttf; sourceTree = "<group>"; };
 		551C0F922959C20A00562283 /* Feather.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Feather.ttf; sourceTree = "<group>"; };
 		551C0F932959C20A00562283 /* FontAwesome5_Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = FontAwesome5_Regular.ttf; sourceTree = "<group>"; };
@@ -60,13 +62,11 @@
 		551C0FA02959C20A00562283 /* Foundation.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Foundation.ttf; sourceTree = "<group>"; };
 		558DBD5029824B7D00421889 /* linkfit-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "linkfit-Bridging-Header.h"; sourceTree = "<group>"; };
 		558DBD5129824B7D00421889 /* File.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = File.swift; sourceTree = "<group>"; };
-		63B6898C9F74E0AE9102938F /* libPods-linkfit.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-linkfit.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		644B9B853CB0471CA679F6BD /* NotoSansKR-Regular.otf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "NotoSansKR-Regular.otf"; path = "../src/assets/fonts/NotoSansKR-Regular.otf"; sourceTree = "<group>"; };
 		656E7BB95D12449A83E49C68 /* NotoSansKR-Bold.otf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "NotoSansKR-Bold.otf"; path = "../src/assets/fonts/NotoSansKR-Bold.otf"; sourceTree = "<group>"; };
-		6A444B776D8200C09CA056D1 /* libPods-linkfit-linkfitTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-linkfit-linkfitTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = linkfit/LaunchScreen.storyboard; sourceTree = "<group>"; };
-		AE18CC5D2EC0477ABC0CBE6E /* Pods-linkfit.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-linkfit.release.xcconfig"; path = "Target Support Files/Pods-linkfit/Pods-linkfit.release.xcconfig"; sourceTree = "<group>"; };
-		D1029AE5C0007CE1CFF4B29A /* Pods-linkfit.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-linkfit.debug.xcconfig"; path = "Target Support Files/Pods-linkfit/Pods-linkfit.debug.xcconfig"; sourceTree = "<group>"; };
+		B6AB2E6A1747195A4DFB1772 /* libPods-linkfit.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-linkfit.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		C81023637C7E2C87A2F06AC0 /* Pods-linkfit-linkfitTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-linkfit-linkfitTests.release.xcconfig"; path = "Target Support Files/Pods-linkfit-linkfitTests/Pods-linkfit-linkfitTests.release.xcconfig"; sourceTree = "<group>"; };
 		DA09DBF8A4914A939B10AF61 /* NotoSansKR-Medium.otf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "NotoSansKR-Medium.otf"; path = "../src/assets/fonts/NotoSansKR-Medium.otf"; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
@@ -76,7 +76,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				231ECD528DC72668B0EB3B31 /* libPods-linkfit-linkfitTests.a in Frameworks */,
+				0F2B9477CF9BEECDDFDA79A5 /* libPods-linkfit-linkfitTests.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -84,7 +84,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A018339479F4F9B728FCA57A /* libPods-linkfit.a in Frameworks */,
+				F56AC9270D1BD97C7565163A /* libPods-linkfit.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -138,8 +138,8 @@
 			isa = PBXGroup;
 			children = (
 				ED297162215061F000B7C4FE /* JavaScriptCore.framework */,
-				63B6898C9F74E0AE9102938F /* libPods-linkfit.a */,
-				6A444B776D8200C09CA056D1 /* libPods-linkfit-linkfitTests.a */,
+				B6AB2E6A1747195A4DFB1772 /* libPods-linkfit.a */,
+				10717E0C99860CD8913ECC40 /* libPods-linkfit-linkfitTests.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -203,10 +203,10 @@
 		BBD78D7AC51CEA395F1C20DB /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				D1029AE5C0007CE1CFF4B29A /* Pods-linkfit.debug.xcconfig */,
-				AE18CC5D2EC0477ABC0CBE6E /* Pods-linkfit.release.xcconfig */,
-				24CB6FD0B6DF45FB01160B7B /* Pods-linkfit-linkfitTests.debug.xcconfig */,
-				0549442964FD1AEDAC728C48 /* Pods-linkfit-linkfitTests.release.xcconfig */,
+				29C7014034F25ABE646AB680 /* Pods-linkfit.debug.xcconfig */,
+				4D7DA55292AD43DB220408BC /* Pods-linkfit.release.xcconfig */,
+				156E68712C11683F53CDFFAD /* Pods-linkfit-linkfitTests.debug.xcconfig */,
+				C81023637C7E2C87A2F06AC0 /* Pods-linkfit-linkfitTests.release.xcconfig */,
 			);
 			path = Pods;
 			sourceTree = "<group>";
@@ -218,12 +218,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 00E357021AD99517003FC87E /* Build configuration list for PBXNativeTarget "linkfitTests" */;
 			buildPhases = (
-				3271A1076835BBAC1B483484 /* [CP] Check Pods Manifest.lock */,
+				DFA8DD770DAE1B9FF51CC34F /* [CP] Check Pods Manifest.lock */,
 				00E356EA1AD99517003FC87E /* Sources */,
 				00E356EB1AD99517003FC87E /* Frameworks */,
 				00E356EC1AD99517003FC87E /* Resources */,
-				ECA96A15B79A9389E1571CF4 /* [CP] Embed Pods Frameworks */,
-				FB8AAABA43C7DE78DE6413BB /* [CP] Copy Pods Resources */,
+				01AA3D1D10C8363A41CBCE25 /* [CP] Embed Pods Frameworks */,
+				44D488EC0D82B0D92D5C201E /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -239,14 +239,14 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 13B07F931A680F5B00A75B9A /* Build configuration list for PBXNativeTarget "linkfit" */;
 			buildPhases = (
-				6D743D7604337B216C42FBFE /* [CP] Check Pods Manifest.lock */,
+				44C477C55CBA8062C634DF5A /* [CP] Check Pods Manifest.lock */,
 				FD10A7F022414F080027D42C /* Start Packager */,
 				13B07F871A680F5B00A75B9A /* Sources */,
 				13B07F8C1A680F5B00A75B9A /* Frameworks */,
 				13B07F8E1A680F5B00A75B9A /* Resources */,
 				00DD1BFF1BD5951E006B06BC /* Bundle React Native code and images */,
-				F077A462286FA0D40D4FAD11 /* [CP] Embed Pods Frameworks */,
-				156AF0B34D79AE8F656035FA /* [CP] Copy Pods Resources */,
+				14D0C91A90A752900902046D /* [CP] Embed Pods Frameworks */,
+				474E3008F305DD8C9C3FE31E /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -332,46 +332,41 @@
 			shellPath = /bin/sh;
 			shellScript = "set -e\n\nWITH_ENVIRONMENT=\"../node_modules/react-native/scripts/xcode/with-environment.sh\"\nREACT_NATIVE_XCODE=\"../node_modules/react-native/scripts/react-native-xcode.sh\"\n\n/bin/sh -c \"$WITH_ENVIRONMENT $REACT_NATIVE_XCODE\"\n";
 		};
-		156AF0B34D79AE8F656035FA /* [CP] Copy Pods Resources */ = {
+		01AA3D1D10C8363A41CBCE25 /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-linkfit/Pods-linkfit-resources-${CONFIGURATION}-input-files.xcfilelist",
+				"${PODS_ROOT}/Target Support Files/Pods-linkfit-linkfitTests/Pods-linkfit-linkfitTests-frameworks-${CONFIGURATION}-input-files.xcfilelist",
 			);
-			name = "[CP] Copy Pods Resources";
+			name = "[CP] Embed Pods Frameworks";
 			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-linkfit/Pods-linkfit-resources-${CONFIGURATION}-output-files.xcfilelist",
+				"${PODS_ROOT}/Target Support Files/Pods-linkfit-linkfitTests/Pods-linkfit-linkfitTests-frameworks-${CONFIGURATION}-output-files.xcfilelist",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-linkfit/Pods-linkfit-resources.sh\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-linkfit-linkfitTests/Pods-linkfit-linkfitTests-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		3271A1076835BBAC1B483484 /* [CP] Check Pods Manifest.lock */ = {
+		14D0C91A90A752900902046D /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-linkfit/Pods-linkfit-frameworks-${CONFIGURATION}-input-files.xcfilelist",
 			);
-			inputPaths = (
-				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
-				"${PODS_ROOT}/Manifest.lock",
-			);
-			name = "[CP] Check Pods Manifest.lock";
+			name = "[CP] Embed Pods Frameworks";
 			outputFileListPaths = (
-			);
-			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-linkfit-linkfitTests-checkManifestLockResult.txt",
+				"${PODS_ROOT}/Target Support Files/Pods-linkfit/Pods-linkfit-frameworks-${CONFIGURATION}-output-files.xcfilelist",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-linkfit/Pods-linkfit-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		6D743D7604337B216C42FBFE /* [CP] Check Pods Manifest.lock */ = {
+		44C477C55CBA8062C634DF5A /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -393,41 +388,7 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
-		ECA96A15B79A9389E1571CF4 /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-linkfit-linkfitTests/Pods-linkfit-linkfitTests-frameworks-${CONFIGURATION}-input-files.xcfilelist",
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-linkfit-linkfitTests/Pods-linkfit-linkfitTests-frameworks-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-linkfit-linkfitTests/Pods-linkfit-linkfitTests-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		F077A462286FA0D40D4FAD11 /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-linkfit/Pods-linkfit-frameworks-${CONFIGURATION}-input-files.xcfilelist",
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-linkfit/Pods-linkfit-frameworks-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-linkfit/Pods-linkfit-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		FB8AAABA43C7DE78DE6413BB /* [CP] Copy Pods Resources */ = {
+		44D488EC0D82B0D92D5C201E /* [CP] Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -442,6 +403,45 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-linkfit-linkfitTests/Pods-linkfit-linkfitTests-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		474E3008F305DD8C9C3FE31E /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-linkfit/Pods-linkfit-resources-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Copy Pods Resources";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-linkfit/Pods-linkfit-resources-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-linkfit/Pods-linkfit-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		DFA8DD770DAE1B9FF51CC34F /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-linkfit-linkfitTests-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
 		FD10A7F022414F080027D42C /* Start Packager */ = {
@@ -497,7 +497,7 @@
 /* Begin XCBuildConfiguration section */
 		00E356F61AD99517003FC87E /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 24CB6FD0B6DF45FB01160B7B /* Pods-linkfit-linkfitTests.debug.xcconfig */;
+			baseConfigurationReference = 156E68712C11683F53CDFFAD /* Pods-linkfit-linkfitTests.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
@@ -525,7 +525,7 @@
 		};
 		00E356F71AD99517003FC87E /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 0549442964FD1AEDAC728C48 /* Pods-linkfit-linkfitTests.release.xcconfig */;
+			baseConfigurationReference = C81023637C7E2C87A2F06AC0 /* Pods-linkfit-linkfitTests.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
@@ -550,7 +550,7 @@
 		};
 		13B07F941A680F5B00A75B9A /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = D1029AE5C0007CE1CFF4B29A /* Pods-linkfit.debug.xcconfig */;
+			baseConfigurationReference = 29C7014034F25ABE646AB680 /* Pods-linkfit.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
@@ -577,7 +577,7 @@
 		};
 		13B07F951A680F5B00A75B9A /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = AE18CC5D2EC0477ABC0CBE6E /* Pods-linkfit.release.xcconfig */;
+			baseConfigurationReference = 4D7DA55292AD43DB220408BC /* Pods-linkfit.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
