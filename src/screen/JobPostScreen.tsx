@@ -1,5 +1,4 @@
 import {
-  ActivityIndicator,
   Alert,
   Image,
   NativeScrollEvent,
@@ -31,6 +30,7 @@ function JobPostScreen({route, navigation}: Props) {
     useState<SetStateAction<boolean>>(false);
   const [modalTitle, setModalTitle] = useState('');
   const [modalData, setModalData] = useState<any[]>([]);
+  const [modalType, setModalType] = useState<string>('');
   const {recruitSeq} = route.params;
   const [recruitInfo, setRecruitInfo] = useState<any>({
     dates: [{day: '', time: ''}],
@@ -52,7 +52,7 @@ function JobPostScreen({route, navigation}: Props) {
       });
   }, [recruitSeq]);
 
-  const MODAL = [
+  const APPLY = [
     {
       value: '2023.12.31 / 14:00 ~ 18:00',
       disabled: false,
@@ -72,7 +72,7 @@ function JobPostScreen({route, navigation}: Props) {
       job: () => {},
     },
   ];
-  const CANCEL_MODAL = [
+  const CANCEL = [
     {
       value: '2023.12.31 / 14:00 ~ 18:00',
       disabled: false,
@@ -90,24 +90,51 @@ function JobPostScreen({route, navigation}: Props) {
       disabled: false,
       selected: true,
       job: () => {},
+    },
+  ];
+  const RESUME = [
+    {
+      master: true,
+      title: '3년차 필라테스 강사입니다.',
+      date: '2022.12.09 수정',
+      selected: true,
+    },
+    {
+      master: false,
+      title: '3년차 필라테스 강사입니다.',
+      date: '2022.12.09 수정',
+      selected: false,
+    },
+    {
+      master: false,
+      title: '3년차 필라테스 강사입니다.',
+      date: '2022.12.09 수정',
+      selected: false,
+    },
+    {
+      master: false,
+      title: '3년차 필라테스 강사입니다.',
+      date: '2022.12.09 수정',
+      selected: false,
     },
   ];
 
   const apply = () => {
-    setModalTitle('지원할 날짜 및 시간을 선택하세요.');
-    setModalData(MODAL);
+    setModalType('apply');
+    setModalTitle('지원하기');
+    setModalData(APPLY);
     openModal();
   };
   const cancel = () => {
+    setModalType('cancel');
     setModalTitle('지원 취소할 날짜 및 시간을 선택하세요. ');
-    setModalData(CANCEL_MODAL);
+    setModalData(CANCEL);
     openModal();
   };
 
   const openModal = () => {
     setModalVisible(true);
   };
-
   // todo: 지원을 안했으면 지원하기 버튼 표시 || 지원을 했으면 지원완료 메시지 표시
   return (
     <>
@@ -249,28 +276,170 @@ function JobPostScreen({route, navigation}: Props) {
         modalData={modalData}
         type={'select'}
         content={
-          <View>
-            {modalData.map((item, index) => {
-              return (
-                <View key={index} style={common.modalItemBox}>
-                  <Pressable
-                    // onPress={() => onClickItem(item)}
-                    style={[common.rowCenterBetween, {width: '100%'}]}>
-                    <Text
+          <>
+            {modalType === 'apply' && (
+              <View style={{width: '100%'}}>
+                {/* 등록된 이력서 없을 때 */}
+                <Pressable style={[common.basicBox, {alignItems: 'center'}]}>
+                  <Image
+                    source={iconPath.ADD_BUTTON}
+                    style={[common.size24, common.mb8]}
+                  />
+                  <Text
+                    style={[
+                      common.text_m,
+                      {
+                        textDecorationLine: 'underline',
+                        textDecorationColor: GRAY.DARK,
+                      },
+                    ]}>
+                    이력서 등록하기
+                  </Text>
+                </Pressable>
+
+                {RESUME.map((item, index) => {
+                  return (
+                    <View
+                      key={index}
                       style={[
-                        common.modalText,
-                        item.selected && {color: BLUE.DEFAULT},
+                        common.basicBox,
+                        common.mv4,
+                        item.selected && {
+                          borderColor: BLUE.DEFAULT,
+                          borderWidth: 2,
+                        },
                       ]}>
-                      {item.value}
-                    </Text>
-                    {item.selected && (
-                      <Image source={iconPath.CHECK} style={common.size24} />
-                    )}
+                      {item.master && (
+                        <View style={[common.resumeBadge]}>
+                          <Text
+                            style={[
+                              common.text,
+                              common.fs10,
+                              {color: BLUE.DEFAULT, textAlign: 'center'},
+                            ]}>
+                            대표
+                          </Text>
+                        </View>
+                      )}
+
+                      <Text numberOfLines={1} style={common.title}>
+                        {item.title}
+                      </Text>
+                      <Text style={[common.text_s, common.fcg]}>
+                        {item.date}
+                      </Text>
+                      {item.selected ? (
+                        <Image
+                          style={[
+                            common.size24,
+                            {position: 'absolute', right: 16, top: '50%'},
+                          ]}
+                          source={iconPath.CHECK}
+                        />
+                      ) : null}
+                    </View>
+                  );
+                })}
+
+                <View style={[common.mt40, common.mb8]}>
+                  <Text style={common.title_s}>
+                    지원할 날짜 및 시간을 선택하세요.
+                  </Text>
+                </View>
+                {modalData.map((item, index) => {
+                  return (
+                    <View
+                      key={index}
+                      style={[common.modalItemBox, {paddingVertical: 4}]}>
+                      <Pressable
+                        disabled={item.disabled}
+                        key={index}
+                        style={[
+                          common.modalSelectBox,
+                          item.selected && {borderColor: BLUE.DEFAULT},
+                          item.disabled && {opacity: 0.5},
+                        ]}>
+                        <View style={[common.rowCenter]}>
+                          <Image
+                            source={iconPath.CALENDAR}
+                            style={[common.size24, common.mr8]}
+                          />
+                          <Text style={common.modalText}>{item.value}</Text>
+                        </View>
+                        {item.selected ? (
+                          <Image
+                            style={common.size24}
+                            source={iconPath.CHECK}
+                          />
+                        ) : null}
+                      </Pressable>
+                    </View>
+                  );
+                })}
+                {/* 지원하기 버튼 등록 된 이력서 없을 경우 disable */}
+                <View style={common.mt40}>
+                  <Pressable>
+                    <LinearGradient
+                      style={common.button}
+                      start={{x: 0.1, y: 0.5}}
+                      end={{x: 0.6, y: 1}}
+                      colors={['#74ebe4', '#3962f3']}>
+                      <Text style={common.buttonText}>지원하기</Text>
+                    </LinearGradient>
                   </Pressable>
                 </View>
-              );
-            })}
-          </View>
+              </View>
+            )}
+            {modalType === 'cancel' && (
+              <View>
+                {modalData.map((item, index) => {
+                  return (
+                    <View
+                      key={index}
+                      style={[common.modalItemBox, {paddingVertical: 4}]}>
+                      <Pressable
+                        onPress={item.job}
+                        disabled={item.disabled}
+                        key={index}
+                        style={[
+                          common.modalSelectBox,
+                          item.selected && {borderColor: BLUE.DEFAULT},
+                          item.disabled && {opacity: 0.5},
+                        ]}>
+                        <View style={[common.rowCenter]}>
+                          <Image
+                            source={iconPath.CALENDAR}
+                            style={[common.size24, common.mr8]}
+                          />
+                          <Text style={common.modalText}>{item.value}</Text>
+                        </View>
+                        {item.selected ? (
+                          <Image
+                            style={common.size24}
+                            source={iconPath.CHECK}
+                          />
+                        ) : null}
+                      </Pressable>
+                    </View>
+                  );
+                })}
+                {/* 지원 취소하기 버튼 */}
+                <View style={common.mt40}>
+                  <LinearGradient
+                    style={common.gradientBorderBox}
+                    start={{x: 0, y: 1}}
+                    end={{x: 1, y: 1}}
+                    colors={['#74ebe4', '#3962f3']}>
+                    <Pressable style={common.borderInnerBox}>
+                      <Text style={[common.text_m, common.innerText]}>
+                        지원 취소하기
+                      </Text>
+                    </Pressable>
+                  </LinearGradient>
+                </View>
+              </View>
+            )}
+          </>
         }
       />
     </>
@@ -281,6 +450,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     paddingHorizontal: 16,
+    paddingBottom: 16,
     backgroundColor: WHITE,
   },
   imgBox: {

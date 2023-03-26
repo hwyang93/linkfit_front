@@ -293,6 +293,17 @@ const common = StyleSheet.create({
     textAlign: 'left',
     lineHeight: +width * 24,
   },
+  modalSelectBox: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    width: '100%',
+    paddingVertical: 8,
+    paddingHorizontal: 16,
+    // marginVertical: 8,
+    borderWidth: 2,
+    borderColor: GRAY.LIGHT,
+    borderRadius: 8,
+  },
   // border gradient button
   gradientBorderBox: {
     height: 56,
