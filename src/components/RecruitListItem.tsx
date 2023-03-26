@@ -40,7 +40,7 @@ function RecruitListItem({item}: ListProps) {
           source={
             item.writer.profileImage
               ? {uri: item.writer.profileImage.originFileUrl}
-              : iconPath.THUMBNAIL
+              : iconPath.CENTER_DEFAULT
           }
         />
       </View>
