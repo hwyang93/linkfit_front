@@ -7,11 +7,16 @@ import Modal from '@components/ModalSheet';
 
 import {SetStateAction, useState} from 'react';
 import {iconPath} from '@util/iconPath';
+import toast from '@hooks/toast';
 
 function MessageScreen() {
   const navigation = useNavigation<NavigationProp<LoggedInParamList>>();
   const [modalVisible, setModalVisible] =
     useState<SetStateAction<boolean>>(false);
+
+  const toastTest = () => {
+    toast.success({message: 'test'});
+  };
 
   const modalData = [
     {
@@ -45,6 +50,7 @@ function MessageScreen() {
         onPress={() => navigation.navigate('MyCenter')}
       />
       <Button title={'모달 샘플'} onPress={() => setModalVisible(true)} />
+      <Button title={'토스트 샘플'} onPress={toastTest} />
       <Modal
         modalVisible={modalVisible}
         setModalVisible={setModalVisible}

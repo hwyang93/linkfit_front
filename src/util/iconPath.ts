@@ -79,4 +79,5 @@ export const iconPath = {
   EMPTY: require('@images/icon/empty.png'),
   CALENDAR: require('@images/icon/calendar.png'),
   CANCEL: require('@images/icon/cancel.png'),
+  CENTER_DEFAULT: require('@images/center_profile_default.png'),
 };
