@@ -293,5 +293,37 @@ const common = StyleSheet.create({
     textAlign: 'left',
     lineHeight: +width * 24,
   },
+  modalSelectBox: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    width: '100%',
+    paddingVertical: 8,
+    paddingHorizontal: 16,
+    // marginVertical: 8,
+    borderWidth: 2,
+    borderColor: GRAY.LIGHT,
+    borderRadius: 8,
+  },
+  // border gradient button
+  gradientBorderBox: {
+    height: 56,
+    width: '100%',
+    justifyContent: 'center',
+    alignSelf: 'center',
+    borderRadius: 16,
+  },
+  borderInnerBox: {
+    flex: 1,
+    alignSelf: 'center',
+    justifyContent: 'center',
+    backgroundColor: '#ffffff',
+    width: '99%',
+    margin: 1,
+    borderRadius: 14,
+  },
+  innerText: {
+    color: BLUE.DEFAULT,
+    textAlign: 'center',
+  },
 });
 export default common;
