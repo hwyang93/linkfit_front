@@ -1,7 +1,8 @@
 import {useState} from 'react';
-import {StyleSheet, Text, TextInput, View} from 'react-native';
+import {Image, StyleSheet, Text, TextInput, View} from 'react-native';
 import common from '@styles/common';
 import {GRAY, INPUT} from '@styles/colors';
+import {iconPath} from '@util/iconPath';
 
 export const KeyboardTypes = {
   DEFAULT: 'default',
@@ -33,6 +34,7 @@ type InputProps = {
   numberOfLines?: number;
   maxLength?: number;
   comment?: boolean;
+  icon?: string;
 };
 
 const Input = ({
@@ -46,11 +48,12 @@ const Input = ({
   numberOfLines,
   maxLength,
   comment,
+  icon,
   ...props
 }: InputProps) => {
   const [isFocused, setIsFocused] = useState(false);
   // console.log('style : ', propStyles);
-
+  console.log(icon);
   const onBlur = () => {
     setIsFocused(false);
   };
@@ -70,13 +73,27 @@ const Input = ({
           {label}
         </Text>
       ) : null}
+      {icon === 'time' && (
+        <View style={{position: 'absolute', left: 16, top: 16}}>
+          <Image source={iconPath.TIME} style={[common.size24]} />
+        </View>
+      )}
+      {icon === 'day' && (
+        <View style={{position: 'absolute', left: 16, top: 16}}>
+          <Image source={iconPath.DAY} style={[common.size24]} />
+        </View>
+      )}
       <TextInput
         {...props}
         style={[
           common.textInput,
-          {borderColor: value || isFocused ? INPUT.FOCUS : GRAY.LIGHT},
+          {
+            borderColor: value || isFocused ? INPUT.FOCUS : GRAY.LIGHT,
+            paddingLeft: icon && 50,
+          },
           multiline && styles.multiline,
           comment && styles.comment,
+
           // {borderColor: value && !isFocused ? INPUT.DEFAULT : INPUT.DEFAULT},
         ]}
         value={value}
