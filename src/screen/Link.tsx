@@ -108,7 +108,7 @@ function Link() {
               return (
                 <View key={index} style={common.modalItemBox}>
                   <Pressable
-                    // onPress={() => onClickItem(item)}
+                    onPress={item.job}
                     style={[common.rowCenterBetween, {width: '100%'}]}>
                     <Text
                       style={[
