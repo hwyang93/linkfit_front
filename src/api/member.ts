@@ -79,3 +79,7 @@ export function fetchPositionSuggest(seq: number) {
 export function updatePositionSuggestStatus(seq: number, data: object) {
   return request.patch(`/member/suggest/${seq}`, data);
 }
+
+export function fetchMemberFollowings(type: string) {
+  return request.get(`/member/following/${type}`);
+}
