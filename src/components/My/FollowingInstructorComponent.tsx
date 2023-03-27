@@ -11,6 +11,9 @@ import {
 import common from '@styles/common';
 import {BLUE, GRAY, WHITE} from '@styles/colors';
 import {iconPath} from '@util/iconPath';
+import {useCallback, useEffect, useState} from 'react';
+import {fetchMemberFollowings} from '@api/member';
+import toast from '@hooks/toast';
 
 const EMPLOYER = [
   {
@@ -31,58 +34,90 @@ const EMPLOYER = [
 ];
 
 function FollowingInstructorComponent() {
+  const [followings, setFollowings] = useState<any[]>([]);
+
+  const getMemberFollowingList = useCallback(() => {
+    fetchMemberFollowings('INSTRUCTOR ')
+      .then(({data}: any) => {
+        setFollowings(data);
+      })
+      .catch((e: any) => {
+        toast.error({message: e.message});
+      });
+  }, []);
+
+  useEffect(() => {
+    getMemberFollowingList();
+  }, []);
   return (
     <ScrollView showsVerticalScrollIndicator={false}>
-      <View style={styles.reviewBox}>
-        <View style={common.rowCenter}>
-          <Image
-            source={require('../../assets/images/thumbnail.png')}
-            style={styles.thumbnail}
-          />
-          <View style={{flex: 1}}>
+      {/*<View>*/}
+      {followings.map(following => {
+        return (
+          <View
+            key={`${following.seq} ${following.memberSeq} ${following.favoriteSeq}`}
+            style={styles.reviewBox}>
             <View style={common.rowCenter}>
-              <Text style={[common.text_m, common.fwb, common.mr8]}>
-                포지션
-              </Text>
-              <Text style={[common.text]}>경력</Text>
-            </View>
-            <View style={common.rowCenter}>
-              <Text style={[common.text_l, common.fwb, common.mr8]}>
-                닉네임
-              </Text>
-              <Text style={[common.text_s, {color: BLUE.DEFAULT}]}>
-                인증강사
-              </Text>
               <Image
-                style={{marginLeft: 2, width: 14, height: 14}}
-                source={iconPath.CERTIFICATION}
+                source={require('../../assets/images/thumbnail.png')}
+                style={styles.thumbnail}
               />
-            </View>
-            <View style={[common.rowCenterBetween]}>
-              <Text style={[common.text_s, {flex: 1}]}>지역</Text>
-              <View style={[common.rowCenter, {}]}>
-                <View>
-                  <Image source={iconPath.MESSAGE} style={common.size24} />
+              <View style={{flex: 1}}>
+                <View style={common.rowCenter}>
+                  <Text style={[common.text_m, common.fwb, common.mr8]}>
+                    {following.followingMember.field}
+                  </Text>
+                  <Text style={[common.text]}>{following.career}</Text>
                 </View>
-                <View>
-                  <Image source={iconPath.FAVORITE_ON} style={common.size24} />
+                <View style={common.rowCenter}>
+                  <Text style={[common.text_l, common.fwb, common.mr8]}>
+                    {following.followingMember.nickname
+                      ? following.followingMember.nickname
+                      : following.followingMember.name}
+                  </Text>
+                  <Text style={[common.text_s, {color: BLUE.DEFAULT}]}>
+                    인증강사
+                  </Text>
+                  <Image
+                    style={{marginLeft: 2, width: 14, height: 14}}
+                    source={iconPath.CERTIFICATION}
+                  />
                 </View>
-                <Text
-                  style={[common.text_m, common.fwb, {alignSelf: 'flex-end'}]}>
-                  23
-                </Text>
+                <View style={[common.rowCenterBetween]}>
+                  <Text style={[common.text_s, {flex: 1}]}>지역</Text>
+                  <View style={[common.rowCenter, {}]}>
+                    <View>
+                      <Image source={iconPath.MESSAGE} style={common.size24} />
+                    </View>
+                    <View>
+                      <Image
+                        source={iconPath.FAVORITE_ON}
+                        style={common.size24}
+                      />
+                    </View>
+                    <Text
+                      style={[
+                        common.text_m,
+                        common.fwb,
+                        {alignSelf: 'flex-end'},
+                      ]}>
+                      23
+                    </Text>
+                  </View>
+                </View>
               </View>
             </View>
-          </View>
-        </View>
 
-        {/*<Pressable*/}
-        {/*  style={styles.kebabIcon}*/}
-        {/*  hitSlop={10}*/}
-        {/*  onPress={() => Alert.alert('click', 'test')}>*/}
-        {/*  <Image source={iconPath.KEBAB} style={[common.size24]} />*/}
-        {/*</Pressable>*/}
-      </View>
+            {/*<Pressable*/}
+            {/*  style={styles.kebabIcon}*/}
+            {/*  hitSlop={10}*/}
+            {/*  onPress={() => Alert.alert('click', 'test')}>*/}
+            {/*  <Image source={iconPath.KEBAB} style={[common.size24]} />*/}
+            {/*</Pressable>*/}
+          </View>
+        );
+      })}
+      {/*</View>*/}
     </ScrollView>
   );
 }
