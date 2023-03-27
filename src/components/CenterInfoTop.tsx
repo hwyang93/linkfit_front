@@ -79,7 +79,7 @@ function CenterInfoTop() {
     },
   ];
   return (
-    <ScrollView>
+    <View>
       <View style={common.mb16}>
         <Image
           source={require('../assets/images/center_01.png')}
@@ -117,7 +117,7 @@ function CenterInfoTop() {
         {/* 채용중인 항목 리스트 */}
         <OfferListItem offer={OFFERS} button={true} />
       </View>
-    </ScrollView>
+    </View>
   );
 }
 
