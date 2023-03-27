@@ -1,4 +1,5 @@
 export const iconPath = {
+  CENTER_DEFAULT: require('@images/center_profile_default.png'),
   LOGO_TEXT: require('@images/logoText.png'),
   LOGO: require('@images/logo.png'),
   APPLE: require('@images/icon/apple.png'),
@@ -79,5 +80,5 @@ export const iconPath = {
   EMPTY: require('@images/icon/empty.png'),
   CALENDAR: require('@images/icon/calendar.png'),
   CANCEL: require('@images/icon/cancel.png'),
-  CENTER_DEFAULT: require('@images/center_profile_default.png'),
+  TIME: require('@images/icon/time.png'),
 };
