@@ -10,9 +10,16 @@ type selectProps = {
   onSelect: Function;
   defaultButtonText: string;
   label?: string;
+  onChangeSearchInputText?: any;
 };
 
-const SelectBox = ({data, onSelect, defaultButtonText, label}: selectProps) => {
+const SelectBox = ({
+  data,
+  onSelect,
+  defaultButtonText,
+  label,
+  onChangeSearchInputText,
+}: selectProps) => {
   const [focus, setFocus] = useState(false);
   const [, setSelectItem] = useState('');
 
@@ -52,6 +59,7 @@ const SelectBox = ({data, onSelect, defaultButtonText, label}: selectProps) => {
         rowStyle={styles.dropItem}
         rowTextStyle={styles.dropText}
         onFocus={() => setFocus(true)}
+        onChangeSearchInputText={onChangeSearchInputText}
       />
       {label && (
         <Text style={[common.label, {color: focus ? INPUT.FOCUS : GRAY.LIGHT}]}>

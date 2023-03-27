@@ -1,5 +1,6 @@
 import {
   ActivityIndicator,
+  Dimensions,
   Image,
   Pressable,
   StyleSheet,
@@ -28,10 +29,13 @@ const PAY_TYPE = ['시급', '주급', '월급', '연봉'];
 // 채용포지션이 필라테스 요가의 경우
 const RECRUIT_TYPE = ['전임', '파트', '대강'];
 
+const windowWidth = Dimensions.get('window').width;
+const columns7 = (windowWidth - 32) / 7;
+
 function JobOfferFormScreen() {
   const [loading, setLoading] = useState<boolean>(false);
   const [offerTitle, setOfferTitle] = useState('');
-  const [position, setPosition] = useState('');
+  const [position, setPosition] = useState('실장');
   const [education, setEducation] = useState('');
   const [career, setCareer] = useState('');
   const [time, setTime] = useState('');
@@ -39,7 +43,17 @@ function JobOfferFormScreen() {
   const [pay, setPay] = useState('');
   const [content, setContent] = useState('');
   const [recruitType, setRecruitType] = useState(''); // 채용 형태
-  const [day, setDay] = useState([]); // 요일
+  const [day, setDay] = useState([
+    {value: '월', selected: true},
+    {value: '화', selected: false},
+    {value: '수', selected: false},
+    {value: '목', selected: false},
+    {value: '금', selected: false},
+    {value: '토', selected: false},
+    {value: '일', selected: false},
+  ]); // 요일
+
+  const [date, setDate] = useState('');
 
   const canGoNext = true;
 
@@ -127,17 +141,52 @@ function JobOfferFormScreen() {
           />
         </View>
 
-        {/* 요일 */}
+        {/* 날짜 선택 조건 */}
+        {/* 포지션이 실장일 경우 */}
+        {position === '실장' ? (
+          <View style={common.mb16}>
+            <SelectBox
+              label={'시간'}
+              data={TIME}
+              onSelect={(value: any) => setTime(value)}
+              defaultButtonText={'시간을 선택하세요.'}
+            />
+          </View>
+        ) : null}
 
-        {/* 시간 */}
-        <View style={common.mb16}>
-          <SelectBox
-            label={'시간'}
-            data={TIME}
-            onSelect={(value: any) => setTime(value)}
-            defaultButtonText={'시간을 선택하세요.'}
-          />
-        </View>
+        {/* 실장이 아니고 전임 또는 파트일 경우 요일 선택 */}
+        {position !== '실장' && recruitType !== '대강' ? (
+          <>
+            <View style={common.mb16}>
+              <Input
+                label={'요일'}
+                onChangeText={(text: string) => setPay(text)}
+                value={pay}
+                icon={'day'}
+                placeholder={'요일을 선택하세요.'}
+                keyboardType={KeyboardTypes.DEFAULT}
+                editable={true}
+              />
+            </View>
+            <View style={[common.mb16, common.row]}>
+              {day.map((item, index) => {
+                return (
+                  <Pressable
+                    key={index}
+                    style={[
+                      styles.dateItem,
+                      item.selected && {backgroundColor: '#d7e0fd'},
+                    ]}>
+                    <Text style={[common.text_m, {color: '#292929'}]}>
+                      {item.value}
+                    </Text>
+                  </Pressable>
+                );
+              })}
+            </View>
+          </>
+        ) : null}
+
         {/* 급여 형태 */}
         <View style={common.mb16}>
           <SelectBox
@@ -207,6 +256,14 @@ const styles = StyleSheet.create({
     borderWidth: 2,
     borderColor: GRAY.LIGHT,
     borderRadius: 8,
+  },
+  dateItem: {
+    width: columns7,
+    height: columns7,
+    // backgroundColor: '#d7e0fd',
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderRadius: 200,
   },
 });
 export default JobOfferFormScreen;
