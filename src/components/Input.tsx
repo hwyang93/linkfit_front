@@ -35,6 +35,7 @@ type InputProps = {
   maxLength?: number;
   comment?: boolean;
   icon?: string;
+  textAlign?: any;
 };
 
 const Input = ({
@@ -49,11 +50,12 @@ const Input = ({
   maxLength,
   comment,
   icon,
+  textAlign,
   ...props
 }: InputProps) => {
   const [isFocused, setIsFocused] = useState(false);
   // console.log('style : ', propStyles);
-  console.log(icon);
+  // console.log(icon);
   const onBlur = () => {
     setIsFocused(false);
   };
@@ -73,12 +75,12 @@ const Input = ({
           {label}
         </Text>
       ) : null}
-      {icon === 'time' && (
+      {icon !== 'time' ? null : (
         <View style={{position: 'absolute', left: 16, top: 16}}>
           <Image source={iconPath.TIME} style={[common.size24]} />
         </View>
       )}
-      {icon === 'day' && (
+      {icon !== 'day' ? null : (
         <View style={{position: 'absolute', left: 16, top: 16}}>
           <Image source={iconPath.DAY} style={[common.size24]} />
         </View>
@@ -111,6 +113,7 @@ const Input = ({
         multiline={multiline}
         numberOfLines={numberOfLines}
         maxLength={maxLength}
+        textAlign={textAlign}
       />
     </View>
   );

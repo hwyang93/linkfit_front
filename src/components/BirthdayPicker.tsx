@@ -1,9 +1,10 @@
-import {Pressable, StyleSheet, Text, View} from 'react-native';
+import {Image, Pressable, StyleSheet, Text, View} from 'react-native';
 import DateTimePickerModal from 'react-native-modal-datetime-picker';
 import moment from 'moment';
 import {useState} from 'react';
 import common from '@styles/common';
 import {GRAY, INPUT} from '@styles/colors';
+import {iconPath} from '@util/iconPath';
 
 type birthProps = {
   label?: string;
@@ -11,9 +12,18 @@ type birthProps = {
   value?: string;
   placeholder?: string;
   disabled?: boolean;
+  textAlign?: string;
+  icon?: string;
 };
 
-function BirthdayPicker({label, onSelect, placeholder, disabled}: birthProps) {
+function BirthdayPicker({
+  label,
+  onSelect,
+  placeholder,
+  disabled,
+  textAlign,
+  icon,
+}: birthProps) {
   const [focus, setFocus] = useState(false);
   const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
   const [birth, setBirth] = useState('');
@@ -26,7 +36,7 @@ function BirthdayPicker({label, onSelect, placeholder, disabled}: birthProps) {
   };
   const handleConfirm = (date: any) => {
     setBirth(moment(date).format('YYYY.MM.DD'));
-    console.log('생일은 바로...', birth);
+    // console.log('생일은 바로...', birth);
     onSelect(date);
     hideDatePicker();
   };
@@ -44,10 +54,28 @@ function BirthdayPicker({label, onSelect, placeholder, disabled}: birthProps) {
           style={[common.textInput, focus && {borderColor: INPUT.FOCUS}]}
           onPress={showDatePicker}
           disabled={disabled}>
+          {icon !== 'day' ? null : (
+            <View style={{position: 'absolute', left: 16, top: 16}}>
+              <Image source={iconPath.DAY} style={[common.size24]} />
+            </View>
+          )}
           {birth ? (
-            <Text style={[styles.text, {color: '#292929'}]}>{birth}</Text>
+            <Text
+              style={[
+                styles.text,
+                {color: '#292929'},
+                textAlign === 'right' && {textAlign: 'right'},
+              ]}>
+              {birth}
+            </Text>
           ) : (
-            <Text style={[styles.text]}>{placeholder}</Text>
+            <Text
+              style={[
+                styles.text,
+                textAlign === 'right' && {textAlign: 'right'},
+              ]}>
+              {placeholder}
+            </Text>
           )}
         </Pressable>
       </View>
