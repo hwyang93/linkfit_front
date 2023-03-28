@@ -18,6 +18,7 @@ import LinearGradient from 'react-native-linear-gradient';
 import MultipleImagePicker, {
   MediaType,
 } from '@baronha/react-native-multiple-image-picker';
+import BirthdayPicker from '@components/BirthdayPicker';
 
 const POSITION = ['실장', '필라테스', '요가'];
 const EDUCATION = ['학력 무관', '고졸 이상', '대졸 이상'];
@@ -25,6 +26,15 @@ const CAREER = ['경력 무관', '신입', '1년 이상', '3년 이상', '5년 �
 const TIME = ['평일 오전', '평일 오후', '주말 오전', '주말 오후'];
 const TIME2 = ['오전', '오후', '전일', '시간 협의'];
 const PAY_TYPE = ['시급', '주급', '월급', '연봉'];
+const DAY = [
+  {value: '월', selected: true},
+  {value: '화', selected: false},
+  {value: '수', selected: false},
+  {value: '목', selected: false},
+  {value: '금', selected: false},
+  {value: '토', selected: false},
+  {value: '일', selected: false},
+];
 
 // 채용포지션이 필라테스 요가의 경우
 const RECRUIT_TYPE = ['전임', '파트', '대강'];
@@ -35,7 +45,7 @@ const columns7 = (windowWidth - 32) / 7;
 function JobOfferFormScreen() {
   const [loading, setLoading] = useState<boolean>(false);
   const [offerTitle, setOfferTitle] = useState('');
-  const [position, setPosition] = useState('실장');
+  const [position, setPosition] = useState('');
   const [education, setEducation] = useState('');
   const [career, setCareer] = useState('');
   const [time, setTime] = useState('');
@@ -43,16 +53,7 @@ function JobOfferFormScreen() {
   const [pay, setPay] = useState('');
   const [content, setContent] = useState('');
   const [recruitType, setRecruitType] = useState(''); // 채용 형태
-  const [day, setDay] = useState([
-    {value: '월', selected: true},
-    {value: '화', selected: false},
-    {value: '수', selected: false},
-    {value: '목', selected: false},
-    {value: '금', selected: false},
-    {value: '토', selected: false},
-    {value: '일', selected: false},
-  ]); // 요일
-
+  const [day, setDay] = useState(''); // 요일
   const [date, setDate] = useState('');
 
   const canGoNext = true;
@@ -77,8 +78,6 @@ function JobOfferFormScreen() {
       console.log(e.code, e.message);
     }
   };
-
-  console.log(position);
 
   return (
     <DismissKeyboardView>
@@ -110,7 +109,7 @@ function JobOfferFormScreen() {
         </View>
 
         {/* 요가, 필라테스의 경우 표시 */}
-        {position === '실장' ? null : (
+        {position === '실장' || position === '' ? null : (
           <View style={common.mb16}>
             <SelectBox
               label={'채용 형태'}
@@ -143,7 +142,7 @@ function JobOfferFormScreen() {
 
         {/* 날짜 선택 조건 */}
         {/* 포지션이 실장일 경우 */}
-        {position === '실장' ? (
+        {position === '' || position === '실장' ? (
           <View style={common.mb16}>
             <SelectBox
               label={'시간'}
@@ -152,40 +151,78 @@ function JobOfferFormScreen() {
               defaultButtonText={'시간을 선택하세요.'}
             />
           </View>
-        ) : null}
-
-        {/* 실장이 아니고 전임 또는 파트일 경우 요일 선택 */}
-        {position !== '실장' && recruitType !== '대강' ? (
+        ) : (
           <>
-            <View style={common.mb16}>
-              <Input
-                label={'요일'}
-                onChangeText={(text: string) => setPay(text)}
-                value={pay}
-                icon={'day'}
-                placeholder={'요일을 선택하세요.'}
-                keyboardType={KeyboardTypes.DEFAULT}
-                editable={true}
-              />
-            </View>
-            <View style={[common.mb16, common.row]}>
-              {day.map((item, index) => {
-                return (
-                  <Pressable
-                    key={index}
-                    style={[
-                      styles.dateItem,
-                      item.selected && {backgroundColor: '#d7e0fd'},
-                    ]}>
-                    <Text style={[common.text_m, {color: '#292929'}]}>
-                      {item.value}
-                    </Text>
+            {recruitType !== '대강' ? (
+              <>
+                <View style={common.mb16}>
+                  <Input
+                    label={'요일'}
+                    onChangeText={(item: any) => setDay(item)}
+                    value={day}
+                    icon={'day'}
+                    placeholder={'요일을 선택하세요.'}
+                    keyboardType={KeyboardTypes.DEFAULT}
+                    textAlign={'right'}
+                    editable={false}
+                  />
+                </View>
+                <View style={[common.mb16, common.row]}>
+                  {DAY.map((item, index) => {
+                    return (
+                      <Pressable
+                        key={index}
+                        style={[
+                          styles.dateItem,
+                          item.selected && {backgroundColor: '#d7e0fd'},
+                        ]}>
+                        <Text style={[common.text_m, {color: '#292929'}]}>
+                          {item.value}
+                        </Text>
+                      </Pressable>
+                    );
+                  })}
+                </View>
+                <View style={common.mb16}>
+                  <SelectBox
+                    label={'시간'}
+                    data={TIME2}
+                    onSelect={(value: any) => setTime(value)}
+                    defaultButtonText={'선택한 요일의 시간을 선택하세요.'}
+                  />
+                </View>
+              </>
+            ) : (
+              <>
+                <View style={common.mb16}>
+                  <BirthdayPicker
+                    label={'날짜'}
+                    onSelect={(value: any) => setDate(value)}
+                    placeholder={'날짜를 선택하세요.'}
+                    value={date}
+                    textAlign={'right'}
+                    icon={'day'}
+                  />
+                </View>
+                <View style={common.mb16}>
+                  <SelectBox
+                    label={'시간'}
+                    data={TIME2}
+                    onSelect={(value: any) => setTime(value)}
+                    defaultButtonText={'선택한 요일의 시간을 선택하세요.'}
+                    // textAlign={'right'}
+                  />
+                </View>
+                {/* 추가 버튼 */}
+                <View style={common.mb16}>
+                  <Pressable style={{alignSelf: 'center'}}>
+                    <Image source={iconPath.ADD_BUTTON} style={common.size40} />
                   </Pressable>
-                );
-              })}
-            </View>
+                </View>
+              </>
+            )}
           </>
-        ) : null}
+        )}
 
         {/* 급여 형태 */}
         <View style={common.mb16}>
