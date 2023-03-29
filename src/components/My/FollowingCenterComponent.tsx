@@ -54,7 +54,12 @@ function FollowingCenterComponent() {
           <View
             key={`${following.seq} ${following.memberSeq} ${following.favoriteSeq}`}
             style={styles.listBox}>
-            <Pressable onPress={() => navigation.navigate('CenterInfo')}>
+            <Pressable
+              onPress={() =>
+                navigation.navigate('CenterInfo', {
+                  memberSeq: following.favoriteSeq,
+                })
+              }>
               <View style={common.mb16}>
                 <Image
                   source={require('@images/center_01.png')}

@@ -83,3 +83,11 @@ export function updatePositionSuggestStatus(seq: number, data: object) {
 export function fetchMemberFollowings(type: string) {
   return request.get(`/member/following/${type}`);
 }
+
+export function fetchMemberInfoBySeq(seq: number) {
+  return request.get(`/member/${seq}`);
+}
+
+export function fetchRecruitByMember(seq: number) {
+  return request.get(`/member/${seq}/recruit`);
+}
