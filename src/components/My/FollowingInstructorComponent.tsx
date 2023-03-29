@@ -14,26 +14,11 @@ import {iconPath} from '@util/iconPath';
 import {useCallback, useEffect, useState} from 'react';
 import {fetchMemberFollowings} from '@api/member';
 import toast from '@hooks/toast';
-
-const EMPLOYER = [
-  {
-    field: '필라테스',
-    nickname: '닉네임',
-    career: '3년',
-    date: '2022.12.12',
-    comment:
-      '후기 내용입니다. 후기내용입니다. 후기 내용입니다. 후기내용입니다. 후기 내용입니다. 후기내용입니다. 후기 내용입니다. 후기내용입니다.',
-  },
-  {
-    field: '요가',
-    nickname: '닉네임',
-    career: '3년',
-    date: '2022.12.12',
-    comment: '후기 내용입니다. 후기내용입니다.',
-  },
-];
+import {NavigationProp, useNavigation} from '@react-navigation/native';
+import {LoggedInParamList} from '../../../AppInner';
 
 function FollowingInstructorComponent() {
+  const navigation = useNavigation<NavigationProp<LoggedInParamList>>();
   const [followings, setFollowings] = useState<any[]>([]);
 
   const getMemberFollowingList = useCallback(() => {
@@ -54,67 +39,74 @@ function FollowingInstructorComponent() {
       {/*<View>*/}
       {followings.map(following => {
         return (
-          <View
+          <Pressable
             key={`${following.seq} ${following.memberSeq} ${following.favoriteSeq}`}
-            style={styles.reviewBox}>
-            <View style={common.rowCenter}>
-              <Image
-                source={require('../../assets/images/thumbnail.png')}
-                style={styles.thumbnail}
-              />
-              <View style={{flex: 1}}>
-                <View style={common.rowCenter}>
-                  <Text style={[common.text_m, common.fwb, common.mr8]}>
-                    {following.followingMember.field}
-                  </Text>
-                  <Text style={[common.text]}>{following.career}</Text>
-                </View>
-                <View style={common.rowCenter}>
-                  <Text style={[common.text_l, common.fwb, common.mr8]}>
-                    {following.followingMember.nickname
-                      ? following.followingMember.nickname
-                      : following.followingMember.name}
-                  </Text>
-                  <Text style={[common.text_s, {color: BLUE.DEFAULT}]}>
-                    인증강사
-                  </Text>
-                  <Image
-                    style={{marginLeft: 2, width: 14, height: 14}}
-                    source={iconPath.CERTIFICATION}
-                  />
-                </View>
-                <View style={[common.rowCenterBetween]}>
-                  <Text style={[common.text_s, {flex: 1}]}>지역</Text>
-                  <View style={[common.rowCenter, {}]}>
-                    <View>
-                      <Image source={iconPath.MESSAGE} style={common.size24} />
-                    </View>
-                    <View>
-                      <Image
-                        source={iconPath.FAVORITE_ON}
-                        style={common.size24}
-                      />
-                    </View>
-                    <Text
-                      style={[
-                        common.text_m,
-                        common.fwb,
-                        {alignSelf: 'flex-end'},
-                      ]}>
-                      23
+            onPress={() =>
+              navigation.navigate('Profile', {memberSeq: following.favoriteSeq})
+            }>
+            <View style={styles.reviewBox}>
+              <View style={common.rowCenter}>
+                <Image
+                  source={require('../../assets/images/thumbnail.png')}
+                  style={styles.thumbnail}
+                />
+                <View style={{flex: 1}}>
+                  <View style={common.rowCenter}>
+                    <Text style={[common.text_m, common.fwb, common.mr8]}>
+                      {following.followingMember.field}
                     </Text>
+                    <Text style={[common.text]}>{following.career}</Text>
+                  </View>
+                  <View style={common.rowCenter}>
+                    <Text style={[common.text_l, common.fwb, common.mr8]}>
+                      {following.followingMember.nickname
+                        ? following.followingMember.nickname
+                        : following.followingMember.name}
+                    </Text>
+                    <Text style={[common.text_s, {color: BLUE.DEFAULT}]}>
+                      인증강사
+                    </Text>
+                    <Image
+                      style={{marginLeft: 2, width: 14, height: 14}}
+                      source={iconPath.CERTIFICATION}
+                    />
+                  </View>
+                  <View style={[common.rowCenterBetween]}>
+                    <Text style={[common.text_s, {flex: 1}]}>지역</Text>
+                    <View style={[common.rowCenter, {}]}>
+                      <View>
+                        <Image
+                          source={iconPath.MESSAGE}
+                          style={common.size24}
+                        />
+                      </View>
+                      <View>
+                        <Image
+                          source={iconPath.FAVORITE_ON}
+                          style={common.size24}
+                        />
+                      </View>
+                      <Text
+                        style={[
+                          common.text_m,
+                          common.fwb,
+                          {alignSelf: 'flex-end'},
+                        ]}>
+                        {following.followingMember.followerCount}
+                      </Text>
+                    </View>
                   </View>
                 </View>
               </View>
-            </View>
 
-            {/*<Pressable*/}
-            {/*  style={styles.kebabIcon}*/}
-            {/*  hitSlop={10}*/}
-            {/*  onPress={() => Alert.alert('click', 'test')}>*/}
-            {/*  <Image source={iconPath.KEBAB} style={[common.size24]} />*/}
-            {/*</Pressable>*/}
-          </View>
+              {/*<Pressable*/}
+              {/*  style={styles.kebabIcon}*/}
+              {/*  hitSlop={10}*/}
+              {/*  onPress={() => Alert.alert('click', 'test')}>*/}
+              {/*  <Image source={iconPath.KEBAB} style={[common.size24]} />*/}
+              {/*</Pressable>*/}
+            </View>
+          </Pressable>
         );
       })}
       {/*</View>*/}

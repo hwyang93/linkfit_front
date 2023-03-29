@@ -9,10 +9,17 @@ import {
 import {Tabs, MaterialTabBar} from 'react-native-collapsible-tab-view';
 import {BLUE, GRAY, WHITE} from '@styles/colors';
 import common from '@styles/common';
-import {NavigationProp, useNavigation} from '@react-navigation/native';
+import {
+  NavigationProp,
+  RouteProp,
+  useNavigation,
+  useRoute,
+} from '@react-navigation/native';
 import {LoggedInParamList} from '../../AppInner';
-import {useCallback, useState} from 'react';
+import {useCallback, useEffect, useState} from 'react';
 import CenterInfoTop from '@components/CenterInfoTop';
+import {fetchMemberInfoBySeq, fetchRecruitByMember} from '@api/member';
+import toast from '@hooks/toast';
 
 // const HEADER_HEIGHT = 250;
 
@@ -22,14 +29,41 @@ const imageSize = (width - 6) / 3;
 
 // 센터 프로필 상단 영역 시작
 function Header() {
-  const navigation = useNavigation<NavigationProp<LoggedInParamList>>();
-  return <CenterInfoTop />;
+  const [centerInfo, setCenterInfo] = useState<any>({});
+  const [recruits, setRecruits] = useState<any[]>([]);
+  const route = useRoute<RouteProp<LoggedInParamList, 'CenterInfo'>>();
+  const getCenterInfo = useCallback(() => {
+    fetchMemberInfoBySeq(route.params.memberSeq)
+      .then(({data}: any) => {
+        console.log(data);
+        setCenterInfo(data);
+      })
+      .catch((e: any) => {
+        toast.error({message: e.message});
+      });
+  }, [route.params.memberSeq]);
+
+  const getRecruits = useCallback(() => {
+    fetchRecruitByMember(route.params.memberSeq)
+      .then(({data}: any) => {
+        console.log(data);
+        setRecruits(data);
+      })
+      .catch((e: any) => {
+        toast.error({message: e.message});
+      });
+  }, [route.params.memberSeq]);
+
+  useEffect(() => {
+    getCenterInfo();
+    getRecruits();
+  }, [getCenterInfo, getRecruits]);
+  return <CenterInfoTop centerInfo={centerInfo} recruits={recruits} />;
 }
 // 센터 프로필 상단 영역 끝
 
 function CenterInfoScreen() {
   const navigation = useNavigation<NavigationProp<LoggedInParamList>>();
-
   // 탭 바 영역
   const tabBar = (props: any) => (
     <MaterialTabBar
