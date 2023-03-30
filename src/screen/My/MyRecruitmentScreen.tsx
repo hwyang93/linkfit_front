@@ -1,5 +1,4 @@
 import {
-  Alert,
   Image,
   Pressable,
   ScrollView,
@@ -7,7 +6,7 @@ import {
   Text,
   View,
 } from 'react-native';
-import {WHITE} from '@styles/colors';
+import {BLUE, WHITE} from '@styles/colors';
 
 import common from '@styles/common';
 import TopFilter from '@components/TopFilter';
@@ -18,6 +17,7 @@ import Modal from '@components/ModalSheet';
 import {iconPath} from '@util/iconPath';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {fetchRecruits} from '@api/recruit';
+import toast from '@hooks/toast';
 
 function MyRecruitmentScreen() {
   const navigation = useNavigation<NavigationProp<LoggedInParamList>>();
@@ -26,6 +26,7 @@ function MyRecruitmentScreen() {
   const [modalTitle, setModalTitle] = useState('');
   const [modalData, setModalData] = useState<any[]>([]);
   const [recruits, setRecruits] = useState<any[]>([]);
+  const [selectedFilter, setSelectedFilter] = useState('');
 
   const getRecruits = useCallback(() => {
     const params = {isWriter: 'Y'};
@@ -34,7 +35,7 @@ function MyRecruitmentScreen() {
         setRecruits(data);
       })
       .catch((e: any) => {
-        Alert.alert(e.message);
+        toast.error({message: e.message});
       });
   }, []);
 
@@ -42,56 +43,56 @@ function MyRecruitmentScreen() {
     getRecruits();
   }, []);
 
-  const FILTER = [
+  const [FILTER, setFILTER] = useState([
     {
+      key: 'period',
       value: '기간',
       job: () => {
+        setSelectedFilter('period');
         setModalTitle('기간');
         setModalData(MODAL);
         openModal();
       },
     },
     {
-      value: '지원 상태',
+      key: 'status',
+      value: '진행 여부',
       job: () => {
+        setSelectedFilter('status');
         setModalTitle('진행 여부');
         setModalData(MODAL2);
         openModal();
       },
     },
-  ];
-  const MODAL = [
+  ]);
+  const [MODAL, setMODAL] = useState([
     {
       value: '일주일',
-      job: () => {
-        console.log('일주일 눌렸나요');
-      },
+      selected: false,
     },
     {
       value: '1개월',
-      job: () => {},
+      selected: false,
     },
     {
       value: '2개월',
-      job: () => {},
+      selected: false,
     },
     {
       value: '3개월 이상',
-      job: () => {},
+      selected: false,
     },
-  ];
-  const MODAL2 = [
+  ]);
+  const [MODAL2, setMODAL2] = useState([
     {
       value: '진행 중',
-      job: () => {
-        console.log('지원완료 눌렸나요');
-      },
+      selected: false,
     },
     {
       value: '마감',
-      job: () => {},
+      selected: false,
     },
-  ];
+  ]);
   const MODAL3 = [
     {
       value: '공고 수정하기',
@@ -106,6 +107,39 @@ function MyRecruitmentScreen() {
   const openModal = () => {
     setModalVisible(true);
   };
+  const onSelect = useCallback(
+    (modalData: any) => {
+      if (selectedFilter === 'period') {
+        setMODAL(modalData);
+        setFILTER(() => {
+          return FILTER.map(filter => {
+            if (filter.key === 'period') {
+              const value = modalData.find((item: any) => {
+                return item.selected;
+              })?.value;
+              filter.value = value ? value : '기간';
+            }
+            return filter;
+          });
+        });
+      } else if (selectedFilter === 'status') {
+        setMODAL2(modalData);
+        setFILTER(() => {
+          return FILTER.map(filter => {
+            if (filter.key === 'status') {
+              const value = modalData.find((item: any) => {
+                return item.selected;
+              })?.value;
+              filter.value = value ? value : '진행 여부';
+            }
+            return filter;
+          });
+        });
+      }
+      setModalVisible(false);
+    },
+    [FILTER, selectedFilter],
+  );
   const clickKebab = () => {
     setModalTitle('더보기');
     setModalData(MODAL3);
@@ -148,7 +182,7 @@ function MyRecruitmentScreen() {
                 <Pressable
                   style={styles.kebabIcon}
                   hitSlop={10}
-                  onPress={() => {}}>
+                  onPress={clickKebab}>
                   <Image source={iconPath.KEBAB} style={[common.size24]} />
                 </Pressable>
               </Pressable>
@@ -163,6 +197,31 @@ function MyRecruitmentScreen() {
           setModalVisible={setModalVisible}
           title={modalTitle}
           modalData={modalData}
+          onSelect={onSelect}
+          content={
+            <View>
+              {modalData.map((item, index) => {
+                return (
+                  <View key={index} style={common.modalItemBox}>
+                    <Pressable
+                      // onPress={() => onClickItem(item)}
+                      style={[common.rowCenterBetween, {width: '100%'}]}>
+                      <Text
+                        style={[
+                          common.modalText,
+                          item.selected && {color: BLUE.DEFAULT},
+                        ]}>
+                        {item.value}
+                      </Text>
+                      {item.selected && (
+                        <Image source={iconPath.CHECK} style={common.size24} />
+                      )}
+                    </Pressable>
+                  </View>
+                );
+              })}
+            </View>
+          }
         />
       </ScrollView>
     </SafeAreaView>

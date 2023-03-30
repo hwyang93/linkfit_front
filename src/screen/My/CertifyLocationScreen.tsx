@@ -1,6 +1,5 @@
 import {
   ActivityIndicator,
-  Alert,
   Image,
   PermissionsAndroid,
   Platform,
@@ -20,6 +19,8 @@ import axios from 'axios/index';
 import Geolocation from 'react-native-geolocation-service';
 import {iconPath} from '@util/iconPath';
 import {createRegionAuth, fetchRegionAuth} from '@api/member';
+import {SafeAreaView} from 'react-native-safe-area-context';
+import toast from '@hooks/toast';
 
 async function requestPermission() {
   try {
@@ -35,6 +36,7 @@ async function requestPermission() {
     }
   } catch (e) {
     console.log(e);
+    toast.error({message: e.message});
   }
 }
 
@@ -79,6 +81,7 @@ function CertifyLocationScreen() {
       })
       .catch((e: any) => {
         console.log(e);
+        toast.error({message: e.message});
       });
   }, []);
 
@@ -96,10 +99,10 @@ function CertifyLocationScreen() {
     await createRegionAuth(data)
       .then(() => {
         getAuthInfo();
-        Alert.alert('인증완료!');
+        toast.success({message: '현재 위치로 인증되었어요!'});
       })
       .catch((e: any) => {
-        console.log(e);
+        toast.error({message: e.message});
       });
   }, [
     locationObj?.region1depth,
@@ -158,88 +161,91 @@ function CertifyLocationScreen() {
             region3depth: regionInfo.region_3depth_name,
           });
         });
-    } catch (error: any) {
-      console.log(error.message);
+    } catch (e: any) {
+      console.log(e.message);
+      toast.error({message: e.message});
     }
   };
 
   const canGoNext = true;
 
   return (
-    <ScrollView style={styles.container}>
-      <View style={styles.map}>
-        <NaverMapView
-          style={{width: '100%', height: '100%'}}
-          showsMyLocationButton={false}
-          zoomControl={false}
-          center={{...P0, zoom: 16}}
-          // onTouch={e => console.warn('onTouch', JSON.stringify(e.nativeEvent))}
-          // onCameraChange={e =>
-          //   console.warn('onCameraChange', JSON.stringify(e))
-          // }
-          // onMapClick={e => console.warn('onMapClick', JSON.stringify(e))}
-          useTextureView>
-          <Marker
-            coordinate={P0}
-            onClick={() => console.warn('onClick! p0')}
-            caption={{text: '현재 위치'}}
-          />
-        </NaverMapView>
-        <LocationButton bottom={16} />
-      </View>
-      {authInfo ? (
-        <View style={common.mb16}>
-          <Text style={[common.text_m, common.fwb]}>인증 위치</Text>
+    <SafeAreaView edges={['bottom', 'left', 'right']} style={styles.container}>
+      <ScrollView>
+        <View style={styles.map}>
+          <NaverMapView
+            style={{width: '100%', height: '100%'}}
+            showsMyLocationButton={false}
+            zoomControl={false}
+            center={{...P0, zoom: 16}}
+            // onTouch={e => console.warn('onTouch', JSON.stringify(e.nativeEvent))}
+            // onCameraChange={e =>
+            //   console.warn('onCameraChange', JSON.stringify(e))
+            // }
+            // onMapClick={e => console.warn('onMapClick', JSON.stringify(e))}
+            useTextureView>
+            <Marker
+              coordinate={P0}
+              onClick={() => console.warn('onClick! p0')}
+              caption={{text: '현재 위치'}}
+            />
+          </NaverMapView>
+          <LocationButton bottom={16} />
+        </View>
+        {authInfo ? (
+          <View style={common.mb16}>
+            <Text style={[common.text_m, common.fwb]}>인증 위치</Text>
 
-          <View style={styles.locationBox}>
-            <View style={common.rowCenter}>
-              <Image source={iconPath.MY_PLACE} style={common.size24} />
-              <Text style={common.text_m}>
-                {authInfo.region1depth} {authInfo.region2depth}{' '}
-                {authInfo.region3depth}
-              </Text>
+            <View style={styles.locationBox}>
+              <View style={common.rowCenter}>
+                <Image source={iconPath.MY_PLACE} style={common.size24} />
+                <Text style={common.text_m}>
+                  {authInfo.region1depth} {authInfo.region2depth}{' '}
+                  {authInfo.region3depth}
+                </Text>
+              </View>
+              <Pressable onPress={() => {}} hitSlop={10}>
+                <Image source={iconPath.CLOSE} style={common.size24} />
+              </Pressable>
             </View>
-            <Pressable onPress={() => {}} hitSlop={10}>
-              <Image source={iconPath.CLOSE} style={common.size24} />
-            </Pressable>
+          </View>
+        ) : (
+          <></>
+        )}
+
+        <View>
+          <Text style={[common.text_m, common.mb8]}>현재 위치는</Text>
+          <View style={common.row}>
+            <Text style={[common.title, common.mr8]}>
+              {locationObj?.region1depth} {locationObj?.region2depth}{' '}
+              {locationObj?.region3depth}
+            </Text>
+            <Text style={common.text_m}>입니다.</Text>
           </View>
         </View>
-      ) : (
-        <></>
-      )}
 
-      <View>
-        <Text style={[common.text_m, common.mb8]}>현재 위치는</Text>
-        <View style={common.row}>
-          <Text style={[common.title, common.mr8]}>
-            {locationObj?.region1depth} {locationObj?.region2depth}{' '}
-            {locationObj?.region3depth}
-          </Text>
-          <Text style={common.text_m}>입니다.</Text>
+        {/* 완료 버튼 */}
+        <View style={common.mt40}>
+          <Pressable disabled={!canGoNext} onPress={onRegionAuth}>
+            <LinearGradient
+              style={common.button}
+              start={{x: 0.1, y: 0.5}}
+              end={{x: 0.6, y: 1}}
+              colors={
+                canGoNext ? ['#74ebe4', '#3962f3'] : ['#dcdcdc', '#dcdcdc']
+              }>
+              {loading ? (
+                <ActivityIndicator color="white" />
+              ) : (
+                <Text style={common.buttonText}>
+                  {authInfo ? '현위치로 재인증하기' : '현위치로 인증하기'}
+                </Text>
+              )}
+            </LinearGradient>
+          </Pressable>
         </View>
-      </View>
-
-      {/* 완료 버튼 */}
-      <View style={common.mt40}>
-        <Pressable disabled={!canGoNext} onPress={onRegionAuth}>
-          <LinearGradient
-            style={common.button}
-            start={{x: 0.1, y: 0.5}}
-            end={{x: 0.6, y: 1}}
-            colors={
-              canGoNext ? ['#74ebe4', '#3962f3'] : ['#dcdcdc', '#dcdcdc']
-            }>
-            {loading ? (
-              <ActivityIndicator color="white" />
-            ) : (
-              <Text style={common.buttonText}>
-                {authInfo ? '현위치로 재인증하기' : '현위치로 인증하기'}
-              </Text>
-            )}
-          </LinearGradient>
-        </Pressable>
-      </View>
-    </ScrollView>
+      </ScrollView>
+    </SafeAreaView>
   );
 }
 const styles = StyleSheet.create({
