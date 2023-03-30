@@ -18,36 +18,37 @@ import {
 import {LoggedInParamList} from '../../AppInner';
 import {useCallback, useEffect, useState} from 'react';
 import CenterInfoTop from '@components/CenterInfoTop';
-import {fetchMemberInfoBySeq, fetchRecruitByMember} from '@api/member';
 import toast from '@hooks/toast';
+import {fetchCompany} from '@api/company';
 
 // const HEADER_HEIGHT = 250;
 
 const width = Dimensions.get('window').width - 32;
 const tabWidth = width / 2;
 const imageSize = (width - 6) / 3;
-
+type headerProps = {
+  centerInfo: any;
+  recruits: any[];
+};
 // 센터 프로필 상단 영역 시작
-function Header() {
+function Header({centerInfo, recruits}: headerProps) {
+  return <CenterInfoTop centerInfo={centerInfo} recruits={recruits} />;
+}
+// 센터 프로필 상단 영역 끝
+
+function CenterInfoScreen() {
+  const route = useRoute<RouteProp<LoggedInParamList, 'CenterInfo'>>();
+  const navigation = useNavigation<NavigationProp<LoggedInParamList>>();
   const [centerInfo, setCenterInfo] = useState<any>({});
   const [recruits, setRecruits] = useState<any[]>([]);
-  const route = useRoute<RouteProp<LoggedInParamList, 'CenterInfo'>>();
-  const getCenterInfo = useCallback(() => {
-    fetchMemberInfoBySeq(route.params.memberSeq)
-      .then(({data}: any) => {
-        console.log(data);
-        setCenterInfo(data);
-      })
-      .catch((e: any) => {
-        toast.error({message: e.message});
-      });
-  }, [route.params.memberSeq]);
+  const [reputations, setReputations] = useState<any[]>([]);
 
-  const getRecruits = useCallback(() => {
-    fetchRecruitByMember(route.params.memberSeq)
+  const getCenterInfo = useCallback(() => {
+    fetchCompany(route.params.memberSeq)
       .then(({data}: any) => {
-        console.log(data);
-        setRecruits(data);
+        setCenterInfo(data.companyInfo);
+        setRecruits(data.recruits);
+        setReputations(data.reputations);
       })
       .catch((e: any) => {
         toast.error({message: e.message});
@@ -56,14 +57,7 @@ function Header() {
 
   useEffect(() => {
     getCenterInfo();
-    getRecruits();
-  }, [getCenterInfo, getRecruits]);
-  return <CenterInfoTop centerInfo={centerInfo} recruits={recruits} />;
-}
-// 센터 프로필 상단 영역 끝
-
-function CenterInfoScreen() {
-  const navigation = useNavigation<NavigationProp<LoggedInParamList>>();
+  }, [getCenterInfo]);
   // 탭 바 영역
   const tabBar = (props: any) => (
     <MaterialTabBar
@@ -92,7 +86,9 @@ function CenterInfoScreen() {
     return (
       <View style={common.mt16}>
         <Text style={[common.text_m, common.fwb]}>센터 주소</Text>
-        <Text style={common.text_m}>서울특별시 강남구 봉은사로 12345</Text>
+        <Text style={common.text_m}>
+          {`${centerInfo.address} ${centerInfo.addressDetail}`}
+        </Text>
       </View>
     );
   };
@@ -141,26 +137,9 @@ function CenterInfoScreen() {
   };
 
   const [textLine, setTextLine] = useState(2);
-  const tab2Data = [
-    {
-      id: 1,
-      nickname: '저팔계',
-      type: '강사',
-      date: '2022.12.12',
-      review:
-        '후기 내용 입니다. 저팔계지만 유연해요. 깜짝 놀랐어요. 오늘 점심은 뭐 먹을까요. 매일매일 고민해요. 왜 때문이죠.',
-    },
-    {
-      id: 2,
-      nickname: '소다늠',
-      type: '강사',
-      date: '2023.1.12',
-      review: '젓가락이지만 유연해요. 깜짝 놀랐어요.',
-    },
-  ];
 
   const ReviewTab = useCallback(
-    ({item}: reviewProps) => {
+    ({item}: any) => {
       const textExpansion = () => {
         if (textLine === 2) {
           setTextLine(0);
@@ -176,22 +155,24 @@ function CenterInfoScreen() {
           }}>
           <View style={[common.row, common.mb8]}>
             <Text style={[common.text_m, common.fwb, common.fs18]}>
-              {item.nickname}
+              {item.evaluationMember?.nickname
+                ? item.evaluationMember?.nickname
+                : item.evaluationMember?.name}
             </Text>
             <Text
               style={[
                 common.text,
                 {alignSelf: 'flex-end', marginHorizontal: 4},
               ]}>
-              {item.type}
+              {item.evaluationMember?.field}
             </Text>
             <Text style={[common.text, {alignSelf: 'flex-end'}]}>
-              {item.date}
+              {item.updatedAt}
             </Text>
           </View>
           <Pressable onPress={textExpansion}>
             <Text style={common.text_m} numberOfLines={textLine}>
-              {item.review}
+              {item.comment}
             </Text>
           </Pressable>
         </View>
@@ -202,7 +183,9 @@ function CenterInfoScreen() {
 
   return (
     <Tabs.Container
-      renderHeader={Header}
+      renderHeader={() => (
+        <Header centerInfo={centerInfo} recruits={recruits} />
+      )}
       allowHeaderOverscroll
       revealHeaderOnScroll
       headerContainerStyle={{
@@ -217,8 +200,8 @@ function CenterInfoScreen() {
         <View style={{padding: 16}}>
           <Tabs.FlatList
             data={tab1Data}
-            ListHeaderComponent={IntroduceTabHeader}
-            ListFooterComponent={IntroduceTabFooter}
+            ListHeaderComponent={() => <IntroduceTabHeader />}
+            ListFooterComponent={() => <IntroduceTabFooter />}
             renderItem={IntroduceTab}
             numColumns={3}
             keyExtractor={(item: any) => item.id}
@@ -228,7 +211,7 @@ function CenterInfoScreen() {
       <Tabs.Tab name="후기 관리">
         <View style={{padding: 16}}>
           <Tabs.FlatList
-            data={tab2Data}
+            data={reputations}
             ListHeaderComponent={<View style={{paddingBottom: 16}} />}
             ItemSeparatorComponent={() => {
               return (
@@ -236,7 +219,7 @@ function CenterInfoScreen() {
               );
             }}
             renderItem={ReviewTab}
-            keyExtractor={(item: any) => item.id}
+            keyExtractor={(item: any) => item.seq}
           />
         </View>
       </Tabs.Tab>

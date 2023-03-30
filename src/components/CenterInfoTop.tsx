@@ -1,4 +1,4 @@
-import {Image, ScrollView, Text, View} from 'react-native';
+import {Image, Text, View} from 'react-native';
 import common from '@styles/common';
 import {iconPath} from '@util/iconPath';
 import {GRAY} from '@styles/colors';
@@ -22,16 +22,14 @@ function CenterInfoTop({centerInfo, recruits}: Props) {
       <View style={[common.rowBetween, common.mb8]}>
         <View style={common.rowCenter}>
           <Text style={[common.title_l, common.mr8]}>
-            {centerInfo.company.companyName}
+            {centerInfo.companyName}
           </Text>
           <Image source={iconPath.FAVORITE} style={common.size24} />
           <Text style={[common.text_m, common.fwb]}>23</Text>
         </View>
       </View>
       <View style={[common.rowCenter, common.mb16]}>
-        <Text style={[common.text_m, common.fwb]}>
-          {centerInfo.company.field}
-        </Text>
+        <Text style={[common.text_m, common.fwb]}>{centerInfo.field}</Text>
         <Text style={[common.mh8, common.fcg]}>|</Text>
         <Text style={[common.text_s, {color: GRAY.DARK}]}>서울 · 송파구</Text>
       </View>
