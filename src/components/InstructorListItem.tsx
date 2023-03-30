@@ -4,6 +4,8 @@ import {iconPath} from '@util/iconPath';
 import {BLUE} from '@styles/colors';
 import {NavigationProp, useNavigation} from '@react-navigation/native';
 import {LoggedInParamList} from '../../AppInner';
+import {SetStateAction, useState} from 'react';
+import Modal from '@components/ModalSheet';
 
 type ListProps = {
   item: {
@@ -20,6 +22,19 @@ type ListProps = {
 
 function InstructorListItem({item}: ListProps) {
   const navigation = useNavigation<NavigationProp<LoggedInParamList>>();
+  const [modalVisible, setModalVisible] =
+    useState<SetStateAction<boolean>>(false);
+
+  const MODAL = [
+    {
+      value: '차단하기',
+      job: () => {},
+    },
+    {
+      value: '신고하기',
+      job: () => {},
+    },
+  ];
   return (
     <View style={styles.listBox}>
       <Pressable
@@ -53,7 +68,7 @@ function InstructorListItem({item}: ListProps) {
       <Pressable
         style={styles.kebabIcon}
         hitSlop={10}
-        onPress={() => Alert.alert('click', 'test')}>
+        onPress={() => setModalVisible(true)}>
         <Image source={iconPath.KEBAB} style={[common.size24]} />
       </Pressable>
       <View style={styles.rightBox}>
@@ -71,6 +86,36 @@ function InstructorListItem({item}: ListProps) {
         </Pressable>
         <Text style={[common.text_m, common.fwb]}>{item.followerCount}</Text>
       </View>
+
+      <Modal
+        modalVisible={modalVisible}
+        setModalVisible={setModalVisible}
+        title={'더보기'}
+        content={
+          <View>
+            {MODAL.map((item, index) => {
+              return (
+                <View key={index} style={common.modalItemBox}>
+                  <Pressable
+                    onPress={item.job}
+                    style={[common.rowCenterBetween, {width: '100%'}]}>
+                    <Text
+                      style={[
+                        common.modalText,
+                        // item.selected && {color: BLUE.DEFAULT},
+                      ]}>
+                      {item.value}
+                    </Text>
+                    {/*{item.selected && (*/}
+                    {/*  <Image source={iconPath.CHECK} style={common.size24} />*/}
+                    {/*)}*/}
+                  </Pressable>
+                </View>
+              );
+            })}
+          </View>
+        }
+      />
     </View>
   );
 }

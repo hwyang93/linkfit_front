@@ -16,9 +16,10 @@ import ApplicantWaitingComponent from '@components/My/ApplicantWaitingComponent'
 import ApplicantFinishComponent from '@components/My/ApplicantFinishComponent';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import {LoggedInParamList} from '../../../AppInner';
-import {useCallback, useEffect, useState} from 'react';
+import {SetStateAction, useCallback, useEffect, useState} from 'react';
 import {fetchRecruitApplications} from '@api/recruit';
 import {useIsFocused} from '@react-navigation/native';
+import Modal from '@components/ModalSheet';
 
 const Tab = createMaterialTopTabNavigator();
 const windowWidth = Dimensions.get('window').width;
@@ -36,7 +37,8 @@ function ApplicantStatusScreen({route}: props) {
   const [recruitInfo, setRecruitInfo] = useState<any>({});
   const [waitingApplications, setWaitingApplications] = useState<any[]>([]);
   const [finishApplications, setFinishApplications] = useState<any[]>([]);
-
+  const [modalVisible, setModalVisible] =
+    useState<SetStateAction<boolean>>(false);
   const getRecruitApplications = useCallback(() => {
     fetchRecruitApplications(route.params.recruitSeq)
       .then(({data}: any) => {
@@ -62,6 +64,17 @@ function ApplicantStatusScreen({route}: props) {
     }
   }, [isFocused, route.params.recruitSeq]);
 
+  const MODAL = [
+    {
+      value: '공고 수정하기',
+      job: () => {},
+    },
+    {
+      value: '공고 복사하기',
+      job: () => {},
+    },
+  ];
+
   return (
     <>
       <View style={styles.container}>
@@ -86,12 +99,41 @@ function ApplicantStatusScreen({route}: props) {
             <Pressable
               style={styles.kebabIcon}
               hitSlop={10}
-              onPress={() => Alert.alert('text', '케밥 클릭')}>
+              onPress={() => setModalVisible(true)}>
               <Image source={iconPath.KEBAB} style={[common.size24]} />
             </Pressable>
           </View>
         </View>
         {/* 컨텐츠 영역 */}
+        <Modal
+          modalVisible={modalVisible}
+          setModalVisible={setModalVisible}
+          title={'타이틀'}
+          content={
+            <View>
+              {MODAL.map((item, index) => {
+                return (
+                  <View key={index} style={common.modalItemBox}>
+                    <Pressable
+                      // onPress={() => onClickItem(item)}
+                      style={[common.rowCenterBetween, {width: '100%'}]}>
+                      <Text
+                        style={[
+                          common.modalText,
+                          // item.selected && {color: BLUE.DEFAULT},
+                        ]}>
+                        {item.value}
+                      </Text>
+                      {/*{item.selected && (*/}
+                      {/*  <Image source={iconPath.CHECK} style={common.size24} />*/}
+                      {/*)}*/}
+                    </Pressable>
+                  </View>
+                );
+              })}
+            </View>
+          }
+        />
       </View>
       <Tabs
         waitingApplications={waitingApplications}

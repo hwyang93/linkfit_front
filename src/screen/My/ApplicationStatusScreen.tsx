@@ -9,7 +9,6 @@ import {
   View,
 } from 'react-native';
 import {BLUE, WHITE} from '@styles/colors';
-
 import common, {width} from '@styles/common';
 import TopFilter from '@components/TopFilter';
 import {NavigationProp, useNavigation} from '@react-navigation/native';
@@ -18,6 +17,7 @@ import {SetStateAction, useCallback, useEffect, useState} from 'react';
 import Modal from '@components/ModalSheet';
 import {iconPath} from '@util/iconPath';
 import {fetchRecruitApplicationsMy} from '@api/recruit';
+import toast from '@hooks/toast';
 
 const windowWidth = Dimensions.get('window').width;
 const columns2 = (windowWidth - 48) / 2;
@@ -37,7 +37,7 @@ function ApplicationStatusScreen() {
         setApplications(data);
       })
       .catch((e: any) => {
-        Alert.alert(e.message);
+        toast.error({message: e.message});
       });
   }, []);
 
@@ -228,6 +228,30 @@ function ApplicationStatusScreen() {
           title={modalTitle}
           modalData={modalData}
           onSelect={onSelect}
+          content={
+            <View>
+              {modalData.map((item, index) => {
+                return (
+                  <View key={index} style={common.modalItemBox}>
+                    <Pressable
+                      // onPress={() => onClickItem(item)}
+                      style={[common.rowCenterBetween, {width: '100%'}]}>
+                      <Text
+                        style={[
+                          common.modalText,
+                          item.selected && {color: BLUE.DEFAULT},
+                        ]}>
+                        {item.value}
+                      </Text>
+                      {item.selected && (
+                        <Image source={iconPath.CHECK} style={common.size24} />
+                      )}
+                    </Pressable>
+                  </View>
+                );
+              })}
+            </View>
+          }
         />
       </ScrollView>
     </View>
