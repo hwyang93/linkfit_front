@@ -4,6 +4,8 @@ import {GRAY} from '@styles/colors';
 import {iconPath} from '@util/iconPath';
 import {useEffect, useState} from 'react';
 import Icon from 'react-native-vector-icons/FontAwesome';
+import {NavigationProp, useNavigation} from '@react-navigation/native';
+import {LoggedInParamList} from '../../AppInner';
 
 type offerProps = {
   offer: any[];
@@ -11,24 +13,22 @@ type offerProps = {
 };
 
 function OfferListItem({offer, button}: offerProps) {
-  const [resArr, setResArr] = useState(offer);
+  const navigation = useNavigation<NavigationProp<LoggedInParamList>>();
   const [isMore, setIsMore] = useState(false);
   const [showingItems, setShowingItems] = useState(offer);
 
   useEffect(() => {
-    setShowingItems([...resArr.slice(0, 1)]);
-    // if (resArr.length >= 4) {
+    setShowingItems([...offer.slice(0, 1)]);
     setIsMore(false);
-    // }
-  }, [resArr]);
+  }, [offer]);
 
   const moreLoad = () => {
-    setShowingItems(resArr.slice(0, showingItems.length + 4));
-    if (showingItems.length + 4 > resArr.length) {
+    setShowingItems(offer.slice(0, showingItems.length + 4));
+    if (showingItems.length + 4 > offer.length) {
       setIsMore(true);
     }
-    if (isMore && showingItems.length + 4 > resArr.length) {
-      setShowingItems(resArr.slice(0, 1));
+    if (isMore && showingItems.length + 4 > offer.length) {
+      setShowingItems(offer.slice(0, 1));
       setIsMore(false);
     }
   };
@@ -40,21 +40,29 @@ function OfferListItem({offer, button}: offerProps) {
           <Pressable
             style={styles.offer}
             key={index}
-            // onPress={() => Alert.alert('리스트', '링크이동')}
-          >
+            onPress={() =>
+              navigation.navigate('JobPost', {recruitSeq: item.seq})
+            }>
             <Text
               style={[common.text_l, common.fwb, {width: '85%'}]}
               numberOfLines={1}>
               {item.title}
             </Text>
             <Text style={[common.text_s, {color: GRAY.DARK}]}>
-              {item.type} · {item.date} · {item.time}
+              {item.recruitType} ·
+              {item.dates.map((date: any) => {
+                return ` ${date.day}·${date.time} `;
+              })}
             </Text>
             <Pressable
               onPress={() => Alert.alert('북마크', 'test')}
               hitSlop={10}
               style={styles.iconPosition}>
-              <Image source={iconPath.BOOKMARK} style={common.size24} />
+              {item.isBookmark === 'Y' ? (
+                <Image source={iconPath.BOOKMARK_ON} style={common.size24} />
+              ) : (
+                <Image source={iconPath.BOOKMARK} style={common.size24} />
+              )}
             </Pressable>
           </Pressable>
         );

@@ -34,19 +34,8 @@ function FollowingCenterComponent() {
 
   useEffect(() => {
     getMemberFollowingList();
-  }, []);
+  }, [getMemberFollowingList]);
 
-  const CENTER = [
-    {
-      image: '',
-      title: '',
-      field: '',
-      location: '',
-      phoneNumber: '',
-      message: '',
-      favorite: '',
-    },
-  ];
   return (
     <ScrollView showsVerticalScrollIndicator={false}>
       {followings.map(following => {
