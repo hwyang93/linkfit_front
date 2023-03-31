@@ -210,7 +210,8 @@ function JobOfferFormScreen() {
                     data={TIME2}
                     onSelect={(value: any) => setTime(value)}
                     defaultButtonText={'선택한 요일의 시간을 선택하세요.'}
-                    // textAlign={'right'}
+                    textAlign={'right'}
+                    icon={'time'}
                   />
                 </View>
                 {/* 추가 버튼 */}
