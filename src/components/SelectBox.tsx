@@ -1,9 +1,10 @@
 import {useState} from 'react';
-import {StyleSheet, Text, View} from 'react-native';
+import {Image, StyleSheet, Text, View} from 'react-native';
 import SelectDropdown from 'react-native-select-dropdown';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import {GRAY, INPUT} from '@styles/colors';
 import common from '@styles/common';
+import {iconPath} from '@util/iconPath';
 
 type selectProps = {
   data: any;
@@ -11,6 +12,8 @@ type selectProps = {
   defaultButtonText: string;
   label?: string;
   onChangeSearchInputText?: any;
+  textAlign?: string;
+  icon?: string;
 };
 
 const SelectBox = ({
@@ -19,6 +22,8 @@ const SelectBox = ({
   defaultButtonText,
   label,
   onChangeSearchInputText,
+  textAlign,
+  icon,
 }: selectProps) => {
   const [focus, setFocus] = useState(false);
   const [, setSelectItem] = useState('');
@@ -44,7 +49,34 @@ const SelectBox = ({
         defaultButtonText={defaultButtonText}
         // buttonStyle={{width: '100%', backgroundColor: WHITE}}
         buttonStyle={focus ? styles.selectBoxFocus : styles.selectBox}
-        buttonTextStyle={focus ? styles.selectTextFocus : styles.selectText}
+        // buttonTextStyle={focus ? styles.selectTextFocus : styles.selectText}
+        renderCustomizedButtonChild={selectedItem => {
+          return (
+            <View style={[common.rowCenter, {height: 56, width: '100%'}]}>
+              {icon === 'time' && (
+                <View
+                  style={{
+                    position: 'absolute',
+                    left: 8,
+                    top: 16,
+                  }}>
+                  <Image source={iconPath.TIME} style={[common.size24]} />
+                </View>
+              )}
+              <Text
+                style={[
+                  focus ? styles.selectTextFocus : styles.selectText,
+                  textAlign === 'right' && {
+                    width: '100%',
+                    textAlign: 'right',
+                    paddingRight: 16,
+                  },
+                ]}>
+                {selectedItem ? selectedItem : defaultButtonText}
+              </Text>
+            </View>
+          );
+        }}
         renderDropdownIcon={isOpened => {
           return (
             <FontAwesome
@@ -82,7 +114,7 @@ const styles = StyleSheet.create({
   selectText: {
     color: '#acacac',
     fontSize: 16,
-    textAlign: 'left',
+    // textAlign: 'left',
   },
   dropBox: {
     backgroundColor: '#fff',
@@ -104,7 +136,17 @@ const styles = StyleSheet.create({
   selectTextFocus: {
     color: '#292929',
     fontSize: 16,
-    textAlign: 'left',
+    // textAlign: 'left',
+  },
+  textRight: {
+    color: '#292929',
+    fontSize: 16,
+    textAlign: 'right',
+  },
+  textLeft: {
+    color: '#acacac',
+    fontSize: 16,
+    // textAlign: 'left',
   },
 });
 
