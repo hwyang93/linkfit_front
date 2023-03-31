@@ -1,5 +1,4 @@
 import {
-  Alert,
   Dimensions,
   Image,
   Pressable,
@@ -113,10 +112,19 @@ function ApplicationStatusScreen() {
     setModalVisible(true);
   };
 
-  const onSelect = useCallback(
-    (modalData: any) => {
+  const onSelectFilter = useCallback(
+    (selectItem: any) => {
       if (selectedFilter === 'period') {
-        setMODAL(modalData);
+        setMODAL(() => {
+          return MODAL.map(item => {
+            if (item.value === selectItem.value) {
+              item.selected = !item.selected;
+            } else {
+              item.selected = false;
+            }
+            return item;
+          });
+        });
         setFILTER(() => {
           return FILTER.map(filter => {
             if (filter.key === 'period') {
@@ -129,7 +137,16 @@ function ApplicationStatusScreen() {
           });
         });
       } else if (selectedFilter === 'status') {
-        setMODAL2(modalData);
+        setMODAL2(() => {
+          return MODAL2.map(item => {
+            if (item.value === selectItem.value) {
+              item.selected = !item.selected;
+            } else {
+              item.selected = false;
+            }
+            return item;
+          });
+        });
         setFILTER(() => {
           return FILTER.map(filter => {
             if (filter.key === 'status') {
@@ -144,7 +161,7 @@ function ApplicationStatusScreen() {
       }
       setModalVisible(false);
     },
-    [FILTER, selectedFilter],
+    [FILTER, MODAL, MODAL2, modalData, selectedFilter],
   );
   return (
     <View style={styles.container}>
@@ -227,14 +244,13 @@ function ApplicationStatusScreen() {
           setModalVisible={setModalVisible}
           title={modalTitle}
           modalData={modalData}
-          onSelect={onSelect}
           content={
             <View>
               {modalData.map((item, index) => {
                 return (
                   <View key={index} style={common.modalItemBox}>
                     <Pressable
-                      // onPress={() => onClickItem(item)}
+                      onPress={() => onSelectFilter(item)}
                       style={[common.rowCenterBetween, {width: '100%'}]}>
                       <Text
                         style={[
