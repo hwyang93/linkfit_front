@@ -1,5 +1,4 @@
 import {
-  Alert,
   Image,
   Pressable,
   ScrollView,
@@ -14,6 +13,7 @@ import Modal from '@components/ModalSheet';
 import {SetStateAction, useCallback, useEffect, useState} from 'react';
 import {cancelMemberLicence, fetchMemberLicences} from '@api/member';
 import {useIsFocused} from '@react-navigation/native';
+import toast from '@hooks/toast';
 
 function CertifyInstructorScreen() {
   const isFocused = useIsFocused();
@@ -40,7 +40,7 @@ function CertifyInstructorScreen() {
         setLicenses(data);
       })
       .catch((e: any) => {
-        console.log(e);
+        toast.error({message: e.message});
       });
   }, []);
 
@@ -51,7 +51,7 @@ function CertifyInstructorScreen() {
           setLicenses(data);
         })
         .catch((e: any) => {
-          console.log(e);
+          toast.error({message: e.message});
         });
     }
   }, [isFocused]);
@@ -59,12 +59,12 @@ function CertifyInstructorScreen() {
   const onCancelLicence = useCallback(() => {
     cancelMemberLicence(selectedLicenceSeq)
       .then(() => {
-        Alert.alert('강사 인증취소되었어요!');
+        toast.success({message: '강사 인증 취소되었어요!'});
         setModalVisible(false);
         getMemberLicences();
       })
       .catch((e: any) => {
-        console.log(e);
+        toast.error({message: e.message});
       });
   }, [getMemberLicences, selectedLicenceSeq]);
 
@@ -118,6 +118,21 @@ function CertifyInstructorScreen() {
         setModalVisible={setModalVisible}
         title={'더보기'}
         modalData={MODAL}
+        content={
+          <View>
+            {MODAL.map((item, index) => {
+              return (
+                <View key={index} style={common.modalItemBox}>
+                  <Pressable
+                    onPress={item.job}
+                    style={[common.rowCenterBetween, {width: '100%'}]}>
+                    <Text style={[common.modalText]}>{item.value}</Text>
+                  </Pressable>
+                </View>
+              );
+            })}
+          </View>
+        }
       />
     </ScrollView>
   );

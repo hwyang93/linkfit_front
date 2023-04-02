@@ -1,5 +1,4 @@
 import {
-  Alert,
   Dimensions,
   Image,
   Pressable,
@@ -20,6 +19,7 @@ import {SetStateAction, useCallback, useEffect, useState} from 'react';
 import {fetchRecruitApplications} from '@api/recruit';
 import {useIsFocused} from '@react-navigation/native';
 import Modal from '@components/ModalSheet';
+import toast from '@hooks/toast';
 
 const Tab = createMaterialTopTabNavigator();
 const windowWidth = Dimensions.get('window').width;
@@ -54,7 +54,7 @@ function ApplicantStatusScreen({route}: props) {
         setFinishApplications(finishList);
       })
       .catch((e: any) => {
-        Alert.alert(e.message);
+        toast.error({message: e.message});
       });
   }, [route.params.recruitSeq]);
 
