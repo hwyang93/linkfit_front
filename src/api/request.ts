@@ -9,10 +9,8 @@ const uri =
     ? 'http://127.0.0.1:3000/api/v1'
     : 'http://10.0.2.2:3000/api/v1';
 const service = axios.create({
-  // baseURL: 'http://172.30.1.76:3000/api/v1',
-  baseURL: uri,
-  // baseURL: 'http://127.0.0.1:3000/api/v1',
-  // baseURL: 'http://10.0.2.2:3000/api/v1',
+  baseURL: 'http://172.30.1.40:3000/api/v1',
+  // baseURL: uri,
   timeout: 600000,
 });
 export const getHeaders = async (tokenType: string) => {
