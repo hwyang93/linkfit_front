@@ -11,14 +11,12 @@ import NaverMapView, {Marker} from 'react-native-nmap';
 import {iconPath} from '@util/iconPath';
 import LocationButton from '@components/LocationButton';
 import FloatingLinkButton from '@components/FloatingLinkButton';
-import {SetStateAction, useEffect, useState} from 'react';
+import {SetStateAction, useCallback, useEffect, useState} from 'react';
 import Geolocation from 'react-native-geolocation-service';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import FloatingWriteButton from '@components/FloatingWriteButton';
 import Modal from '@components/ModalSheet';
-
-import {recruitStore, recruitAction} from '@/zustand/recruitStore';
-import TopFilter2 from '@components/TopFilter2';
+import TopFilter from '@components/TopFilter';
 import common from '@styles/common';
 import {BLUE} from '@styles/colors';
 import LinearGradient from 'react-native-linear-gradient';
@@ -41,23 +39,15 @@ async function requestPermission() {
 }
 
 function RecruitMapScreen() {
-  // 컴포넌트에서 Zustand 불러오기
-  const recruitState = recruitStore(state => state);
-  const filters = recruitState.filters;
-
   const [modalVisible, setModalVisible] =
     useState<SetStateAction<boolean>>(false);
   const [modalTitle, setModalTitle] = useState('');
   const [modalData, setModalData] = useState<any[]>([]);
-  // const [myLocation, setMyLocation] = useState({});
-  // const [myLocation, setMyLocation] = useState<
-  //   {latitude: number; longitude: number} | string
-  // >('');
+  const [selectedFilter, setSelectedFilter] = useState('');
   const [myLocation, setMyLocation] = useState<{
     latitude: number;
     longitude: number;
   } | null>(null);
-
   const [selected, setSelected] = useState(false);
 
   useEffect(() => {
@@ -65,7 +55,6 @@ function RecruitMapScreen() {
       if (result === 'granted') {
         Geolocation.getCurrentPosition(
           (pos: any) => {
-            // console.log('지금위치', pos);
             setMyLocation({
               latitude: pos.coords.latitude,
               longitude: pos.coords.longitude,
@@ -87,169 +76,179 @@ function RecruitMapScreen() {
   const P0 = {latitude: 37.564362, longitude: 126.977011};
   // const P1 = {latitude: 37.565051, longitude: 126.978567};
 
-  const FILTER = [
+  const [FILTER, setFILTER] = useState([
     {
+      key: 'position',
       value: '포지션',
       job: () => {
+        setSelectedFilter('position');
         setModalTitle('포지션');
         setModalData(MODAL);
         openModal();
-        // zustand 필터값 탭번호 1번으로 수정
-        filters.currentTab = 1;
-        recruitAction.filtersSet(filters);
       },
     },
     {
+      key: 'type',
       value: '채용형태',
       job: () => {
+        setSelectedFilter('type');
         setModalTitle('채용형태');
         setModalData(MODAL2);
         openModal();
-        filters.currentTab = 2;
-        recruitAction.filtersSet(filters);
       },
     },
     {
+      key: 'time',
       value: '수업시간',
       job: () => {
+        setSelectedFilter('time');
         setModalTitle('수업시간');
         setModalData(MODAL3);
         openModal();
-        filters.currentTab = 3;
-        recruitAction.filtersSet(filters);
       },
     },
-  ];
+  ]);
 
-  const MODAL = [
+  const [MODAL, setMODAL] = useState([
     {
       icon: iconPath.LINK,
       iconOn: iconPath.LINK_ON,
       value: '전체',
       selected: false,
-      job: () => {
-        recruitState.filters.currentPosition = '전체';
-        recruitAction.filtersSet(recruitState.filters);
-        setSelected(!selected);
-        console.log(selected);
-      },
     },
     {
       icon: iconPath.PILATES,
       iconOn: iconPath.PILATES_ON,
       value: '필라테스',
       selected: false,
-      job: () => {
-        recruitState.filters.currentPosition = '필라테스';
-        recruitAction.filtersSet(recruitState.filters);
-        setSelected(!selected);
-      },
     },
     {
       icon: iconPath.YOGA,
       iconOn: iconPath.YOGA_ON,
       value: '요가',
       selected: false,
-      job: () => {
-        recruitState.filters.currentPosition = '요가';
-        recruitAction.filtersSet(recruitState.filters);
-        setSelected(!selected);
-      },
     },
-  ];
-  const MODAL2 = [
+  ]);
+  const [MODAL2, setMODAL2] = useState([
     {
       value: '전임',
       selected: false,
-      job: () => {
-        recruitState.filters.currentType = '전임';
-        recruitAction.filtersSet(recruitState.filters);
-      },
     },
     {
       value: '파트타임',
       selected: false,
-      job: () => {
-        recruitState.filters.currentType = '파트타임';
-        recruitAction.filtersSet(recruitState.filters);
-      },
     },
     {
       value: '대강',
       selected: false,
-      job: () => {
-        recruitState.filters.currentType = '대강';
-        recruitAction.filtersSet(recruitState.filters);
-      },
     },
     {
       value: '실장',
       selected: false,
-      job: () => {
-        recruitState.filters.currentType = '실장';
-        recruitAction.filtersSet(recruitState.filters);
-      },
     },
-  ];
-  const MODAL3 = [
+  ]);
+  const [MODAL3, setMODAL3] = useState([
     {
       value: '오전',
       selected: false,
-      job: () => {
-        recruitState.filters.currentDate = '오전';
-        recruitAction.filtersSet(recruitState.filters);
-      },
     },
     {
       value: '오후',
       selected: false,
-      job: () => {
-        recruitState.filters.currentDate = '오후';
-        recruitAction.filtersSet(recruitState.filters);
-      },
     },
     {
       value: '전일',
       selected: false,
-      job: () => {
-        recruitState.filters.currentDate = '전일';
-        recruitAction.filtersSet(recruitState.filters);
-      },
     },
     {
       value: '협의',
       selected: false,
-      job: () => {
-        recruitState.filters.currentDate = '협의';
-        recruitAction.filtersSet(recruitState.filters);
-      },
     },
-  ];
+  ]);
 
   const openModal = () => {
     setModalVisible(true);
   };
-  const onFilter = () => {
-    recruitAction.onFilter();
-    setModalVisible(false);
-  };
-  useEffect(() => {
-    // zustand 재방문시 filter 초기화
-    recruitAction.filtersSet({
-      currentTab: 1,
-      position: '포지션',
-      currentPosition: '포지션',
-      type: '채용형태',
-      currentType: '채용형태',
-      date: '수업시간',
-      currentDate: '수업시간',
-    });
-  }, []);
+
+  const onSelectFilter = useCallback(
+    (selectItem: any) => {
+      if (selectedFilter === 'position') {
+        setMODAL(() => {
+          return MODAL.map(item => {
+            if (item.value === selectItem.value) {
+              item.selected = !item.selected;
+            } else {
+              item.selected = false;
+            }
+            return item;
+          });
+        });
+        setFILTER(() => {
+          return FILTER.map(filter => {
+            if (filter.key === 'position') {
+              const value = modalData.find((item: any) => {
+                return item.selected;
+              })?.value;
+              filter.value = value ? value : '포지션';
+            }
+            return filter;
+          });
+        });
+      } else if (selectedFilter === 'type') {
+        setMODAL2(() => {
+          return MODAL2.map(item => {
+            if (item.value === selectItem.value) {
+              item.selected = !item.selected;
+            } else {
+              item.selected = false;
+            }
+            return item;
+          });
+        });
+        setFILTER(() => {
+          return FILTER.map(filter => {
+            if (filter.key === 'type') {
+              const value = modalData.find((item: any) => {
+                return item.selected;
+              })?.value;
+              filter.value = value ? value : '채용 형태';
+            }
+            return filter;
+          });
+        });
+      } else if (selectedFilter === 'time') {
+        setMODAL3(() => {
+          return MODAL3.map(item => {
+            if (item.value === selectItem.value) {
+              item.selected = !item.selected;
+            } else {
+              item.selected = false;
+            }
+            return item;
+          });
+        });
+        setFILTER(() => {
+          return FILTER.map(filter => {
+            if (filter.key === 'time') {
+              const value = modalData.find((item: any) => {
+                return item.selected;
+              })?.value;
+              filter.value = value ? value : '수업 시간';
+            }
+            return filter;
+          });
+        });
+      }
+      setModalVisible(false);
+    },
+    [FILTER, MODAL, MODAL2, MODAL3, modalData, selectedFilter],
+  );
+
   return (
     <SafeAreaView edges={['bottom', 'left', 'right']} style={styles.container}>
       <View style={{paddingHorizontal: 16}}>
         {/* 필터 영역 */}
-        <TopFilter2 data={FILTER} />
+        <TopFilter data={FILTER} />
         {/* 필터 영역 */}
       </View>
       <NaverMapView
@@ -294,9 +293,6 @@ function RecruitMapScreen() {
         setModalVisible={setModalVisible}
         title={modalTitle}
         modalData={modalData}
-        type={'check'}
-        onFilter={onFilter}
-        selected={selected}
         content={
           <View>
             {modalData.map((item, index) => {
@@ -304,24 +300,24 @@ function RecruitMapScreen() {
                 <View key={index} style={common.modalItemBox}>
                   <Pressable
                     key={index}
-                    onPress={item.job}
-                    style={[common.rowBetween]}>
+                    onPress={() => onSelectFilter(item)}
+                    style={[common.rowBetween, {width: '100%'}]}>
                     <View style={[common.rowCenter]}>
                       {item.icon ? (
                         <Image
                           style={[common.size24, common.mr10]}
-                          source={selected ? item.iconOn : item.icon}
+                          source={item.selected ? item.iconOn : item.icon}
                         />
                       ) : null}
                       <Text
                         style={[
                           common.modalText,
-                          selected && {color: BLUE.DEFAULT},
+                          item.selected && {color: BLUE.DEFAULT},
                         ]}>
                         {item.value}
                       </Text>
                     </View>
-                    {selected ? (
+                    {item.selected ? (
                       <Image style={common.size24} source={iconPath.CHECK} />
                     ) : null}
                   </Pressable>
