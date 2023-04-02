@@ -34,8 +34,7 @@ async function requestPermission() {
         PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
       );
     }
-  } catch (e) {
-    console.log(e);
+  } catch (e: any) {
     toast.error({message: e.message});
   }
 }
@@ -80,7 +79,6 @@ function CertifyLocationScreen() {
         });
       })
       .catch((e: any) => {
-        console.log(e);
         toast.error({message: e.message});
       });
   }, []);

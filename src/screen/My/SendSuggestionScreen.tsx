@@ -8,7 +8,7 @@ import {
 } from 'react-native';
 import {BLUE, GRAY, WHITE} from '@styles/colors';
 import Modal from '@components/ModalSheet';
-import {SetStateAction, useState} from 'react';
+import {SetStateAction, useCallback, useState} from 'react';
 import TopFilter from '@components/TopFilter';
 import common from '@styles/common';
 import {NavigationProp, useNavigation} from '@react-navigation/native';
@@ -23,11 +23,13 @@ function SendSuggestionScreen() {
 
   const [modalTitle, setModalTitle] = useState('');
   const [modalData, setModalData] = useState<any[]>([]);
+  const [selectedFilter, setSelectedFilter] = useState('');
 
-  const FILTER = [
+  const [FILTER, setFILTER] = useState([
     {
       value: '기간',
       job: () => {
+        setSelectedFilter('period');
         setModalTitle('기간');
         setModalData(MODAL);
         openModal();
@@ -36,46 +38,45 @@ function SendSuggestionScreen() {
     {
       value: '답변 여부',
       job: () => {
+        setSelectedFilter('status');
         setModalTitle('답변 여부');
         setModalData(MODAL2);
         openModal();
       },
     },
-  ];
-  const MODAL = [
+  ]);
+  const [MODAL, setMODAL] = useState([
     {
       value: '일주일',
-      job: () => {
-        console.log('일주일 눌렸나요');
-      },
+      selected: false,
     },
     {
       value: '1개월',
-      job: () => {},
+      selected: false,
     },
     {
       value: '2개월',
-      job: () => {},
+      selected: false,
     },
     {
       value: '3개월 이상',
-      job: () => {},
+      selected: false,
     },
-  ];
-  const MODAL2 = [
+  ]);
+  const [MODAL2, setMODAL2] = useState([
     {
       value: '답변 대기중',
-      job: () => {},
+      selected: false,
     },
     {
       value: '답변 완료',
-      job: () => {},
+      selected: false,
     },
     {
       value: '제안 마감',
-      job: () => {},
+      selected: false,
     },
-  ];
+  ]);
   const MODAL3 = [
     {
       value: '제안 수정하기',
@@ -153,13 +154,66 @@ function SendSuggestionScreen() {
     },
   ];
 
-  const openModal = () => {
-    setModalVisible(true);
-  };
+  const onSelectFilter = useCallback(
+    (selectItem: any) => {
+      if (selectedFilter === 'period') {
+        setMODAL(() => {
+          return MODAL.map(item => {
+            if (item.value === selectItem.value) {
+              item.selected = !item.selected;
+            } else {
+              item.selected = false;
+            }
+            return item;
+          });
+        });
+        setFILTER(() => {
+          return FILTER.map(filter => {
+            if (filter.key === 'period') {
+              const value = modalData.find((item: any) => {
+                return item.selected;
+              })?.value;
+              filter.value = value ? value : '기간';
+            }
+            return filter;
+          });
+        });
+      } else if (selectedFilter === 'status') {
+        setMODAL2(() => {
+          return MODAL2.map(item => {
+            if (item.value === selectItem.value) {
+              item.selected = !item.selected;
+            } else {
+              item.selected = false;
+            }
+            return item;
+          });
+        });
+        setFILTER(() => {
+          return FILTER.map(filter => {
+            if (filter.key === 'status') {
+              const value = modalData.find((item: any) => {
+                return item.selected;
+              })?.value;
+              filter.value = value ? value : '답변 여부';
+            }
+            return filter;
+          });
+        });
+      }
+      setModalVisible(false);
+    },
+    [FILTER, MODAL, MODAL2, modalData, selectedFilter],
+  );
+
   const clickKebab = () => {
     setModalTitle('더보기');
     setModalData(MODAL3);
     openModal();
+  };
+
+  const openModal = () => {
+    setModalVisible(true);
   };
 
   return (
@@ -252,6 +306,30 @@ function SendSuggestionScreen() {
           setModalVisible={setModalVisible}
           title={modalTitle}
           modalData={modalData}
+          content={
+            <View>
+              {modalData.map((item, index) => {
+                return (
+                  <View key={index} style={common.modalItemBox}>
+                    <Pressable
+                      onPress={() => onSelectFilter(item)}
+                      style={[common.rowCenterBetween, {width: '100%'}]}>
+                      <Text
+                        style={[
+                          common.modalText,
+                          item.selected && {color: BLUE.DEFAULT},
+                        ]}>
+                        {item.value}
+                      </Text>
+                      {item.selected && (
+                        <Image source={iconPath.CHECK} style={common.size24} />
+                      )}
+                    </Pressable>
+                  </View>
+                );
+              })}
+            </View>
+          }
         />
       </ScrollView>
     </SafeAreaView>
