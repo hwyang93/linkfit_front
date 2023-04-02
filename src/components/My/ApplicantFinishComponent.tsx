@@ -64,10 +64,20 @@ function ApplicantFinishComponent({list}: any) {
   const openModal = () => {
     setModalVisible(true);
   };
-  const onSelect = useCallback(
-    (modalData: any) => {
+
+  const onSelectFilter = useCallback(
+    (selectItem: any) => {
       if (selectedFilter === 'period') {
-        setMODAL(modalData);
+        setMODAL(() => {
+          return MODAL.map(item => {
+            if (item.value === selectItem.value) {
+              item.selected = !item.selected;
+            } else {
+              item.selected = false;
+            }
+            return item;
+          });
+        });
         setFILTER(() => {
           return FILTER.map(filter => {
             if (filter.key === 'period') {
@@ -82,7 +92,7 @@ function ApplicantFinishComponent({list}: any) {
       }
       setModalVisible(false);
     },
-    [FILTER, selectedFilter],
+    [FILTER, MODAL, modalData, selectedFilter],
   );
   return (
     <>
@@ -100,14 +110,13 @@ function ApplicantFinishComponent({list}: any) {
         setModalVisible={setModalVisible}
         title={modalTitle}
         modalData={modalData}
-        onSelect={onSelect}
         content={
           <View>
             {modalData.map((item, index) => {
               return (
                 <View key={index} style={common.modalItemBox}>
                   <Pressable
-                    // onPress={() => onClickItem(item)}
+                    onPress={() => onSelectFilter(item)}
                     style={[common.rowCenterBetween, {width: '100%'}]}>
                     <Text
                       style={[

@@ -1,5 +1,4 @@
 import {
-  Alert,
   Image,
   Pressable,
   ScrollView,
@@ -20,6 +19,7 @@ import {
 } from '@react-navigation/native';
 import {LoggedInParamList} from '../../../AppInner';
 import {deleteMemberReputation, fetchMemberReputations} from '@api/member';
+import toast from '@hooks/toast';
 
 function EmployeeReviewComponent() {
   const isFocused = useIsFocused();
@@ -40,7 +40,7 @@ function EmployeeReviewComponent() {
         setReputations(data);
       })
       .catch((e: any) => {
-        console.log(e.message);
+        toast.error({message: e.message});
       });
   }, []);
 
@@ -53,12 +53,12 @@ function EmployeeReviewComponent() {
   const onDeleteReputation = useCallback(() => {
     deleteMemberReputation(selectedReputation.seq)
       .then(() => {
-        Alert.alert('후기 삭제가 완료되었어요!');
+        toast.success({message: '후기 삭제가 완료되었어요!'});
         setModalVisible(false);
         getReputations();
       })
       .catch((e: any) => {
-        console.log(e.message);
+        toast.error({message: e.message});
       });
   }, [selectedReputation.seq, getReputations]);
 

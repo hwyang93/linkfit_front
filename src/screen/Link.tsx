@@ -23,6 +23,7 @@ import {
   useNavigation,
 } from '@react-navigation/native';
 import {LoggedInParamList} from '../../AppInner';
+import toast from '@hooks/toast';
 
 function Link() {
   const navigation = useNavigation<NavigationProp<LoggedInParamList>>();
@@ -55,8 +56,8 @@ function Link() {
       .then(({data}: any) => {
         setInstructors(data);
       })
-      .catch((e: {message: () => any}) => {
-        console.log(e.message());
+      .catch((e: any) => {
+        toast.error({message: e.message});
       });
   }, []);
 

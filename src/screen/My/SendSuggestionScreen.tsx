@@ -27,6 +27,7 @@ function SendSuggestionScreen() {
 
   const [FILTER, setFILTER] = useState([
     {
+      key: 'period',
       value: '기간',
       job: () => {
         setSelectedFilter('period');
@@ -36,6 +37,7 @@ function SendSuggestionScreen() {
       },
     },
     {
+      key: 'status',
       value: '답변 여부',
       job: () => {
         setSelectedFilter('status');
