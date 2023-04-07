@@ -46,6 +46,11 @@ const MENU = [
     title: '후기 관리',
     link: 'ReviewManage',
   },
+  {
+    icon: iconPath.MY_SETTINGS,
+    title: '설정',
+    link: 'Setting',
+  },
 ];
 
 function MyCenterScreen() {
