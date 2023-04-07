@@ -83,6 +83,7 @@ function JobOfferFormScreen() {
 
   const addTimetable = () => {
     setDateForm([...dateForm, {}]);
+    console.log(dateForm.length);
   };
 
   const handleDaySelection = (index: any) => {
@@ -219,13 +220,18 @@ function JobOfferFormScreen() {
                 })}
 
                 {/* 추가 버튼 */}
-                <View style={common.mb16}>
-                  <Pressable
-                    style={{alignSelf: 'center'}}
-                    onPress={addTimetable}>
-                    <Image source={iconPath.ADD_BUTTON} style={common.size40} />
-                  </Pressable>
-                </View>
+                {dateForm.length < 2 ? (
+                  <View style={common.mb16}>
+                    <Pressable
+                      style={{alignSelf: 'center'}}
+                      onPress={addTimetable}>
+                      <Image
+                        source={iconPath.ADD_BUTTON}
+                        style={common.size40}
+                      />
+                    </Pressable>
+                  </View>
+                ) : null}
               </>
             )}
           </>

@@ -114,7 +114,7 @@ const styles = StyleSheet.create({
   selectText: {
     color: '#acacac',
     fontSize: 16,
-    // textAlign: 'left',
+    paddingLeft: 8,
   },
   dropBox: {
     backgroundColor: '#fff',
@@ -136,7 +136,7 @@ const styles = StyleSheet.create({
   selectTextFocus: {
     color: '#292929',
     fontSize: 16,
-    // textAlign: 'left',
+    paddingLeft: 8,
   },
   textRight: {
     color: '#292929',
@@ -146,7 +146,6 @@ const styles = StyleSheet.create({
   textLeft: {
     color: '#acacac',
     fontSize: 16,
-    // textAlign: 'left',
   },
 });
 
