@@ -1,12 +1,17 @@
 require_relative '../node_modules/react-native/scripts/react_native_pods'
 require_relative '../node_modules/@react-native-community/cli-platform-ios/native_modules'
 
-platform :ios, '12.4'
+# React Native Maps dependencies
+# The following line is only needed if building on an Apple silicon Mac without rosetta.
+pod 'Google-Maps-iOS-Utils', :git => 'https://github.com/Simon-TechForm/google-maps-ios-utils.git', :branch => 'feat/support-apple-silicon'
+rn_maps_path = '../node_modules/react-native-maps'
+
+platform :ios, '13.0'
 install! 'cocoapods', :deterministic_uuids => false
 
 target 'linkfit' do
+  pod 'react-native-google-maps', :path => rn_maps_path
   config = use_native_modules!
-  pod 'NMapsMap','3.10.1'
   pod 'RNVectorIcons', :path => '../node_modules/react-native-vector-icons'
   permissions_path = '../node_modules/react-native-permissions/ios'
 

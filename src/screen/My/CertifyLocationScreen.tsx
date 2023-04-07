@@ -10,7 +10,7 @@ import {
   View,
 } from 'react-native';
 import {GRAY, WHITE} from '@styles/colors';
-import NaverMapView, {Marker} from 'react-native-nmap';
+// import NaverMapView, {Marker} from 'react-native-nmap';
 import {useCallback, useEffect, useState} from 'react';
 import common from '@styles/common';
 import LinearGradient from 'react-native-linear-gradient';
@@ -171,23 +171,23 @@ function CertifyLocationScreen() {
     <SafeAreaView edges={['bottom', 'left', 'right']} style={styles.container}>
       <ScrollView>
         <View style={styles.map}>
-          <NaverMapView
-            style={{width: '100%', height: '100%'}}
-            showsMyLocationButton={false}
-            zoomControl={false}
-            center={{...P0, zoom: 16}}
-            // onTouch={e => console.warn('onTouch', JSON.stringify(e.nativeEvent))}
-            // onCameraChange={e =>
-            //   console.warn('onCameraChange', JSON.stringify(e))
-            // }
-            // onMapClick={e => console.warn('onMapClick', JSON.stringify(e))}
-            useTextureView>
-            <Marker
-              coordinate={P0}
-              onClick={() => console.warn('onClick! p0')}
-              caption={{text: '현재 위치'}}
-            />
-          </NaverMapView>
+          {/*<NaverMapView*/}
+          {/*  style={{width: '100%', height: '100%'}}*/}
+          {/*  showsMyLocationButton={false}*/}
+          {/*  zoomControl={false}*/}
+          {/*  center={{...P0, zoom: 16}}*/}
+          {/*  // onTouch={e => console.warn('onTouch', JSON.stringify(e.nativeEvent))}*/}
+          {/*  // onCameraChange={e =>*/}
+          {/*  //   console.warn('onCameraChange', JSON.stringify(e))*/}
+          {/*  // }*/}
+          {/*  // onMapClick={e => console.warn('onMapClick', JSON.stringify(e))}*/}
+          {/*  useTextureView>*/}
+          {/*  <Marker*/}
+          {/*    coordinate={P0}*/}
+          {/*    onClick={() => console.warn('onClick! p0')}*/}
+          {/*    caption={{text: '현재 위치'}}*/}
+          {/*  />*/}
+          {/*</NaverMapView>*/}
           <LocationButton bottom={16} />
         </View>
         {authInfo ? (

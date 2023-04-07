@@ -7,7 +7,7 @@ import {
   Text,
   View,
 } from 'react-native';
-import NaverMapView, {Marker} from 'react-native-nmap';
+// import NaverMapView, {Marker} from 'react-native-nmap';
 import {iconPath} from '@util/iconPath';
 import LocationButton from '@components/LocationButton';
 import FloatingLinkButton from '@components/FloatingLinkButton';
@@ -251,33 +251,33 @@ function RecruitMapScreen() {
         <TopFilter data={FILTER} />
         {/* 필터 영역 */}
       </View>
-      <NaverMapView
-        style={{width: '100%', height: '100%'}}
-        showsMyLocationButton={false}
-        zoomControl={false}
-        center={{...P0, zoom: 16}}
-        onTouch={(e: {nativeEvent: any}) =>
-          console.warn('onTouch', JSON.stringify(e.nativeEvent))
-        }
-        onCameraChange={e => console.warn('onCameraChange', JSON.stringify(e))}
-        onMapClick={e => console.warn('onMapClick', JSON.stringify(e))}>
-        {/*<Marker coordinate={P0} onClick={() => console.warn('onClick! p0')} />*/}
-        {myLocation?.latitude && (
-          <Marker
-            coordinate={{
-              latitude: myLocation.latitude,
-              longitude: myLocation.longitude,
-            }}
-            pinColor="red"
-          />
-        )}
-        {/*<Marker coordinate={P0} onClick={() => console.warn('onClick! p0')} />*/}
-        {/*<Marker*/}
-        {/*  coordinate={P1}*/}
-        {/*  pinColor="blue"*/}
-        {/*  onClick={() => console.warn('onClick! p1')}*/}
-        {/*/>*/}
-      </NaverMapView>
+      {/*<NaverMapView*/}
+      {/*  style={{width: '100%', height: '100%'}}*/}
+      {/*  showsMyLocationButton={false}*/}
+      {/*  zoomControl={false}*/}
+      {/*  center={{...P0, zoom: 16}}*/}
+      {/*  onTouch={(e: {nativeEvent: any}) =>*/}
+      {/*    console.warn('onTouch', JSON.stringify(e.nativeEvent))*/}
+      {/*  }*/}
+      {/*  onCameraChange={e => console.warn('onCameraChange', JSON.stringify(e))}*/}
+      {/*  onMapClick={e => console.warn('onMapClick', JSON.stringify(e))}>*/}
+      {/*  /!*<Marker coordinate={P0} onClick={() => console.warn('onClick! p0')} />*!/*/}
+      {/*  {myLocation?.latitude && (*/}
+      {/*    <Marker*/}
+      {/*      coordinate={{*/}
+      {/*        latitude: myLocation.latitude,*/}
+      {/*        longitude: myLocation.longitude,*/}
+      {/*      }}*/}
+      {/*      pinColor="red"*/}
+      {/*    />*/}
+      {/*  )}*/}
+      {/*  <Marker coordinate={P0} onClick={() => console.warn('onClick! p0')} />*/}
+      {/*  <Marker*/}
+      {/*    coordinate={P1}*/}
+      {/*    pinColor="blue"*/}
+      {/*    onClick={() => console.warn('onClick! p1')}*/}
+      {/*  />*/}
+      {/*</NaverMapView>*/}
       {/* Floating Button */}
       <FloatingWriteButton bottom={144} icon={iconPath.PENCIL_W} />
       {/* 현재 위치로 이동 버튼 */}
