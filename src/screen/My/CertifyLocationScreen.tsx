@@ -10,7 +10,6 @@ import {
   View,
 } from 'react-native';
 import {GRAY, WHITE} from '@styles/colors';
-// import NaverMapView, {Marker} from 'react-native-nmap';
 import {useCallback, useEffect, useState} from 'react';
 import common from '@styles/common';
 import LinearGradient from 'react-native-linear-gradient';
@@ -21,6 +20,7 @@ import {iconPath} from '@util/iconPath';
 import {createRegionAuth, fetchRegionAuth} from '@api/member';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import toast from '@hooks/toast';
+import MapView, {PROVIDER_GOOGLE} from 'react-native-maps';
 
 async function requestPermission() {
   try {
@@ -188,6 +188,17 @@ function CertifyLocationScreen() {
           {/*    caption={{text: '현재 위치'}}*/}
           {/*  />*/}
           {/*</NaverMapView>*/}
+
+          <MapView
+            style={{flex: 1}}
+            provider={PROVIDER_GOOGLE}
+            initialRegion={{
+              latitude: 37.0,
+              longitude: 126.0,
+              latitudeDelta: 0.0922,
+              longitudeDelta: 0.0421,
+            }}
+          />
           <LocationButton bottom={16} />
         </View>
         {authInfo ? (

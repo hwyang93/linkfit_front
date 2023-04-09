@@ -7,7 +7,6 @@ import {
   Text,
   View,
 } from 'react-native';
-// import NaverMapView, {Marker} from 'react-native-nmap';
 import {iconPath} from '@util/iconPath';
 import LocationButton from '@components/LocationButton';
 import FloatingLinkButton from '@components/FloatingLinkButton';
@@ -20,6 +19,7 @@ import TopFilter from '@components/TopFilter';
 import common from '@styles/common';
 import {BLUE} from '@styles/colors';
 import LinearGradient from 'react-native-linear-gradient';
+import MapView, {PROVIDER_GOOGLE} from 'react-native-maps';
 
 async function requestPermission() {
   try {
@@ -48,6 +48,9 @@ function RecruitMapScreen() {
     latitude: number;
     longitude: number;
   } | null>(null);
+
+  const [location, setLocation] = useState();
+
   const [selected, setSelected] = useState(false);
 
   useEffect(() => {
@@ -55,10 +58,12 @@ function RecruitMapScreen() {
       if (result === 'granted') {
         Geolocation.getCurrentPosition(
           (pos: any) => {
-            setMyLocation({
-              latitude: pos.coords.latitude,
-              longitude: pos.coords.longitude,
-            });
+            // setMyLocation({
+            //   latitude: pos.coords.latitude,
+            //   longitude: pos.coords.longitude,
+            // });
+            setLocation(pos.coords);
+            console.log(pos);
           },
           error => {
             console.log(error);
@@ -73,7 +78,7 @@ function RecruitMapScreen() {
     });
   }, []);
 
-  const P0 = {latitude: 37.564362, longitude: 126.977011};
+  // const P0 = {latitude: 37.564362, longitude: 126.977011};
   // const P1 = {latitude: 37.565051, longitude: 126.978567};
 
   const [FILTER, setFILTER] = useState([
@@ -251,33 +256,17 @@ function RecruitMapScreen() {
         <TopFilter data={FILTER} />
         {/* 필터 영역 */}
       </View>
-      {/*<NaverMapView*/}
-      {/*  style={{width: '100%', height: '100%'}}*/}
-      {/*  showsMyLocationButton={false}*/}
-      {/*  zoomControl={false}*/}
-      {/*  center={{...P0, zoom: 16}}*/}
-      {/*  onTouch={(e: {nativeEvent: any}) =>*/}
-      {/*    console.warn('onTouch', JSON.stringify(e.nativeEvent))*/}
-      {/*  }*/}
-      {/*  onCameraChange={e => console.warn('onCameraChange', JSON.stringify(e))}*/}
-      {/*  onMapClick={e => console.warn('onMapClick', JSON.stringify(e))}>*/}
-      {/*  /!*<Marker coordinate={P0} onClick={() => console.warn('onClick! p0')} />*!/*/}
-      {/*  {myLocation?.latitude && (*/}
-      {/*    <Marker*/}
-      {/*      coordinate={{*/}
-      {/*        latitude: myLocation.latitude,*/}
-      {/*        longitude: myLocation.longitude,*/}
-      {/*      }}*/}
-      {/*      pinColor="red"*/}
-      {/*    />*/}
-      {/*  )}*/}
-      {/*  <Marker coordinate={P0} onClick={() => console.warn('onClick! p0')} />*/}
-      {/*  <Marker*/}
-      {/*    coordinate={P1}*/}
-      {/*    pinColor="blue"*/}
-      {/*    onClick={() => console.warn('onClick! p1')}*/}
-      {/*  />*/}
-      {/*</NaverMapView>*/}
+      <MapView
+        style={{flex: 1}}
+        provider={PROVIDER_GOOGLE}
+        initialRegion={{
+          latitude: 37.0,
+          longitude: 126.0,
+          latitudeDelta: 0.0922,
+          longitudeDelta: 0.0421,
+        }}
+      />
+
       {/* Floating Button */}
       <FloatingWriteButton bottom={144} icon={iconPath.PENCIL_W} />
       {/* 현재 위치로 이동 버튼 */}
