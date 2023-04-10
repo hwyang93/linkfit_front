@@ -128,6 +128,12 @@ def reactNativeArchitectures() {
     def value = project.getProperties().get("reactNativeArchitectures")
     return value ? value.split(",") : ["armeabi-v7a", "x86", "x86_64", "arm64-v8a"]
 }
+/**
+ * Hide API Keys
+ */
+Properties properties = new Properties()
+properties.load(project.rootProject.file('local.properties').newDataInputStream())
+def googleMapApiKey = properties.getProperty('google.map.key')
 
 android {
     ndkVersion rootProject.ext.ndkVersion
@@ -160,6 +166,7 @@ android {
                 }
             }
         }
+        manifestPlaceholders = [googleMapApiKey:googleMapApiKey]
     }
 
     if (isNewArchitectureEnabled()) {
