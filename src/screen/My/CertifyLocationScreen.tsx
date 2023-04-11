@@ -17,10 +17,10 @@ import LocationButton from '@components/LocationButton';
 import axios from 'axios/index';
 import Geolocation from 'react-native-geolocation-service';
 import {iconPath} from '@util/iconPath';
-import {createRegionAuth, fetchRegionAuth} from '@api/member';
+import {createRegionAuth, deleteRegionAuth, fetchRegionAuth} from '@api/member';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import toast from '@hooks/toast';
-import MapView, {PROVIDER_GOOGLE} from 'react-native-maps';
+import MapView, {Marker, PROVIDER_GOOGLE} from 'react-native-maps';
 
 async function requestPermission() {
   try {
@@ -39,11 +39,6 @@ async function requestPermission() {
   }
 }
 
-// todo : 화면 진입시 위치 좌표 가져오기
-// todo : 위치 좌표 현재위치에 바인딩
-// todo : 위치 버튼 클릭 시 좌표 재 조회
-// todo : 인증하기 버튼 기능
-
 function CertifyLocationScreen() {
   const [loading, setLoading] = useState<boolean>(false);
   const [myLocation, setMyLocation] = useState<{
@@ -61,6 +56,7 @@ function CertifyLocationScreen() {
     region2depth: string;
     region3depth: string;
   } | null>(null);
+  const [selectedRegion, setSelectedRegion] = useState({seq: 0});
 
   let P0 = {latitude: 37.503979, longitude: 127.036201};
 
@@ -110,6 +106,16 @@ function CertifyLocationScreen() {
     myLocation?.longitude,
   ]);
 
+  const onDeleteRegion = useCallback(() => {
+    deleteRegionAuth(selectedRegion.seq)
+      .then(() => {
+        console.log();
+      })
+      .catch((e: any) => {
+        toast.error({message: e.message});
+      });
+  }, [selectedRegion.seq]);
+
   useEffect(() => {
     requestPermission().then(result => {
       if (result === 'granted') {
@@ -134,9 +140,6 @@ function CertifyLocationScreen() {
     mapApi();
   }, []);
 
-  // const x = '126.9539484';
-  // const y = '37.3097165';
-
   const mapApi = async () => {
     try {
       await axios
@@ -160,7 +163,6 @@ function CertifyLocationScreen() {
           });
         });
     } catch (e: any) {
-      console.log(e.message);
       toast.error({message: e.message});
     }
   };
@@ -172,17 +174,27 @@ function CertifyLocationScreen() {
       <ScrollView>
         <View style={styles.map}>
           <MapView
-            style={{flex: 1}}
+            style={{flex: 1, width: '100%', height: 320}}
             provider={PROVIDER_GOOGLE}
             initialRegion={{
-              latitude: 37.0,
-              longitude: 126.0,
+              latitude: P0.latitude,
+              longitude: P0.longitude,
               latitudeDelta: 0.0922,
               longitudeDelta: 0.0421,
-            }}
-          />
+            }}>
+            <Marker
+              coordinate={{
+                latitude: P0.latitude,
+                longitude: P0.longitude,
+              }}
+              pinColor="#2D63E2"
+              // title="하이"
+              // description="테스트"
+            />
+          </MapView>
           <LocationButton bottom={16} />
         </View>
+
         {authInfo ? (
           <View style={common.mb16}>
             <Text style={[common.text_m, common.fwb]}>인증 위치</Text>
@@ -195,7 +207,7 @@ function CertifyLocationScreen() {
                   {authInfo.region3depth}
                 </Text>
               </View>
-              <Pressable onPress={() => {}} hitSlop={10}>
+              <Pressable onPress={onDeleteRegion} hitSlop={10}>
                 <Image source={iconPath.CLOSE} style={common.size24} />
               </Pressable>
             </View>
