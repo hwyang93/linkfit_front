@@ -16,6 +16,9 @@
 #import <ReactCommon/RCTTurboModuleManager.h>
 
 #import <react/config/ReactNativeConfig.h>
+#import "RNCConfig.h"
+
+NSDictionary *config = [RNCConfig env];
 
 static NSString *const kRNConcurrentRoot = @"concurrentRoot";
 

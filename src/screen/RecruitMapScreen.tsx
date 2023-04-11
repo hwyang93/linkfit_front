@@ -20,7 +20,7 @@ import TopFilter from '@components/TopFilter';
 import common from '@styles/common';
 import {BLUE} from '@styles/colors';
 import LinearGradient from 'react-native-linear-gradient';
-import MapView, {PROVIDER_GOOGLE} from 'react-native-maps';
+import MapView, {Marker, PROVIDER_GOOGLE} from 'react-native-maps';
 import toast from '@hooks/toast';
 // import Geolocation from '@react-native-community/geolocation';
 
@@ -59,22 +59,27 @@ function RecruitMapScreen() {
   // const [latitude, setLatitude] = useState<string>('');
   // const [longitude, setLongitude] = useState<string>('');
   //
-  // const geoLocation = () => {
-  //   Geolocation.getCurrentPosition(
-  //     position => {
-  //       const latitude = JSON.stringify(position.coords.latitude);
-  //       const longitude = JSON.stringify(position.coords.longitude);
-  //
-  //       setLatitude(latitude);
-  //       setLongitude(longitude);
-  //       console.log(latitude, longitude);
-  //     },
-  //     error => {
-  //       console.log(error.code, error.message);
-  //     },
-  //     {enableHighAccuracy: true, timeout: 15000, maximumAge: 10000},
-  //   );
-  // };
+  const geoLocation = () => {
+    Geolocation.getCurrentPosition(
+      position => {
+        // const latitude = JSON.stringify(position.coords.latitude);
+        // const longitude = JSON.stringify(position.coords.longitude);
+
+        const {latitude, longitude} = position.coords;
+        setLocation({
+          latitude,
+          longitude,
+        });
+        // setLatitude(latitude);
+        // setLongitude(longitude);
+        // console.log(latitude, longitude);
+      },
+      error => {
+        console.log(error.code, error.message);
+      },
+      {enableHighAccuracy: true, timeout: 15000, maximumAge: 10000},
+    );
+  };
 
   const [location, setLocation] = useState<ILocation | undefined>(undefined);
 
@@ -277,8 +282,17 @@ function RecruitMapScreen() {
             longitude: location.longitude,
             latitudeDelta: 0.005,
             longitudeDelta: 0.005,
-          }}
-        />
+          }}>
+          <Marker
+            coordinate={{
+              latitude: location.latitude,
+              longitude: location.longitude,
+            }}
+            pinColor="#2D63E2"
+            title="하이"
+            description="테스트"
+          />
+        </MapView>
       ) : (
         <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
           <ActivityIndicator color={BLUE.DEFAULT} />
@@ -288,7 +302,7 @@ function RecruitMapScreen() {
       {/* Floating Button */}
       <FloatingWriteButton bottom={144} icon={iconPath.PENCIL_W} />
       {/* 현재 위치로 이동 버튼 */}
-      <LocationButton bottom={88} />
+      <LocationButton bottom={88} job={geoLocation} />
       {/* 페이지 이동 버튼 */}
       <FloatingLinkButton
         link={'RecruitList'}

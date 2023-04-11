@@ -188,8 +188,8 @@ function CertifyLocationScreen() {
                 longitude: P0.longitude,
               }}
               pinColor="#2D63E2"
-              // title="하이"
-              // description="테스트"
+              title="하이"
+              description="테스트"
             />
           </MapView>
           <LocationButton bottom={16} />
