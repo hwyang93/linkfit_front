@@ -23,6 +23,7 @@ import LinearGradient from 'react-native-linear-gradient';
 import MapView, {PROVIDER_GOOGLE} from 'react-native-maps';
 import toast from '@hooks/toast';
 // import Geolocation from '@react-native-community/geolocation';
+import Config from 'react-native-config';
 
 interface ILocation {
   latitude: number;
@@ -261,6 +262,7 @@ function RecruitMapScreen() {
     [FILTER, MODAL, MODAL2, MODAL3, modalData, selectedFilter],
   );
 
+  console.log('찾았나요', Config.GOOGLE_MAPS_API_KEY);
   return (
     <SafeAreaView edges={['left', 'right']} style={styles.container}>
       <View style={{paddingHorizontal: 16}}>

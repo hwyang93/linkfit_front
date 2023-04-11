@@ -66,3 +66,6 @@ buck-out/
 # temporary
 /src/api/request.ts
 android/app/src/main/
+
+#react-native-config
+ios/tmp.xcconfig
