@@ -241,7 +241,7 @@ function JobPostScreen({route, navigation}: Props) {
               provider={PROVIDER_GOOGLE}
               initialRegion={{
                 latitude: 53.339688,
-                longitude: -6.236688
+                longitude: -6.236688,
                 latitudeDelta: 0.0922,
                 longitudeDelta: 0.0421,
               }}>
