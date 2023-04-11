@@ -69,3 +69,4 @@ android/app/src/main/
 
 #react-native-config
 ios/tmp.xcconfig
+ios/Config.xcconfig
