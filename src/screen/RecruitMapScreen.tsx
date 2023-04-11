@@ -6,6 +6,7 @@ import {
   StyleSheet,
   Text,
   View,
+  ActivityIndicator,
 } from 'react-native';
 import {iconPath} from '@util/iconPath';
 import LocationButton from '@components/LocationButton';
@@ -20,6 +21,13 @@ import common from '@styles/common';
 import {BLUE} from '@styles/colors';
 import LinearGradient from 'react-native-linear-gradient';
 import MapView, {PROVIDER_GOOGLE} from 'react-native-maps';
+import toast from '@hooks/toast';
+// import Geolocation from '@react-native-community/geolocation';
+
+interface ILocation {
+  latitude: number;
+  longitude: number;
+}
 
 async function requestPermission() {
   try {
@@ -33,8 +41,8 @@ async function requestPermission() {
         PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
       );
     }
-  } catch (e) {
-    console.log(e);
+  } catch (e: any) {
+    toast.error({message: e.message});
   }
 }
 
@@ -44,42 +52,47 @@ function RecruitMapScreen() {
   const [modalTitle, setModalTitle] = useState('');
   const [modalData, setModalData] = useState<any[]>([]);
   const [selectedFilter, setSelectedFilter] = useState('');
-  const [myLocation, setMyLocation] = useState<{
-    latitude: number;
-    longitude: number;
-  } | null>(null);
-
-  const [location, setLocation] = useState();
-
-  const [selected, setSelected] = useState(false);
-
-  useEffect(() => {
-    requestPermission().then(result => {
-      if (result === 'granted') {
-        Geolocation.getCurrentPosition(
-          (pos: any) => {
-            // setMyLocation({
-            //   latitude: pos.coords.latitude,
-            //   longitude: pos.coords.longitude,
-            // });
-            setLocation(pos.coords);
-            console.log(pos);
-          },
-          error => {
-            console.log(error);
-          },
-          {
-            enableHighAccuracy: true,
-            timeout: 3600,
-            maximumAge: 3600,
-          },
-        );
-      }
-    });
-  }, []);
 
   // const P0 = {latitude: 37.564362, longitude: 126.977011};
   // const P1 = {latitude: 37.565051, longitude: 126.978567};
+
+  // const [latitude, setLatitude] = useState<string>('');
+  // const [longitude, setLongitude] = useState<string>('');
+  //
+  // const geoLocation = () => {
+  //   Geolocation.getCurrentPosition(
+  //     position => {
+  //       const latitude = JSON.stringify(position.coords.latitude);
+  //       const longitude = JSON.stringify(position.coords.longitude);
+  //
+  //       setLatitude(latitude);
+  //       setLongitude(longitude);
+  //       console.log(latitude, longitude);
+  //     },
+  //     error => {
+  //       console.log(error.code, error.message);
+  //     },
+  //     {enableHighAccuracy: true, timeout: 15000, maximumAge: 10000},
+  //   );
+  // };
+
+  const [location, setLocation] = useState<ILocation | undefined>(undefined);
+
+  useEffect(() => {
+    Geolocation.getCurrentPosition(
+      position => {
+        const {latitude, longitude} = position.coords;
+        setLocation({
+          latitude,
+          longitude,
+        });
+      },
+      error => {
+        console.log(error.code, error.message);
+      },
+      {enableHighAccuracy: true, timeout: 15000, maximumAge: 10000},
+    );
+  }, []);
 
   const [FILTER, setFILTER] = useState([
     {
@@ -113,7 +126,6 @@ function RecruitMapScreen() {
       },
     },
   ]);
-
   const [MODAL, setMODAL] = useState([
     {
       icon: iconPath.LINK,
@@ -250,22 +262,28 @@ function RecruitMapScreen() {
   );
 
   return (
-    <SafeAreaView edges={['bottom', 'left', 'right']} style={styles.container}>
+    <SafeAreaView edges={['left', 'right']} style={styles.container}>
       <View style={{paddingHorizontal: 16}}>
         {/* 필터 영역 */}
         <TopFilter data={FILTER} />
         {/* 필터 영역 */}
       </View>
-      <MapView
-        style={{flex: 1}}
-        provider={PROVIDER_GOOGLE}
-        initialRegion={{
-          latitude: 37.0,
-          longitude: 126.0,
-          latitudeDelta: 0.0922,
-          longitudeDelta: 0.0421,
-        }}
-      />
+      {location ? (
+        <MapView
+          style={{flex: 1}}
+          provider={PROVIDER_GOOGLE}
+          initialRegion={{
+            latitude: location.latitude,
+            longitude: location.longitude,
+            latitudeDelta: 0.005,
+            longitudeDelta: 0.005,
+          }}
+        />
+      ) : (
+        <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
+          <ActivityIndicator color={BLUE.DEFAULT} />
+        </View>
+      )}
 
       {/* Floating Button */}
       <FloatingWriteButton bottom={144} icon={iconPath.PENCIL_W} />

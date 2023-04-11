@@ -34,6 +34,10 @@ export function fetchRegionAuth() {
   return request.get('/member/region');
 }
 
+export function deleteRegionAuth(seq: number) {
+  return request.delete(`/member/region/${seq}`);
+}
+
 export function fetchMemberLicences() {
   return request.get('/member/licence');
 }

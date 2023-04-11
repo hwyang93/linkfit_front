@@ -5,9 +5,16 @@ import common from '@styles/common';
 
 // todo : 프롭스로 bottom 스타일 값 받아와서 적용하기
 
-const LocationButton = (props: any) => {
+type Props = {
+  bottom?: number;
+  job?: () => void;
+};
+
+const LocationButton = (props: Props) => {
   return (
-    <Pressable style={[styles.locationButton, {bottom: props.bottom}]}>
+    <Pressable
+      style={[styles.locationButton, {bottom: props.bottom}]}
+      onPress={props.job}>
       <Image style={common.size24} source={iconPath.LOCATION} />
     </Pressable>
   );

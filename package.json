@@ -12,6 +12,7 @@
   "dependencies": {
     "@baronha/react-native-multiple-image-picker": "^0.4.13",
     "@react-native-community/datetimepicker": "^7.0.0",
+    "@react-native-community/geolocation": "^3.0.6",
     "@react-navigation/bottom-tabs": "^6.4.3",
     "@react-navigation/material-top-tabs": "^6.5.3",
     "@react-navigation/native": "^6.0.16",
