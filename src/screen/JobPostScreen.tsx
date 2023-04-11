@@ -21,6 +21,7 @@ import FloatingLinkButton from '@components/FloatingLinkButton';
 import Modal from '@components/ModalSheet';
 import LinearGradient from 'react-native-linear-gradient';
 import {iconPath} from '@util/iconPath';
+import MapView, {Marker, PROVIDER_GOOGLE} from 'react-native-maps';
 
 type Props = NativeStackScreenProps<LoggedInParamList, 'JobPost'>;
 
@@ -231,10 +232,29 @@ function JobPostScreen({route, navigation}: Props) {
           </View>
 
           <View style={common.mb24}>
-            <Image
+            {/*<Image*/}
+            {/*  style={common.mapBox}*/}
+            {/*  source={require('../assets/images/map_sample.png')}*/}
+            {/*/>*/}
+            <MapView
               style={common.mapBox}
-              source={require('../assets/images/map_sample.png')}
-            />
+              provider={PROVIDER_GOOGLE}
+              initialRegion={{
+                latitude: 53.339688,
+                longitude: -6.236688
+                latitudeDelta: 0.0922,
+                longitudeDelta: 0.0421,
+              }}>
+              <Marker
+                coordinate={{
+                  latitude: 53.339688,
+                  longitude: -6.236688,
+                }}
+                pinColor="#2D63E2"
+                title="하이"
+                description="테스트"
+              />
+            </MapView>
           </View>
 
           <View>
