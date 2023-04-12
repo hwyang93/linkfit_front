@@ -91,6 +91,7 @@ const SelectBox = ({
         rowStyle={styles.dropItem}
         rowTextStyle={styles.dropText}
         onFocus={() => setFocus(true)}
+        onBlur={() => setFocus(false)}
         onChangeSearchInputText={onChangeSearchInputText}
       />
       {label && (
