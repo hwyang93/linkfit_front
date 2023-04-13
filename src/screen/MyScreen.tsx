@@ -8,7 +8,7 @@ import {
   Text,
   View,
 } from 'react-native';
-import {useSafeAreaInsets} from 'react-native-safe-area-context';
+import {SafeAreaView} from 'react-native-safe-area-context';
 import {BLUE, GRAY, WHITE} from '@styles/colors';
 import ProfileBox from '@components/ProfileBox';
 import common from '@styles/common';
@@ -62,7 +62,6 @@ const MENU = [
 function MyScreen() {
   const navigation = useNavigation<NavigationProp<LoggedInParamList>>();
   const isFocused = useIsFocused();
-  const insets = useSafeAreaInsets();
   const [myInfo, setMyInfo] = useState<any>({
     memberInfo: {
       nickname: '',
@@ -105,10 +104,8 @@ function MyScreen() {
   }, [isFocused]);
 
   return (
-    <ScrollView
-      style={{flex: 1, backgroundColor: WHITE}}
-      showsVerticalScrollIndicator={false}>
-      <View style={[styles.container, {paddingBottom: insets.bottom}]}>
+    <SafeAreaView edges={['left', 'right']} style={styles.container}>
+      <ScrollView showsVerticalScrollIndicator={false}>
         <View style={common.mb20}>
           <ProfileBox memberInfo={myInfo.memberInfo} />
         </View>
@@ -356,8 +353,8 @@ function MyScreen() {
             </View>
           </View>
         </View>
-      </View>
-    </ScrollView>
+      </ScrollView>
+    </SafeAreaView>
   );
 }
 const styles = StyleSheet.create({
