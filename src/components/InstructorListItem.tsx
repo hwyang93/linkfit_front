@@ -18,8 +18,6 @@ type ListProps = {
   };
 };
 
-// todo: 필라테스 요가에 따라 썸넹일 이미지 변경되게 세팅 해야함(참고 MyProfileScreen.tsx)
-
 function InstructorListItem({item}: ListProps) {
   const navigation = useNavigation<NavigationProp<LoggedInParamList>>();
   const [modalVisible, setModalVisible] =
@@ -81,7 +79,7 @@ function InstructorListItem({item}: ListProps) {
         <Pressable onPress={() => Alert.alert('click', 'test')}>
           <Image
             source={iconPath.FAVORITE}
-            style={[common.size24, common.mr8]}
+            style={[common.size24, common.mr4]}
           />
         </Pressable>
         <Text style={[common.text_m, common.fwb]}>{item.followerCount}</Text>
@@ -99,16 +97,7 @@ function InstructorListItem({item}: ListProps) {
                   <Pressable
                     onPress={item.job}
                     style={[common.rowCenterBetween, {width: '100%'}]}>
-                    <Text
-                      style={[
-                        common.modalText,
-                        // item.selected && {color: BLUE.DEFAULT},
-                      ]}>
-                      {item.value}
-                    </Text>
-                    {/*{item.selected && (*/}
-                    {/*  <Image source={iconPath.CHECK} style={common.size24} />*/}
-                    {/*)}*/}
+                    <Text style={[common.modalText]}>{item.value}</Text>
                   </Pressable>
                 </View>
               );

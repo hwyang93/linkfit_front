@@ -30,7 +30,7 @@ function LinkHeader({toPush, toMy}: HeaderProps) {
           alignItems: 'center',
         }}>
         <Pressable
-          style={{marginRight: 8}}
+          style={{marginRight: 16}}
           onPress={() => navigation.navigate(toPush)}>
           <Image source={iconPath.BELL} style={common.size24} />
         </Pressable>

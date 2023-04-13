@@ -232,11 +232,14 @@ const common = StyleSheet.create({
   imgBox: {width: '100%', height: 160, borderRadius: 8},
   // filter box
   filterBox: {
+    flex: 0,
     paddingHorizontal: 12,
-    paddingVertical: 6,
+    height: 28,
+    justifyContent: 'center',
+    alignItems: 'center',
     marginRight: 8,
     backgroundColor: '#fff',
-    borderRadius: 16,
+    borderRadius: 32,
     borderWidth: 1,
     borderColor: GRAY.LIGHT,
   },

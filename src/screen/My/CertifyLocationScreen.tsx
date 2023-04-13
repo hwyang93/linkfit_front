@@ -202,7 +202,7 @@ function CertifyLocationScreen() {
             <View style={styles.locationBox}>
               <View style={common.rowCenter}>
                 <Image source={iconPath.MY_PLACE} style={common.size24} />
-                <Text style={common.text_m}>
+                <Text style={[common.text_m, common.ml8]}>
                   {authInfo.region1depth} {authInfo.region2depth}{' '}
                   {authInfo.region3depth}
                 </Text>

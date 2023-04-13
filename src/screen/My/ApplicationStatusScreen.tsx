@@ -17,6 +17,7 @@ import Modal from '@components/ModalSheet';
 import {iconPath} from '@util/iconPath';
 import {fetchRecruitApplicationsMy} from '@api/recruit';
 import toast from '@hooks/toast';
+import {SafeAreaView} from 'react-native-safe-area-context';
 
 const windowWidth = Dimensions.get('window').width;
 const columns2 = (windowWidth - 48) / 2;
@@ -164,7 +165,7 @@ function ApplicationStatusScreen() {
     [FILTER, MODAL, MODAL2, modalData, selectedFilter],
   );
   return (
-    <View style={styles.container}>
+    <SafeAreaView edges={['bottom', 'left', 'right']} style={styles.container}>
       {/* 필터 영역 */}
       <TopFilter data={FILTER} />
       {/* 필터 영역 */}
@@ -270,7 +271,7 @@ function ApplicationStatusScreen() {
           }
         />
       </ScrollView>
-    </View>
+    </SafeAreaView>
   );
 }
 

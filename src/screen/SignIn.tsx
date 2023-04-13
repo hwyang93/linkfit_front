@@ -70,7 +70,8 @@ function SignIn({navigation}: SignInScreenProps) {
         }
       })
       .catch((e: {message: any}): any => {
-        console.log(e.message);
+        // console.log(e.message);
+        toast.error({message: e.message});
       });
   };
 

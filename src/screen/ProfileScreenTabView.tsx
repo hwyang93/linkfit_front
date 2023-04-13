@@ -249,7 +249,10 @@ function ProfileScreenTabView() {
                   인증강사
                 </Text>
                 <Image
-                  style={{marginLeft: 2, width: 14, height: 14}}
+                  style={[
+                    common.size24,
+                    {marginLeft: 2, width: 14, height: 14},
+                  ]}
                   source={iconPath.CERTIFICATION}
                 />
               </View>

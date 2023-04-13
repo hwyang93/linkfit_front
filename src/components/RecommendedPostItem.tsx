@@ -1,4 +1,4 @@
-import {Pressable, StyleSheet, Text, View} from 'react-native';
+import {Pressable, Text, View} from 'react-native';
 import common from '@styles/common';
 import BookmarkCounter from '@components/Counter/BookmarkCounter';
 import CommentCounter from '@components/Counter/CommentCounter';
@@ -41,7 +41,7 @@ function RecommendedPostItem({item}: listProps) {
             <BookmarkCounter counter={item.bookmarks.length} />
             <CommentCounter counter={item.comments.length} />
           </View>
-          <View style={[styles.labelBox]}>
+          <View style={[common.filterBox, common.filterBoxActive]}>
             <Text style={[common.text_m]}>{item.category}</Text>
           </View>
         </View>
@@ -49,14 +49,5 @@ function RecommendedPostItem({item}: listProps) {
     </Pressable>
   );
 }
-
-const styles = StyleSheet.create({
-  labelBox: {
-    paddingHorizontal: 12,
-    paddingVertical: 2,
-    backgroundColor: '#d7e0fd',
-    borderRadius: 16,
-  },
-});
 
 export default RecommendedPostItem;
