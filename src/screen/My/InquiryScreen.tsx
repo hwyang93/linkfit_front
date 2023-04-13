@@ -11,7 +11,6 @@ import common from '@styles/common';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {iconPath} from '@util/iconPath';
 import EmptySet from '@components/EmptySet';
-import FloatingWriteButton from '@components/FloatingWriteButton';
 import FloatingLinkButton from '@components/FloatingLinkButton';
 import {NavigationProp, useNavigation} from '@react-navigation/native';
 import {LoggedInParamList} from '../../../AppInner';
@@ -90,8 +89,8 @@ function InquiryScreen() {
       <FloatingLinkButton
         title={'문의하기'}
         type={'gradient'}
-        bottom={0}
-        right={0}
+        bottom={16}
+        right={16}
         job={toInquiry}
       />
     </SafeAreaView>

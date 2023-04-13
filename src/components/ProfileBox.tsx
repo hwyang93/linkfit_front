@@ -51,7 +51,7 @@ function ProfileBox({memberInfo}: any) {
             <Text style={[common.text, common.mr8, {alignSelf: 'flex-end'}]}>
               {memberInfo.career}
             </Text>
-            <Text style={[common.text, {color: GRAY.DARK}]}>
+            <Text style={[common.text_s, common.fcg]}>
               {memberInfo.address}
             </Text>
           </View>

@@ -388,7 +388,7 @@ const MainStack = () => {
         <Stack.Screen
           name="Blacklist"
           component={BlacklistScreen}
-          options={{title: '차단 사용 관리'}}
+          options={{title: '차단 사용자 관리'}}
         />
         <Stack.Screen
           name="Notice"

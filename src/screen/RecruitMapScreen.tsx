@@ -99,6 +99,22 @@ function RecruitMapScreen() {
     );
   }, []);
 
+  useEffect(() => {
+    Geolocation.watchPosition(
+      position => {
+        const {latitude, longitude} = position.coords;
+        setLocation({
+          latitude,
+          longitude,
+        });
+      },
+      error => {
+        console.log(error.code, error.message);
+      },
+      {enableHighAccuracy: true, distanceFilter: 10},
+    );
+  });
+
   const [FILTER, setFILTER] = useState([
     {
       key: 'position',
@@ -277,21 +293,23 @@ function RecruitMapScreen() {
         <MapView
           style={{flex: 1}}
           provider={PROVIDER_GOOGLE}
+          showsUserLocation={true}
+          // showsMyLocationButton={true}
           initialRegion={{
             latitude: location.latitude,
             longitude: location.longitude,
             latitudeDelta: 0.005,
             longitudeDelta: 0.005,
           }}>
-          <Marker
-            coordinate={{
-              latitude: location.latitude,
-              longitude: location.longitude,
-            }}
-            pinColor="#2D63E2"
-            title="하이"
-            description="테스트"
-          />
+          {/*<Marker*/}
+          {/*  coordinate={{*/}
+          {/*    latitude: location.latitude,*/}
+          {/*    longitude: location.longitude,*/}
+          {/*  }}*/}
+          {/*  pinColor="#2D63E2"*/}
+          {/*  title="하이"*/}
+          {/*  description="테스트"*/}
+          {/*/>*/}
         </MapView>
       ) : (
         <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
@@ -368,7 +386,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
   },
-  filter: {flexDirection: 'row', paddingVertical: 8, paddingHorizontal: 16},
+  // filter: {flexDirection: 'row', paddingVertical: 8, paddingHorizontal: 16},
 });
 
 export default RecruitMapScreen;
