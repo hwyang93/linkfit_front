@@ -5,12 +5,14 @@ import EncryptedStorage from 'react-native-encrypted-storage';
 import {Platform} from 'react-native';
 
 const uri =
-  Platform.OS === 'ios'
+  process.env.NODE_ENV === 'production'
+    ? 'http://linkfit-back-api.works:8000/api/v1'
+    : Platform.OS === 'ios'
     ? 'http://127.0.0.1:3000/api/v1'
     : 'http://10.0.2.2:3000/api/v1';
 const service = axios.create({
-  baseURL: 'http://172.30.1.89:3000/api/v1',
-  // baseURL: uri,
+  // baseURL: 'http://172.30.1.89:3000/api/v1',
+  baseURL: uri,
   timeout: 600000,
 });
 export const getHeaders = async (tokenType: string) => {
