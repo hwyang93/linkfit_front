@@ -307,14 +307,14 @@ const MainStack = () => {
           component={ResumePreviewScreen}
           options={{
             title: '이력서 미리보기',
-            headerRight: () => (
-              <Pressable
-                onPress={() => Alert.alert('test', '좋아용')}
-                hitSlop={10}
-                style={[common.mh4, common.size24]}>
-                <Image source={iconPath.BOOKMARK} style={common.size24} />
-              </Pressable>
-            ),
+            // headerRight: () => (
+            //   <Pressable
+            //     onPress={() => Alert.alert('test', '좋아용')}
+            //     hitSlop={10}
+            //     style={[common.mh4, common.size24]}>
+            //     <Image source={iconPath.BOOKMARK} style={common.size24} />
+            //   </Pressable>
+            // ),
           }}
         />
         {/* 지원 현황 */}

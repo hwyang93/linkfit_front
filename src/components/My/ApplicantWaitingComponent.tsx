@@ -96,7 +96,13 @@ function ApplicantWaitingComponent({list}: any) {
   );
   return (
     <>
-      <View style={{flex: 0, paddingHorizontal: 16, backgroundColor: WHITE}}>
+      <View
+        style={{
+          flex: 0,
+          paddingVertical: 8,
+          paddingHorizontal: 16,
+          backgroundColor: WHITE,
+        }}>
         <TopFilter data={FILTER} />
       </View>
       <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>

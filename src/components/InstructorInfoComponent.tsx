@@ -98,12 +98,12 @@ function InstructorInfoComponent(props: any) {
               <Text style={common.text}>3시간 전 접속</Text>
             </View>
           </View>
-          <Pressable
-            style={styles.kebabIcon}
-            hitSlop={10}
-            onPress={() => Alert.alert('text', '케밥 클릭')}>
-            <Image source={iconPath.KEBAB} style={[common.size24]} />
-          </Pressable>
+          {/*<Pressable*/}
+          {/*  style={styles.kebabIcon}*/}
+          {/*  hitSlop={10}*/}
+          {/*  onPress={() => Alert.alert('text', '케밥 클릭')}>*/}
+          {/*  <Image source={iconPath.KEBAB} style={[common.size24]} />*/}
+          {/*</Pressable>*/}
         </Pressable>
       )}
     </View>
