@@ -74,6 +74,7 @@ function MessageScreen() {
                       <Image source={iconPath.CHECK} style={common.size24} />
                     )}
                   </Pressable>
+                  <Button title={'토스트 샘플'} onPress={toastTest} />
                 </View>
               );
             })}
