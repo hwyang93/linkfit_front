@@ -22,6 +22,7 @@ import {fetchResume} from '@api/resume';
 import {fetchRecruitApplication, updateRecruitApplyStatus} from '@api/recruit';
 import {useSelector} from 'react-redux';
 import {RootState} from '@store/reducer';
+import toast from '@hooks/toast';
 
 type Props = NativeStackScreenProps<LoggedInParamList, 'ResumePreview'>;
 
@@ -47,9 +48,10 @@ function ResumePreviewScreen({route, navigation}: Props) {
           if (data.status === 'PASS') {
             setApplyResult(data.status);
           }
+          console.log(applyResult);
         })
         .catch((e: any) => {
-          Alert.alert(e.message);
+          toast.error({message: e.message});
           navigation.goBack();
         });
     }
@@ -58,7 +60,7 @@ function ResumePreviewScreen({route, navigation}: Props) {
         setResume(data);
       })
       .catch((e: any) => {
-        Alert.alert(e.message);
+        toast.error({message: e.message});
         navigation.goBack();
       });
   }, [route.params.applySeq, route.params.resumeSeq, navigation]);
@@ -67,13 +69,16 @@ function ResumePreviewScreen({route, navigation}: Props) {
     (status: string) => {
       updateRecruitApplyStatus(route.params.applySeq, {status: status})
         .then(() => {
-          Alert.alert('합격 여부 전달이 완료되었어요!');
+          setLoading(true);
+          toast.success('합격 여부 전달이 완료되었어요!');
           navigation.navigate('ApplicantStatus', {
             recruitSeq: route.params.recruitSeq,
           });
+          setLoading(false);
         })
         .catch((e: any) => {
-          Alert.alert(e.message);
+          setLoading(false);
+          toast.error({message: e.message});
         });
     },
     [navigation, route.params.applySeq],
@@ -120,15 +125,20 @@ function ResumePreviewScreen({route, navigation}: Props) {
   return (
     <SafeAreaView edges={['bottom', 'left', 'right']} style={styles.container}>
       <ScrollView showsVerticalScrollIndicator={false}>
-        {resume.isMaster === 'Y' && (
-          <View style={common.row}>
-            <View style={[styles.box, common.mb8]}>
-              <Text style={[common.text, common.fs10, {color: BLUE.DEFAULT}]}>
-                대표
-              </Text>
-            </View>
-          </View>
-        )}
+        {applyResult !== 'APPLY' && applyResult !== 'PASS' ? (
+          <>
+            {resume.isMaster === 'Y' && (
+              <View style={common.rowCenter}>
+                <View style={[styles.box, common.mb8]}>
+                  <Text
+                    style={[common.text, common.fs10, {color: BLUE.DEFAULT}]}>
+                    대표
+                  </Text>
+                </View>
+              </View>
+            )}
+          </>
+        ) : null}
 
         <View style={common.mb24}>
           <Text style={common.title_l}>{resume.title}</Text>
@@ -169,9 +179,6 @@ function ResumePreviewScreen({route, navigation}: Props) {
             서울 · 강남구 · 역삼동
           </Text>
 
-          <Pressable style={styles.kebabIcon} hitSlop={10} onPress={() => {}}>
-            <Image source={iconPath.KEBAB} style={[common.size24]} />
-          </Pressable>
           <Pressable style={styles.phoneIcon} hitSlop={10} onPress={() => {}}>
             <Image source={iconPath.PHONE} style={[common.size24]} />
           </Pressable>
@@ -254,6 +261,31 @@ function ResumePreviewScreen({route, navigation}: Props) {
           title={modalTitle}
           modalData={modalData}
           type={'button'}
+          content={
+            <View>
+              {MODAL.map((item, index) => {
+                return (
+                  <View
+                    key={index}
+                    style={[common.modalItemBox, {paddingVertical: 8}]}>
+                    <Pressable onPress={item.job} style={{flex: 1}}>
+                      <LinearGradient
+                        style={[common.button]}
+                        start={{x: 0.1, y: 0.5}}
+                        end={{x: 0.6, y: 1}}
+                        colors={['#74ebe4', '#3962f3']}>
+                        {loading ? (
+                          <ActivityIndicator color="white" />
+                        ) : (
+                          <Text style={common.buttonText}>{item.value}</Text>
+                        )}
+                      </LinearGradient>
+                    </Pressable>
+                  </View>
+                );
+              })}
+            </View>
+          }
         />
       </ScrollView>
     </SafeAreaView>

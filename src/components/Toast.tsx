@@ -147,7 +147,7 @@ const styles = StyleSheet.create({
     bottom: '4%',
     left: '4%',
     right: '4%',
-    zIndex: 1,
+    zIndex: 1000,
     paddingVertical: 10,
     paddingHorizontal: 16,
     elevation: 1,

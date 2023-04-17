@@ -1,4 +1,4 @@
-import {useCallback, useEffect, useRef, useState} from 'react';
+import {useEffect, useRef, useState} from 'react';
 import {
   View,
   StyleSheet,
@@ -8,14 +8,9 @@ import {
   TouchableWithoutFeedback,
   Dimensions,
   PanResponder,
-  Pressable,
-  ActivityIndicator,
-  Image,
 } from 'react-native';
-import {BLACK, BLUE, GRAY} from '@styles/colors';
+import {BLACK, GRAY} from '@styles/colors';
 import common, {width} from '@styles/common';
-import LinearGradient from 'react-native-linear-gradient';
-import {iconPath} from '@util/iconPath';
 
 type modalProps = {
   title?: string;
@@ -80,23 +75,6 @@ function ModalSheetSample(props: modalProps) {
     }
   }, [props.modalData, props.modalVisible, props.type, resetBottomSheet]);
 
-  // const onClickItem = useCallback(
-  //   (item: any) => {
-  //     const newData = modalData.map(modalItem => {
-  //       if (modalItem.value === item.value) {
-  //         modalItem.selected = !modalItem.selected;
-  //         return item;
-  //       } else {
-  //         modalItem.selected = false;
-  //         return modalItem;
-  //       }
-  //     });
-  //     props.onSelect(newData);
-  //     setModalData(newData);
-  //   },
-  //   [modalData, props],
-  // );
-
   const closeModal = () => {
     closeBottomSheet.start(() => {
       setModalVisible(false);
@@ -129,8 +107,8 @@ function ModalSheetSample(props: modalProps) {
             <Text
               style={[
                 styles.modalTitle,
-                modalType === 'button' && {marginBottom: 16},
-                modalType === 'select' && {marginBottom: 16},
+                props.type === 'button' && {marginBottom: 16},
+                props.type === 'select' && {marginBottom: 16},
               ]}>
               {props.title}
             </Text>
@@ -175,7 +153,6 @@ const styles = StyleSheet.create({
     textAlign: 'left',
     lineHeight: +width * 24,
   },
-
   modalTitle: {
     color: BLACK,
     fontSize: +width * 16,
