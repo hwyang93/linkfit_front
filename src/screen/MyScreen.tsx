@@ -132,7 +132,7 @@ function MyScreen() {
         </View>
 
         {/* 이력서 박스 */}
-        {myInfo.masterResume.seq && (
+        {myInfo.masterResume.seq ? (
           <View style={common.mb24}>
             <View style={common.basicBox}>
               <View style={[common.resumeBadge]}>
@@ -157,6 +157,8 @@ function MyScreen() {
               </Pressable>
             </View>
           </View>
+        ) : (
+          <View style={{marginBottom: 16}} />
         )}
         {/* 이력서 박스 */}
 
