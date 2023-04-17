@@ -6,7 +6,7 @@ import {Platform} from 'react-native';
 
 const uri =
   process.env.NODE_ENV === 'production'
-    ? 'http://linkfit-back-api.works:8000/api/v1'
+    ? 'http://linkfit-back-api.works/api/v1'
     : Platform.OS === 'ios'
     ? 'http://127.0.0.1:3000/api/v1'
     : 'http://10.0.2.2:3000/api/v1';
