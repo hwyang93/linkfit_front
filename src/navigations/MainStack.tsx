@@ -338,7 +338,7 @@ const MainStack = () => {
         <Stack.Screen
           name="MyPost"
           component={MyRecruitmentScreen}
-          options={{title: '작성 공고'}}
+          options={{title: '공고 현황'}}
         />
         <Stack.Screen
           name="ApplicantStatus"
