@@ -7,6 +7,7 @@ import {
   Text,
   View,
   ActivityIndicator,
+  Dimensions,
 } from 'react-native';
 import {iconPath} from '@util/iconPath';
 import LocationButton from '@components/LocationButton';
@@ -110,6 +111,7 @@ function RecruitMapScreen() {
           latitude,
           longitude,
         });
+        console.log(position);
       },
       error => {
         console.log(error.code, error.message);
@@ -206,6 +208,26 @@ function RecruitMapScreen() {
       selected: false,
     },
   ]);
+  const MARKER = [
+    {
+      type: 'yoga',
+      icon: require('@images/icon/marker_yoga.png'),
+      latitude: 37.503079,
+      longitude: 127.03428053825826,
+    },
+    {
+      type: 'pilates',
+      icon: require('@images/icon/marker_pilates.png'),
+      latitude: 37.50079,
+      longitude: 127.035,
+    },
+    {
+      type: 'pilates',
+      icon: require('@images/icon/marker_pilates.png'),
+      latitude: 37.50579,
+      longitude: 127.035,
+    },
+  ];
 
   const openModal = () => {
     setModalVisible(true);
@@ -305,18 +327,24 @@ function RecruitMapScreen() {
           initialRegion={{
             latitude: location.latitude,
             longitude: location.longitude,
-            latitudeDelta: 0.005,
-            longitudeDelta: 0.005,
+            latitudeDelta: 0.0043,
+            longitudeDelta: 0.0043,
           }}>
-          {/*<Marker*/}
-          {/*  coordinate={{*/}
-          {/*    latitude: location.latitude,*/}
-          {/*    longitude: location.longitude,*/}
-          {/*  }}*/}
-          {/*  pinColor="#2D63E2"*/}
-          {/*  title="하이"*/}
-          {/*  description="테스트"*/}
-          {/*/>*/}
+          {MARKER.map((item, index) => {
+            return (
+              <Marker
+                key={index}
+                coordinate={{
+                  latitude: item.latitude,
+                  longitude: item.longitude,
+                }}
+                pinColor="#2D63E2"
+                title="하이"
+                description="테스트">
+                <Image source={item.icon} style={{width: 48, height: 48}} />
+              </Marker>
+            );
+          })}
         </MapView>
       ) : (
         <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
