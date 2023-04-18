@@ -22,6 +22,8 @@ import {BLUE} from '@styles/colors';
 import LinearGradient from 'react-native-linear-gradient';
 import MapView, {Marker, PROVIDER_GOOGLE} from 'react-native-maps';
 import toast from '@hooks/toast';
+import {NavigationProp, useNavigation} from '@react-navigation/native';
+import {LoggedInParamList} from '../../AppInner';
 // import Geolocation from '@react-native-community/geolocation';
 
 interface ILocation {
@@ -47,6 +49,7 @@ async function requestPermission() {
 }
 
 function RecruitMapScreen() {
+  const navigation = useNavigation<NavigationProp<LoggedInParamList>>();
   const [modalVisible, setModalVisible] =
     useState<SetStateAction<boolean>>(false);
   const [modalTitle, setModalTitle] = useState('');
@@ -282,6 +285,10 @@ function RecruitMapScreen() {
     [FILTER, MODAL, MODAL2, MODAL3, modalData, selectedFilter],
   );
 
+  const toJobOfferForm = () => {
+    navigation.navigate('JobOfferForm');
+  };
+
   return (
     <SafeAreaView edges={['left', 'right']} style={styles.container}>
       <View style={{paddingHorizontal: 16}}>
@@ -318,7 +325,11 @@ function RecruitMapScreen() {
       )}
 
       {/* Floating Button */}
-      <FloatingWriteButton bottom={144} icon={iconPath.PENCIL_W} />
+      <FloatingWriteButton
+        bottom={144}
+        icon={iconPath.PENCIL_W}
+        job={toJobOfferForm}
+      />
       {/* 현재 위치로 이동 버튼 */}
       <LocationButton bottom={88} job={geoLocation} />
       {/* 페이지 이동 버튼 */}
