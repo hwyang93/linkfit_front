@@ -97,7 +97,11 @@ function ResumeManageScreen() {
               {resume.isMaster === 'Y' && (
                 <View style={common.resumeBadge}>
                   <Text
-                    style={[common.text, common.fs10, {color: BLUE.DEFAULT}]}>
+                    style={[
+                      common.text,
+                      common.fs10,
+                      {color: BLUE.DEFAULT, textAlign: 'center'},
+                    ]}>
                     대표
                   </Text>
                 </View>

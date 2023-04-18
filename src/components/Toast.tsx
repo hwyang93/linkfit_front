@@ -136,7 +136,9 @@ const Toast = () => {
           />
           <Text style={[styles.text, common.text_m]}>{message}</Text>
         </View>
-        <Image source={iconPath.TOAST_CLOSE} style={common.size24} />
+        {Platform.OS === 'ios' && (
+          <Image source={iconPath.TOAST_CLOSE} style={common.size24} />
+        )}
       </TouchableOpacity>
     </Animated.View>
   );

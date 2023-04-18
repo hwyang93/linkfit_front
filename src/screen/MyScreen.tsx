@@ -134,7 +134,13 @@ function MyScreen() {
         {/* 이력서 박스 */}
         {myInfo.masterResume.seq ? (
           <View style={common.mb24}>
-            <View style={common.basicBox}>
+            <Pressable
+              style={common.basicBox}
+              onPress={() =>
+                navigation.navigate('ResumePreview', {
+                  resumeSeq: myInfo.masterResume.seq,
+                })
+              }>
               <View style={[common.resumeBadge]}>
                 <Text
                   style={[
@@ -149,13 +155,7 @@ function MyScreen() {
               <Text style={[common.text_s, {color: GRAY.DARK}]}>
                 {myInfo.masterResume.updatedAt}
               </Text>
-              <Pressable
-                style={styles.kebabIcon}
-                hitSlop={10}
-                onPress={() => Alert.alert('click', 'test')}>
-                <Image source={iconPath.KEBAB} style={[common.size24]} />
-              </Pressable>
-            </View>
+            </Pressable>
           </View>
         ) : (
           <View style={{marginBottom: 16}} />
