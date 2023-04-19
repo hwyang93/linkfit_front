@@ -12,13 +12,14 @@ import DismissKeyboardView from '@components/DismissKeyboardView';
 import {iconPath} from '@util/iconPath';
 import common from '@styles/common';
 import Input, {KeyboardTypes} from '@components/Input';
-import {Key, useState} from 'react';
+import {Key, useCallback, useState} from 'react';
 import SelectBox from '@components/SelectBox';
 import LinearGradient from 'react-native-linear-gradient';
 import MultipleImagePicker, {
   MediaType,
 } from '@baronha/react-native-multiple-image-picker';
 import TimeComponent from '@components/Offer/TimeComponent';
+import toast from '@hooks/toast';
 
 const POSITION = ['실장', '필라테스', '요가'];
 const EDUCATION = ['학력 무관', '고졸 이상', '대졸 이상'];
@@ -91,6 +92,36 @@ function JobOfferFormScreen() {
     updatedDay[index].selected = !updatedDay[index].selected;
     setDAY(updatedDay);
   };
+
+  const onCreateRecruit = useCallback(() => {
+    // toast.error({message: e.message});
+    const data = {
+      title: offerTitle,
+      companyName: 'string',
+      position: position,
+      address: 'string',
+      addressDetail: 'string',
+      district: 'string',
+      phone: 'string',
+      recruitType: 'string',
+      career: career,
+      education: education,
+      payType: payType,
+      pay: pay,
+      classType: 'string',
+      content: content,
+      lon: 0,
+      lat: 0,
+      dates: [
+        {
+          day: 'string',
+          time: 'string',
+        },
+      ],
+    };
+    console.log(data);
+    toast.error({message: '클릭이다'});
+  }, [career, content, education, offerTitle, pay, payType, position]);
 
   return (
     <DismissKeyboardView>
@@ -272,7 +303,7 @@ function JobOfferFormScreen() {
 
         {/* 채용 공고 등록 버튼 */}
         <View style={common.mt40}>
-          <Pressable onPress={() => {}}>
+          <Pressable onPress={onCreateRecruit}>
             <LinearGradient
               style={common.button}
               start={{x: 0.1, y: 0.5}}
