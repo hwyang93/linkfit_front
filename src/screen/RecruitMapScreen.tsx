@@ -7,7 +7,7 @@ import {
   Text,
   View,
   ActivityIndicator,
-  Dimensions,
+  Alert,
 } from 'react-native';
 import {iconPath} from '@util/iconPath';
 import LocationButton from '@components/LocationButton';
@@ -32,51 +32,44 @@ interface ILocation {
   longitude: number;
 }
 
-async function requestPermission() {
-  try {
-    // IOS 위치 정보 수집 권한 요청
-    if (Platform.OS === 'ios') {
-      return await Geolocation.requestAuthorization('always');
-    }
-    // 안드로이드 위치 정보 수집 권한 요청
-    if (Platform.OS === 'android') {
-      return await PermissionsAndroid.request(
-        PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
-      );
-    }
-  } catch (e: any) {
-    toast.error({message: e.message});
-  }
-}
+// async function requestPermission() {
+//   try {
+//     // IOS 위치 정보 수집 권한 요청
+//     if (Platform.OS === 'ios') {
+//       return await Geolocation.requestAuthorization('always');
+//     }
+//     // 안드로이드 위치 정보 수집 권한 요청
+//     if (Platform.OS === 'android') {
+//       return await PermissionsAndroid.request(
+//         PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
+//       );
+//     }
+//   } catch (e: any) {
+//     toast.error({message: e.message});
+//   }
+// }
 
 function RecruitMapScreen() {
   const navigation = useNavigation<NavigationProp<LoggedInParamList>>();
+  const [location, setLocation] = useState<ILocation | undefined>(undefined);
   const [modalVisible, setModalVisible] =
     useState<SetStateAction<boolean>>(false);
+  const [modalVisible2, setModalVisible2] =
+    useState<SetStateAction<boolean>>(false);
   const [modalTitle, setModalTitle] = useState('');
+  const [modalTitle2, setModalTitle2] = useState('');
   const [modalData, setModalData] = useState<any[]>([]);
   const [selectedFilter, setSelectedFilter] = useState('');
 
-  // const P0 = {latitude: 37.564362, longitude: 126.977011};
-  // const P1 = {latitude: 37.565051, longitude: 126.978567};
-
-  // const [latitude, setLatitude] = useState<string>('');
-  // const [longitude, setLongitude] = useState<string>('');
-  //
   const geoLocation = () => {
     Geolocation.getCurrentPosition(
       position => {
-        // const latitude = JSON.stringify(position.coords.latitude);
-        // const longitude = JSON.stringify(position.coords.longitude);
-
         const {latitude, longitude} = position.coords;
         setLocation({
           latitude,
           longitude,
         });
-        // setLatitude(latitude);
-        // setLongitude(longitude);
-        // console.log(latitude, longitude);
+        console.log(latitude, longitude);
       },
       error => {
         console.log(error.code, error.message);
@@ -84,8 +77,6 @@ function RecruitMapScreen() {
       {enableHighAccuracy: true, timeout: 15000, maximumAge: 10000},
     );
   };
-
-  const [location, setLocation] = useState<ILocation | undefined>(undefined);
 
   useEffect(() => {
     Geolocation.getCurrentPosition(
@@ -95,6 +86,7 @@ function RecruitMapScreen() {
           latitude,
           longitude,
         });
+        // console.log(position);
       },
       error => {
         console.log(error.code, error.message);
@@ -232,6 +224,9 @@ function RecruitMapScreen() {
   const openModal = () => {
     setModalVisible(true);
   };
+  const openModal2 = () => {
+    setModalVisible2(true);
+  };
 
   const onSelectFilter = useCallback(
     (selectItem: any) => {
@@ -323,6 +318,7 @@ function RecruitMapScreen() {
           style={{flex: 1}}
           provider={PROVIDER_GOOGLE}
           showsUserLocation={true}
+          loadingEnabled={true}
           // showsMyLocationButton={true}
           initialRegion={{
             latitude: location.latitude,
@@ -338,9 +334,7 @@ function RecruitMapScreen() {
                   latitude: item.latitude,
                   longitude: item.longitude,
                 }}
-                pinColor="#2D63E2"
-                title="하이"
-                description="테스트">
+                onPress={openModal2}>
                 <Image source={item.icon} style={{width: 48, height: 48}} />
               </Marker>
             );
@@ -414,6 +408,17 @@ function RecruitMapScreen() {
                 </LinearGradient>
               </Pressable>
             </View>
+          </View>
+        }
+      />
+      <Modal
+        modalVisible={modalVisible2}
+        setModalVisible={setModalVisible2}
+        title={'센터'}
+        type={'tab'}
+        content={
+          <View style={{width: '100%', backgroundColor: 'red'}}>
+            <Text>test</Text>
           </View>
         }
       />

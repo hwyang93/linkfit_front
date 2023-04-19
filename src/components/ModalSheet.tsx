@@ -28,11 +28,7 @@ type modalProps = {
 };
 
 function ModalSheetSample(props: modalProps) {
-  const [loading, setLoading] = useState<boolean>(false);
-  const [modalType, setModalType] = useState<any>();
-  const [modalData, setModalData] = useState<any[]>([]);
   const {modalVisible, setModalVisible} = props;
-  const [selected, setSelected] = useState();
   const screenHeight = Dimensions.get('screen').height;
   const panY = useRef(new Animated.Value(screenHeight)).current;
   const translateY = panY.interpolate({
@@ -109,6 +105,7 @@ function ModalSheetSample(props: modalProps) {
                 styles.modalTitle,
                 props.type === 'button' && {marginBottom: 16},
                 props.type === 'select' && {marginBottom: 16},
+                props.type === 'tab' && {marginBottom: 16},
               ]}>
               {props.title}
             </Text>

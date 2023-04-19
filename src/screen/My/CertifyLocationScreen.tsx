@@ -179,9 +179,10 @@ function CertifyLocationScreen() {
             initialRegion={{
               latitude: P0.latitude,
               longitude: P0.longitude,
-              latitudeDelta: 0.0922,
-              longitudeDelta: 0.0421,
-            }}>
+              latitudeDelta: 0.002,
+              longitudeDelta: 0.002,
+            }}
+            loadingEnabled={true}>
             <Marker
               coordinate={{
                 latitude: P0.latitude,
