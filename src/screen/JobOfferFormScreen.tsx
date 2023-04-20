@@ -1,5 +1,6 @@
 import {
   ActivityIndicator,
+  Alert,
   Dimensions,
   Image,
   Pressable,
@@ -20,6 +21,9 @@ import MultipleImagePicker, {
 } from '@baronha/react-native-multiple-image-picker';
 import TimeComponent from '@components/Offer/TimeComponent';
 import toast from '@hooks/toast';
+import {createRecruit} from '@api/recruit';
+import {NativeStackScreenProps} from '@react-navigation/native-stack';
+import {LoggedInParamList} from '../../AppInner';
 
 const POSITION = ['실장', '필라테스', '요가'];
 const EDUCATION = ['학력 무관', '고졸 이상', '대졸 이상'];
@@ -33,8 +37,8 @@ const RECRUIT_TYPE = ['전임', '파트', '대강'];
 
 const windowWidth = Dimensions.get('window').width;
 const columns7 = (windowWidth - 32) / 7;
-
-function JobOfferFormScreen() {
+type Props = NativeStackScreenProps<LoggedInParamList>;
+function JobOfferFormScreen({navigation}: Props) {
   const [loading, setLoading] = useState<boolean>(false);
   const [offerTitle, setOfferTitle] = useState('');
   const [position, setPosition] = useState('');
@@ -47,7 +51,7 @@ function JobOfferFormScreen() {
   const [recruitType, setRecruitType] = useState(''); // 채용 형태
   const [day, setDay] = useState(''); // 요일
   const [date, setDate] = useState('');
-  const [dateForm, setDateForm] = useState<any>([]);
+  const [dateForm, setDateForm] = useState<any[]>([{}]);
 
   const [DAY, setDAY] = useState([
     {value: '월', selected: false},
@@ -84,13 +88,33 @@ function JobOfferFormScreen() {
 
   const addTimetable = () => {
     setDateForm([...dateForm, {}]);
-    console.log(dateForm.length);
   };
 
   const handleDaySelection = (index: any) => {
     const updatedDay = [...DAY];
     updatedDay[index].selected = !updatedDay[index].selected;
     setDAY(updatedDay);
+    let dayList: string = '';
+    updatedDay.map(item => {
+      if (item.selected) {
+        return (dayList += item.value + ', ');
+      }
+    });
+    const newDate = dateForm;
+    newDate[0].day = dayList.substring(0, dayList.length - 2);
+    setDateForm(newDate);
+    setDay(dayList.substring(0, dayList.length - 2));
+  };
+
+  const handleTimeSelection = (time: string) => {
+    const newDate = dateForm;
+    newDate[0].time = time;
+    setDateForm(newDate);
+  };
+  const handleAddDates = (value: string, type: string, index: number) => {
+    const newDates = dateForm;
+    newDates[index][type] = value;
+    setDateForm(newDates);
   };
 
   const onCreateRecruit = useCallback(() => {
@@ -103,7 +127,7 @@ function JobOfferFormScreen() {
       addressDetail: 'string',
       district: 'string',
       phone: 'string',
-      recruitType: 'string',
+      recruitType: recruitType,
       career: career,
       education: education,
       payType: payType,
@@ -112,16 +136,28 @@ function JobOfferFormScreen() {
       content: content,
       lon: 0,
       lat: 0,
-      dates: [
-        {
-          day: 'string',
-          time: 'string',
-        },
-      ],
+      dates: dateForm,
     };
     console.log(data);
-    toast.error({message: '클릭이다'});
-  }, [career, content, education, offerTitle, pay, payType, position]);
+    createRecruit(data)
+      .then(() => {
+        Alert.alert('채용 공고 등록이 완료되었어요!');
+        navigation.pop();
+      })
+      .catch((e: {message: any}) => {
+        toast.error({message: e.message});
+      });
+  }, [
+    career,
+    content,
+    dateForm,
+    education,
+    offerTitle,
+    pay,
+    payType,
+    position,
+    recruitType,
+  ]);
 
   return (
     <DismissKeyboardView>
@@ -191,7 +227,7 @@ function JobOfferFormScreen() {
             <SelectBox
               label={'시간'}
               data={TIME}
-              onSelect={(value: any) => setTime(value)}
+              onSelect={(value: any) => setDateForm([{day: '', time: value}])}
               defaultButtonText={'시간을 선택하세요.'}
             />
           </View>
@@ -232,26 +268,30 @@ function JobOfferFormScreen() {
                   <SelectBox
                     label={'시간'}
                     data={TIME2}
-                    onSelect={(value: any) => setTime(value)}
+                    onSelect={(value: any) => handleTimeSelection(value)}
                     defaultButtonText={'선택한 요일의 시간을 선택하세요.'}
                   />
                 </View>
               </>
             ) : (
               <>
-                <View>
-                  <TimeComponent />
-                </View>
-                {dateForm.map((item: any, index: Key | null | undefined) => {
+                {dateForm.map((item: any, index: number) => {
                   return (
-                    <View key={index}>
-                      <TimeComponent />
+                    <View key={'dateFrom' + index}>
+                      <TimeComponent
+                        onSelectDay={(value: string) =>
+                          handleAddDates(value, 'day', index)
+                        }
+                        onSelectTime={(value: string) =>
+                          handleAddDates(value, 'time', index)
+                        }
+                      />
                     </View>
                   );
                 })}
 
                 {/* 추가 버튼 */}
-                {dateForm.length < 2 ? (
+                {dateForm.length < 3 ? (
                   <View style={common.mb16}>
                     <Pressable
                       style={{alignSelf: 'center'}}
