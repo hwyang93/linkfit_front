@@ -13,7 +13,9 @@ function ProfileBox({memberInfo}: any) {
     <View>
       <Pressable
         style={styles.profileBox}
-        onPress={() => navigation.navigate('CenterProfile')}>
+        onPress={() =>
+          navigation.navigate('CenterProfile', {memberSeq: memberInfo.seq})
+        }>
         <View>
           <View style={common.rowCenter}>
             <Text style={[common.text_l, common.fwb, common.mr8]}>

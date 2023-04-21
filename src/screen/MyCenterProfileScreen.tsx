@@ -9,96 +9,58 @@ import {
 import {Tabs, MaterialTabBar} from 'react-native-collapsible-tab-view';
 import {BLUE, GRAY, WHITE} from '@styles/colors';
 import common from '@styles/common';
-import {iconPath} from '@util/iconPath';
-import {NavigationProp, useNavigation} from '@react-navigation/native';
+import {
+  NavigationProp,
+  RouteProp,
+  useNavigation,
+  useRoute,
+} from '@react-navigation/native';
 import {LoggedInParamList} from '../../AppInner';
-import {useCallback, useState} from 'react';
+import {useCallback, useEffect, useState} from 'react';
+import CenterInfoTop from '@components/CenterInfoTop';
+import toast from '@hooks/toast';
+import {fetchCompany} from '@api/company';
+import EmptySet from '@components/EmptySet';
 
 // const HEADER_HEIGHT = 250;
 
 const width = Dimensions.get('window').width - 32;
 const tabWidth = width / 2;
 const imageSize = (width - 6) / 3;
-
+type headerProps = {
+  centerInfo: any;
+  recruits: any[];
+};
 // 센터 프로필 상단 영역 시작
-function Header() {
-  const navigation = useNavigation<NavigationProp<LoggedInParamList>>();
+function Header({centerInfo, recruits}: headerProps) {
   return (
-    <View>
-      <View style={common.mb16}>
-        <Image
-          source={require('../assets/images/center_01.png')}
-          resizeMode={'cover'}
-          style={common.imgBox}
-        />
-      </View>
-      <View style={[common.rowBetween, common.mb8]}>
-        <View style={common.rowCenter}>
-          <Text style={[common.title_l, common.mr8]}>링크 필라테스</Text>
-          <Image
-            source={iconPath.FAVORITE_FILL}
-            style={[common.size24, common.mr4]}
-          />
-          <Text style={[common.text_m, common.fwb]}>23</Text>
-        </View>
-        <Pressable
-          style={styles.pencil}
-          onPress={() => navigation.navigate('CenterProfileEdit')}>
-          <Image source={iconPath.PENCIL_B} style={[common.size24]} />
-        </Pressable>
-      </View>
-      <View style={[common.rowCenter, common.mb16]}>
-        <Text style={[common.text_m, common.fwb]}>필라테스</Text>
-        <Text style={[common.mh8, common.fcg]}>|</Text>
-        <Text style={[common.text_s, {color: GRAY.DARK}]}>서울 · 송파구</Text>
-      </View>
-      <View style={common.mb16}>
-        <Text style={[common.text_m, common.fwb]}>소개글</Text>
-        <Text style={common.text_m}>
-          강남구 역삼동에 위치한 필라테스 센터입니다. 근처에서 젤 좋아요.
-          진짜진짜 진짜루.
-        </Text>
-      </View>
-    </View>
+    <CenterInfoTop centerInfo={centerInfo} recruits={recruits} fromMy={true} />
   );
 }
 // 센터 프로필 상단 영역 끝
 
-function MyCenterProfileScreen() {
+function CenterInfoScreen() {
+  const route = useRoute<RouteProp<LoggedInParamList, 'CenterInfo'>>();
   const navigation = useNavigation<NavigationProp<LoggedInParamList>>();
+  const [centerInfo, setCenterInfo] = useState<any>({});
+  const [recruits, setRecruits] = useState<any[]>([]);
+  const [reputations, setReputations] = useState<any[]>([]);
 
-  const tab1Data = [
-    {src: require('@images/center_01.png')},
-    {src: require('@images/center_02.png')},
-    {src: require('@images/center_03.png')},
-    {src: require('@images/center_04.png')},
-    {src: require('@images/center_05.png')},
-  ];
-  const tab2Data = [
-    {
-      id: 1,
-      nickname: '저팔계',
-      type: '강사',
-      date: '2022.12.12',
-      review:
-        '후기 내용 입니다. 저팔계지만 유연해요. 깜짝 놀랐어요. 오늘 점심은 뭐 먹을까요. 매일매일 고민해요. 왜 때문이죠.',
-    },
-    {
-      id: 2,
-      nickname: '소다늠',
-      type: '강사',
-      date: '2023.1.12',
-      review: '젓가락이지만 유연해요. 깜짝 놀랐어요.',
-    },
-  ];
+  const getCenterInfo = useCallback(() => {
+    fetchCompany(route.params.memberSeq)
+      .then(({data}: any) => {
+        setCenterInfo(data.companyInfo);
+        setRecruits(data.recruits);
+        setReputations(data.reputations);
+      })
+      .catch((e: any) => {
+        toast.error({message: e.message});
+      });
+  }, [route.params.memberSeq]);
 
-  const IntroduceTabHeader = () => {
-    return (
-      <View style={common.mb8}>
-        <Text style={[common.text_m, common.fwb]}>센터 사진</Text>
-      </View>
-    );
-  };
+  useEffect(() => {
+    getCenterInfo();
+  }, [getCenterInfo]);
 
   // 탭 바 영역
   const tabBar = (props: any) => (
@@ -111,11 +73,37 @@ function MyCenterProfileScreen() {
       itemStyle={{width: tabWidth}}
       labelStyle={common.text_m}
       contentContainerStyle={{
-        // flex: 1,
+        flex: 1,
         width: width,
       }}
     />
   );
+
+  const IntroduceTabHeader = () => {
+    return (
+      <View style={common.mb8}>
+        <Text style={[common.text_m, common.fwb]}>센터 사진</Text>
+      </View>
+    );
+  };
+  const IntroduceTabFooter = () => {
+    return (
+      <View style={common.mt16}>
+        <Text style={[common.text_m, common.fwb]}>센터 주소</Text>
+        <Text style={common.text_m}>
+          {`${centerInfo.address} ${centerInfo.addressDetail}`}
+        </Text>
+      </View>
+    );
+  };
+
+  const tab1Data = [
+    {src: require('@images/center_01.png')},
+    {src: require('@images/center_02.png')},
+    {src: require('@images/center_03.png')},
+    {src: require('@images/center_04.png')},
+    {src: require('@images/center_05.png')},
+  ];
 
   type imageProps = {
     item: any;
@@ -155,7 +143,7 @@ function MyCenterProfileScreen() {
   const [textLine, setTextLine] = useState(2);
 
   const ReviewTab = useCallback(
-    ({item}: reviewProps) => {
+    ({item}: any) => {
       const textExpansion = () => {
         if (textLine === 2) {
           setTextLine(0);
@@ -164,32 +152,42 @@ function MyCenterProfileScreen() {
         }
       };
       return (
-        <View
-          style={{
-            width: width,
-            // padding: 16,
-          }}>
-          <View style={[common.row, common.mb8]}>
-            <Text style={[common.text_m, common.fwb, common.fs18]}>
-              {item.nickname}
-            </Text>
-            <Text
-              style={[
-                common.text,
-                {alignSelf: 'flex-end', marginHorizontal: 4},
-              ]}>
-              {item.type}
-            </Text>
-            <Text style={[common.text, {alignSelf: 'flex-end'}]}>
-              {item.date}
-            </Text>
-          </View>
-          <Pressable onPress={textExpansion}>
-            <Text style={common.text_m} numberOfLines={textLine}>
-              {item.review}
-            </Text>
-          </Pressable>
-        </View>
+        <>
+          {reputations.length < 1 ? (
+            <View style={{flex: 1}}>
+              <EmptySet text={'등록된 후기가 없어요.'} />
+            </View>
+          ) : (
+            <View
+              style={{
+                width: width,
+                // padding: 16,
+              }}>
+              <View style={[common.row, common.mb8]}>
+                <Text style={[common.text_m, common.fwb, common.fs18]}>
+                  {item.evaluationMember?.nickname
+                    ? item.evaluationMember?.nickname
+                    : item.evaluationMember?.name}
+                </Text>
+                <Text
+                  style={[
+                    common.text,
+                    {alignSelf: 'flex-end', marginHorizontal: 4},
+                  ]}>
+                  {item.evaluationMember?.field}
+                </Text>
+                <Text style={[common.text, {alignSelf: 'flex-end'}]}>
+                  {item.updatedAt}
+                </Text>
+              </View>
+              <Pressable onPress={textExpansion}>
+                <Text style={common.text_m} numberOfLines={textLine}>
+                  {item.comment}
+                </Text>
+              </Pressable>
+            </View>
+          )}
+        </>
       );
     },
     [textLine],
@@ -197,7 +195,11 @@ function MyCenterProfileScreen() {
 
   return (
     <Tabs.Container
-      renderHeader={Header}
+      renderHeader={() => (
+        <Header centerInfo={centerInfo} recruits={recruits} />
+      )}
+      allowHeaderOverscroll
+      revealHeaderOnScroll
       headerContainerStyle={{
         paddingTop: 16,
         paddingHorizontal: 16,
@@ -210,7 +212,8 @@ function MyCenterProfileScreen() {
         <View style={{padding: 16}}>
           <Tabs.FlatList
             data={tab1Data}
-            ListHeaderComponent={IntroduceTabHeader}
+            ListHeaderComponent={() => <IntroduceTabHeader />}
+            ListFooterComponent={() => <IntroduceTabFooter />}
             renderItem={IntroduceTab}
             numColumns={3}
             keyExtractor={(item: any) => item.id}
@@ -220,7 +223,7 @@ function MyCenterProfileScreen() {
       <Tabs.Tab name="후기 관리">
         <View style={{padding: 16}}>
           <Tabs.FlatList
-            data={tab2Data}
+            data={reputations}
             ListHeaderComponent={<View style={{paddingBottom: 16}} />}
             ItemSeparatorComponent={() => {
               return (
@@ -228,7 +231,7 @@ function MyCenterProfileScreen() {
               );
             }}
             renderItem={ReviewTab}
-            keyExtractor={(item: any) => item.id}
+            keyExtractor={(item: any) => item.seq}
           />
         </View>
       </Tabs.Tab>
@@ -249,4 +252,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default MyCenterProfileScreen;
+export default CenterInfoScreen;

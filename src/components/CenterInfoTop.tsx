@@ -1,15 +1,19 @@
-import {Image, Text, View} from 'react-native';
+import {Image, Pressable, StyleSheet, Text, View} from 'react-native';
 import common from '@styles/common';
 import {iconPath} from '@util/iconPath';
 import {GRAY} from '@styles/colors';
 // import LinkCollection from '@components/LinkCollection';
 import OfferListItem from '@components/OfferListItem';
+import {NavigationProp, useNavigation} from '@react-navigation/native';
+import {LoggedInParamList} from '../../AppInner';
 
 type Props = {
-  centerInfo: any;
-  recruits: any[];
+  centerInfo?: any;
+  recruits?: any[];
+  fromMy?: boolean;
 };
-function CenterInfoTop({centerInfo, recruits}: Props) {
+function CenterInfoTop({centerInfo, recruits, fromMy}: Props) {
+  const navigation = useNavigation<NavigationProp<LoggedInParamList>>();
   return (
     <View>
       <View style={common.mb16}>
@@ -27,6 +31,13 @@ function CenterInfoTop({centerInfo, recruits}: Props) {
           <Image source={iconPath.FAVORITE} style={common.size24} />
           <Text style={[common.text_m, common.fwb]}>23</Text>
         </View>
+        {fromMy ? (
+          <Pressable
+            style={styles.pencil}
+            onPress={() => navigation.navigate('CenterProfileEdit')}>
+            <Image source={iconPath.PENCIL_B} style={[common.size24]} />
+          </Pressable>
+        ) : null}
       </View>
       <View style={[common.rowCenter, common.mb16]}>
         <Text style={[common.text_m, common.fwb]}>{centerInfo.field}</Text>
@@ -52,5 +63,9 @@ function CenterInfoTop({centerInfo, recruits}: Props) {
     </View>
   );
 }
+
+const styles = StyleSheet.create({
+  pencil: {position: 'absolute', top: 0, right: 0},
+});
 
 export default CenterInfoTop;

@@ -127,7 +127,7 @@ const styles = StyleSheet.create({
   multiline: {
     height: 276,
     textAlignVertical: 'top',
-    paddingVertical: 16,
+    paddingTop: 16,
   },
   comment: {
     height: 40,
