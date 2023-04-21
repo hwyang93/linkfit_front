@@ -25,6 +25,8 @@ import MapView, {Marker, PROVIDER_GOOGLE} from 'react-native-maps';
 import toast from '@hooks/toast';
 import {NavigationProp, useNavigation} from '@react-navigation/native';
 import {LoggedInParamList} from '../../AppInner';
+import CenterInfoComponent from '@components/CenterInfoComponent';
+import OfferListItem from '@components/OfferListItem';
 // import Geolocation from '@react-native-community/geolocation';
 
 interface ILocation {
@@ -417,8 +419,15 @@ function RecruitMapScreen() {
         title={'센터'}
         type={'tab'}
         content={
-          <View style={{width: '100%', backgroundColor: 'red'}}>
-            <Text>test</Text>
+          <View style={{width: '100%'}}>
+            <View style={common.mb16}>
+              <CenterInfoComponent />
+            </View>
+            <View>
+              <View style={common.basicBox}>
+                <Text>필라테스</Text>
+              </View>
+            </View>
           </View>
         }
       />
@@ -430,7 +439,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
   },
-  // filter: {flexDirection: 'row', paddingVertical: 8, paddingHorizontal: 16},
 });
 
 export default RecruitMapScreen;

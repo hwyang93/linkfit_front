@@ -432,7 +432,7 @@ const MainStack = () => {
             title: '센터 정보',
             headerRight: () => (
               <Pressable
-                onPress={() => Alert.alert('test', '좋아용')}
+                onPress={() => Alert.alert('test', '북마크네용')}
                 hitSlop={10}
                 style={[common.mh4, common.size24]}>
                 <Image source={iconPath.BOOKMARK} style={common.size24} />
