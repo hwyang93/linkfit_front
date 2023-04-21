@@ -15,12 +15,17 @@ type CenterInfoProps = {
 
 function CenterInfoComponent({link}: CenterInfoProps) {
   const navigation = useNavigation<NavigationProp<LoggedInParamList>>();
+  // console.log('centerInfoComponent.tsx', link.title);
+
   // todo: 전화걸기 (시뮬레이션 환경에선 안됨)
   // import { Linking } from 'react-native';
   // () => Linking.openURL(`tel:01099003171`)
   // {Linking.openURL(`tel:${phoneNumber}`)}
   return (
-    <Pressable onPress={() => navigation.navigate(link)}>
+    <Pressable
+      onPress={() =>
+        navigation.navigate('CenterInfo', {memberSeq: link.memberSeq})
+      }>
       <View style={common.mb16}>
         <Image
           source={require('../assets/images/center_01.png')}
@@ -28,10 +33,10 @@ function CenterInfoComponent({link}: CenterInfoProps) {
           style={common.imgBox}
         />
       </View>
-      <Text style={common.title}>링크 필라테스</Text>
+      <Text style={common.title}>test title</Text>
       <View style={common.rowCenterBetween}>
         <Text style={[common.text_s, {color: GRAY.DARK}]}>
-          필라테스 | 서울 · 송파구
+          필라테스 | 서울시 · 역삼동
         </Text>
         <View style={common.rowCenterBetween}>
           <Pressable

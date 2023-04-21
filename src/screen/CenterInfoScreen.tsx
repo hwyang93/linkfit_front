@@ -20,6 +20,7 @@ import {useCallback, useEffect, useState} from 'react';
 import CenterInfoTop from '@components/CenterInfoTop';
 import toast from '@hooks/toast';
 import {fetchCompany} from '@api/company';
+import EmptySet from '@components/EmptySet';
 
 // const HEADER_HEIGHT = 250;
 
@@ -58,6 +59,7 @@ function CenterInfoScreen() {
   useEffect(() => {
     getCenterInfo();
   }, [getCenterInfo]);
+
   // 탭 바 영역
   const tabBar = (props: any) => (
     <MaterialTabBar
@@ -148,34 +150,42 @@ function CenterInfoScreen() {
         }
       };
       return (
-        <View
-          style={{
-            width: width,
-            // padding: 16,
-          }}>
-          <View style={[common.row, common.mb8]}>
-            <Text style={[common.text_m, common.fwb, common.fs18]}>
-              {item.evaluationMember?.nickname
-                ? item.evaluationMember?.nickname
-                : item.evaluationMember?.name}
-            </Text>
-            <Text
-              style={[
-                common.text,
-                {alignSelf: 'flex-end', marginHorizontal: 4},
-              ]}>
-              {item.evaluationMember?.field}
-            </Text>
-            <Text style={[common.text, {alignSelf: 'flex-end'}]}>
-              {item.updatedAt}
-            </Text>
-          </View>
-          <Pressable onPress={textExpansion}>
-            <Text style={common.text_m} numberOfLines={textLine}>
-              {item.comment}
-            </Text>
-          </Pressable>
-        </View>
+        <>
+          {reputations.length < 1 ? (
+            <View style={{flex: 1}}>
+              <EmptySet text={'등록된 후기가 없어요.'} />
+            </View>
+          ) : (
+            <View
+              style={{
+                width: width,
+                // padding: 16,
+              }}>
+              <View style={[common.row, common.mb8]}>
+                <Text style={[common.text_m, common.fwb, common.fs18]}>
+                  {item.evaluationMember?.nickname
+                    ? item.evaluationMember?.nickname
+                    : item.evaluationMember?.name}
+                </Text>
+                <Text
+                  style={[
+                    common.text,
+                    {alignSelf: 'flex-end', marginHorizontal: 4},
+                  ]}>
+                  {item.evaluationMember?.field}
+                </Text>
+                <Text style={[common.text, {alignSelf: 'flex-end'}]}>
+                  {item.updatedAt}
+                </Text>
+              </View>
+              <Pressable onPress={textExpansion}>
+                <Text style={common.text_m} numberOfLines={textLine}>
+                  {item.comment}
+                </Text>
+              </Pressable>
+            </View>
+          )}
+        </>
       );
     },
     [textLine],

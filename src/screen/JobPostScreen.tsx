@@ -261,7 +261,7 @@ function JobPostScreen({route, navigation}: Props) {
             <Text style={[common.mb8, common.text_m, common.fwb]}>
               센터 정보
             </Text>
-            <CenterInfoComponent link={'CenterInfo'} />
+            <CenterInfoComponent link={recruitInfo} />
           </View>
 
           {/* 지원 취소하기 버튼 */}
