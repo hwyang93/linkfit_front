@@ -95,7 +95,7 @@ function Header() {
 
         <Pressable
           style={styles.pencil}
-          onPress={() => navigation.navigate('CenterProfileEdit')}>
+          onPress={() => navigation.navigate('ProfileEdit')}>
           <Image source={iconPath.PENCIL_B} style={[common.size24]} />
         </Pressable>
       </View>

@@ -1,5 +1,4 @@
 import {
-  Alert,
   Dimensions,
   Image,
   Pressable,

@@ -7,7 +7,7 @@ import {
   Text,
   View,
 } from 'react-native';
-import {useSafeAreaInsets} from 'react-native-safe-area-context';
+import {SafeAreaView} from 'react-native-safe-area-context';
 import {GRAY, WHITE} from '@styles/colors';
 import common from '@styles/common';
 import {iconPath} from '@util/iconPath';
@@ -55,7 +55,6 @@ const MENU = [
 
 function MyCenterScreen() {
   const navigation = useNavigation<NavigationProp<LoggedInParamList>>();
-  const insets = useSafeAreaInsets();
   const isFocused = useIsFocused();
   const [myInfo, setMyInfo] = useState<any>({});
 
@@ -72,10 +71,8 @@ function MyCenterScreen() {
   }, [isFocused]);
 
   return (
-    <ScrollView
-      style={{flex: 1, backgroundColor: WHITE}}
-      showsVerticalScrollIndicator={false}>
-      <View style={[styles.container, {paddingBottom: insets.bottom}]}>
+    <SafeAreaView edges={['left', 'right']} style={styles.container}>
+      <ScrollView showsVerticalScrollIndicator={false}>
         <View style={common.mb20}>
           <CenterProfileBox memberInfo={myInfo.memberInfo} />
         </View>
@@ -191,8 +188,8 @@ function MyCenterScreen() {
             </View>
           </View>
         </View>
-      </View>
-    </ScrollView>
+      </ScrollView>
+    </SafeAreaView>
   );
 }
 const styles = StyleSheet.create({
