@@ -19,6 +19,7 @@ import LinearGradient from 'react-native-linear-gradient';
 import CareerComponent from '@components/Resume/CareerComponent';
 import EducationComponent from '@components/Resume/EducationComponent';
 
+const GENDER_DATA = [{value: '남자'}, {value: '여자'}];
 function ResumeFormScreen() {
   const [loading, setLoading] = useState<boolean>(false);
   const [title, setTitle] = useState('');
@@ -29,28 +30,28 @@ function ResumeFormScreen() {
   const [phoneNumber, setPhoneNumber] = useState('');
   const [license, setLicense] = useState('');
   const [introduce, setIntroduce] = useState('');
-  const genderData = [{value: '남자'}, {value: '여자'}];
   const licenseData = [''];
 
-  const [careerForm, setCareerForm] = useState<any>([]);
-  const [educationForm, setEducationForm] = useState<any>([]);
+  const [careers, setCareers] = useState<any>([{}]);
+  const [educations, setEducations] = useState<any>([{}]);
 
   const addCareerForm = () => {
-    setCareerForm([...careerForm, {}]);
+    setCareers([...careers, {}]);
   };
   const removeCareerForm = (index: any) => {
-    const newCareerForm = [...careerForm];
+    const newCareerForm = [...careers];
+    z``;
     newCareerForm.splice(index, 1);
-    setCareerForm(newCareerForm);
+    setCareers(newCareerForm);
   };
 
   const addEducationForm = () => {
-    setEducationForm([...educationForm, {}]);
+    setEducations([...educations, {}]);
   };
   const removeEducationForm = (index: any) => {
-    const newEducationForm = [...educationForm];
+    const newEducationForm = [...educations];
     newEducationForm.splice(index, 1);
-    setEducationForm(newEducationForm);
+    setEducations(newEducationForm);
   };
 
   const canGoNext = true;
@@ -119,23 +120,24 @@ function ResumeFormScreen() {
         {/* 성별 */}
         <View style={[common.mb16]}>
           <TabButton
-            genderData={genderData}
+            genderData={GENDER_DATA}
             onSelect={(value: any) => setGender(value)}
             value={gender}
           />
         </View>
 
         {/* 경력 */}
-        <View style={common.mv20}>
-          <CareerComponent />
-        </View>
-
-        {careerForm.map((item: any, index: Key | null | undefined) => {
+        {careers.map((item: any, index: number) => {
           return (
             <View key={index} style={[common.mv20]}>
-              <Pressable onPress={removeCareerForm} style={styles.removeButton}>
-                <Image source={iconPath.CANCEL} style={[common.size24]} />
-              </Pressable>
+              {index !== 0 && (
+                <Pressable
+                  onPress={removeCareerForm}
+                  style={styles.removeButton}>
+                  <Image source={iconPath.CANCEL} style={[common.size24]} />
+                </Pressable>
+              )}
+
               <View>
                 <CareerComponent />
               </View>
@@ -151,18 +153,17 @@ function ResumeFormScreen() {
         </View>
 
         {/* 학력 */}
-        <View style={common.mv20}>
-          <EducationComponent />
-        </View>
-
-        {educationForm.map((item: any, index: Key | null | undefined) => {
+        {educations.map((item: any, index: number) => {
           return (
             <View key={index} style={common.mv20}>
-              <Pressable
-                onPress={removeEducationForm}
-                style={styles.removeButton}>
-                <Image source={iconPath.CANCEL} style={[common.size24]} />
-              </Pressable>
+              {index !== 0 && (
+                <Pressable
+                  onPress={removeEducationForm}
+                  style={styles.removeButton}>
+                  <Image source={iconPath.CANCEL} style={[common.size24]} />
+                </Pressable>
+              )}
+
               <View>
                 <EducationComponent />
               </View>
