@@ -28,7 +28,7 @@ export type LoggedInParamList = {
   MyCenterInfo: undefined;
   MyNotification: undefined;
 
-  CenterProfile: undefined;
+  CenterProfile: {memberSeq: number};
   CenterProfileEdit: undefined;
   CompanyInfo: undefined;
   CenterRecruitment: undefined;

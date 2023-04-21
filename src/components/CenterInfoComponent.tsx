@@ -33,10 +33,10 @@ function CenterInfoComponent({link}: CenterInfoProps) {
           style={common.imgBox}
         />
       </View>
-      <Text style={common.title}>test title</Text>
+      <Text style={common.title}>링크 필라테스</Text>
       <View style={common.rowCenterBetween}>
         <Text style={[common.text_s, {color: GRAY.DARK}]}>
-          필라테스 | 서울시 · 역삼동
+          필라테스 | 서울 · 송파구
         </Text>
         <View style={common.rowCenterBetween}>
           <Pressable
