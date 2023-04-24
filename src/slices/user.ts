@@ -11,6 +11,7 @@ export interface memberState {
   birth: string;
   email: string;
   accessToken: string;
+  phone: string;
   lon: number;
   lat: number;
   type: string;
@@ -23,6 +24,7 @@ const initialState: memberState = {
   birth: '',
   email: '',
   accessToken: '',
+  phone: '',
   lon: 0,
   lat: 0,
   type: '',
@@ -38,6 +40,7 @@ const userSlice = createSlice({
       state.nickname = action.payload.nickname;
       state.birth = action.payload.birth;
       state.accessToken = action.payload.accessToken;
+      state.phone = action.payload.phone;
       state.type = action.payload.type;
     },
     setAccessToken(state, action) {

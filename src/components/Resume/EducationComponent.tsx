@@ -8,10 +8,24 @@ import {useState} from 'react';
 const windowWidth = Dimensions.get('window').width;
 const columns2 = (windowWidth - 40) / 2;
 
-function EducationComponent() {
+type educationProps = {
+  onSelectSchool: Function;
+  onSelectMajor: Function;
+  onSelectStartDate: Function;
+  onSelectEndDate: Function;
+  onSelectStatus: Function;
+};
+
+function EducationComponent({
+  onSelectSchool,
+  onSelectMajor,
+  onSelectStartDate,
+  onSelectEndDate,
+  onSelectStatus,
+}: educationProps) {
   const [school, setSchool] = useState('');
   const [education, setEducation] = useState('');
-
+  console.log('rendering');
   const educationData = ['고등학교 졸업', '대학교 졸업'];
   return (
     <>
@@ -29,7 +43,7 @@ function EducationComponent() {
       <View style={common.mb16}>
         <Input
           label={'학교명'}
-          onChangeText={(text: string) => setSchool(text)}
+          onChangeText={(text: string) => onSelectSchool(text)}
           value={school}
           placeholder={'학교명을 입력하세요.'}
           keyboardType={KeyboardTypes.DEFAULT}

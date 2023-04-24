@@ -7,9 +7,21 @@ import {useState} from 'react';
 const windowWidth = Dimensions.get('window').width;
 const columns2 = (windowWidth - 40) / 2;
 
-function CareerComponent() {
-  const [career, setCareer] = useState('');
-  const [workType, setWorkType] = useState('');
+type careerProps = {
+  onSelectPosition: Function;
+  onSelectWorkType: Function;
+  onSelectStartDate: Function;
+  onSelectEndDate: Function;
+};
+
+function CareerComponent({
+  onSelectStartDate,
+  onSelectEndDate,
+  onSelectWorkType,
+  onSelectPosition,
+}: careerProps) {
+  // const [career, setCareer] = useState('');
+  // const [workType, setWorkType] = useState('');
   const careerData = ['필라테스', '요가'];
   const workData = ['정규직', '계약직'];
   return (
@@ -19,7 +31,7 @@ function CareerComponent() {
         <SelectBox
           label={'경력'}
           data={careerData}
-          onSelect={(value: any) => setCareer(value)}
+          onSelect={(value: any) => onSelectPosition(value)}
           defaultButtonText={'포지션을 선택하세요. (ex. 필라테스)'}
         />
       </View>
@@ -29,7 +41,7 @@ function CareerComponent() {
         <SelectBox
           label={'근무 형태'}
           data={workData}
-          onSelect={(value: any) => setWorkType(value)}
+          onSelect={(value: any) => onSelectWorkType(value)}
           defaultButtonText={'근무 형태를 선택하세요.'}
         />
       </View>

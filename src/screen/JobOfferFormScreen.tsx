@@ -152,6 +152,7 @@ function JobOfferFormScreen({navigation}: Props) {
     content,
     dateForm,
     education,
+    navigation,
     offerTitle,
     pay,
     payType,
