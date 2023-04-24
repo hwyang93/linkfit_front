@@ -10,7 +10,7 @@ import {WHITE} from '@styles/colors';
 import DismissKeyboardView from '@components/DismissKeyboardView';
 import common from '@styles/common';
 import Input, {KeyboardTypes} from '@components/Input';
-import {Key, useState} from 'react';
+import {Key, useCallback, useEffect, useState} from 'react';
 import BirthdayPicker from '@components/BirthdayPicker';
 import TabButton from '@components/TabButton';
 import SelectBox from '@components/SelectBox';
@@ -18,29 +18,46 @@ import {iconPath} from '@util/iconPath';
 import LinearGradient from 'react-native-linear-gradient';
 import CareerComponent from '@components/Resume/CareerComponent';
 import EducationComponent from '@components/Resume/EducationComponent';
+import {useSelector} from 'react-redux';
+import {RootState} from '@store/reducer';
+import {fetchMemberLicences} from '@api/member';
+import toast from '@hooks/toast';
 
 const GENDER_DATA = [{value: '남자'}, {value: '여자'}];
 function ResumeFormScreen() {
+  const memberInfo = useSelector((state: RootState) => state.user);
+  console.log(memberInfo);
   const [loading, setLoading] = useState<boolean>(false);
   const [title, setTitle] = useState('');
-  const [name, setName] = useState('');
-  const [birth, setBirth] = useState('');
+  const [name, setName] = useState(memberInfo.name);
+  const [birth, setBirth] = useState(memberInfo.birth);
   const [gender, setGender] = useState('');
   const [address, setAddress] = useState('');
-  const [phoneNumber, setPhoneNumber] = useState('');
-  const [license, setLicense] = useState('');
+  const [phoneNumber, setPhoneNumber] = useState(memberInfo.phone);
+  const [licenseSeq, setLicenseSeq] = useState(0);
   const [introduce, setIntroduce] = useState('');
-  const licenseData = [''];
+  const [licenses, setLicenses] = useState([]);
+  // const licenseData = [''];
 
   const [careers, setCareers] = useState<any>([{}]);
   const [educations, setEducations] = useState<any>([{}]);
+
+  useEffect(() => {
+    fetchMemberLicences()
+      .then(({data}: any) => {
+        console.log('licence::::::::');
+        setLicenses(data);
+      })
+      .catch((e: any) => {
+        toast.error({message: e.message});
+      });
+  }, []);
 
   const addCareerForm = () => {
     setCareers([...careers, {}]);
   };
   const removeCareerForm = (index: any) => {
     const newCareerForm = [...careers];
-    z``;
     newCareerForm.splice(index, 1);
     setCareers(newCareerForm);
   };
@@ -53,6 +70,38 @@ function ResumeFormScreen() {
     newEducationForm.splice(index, 1);
     setEducations(newEducationForm);
   };
+
+  const handleCareers = (value: string, type: string, index: number) => {
+    const newCareers = careers;
+    newCareers[index][type] = value;
+    setCareers(newCareers);
+  };
+
+  const handleEducations = (value: string, type: string, index: number) => {
+    const newEducations = educations;
+    newEducations[index][type] = value;
+    setEducations(newEducations);
+  };
+
+  const onCreateResume = useCallback(() => {
+    const data = {
+      title: title,
+      name: name,
+      birth: birth,
+      address: address,
+      addressDetail: address,
+      intro: introduce,
+      hopePay: 'string',
+      hopeArea: 'string',
+      hopeTime: 'string',
+      hopeWorkType: 'string',
+      isMaster: 'N',
+      isOpen: 'N',
+      careers: careers,
+      educations: educations,
+    };
+    console.log(data);
+  }, [address, birth, careers, educations, introduce, name, title]);
 
   const canGoNext = true;
 
@@ -84,12 +133,19 @@ function ResumeFormScreen() {
 
         {/* 생년월일 */}
         <View style={common.mb16}>
-          <BirthdayPicker
+          {/*<BirthdayPicker*/}
+          {/*  label={'생년월일'}*/}
+          {/*  onSelect={(value: any) => setBirth(value)}*/}
+          {/*  placeholder={'자동입력'}*/}
+          {/*  value={birth}*/}
+          {/*  disabled={true}*/}
+          {/*/>*/}
+          <Input
             label={'생년월일'}
-            onSelect={(value: any) => setBirth(value)}
-            placeholder={'자동입력'}
             value={birth}
-            disabled={true}
+            placeholder={'자동입력'}
+            keyboardType={KeyboardTypes.DEFAULT}
+            editable={false}
           />
         </View>
 
@@ -139,12 +195,24 @@ function ResumeFormScreen() {
               )}
 
               <View>
-                <CareerComponent />
+                <CareerComponent
+                  onSelectPosition={(value: string) =>
+                    handleCareers(value, 'field', index)
+                  }
+                  onSelectWorkType={(value: string) =>
+                    handleCareers(value, 'workType', index)
+                  }
+                  onSelectStartDate={(value: string) =>
+                    handleCareers(value, 'startDate', index)
+                  }
+                  onSelectEndDate={(value: string) =>
+                    handleCareers(value, 'endDate', index)
+                  }
+                />
               </View>
             </View>
           );
         })}
-
         {/* 경력 추가 버튼*/}
         <View style={common.mb16}>
           <Pressable onPress={addCareerForm} style={{alignSelf: 'center'}}>
@@ -165,7 +233,23 @@ function ResumeFormScreen() {
               )}
 
               <View>
-                <EducationComponent />
+                <EducationComponent
+                  onSelectSchool={(value: string) =>
+                    handleEducations(value, 'school', index)
+                  }
+                  onSelectMajor={(value: string) =>
+                    handleEducations(value, 'major', index)
+                  }
+                  onSelectStartDate={(value: string) =>
+                    handleEducations(value, 'startDate', index)
+                  }
+                  onSelectEndDate={(value: string) =>
+                    handleEducations(value, 'endDate', index)
+                  }
+                  onSelectStatus={(value: string) =>
+                    handleEducations(value, 'status', index)
+                  }
+                />
               </View>
             </View>
           );
@@ -182,8 +266,8 @@ function ResumeFormScreen() {
         <View style={common.mb16}>
           <SelectBox
             label={'자격증'}
-            data={licenseData}
-            onSelect={(value: any) => setLicense(value)}
+            data={licenses}
+            onSelect={(value: any) => setLicenseSeq(value.seq)}
             defaultButtonText={'자격증을 선택하세요.'}
           />
         </View>
@@ -203,7 +287,7 @@ function ResumeFormScreen() {
 
         {/* 작성완료 버튼 */}
         <View style={common.mt20}>
-          <Pressable disabled={!canGoNext} onPress={() => {}}>
+          <Pressable disabled={!canGoNext} onPress={onCreateResume}>
             <LinearGradient
               style={common.button}
               start={{x: 0.1, y: 0.5}}
