@@ -8,6 +8,7 @@ import {
   TouchableWithoutFeedback,
   Dimensions,
   PanResponder,
+  ScrollView,
 } from 'react-native';
 import {BLACK, GRAY} from '@styles/colors';
 import common, {width} from '@styles/common';
@@ -56,7 +57,8 @@ function ModalSheetSample(props: modalProps) {
         panY.setValue(gestureState.dy);
       },
       onPanResponderRelease: (event, gestureState) => {
-        if (gestureState.dy > 0 && gestureState.vy > 1.5) {
+        if (gestureState.dy > 0) {
+          // if (gestureState.dy > 0 && gestureState.vy > 1.5) {
           closeModal();
         } else {
           resetBottomSheet.start();
@@ -87,6 +89,7 @@ function ModalSheetSample(props: modalProps) {
         <TouchableWithoutFeedback onPress={closeModal}>
           <View style={styles.background} />
         </TouchableWithoutFeedback>
+
         <Animated.View
           style={[
             {
@@ -94,10 +97,19 @@ function ModalSheetSample(props: modalProps) {
               transform: [{translateY: translateY}],
               height: props.modalHeight,
               paddingBottom: 32,
+              maxHeight: '93%',
             },
-          ]}
-          {...panResponders.panHandlers}>
-          <View style={styles.topBar} />
+          ]}>
+          <View
+            style={styles.topBar}
+            {...panResponders.panHandlers}
+            hitSlop={{
+              top: 32,
+              bottom: 32,
+              left: Dimensions.get('screen').width / 2,
+              right: Dimensions.get('screen').width / 2,
+            }}
+          />
           {/* 모달 타이틀 */}
           <View style={common.mt16}>
             <Text
@@ -110,7 +122,9 @@ function ModalSheetSample(props: modalProps) {
               {props.title}
             </Text>
           </View>
-          {props.content}
+          <ScrollView showsVerticalScrollIndicator={false}>
+            {props.content}
+          </ScrollView>
         </Animated.View>
       </View>
     </Modal>
@@ -141,6 +155,7 @@ const styles = StyleSheet.create({
     width: 40,
     height: 3,
     backgroundColor: GRAY.DEFAULT,
+    zIndex: 9999,
   },
   modalText: {
     fontFamily: 'NotoSansKR-Medium',
