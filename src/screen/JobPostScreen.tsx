@@ -15,13 +15,15 @@ import {SafeAreaView} from 'react-native-safe-area-context';
 import CenterInfoComponent from '@components/CenterInfoComponent';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import {LoggedInParamList} from '../../AppInner';
-import {SetStateAction, useEffect, useState} from 'react';
-import {fetchRecruit} from '@api/recruit';
+import {SetStateAction, useCallback, useEffect, useState} from 'react';
+import {createRecruitApply, fetchRecruit} from '@api/recruit';
 import FloatingLinkButton from '@components/FloatingLinkButton';
 import Modal from '@components/ModalSheet';
 import LinearGradient from 'react-native-linear-gradient';
 import {iconPath} from '@util/iconPath';
 import MapView, {Marker, PROVIDER_GOOGLE} from 'react-native-maps';
+import {fetchResumes} from '@api/resume';
+import toast from '@hooks/toast';
 
 type Props = NativeStackScreenProps<LoggedInParamList, 'JobPost'>;
 
@@ -36,22 +38,105 @@ function JobPostScreen({route, navigation}: Props) {
   const [recruitInfo, setRecruitInfo] = useState<any>({
     dates: [{day: '', time: ''}],
   });
+  const [resumes, setResumes] = useState<any[]>([]);
+  const [recruitDates, setRecruitDates] = useState<any[]>([]);
 
   const [contentVerticalOffset, setContentVerticalOffset] = useState(0);
+
+  const [step, setStep] = useState('');
 
   const onScrollHandler = (event: NativeSyntheticEvent<NativeScrollEvent>) => {
     setContentVerticalOffset(event.nativeEvent.contentOffset.y);
   };
 
-  useEffect(() => {
+  const getRecruitInfo = useCallback(() => {
     fetchRecruit(recruitSeq)
       .then(({data}: any) => {
         setRecruitInfo(data);
+        data.dates.forEach((date: any) => {
+          date.isSelected = false;
+        });
+        setRecruitDates(data.dates);
       })
       .catch((e: any) => {
-        Alert.alert(e.message);
+        toast.error({message: e.message});
       });
   }, [recruitSeq]);
+
+  const getResumeList = useCallback(() => {
+    fetchResumes()
+      .then(({data}: any) => {
+        data.forEach((resume: any) => {
+          resume.isSelected = false;
+        });
+        setResumes(data);
+      })
+      .catch((e: any) => {
+        toast.error({message: e.message});
+      });
+  }, []);
+
+  const onCreateApply = useCallback(() => {
+    const dates = recruitDates.filter((date: any) => {
+      if (date.isSelected) {
+        return date.seq;
+      }
+    });
+    const resumeSeq = resumes.find((resume: any) => {
+      return resume.isSelected;
+    }).seq;
+    const data = {recruitDateSeq: dates, resumeSeq: resumeSeq};
+
+    createRecruitApply(recruitInfo.seq, data)
+      .then(() => {
+        toast.success({message: '지원이 완료되었어요!'});
+        setModalVisible(false);
+        getRecruitInfo();
+      })
+      .catch((e: any) => {
+        toast.error({message: e.message});
+      });
+  }, [getRecruitInfo, recruitDates, recruitInfo.seq, resumes]);
+
+  useEffect(() => {
+    getRecruitInfo();
+    getResumeList();
+  }, [getRecruitInfo, getResumeList]);
+  // useEffect(() => {
+  //   setResumes(() => {
+  //     return resumes.map((resume: any) => {
+  //       resume.isSelected = false;
+  //       return resume;
+  //     });
+  //   });
+  //   setRecruitDates(() => {
+  //     return recruitDates.map((date: any) => {
+  //       date.isSelected = false;
+  //       return date;
+  //     });
+  //   });
+  // }, [modalVisible, recruitDates, resumes]);
+
+  useEffect(() => {
+    const selectResume = resumes.find((resume: any) => {
+      return resume.isSelected;
+    });
+    const selectDate = recruitDates.filter((date: any) => {
+      return date.isSelected;
+    });
+    if (!selectResume) {
+      setStep('');
+      return;
+    }
+    if (selectResume && selectDate.length > 0) {
+      setStep('apply');
+      return;
+    }
+    if (selectResume) {
+      setStep('date');
+      return;
+    }
+  }, [recruitDates, resumes]);
 
   const APPLY = [
     {
@@ -93,32 +178,36 @@ function JobPostScreen({route, navigation}: Props) {
       job: () => {},
     },
   ];
-  const RESUME = [
-    {
-      master: true,
-      title: '3년차 필라테스 강사입니다.',
-      date: '2022.12.09 수정',
-      selected: true,
+
+  const onSelectResume = useCallback(
+    (seq: number) => {
+      setResumes(() => {
+        return resumes.map((resume: any) => {
+          if (resume.seq === seq) {
+            resume.isSelected = !resume.isSelected;
+          } else {
+            resume.isSelected = false;
+          }
+          return resume;
+        });
+      });
     },
-    {
-      master: false,
-      title: '3년차 필라테스 강사입니다.',
-      date: '2022.12.09 수정',
-      selected: false,
+    [resumes],
+  );
+
+  const onSelectRecruitDate = useCallback(
+    (seq: number) => {
+      setRecruitDates(() => {
+        return recruitDates.map((date: any) => {
+          if (date.seq === seq) {
+            date.isSelected = !date.isSelected;
+          }
+          return date;
+        });
+      });
     },
-    {
-      master: false,
-      title: '3년차 필라테스 강사입니다.',
-      date: '2022.12.09 수정',
-      selected: false,
-    },
-    {
-      master: false,
-      title: '3년차 필라테스 강사입니다.',
-      date: '2022.12.09 수정',
-      selected: false,
-    },
-  ];
+    [recruitDates],
+  );
 
   const apply = () => {
     setModalType('apply');
@@ -293,117 +382,175 @@ function JobPostScreen({route, navigation}: Props) {
         modalVisible={modalVisible}
         setModalVisible={setModalVisible}
         title={modalTitle}
-        modalData={modalData}
+        // modalData={modalData}
         type={'select'}
         content={
           <>
             {modalType === 'apply' && (
               <View style={{width: '100%'}}>
                 {/* 등록된 이력서 없을 때 */}
-                <Pressable style={[common.basicBox, {alignItems: 'center'}]}>
-                  <Image
-                    source={iconPath.ADD_BUTTON}
-                    style={[common.size24, common.mb8]}
-                  />
-                  <Text
-                    style={[
-                      common.text_m,
-                      {
-                        textDecorationLine: 'underline',
-                        textDecorationColor: GRAY.DARK,
-                      },
-                    ]}>
-                    이력서 등록하기
-                  </Text>
-                </Pressable>
-
-                {RESUME.map((item, index) => {
-                  return (
-                    <View
-                      key={index}
+                {resumes.length === 0 && (
+                  <Pressable style={[common.basicBox, {alignItems: 'center'}]}>
+                    <Image
+                      source={iconPath.ADD_BUTTON}
+                      style={[common.size24, common.mb8]}
+                    />
+                    <Text
                       style={[
-                        common.basicBox,
-                        common.mv4,
-                        item.selected && {
-                          borderColor: BLUE.DEFAULT,
-                          borderWidth: 2,
+                        common.text_m,
+                        {
+                          textDecorationLine: 'underline',
+                          textDecorationColor: GRAY.DARK,
                         },
                       ]}>
-                      {item.master && (
-                        <View style={[common.resumeBadge]}>
-                          <Text
-                            style={[
-                              common.text,
-                              common.fs10,
-                              {color: BLUE.DEFAULT, textAlign: 'center'},
-                            ]}>
-                            대표
-                          </Text>
-                        </View>
-                      )}
+                      이력서 등록하기
+                    </Text>
+                  </Pressable>
+                )}
 
-                      <Text numberOfLines={1} style={common.title}>
-                        {item.title}
-                      </Text>
-                      <Text style={[common.text_s, common.fcg]}>
-                        {item.date}
-                      </Text>
-                      {item.selected ? (
-                        <Image
-                          style={[
-                            common.size24,
-                            {position: 'absolute', right: 16, top: '50%'},
-                          ]}
-                          source={iconPath.CHECK}
-                        />
-                      ) : null}
-                    </View>
-                  );
-                })}
-
-                <View style={[common.mt40, common.mb8]}>
-                  <Text style={common.title_s}>
-                    지원할 날짜 및 시간을 선택하세요.
-                  </Text>
-                </View>
-                {modalData.map((item, index) => {
+                {resumes.map(resume => {
                   return (
-                    <View
-                      key={index}
-                      style={[common.modalItemBox, {paddingVertical: 4}]}>
-                      <Pressable
-                        disabled={item.disabled}
-                        key={index}
+                    <Pressable
+                      key={'resume' + resume.seq}
+                      onPress={() => onSelectResume(resume.seq)}>
+                      <View
                         style={[
-                          common.modalSelectBox,
-                          item.selected && {borderColor: BLUE.DEFAULT},
-                          item.disabled && {opacity: 0.5},
+                          common.basicBox,
+                          common.mv4,
+                          resume.isSelected && {
+                            borderColor: BLUE.DEFAULT,
+                            borderWidth: 2,
+                          },
                         ]}>
-                        <View style={[common.rowCenter]}>
+                        {resume.isMaster === 'Y' && (
+                          <View style={[common.resumeBadge]}>
+                            <Text
+                              style={[
+                                common.text,
+                                common.fs10,
+                                {color: BLUE.DEFAULT, textAlign: 'center'},
+                              ]}>
+                              대표
+                            </Text>
+                          </View>
+                        )}
+
+                        <Text numberOfLines={1} style={common.title}>
+                          {resume.title}
+                        </Text>
+                        <Text style={[common.text_s, common.fcg]}>
+                          {resume.updatedAt}
+                        </Text>
+                        {resume.isSelected && (
                           <Image
-                            source={iconPath.CALENDAR}
-                            style={[common.size24, common.mr8]}
-                          />
-                          <Text style={common.modalText}>{item.value}</Text>
-                        </View>
-                        {item.selected ? (
-                          <Image
-                            style={common.size24}
+                            style={[
+                              common.size24,
+                              {position: 'absolute', right: 16, top: '50%'},
+                            ]}
                             source={iconPath.CHECK}
                           />
-                        ) : null}
-                      </Pressable>
-                    </View>
+                        )}
+                      </View>
+                    </Pressable>
                   );
                 })}
+                {(step === 'date' || step === 'apply') && (
+                  <>
+                    <View style={[common.mt40, common.mb8]}>
+                      <Text style={common.title_s}>
+                        지원할 날짜 및 시간을 선택하세요.
+                      </Text>
+                    </View>
+                    {recruitDates.map((item: any) => {
+                      return (
+                        <Pressable
+                          key={'recruitDate' + item.seq}
+                          disabled={item.isApplied}
+                          onPress={() => onSelectRecruitDate(item.seq)}>
+                          <View
+                            style={[common.modalItemBox, {paddingVertical: 4}]}>
+                            <View
+                              style={[
+                                common.modalSelectBox,
+                                item.isSelected && {
+                                  borderColor: BLUE.DEFAULT,
+                                },
+                                item.isApplied && {opacity: 0.5},
+                              ]}>
+                              <View style={[common.rowCenter]}>
+                                <Image
+                                  source={iconPath.CALENDAR}
+                                  style={[common.size24, common.mr8]}
+                                />
+                                <Text style={common.modalText}>
+                                  {item.day + '/' + item.time}
+                                </Text>
+                              </View>
+                              {item.isSelected && (
+                                <Image
+                                  style={common.size24}
+                                  source={iconPath.CHECK}
+                                />
+                              )}
+                            </View>
+                          </View>
+                        </Pressable>
+                      );
+                    })}
+                  </>
+                )}
+                {/*<View style={[common.mt40, common.mb8]}>*/}
+                {/*  <Text style={common.title_s}>*/}
+                {/*    지원할 날짜 및 시간을 선택하세요.*/}
+                {/*  </Text>*/}
+                {/*</View>*/}
+                {/*{recruitDates.map((item: any) => {*/}
+                {/*  return (*/}
+                {/*    <Pressable*/}
+                {/*      key={'recruitDate' + item.seq}*/}
+                {/*      disabled={item.isApplied}*/}
+                {/*      onPress={() => onSelectRecruitDate(item.seq)}>*/}
+                {/*      <View style={[common.modalItemBox, {paddingVertical: 4}]}>*/}
+                {/*        <View*/}
+                {/*          style={[*/}
+                {/*            common.modalSelectBox,*/}
+                {/*            item.isSelected && {borderColor: BLUE.DEFAULT},*/}
+                {/*            item.isApplied && {opacity: 0.5},*/}
+                {/*          ]}>*/}
+                {/*          <View style={[common.rowCenter]}>*/}
+                {/*            <Image*/}
+                {/*              source={iconPath.CALENDAR}*/}
+                {/*              style={[common.size24, common.mr8]}*/}
+                {/*            />*/}
+                {/*            <Text style={common.modalText}>*/}
+                {/*              {item.day + '/' + item.time}*/}
+                {/*            </Text>*/}
+                {/*          </View>*/}
+                {/*          {item.isSelected && (*/}
+                {/*            <Image*/}
+                {/*              style={common.size24}*/}
+                {/*              source={iconPath.CHECK}*/}
+                {/*            />*/}
+                {/*          )}*/}
+                {/*        </View>*/}
+                {/*      </View>*/}
+                {/*    </Pressable>*/}
+                {/*  );*/}
+                {/*})}*/}
                 {/* 지원하기 버튼 등록 된 이력서 없을 경우 disable */}
                 <View style={common.mt40}>
-                  <Pressable>
+                  <Pressable
+                    disabled={!(step === 'apply')}
+                    onPress={() => onCreateApply()}>
                     <LinearGradient
                       style={common.button}
                       start={{x: 0.1, y: 0.5}}
                       end={{x: 0.6, y: 1}}
-                      colors={['#74ebe4', '#3962f3']}>
+                      colors={
+                        step === 'apply'
+                          ? ['#74ebe4', '#3962f3']
+                          : ['#dcdcdc', '#dcdcdc']
+                      }>
                       <Text style={common.buttonText}>지원하기</Text>
                     </LinearGradient>
                   </Pressable>

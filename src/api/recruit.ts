@@ -16,6 +16,10 @@ export function fetchBookmarkRecruits() {
   return request.get('/recruit/bookmark');
 }
 
+export function createRecruitApply(seq: number, data: object) {
+  return request.post(`/recruit/${seq}/apply`, data);
+}
+
 export function fetchRecruitApplicationsMy() {
   return request.get('/recruit/apply');
 }
