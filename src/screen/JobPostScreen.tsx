@@ -16,7 +16,11 @@ import CenterInfoComponent from '@components/CenterInfoComponent';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import {LoggedInParamList} from '../../AppInner';
 import {SetStateAction, useCallback, useEffect, useState} from 'react';
-import {createRecruitApply, fetchRecruit} from '@api/recruit';
+import {
+  createRecruitApply,
+  fetchRecruit,
+  updateRecruitApplyCancel,
+} from '@api/recruit';
 import FloatingLinkButton from '@components/FloatingLinkButton';
 import Modal from '@components/ModalSheet';
 import LinearGradient from 'react-native-linear-gradient';
@@ -32,7 +36,7 @@ function JobPostScreen({route, navigation}: Props) {
   const [modalVisible, setModalVisible] =
     useState<SetStateAction<boolean>>(false);
   const [modalTitle, setModalTitle] = useState('');
-  const [modalData, setModalData] = useState<any[]>([]);
+  // const [modalData, setModalData] = useState<any[]>([]);
   const [modalType, setModalType] = useState<string>('');
   const {recruitSeq} = route.params;
   const [recruitInfo, setRecruitInfo] = useState<any>({
@@ -53,6 +57,7 @@ function JobPostScreen({route, navigation}: Props) {
     fetchRecruit(recruitSeq)
       .then(({data}: any) => {
         setRecruitInfo(data);
+        console.log(data);
         data.dates.forEach((date: any) => {
           date.isSelected = false;
         });
@@ -98,24 +103,49 @@ function JobPostScreen({route, navigation}: Props) {
       });
   }, [getRecruitInfo, recruitDates, recruitInfo.seq, resumes]);
 
+  const onCancelApply = useCallback(() => {
+    const dates: any[] = [];
+    recruitDates.forEach((date: any) => {
+      if (date.isSelected) {
+        const applySeq = recruitInfo.applyInfo.find((item: any) => {
+          return item.recruitDateSeq === date.seq;
+        }).seq;
+
+        return dates.push(applySeq);
+      }
+    });
+    const data = {recruitDateSeqs: dates};
+
+    updateRecruitApplyCancel(data)
+      .then(() => {
+        toast.success({message: '지원이 취소되었어요!'});
+        setModalVisible(false);
+        getRecruitInfo();
+      })
+      .catch((e: any) => {
+        toast.error({message: e.message});
+      });
+  }, [getRecruitInfo, recruitDates]);
+
   useEffect(() => {
     getRecruitInfo();
     getResumeList();
   }, [getRecruitInfo, getResumeList]);
-  // useEffect(() => {
-  //   setResumes(() => {
-  //     return resumes.map((resume: any) => {
-  //       resume.isSelected = false;
-  //       return resume;
-  //     });
-  //   });
-  //   setRecruitDates(() => {
-  //     return recruitDates.map((date: any) => {
-  //       date.isSelected = false;
-  //       return date;
-  //     });
-  //   });
-  // }, [modalVisible, recruitDates, resumes]);
+
+  useEffect(() => {
+    setResumes(() => {
+      return resumes.map((resume: any) => {
+        resume.isSelected = false;
+        return resume;
+      });
+    });
+    setRecruitDates(() => {
+      return recruitDates.map((date: any) => {
+        date.isSelected = false;
+        return date;
+      });
+    });
+  }, [modalVisible]);
 
   useEffect(() => {
     const selectResume = resumes.find((resume: any) => {
@@ -137,47 +167,6 @@ function JobPostScreen({route, navigation}: Props) {
       return;
     }
   }, [recruitDates, resumes]);
-
-  const APPLY = [
-    {
-      value: '2023.12.31 / 14:00 ~ 18:00',
-      disabled: false,
-      selected: false,
-      job: () => {},
-    },
-    {
-      value: '2023.12.31 / 14:00 ~ 18:00',
-      disabled: true,
-      selected: false,
-      job: () => {},
-    },
-    {
-      value: '2023.12.31 / 14:00 ~ 18:00',
-      disabled: false,
-      selected: true,
-      job: () => {},
-    },
-  ];
-  const CANCEL = [
-    {
-      value: '2023.12.31 / 14:00 ~ 18:00',
-      disabled: false,
-      selected: false,
-      job: () => {},
-    },
-    {
-      value: '2023.12.31 / 14:00 ~ 18:00',
-      disabled: true,
-      selected: false,
-      job: () => {},
-    },
-    {
-      value: '2023.12.31 / 14:00 ~ 18:00',
-      disabled: false,
-      selected: true,
-      job: () => {},
-    },
-  ];
 
   const onSelectResume = useCallback(
     (seq: number) => {
@@ -212,13 +201,11 @@ function JobPostScreen({route, navigation}: Props) {
   const apply = () => {
     setModalType('apply');
     setModalTitle('지원하기');
-    setModalData(APPLY);
     openModal();
   };
   const cancel = () => {
     setModalType('cancel');
     setModalTitle('지원 취소할 날짜 및 시간을 선택하세요. ');
-    setModalData(CANCEL);
     openModal();
   };
 
@@ -559,33 +546,34 @@ function JobPostScreen({route, navigation}: Props) {
             )}
             {modalType === 'cancel' && (
               <View>
-                {modalData.map((item, index) => {
+                {recruitDates.map((item, index) => {
                   return (
                     <View
                       key={index}
                       style={[common.modalItemBox, {paddingVertical: 4}]}>
                       <Pressable
-                        onPress={item.job}
+                        onPress={() => onSelectRecruitDate(item.seq)}
                         disabled={item.disabled}
-                        key={index}
                         style={[
                           common.modalSelectBox,
-                          item.selected && {borderColor: BLUE.DEFAULT},
-                          item.disabled && {opacity: 0.5},
+                          item.isSelected && {borderColor: BLUE.DEFAULT},
+                          !item.isApplied && {opacity: 0.5},
                         ]}>
                         <View style={[common.rowCenter]}>
                           <Image
                             source={iconPath.CALENDAR}
                             style={[common.size24, common.mr8]}
                           />
-                          <Text style={common.modalText}>{item.value}</Text>
+                          <Text style={common.modalText}>
+                            {item.day + '/' + item.time}
+                          </Text>
                         </View>
-                        {item.selected ? (
+                        {item.isSelected && (
                           <Image
                             style={common.size24}
                             source={iconPath.CHECK}
                           />
-                        ) : null}
+                        )}
                       </Pressable>
                     </View>
                   );
@@ -597,7 +585,9 @@ function JobPostScreen({route, navigation}: Props) {
                     start={{x: 0, y: 1}}
                     end={{x: 1, y: 1}}
                     colors={['#74ebe4', '#3962f3']}>
-                    <Pressable style={common.borderInnerBox}>
+                    <Pressable
+                      style={common.borderInnerBox}
+                      onPress={() => onCancelApply()}>
                       <Text style={[common.text_m, common.innerText]}>
                         지원 취소하기
                       </Text>

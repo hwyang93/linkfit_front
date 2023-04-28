@@ -20,6 +20,10 @@ export function createRecruitApply(seq: number, data: object) {
   return request.post(`/recruit/${seq}/apply`, data);
 }
 
+export function updateRecruitApplyCancel(data: object) {
+  return request.patch('/recruit/apply', data);
+}
+
 export function fetchRecruitApplicationsMy() {
   return request.get('/recruit/apply');
 }
