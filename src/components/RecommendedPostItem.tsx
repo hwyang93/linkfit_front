@@ -4,6 +4,9 @@ import BookmarkCounter from '@components/Counter/BookmarkCounter';
 import CommentCounter from '@components/Counter/CommentCounter';
 import {NavigationProp, useNavigation} from '@react-navigation/native';
 import {LoggedInParamList} from '../../AppInner';
+import {useCallback, useState} from 'react';
+import {createCommunityBookmark, deleteCommunityBookmark} from '@api/community';
+import toast from '@hooks/toast';
 
 type listProps = {
   item: any;
@@ -11,38 +14,79 @@ type listProps = {
 
 function RecommendedPostItem({item}: listProps) {
   const navigation = useNavigation<NavigationProp<LoggedInParamList>>();
+  const [postInfo, setPostInfo] = useState<any>(item);
+
+  const onClickBookmark = useCallback(() => {
+    if (postInfo.isBookmark === 'N') {
+      createCommunityBookmark(postInfo.seq)
+        .then(() => {
+          toast.success({message: '북마크등록이 완료되었어요!'});
+          setPostInfo({
+            ...postInfo,
+            isBookmark: 'Y',
+            bookmarkCount: postInfo.bookmarkCount + 1,
+          });
+        })
+        .catch((e: any) => {
+          toast.error({message: e.message});
+        });
+    } else {
+      deleteCommunityBookmark(postInfo.seq)
+        .then(() => {
+          toast.success({message: '북마크가 삭제되었어요!'});
+          setPostInfo({
+            ...postInfo,
+            isBookmark: 'N',
+            bookmarkCount: postInfo.bookmarkCount - 1,
+          });
+        })
+        .catch((e: any) => {
+          toast.error({message: e.message});
+        });
+    }
+  }, [postInfo]);
+
   return (
     <Pressable
-      onPress={() => navigation.navigate('CommunityPost', {postSeq: item.seq})}>
+      onPress={() =>
+        navigation.navigate('CommunityPost', {postSeq: postInfo.seq})
+      }>
       <View>
-        <Text style={[common.title, common.fs18]}>{item.title}</Text>
+        <Text style={[common.title, common.fs18]}>{postInfo.title}</Text>
         <View style={[common.rowEnd, common.mb8]}>
-          {item.writer.type === 'COMPANY' ? (
+          {postInfo.writer.type === 'COMPANY' ? (
             <Text style={[common.text_m, common.fwb]}>
-              {item.writer.company?.companyName}
+              {postInfo.writer.company?.companyName}
             </Text>
           ) : (
             <Text style={[common.text_m, common.fwb]}>
-              {item.writer.nickname ? item.writer.nickname : item.writer.name}
+              {postInfo.writer.nickname
+                ? postInfo.writer.nickname
+                : postInfo.writer.name}
             </Text>
           )}
           <Text style={[common.text, common.mh4]}>
-            {item.writer.type === 'INSTRUCTOR'
+            {postInfo.writer.type === 'INSTRUCTOR'
               ? '강사'
-              : item.writer.type === 'COMPANY'
+              : postInfo.writer.type === 'COMPANY'
               ? '센터'
               : '일반'}
           </Text>
-          <Text style={common.text}>{item.updatedAt}</Text>
+          <Text style={common.text}>{postInfo.updatedAt}</Text>
         </View>
-        <Text style={[common.mb8, common.text_m]}>{item.contents}</Text>
+        <Text style={[common.mb8, common.text_m]}>{postInfo.contents}</Text>
         <View style={common.rowCenterBetween}>
           <View style={common.rowCenter}>
-            <BookmarkCounter counter={item.bookmarks.length} />
-            <CommentCounter counter={item.comments.length} />
+            <BookmarkCounter
+              seq={postInfo.seq}
+              isBookmark={postInfo.isBookmark}
+              counter={postInfo.bookmarkCount}
+              onClick={onClickBookmark}
+            />
+            <CommentCounter counter={postInfo.comments.length} />
           </View>
           <View style={[common.filterBox, common.filterBoxActive]}>
-            <Text style={[common.text_m]}>{item.category}</Text>
+            <Text style={[common.text_m]}>{postInfo.category}</Text>
           </View>
         </View>
       </View>
