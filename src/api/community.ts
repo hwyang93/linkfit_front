@@ -19,3 +19,11 @@ export function fetchBookmarkCommunities() {
 export function createCommunityComment(seq: number, data: object) {
   return request.post(`/community/${seq}/comment`, data);
 }
+
+export function createCommunityBookmark(seq: number) {
+  return request.post(`/community/bookmark/${seq}`);
+}
+
+export function deleteCommunityBookmark(seq: number) {
+  return request.delete(`/community/bookmark/${seq}`);
+}
