@@ -4,7 +4,7 @@ import BookmarkCounter from '@components/Counter/BookmarkCounter';
 import CommentCounter from '@components/Counter/CommentCounter';
 import {NavigationProp, useNavigation} from '@react-navigation/native';
 import {LoggedInParamList} from '../../AppInner';
-import {useCallback, useState} from 'react';
+import {useCallback, useEffect, useState} from 'react';
 import {createCommunityBookmark, deleteCommunityBookmark} from '@api/community';
 import toast from '@hooks/toast';
 
@@ -16,11 +16,15 @@ function RecommendedPostItem({item}: listProps) {
   const navigation = useNavigation<NavigationProp<LoggedInParamList>>();
   const [postInfo, setPostInfo] = useState<any>(item);
 
+  useEffect(() => {
+    setPostInfo(item);
+  }, [item]);
+
   const onClickBookmark = useCallback(() => {
     if (postInfo.isBookmark === 'N') {
       createCommunityBookmark(postInfo.seq)
         .then(() => {
-          toast.success({message: '북마크등록이 완료되었어요!'});
+          toast.success({message: '북마크 등록이 완료되었어요!'});
           setPostInfo({
             ...postInfo,
             isBookmark: 'Y',

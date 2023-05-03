@@ -1,4 +1,4 @@
-import {Alert, StyleSheet, View} from 'react-native';
+import {Alert, StyleSheet} from 'react-native';
 import {iconPath} from '@util/iconPath';
 import RecruitComponent from '@components/RecruitComponent';
 import FloatingLinkButton from '@components/FloatingLinkButton';
@@ -8,6 +8,7 @@ import {fetchRecruits} from '@api/recruit';
 import FloatingWriteButton from '@components/FloatingWriteButton';
 import {NavigationProp, useNavigation} from '@react-navigation/native';
 import {LoggedInParamList} from '../../AppInner';
+import toast from '@hooks/toast';
 
 function RecruitListScreen() {
   const navigation = useNavigation<NavigationProp<LoggedInParamList>>();
@@ -20,13 +21,13 @@ function RecruitListScreen() {
         setRecruits(data);
       })
       .catch((e: any) => {
-        Alert.alert(e.message);
+        toast.error({message: e.message});
       });
   }, []);
 
   useEffect(() => {
     getRecruits();
-  }, []);
+  }, [getRecruits]);
 
   const toJobOfferForm = () => {
     navigation.navigate('JobOfferForm');

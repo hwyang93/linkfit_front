@@ -15,14 +15,54 @@ import CommentCounter from '@components/Counter/CommentCounter';
 import Input, {KeyboardTypes} from '@components/Input';
 import LinearGradient from 'react-native-linear-gradient';
 import {WHITE} from '@styles/colors';
-import {useCallback, useState} from 'react';
-import {createCommunityComment} from '@api/community';
+import {useCallback, useEffect, useState} from 'react';
+import {
+  createCommunityBookmark,
+  createCommunityComment,
+  deleteCommunityBookmark,
+} from '@api/community';
 import toast from '@hooks/toast';
+type listProps = {
+  item: any;
+};
 
-function CommunityPostTop({postInfo}: any) {
+function CommunityPostTop({item}: listProps) {
   const [loading, setLoading] = useState<boolean>(false);
+  const [postInfo, setPostInfo] = useState<any>(item);
   const [comment, setComment] = useState('');
   const canGoNext = comment;
+  useEffect(() => {
+    setPostInfo(item);
+  }, [item]);
+  const onClickBookmark = useCallback(() => {
+    if (postInfo.isBookmark === 'N') {
+      createCommunityBookmark(postInfo.seq)
+        .then(() => {
+          toast.success({message: '북마크 등록이 완료되었어요!'});
+          setPostInfo({
+            ...postInfo,
+            isBookmark: 'Y',
+            bookmarkCount: postInfo.bookmarkCount + 1,
+          });
+        })
+        .catch((e: any) => {
+          toast.error({message: e.message});
+        });
+    } else {
+      deleteCommunityBookmark(postInfo.seq)
+        .then(() => {
+          toast.success({message: '북마크가 삭제되었어요!'});
+          setPostInfo({
+            ...postInfo,
+            isBookmark: 'N',
+            bookmarkCount: postInfo.bookmarkCount - 1,
+          });
+        })
+        .catch((e: any) => {
+          toast.error({message: e.message});
+        });
+    }
+  }, [postInfo]);
 
   const createComment = useCallback(() => {
     const data = {
@@ -70,7 +110,12 @@ function CommunityPostTop({postInfo}: any) {
 
       <View style={common.mb16}>
         <View style={common.rowCenter}>
-          <BookmarkCounter counter={postInfo.bookmarks?.length} />
+          <BookmarkCounter
+            seq={postInfo.seq}
+            isBookmark={postInfo.isBookmark}
+            counter={postInfo.bookmarkCount}
+            onClick={onClickBookmark}
+          />
           <CommentCounter counter={postInfo.comments?.length} />
         </View>
       </View>

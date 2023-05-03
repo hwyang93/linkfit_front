@@ -21,9 +21,9 @@ export function createCommunityComment(seq: number, data: object) {
 }
 
 export function createCommunityBookmark(seq: number) {
-  return request.post(`/community/bookmark/${seq}`);
+  return request.post(`/community/${seq}/bookmark`);
 }
 
 export function deleteCommunityBookmark(seq: number) {
-  return request.delete(`/community/bookmark/${seq}`);
+  return request.delete(`/community/${seq}/bookmark`);
 }

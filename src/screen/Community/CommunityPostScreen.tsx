@@ -67,7 +67,7 @@ function CommunityPostScreen({route, navigation}: Props) {
             </View>
           );
         }}
-        ListHeaderComponent={<CommunityPostTop postInfo={post} />}
+        ListHeaderComponent={<CommunityPostTop item={post} />}
         showsVerticalScrollIndicator={false}
         ItemSeparatorComponent={() => (
           <View style={[common.separator, common.mv16]} />
