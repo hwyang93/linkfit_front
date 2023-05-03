@@ -29,7 +29,7 @@ function BookmarkJobOfferComponent() {
       data={bookmarkedRecruits}
       renderItem={renderItem}
       numColumns={2}
-      keyExtractor={item => item.id}
+      keyExtractor={item => 'bookmarkedRecruit' + item.seq}
       ItemSeparatorComponent={() => <View style={{marginBottom: 16}} />}
     />
   );

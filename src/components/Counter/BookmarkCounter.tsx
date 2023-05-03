@@ -1,5 +1,5 @@
 import common from '@styles/common';
-import {Alert, Image, Pressable, Text, View} from 'react-native';
+import {Image, Pressable, Text, View} from 'react-native';
 import {iconPath} from '@util/iconPath';
 
 function BookmarkCounter(props: any) {

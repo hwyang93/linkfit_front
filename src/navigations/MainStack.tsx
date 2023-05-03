@@ -128,14 +128,14 @@ const MainStack = () => {
           component={CommunityPostScreen}
           options={{
             title: '게시글',
-            headerRight: () => (
-              <Pressable
-                onPress={() => {}}
-                hitSlop={10}
-                style={[common.mh4, common.size24]}>
-                <Image source={iconPath.BOOKMARK} style={common.size24} />
-              </Pressable>
-            ),
+            // headerRight: () => (
+            //   <Pressable
+            //     onPress={() => {}}
+            //     hitSlop={10}
+            //     style={[common.mh4, common.size24]}>
+            //     <Image source={iconPath.BOOKMARK} style={common.size24} />
+            //   </Pressable>
+            // ),
           }}
         />
         {/* 커뮤니티 MY 화면 */}

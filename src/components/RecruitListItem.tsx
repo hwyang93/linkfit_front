@@ -11,18 +11,23 @@ import common from '@styles/common';
 import {iconPath} from '@util/iconPath';
 import {NavigationProp, useNavigation} from '@react-navigation/native';
 import {LoggedInParamList} from '../../AppInner';
+import {useCallback, useEffect, useState} from 'react';
+import {createCommunityBookmark, deleteCommunityBookmark} from '@api/community';
+import toast from '@hooks/toast';
+import {createRecruitBookmark, deleteRecruitBookmark} from '@api/recruit';
 
 type ListProps = {
-  item: {
-    seq: number;
-    position: string;
-    title: string;
-    companyName: string;
-    address: string;
-    src: any;
-    // color: string;
-    writer: any;
-  };
+  // item: {
+  //   seq: number;
+  //   position: string;
+  //   title: string;
+  //   companyName: string;
+  //   address: string;
+  //   src: any;
+  //   // color: string;
+  //   writer: any;
+  // };
+  item: any;
 };
 
 const windowWidth = Dimensions.get('window').width;
@@ -30,16 +35,52 @@ const columns2 = (windowWidth - 48) / 2;
 
 function RecruitListItem({item}: ListProps) {
   const navigation = useNavigation<NavigationProp<LoggedInParamList>>();
+  const [recruitInfo, setRecruitInfo] = useState(item);
+
+  useEffect(() => {
+    setRecruitInfo(item);
+  }, [item]);
+
+  const onClickBookmark = useCallback(() => {
+    if (recruitInfo.isBookmark === 'N') {
+      createRecruitBookmark(recruitInfo.seq)
+        .then(() => {
+          toast.success({message: '북마크 등록이 완료되었어요!'});
+          setRecruitInfo({
+            ...recruitInfo,
+            isBookmark: 'Y',
+          });
+        })
+        .catch((e: any) => {
+          toast.error({message: e.message});
+        });
+    } else {
+      deleteRecruitBookmark(recruitInfo.seq)
+        .then(() => {
+          toast.success({message: '북마크가 삭제되었어요!'});
+          setRecruitInfo({
+            ...recruitInfo,
+            isBookmark: 'N',
+          });
+        })
+        .catch((e: any) => {
+          toast.error({message: e.message});
+        });
+    }
+  }, [recruitInfo]);
+
   return (
     <Pressable
       style={styles.itemBox}
-      onPress={() => navigation.navigate('JobPost', {recruitSeq: item.seq})}>
+      onPress={() =>
+        navigation.navigate('JobPost', {recruitSeq: recruitInfo.seq})
+      }>
       <View style={styles.imgBox}>
         <Image
           style={styles.img}
           source={
-            item.writer.profileImage
-              ? {uri: item.writer.profileImage.originFileUrl}
+            recruitInfo.writer.profileImage
+              ? {uri: recruitInfo.writer.profileImage.originFileUrl}
               : iconPath.CENTER_DEFAULT
           }
         />
@@ -47,19 +88,26 @@ function RecruitListItem({item}: ListProps) {
 
       <View>
         {/* 포지션 */}
-        <Text style={[common.text]}>{item.position}</Text>
+        <Text style={[common.text]}>{recruitInfo.position}</Text>
         {/* 제목 */}
         <Text style={[common.text_m, common.fwb]} numberOfLines={1}>
-          {item.title}
+          {recruitInfo.title}
         </Text>
         {/* 업체명 */}
-        <Text style={[common.text_s, common.fwb]}>{item.companyName}</Text>
+        <Text style={[common.text_s, common.fwb]}>
+          {recruitInfo.companyName}
+        </Text>
         {/* 지역 */}
-        <Text style={common.text}>{item.address}</Text>
-        <Pressable
-          style={styles.bookmark}
-          onPress={() => Alert.alert('click', 'bookmark')}>
-          <Image source={iconPath.BOOKMARK} style={[common.size24]} />
+        <Text style={common.text}>{recruitInfo.address}</Text>
+        <Pressable style={styles.bookmark} onPress={() => onClickBookmark()}>
+          <Image
+            source={
+              recruitInfo.isBookmark === 'Y'
+                ? iconPath.BOOKMARK_ON
+                : iconPath.BOOKMARK
+            }
+            style={[common.size24]}
+          />
         </Pressable>
       </View>
     </Pressable>

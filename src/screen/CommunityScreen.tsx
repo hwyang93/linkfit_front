@@ -111,7 +111,7 @@ function CommunityScreen() {
         renderItem={renderItem}
         ListHeaderComponent={() => (
           <View style={common.mb16}>
-            <Text style={[common.title]}>추천 게시글</Text>
+            <Text style={[common.title]}>최근 게시글</Text>
           </View>
         )}
         ItemSeparatorComponent={() => (

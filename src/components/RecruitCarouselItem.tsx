@@ -34,7 +34,15 @@ function RecruitListItem({item}: any) {
         navigation.navigate('JobPost', {recruitSeq: recruitInfo.seq})
       }>
       <View>
-        <Image source={item.src} style={styles.imgBox} resizeMode={'cover'} />
+        <Image
+          source={
+            recruitInfo.writer?.profileImage
+              ? {uri: recruitInfo.writer.profileImage.originFileUrl}
+              : iconPath.CENTER_DEFAULT
+          }
+          style={styles.imgBox}
+          resizeMode={'cover'}
+        />
       </View>
 
       <View style={styles.infoBox}>
@@ -46,11 +54,18 @@ function RecruitListItem({item}: any) {
           {recruitInfo.companyName}
         </Text>
         {/* 지역 */}
-        <Text style={[common.text_s, common.fcg]}>지역표출할거임</Text>
+        <Text style={[common.text_s, common.fcg]}>{recruitInfo.address}</Text>
         <Pressable
           style={styles.bookmark}
           onPress={() => Alert.alert('click', 'bookmark')}>
-          <Image source={iconPath.BOOKMARK} style={[common.size24]} />
+          <Image
+            source={
+              recruitInfo.isBookmark === 'Y'
+                ? iconPath.BOOKMARK_ON
+                : iconPath.BOOKMARK
+            }
+            style={[common.size24]}
+          />
         </Pressable>
       </View>
     </Pressable>
