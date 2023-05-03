@@ -11,7 +11,9 @@ import common from '@styles/common';
 import {iconPath} from '@util/iconPath';
 import {NavigationProp, useNavigation} from '@react-navigation/native';
 import {LoggedInParamList} from '../../AppInner';
-import {useEffect, useState} from 'react';
+import {useCallback, useEffect, useState} from 'react';
+import {createRecruitBookmark, deleteRecruitBookmark} from '@api/recruit';
+import toast from '@hooks/toast';
 
 const windowWidth = Dimensions.get('window').width;
 const imageSize = (windowWidth - 40) / 2;
@@ -27,6 +29,34 @@ function RecruitListItem({item}: any) {
       setRecruitInfo(item);
     }
   }, [item]);
+
+  const onClickBookmark = useCallback(() => {
+    if (recruitInfo.isBookmark === 'N') {
+      createRecruitBookmark(recruitInfo.seq)
+        .then(() => {
+          toast.success({message: '북마크 등록이 완료되었어요!'});
+          setRecruitInfo({
+            ...recruitInfo,
+            isBookmark: 'Y',
+          });
+        })
+        .catch((e: any) => {
+          toast.error({message: e.message});
+        });
+    } else {
+      deleteRecruitBookmark(recruitInfo.seq)
+        .then(() => {
+          toast.success({message: '북마크가 삭제되었어요!'});
+          setRecruitInfo({
+            ...recruitInfo,
+            isBookmark: 'N',
+          });
+        })
+        .catch((e: any) => {
+          toast.error({message: e.message});
+        });
+    }
+  }, [recruitInfo]);
   return (
     <Pressable
       style={styles.slideBox}
@@ -55,9 +85,7 @@ function RecruitListItem({item}: any) {
         </Text>
         {/* 지역 */}
         <Text style={[common.text_s, common.fcg]}>{recruitInfo.address}</Text>
-        <Pressable
-          style={styles.bookmark}
-          onPress={() => Alert.alert('click', 'bookmark')}>
+        <Pressable style={styles.bookmark} onPress={() => onClickBookmark()}>
           <Image
             source={
               recruitInfo.isBookmark === 'Y'
