@@ -21,6 +21,7 @@ import {
   useNavigation,
 } from '@react-navigation/native';
 import {LoggedInParamList} from '../../AppInner';
+import toast from '@hooks/toast';
 
 const windowWidth = Dimensions.get('window').width;
 const columns3 = (windowWidth - 32) / 3;
@@ -96,8 +97,8 @@ function MyScreen() {
         .then(({data}: any) => {
           setMyInfo(data);
         })
-        .catch((message: any) => {
-          console.log(message);
+        .catch((e: any) => {
+          toast.error({message: e.message});
         });
     }
   }, [isFocused]);

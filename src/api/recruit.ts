@@ -47,3 +47,7 @@ export function fetchRecruitApplication(seq: number) {
 export function updateRecruitApplyStatus(seq: number, data: object) {
   return request.patch(`/recruit/${seq}/apply`, data);
 }
+
+export function fetchRecommendedRecruits() {
+  return request.get('/recruit/recommended');
+}

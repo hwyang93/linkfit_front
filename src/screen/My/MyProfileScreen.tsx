@@ -11,16 +11,11 @@ import {Tabs, MaterialTabBar} from 'react-native-collapsible-tab-view';
 import {BLUE, GRAY, WHITE} from '@styles/colors';
 import common from '@styles/common';
 import {iconPath} from '@util/iconPath';
-import {
-  NavigationProp,
-  RouteProp,
-  useNavigation,
-  useRoute,
-} from '@react-navigation/native';
+import {NavigationProp, useNavigation} from '@react-navigation/native';
 import {LoggedInParamList} from '../../../AppInner';
 import {useCallback, useEffect, useState} from 'react';
-import {useSelector} from 'react-redux';
-import {RootState} from '@store/reducer';
+import {fetchMemberInfo} from '@api/member';
+import toast from '@hooks/toast';
 
 // const HEADER_HEIGHT = 250;
 
@@ -28,30 +23,37 @@ const width = Dimensions.get('window').width - 32;
 const tabWidth = width / 2;
 const imageSize = (width - 6) / 3;
 
-// 센터 프로필 상단 영역 시작
 function Header() {
-  // const memberInfo = useSelector((state: RootState) => state.user);
-  // const route = useRoute<RouteProp<LoggedInParamList, 'Profile'>>();
   const navigation = useNavigation<NavigationProp<LoggedInParamList>>();
-  // const [instructor, setInstructor] = useState({});
-  // const [reputation, setReputation] = useState({});
+  const [memberInfo, setMemberInfo] = useState<any>({});
 
-  // console.log('member', memberInfo);
-
+  useEffect(() => {
+    fetchMemberInfo()
+      .then(({data}: any) => {
+        setMemberInfo(data);
+        console.log(data);
+      })
+      .catch((e: any) => {
+        toast.error({message: e.message});
+      });
+  }, []);
   return (
     <View>
       <View style={styles.profileBox}>
         <View style={[common.mr16, styles.thumbnailBox]}>
           <Image
-            source={require('../../assets/images/thumbnail.png')}
+            source={
+              memberInfo.profileImage
+                ? {uri: memberInfo.profileImage.originFileUrl}
+                : iconPath.THUMBNAIL
+            }
             style={common.thumbnail_l}
           />
         </View>
         <View>
           <View style={common.rowCenter}>
             <Text style={[common.text_l, common.fwb, common.mr8]}>
-              {/*{instructor.nickname}*/}
-              닉네임
+              {memberInfo.nickname ? memberInfo.nickname : memberInfo.name}
             </Text>
             <View style={common.rowCenter}>
               <Text style={[common.text_s, {color: BLUE.DEFAULT}]}>
@@ -66,16 +68,12 @@ function Header() {
 
           <View style={common.rowCenter}>
             <Text style={[common.text_m, common.fwb, common.mr8]}>
-              필라테스
+              {memberInfo.field}
             </Text>
-            <Text style={[common.text]}>
-              {/*{instructor.career}*/}
-              3년
-            </Text>
+            <Text style={[common.text]}>{memberInfo.career}</Text>
             <Text style={[common.mh8]}>|</Text>
             <Text style={[common.text_s, common.fcg]}>
-              {/*{instructor.address}*/}
-              서울 · 송파구
+              {memberInfo.address}
             </Text>
           </View>
 
@@ -95,7 +93,7 @@ function Header() {
 
         <Pressable
           style={styles.pencil}
-          onPress={() => navigation.navigate('ProfileEdit')}>
+          onPress={() => navigation.navigate('ProfileEdit', {memberInfo})}>
           <Image source={iconPath.PENCIL_B} style={[common.size24]} />
         </Pressable>
       </View>
@@ -106,8 +104,6 @@ function Header() {
 
 function MyProfileScreen({memberInfo}: any) {
   const navigation = useNavigation<NavigationProp<LoggedInParamList>>();
-
-  console.log('그럼 여기는', memberInfo);
 
   const tab1Data = [
     {src: require('@images/instructor_01.png')},

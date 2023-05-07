@@ -11,3 +11,7 @@ export function fetchInstructor(seq: number) {
 export function createInstructorSuggest(data: object) {
   return request.post('/instructor/suggest', data);
 }
+
+export function fetchRecommendedInstructors() {
+  return request.get('/instructor/recommended');
+}

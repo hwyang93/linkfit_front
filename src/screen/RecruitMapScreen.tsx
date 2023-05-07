@@ -337,7 +337,7 @@ function RecruitMapScreen() {
                   longitude: item.longitude,
                 }}
                 onPress={openModal2}>
-                <Image source={item.icon} style={{width: 48, height: 48}} />
+                <Image source={item.icon} style={{width: 24, height: 24}} />
               </Marker>
             );
           })}

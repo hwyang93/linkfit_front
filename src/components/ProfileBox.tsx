@@ -29,7 +29,7 @@ function ProfileBox({memberInfo}: any) {
             <Text style={[common.text_l, common.fwb, common.mr8]}>
               {!memberInfo.nickname ? memberInfo.name : memberInfo.nickname}
             </Text>
-            {memberInfo.type === 'INSTRUCTOR' ? (
+            {memberInfo.type === 'INSTRUCTOR' && (
               <View style={common.rowCenter}>
                 <Text style={[common.text_s, {color: BLUE.DEFAULT}]}>
                   인증강사
@@ -39,8 +39,6 @@ function ProfileBox({memberInfo}: any) {
                   source={iconPath.CERTIFICATION}
                 />
               </View>
-            ) : (
-              ''
             )}
           </View>
 
