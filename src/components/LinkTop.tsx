@@ -5,9 +5,23 @@ import {WHITE} from '@styles/colors';
 import RecruitCarousel from '@components/RecruitCarousel';
 import {NavigationProp, useNavigation} from '@react-navigation/native';
 import {LoggedInParamList} from '../../AppInner';
+import {useEffect, useState} from 'react';
+import toast from '@hooks/toast';
+import {fetchRecommendedRecruits} from '@api/recruit';
 
 function LinkTop() {
   const screenWidth = Dimensions.get('window').width;
+  const [recruits, setRecruits] = useState<any[]>([]);
+  useEffect(() => {
+    fetchRecommendedRecruits()
+      .then(({data}: any) => {
+        setRecruits(data);
+      })
+      .catch((e: any) => {
+        toast.error({message: e.message});
+      });
+  }, []);
+
   const LINKS = [
     {
       seq: 1,
@@ -81,7 +95,7 @@ function LinkTop() {
           <RecruitCarousel
             gap={8}
             offset={32}
-            links={LINKS}
+            links={recruits}
             pageWidth={screenWidth - (8 + 32) / 2}
           />
         </View>

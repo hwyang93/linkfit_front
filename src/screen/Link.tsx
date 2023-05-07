@@ -16,7 +16,7 @@ import {iconPath} from '@util/iconPath';
 import FloatingWriteButton from '@components/FloatingWriteButton';
 import Modal from '@components/ModalSheet';
 import {SetStateAction, useCallback, useEffect, useState} from 'react';
-import {fetchInstructors} from '@api/instructor';
+import {fetchRecommendedInstructors} from '@api/instructor';
 import {
   NavigationProp,
   useFocusEffect,
@@ -50,9 +50,9 @@ function Link() {
   const [modalVisible, setModalVisible] =
     useState<SetStateAction<boolean>>(false);
 
-  const [instructors, setInstructors] = useState(() => []);
+  const [instructors, setInstructors] = useState<any[]>([]);
   useEffect(() => {
-    fetchInstructors()
+    fetchRecommendedInstructors()
       .then(({data}: any) => {
         setInstructors(data);
       })
@@ -88,7 +88,7 @@ function Link() {
     <View style={styles.container}>
       <FlatList
         data={instructors}
-        keyExtractor={(item, index) => index.toString()}
+        keyExtractor={item => 'recommendedInstructor' + item.seq}
         renderItem={renderItem}
         ListHeaderComponent={<LinkTop />}
         ItemSeparatorComponent={() => <View style={common.separator} />}
