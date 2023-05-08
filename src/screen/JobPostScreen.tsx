@@ -41,6 +41,7 @@ function JobPostScreen({route, navigation}: Props) {
   const {recruitSeq} = route.params;
   const [recruitInfo, setRecruitInfo] = useState<any>({
     dates: [{day: '', time: ''}],
+    writer: {},
   });
   const [resumes, setResumes] = useState<any[]>([]);
   const [recruitDates, setRecruitDates] = useState<any[]>([]);
@@ -332,13 +333,14 @@ function JobPostScreen({route, navigation}: Props) {
               />
             </MapView>
           </View>
-
-          <View>
-            <Text style={[common.mb8, common.text_m, common.fwb]}>
-              센터 정보
-            </Text>
-            <CenterInfoComponent link={recruitInfo} />
-          </View>
+          {recruitInfo.writer.type === 'COMPANY' && (
+            <View>
+              <Text style={[common.mb8, common.text_m, common.fwb]}>
+                센터 정보
+              </Text>
+              <CenterInfoComponent centerInfo={recruitInfo.writer} />
+            </View>
+          )}
 
           {/* 지원 취소하기 버튼 */}
           <View style={common.mt40}>
