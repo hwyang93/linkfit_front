@@ -6,17 +6,12 @@ import {NavigationProp, useNavigation} from '@react-navigation/native';
 import {LoggedInParamList} from '../../AppInner';
 
 type CenterInfoProps = {
-  title?: string;
-  type?: string;
-  location?: string;
-  tel?: number;
-  link?: any;
+  centerInfo: any;
 };
 
-function CenterInfoComponent({link}: CenterInfoProps) {
+function CenterInfoComponent({centerInfo}: CenterInfoProps) {
   const navigation = useNavigation<NavigationProp<LoggedInParamList>>();
   // console.log('centerInfoComponent.tsx', link.title);
-
   // todo: 전화걸기 (시뮬레이션 환경에선 안됨)
   // import { Linking } from 'react-native';
   // () => Linking.openURL(`tel:01099003171`)
@@ -24,19 +19,26 @@ function CenterInfoComponent({link}: CenterInfoProps) {
   return (
     <Pressable
       onPress={() =>
-        navigation.navigate('CenterInfo', {memberSeq: link.memberSeq})
+        navigation.navigate('CenterInfo', {memberSeq: centerInfo.seq})
       }>
-      <View style={common.mb16}>
-        <Image
-          source={require('../assets/images/center_01.png')}
-          resizeMode={'cover'}
-          style={common.imgBox}
-        />
-      </View>
-      <Text style={common.title}>링크 필라테스</Text>
+      {centerInfo.profileImage && (
+        <View style={common.mb16}>
+          <Image
+            source={{uri: centerInfo.profileImage.originFileUrl}}
+            resizeMode={'cover'}
+            style={common.imgBox}
+          />
+        </View>
+      )}
+
+      <Text style={common.title}>{centerInfo.company.companyName}</Text>
       <View style={common.rowCenterBetween}>
         <Text style={[common.text_s, {color: GRAY.DARK}]}>
-          필라테스 | 서울 · 송파구
+          {centerInfo.company.field +
+            ' | ' +
+            centerInfo.company.address +
+            ' · ' +
+            centerInfo.company.addressDetail}
         </Text>
         <View style={common.rowCenterBetween}>
           <Pressable
@@ -44,15 +46,22 @@ function CenterInfoComponent({link}: CenterInfoProps) {
             onPress={() => Alert.alert('전화', '전화를 걸어주세용')}>
             <Image source={iconPath.PHONE} style={common.size24} />
           </Pressable>
-          <Pressable
-            style={common.mh4}
-            onPress={() => Alert.alert('쪽지', '쪽지를 보내주세용')}>
-            <Image source={iconPath.MESSAGE} style={common.size24} />
-          </Pressable>
+          {/*<Pressable*/}
+          {/*  style={common.mh4}*/}
+          {/*  onPress={() => Alert.alert('쪽지', '쪽지를 보내주세용')}>*/}
+          {/*  <Image source={iconPath.MESSAGE} style={common.size24} />*/}
+          {/*</Pressable>*/}
           <Pressable
             style={common.mh4}
             onPress={() => Alert.alert('하트', '하트를 눌러주세용')}>
-            <Image source={iconPath.FAVORITE} style={common.size24} />
+            <Image
+              source={
+                centerInfo.isFollow === 'Y'
+                  ? iconPath.FAVORITE_ON
+                  : iconPath.FAVORITE
+              }
+              style={common.size24}
+            />
           </Pressable>
         </View>
       </View>

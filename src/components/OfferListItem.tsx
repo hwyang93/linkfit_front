@@ -23,11 +23,10 @@ function OfferListItem({offer, button}: offerProps) {
   }, [offer]);
 
   const moreLoad = () => {
-    setShowingItems(offer.slice(0, showingItems.length + 4));
-    if (showingItems.length + 4 > offer.length) {
+    if (!isMore) {
+      setShowingItems(offer.slice(0, offer.length));
       setIsMore(true);
-    }
-    if (isMore && showingItems.length + 4 > offer.length) {
+    } else {
       setShowingItems(offer.slice(0, 1));
       setIsMore(false);
     }

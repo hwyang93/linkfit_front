@@ -8,7 +8,6 @@ type Props = {
 };
 
 function EmptySet({text}: Props) {
-  console.log(text);
   return (
     <View style={styles.container}>
       <Image source={iconPath.EMPTY} style={styles.empty} />
