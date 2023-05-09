@@ -81,7 +81,8 @@ function Link() {
   }
 
   const openModal = () => {
-    setModalVisible(true);
+    navigation.navigate('JobOfferForm');
+    // setModalVisible(true);
   };
 
   return (

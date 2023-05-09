@@ -38,7 +38,9 @@ function CertifyInstructorFormScreen() {
     type: string | undefined;
     uri: string | undefined;
   }>({name: undefined, type: undefined, uri: undefined}); // file 주소
-  const [licenceFileName, setLicenceFileName] = useState(''); // file 이름
+  const [licenceFileName, setLicenceFileName] = useState<string | undefined>(
+    '',
+  ); // file 이름
 
   const onRegisterLicence = useCallback(() => {
     const formData = new FormData();

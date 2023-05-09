@@ -39,7 +39,9 @@ function CenterInfoTop({centerInfo, recruits, fromMy}: Props) {
             }
             style={common.size24}
           />
-          <Text style={[common.text_m, common.fwb]}>23</Text>
+          <Text style={[common.text_m, common.fwb]}>
+            {centerInfo.followerCount}
+          </Text>
         </View>
         {fromMy ? (
           <Pressable

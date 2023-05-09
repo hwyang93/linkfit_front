@@ -225,13 +225,16 @@ function JobPostScreen({route, navigation}: Props) {
           onScroll={onScrollHandler}>
           {/* 구인공고 탑 메인 */}
           <View style={common.mb40}>
-            <View style={common.mb16}>
-              <Image
-                source={require('../assets/images/job_01.png')}
-                resizeMode={'cover'}
-                style={styles.imgBox}
-              />
-            </View>
+            {recruitInfo.writer.profileImage && (
+              <View style={common.mb16}>
+                <Image
+                  source={{uri: recruitInfo.writer.profileImage.originFileUrl}}
+                  resizeMode={'cover'}
+                  style={styles.imgBox}
+                />
+              </View>
+            )}
+
             <Text style={[common.mb16, common.title_l]}>
               {recruitInfo.title}
             </Text>

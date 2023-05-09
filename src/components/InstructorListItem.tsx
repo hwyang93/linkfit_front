@@ -15,6 +15,7 @@ type ListProps = {
     nickname: string;
     address: string;
     followerCount: number;
+    profileImage: any;
   };
 };
 
@@ -39,7 +40,11 @@ function InstructorListItem({item}: ListProps) {
         style={common.mr16}
         onPress={() => navigation.navigate('Profile', {memberSeq: item.seq})}>
         <Image
-          source={require('../assets/images/thumbnail.png')}
+          source={
+            item.profileImage
+              ? {uri: item.profileImage.originFileUrl}
+              : iconPath.THUMBNAIL
+          }
           style={styles.thumbnail}
         />
       </Pressable>
