@@ -3,6 +3,7 @@ import {refreshToken} from '@api/auth';
 const axios = require('axios').default;
 import EncryptedStorage from 'react-native-encrypted-storage';
 import {Platform} from 'react-native';
+import toast from '@hooks/toast';
 
 const uri =
   process.env.NODE_ENV === 'production'
@@ -60,8 +61,8 @@ service.interceptors.response.use(
           await EncryptedStorage.setItem('accessToken', data.accessToken);
           service(originalRequest);
         })
-        .catch((error: any) => {
-          console.log(error);
+        .catch((e: any) => {
+          toast.error({message: e.message});
         });
     }
     return Promise.reject(error.response.data);

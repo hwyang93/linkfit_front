@@ -1,13 +1,10 @@
 import {
   Image,
-  PermissionsAndroid,
-  Platform,
   Pressable,
   StyleSheet,
   Text,
   View,
   ActivityIndicator,
-  Alert,
 } from 'react-native';
 import {iconPath} from '@util/iconPath';
 import LocationButton from '@components/LocationButton';
@@ -59,7 +56,6 @@ function RecruitMapScreen() {
   const [modalVisible2, setModalVisible2] =
     useState<SetStateAction<boolean>>(false);
   const [modalTitle, setModalTitle] = useState('');
-  const [modalTitle2, setModalTitle2] = useState('');
   const [modalData, setModalData] = useState<any[]>([]);
   const [selectedFilter, setSelectedFilter] = useState('');
 
@@ -71,7 +67,6 @@ function RecruitMapScreen() {
           latitude,
           longitude,
         });
-        console.log(latitude, longitude);
       },
       error => {
         console.log(error.code, error.message);
@@ -105,7 +100,6 @@ function RecruitMapScreen() {
           latitude,
           longitude,
         });
-        console.log(position);
       },
       error => {
         console.log(error.code, error.message);

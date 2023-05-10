@@ -5,6 +5,7 @@ import {fetchInstructors} from '@api/instructor';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {iconPath} from '@util/iconPath';
 import TopFilter from '@components/TopFilter';
+import toast from '@hooks/toast';
 
 function InstructorListScreen() {
   const [instructors, setInstructors] = useState(() => []);
@@ -52,11 +53,8 @@ function InstructorListScreen() {
       .then(({data}: any) => {
         setInstructors(data);
       })
-      // .catch((e: {message: () => any}) => {
-      //   console.log(e.message());
-      // });
-      .catch((message: any) => {
-        console.log(message);
+      .catch((e: {message: any}) => {
+        toast.error({message: e.message});
       });
   }, []);
 

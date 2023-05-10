@@ -11,7 +11,11 @@ import {Tabs, MaterialTabBar} from 'react-native-collapsible-tab-view';
 import {BLUE, GRAY, WHITE} from '@styles/colors';
 import common from '@styles/common';
 import {iconPath} from '@util/iconPath';
-import {NavigationProp, useNavigation} from '@react-navigation/native';
+import {
+  NavigationProp,
+  useIsFocused,
+  useNavigation,
+} from '@react-navigation/native';
 import {LoggedInParamList} from '../../../AppInner';
 import {useCallback, useEffect, useState} from 'react';
 import {fetchMemberInfo} from '@api/member';
@@ -26,17 +30,18 @@ const imageSize = (width - 6) / 3;
 function Header() {
   const navigation = useNavigation<NavigationProp<LoggedInParamList>>();
   const [memberInfo, setMemberInfo] = useState<any>({});
-
+  const isFocused = useIsFocused();
   useEffect(() => {
-    fetchMemberInfo()
-      .then(({data}: any) => {
-        setMemberInfo(data);
-        console.log(data);
-      })
-      .catch((e: any) => {
-        toast.error({message: e.message});
-      });
-  }, []);
+    if (isFocused) {
+      fetchMemberInfo()
+        .then(({data}: any) => {
+          setMemberInfo(data);
+        })
+        .catch((e: any) => {
+          toast.error({message: e.message});
+        });
+    }
+  }, [isFocused]);
   return (
     <View>
       <View style={styles.profileBox}>

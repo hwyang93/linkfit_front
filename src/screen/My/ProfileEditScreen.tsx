@@ -23,6 +23,7 @@ import {
 } from '@react-navigation/native';
 import {LoggedInParamList} from '../../../AppInner';
 import {Asset, launchImageLibrary, MediaType} from 'react-native-image-picker';
+import toast from '@hooks/toast';
 
 function ProfileEditScreen() {
   const navigation = useNavigation<NavigationProp<LoggedInParamList>>();
@@ -39,7 +40,7 @@ function ProfileEditScreen() {
     },
   ]);
   const [loading, setLoading] = useState<boolean>(false);
-  const [imageUri, setImageUri] = useState<{uri: string}>({});
+  const [imageUri, setImageUri] = useState<any>({});
   const [imageObj, setImageObj] = useState<{
     name: string | undefined;
     type: string | undefined;
@@ -63,16 +64,17 @@ function ProfileEditScreen() {
     formData.append('intro', intro);
     formData.append('field', field);
     formData.append('links', links);
-    formData.append('file', imageObj);
+    if (imageObj.uri) {
+      formData.append('file', imageObj);
+    }
 
     await updateProfile(formData)
       .then(() => {
-        Alert.alert('프로필이 수정되었습니다.');
+        toast.success({message: '프로필이 수정되었습니다.'});
         navigation.goBack();
       })
-      .catch((e: {message: any}) => {
-        console.log(e);
-        Alert.alert(e.message);
+      .catch((e: any) => {
+        toast.error({message: e.message});
       });
   }, [nickname, intro, field, links, imageObj, navigation]);
 
