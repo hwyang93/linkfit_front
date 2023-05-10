@@ -1,18 +1,28 @@
-import {Alert, StyleSheet} from 'react-native';
+import {Alert, Image, Pressable, StyleSheet, Text, View} from 'react-native';
 import {iconPath} from '@util/iconPath';
 import RecruitComponent from '@components/RecruitComponent';
 import FloatingLinkButton from '@components/FloatingLinkButton';
 import {SafeAreaView} from 'react-native-safe-area-context';
-import {useCallback, useEffect, useState} from 'react';
+import {SetStateAction, useCallback, useEffect, useState} from 'react';
 import {fetchRecruits} from '@api/recruit';
 import FloatingWriteButton from '@components/FloatingWriteButton';
 import {NavigationProp, useNavigation} from '@react-navigation/native';
 import {LoggedInParamList} from '../../AppInner';
 import toast from '@hooks/toast';
+import TopFilter from '@components/TopFilter';
+import common from '@styles/common';
+import {BLUE} from '@styles/colors';
+import LinearGradient from 'react-native-linear-gradient';
+import Modal from '@components/ModalSheet';
 
 function RecruitListScreen() {
   const navigation = useNavigation<NavigationProp<LoggedInParamList>>();
   const [recruits, setRecruits] = useState<any[]>([]);
+  const [modalVisible, setModalVisible] =
+    useState<SetStateAction<boolean>>(false);
+  const [modalTitle, setModalTitle] = useState('');
+  const [modalData, setModalData] = useState<any[]>([]);
+  const [selectedFilter, setSelectedFilter] = useState('');
 
   const getRecruits = useCallback(() => {
     const params = {};
@@ -25,6 +35,98 @@ function RecruitListScreen() {
       });
   }, []);
 
+  const [FILTER, setFILTER] = useState([
+    {
+      key: 'position',
+      value: '포지션',
+      job: () => {
+        setSelectedFilter('position');
+        setModalTitle('포지션');
+        setModalData(MODAL);
+        openModal();
+      },
+    },
+    {
+      key: 'type',
+      value: '채용형태',
+      job: () => {
+        setSelectedFilter('type');
+        setModalTitle('채용형태');
+        setModalData(MODAL2);
+        openModal();
+      },
+    },
+    {
+      key: 'time',
+      value: '수업시간',
+      job: () => {
+        setSelectedFilter('time');
+        setModalTitle('수업시간');
+        setModalData(MODAL3);
+        openModal();
+      },
+    },
+  ]);
+  const [MODAL, setMODAL] = useState([
+    {
+      icon: iconPath.LINK,
+      iconOn: iconPath.LINK_ON,
+      value: '전체',
+      selected: false,
+    },
+    {
+      icon: iconPath.PILATES,
+      iconOn: iconPath.PILATES_ON,
+      value: '필라테스',
+      selected: false,
+    },
+    {
+      icon: iconPath.YOGA,
+      iconOn: iconPath.YOGA_ON,
+      value: '요가',
+      selected: false,
+    },
+  ]);
+  const [MODAL2, setMODAL2] = useState([
+    {
+      value: '전임',
+      selected: false,
+    },
+    {
+      value: '파트타임',
+      selected: false,
+    },
+    {
+      value: '대강',
+      selected: false,
+    },
+    {
+      value: '실장',
+      selected: false,
+    },
+  ]);
+  const [MODAL3, setMODAL3] = useState([
+    {
+      value: '오전',
+      selected: false,
+    },
+    {
+      value: '오후',
+      selected: false,
+    },
+    {
+      value: '전일',
+      selected: false,
+    },
+    {
+      value: '협의',
+      selected: false,
+    },
+  ]);
+  const openModal = () => {
+    setModalVisible(true);
+  };
+
   useEffect(() => {
     getRecruits();
   }, [getRecruits]);
@@ -33,9 +135,88 @@ function RecruitListScreen() {
     navigation.navigate('JobOfferForm');
   };
 
+  const onSelectFilter = useCallback(
+    (selectItem: any) => {
+      if (selectedFilter === 'position') {
+        setMODAL(() => {
+          return MODAL.map(item => {
+            if (item.value === selectItem.value) {
+              item.selected = !item.selected;
+            } else {
+              item.selected = false;
+            }
+            return item;
+          });
+        });
+        setFILTER(() => {
+          return FILTER.map(filter => {
+            if (filter.key === 'position') {
+              const value = modalData.find((item: any) => {
+                return item.selected;
+              })?.value;
+              filter.value = value ? value : '포지션';
+            }
+            return filter;
+          });
+        });
+      } else if (selectedFilter === 'type') {
+        setMODAL2(() => {
+          return MODAL2.map(item => {
+            if (item.value === selectItem.value) {
+              item.selected = !item.selected;
+            } else {
+              item.selected = false;
+            }
+            return item;
+          });
+        });
+        setFILTER(() => {
+          return FILTER.map(filter => {
+            if (filter.key === 'type') {
+              const value = modalData.find((item: any) => {
+                return item.selected;
+              })?.value;
+              filter.value = value ? value : '채용 형태';
+            }
+            return filter;
+          });
+        });
+      } else if (selectedFilter === 'time') {
+        setMODAL3(() => {
+          return MODAL3.map(item => {
+            if (item.value === selectItem.value) {
+              item.selected = !item.selected;
+            } else {
+              item.selected = false;
+            }
+            return item;
+          });
+        });
+        setFILTER(() => {
+          return FILTER.map(filter => {
+            if (filter.key === 'time') {
+              const value = modalData.find((item: any) => {
+                return item.selected;
+              })?.value;
+              filter.value = value ? value : '수업 시간';
+            }
+            return filter;
+          });
+        });
+      }
+      // setModalVisible(false);
+    },
+    [FILTER, MODAL, MODAL2, MODAL3, modalData, selectedFilter],
+  );
+
   return (
     <SafeAreaView edges={['bottom', 'left', 'right']} style={styles.container}>
       {/* 구인공고 */}
+      <View style={{paddingHorizontal: 16}}>
+        {/* 필터 영역 */}
+        <TopFilter data={FILTER} />
+        {/* 필터 영역 */}
+      </View>
       <RecruitComponent
         list={recruits}
         title={'구인 공고'}
@@ -52,6 +233,57 @@ function RecruitListScreen() {
         link={'RecruitMap'}
         title={'지도보기'}
         icon={iconPath.MAP}
+      />
+      <Modal
+        modalVisible={modalVisible}
+        setModalVisible={setModalVisible}
+        title={modalTitle}
+        modalData={modalData}
+        content={
+          <View>
+            {modalData.map((item, index) => {
+              return (
+                <View key={index} style={common.modalItemBox}>
+                  <Pressable
+                    key={index}
+                    onPress={() => onSelectFilter(item)}
+                    style={[common.rowBetween, {width: '100%'}]}>
+                    <View style={[common.rowCenter]}>
+                      {item.icon && (
+                        <Image
+                          style={[common.size24, common.mr10]}
+                          source={item.selected ? item.iconOn : item.icon}
+                        />
+                      )}
+                      <Text
+                        style={[
+                          common.modalText,
+                          item.selected && {color: BLUE.DEFAULT},
+                        ]}>
+                        {item.value}
+                      </Text>
+                    </View>
+                    {item.selected && (
+                      <Image style={common.size24} source={iconPath.CHECK} />
+                    )}
+                  </Pressable>
+                </View>
+              );
+            })}
+            {/* button */}
+            <View>
+              <Pressable style={{width: '100%', marginTop: 40}}>
+                <LinearGradient
+                  style={common.button}
+                  start={{x: 0.1, y: 0.5}}
+                  end={{x: 0.6, y: 1}}
+                  colors={['#74ebe4', '#3962f3']}>
+                  <Text style={common.buttonText}>필터 적용</Text>
+                </LinearGradient>
+              </Pressable>
+            </View>
+          </View>
+        }
       />
     </SafeAreaView>
   );
