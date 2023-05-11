@@ -122,7 +122,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     paddingVertical: 16,
   },
-  thumbnail: {width: 80, height: 80},
+  thumbnail: {width: 80, height: 80, borderRadius: 200},
   rightBox: {
     position: 'absolute',
     bottom: 16,

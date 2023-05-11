@@ -90,8 +90,7 @@ function Header() {
               />
             </Pressable>
             <Text style={[common.text_m, common.fwb, common.mr8]}>
-              {/*{instructor.follower}*/}
-              23
+              {memberInfo.followerCount}
             </Text>
           </View>
         </View>
@@ -107,7 +106,7 @@ function Header() {
 }
 // 센터 프로필 상단 영역 끝
 
-function MyProfileScreen({memberInfo}: any) {
+function MyProfileScreen() {
   const navigation = useNavigation<NavigationProp<LoggedInParamList>>();
 
   const tab1Data = [
