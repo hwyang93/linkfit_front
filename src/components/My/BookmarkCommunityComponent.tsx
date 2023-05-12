@@ -90,7 +90,7 @@ function BookmarkCommunityComponent() {
                       />
                     </Pressable>
                     <Text style={[common.text_m, common.fwb]}>
-                      {bookmark.community.bookmarks.length}
+                      {bookmark.community.bookmarkCount}
                     </Text>
                   </View>
                   <View style={common.rowCenter}>
