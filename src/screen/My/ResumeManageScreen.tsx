@@ -54,7 +54,7 @@ function ResumeManageScreen() {
       selected: false,
     },
     {
-      value: '이려서 이름 변경',
+      value: '이력서 이름 변경',
       selected: false,
     },
     {
@@ -92,38 +92,47 @@ function ResumeManageScreen() {
     <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
       {resumes.map((resume, index) => {
         return (
-          <View key={index} style={[common.basicBox, common.mb8]}>
-            <View style={common.rowCenter}>
-              {resume.isMaster === 'Y' && (
-                <View style={common.resumeBadge}>
-                  <Text
-                    style={[
-                      common.text,
-                      common.fs10,
-                      {color: BLUE.DEFAULT, textAlign: 'center'},
-                    ]}>
-                    대표
-                  </Text>
-                </View>
-              )}
-            </View>
+          <Pressable
+            onPress={() =>
+              navigation.navigate('ResumePreview', {
+                resumeSeq: resume.seq,
+                applySeq: null,
+                recruitSeq: null,
+              })
+            }>
+            <View key={index} style={[common.basicBox, common.mb8]}>
+              <View style={common.rowCenter}>
+                {resume.isMaster === 'Y' && (
+                  <View style={common.resumeBadge}>
+                    <Text
+                      style={[
+                        common.text,
+                        common.fs10,
+                        {color: BLUE.DEFAULT, textAlign: 'center'},
+                      ]}>
+                      대표
+                    </Text>
+                  </View>
+                )}
+              </View>
 
-            <Text style={[common.title, common.mb12]} numberOfLines={1}>
-              {resume.title}
-            </Text>
-            <Text style={[common.text_s, {color: GRAY.DARK}]}>
-              {resume.updatedAt}
-            </Text>
-            <Pressable
-              style={styles.kebabIcon}
-              hitSlop={10}
-              onPress={() => {
-                setSelectedResume(resume);
-                openModal();
-              }}>
-              <Image source={iconPath.KEBAB} style={[common.size24]} />
-            </Pressable>
-          </View>
+              <Text style={[common.title, common.mb12]} numberOfLines={1}>
+                {resume.title}
+              </Text>
+              <Text style={[common.text_s, {color: GRAY.DARK}]}>
+                {resume.updatedAt}
+              </Text>
+              <Pressable
+                style={styles.kebabIcon}
+                hitSlop={10}
+                onPress={() => {
+                  setSelectedResume(resume);
+                  openModal();
+                }}>
+                <Image source={iconPath.KEBAB} style={[common.size24]} />
+              </Pressable>
+            </View>
+          </Pressable>
         );
       })}
 
