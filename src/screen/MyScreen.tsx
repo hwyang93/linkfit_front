@@ -139,6 +139,8 @@ function MyScreen() {
               onPress={() =>
                 navigation.navigate('ResumePreview', {
                   resumeSeq: myInfo.masterResume.seq,
+                  applySeq: null,
+                  recruitSeq: null,
                 })
               }>
               <View style={[common.resumeBadge]}>

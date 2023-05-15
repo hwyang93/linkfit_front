@@ -1,6 +1,5 @@
 import {
   ActivityIndicator,
-  Alert,
   Image,
   Pressable,
   ScrollView,
@@ -48,7 +47,6 @@ function ResumePreviewScreen({route, navigation}: Props) {
           if (data.status === 'PASS') {
             setApplyResult(data.status);
           }
-          console.log(applyResult);
         })
         .catch((e: any) => {
           toast.error({message: e.message});
@@ -81,7 +79,7 @@ function ResumePreviewScreen({route, navigation}: Props) {
           toast.error({message: e.message});
         });
     },
-    [navigation, route.params.applySeq],
+    [navigation, route.params.applySeq, route.params.recruitSeq],
   );
 
   useEffect(() => {
@@ -148,36 +146,39 @@ function ResumePreviewScreen({route, navigation}: Props) {
         <View style={common.mb24}>
           <View style={[common.rowCenter, common.mb8]}>
             <Text style={[common.title, common.mr8]}>{resume.name}</Text>
-            {/*{resume.writer.type === 'INSTRUCTOR' && (*/}
-            {/*)}*/}
-            <View style={common.rowCenter}>
-              <Text style={[common.text_s, {color: BLUE.DEFAULT}]}>
-                인증강사
-              </Text>
-              <Image
-                style={{marginLeft: 2, width: 14, height: 14}}
-                source={iconPath.CERTIFICATION}
-              />
-            </View>
+            {resume.writer?.type === 'INSTRUCTOR' && (
+              <View style={common.rowCenter}>
+                <Text style={[common.text_s, {color: BLUE.DEFAULT}]}>
+                  인증강사
+                </Text>
+
+                <Image
+                  style={{marginLeft: 2, width: 14, height: 14}}
+                  source={iconPath.CERTIFICATION}
+                />
+              </View>
+            )}
           </View>
 
           <View style={[common.rowCenter, common.mb8]}>
             <Text style={[common.text_m, common.fwb, common.mr8]}>
-              필라테스
+              {resume.writer?.field}
             </Text>
             <Text style={[common.text, {alignSelf: 'flex-end'}]}>
-              2년 6개월
+              {resume.writer?.career}
             </Text>
             <Text style={[common.text_m, common.mh8, common.fcg]}>|</Text>
             <Text style={[common.text_m, common.fwb]}>24세</Text>
             <Text style={[common.text_m, common.mh8, common.fcg]}>|</Text>
             <Text style={[common.text_m, common.fwb]}>
-              {/*{resume.writer.gender}*/}
+              {resume.writer?.gender}
             </Text>
           </View>
-          <Text style={[common.text_s, {color: GRAY.DARK}]}>
-            서울 · 강남구 · 역삼동
-          </Text>
+          {resume.writer?.regionAuth && (
+            <Text style={[common.text_s, {color: GRAY.DARK}]}>
+              {`${resume.writer?.regionAuth.region1depth} · ${resume.writer?.regionAuth.region2depth} · ${resume.writer?.regionAuth.region3depth}`}
+            </Text>
+          )}
 
           <Pressable style={styles.phoneIcon} hitSlop={10} onPress={() => {}}>
             <Image source={iconPath.PHONE} style={[common.size24]} />
@@ -189,32 +190,55 @@ function ResumePreviewScreen({route, navigation}: Props) {
           <View style={styles.line} />
           <Text style={[common.text_m, common.mv2]}>{resume.intro}</Text>
         </View>
-
         <View style={common.mb24}>
           <Text style={[common.text_m, common.fwb, common.mr8]}>경력</Text>
           <View style={styles.line} />
-          <Text style={[common.text_m, common.mv2]}>필라테스 전임</Text>
-          <Text style={[common.text_m, common.mv2, common.fcg]}>
-            2022.10.11 ~ 2023.01.10
-          </Text>
+          {resume.careers?.map((career: any) => {
+            return (
+              <View key={'career' + career.seq}>
+                <Text
+                  style={[
+                    common.text_m,
+                    common.mv2,
+                  ]}>{`${career.field} ${career.workType}`}</Text>
+                <Text style={[common.text_m, common.mv2, common.fcg]}>
+                  {`${career.startDate} ~ ${career.endDate}`}
+                </Text>
+              </View>
+            );
+          })}
         </View>
 
         <View style={common.mb24}>
           <Text style={[common.text_m, common.fwb, common.mr8]}>학력</Text>
           <View style={styles.line} />
-          <Text style={[common.text_m, common.mv2]}>링크 고등학교</Text>
-          <Text style={[common.text_m, common.mv2, common.fcg]}>
-            2011.03 ~ 2014.02
-          </Text>
+          {resume.educations?.map((education: any) => {
+            return (
+              <View key={'education' + education.seq}>
+                <Text style={[common.text_m, common.mv2]}>
+                  {education.school}
+                </Text>
+                <Text style={[common.text_m, common.mv2, common.fcg]}>
+                  {`${education.startDate} ~ ${education.endDate}`}
+                </Text>
+              </View>
+            );
+          })}
         </View>
 
         <View style={common.mb24}>
           <Text style={[common.text_m, common.fwb, common.mr8]}>자격증</Text>
           <View style={styles.line} />
-          <Text style={[common.text_m, common.mv2]}>자격증 명</Text>
-          <Text style={[common.text_m, common.mv2, common.fcg]}>
-            2022.01.30 취득
-          </Text>
+          {resume.licence && (
+            <View>
+              <Text style={[common.text_m, common.mv2]}>
+                {resume.licence.licenceNumber}
+              </Text>
+              <Text style={[common.text_m, common.mv2, common.fcg]}>
+                2022.01.30 취득
+              </Text>
+            </View>
+          )}
         </View>
 
         {/* 합격 여부 전달하기 버튼 */}
