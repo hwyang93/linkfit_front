@@ -14,6 +14,7 @@ type selectProps = {
   onChangeSearchInputText?: any;
   textAlign?: string;
   icon?: string;
+  selectKey?: string;
 };
 
 const SelectBox = ({
@@ -24,11 +25,15 @@ const SelectBox = ({
   onChangeSearchInputText,
   textAlign,
   icon,
+  selectKey,
 }: selectProps) => {
   const [focus, setFocus] = useState(false);
   const [, setSelectItem] = useState('');
 
-  const selectHandler = (value: any) => {
+  const selectHandler = (value: any, index: number) => {
+    if (selectKey === 'index') {
+      onSelect(value, index);
+    }
     onSelect(value);
     setSelectItem(value);
   };
@@ -37,8 +42,8 @@ const SelectBox = ({
     <View>
       <SelectDropdown
         data={data}
-        onSelect={selectedItem => {
-          selectHandler(selectedItem);
+        onSelect={(selectedItem, index) => {
+          selectHandler(selectedItem, index);
         }}
         buttonTextAfterSelection={selectedItem => {
           return selectedItem;

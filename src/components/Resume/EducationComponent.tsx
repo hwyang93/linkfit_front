@@ -25,7 +25,7 @@ function EducationComponent({
 }: educationProps) {
   const [school, setSchool] = useState('');
   const [education, setEducation] = useState('');
-  console.log('rendering');
+
   const educationData = ['고등학교 졸업', '대학교 졸업'];
   return (
     <>

@@ -13,11 +13,17 @@ import common from '@styles/common';
 import {iconPath} from '@util/iconPath';
 import Modal from '@components/ModalSheet';
 import {SetStateAction, useCallback, useEffect, useState} from 'react';
-import {NavigationProp, useNavigation} from '@react-navigation/native';
+import {
+  NavigationProp,
+  useIsFocused,
+  useNavigation,
+} from '@react-navigation/native';
 import {LoggedInParamList} from '../../../AppInner';
-import {fetchResumes} from '@api/resume';
+import {deleteResume, fetchResumes, updateResumeMaster} from '@api/resume';
+import toast from '@hooks/toast';
 
 function ResumeManageScreen() {
+  const isFocused = useIsFocused();
   const navigation = useNavigation<NavigationProp<LoggedInParamList>>();
   const [modalVisible, setModalVisible] =
     useState<SetStateAction<boolean>>(false);
@@ -27,18 +33,44 @@ function ResumeManageScreen() {
   const [selectedResume, setSelectedResume] = useState<any>({});
 
   const getResumes = useCallback(() => {
-    fetchResumes()
-      .then(({data}: any) => {
-        setResumes(data);
+    if (isFocused) {
+      fetchResumes()
+        .then(({data}: any) => {
+          setResumes(data);
+        })
+        .catch((e: any) => {
+          Alert.alert(e.message);
+        });
+    }
+  }, [isFocused]);
+
+  const onUpdateResumeMaster = useCallback(() => {
+    updateResumeMaster(selectedResume.seq)
+      .then(() => {
+        closeModel();
+        toast.success({message: '대표이력서 설정이 완료되었어요!'});
+        getResumes();
       })
       .catch((e: any) => {
-        Alert.alert(e.message);
+        toast.error({message: e.message});
       });
-  }, []);
+  }, [getResumes, selectedResume.seq]);
+
+  const onDeleteResume = useCallback(() => {
+    deleteResume(selectedResume.seq)
+      .then(() => {
+        closeModel();
+        toast.success({message: '이력서가 삭제되었습니다.'});
+        getResumes();
+      })
+      .catch((e: any) => {
+        toast.error({message: e.message});
+      });
+  }, [getResumes, selectedResume.seq]);
 
   useEffect(() => {
     getResumes();
-  }, []);
+  }, [getResumes]);
 
   const MODAL = [
     {
@@ -51,7 +83,7 @@ function ResumeManageScreen() {
     },
     {
       value: '대표 이력서로 설정',
-      selected: false,
+      job: () => onUpdateResumeMaster(),
     },
     {
       value: '이력서 이름 변경',
@@ -63,13 +95,14 @@ function ResumeManageScreen() {
     },
     {
       value: '미리보기',
-      selected: false,
-      // job: () => {
-      //   closeModel();
-      //   navigation.navigate('ResumePreview', {
-      //     resumeSeq: selectedResume.seq,
-      //   });
-      // },
+      job: () => {
+        closeModel();
+        navigation.navigate('ResumePreview', {
+          resumeSeq: selectedResume.seq,
+          applySeq: null,
+          recruitSeq: null,
+        });
+      },
     },
     {
       value: '수정',
@@ -77,7 +110,18 @@ function ResumeManageScreen() {
     },
     {
       value: '삭제',
-      selected: false,
+      job: () => {
+        Alert.alert('', '삭제하시겠습니까?', [
+          {
+            text: '취소',
+          },
+          {
+            text: '삭제',
+            onPress: () => onDeleteResume(),
+            style: 'cancel',
+          },
+        ]);
+      },
     },
   ];
 
@@ -90,9 +134,10 @@ function ResumeManageScreen() {
 
   return (
     <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
-      {resumes.map((resume, index) => {
+      {resumes.map(resume => {
         return (
           <Pressable
+            key={'resume_' + resume.seq}
             onPress={() =>
               navigation.navigate('ResumePreview', {
                 resumeSeq: resume.seq,
@@ -100,7 +145,7 @@ function ResumeManageScreen() {
                 recruitSeq: null,
               })
             }>
-            <View key={index} style={[common.basicBox, common.mb8]}>
+            <View style={[common.basicBox, common.mb8]}>
               <View style={common.rowCenter}>
                 {resume.isMaster === 'Y' && (
                   <View style={common.resumeBadge}>
@@ -146,7 +191,7 @@ function ResumeManageScreen() {
               return (
                 <View key={index} style={common.modalItemBox}>
                   <Pressable
-                    // onPress={() => onClickItem(item)}
+                    onPress={item.job}
                     style={[common.rowCenterBetween, {width: '100%'}]}>
                     <Text
                       style={[

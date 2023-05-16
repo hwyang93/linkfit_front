@@ -22,11 +22,13 @@ import {useSelector} from 'react-redux';
 import {RootState} from '@store/reducer';
 import {fetchMemberLicences} from '@api/member';
 import toast from '@hooks/toast';
-
+import {createResume} from '@api/resume';
+import {NativeStackScreenProps} from '@react-navigation/native-stack';
+import {LoggedInParamList} from '../../../AppInner';
+type Props = NativeStackScreenProps<LoggedInParamList, 'ResumePreview'>;
 const GENDER_DATA = [{value: '남자'}, {value: '여자'}];
-function ResumeFormScreen() {
+function ResumeFormScreen({navigation}: Props) {
   const memberInfo = useSelector((state: RootState) => state.user);
-  console.log(memberInfo);
   const [loading, setLoading] = useState<boolean>(false);
   const [title, setTitle] = useState('');
   const [name, setName] = useState(memberInfo.name);
@@ -36,16 +38,16 @@ function ResumeFormScreen() {
   const [phoneNumber, setPhoneNumber] = useState(memberInfo.phone);
   const [licenseSeq, setLicenseSeq] = useState(0);
   const [introduce, setIntroduce] = useState('');
-  const [licenses, setLicenses] = useState([]);
+  const [licenses, setLicenses] = useState<any[]>([]);
   // const licenseData = [''];
 
   const [careers, setCareers] = useState<any>([{}]);
   const [educations, setEducations] = useState<any>([{}]);
 
   useEffect(() => {
-    fetchMemberLicences()
+    const params = {status: 'APPROVAL'};
+    fetchMemberLicences(params)
       .then(({data}: any) => {
-        console.log('licence::::::::');
         setLicenses(data);
       })
       .catch((e: any) => {
@@ -83,6 +85,12 @@ function ResumeFormScreen() {
     setEducations(newEducations);
   };
 
+  const selectLicence = (index: number) => {
+    if (index !== undefined) {
+      setLicenseSeq(licenses[index]?.seq);
+    }
+  };
+
   const onCreateResume = useCallback(() => {
     const data = {
       title: title,
@@ -99,9 +107,18 @@ function ResumeFormScreen() {
       isOpen: 'N',
       careers: careers,
       educations: educations,
+      licenceSeq: licenseSeq,
     };
+    createResume(data)
+      .then(() => {
+        toast.success({message: '이력서 등록이 완료되었어요!'});
+        navigation.goBack();
+      })
+      .catch((e: any) => {
+        toast.error({message: e.message});
+      });
     console.log(data);
-  }, [address, birth, careers, educations, introduce, name, title]);
+  }, [address, birth, careers, educations, introduce, licenseSeq, name, title]);
 
   const canGoNext = true;
 
@@ -266,9 +283,12 @@ function ResumeFormScreen() {
         <View style={common.mb16}>
           <SelectBox
             label={'자격증'}
-            data={licenses}
-            onSelect={(value: any) => setLicenseSeq(value.seq)}
+            data={licenses.map(licence => {
+              return licence.field;
+            })}
+            onSelect={(value: any, index: number) => selectLicence(index)}
             defaultButtonText={'자격증을 선택하세요.'}
+            selectKey={'index'}
           />
         </View>
 

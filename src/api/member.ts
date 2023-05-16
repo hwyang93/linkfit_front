@@ -38,8 +38,8 @@ export function deleteRegionAuth(seq: number) {
   return request.delete(`/member/region/${seq}`);
 }
 
-export function fetchMemberLicences() {
-  return request.get('/member/licence');
+export function fetchMemberLicences(params: object) {
+  return request.get('/member/licence', {params});
 }
 
 export function createMemberLicence(data: object) {
