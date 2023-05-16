@@ -35,7 +35,7 @@ function CertifyInstructorScreen() {
   >([]);
 
   const getMemberLicences = useCallback(() => {
-    fetchMemberLicences()
+    fetchMemberLicences({})
       .then(({data}: any) => {
         setLicenses(data);
       })
@@ -46,7 +46,7 @@ function CertifyInstructorScreen() {
 
   useEffect(() => {
     if (isFocused) {
-      fetchMemberLicences()
+      fetchMemberLicences({})
         .then(({data}: any) => {
           setLicenses(data);
         })

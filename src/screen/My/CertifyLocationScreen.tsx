@@ -108,9 +108,7 @@ function CertifyLocationScreen() {
 
   const onDeleteRegion = useCallback(() => {
     deleteRegionAuth(selectedRegion.seq)
-      .then(() => {
-        console.log();
-      })
+      .then(() => {})
       .catch((e: any) => {
         toast.error({message: e.message});
       });
