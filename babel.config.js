@@ -27,7 +27,7 @@ module.exports = {
           '@store': './src/store',
           '@images': './src/assets/images',
           '@styles': './src/styles/',
-          '@util': './src/util/',
+          '@util': './src/utils/',
         },
       },
     ],
