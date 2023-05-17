@@ -8,7 +8,7 @@ import {
 } from 'react-native';
 import common from '@styles/common';
 import {useState} from 'react';
-import {iconPath} from '@util/iconPath';
+import {iconPath} from '@/utils/iconPath';
 import {BLUE} from '@styles/colors';
 import LinearGradient from 'react-native-linear-gradient';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';

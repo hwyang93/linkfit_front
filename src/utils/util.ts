@@ -1,4 +1,6 @@
 // email 형식 확인
+import moment from 'moment/moment';
+
 export const validateEmail = (email: string) => {
   const regex =
     /^[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/;
@@ -16,4 +18,9 @@ export const validatePassword = (password: string) => {
 export const removeWhitespace = (text: string) => {
   const regex = /\s/g;
   return text.replace(regex, '');
+};
+
+export const dateFormatter = (date: any, format: string) => {
+  const dateObj = new Date(date);
+  return moment(dateObj).format(format);
 };

@@ -50,11 +50,19 @@ function CareerComponent({
       <View style={common.mb16}>
         <View style={common.row}>
           <View style={[common.mr8, {width: columns2}]}>
-            <DatePicker label={'입사'} placeholder={'입사 날짜'} />
+            <DatePicker
+              label={'입사'}
+              placeholder={'입사 날짜'}
+              onSelectDate={onSelectStartDate}
+            />
           </View>
 
           <View style={{width: columns2}}>
-            <DatePicker label={'퇴사'} placeholder={'퇴사 날짜'} />
+            <DatePicker
+              label={'퇴사'}
+              placeholder={'퇴사 날짜'}
+              onSelectDate={onSelectEndDate}
+            />
           </View>
         </View>
       </View>

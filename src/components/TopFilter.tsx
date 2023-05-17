@@ -1,5 +1,5 @@
 import {FlatList, Image, Pressable, StyleSheet, Text, View} from 'react-native';
-import {iconPath} from '@util/iconPath';
+import {iconPath} from '@/utils/iconPath';
 import {GRAY} from '@styles/colors';
 import common from '@styles/common';
 

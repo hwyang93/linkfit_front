@@ -13,7 +13,7 @@ import Input, {KeyboardTypes} from '@components/Input';
 import {useCallback, useState} from 'react';
 import BirthdayPicker from '@components/BirthdayPicker';
 import SelectBox from '@components/SelectBox';
-import {iconPath} from '@util/iconPath';
+import {iconPath} from '@/utils/iconPath';
 import LinearGradient from 'react-native-linear-gradient';
 import {Asset, launchImageLibrary, MediaType} from 'react-native-image-picker';
 import {useSelector} from 'react-redux';

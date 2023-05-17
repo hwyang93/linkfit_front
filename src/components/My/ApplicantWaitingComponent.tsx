@@ -14,7 +14,7 @@ import {SetStateAction, useCallback, useEffect, useState} from 'react';
 import Modal from '@components/ModalSheet';
 import TopFilter from '@components/TopFilter';
 import common from '@styles/common';
-import {iconPath} from '@util/iconPath';
+import {iconPath} from '@/utils/iconPath';
 
 function ApplicantWaitingComponent({list}: any) {
   const navigation = useNavigation<NavigationProp<LoggedInParamList>>();

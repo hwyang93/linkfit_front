@@ -7,7 +7,7 @@ import MessageScreen from '@screen/MessageScreen';
 import MyScreen from '@screen/MyScreen';
 import {LoggedInParamList} from '../../AppInner';
 import common from '@styles/common';
-import {iconPath} from '@util/iconPath';
+import {iconPath} from '@/utils/iconPath';
 import MyHeader from '@components/Header/MyHeader';
 import LinkHeader from '@components/Header/LinkHeader';
 import {useSelector} from 'react-redux';

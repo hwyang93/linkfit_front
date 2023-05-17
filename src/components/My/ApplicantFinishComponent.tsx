@@ -14,7 +14,7 @@ import TopFilter from '@components/TopFilter';
 import ApplicantListItem from '@components/My/ApplicantListItem';
 import Modal from '@components/ModalSheet';
 import common from '@styles/common';
-import {iconPath} from '@util/iconPath';
+import {iconPath} from '@/utils/iconPath';
 
 function ApplicantFinishComponent({list}: any) {
   const navigation = useNavigation<NavigationProp<LoggedInParamList>>();

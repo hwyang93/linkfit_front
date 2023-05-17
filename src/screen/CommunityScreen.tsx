@@ -5,7 +5,7 @@ import common from '@styles/common';
 
 import CommunityTop from '@components/CommunityTop';
 import RecommendedPostItem from '@components/RecommendedPostItem';
-import {iconPath} from '@util/iconPath';
+import {iconPath} from '@/utils/iconPath';
 import FloatingWriteButton from '@components/FloatingWriteButton';
 import {
   NavigationProp,

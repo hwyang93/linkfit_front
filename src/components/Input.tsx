@@ -2,7 +2,7 @@ import {useState} from 'react';
 import {Image, StyleSheet, Text, TextInput, View} from 'react-native';
 import common from '@styles/common';
 import {GRAY, INPUT} from '@styles/colors';
-import {iconPath} from '@util/iconPath';
+import {iconPath} from '@/utils/iconPath';
 
 export const KeyboardTypes = {
   DEFAULT: 'default',

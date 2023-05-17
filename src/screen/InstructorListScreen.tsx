@@ -3,7 +3,7 @@ import {StyleSheet, Text, View} from 'react-native';
 import InstructorComponent from '@components/InstructorComponent';
 import {fetchInstructors} from '@api/instructor';
 import {SafeAreaView} from 'react-native-safe-area-context';
-import {iconPath} from '@util/iconPath';
+import {iconPath} from '@/utils/iconPath';
 import TopFilter from '@components/TopFilter';
 import toast from '@hooks/toast';
 

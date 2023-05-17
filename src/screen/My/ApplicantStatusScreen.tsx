@@ -9,7 +9,7 @@ import {
 import {BLUE, GRAY, WHITE} from '@styles/colors';
 
 import common from '@styles/common';
-import {iconPath} from '@util/iconPath';
+import {iconPath} from '@/utils/iconPath';
 import {createMaterialTopTabNavigator} from '@react-navigation/material-top-tabs';
 import ApplicantWaitingComponent from '@components/My/ApplicantWaitingComponent';
 import ApplicantFinishComponent from '@components/My/ApplicantFinishComponent';

@@ -11,7 +11,7 @@ import {GRAY} from '@styles/colors';
 import CenterInfoComponent from '@components/CenterInfoComponent';
 import hairlineWidth = StyleSheet.hairlineWidth;
 import common from '@styles/common';
-import {iconPath} from '@util/iconPath';
+import {iconPath} from '@/utils/iconPath';
 import {NavigationProp, useNavigation} from '@react-navigation/native';
 import {LoggedInParamList} from '../../../AppInner';
 import {useCallback, useEffect, useState} from 'react';

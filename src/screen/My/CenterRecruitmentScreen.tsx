@@ -14,7 +14,7 @@ import {NavigationProp, useNavigation} from '@react-navigation/native';
 import {LoggedInParamList} from '../../../AppInner';
 import {SetStateAction, useState} from 'react';
 import Modal from '@components/ModalSheet';
-import {iconPath} from '@util/iconPath';
+import {iconPath} from '@/utils/iconPath';
 import {SafeAreaView} from 'react-native-safe-area-context';
 
 function CenterRecruitmentScreen() {

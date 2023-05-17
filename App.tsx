@@ -4,7 +4,7 @@ import AppInner from './AppInner';
 import {NavigationContainer} from '@react-navigation/native';
 import SplashScreen from 'react-native-splash-screen';
 import {useEffect} from 'react';
-import usePermissions from '@util/usePermissions';
+import usePermissions from '@/utils/usePermissions';
 import Toast from '@components/Toast';
 
 function App() {

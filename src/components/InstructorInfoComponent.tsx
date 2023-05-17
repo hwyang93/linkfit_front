@@ -1,6 +1,6 @@
 import {Alert, Image, Pressable, StyleSheet, Text, View} from 'react-native';
 import common from '@styles/common';
-import {iconPath} from '@util/iconPath';
+import {iconPath} from '@/utils/iconPath';
 import {BLUE, GRAY} from '@styles/colors';
 
 function InstructorInfoComponent(props: any) {

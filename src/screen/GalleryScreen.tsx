@@ -1,6 +1,6 @@
 import {Image, StyleSheet, View} from 'react-native';
 import Swiper from 'react-native-swiper';
-import {iconPath} from '@util/iconPath';
+import {iconPath} from '@/utils/iconPath';
 import common from '@styles/common';
 import {SafeAreaView} from 'react-native-safe-area-context';
 

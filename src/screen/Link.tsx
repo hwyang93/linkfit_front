@@ -12,7 +12,7 @@ import {BLUE, WHITE} from '@styles/colors';
 import common from '@styles/common';
 import LinkTop from '@components/LinkTop';
 import InstructorListItem from '@components/InstructorListItem';
-import {iconPath} from '@util/iconPath';
+import {iconPath} from '@/utils/iconPath';
 import FloatingWriteButton from '@components/FloatingWriteButton';
 import Modal from '@components/ModalSheet';
 import {SetStateAction, useCallback, useEffect, useState} from 'react';
