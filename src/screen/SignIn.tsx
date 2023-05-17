@@ -10,7 +10,7 @@ import {
 } from 'react-native';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import {LoggedInParamList} from '../../AppInner';
-import {validateEmail, removeWhitespace} from '@util/util';
+import {validateEmail, removeWhitespace} from '@/utils/util';
 import Input, {KeyboardTypes, ReturnKeyTypes} from '@components/Input';
 import useInput from '../hooks/useInput';
 import common from '@styles/common';

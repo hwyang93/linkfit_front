@@ -9,14 +9,14 @@ import {
   Image,
   View,
 } from 'react-native';
-import {SHOW_TOAST_MESSAGE} from '@util/toast';
+import {SHOW_TOAST_MESSAGE} from '@/utils/toast';
 
 import Animated, {
   withTiming,
   useSharedValue,
   useAnimatedStyle,
 } from 'react-native-reanimated';
-import {iconPath} from '@util/iconPath';
+import {iconPath} from '@/utils/iconPath';
 import common from '@styles/common';
 
 type Colors = {

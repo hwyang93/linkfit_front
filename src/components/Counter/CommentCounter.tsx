@@ -1,6 +1,6 @@
 import common from '@styles/common';
 import {Alert, Image, Pressable, Text, View} from 'react-native';
-import {iconPath} from '@util/iconPath';
+import {iconPath} from '@/utils/iconPath';
 
 function CommentCounter(props: any) {
   return (

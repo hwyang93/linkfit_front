@@ -21,10 +21,10 @@ function EducationComponent({
   onSelectMajor,
   onSelectStartDate,
   onSelectEndDate,
-  onSelectStatus,
-}: educationProps) {
+}: // onSelectStatus,
+educationProps) {
   const [school, setSchool] = useState('');
-  const [education, setEducation] = useState('');
+  // const [education, setEducation] = useState('');
 
   const educationData = ['고등학교 졸업', '대학교 졸업'];
   return (
@@ -34,7 +34,7 @@ function EducationComponent({
         <SelectBox
           label={'학력'}
           data={educationData}
-          onSelect={(value: any) => setEducation(value)}
+          onSelect={(value: any) => onSelectMajor(value)}
           defaultButtonText={'학력을 선택하세요.'}
         />
       </View>
@@ -43,7 +43,10 @@ function EducationComponent({
       <View style={common.mb16}>
         <Input
           label={'학교명'}
-          onChangeText={(text: string) => onSelectSchool(text)}
+          onChangeText={(text: string) => {
+            setSchool(text);
+            onSelectSchool(text);
+          }}
           value={school}
           placeholder={'학교명을 입력하세요.'}
           keyboardType={KeyboardTypes.DEFAULT}
@@ -54,11 +57,19 @@ function EducationComponent({
       <View style={common.mb16}>
         <View style={common.row}>
           <View style={[common.mr8, {width: columns2}]}>
-            <DatePicker label={'입학'} placeholder={'입학 년월'} />
+            <DatePicker
+              label={'입학'}
+              placeholder={'입학 년월'}
+              onSelectDate={onSelectStartDate}
+            />
           </View>
 
           <View style={{width: columns2}}>
-            <DatePicker label={'졸업'} placeholder={'졸업 년월'} />
+            <DatePicker
+              label={'졸업'}
+              placeholder={'졸업 년월'}
+              onSelectDate={onSelectEndDate}
+            />
           </View>
         </View>
       </View>

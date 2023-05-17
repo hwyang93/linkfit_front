@@ -11,7 +11,7 @@ import {
 
 import common from '@styles/common';
 import {BLUE, GRAY, WHITE} from '@styles/colors';
-import {iconPath} from '@util/iconPath';
+import {iconPath} from '@/utils/iconPath';
 import {useState} from 'react';
 import BlockButton from '@components/BlockButton';
 import EmptySet from '@components/EmptySet';

@@ -4,7 +4,7 @@ import moment from 'moment';
 import {useState} from 'react';
 import common from '@styles/common';
 import {GRAY, INPUT} from '@styles/colors';
-import {iconPath} from '@util/iconPath';
+import {iconPath} from '@/utils/iconPath';
 
 type birthProps = {
   label?: string;
@@ -32,11 +32,11 @@ function BirthdayPicker({
     setDatePickerVisibility(true);
   };
   const hideDatePicker = () => {
+    setFocus(false);
     setDatePickerVisibility(false);
   };
   const handleConfirm = (date: any) => {
     setBirth(moment(date).format('YYYY.MM.DD'));
-    // console.log('생일은 바로...', birth);
     onSelect(date);
     hideDatePicker();
   };

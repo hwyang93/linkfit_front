@@ -1,5 +1,5 @@
 import {DeviceEventEmitter} from 'react-native';
-import {SHOW_TOAST_MESSAGE} from '@util/toast';
+import {SHOW_TOAST_MESSAGE} from '@/utils/toast';
 
 const toast = {
   info: (options: any) => {

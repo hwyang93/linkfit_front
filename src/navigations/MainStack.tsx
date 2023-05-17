@@ -26,7 +26,7 @@ import CertifyInstructorScreen from '@screen/My/CertifyInstructorScreen';
 import CertifyLocationScreen from '@screen/My/CertifyLocationScreen';
 import {Alert, Image, Pressable} from 'react-native';
 import common from '@styles/common';
-import {iconPath} from '@util/iconPath';
+import {iconPath} from '@/utils/iconPath';
 import {NavigationProp, useNavigation} from '@react-navigation/native';
 import CertifyInstructorFormScreen from '@screen/My/CertifyInstructorFormScreen';
 import ReviewManageScreen from '@screen/My/ReviewManageScreen';

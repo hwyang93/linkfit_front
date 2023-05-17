@@ -8,7 +8,7 @@ import {
   View,
 } from 'react-native';
 import common from '@styles/common';
-import {iconPath} from '@util/iconPath';
+import {iconPath} from '@/utils/iconPath';
 import CommunityUserComponent from '@components/Community/CommunityUserComponent';
 import BookmarkCounter from '@components/Counter/BookmarkCounter';
 import CommentCounter from '@components/Counter/CommentCounter';

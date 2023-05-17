@@ -1,5 +1,5 @@
 import {Alert, Image, Pressable, StyleSheet, Text, View} from 'react-native';
-import {iconPath} from '@util/iconPath';
+import {iconPath} from '@/utils/iconPath';
 import RecruitComponent from '@components/RecruitComponent';
 import FloatingLinkButton from '@components/FloatingLinkButton';
 import {SafeAreaView} from 'react-native-safe-area-context';

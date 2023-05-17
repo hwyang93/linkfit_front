@@ -8,7 +8,7 @@ import {
 } from 'react-native';
 import {BLUE, GRAY, WHITE} from '@styles/colors';
 import common from '@styles/common';
-import {iconPath} from '@util/iconPath';
+import {iconPath} from '@/utils/iconPath';
 import LinearGradient from 'react-native-linear-gradient';
 import {useCallback, useEffect, useState} from 'react';
 import CommunityMyScreenTabView from '@screen/Community/CommunityMyScreenTabView';

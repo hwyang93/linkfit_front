@@ -1,7 +1,7 @@
 import {Alert, Image, Pressable, Text, View} from 'react-native';
 import common from '@styles/common';
 import {GRAY} from '@styles/colors';
-import {iconPath} from '@util/iconPath';
+import {iconPath} from '@/utils/iconPath';
 import {NavigationProp, useNavigation} from '@react-navigation/native';
 import {LoggedInParamList} from '../../AppInner';
 

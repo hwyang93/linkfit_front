@@ -10,7 +10,7 @@ import {
 
 import common from '@styles/common';
 import {GRAY, WHITE} from '@styles/colors';
-import {iconPath} from '@util/iconPath';
+import {iconPath} from '@/utils/iconPath';
 import {SetStateAction, useCallback, useEffect, useState} from 'react';
 import Modal from '@components/ModalSheet';
 import {NavigationProp, useNavigation} from '@react-navigation/native';

@@ -1,6 +1,6 @@
 import {Image, Pressable, StyleSheet, Text, View} from 'react-native';
 import common from '@styles/common';
-import {iconPath} from '@util/iconPath';
+import {iconPath} from '@/utils/iconPath';
 import {GRAY} from '@styles/colors';
 // import LinkCollection from '@components/LinkCollection';
 import OfferListItem from '@components/OfferListItem';

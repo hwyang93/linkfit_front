@@ -1,6 +1,6 @@
 import {Alert, Image, Pressable, StyleSheet, Text, View} from 'react-native';
 import common from '@styles/common';
-import {iconPath} from '@util/iconPath';
+import {iconPath} from '@/utils/iconPath';
 import {BLUE} from '@styles/colors';
 import {NavigationProp, useNavigation} from '@react-navigation/native';
 import {LoggedInParamList} from '../../AppInner';

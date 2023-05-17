@@ -1,6 +1,6 @@
 import {Image, Platform, Pressable, StyleSheet} from 'react-native';
 import {WHITE} from '@styles/colors';
-import {iconPath} from '@util/iconPath';
+import {iconPath} from '@/utils/iconPath';
 import common from '@styles/common';
 
 // todo : 프롭스로 bottom 스타일 값 받아와서 적용하기

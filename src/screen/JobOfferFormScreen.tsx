@@ -10,7 +10,7 @@ import {
 } from 'react-native';
 import {GRAY, WHITE} from '@styles/colors';
 import DismissKeyboardView from '@components/DismissKeyboardView';
-import {iconPath} from '@util/iconPath';
+import {iconPath} from '@/utils/iconPath';
 import common from '@styles/common';
 import Input, {KeyboardTypes} from '@components/Input';
 import {Key, useCallback, useState} from 'react';

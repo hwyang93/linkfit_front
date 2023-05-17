@@ -9,7 +9,7 @@ import {
 } from 'react-native';
 import {BLUE, GRAY, WHITE} from '@styles/colors';
 import common from '@styles/common';
-import {iconPath} from '@util/iconPath';
+import {iconPath} from '@/utils/iconPath';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import LinearGradient from 'react-native-linear-gradient';
 import {SetStateAction, useCallback, useEffect, useState} from 'react';
