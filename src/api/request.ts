@@ -1,6 +1,5 @@
 import {refreshToken} from '@api/auth';
-
-const axios = require('axios').default;
+import axios from 'axios';
 import EncryptedStorage from 'react-native-encrypted-storage';
 import {Platform} from 'react-native';
 import toast from '@hooks/toast';

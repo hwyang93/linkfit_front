@@ -1,5 +1,4 @@
 import {
-  Alert,
   Image,
   Pressable,
   ScrollView,
@@ -16,28 +15,33 @@ import {fetchMemberFollowings} from '@api/member';
 import toast from '@hooks/toast';
 import {NavigationProp, useNavigation} from '@react-navigation/native';
 import {LoggedInParamList} from '../../../AppInner';
+import {FetchMemberFollowingsResponse} from '@/types/api/member';
+import {isAxiosError} from 'axios';
 
 function FollowingInstructorComponent() {
   const navigation = useNavigation<NavigationProp<LoggedInParamList>>();
-  const [followings, setFollowings] = useState<any[]>([]);
+  const [followings, setFollowings] = useState<FetchMemberFollowingsResponse>();
 
   const getMemberFollowingList = useCallback(() => {
-    fetchMemberFollowings('INSTRUCTOR ')
-      .then(({data}: any) => {
+    fetchMemberFollowings({type: 'INSTRUCTOR'})
+      .then(({data}) => {
         setFollowings(data);
       })
-      .catch((e: any) => {
-        toast.error({message: e.message});
+      .catch(error => {
+        if (isAxiosError(error)) {
+          toast.error({message: error.message});
+        }
       });
   }, []);
 
   useEffect(() => {
     getMemberFollowingList();
-  }, []);
+  }, [getMemberFollowingList]);
+
   return (
     <ScrollView showsVerticalScrollIndicator={false}>
       {/*<View>*/}
-      {followings.map(following => {
+      {followings?.map(following => {
         return (
           <Pressable
             key={`${following.seq} ${following.memberSeq} ${following.favoriteSeq}`}
