@@ -81,12 +81,16 @@ function EmployeeReviewComponent() {
 
   return (
     <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
-      {reputations.map((item, index) => {
+      {reputations.map(item => {
         return item.targetMember.type === 'INSTRUCTOR' ? (
-          <View key={index} style={styles.reviewBox}>
+          <View key={'review_' + item.seq} style={styles.reviewBox}>
             <View style={common.rowCenter}>
               <Image
-                source={require('../../assets/images/thumbnail.png')}
+                source={
+                  item.targetMember.profileImage
+                    ? {uri: item.targetMember.profileImage.originFileUrl}
+                    : require('../../assets/images/thumbnail.png')
+                }
                 style={styles.thumbnail}
               />
               <View>
@@ -125,12 +129,12 @@ function EmployeeReviewComponent() {
             </Pressable>
           </View>
         ) : (
-          <View style={styles.reviewBox}>
+          <View key={'review_' + item.seq} style={styles.reviewBox}>
             <View style={common.rowCenter}>
               <Text style={[common.text_m, common.fwb, common.mr8]}>
                 {item.targetMember.company.companyName}
               </Text>
-              <Text style={common.text}>{item.targetMember.company}</Text>
+              <Text style={common.text}>{item.targetMember.company.field}</Text>
             </View>
             <Text style={[common.mt8, common.text]}>{item.updatedAt}</Text>
             <Text style={common.text_m}>{item.comment}</Text>
