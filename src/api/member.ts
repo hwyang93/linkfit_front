@@ -1,3 +1,7 @@
+import {
+  FetchMemberFollowingsParams,
+  FetchMemberFollowingsResponse,
+} from '@/types/api/member';
 import request from './request';
 
 export function createMember(data: object) {
@@ -84,8 +88,10 @@ export function updatePositionSuggestStatus(seq: number, data: object) {
   return request.patch(`/member/suggest/${seq}`, data);
 }
 
-export function fetchMemberFollowings(type: string) {
-  return request.get(`/member/following/${type}`);
+export function fetchMemberFollowings({type}: FetchMemberFollowingsParams) {
+  return request.get<FetchMemberFollowingsResponse>(
+    `/member/following/${type}`,
+  );
 }
 
 export function fetchMemberInfoBySeq(seq: number) {

@@ -8,7 +8,6 @@ import {
   View,
 } from 'react-native';
 import {GRAY} from '@styles/colors';
-import CenterInfoComponent from '@components/CenterInfoComponent';
 import hairlineWidth = StyleSheet.hairlineWidth;
 import common from '@styles/common';
 import {iconPath} from '@util/iconPath';
@@ -17,18 +16,22 @@ import {LoggedInParamList} from '../../../AppInner';
 import {useCallback, useEffect, useState} from 'react';
 import {fetchMemberFollowings} from '@api/member';
 import toast from '@hooks/toast';
+import {FetchMemberFollowingsResponse} from '@/types/api/member';
+import {isAxiosError} from 'axios';
 
 function FollowingCenterComponent() {
   const navigation = useNavigation<NavigationProp<LoggedInParamList>>();
-  const [followings, setFollowings] = useState<any[]>([]);
+  const [followings, setFollowings] = useState<FetchMemberFollowingsResponse>();
 
   const getMemberFollowingList = useCallback(() => {
-    fetchMemberFollowings('COMPANY')
-      .then(({data}: any) => {
+    fetchMemberFollowings({type: 'COMPANY'})
+      .then(({data}) => {
         setFollowings(data);
       })
-      .catch((e: any) => {
-        toast.error({message: e.message});
+      .catch(error => {
+        if (isAxiosError(error)) {
+          toast.error({message: error.message});
+        }
       });
   }, []);
 
@@ -38,7 +41,7 @@ function FollowingCenterComponent() {
 
   return (
     <ScrollView showsVerticalScrollIndicator={false}>
-      {followings.map(following => {
+      {followings?.map(following => {
         return (
           <View
             key={`${following.seq} ${following.memberSeq} ${following.favoriteSeq}`}
@@ -57,11 +60,11 @@ function FollowingCenterComponent() {
                 />
               </View>
               <Text style={common.title}>
-                {following.followingMember.company.companyName}
+                {following.followingMember.company?.companyName}
               </Text>
               <View style={common.rowCenterBetween}>
                 <Text style={[common.text_s, {color: GRAY.DARK}]}>
-                  {following.followingMember.company.field} | 서울 · 송파구
+                  {following.followingMember.company?.field} | 서울 · 송파구
                 </Text>
                 <View style={common.rowCenterBetween}>
                   <Pressable
