@@ -14,7 +14,7 @@ import {
 } from 'react-native';
 import {TabView, TabBar} from 'react-native-tab-view';
 import common from '@styles/common';
-import {iconPath} from '@util/iconPath';
+import {iconPath} from '@/utils/iconPath';
 import {BLUE, GRAY, WHITE} from '@styles/colors';
 import {
   NavigationProp,

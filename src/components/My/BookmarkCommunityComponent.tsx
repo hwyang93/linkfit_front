@@ -8,7 +8,7 @@ import {
 } from 'react-native';
 import common from '@styles/common';
 import {GRAY} from '@styles/colors';
-import {iconPath} from '@util/iconPath';
+import {iconPath} from '@/utils/iconPath';
 import {useCallback, useEffect, useState} from 'react';
 import {fetchBookmarkCommunities} from '@api/community';
 import toast from '@hooks/toast';

@@ -1,6 +1,6 @@
 import {Alert, Image, Pressable, View} from 'react-native';
 import common from '@styles/common';
-import {iconPath} from '@util/iconPath';
+import {iconPath} from '@/utils/iconPath';
 
 function LinkCollection() {
   return (

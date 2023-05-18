@@ -16,7 +16,7 @@ import LinearGradient from 'react-native-linear-gradient';
 import LocationButton from '@components/LocationButton';
 import axios from 'axios/index';
 import Geolocation from 'react-native-geolocation-service';
-import {iconPath} from '@util/iconPath';
+import {iconPath} from '@/utils/iconPath';
 import {createRegionAuth, deleteRegionAuth, fetchRegionAuth} from '@api/member';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import toast from '@hooks/toast';

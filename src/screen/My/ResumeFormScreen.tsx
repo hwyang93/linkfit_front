@@ -14,7 +14,7 @@ import {Key, useCallback, useEffect, useState} from 'react';
 import BirthdayPicker from '@components/BirthdayPicker';
 import TabButton from '@components/TabButton';
 import SelectBox from '@components/SelectBox';
-import {iconPath} from '@util/iconPath';
+import {iconPath} from '@/utils/iconPath';
 import LinearGradient from 'react-native-linear-gradient';
 import CareerComponent from '@components/Resume/CareerComponent';
 import EducationComponent from '@components/Resume/EducationComponent';
@@ -118,7 +118,17 @@ function ResumeFormScreen({navigation}: Props) {
         toast.error({message: e.message});
       });
     console.log(data);
-  }, [address, birth, careers, educations, introduce, licenseSeq, name, title]);
+  }, [
+    address,
+    birth,
+    careers,
+    educations,
+    introduce,
+    licenseSeq,
+    name,
+    navigation,
+    title,
+  ]);
 
   const canGoNext = true;
 

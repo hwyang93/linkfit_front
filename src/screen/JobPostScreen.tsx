@@ -24,7 +24,7 @@ import {
 import FloatingLinkButton from '@components/FloatingLinkButton';
 import Modal from '@components/ModalSheet';
 import LinearGradient from 'react-native-linear-gradient';
-import {iconPath} from '@util/iconPath';
+import {iconPath} from '@/utils/iconPath';
 import MapView, {Marker, PROVIDER_GOOGLE} from 'react-native-maps';
 import {fetchResumes} from '@api/resume';
 import toast from '@hooks/toast';

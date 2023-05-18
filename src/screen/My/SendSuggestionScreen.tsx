@@ -14,7 +14,7 @@ import common from '@styles/common';
 import {NavigationProp, useNavigation} from '@react-navigation/native';
 import {LoggedInParamList} from '../../../AppInner';
 import {SafeAreaView} from 'react-native-safe-area-context';
-import {iconPath} from '@util/iconPath';
+import {iconPath} from '@/utils/iconPath';
 
 function SendSuggestionScreen() {
   const navigation = useNavigation<NavigationProp<LoggedInParamList>>();

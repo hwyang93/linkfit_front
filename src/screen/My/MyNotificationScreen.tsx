@@ -1,6 +1,6 @@
 import {ScrollView, StyleSheet, View, Text, Image} from 'react-native';
 import EmptySet from '@components/EmptySet';
-import {iconPath} from '@util/iconPath';
+import {iconPath} from '@/utils/iconPath';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import common from '@styles/common';
 

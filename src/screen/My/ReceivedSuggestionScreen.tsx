@@ -20,7 +20,7 @@ import {
 import {LoggedInParamList} from '../../../AppInner';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {fetchReceivePositionSuggests} from '@api/member';
-import {iconPath} from '@util/iconPath';
+import {iconPath} from '@/utils/iconPath';
 import toast from '@hooks/toast';
 
 function ReceivedSuggestionScreen() {

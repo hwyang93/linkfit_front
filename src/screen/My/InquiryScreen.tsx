@@ -9,7 +9,7 @@ import {
 import {BLUE, GRAY, WHITE} from '@styles/colors';
 import common from '@styles/common';
 import {SafeAreaView} from 'react-native-safe-area-context';
-import {iconPath} from '@util/iconPath';
+import {iconPath} from '@/utils/iconPath';
 import EmptySet from '@components/EmptySet';
 import FloatingLinkButton from '@components/FloatingLinkButton';
 import {NavigationProp, useNavigation} from '@react-navigation/native';

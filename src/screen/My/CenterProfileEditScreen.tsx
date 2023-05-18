@@ -11,7 +11,7 @@ import DismissKeyboardView from '@components/DismissKeyboardView';
 import common from '@styles/common';
 import Input, {KeyboardTypes} from '@components/Input';
 import {useState} from 'react';
-import {iconPath} from '@util/iconPath';
+import {iconPath} from '@/utils/iconPath';
 import LinearGradient from 'react-native-linear-gradient';
 
 import {

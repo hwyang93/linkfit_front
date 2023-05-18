@@ -9,7 +9,7 @@ import {
 
 import common from '@styles/common';
 import {BLUE, GRAY, WHITE} from '@styles/colors';
-import {iconPath} from '@util/iconPath';
+import {iconPath} from '@/utils/iconPath';
 import {useCallback, useEffect, useState} from 'react';
 import {fetchMemberFollowings} from '@api/member';
 import toast from '@hooks/toast';

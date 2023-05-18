@@ -1,5 +1,5 @@
 import {Image, Pressable, View} from 'react-native';
-import {iconPath} from '@util/iconPath';
+import {iconPath} from '@/utils/iconPath';
 import common from '@styles/common';
 import {NavigationProp, useNavigation} from '@react-navigation/native';
 import {LoggedInParamList} from '../../../AppInner';

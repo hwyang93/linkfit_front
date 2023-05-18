@@ -6,7 +6,7 @@ import common from '@styles/common';
 import Modal from '@components/ModalSheet';
 
 import {SetStateAction, useState} from 'react';
-import {iconPath} from '@util/iconPath';
+import {iconPath} from '@/utils/iconPath';
 import toast from '@hooks/toast';
 
 function MessageScreen() {

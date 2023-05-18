@@ -10,7 +10,7 @@ import {
 import {BLUE, GRAY, WHITE} from '@styles/colors';
 
 import common from '@styles/common';
-import {iconPath} from '@util/iconPath';
+import {iconPath} from '@/utils/iconPath';
 import Modal from '@components/ModalSheet';
 import {SetStateAction, useCallback, useEffect, useState} from 'react';
 import {
@@ -21,6 +21,7 @@ import {
 import {LoggedInParamList} from '../../../AppInner';
 import {deleteResume, fetchResumes, updateResumeMaster} from '@api/resume';
 import toast from '@hooks/toast';
+import {dateFormatter} from '@/utils/util';
 
 function ResumeManageScreen() {
   const isFocused = useIsFocused();
@@ -165,7 +166,7 @@ function ResumeManageScreen() {
                 {resume.title}
               </Text>
               <Text style={[common.text_s, {color: GRAY.DARK}]}>
-                {resume.updatedAt}
+                {dateFormatter(resume.updatedAt, 'YYYY.MM.DD')}
               </Text>
               <Pressable
                 style={styles.kebabIcon}
