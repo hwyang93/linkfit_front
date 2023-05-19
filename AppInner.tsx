@@ -109,7 +109,7 @@ function AppInner() {
   const initAuthentication = useCallback(async () => {
     const refreshToken = await getRefreshToken();
     if (!refreshToken) {
-      return;
+      return setInitialized(true);
     }
 
     try {

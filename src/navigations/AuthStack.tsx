@@ -9,7 +9,7 @@ import SignIn from '@screen/SignIn';
 import SignUp from '@screen/SignUp';
 import {WHITE} from '@styles/colors';
 
-type AuthStackParamList = {
+export type AuthStackParamList = {
   LogIn: {email: string};
   SignIn: undefined;
   SignUp: {email: string};

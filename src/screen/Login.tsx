@@ -1,20 +1,14 @@
-import {useAppDispatch} from '@/store';
-import STORAGE_KEY from '@/utils/constants/storage';
-import {login} from '@api/auth';
-import {fetchMemberInfo} from '@api/member';
+import useAuth from '@/hooks/useAuth';
 import Input, {KeyboardTypes, ReturnKeyTypes} from '@components/Input';
 import Logo from '@components/Logo';
-import toast from '@hooks/toast';
 import {
   NavigationProp,
   RouteProp,
   useNavigation,
   useRoute,
 } from '@react-navigation/native';
-import userSlice from '@slices/user';
 import {BLACK} from '@styles/colors';
 import common from '@styles/common';
-import {isAxiosError} from 'axios';
 import {useState} from 'react';
 import {
   ActivityIndicator,
@@ -25,19 +19,17 @@ import {
   TouchableWithoutFeedback,
   View,
 } from 'react-native';
-import EncryptedStorage from 'react-native-encrypted-storage';
 import LinearGradient from 'react-native-linear-gradient';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {LoggedInParamList} from '../../AppInner';
 
 function LogIn() {
-  const dispatch = useAppDispatch();
   const rootNavigation = useNavigation<NavigationProp<LoggedInParamList>>();
-  const navigation = useNavigation<NavigationProp<LoggedInParamList>>();
   const route = useRoute<RouteProp<LoggedInParamList, 'LogIn'>>();
 
   const [password, setPassword] = useState<string>('');
-  const [loading, setLoading] = useState<boolean>(false);
+
+  const {signIn, isLoading} = useAuth();
 
   const canGoNext = password;
 
@@ -46,38 +38,8 @@ function LogIn() {
       email: route.params.email,
       password: password,
     };
-    await login(loginInfo)
-      .then(async ({data}) => {
-        setLoading(true);
-        dispatch(userSlice.actions.setAccessToken(data.accessToken));
-        await EncryptedStorage.setItem(
-          STORAGE_KEY.ACCESS_TOKEN,
-          data.accessToken,
-        );
-        await EncryptedStorage.setItem(
-          STORAGE_KEY.REFRESH_TOKEN,
-          data.refreshToken,
-        );
-        await getMemberInfo();
-        toast.success({message: '로그인이 완료되었어요!'});
-        setLoading(false);
-      })
-      .catch(error => {
-        setLoading(false);
-        if (isAxiosError(error)) {
-          toast.error({message: error.message});
-        }
-      });
-  };
-  const getMemberInfo = async () => {
-    await fetchMemberInfo()
-      .then(({data}: any) => {
-        dispatch(userSlice.actions.setUser(data));
-        dispatch(userSlice.actions.setIsLoggedIn(true));
-      })
-      .catch((e: {message: any}) => {
-        toast.error({message: e.message});
-      });
+
+    signIn(loginInfo);
   };
 
   return (
@@ -103,7 +65,7 @@ function LogIn() {
             </View>
 
             <View style={common.mt30}>
-              <Pressable disabled={!canGoNext || loading} onPress={onSubmit}>
+              <Pressable disabled={!canGoNext || isLoading} onPress={onSubmit}>
                 <LinearGradient
                   style={common.button}
                   start={{x: 0.1, y: 0.5}}
@@ -111,7 +73,7 @@ function LogIn() {
                   colors={
                     canGoNext ? ['#74ebe4', '#3962f3'] : ['#dcdcdc', '#dcdcdc']
                   }>
-                  {loading ? (
+                  {isLoading ? (
                     <ActivityIndicator color="white" />
                   ) : (
                     <Text style={common.buttonText}>로그인</Text>
