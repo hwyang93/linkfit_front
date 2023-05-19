@@ -1,3 +1,21 @@
+import {useAppDispatch} from '@/store';
+import STORAGE_KEY from '@/utils/constants/storage';
+import {login} from '@api/auth';
+import {fetchMemberInfo} from '@api/member';
+import Input, {KeyboardTypes, ReturnKeyTypes} from '@components/Input';
+import Logo from '@components/Logo';
+import toast from '@hooks/toast';
+import {
+  NavigationProp,
+  RouteProp,
+  useNavigation,
+  useRoute,
+} from '@react-navigation/native';
+import userSlice from '@slices/user';
+import {BLACK} from '@styles/colors';
+import common from '@styles/common';
+import {isAxiosError} from 'axios';
+import {useState} from 'react';
 import {
   ActivityIndicator,
   Keyboard,
@@ -7,26 +25,10 @@ import {
   TouchableWithoutFeedback,
   View,
 } from 'react-native';
-import {useState} from 'react';
-import common from '@styles/common';
-import Input, {KeyboardTypes, ReturnKeyTypes} from '@components/Input';
-import LinearGradient from 'react-native-linear-gradient';
-import Logo from '@components/Logo';
-import {
-  NavigationProp,
-  RouteProp,
-  useNavigation,
-  useRoute,
-} from '@react-navigation/native';
-import {LoggedInParamList} from '../../AppInner';
-import {BLACK} from '@styles/colors';
-import {login} from '@api/auth';
-import {fetchMemberInfo} from '@api/member';
-import {useAppDispatch} from '@/store';
-import userSlice from '@slices/user';
 import EncryptedStorage from 'react-native-encrypted-storage';
+import LinearGradient from 'react-native-linear-gradient';
 import {SafeAreaView} from 'react-native-safe-area-context';
-import toast from '@hooks/toast';
+import {LoggedInParamList} from '../../AppInner';
 
 function LogIn() {
   const dispatch = useAppDispatch();
@@ -45,29 +47,33 @@ function LogIn() {
       password: password,
     };
     await login(loginInfo)
-      .then(async ({data}: any) => {
+      .then(async ({data}) => {
         setLoading(true);
-        dispatch(
-          userSlice.actions.setAccessToken({
-            accessToken: data.accessToken,
-          }),
+        dispatch(userSlice.actions.setAccessToken(data.accessToken));
+        await EncryptedStorage.setItem(
+          STORAGE_KEY.ACCESS_TOKEN,
+          data.accessToken,
         );
-        await EncryptedStorage.setItem('accessToken', data.accessToken);
-        await EncryptedStorage.setItem('refreshToken', data.refreshToken);
+        await EncryptedStorage.setItem(
+          STORAGE_KEY.REFRESH_TOKEN,
+          data.refreshToken,
+        );
         await getMemberInfo();
         toast.success({message: '로그인이 완료되었어요!'});
         setLoading(false);
       })
-      .catch((e: any) => {
+      .catch(error => {
         setLoading(false);
-        toast.error({message: e.message});
+        if (isAxiosError(error)) {
+          toast.error({message: error.message});
+        }
       });
   };
   const getMemberInfo = async () => {
     await fetchMemberInfo()
       .then(({data}: any) => {
         dispatch(userSlice.actions.setUser(data));
-        navigation.navigate('ContentTab', {screen: 'Link'});
+        dispatch(userSlice.actions.setIsLoggedIn(true));
       })
       .catch((e: {message: any}) => {
         toast.error({message: e.message});

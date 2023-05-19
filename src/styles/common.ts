@@ -1,5 +1,5 @@
 import {StyleSheet, Dimensions} from 'react-native';
-import {BLACK, BLUE, GRAY, INPUT, WHITE} from './colors';
+import {BLACK, BLUE, GRAY, WHITE} from './colors';
 
 export const Font = {
   regular: 'NotoSansKR-Regular',

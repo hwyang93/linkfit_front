@@ -1,20 +1,17 @@
-import {useSelector} from 'react-redux';
-import MainStack from '@navigations/MainStack';
-import {useEffect} from 'react';
-import SplashScreen from 'react-native-splash-screen';
-import Geolocation from 'react-native-geolocation-service';
-import userSlice from '@slices/user';
-import {PermissionsAndroid, Platform} from 'react-native';
-import {useAppDispatch} from '@/store';
-import {RootState} from '@store/reducer';
-import EncryptedStorage from 'react-native-encrypted-storage';
 import {fetchMemberInfo} from '@/api/member';
-import {NavigationProp, useNavigation} from '@react-navigation/native';
+import AuthStack from '@/navigations/AuthStack';
+import {useAppDispatch, useAppSelector} from '@/store';
+import STORAGE_KEY from '@/utils/constants/storage';
 import toast from '@hooks/toast';
+import MainStack from '@navigations/MainStack';
+import userSlice from '@slices/user';
+import {isAxiosError} from 'axios';
+import {useCallback, useEffect, useState} from 'react';
+import {PermissionsAndroid, Platform} from 'react-native';
+import EncryptedStorage from 'react-native-encrypted-storage';
+import Geolocation from 'react-native-geolocation-service';
+import SplashScreen from 'react-native-splash-screen';
 
-// import AuthStack from '@navigations/AuthStack';
-
-// export type LoggedInParamList = {
 export type LoggedInParamList = {
   ContentTab: any;
   Link: undefined;
@@ -97,45 +94,47 @@ async function requestPermission() {
   }
 }
 
-// export type RootStackParamList = {
-//   LogIn: {email: string};
-//   SignIn: undefined;
-//   SignUp: {email: string};
-//   Terms: {email: string};
-//   SignUpForm: {email: string};
-//   CompanySignUpForm: {email: string};
-//   PasswordReset: undefined;
-// };
-
 function AppInner() {
+  const [initialized, setInitialized] = useState(false);
   const dispatch = useAppDispatch();
-  const position = useSelector((state: RootState) => state.user.lon);
-  const navigation = useNavigation<NavigationProp<LoggedInParamList>>();
 
-  useEffect(() => {
-    const tokenCheck = async () => {
-      const token = await EncryptedStorage.getItem('refreshToken');
+  // const position = useAppSelector(state => state.user.lon);
+  const isLoggedIn = useAppSelector(state => state.user.isLoggedIn);
 
-      if (token) {
-        await fetchMemberInfo()
-          .then(({data}: any) => {
-            dispatch(userSlice.actions.setUser(data));
-            navigation.navigate('ContentTab', {screen: 'Link'});
-          })
-          .catch((e: {message: any}) => {
-            toast.error({message: e.message});
-          });
+  const getRefreshToken = async () => {
+    const token = await EncryptedStorage.getItem(STORAGE_KEY.REFRESH_TOKEN);
+    return token;
+  };
+
+  const initAuthentication = useCallback(async () => {
+    const refreshToken = await getRefreshToken();
+    if (!refreshToken) {
+      return;
+    }
+
+    try {
+      const response = await fetchMemberInfo();
+      dispatch(userSlice.actions.setUser(response.data));
+      dispatch(userSlice.actions.setIsLoggedIn(true));
+    } catch (error) {
+      if (isAxiosError(error)) {
+        toast.error({message: error.message});
       }
-    };
-    tokenCheck();
-  }, [dispatch, navigation]);
+    } finally {
+      setInitialized(true);
+    }
+  }, [dispatch]);
 
   useEffect(() => {
-    SplashScreen.hide();
+    initAuthentication();
+  }, [initAuthentication]);
+
+  useEffect(() => {
+    initialized && SplashScreen.hide();
     requestPermission().then(result => {
       if (result === 'granted') {
         Geolocation.getCurrentPosition(
-          (pos: any) => {
+          pos => {
             dispatch(
               userSlice.actions.setLocation({
                 lon: pos.coords.latitude,
@@ -161,13 +160,14 @@ function AppInner() {
         );
       }
     });
-  }, [dispatch]);
+  }, [dispatch, initialized]);
 
-  // const isLoggedIn = useSelector((state: RootState) => !!state.user.email);
-  // const isLoggedIn = true;
+  // TODO: 스플래쉬 스크린을 보여줘야 합니다
+  if (!initialized) {
+    return null;
+  }
 
-  // return isLoggedIn ? <MainStack /> : <AuthStack />;
-  return <MainStack />;
+  return isLoggedIn ? <MainStack /> : <AuthStack />;
 }
 
 export default AppInner;

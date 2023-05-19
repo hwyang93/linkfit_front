@@ -190,7 +190,7 @@ function CenterInfoScreen() {
         </>
       );
     },
-    [textLine],
+    [textLine, reputations.length],
   );
 
   return (

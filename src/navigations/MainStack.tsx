@@ -1,69 +1,62 @@
-import {createNativeStackNavigator} from '@react-navigation/native-stack';
-import ContentTab from '@navigations/ContentTab';
-import {LoggedInParamList} from '../../AppInner';
-import HeaderLeft from '@components/HeaderLeft';
-import {WHITE} from '@styles/colors';
-import RecruitMapScreen from '@screen/RecruitMapScreen';
-import RecruitListScreen from '@screen/RecruitListScreen';
-import InstructorListScreen from '@screen/InstructorListScreen';
-import ProfileScreen from '@screen/ProfileScreen';
-import HeaderRight from '@components/HeaderRight';
-import SuggestionScreen from '@screen/SuggestionScreen';
-import CenterInfoScreen from '@screen/CenterInfoScreen';
-import JobPostScreen from '@screen/JobPostScreen';
-import GalleryScreen from '@screen/GalleryScreen';
-import SignIn from '@screen/SignIn';
-import Login from '@screen/Login';
-import TermsScreen from '@screen/Registration/TermsScreen';
-import SignUp from '@screen/SignUp';
-import SignUpFormScreen from '@screen/Registration/SignUpFormScreen';
-import CompanySignUpFormScreen from '@screen/Registration/CompanySignUpFormScreen';
-import PasswordReset from '@screen/Registration/PasswordReset';
-import JobOfferFormScreen from '@screen/JobOfferFormScreen';
-import ProfileEditScreen from '@screen/My/ProfileEditScreen';
-import LinkAddScreen from '@screen/My/LinkAddScreen';
-import CertifyInstructorScreen from '@screen/My/CertifyInstructorScreen';
-import CertifyLocationScreen from '@screen/My/CertifyLocationScreen';
-import {Alert, Image, Pressable} from 'react-native';
-import common from '@styles/common';
 import {iconPath} from '@/utils/iconPath';
+import HeaderLeft from '@components/HeaderLeft';
+import HeaderRight from '@components/HeaderRight';
+import Modal from '@components/ModalSheet';
+import ContentTab from '@navigations/ContentTab';
 import {NavigationProp, useNavigation} from '@react-navigation/native';
-import CertifyInstructorFormScreen from '@screen/My/CertifyInstructorFormScreen';
-import ReviewManageScreen from '@screen/My/ReviewManageScreen';
-import FollowingManageScreen from '@screen/My/FollowingManageScreen';
-import BookmarkManageScreen from '@screen/My/BookmarkManageScreen';
-import SettingScreen from '@screen/My/SettingScreen';
-import NotificationSettingScreen from '@screen/My/NotificationSettingScreen';
-import AccountScreen from '@screen/My/AccountScreen';
-import BlacklistScreen from '@screen/My/BlacklistScreen';
-import NoticeScreen from '@screen/My/NoticeScreen';
-import InquiryScreen from '@screen/My/InquiryScreen';
-import VersionScreen from '@screen/My/VersionScreen';
-import RulesScreen from '@screen/My/RulesScreen';
-import ReviewFormScreen from '@screen/My/ReviewFormScreen';
+import {createNativeStackNavigator} from '@react-navigation/native-stack';
+import CenterInfoScreen from '@screen/CenterInfoScreen';
+import CommunityMyScreen from '@screen/Community/CommunityMyScreen';
 import CommunityPostFormScreen from '@screen/Community/CommunityPostFormScreen';
 import CommunityPostScreen from '@screen/Community/CommunityPostScreen';
-import CommunityMyScreen from '@screen/Community/CommunityMyScreen';
-import MyCenterScreen from '@screen/MyCenterScreen';
-import ResumeManageScreen from '@screen/My/ResumeManageScreen';
-import ResumeFormScreen from '@screen/My/ResumeFormScreen';
-import ResumePreviewScreen from '@screen/My/ResumePreviewScreen';
-import ApplicationStatusScreen from '@screen/My/ApplicationStatusScreen';
-import ReceivedSuggestionScreen from '@screen/My/ReceivedSuggestionScreen';
-import MyRecruitmentScreen from '@screen/My/MyRecruitmentScreen';
-import ReceivedSuggestionDetailScreen from '@screen/My/ReceivedSuggestionDetailScreen';
+import GalleryScreen from '@screen/GalleryScreen';
+import InstructorListScreen from '@screen/InstructorListScreen';
+import JobOfferFormScreen from '@screen/JobOfferFormScreen';
+import JobPostScreen from '@screen/JobPostScreen';
+import AccountScreen from '@screen/My/AccountScreen';
 import ApplicantStatusScreen from '@screen/My/ApplicantStatusScreen';
-import MyCenterProfileScreen from '@screen/MyCenterProfileScreen';
+import ApplicationStatusScreen from '@screen/My/ApplicationStatusScreen';
+import BlacklistScreen from '@screen/My/BlacklistScreen';
+import BookmarkManageScreen from '@screen/My/BookmarkManageScreen';
 import CenterProfileEditScreen from '@screen/My/CenterProfileEditScreen';
-import CompanyInfoScreen from '@screen/My/CompanyInfoScreen';
 import CenterRecruitmentScreen from '@screen/My/CenterRecruitmentScreen';
-import SendSuggestionScreen from '@screen/My/SendSuggestionScreen';
-import SendSuggestionDetailScreen from '@screen/My/SendSuggestionDetailScreen';
-import {SetStateAction, useState} from 'react';
-import Modal from '@components/ModalSheet';
+import CertifyInstructorFormScreen from '@screen/My/CertifyInstructorFormScreen';
+import CertifyInstructorScreen from '@screen/My/CertifyInstructorScreen';
+import CertifyLocationScreen from '@screen/My/CertifyLocationScreen';
+import CompanyInfoScreen from '@screen/My/CompanyInfoScreen';
+import FollowingManageScreen from '@screen/My/FollowingManageScreen';
+import InquiryFormScreen from '@screen/My/InquiryFormScreen';
+import InquiryScreen from '@screen/My/InquiryScreen';
+import LinkAddScreen from '@screen/My/LinkAddScreen';
 import MyNotificationScreen from '@screen/My/MyNotificationScreen';
 import MyProfileScreen from '@screen/My/MyProfileScreen';
-import InquiryFormScreen from '@screen/My/InquiryFormScreen';
+import MyRecruitmentScreen from '@screen/My/MyRecruitmentScreen';
+import NoticeScreen from '@screen/My/NoticeScreen';
+import NotificationSettingScreen from '@screen/My/NotificationSettingScreen';
+import ProfileEditScreen from '@screen/My/ProfileEditScreen';
+import ReceivedSuggestionDetailScreen from '@screen/My/ReceivedSuggestionDetailScreen';
+import ReceivedSuggestionScreen from '@screen/My/ReceivedSuggestionScreen';
+import ResumeFormScreen from '@screen/My/ResumeFormScreen';
+import ResumeManageScreen from '@screen/My/ResumeManageScreen';
+import ResumePreviewScreen from '@screen/My/ResumePreviewScreen';
+import ReviewFormScreen from '@screen/My/ReviewFormScreen';
+import ReviewManageScreen from '@screen/My/ReviewManageScreen';
+import RulesScreen from '@screen/My/RulesScreen';
+import SendSuggestionDetailScreen from '@screen/My/SendSuggestionDetailScreen';
+import SendSuggestionScreen from '@screen/My/SendSuggestionScreen';
+import SettingScreen from '@screen/My/SettingScreen';
+import VersionScreen from '@screen/My/VersionScreen';
+import MyCenterProfileScreen from '@screen/MyCenterProfileScreen';
+import MyCenterScreen from '@screen/MyCenterScreen';
+import ProfileScreen from '@screen/ProfileScreen';
+import RecruitListScreen from '@screen/RecruitListScreen';
+import RecruitMapScreen from '@screen/RecruitMapScreen';
+import SuggestionScreen from '@screen/SuggestionScreen';
+import {WHITE} from '@styles/colors';
+import common from '@styles/common';
+import {SetStateAction, useState} from 'react';
+import {Alert, Image, Pressable} from 'react-native';
+import {LoggedInParamList} from '../../AppInner';
 
 const Stack = createNativeStackNavigator<LoggedInParamList>();
 
@@ -73,7 +66,7 @@ const MainStack = () => {
   const navigation = useNavigation<NavigationProp<LoggedInParamList>>();
   return (
     <Stack.Navigator
-      initialRouteName={'SignIn'}
+      initialRouteName={'ContentTab'}
       screenOptions={{
         headerTitleAlign: 'center',
         headerTintColor: '#000',
@@ -454,43 +447,6 @@ const MainStack = () => {
           options={{
             title: '채용 공고 등록',
           }}
-        />
-      </Stack.Group>
-      <Stack.Group>
-        <Stack.Screen
-          name="SignIn"
-          component={SignIn}
-          options={{headerShown: false}}
-        />
-        <Stack.Screen
-          name="LogIn"
-          component={Login}
-          options={{title: '로그인'}}
-        />
-        <Stack.Screen
-          name="Terms"
-          component={TermsScreen}
-          options={{title: '회원가입'}}
-        />
-        <Stack.Screen
-          name="SignUp"
-          component={SignUp}
-          options={{title: '회원가입'}}
-        />
-        <Stack.Screen
-          name="SignUpForm"
-          component={SignUpFormScreen}
-          options={{title: '회원가입'}}
-        />
-        <Stack.Screen
-          name="CompanySignUpForm"
-          component={CompanySignUpFormScreen}
-          options={{title: '회원가입'}}
-        />
-        <Stack.Screen
-          name="PasswordReset"
-          component={PasswordReset}
-          options={{title: '비밀번호 재설정'}}
         />
       </Stack.Group>
     </Stack.Navigator>
