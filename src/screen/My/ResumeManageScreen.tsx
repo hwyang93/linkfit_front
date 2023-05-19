@@ -74,26 +74,26 @@ function ResumeManageScreen() {
   }, [getResumes]);
 
   const MODAL = [
-    {
-      value: '새 이력서 작성',
-      selected: false,
-      // job: () => {
-      //   closeModel();
-      //   navigation.navigate('ResumeForm');
-      // },
-    },
+    // {
+    //   value: '새 이력서 작성',
+    //   selected: false,
+    //   // job: () => {
+    //   //   closeModel();
+    //   //   navigation.navigate('ResumeForm');
+    //   // },
+    // },
     {
       value: '대표 이력서로 설정',
       job: () => onUpdateResumeMaster(),
     },
-    {
-      value: '이력서 이름 변경',
-      selected: false,
-    },
-    {
-      value: '이력서 복제',
-      selected: false,
-    },
+    // {
+    //   value: '이력서 이름 변경',
+    //   selected: false,
+    // },
+    // {
+    //   value: '이력서 복제',
+    //   selected: false,
+    // },
     {
       value: '미리보기',
       job: () => {

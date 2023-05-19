@@ -294,7 +294,7 @@ function ResumeFormScreen({navigation}: Props) {
           <SelectBox
             label={'자격증'}
             data={licenses.map(licence => {
-              return licence.field;
+              return licence.issuer + '_' + licence.field;
             })}
             onSelect={(value: any, index: number) => selectLicence(index)}
             defaultButtonText={'자격증을 선택하세요.'}
