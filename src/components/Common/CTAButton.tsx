@@ -52,7 +52,7 @@ const CTAButton: React.FC<CTAButtonProps> = ({
         </Pressable>
       )}
       {variant === 'stroked' && (
-        <Pressable style={[]} onPress={onPress} disabled={disabled || loading}>
+        <Pressable onPress={onPress} disabled={disabled || loading} {...props}>
           {({pressed}) => (
             <View
               style={[
