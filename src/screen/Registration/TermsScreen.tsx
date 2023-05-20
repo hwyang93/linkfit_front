@@ -1,3 +1,11 @@
+import CTAButton from '@/components/Common/CTAButton';
+import Checkbox from '@/components/Common/Checkbox';
+import {iconPath} from '@/utils/iconPath';
+import {RouteProp, useRoute} from '@react-navigation/native';
+import {NativeStackScreenProps} from '@react-navigation/native-stack';
+import {BLUE} from '@styles/colors';
+import common from '@styles/common';
+import {useState} from 'react';
 import {
   Image,
   Pressable,
@@ -6,43 +14,64 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import common from '@styles/common';
-import {useState} from 'react';
-import {iconPath} from '@/utils/iconPath';
-import {BLUE} from '@styles/colors';
-import LinearGradient from 'react-native-linear-gradient';
-import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import {LoggedInParamList} from '../../../AppInner';
-import {RouteProp, useRoute} from '@react-navigation/native';
+
+const TERMS = [
+  {id: 1, title: '개인정보 수집 및 이용 동의', required: true},
+  {id: 2, title: '서비스 이용약관 동의', required: true},
+  {id: 3, title: '위치정보 이용약관', required: true},
+  {id: 4, title: '마케팅 수신 동의', required: false},
+];
 
 type SignInScreenProps = NativeStackScreenProps<LoggedInParamList, 'Terms'>;
 
 // todo: 필수항목 전체 동의, 필수 항목 체크 후 다음 버튼 동작, 보기 버튼 클릭 시 약관 확인
 
 function SignUpFormScreen({navigation}: SignInScreenProps) {
-  const route = useRoute<RouteProp<LoggedInParamList, 'Terms'>>();
-  console.log('Terms', route);
-  const [checkItem, setCheckItem] = useState<any>([]);
-  const terms = [
-    {id: 1, require: true, title: '개인정보 수집 및 이용 동의', checked: false},
-    {id: 2, require: true, title: '서비스 이용약관 동의', checked: false},
-    {id: 3, require: true, title: '위치정보 이용약관', checked: false},
-    {id: 4, require: false, title: '마케팅 수신 동의', checked: false},
-  ];
+  const [checkedTermIds, setCheckedTermIds] = useState<number[]>([]);
 
-  function checkHandler(id: number) {
-    console.log('값', checkItem);
-    let index = checkItem.findIndex((i: number) => i === id);
-    console.log('index', index, 'id', id);
-    let arrSelected = [...checkItem];
-    if (index !== -1) {
-      arrSelected.splice(index, 1);
-      console.log(index);
+  const route = useRoute<RouteProp<LoggedInParamList, 'Terms'>>();
+
+  const requiredTerms = TERMS.filter(item => item.required);
+
+  const isAllRequiredCheckboxChecked = requiredTerms.every(item =>
+    checkedTermIds.includes(item.id),
+  );
+
+  const toggleAllRequiredCheckbox = () => {
+    if (isAllRequiredCheckboxChecked) {
+      setCheckedTermIds(
+        checkedTermIds.filter(
+          id => !requiredTerms.map(item => item.id).includes(id),
+        ),
+      );
     } else {
-      arrSelected.push(id);
+      setCheckedTermIds(prev => [
+        ...prev,
+        ...requiredTerms.map(item => item.id),
+      ]);
     }
-    setCheckItem(arrSelected);
-  }
+  };
+
+  const toggleCheckbox = (id: number) => {
+    if (checkedTermIds.includes(id)) {
+      setCheckedTermIds(checkedTermIds.filter(item => item !== id));
+    } else {
+      setCheckedTermIds([...checkedTermIds, id]);
+    }
+  };
+
+  const handleAgreeAllButtonPress = () => {
+    toggleAllRequiredCheckbox();
+  };
+
+  const handleAgreeButtonPress = (id: number) => {
+    toggleCheckbox(id);
+  };
+
+  const handleContinueButtonPress = () => {
+    navigation.navigate('SignUpForm', {email: route.params.email});
+  };
 
   return (
     <View style={styles.container}>
@@ -55,27 +84,31 @@ function SignUpFormScreen({navigation}: SignInScreenProps) {
 
       <View style={common.mt40}>
         <View>
-          <TouchableOpacity style={[common.mr8, styles.touchWrap]}>
-            <Image source={iconPath.CHECK_BOX} style={common.size24} />
+          <TouchableOpacity
+            style={[common.mr8, styles.touchWrap]}
+            onPress={handleAgreeAllButtonPress}>
+            <Checkbox
+              checked={isAllRequiredCheckboxChecked}
+              pointerEvents="none"
+            />
             <Text style={[common.text_m, common.ml8]}>필수 항목 전체동의</Text>
           </TouchableOpacity>
         </View>
         <View style={styles.divideLine} />
 
         <View>
-          {terms.map((item, index) => (
+          {TERMS.map((item, index) => (
             <View key={index} style={styles.terms}>
               <TouchableOpacity
                 style={styles.touchWrap}
-                onPress={() => checkHandler(item?.id)}>
-                {checkItem.findIndex((i: number) => i === item.id) !== -1 ? (
-                  <Image source={iconPath.CHECKED_BOX} style={common.size24} />
-                ) : (
-                  <Image source={iconPath.CHECK_BOX} style={common.size24} />
-                )}
+                onPress={() => handleAgreeButtonPress(item.id)}>
+                <Checkbox
+                  checked={checkedTermIds.includes(item.id)}
+                  pointerEvents="none"
+                />
                 <Text
                   style={[common.text_m, common.ml8, {color: BLUE.DEFAULT}]}>
-                  {item.require ? '(필수) ' : '(선택) '}
+                  {item.required ? '(필수) ' : '(선택) '}
                 </Text>
                 <Text style={[common.text_m]}>{item.title}</Text>
               </TouchableOpacity>
@@ -98,18 +131,11 @@ function SignUpFormScreen({navigation}: SignInScreenProps) {
           </Text>
 
           <View style={common.mt40}>
-            <Pressable
-              onPress={() =>
-                navigation.navigate('SignUpForm', {email: route.params.email})
-              }>
-              <LinearGradient
-                style={common.button}
-                start={{x: 0.1, y: 0.5}}
-                end={{x: 0.6, y: 1}}
-                colors={['#74ebe4', '#3962f3']}>
-                <Text style={common.buttonText}>다음</Text>
-              </LinearGradient>
-            </Pressable>
+            <CTAButton
+              label="다음"
+              onPress={handleContinueButtonPress}
+              disabled={!isAllRequiredCheckboxChecked}
+            />
           </View>
         </View>
       </View>

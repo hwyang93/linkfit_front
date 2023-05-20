@@ -1,10 +1,9 @@
-import {Pressable, StyleSheet, Text, View} from 'react-native';
-import common from '@styles/common';
-import LinearGradient from 'react-native-linear-gradient';
-import {BLUE, GRAY, WHITE} from '@styles/colors';
-import {NativeStackScreenProps} from '@react-navigation/native-stack';
-import {LoggedInParamList} from '../../AppInner';
+import CTAButton from '@/components/Common/CTAButton';
 import {RouteProp, useRoute} from '@react-navigation/native';
+import {NativeStackScreenProps} from '@react-navigation/native-stack';
+import common from '@styles/common';
+import {StyleSheet, Text, View} from 'react-native';
+import {LoggedInParamList} from '../../AppInner';
 type SignInScreenProps = NativeStackScreenProps<LoggedInParamList, 'SignUp'>;
 
 function SignUp({navigation}: SignInScreenProps) {
@@ -19,34 +18,23 @@ function SignUp({navigation}: SignInScreenProps) {
       </View>
 
       <View style={common.mt40}>
-        <Pressable
+        <CTAButton
+          label="일반 회원"
           onPress={() =>
             navigation.navigate('Terms', {email: route.params.email})
-          }>
-          <LinearGradient
-            style={common.button}
-            start={{x: 0.1, y: 0.5}}
-            end={{x: 0.6, y: 1}}
-            colors={['#74ebe4', '#3962f3']}>
-            <Text style={common.buttonText}>일반 회원</Text>
-          </LinearGradient>
-        </Pressable>
+          }
+        />
       </View>
       <View style={common.mt16}>
-        <Pressable
-          style={[
-            common.button,
-            {backgroundColor: WHITE, borderWidth: 1, borderColor: GRAY.DARK},
-          ]}
+        <CTAButton
+          label="사업자 회원"
+          variant="stroked"
           onPress={() =>
             navigation.navigate('CompanySignUpForm', {
               email: route.params.email,
             })
-          }>
-          <Text style={[common.buttonText, {color: BLUE.DEFAULT}]}>
-            사업자 회원
-          </Text>
-        </Pressable>
+          }
+        />
       </View>
     </View>
   );
