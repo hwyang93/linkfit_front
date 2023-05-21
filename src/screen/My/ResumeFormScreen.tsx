@@ -1,3 +1,18 @@
+import {iconPath} from '@/utils/iconPath';
+import {fetchMemberLicences} from '@api/member';
+import {createResume} from '@api/resume';
+import DismissKeyboardView from '@components/DismissKeyboardView';
+import Input, {KeyboardTypes} from '@components/Input';
+import CareerComponent from '@components/Resume/CareerComponent';
+import EducationComponent from '@components/Resume/EducationComponent';
+import SelectBox from '@components/SelectBox';
+import TabButton from '@components/TabButton';
+import toast from '@hooks/toast';
+import {NativeStackScreenProps} from '@react-navigation/native-stack';
+import {RootState} from '@store/reducer';
+import {WHITE} from '@styles/colors';
+import common from '@styles/common';
+import {useCallback, useEffect, useState} from 'react';
 import {
   ActivityIndicator,
   Image,
@@ -6,26 +21,10 @@ import {
   Text,
   View,
 } from 'react-native';
-import {WHITE} from '@styles/colors';
-import DismissKeyboardView from '@components/DismissKeyboardView';
-import common from '@styles/common';
-import Input, {KeyboardTypes} from '@components/Input';
-import {Key, useCallback, useEffect, useState} from 'react';
-import BirthdayPicker from '@components/BirthdayPicker';
-import TabButton from '@components/TabButton';
-import SelectBox from '@components/SelectBox';
-import {iconPath} from '@/utils/iconPath';
 import LinearGradient from 'react-native-linear-gradient';
-import CareerComponent from '@components/Resume/CareerComponent';
-import EducationComponent from '@components/Resume/EducationComponent';
 import {useSelector} from 'react-redux';
-import {RootState} from '@store/reducer';
-import {fetchMemberLicences} from '@api/member';
-import toast from '@hooks/toast';
-import {createResume} from '@api/resume';
-import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import {LoggedInParamList} from '../../../AppInner';
-type Props = NativeStackScreenProps<LoggedInParamList, 'ResumePreview'>;
+type Props = NativeStackScreenProps<LoggedInParamList, 'ResumeForm'>;
 const GENDER_DATA = [{value: '남자'}, {value: '여자'}];
 function ResumeFormScreen({navigation}: Props) {
   const memberInfo = useSelector((state: RootState) => state.user);

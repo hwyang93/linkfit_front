@@ -1,3 +1,15 @@
+import useAuth from '@/hooks/useAuth';
+import Input, {KeyboardTypes, ReturnKeyTypes} from '@components/Input';
+import Logo from '@components/Logo';
+import {
+  NavigationProp,
+  RouteProp,
+  useNavigation,
+  useRoute,
+} from '@react-navigation/native';
+import {BLACK} from '@styles/colors';
+import common from '@styles/common';
+import {useState} from 'react';
 import {
   ActivityIndicator,
   Keyboard,
@@ -7,35 +19,17 @@ import {
   TouchableWithoutFeedback,
   View,
 } from 'react-native';
-import {useState} from 'react';
-import common from '@styles/common';
-import Input, {KeyboardTypes, ReturnKeyTypes} from '@components/Input';
 import LinearGradient from 'react-native-linear-gradient';
-import Logo from '@components/Logo';
-import {
-  NavigationProp,
-  RouteProp,
-  useNavigation,
-  useRoute,
-} from '@react-navigation/native';
-import {LoggedInParamList} from '../../AppInner';
-import {BLACK} from '@styles/colors';
-import {login} from '@api/auth';
-import {fetchMemberInfo} from '@api/member';
-import {useAppDispatch} from '@/store';
-import userSlice from '@slices/user';
-import EncryptedStorage from 'react-native-encrypted-storage';
 import {SafeAreaView} from 'react-native-safe-area-context';
-import toast from '@hooks/toast';
+import {LoggedInParamList} from '../../AppInner';
 
 function LogIn() {
-  const dispatch = useAppDispatch();
   const rootNavigation = useNavigation<NavigationProp<LoggedInParamList>>();
-  const navigation = useNavigation<NavigationProp<LoggedInParamList>>();
   const route = useRoute<RouteProp<LoggedInParamList, 'LogIn'>>();
 
   const [password, setPassword] = useState<string>('');
-  const [loading, setLoading] = useState<boolean>(false);
+
+  const {signIn, isLoading} = useAuth();
 
   const canGoNext = password;
 
@@ -44,34 +38,8 @@ function LogIn() {
       email: route.params.email,
       password: password,
     };
-    await login(loginInfo)
-      .then(async ({data}: any) => {
-        setLoading(true);
-        dispatch(
-          userSlice.actions.setAccessToken({
-            accessToken: data.accessToken,
-          }),
-        );
-        await EncryptedStorage.setItem('accessToken', data.accessToken);
-        await EncryptedStorage.setItem('refreshToken', data.refreshToken);
-        await getMemberInfo();
-        toast.success({message: '로그인이 완료되었어요!'});
-        setLoading(false);
-      })
-      .catch((e: any) => {
-        setLoading(false);
-        toast.error({message: e.message});
-      });
-  };
-  const getMemberInfo = async () => {
-    await fetchMemberInfo()
-      .then(({data}: any) => {
-        dispatch(userSlice.actions.setUser(data));
-        navigation.navigate('ContentTab', {screen: 'Link'});
-      })
-      .catch((e: {message: any}) => {
-        toast.error({message: e.message});
-      });
+
+    signIn(loginInfo);
   };
 
   return (
@@ -97,7 +65,7 @@ function LogIn() {
             </View>
 
             <View style={common.mt30}>
-              <Pressable disabled={!canGoNext || loading} onPress={onSubmit}>
+              <Pressable disabled={!canGoNext || isLoading} onPress={onSubmit}>
                 <LinearGradient
                   style={common.button}
                   start={{x: 0.1, y: 0.5}}
@@ -105,7 +73,7 @@ function LogIn() {
                   colors={
                     canGoNext ? ['#74ebe4', '#3962f3'] : ['#dcdcdc', '#dcdcdc']
                   }>
-                  {loading ? (
+                  {isLoading ? (
                     <ActivityIndicator color="white" />
                   ) : (
                     <Text style={common.buttonText}>로그인</Text>

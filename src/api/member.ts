@@ -1,6 +1,7 @@
 import {
   FetchMemberFollowingsParams,
   FetchMemberFollowingsResponse,
+  FetchMemberInfoResponse,
 } from '@/types/api/member';
 import request from './request';
 
@@ -9,7 +10,7 @@ export function createMember(data: object) {
 }
 
 export function fetchMemberInfo() {
-  return request.get('/member');
+  return request.get<FetchMemberInfoResponse>('/member');
 }
 
 export function fetchMemberInfoByEmail(email: string) {

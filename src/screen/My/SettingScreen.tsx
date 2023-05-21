@@ -1,3 +1,9 @@
+import useAuth from '@/hooks/useAuth';
+import {iconPath} from '@/utils/iconPath';
+import {NavigationProp, useNavigation} from '@react-navigation/native';
+import {BLUE, GRAY, WHITE} from '@styles/colors';
+import common from '@styles/common';
+import {useCallback} from 'react';
 import {
   Alert,
   Image,
@@ -7,15 +13,8 @@ import {
   Text,
   View,
 } from 'react-native';
-import {BLUE, WHITE} from '@styles/colors';
-import common from '@styles/common';
-import {iconPath} from '@/utils/iconPath';
-import {GRAY} from '@styles/colors';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
-import {NavigationProp, useNavigation} from '@react-navigation/native';
 import {LoggedInParamList} from '../../../AppInner';
-import {useCallback} from 'react';
-import EncryptedStorage from 'react-native-encrypted-storage';
 
 const DATA = [
   {
@@ -57,12 +56,11 @@ const DATA = [
 
 function SettingScreen() {
   const navigation = useNavigation<NavigationProp<LoggedInParamList>>();
+  const {signOut} = useAuth();
 
   const onLogout = useCallback(async () => {
-    await EncryptedStorage.removeItem('accessToken');
-    await EncryptedStorage.removeItem('refreshToken');
-    navigation.navigate('SignIn');
-  }, [navigation]);
+    signOut();
+  }, [signOut]);
 
   return (
     <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>

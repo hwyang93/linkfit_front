@@ -6,7 +6,11 @@ import {
   Text,
   Pressable,
 } from 'react-native';
-import {Tabs, MaterialTabBar} from 'react-native-collapsible-tab-view';
+import {
+  Tabs,
+  MaterialTabBar,
+  TabBarProps,
+} from 'react-native-collapsible-tab-view';
 import {BLUE, GRAY, WHITE} from '@styles/colors';
 import common from '@styles/common';
 import {
@@ -31,11 +35,21 @@ type headerProps = {
   centerInfo: any;
   recruits: any[];
 };
-// 센터 프로필 상단 영역 시작
-function Header({centerInfo, recruits}: headerProps) {
-  return <CenterInfoTop centerInfo={centerInfo} recruits={recruits} />;
-}
-// 센터 프로필 상단 영역 끝
+
+const tabBar = (props: TabBarProps) => (
+  <MaterialTabBar
+    {...props}
+    style={styles.tab}
+    inactiveColor={GRAY.DEFAULT}
+    indicatorStyle={styles.indicator}
+    activeColor={BLUE.DEFAULT}
+    labelStyle={common.text_m}
+    contentContainerStyle={{
+      flex: 1,
+      width: width,
+    }}
+  />
+);
 
 function CenterInfoScreen() {
   const route = useRoute<RouteProp<LoggedInParamList, 'CenterInfo'>>();
@@ -60,23 +74,6 @@ function CenterInfoScreen() {
     getCenterInfo();
   }, [getCenterInfo]);
 
-  // 탭 바 영역
-  const tabBar = (props: any) => (
-    <MaterialTabBar
-      {...props}
-      style={styles.tab}
-      inactiveColor={GRAY.DEFAULT}
-      indicatorStyle={styles.indicator}
-      activeColor={BLUE.DEFAULT}
-      itemStyle={{width: tabWidth}}
-      labelStyle={common.text_m}
-      contentContainerStyle={{
-        flex: 1,
-        width: width,
-      }}
-    />
-  );
-
   const IntroduceTabHeader = () => {
     return (
       <View style={common.mb8}>
@@ -84,6 +81,7 @@ function CenterInfoScreen() {
       </View>
     );
   };
+
   const IntroduceTabFooter = () => {
     return (
       <View style={common.mt16}>
@@ -110,19 +108,17 @@ function CenterInfoScreen() {
   const IntroduceTab = useCallback(
     ({item}: imageProps) => {
       return (
-        <>
-          <Pressable onPress={() => navigation.navigate('Gallery')}>
-            <Image
-              source={item.src}
-              resizeMode={'cover'}
-              style={{
-                width: imageSize,
-                height: imageSize,
-                margin: 1,
-              }}
-            />
-          </Pressable>
-        </>
+        <Pressable onPress={() => navigation.navigate('Gallery')}>
+          <Image
+            source={item.src}
+            resizeMode={'cover'}
+            style={{
+              width: imageSize,
+              height: imageSize,
+              margin: 1,
+            }}
+          />
+        </Pressable>
       );
     },
     [navigation],
@@ -193,45 +189,41 @@ function CenterInfoScreen() {
 
   return (
     <Tabs.Container
+      renderTabBar={tabBar}
       renderHeader={() => (
-        <Header centerInfo={centerInfo} recruits={recruits} />
+        <CenterInfoTop centerInfo={centerInfo} recruits={recruits} />
       )}
       allowHeaderOverscroll
-      revealHeaderOnScroll
       headerContainerStyle={{
         paddingTop: 16,
         paddingHorizontal: 16,
         shadowOpacity: 0,
         elevation: 0,
-      }}
-      // headerHeight={HEADER_HEIGHT}
-      renderTabBar={tabBar}>
+      }}>
       <Tabs.Tab name="센터 소개">
-        <View style={{padding: 16}}>
-          <Tabs.FlatList
-            data={tab1Data}
-            ListHeaderComponent={() => <IntroduceTabHeader />}
-            ListFooterComponent={() => <IntroduceTabFooter />}
-            renderItem={IntroduceTab}
-            numColumns={3}
-            keyExtractor={(item: any) => item.id}
-          />
-        </View>
+        <Tabs.FlatList
+          style={{padding: 16}}
+          data={tab1Data}
+          ListHeaderComponent={() => <IntroduceTabHeader />}
+          ListFooterComponent={() => <IntroduceTabFooter />}
+          renderItem={IntroduceTab}
+          numColumns={3}
+          keyExtractor={(item: any) => item.id}
+        />
       </Tabs.Tab>
       <Tabs.Tab name="후기 관리">
-        <View style={{padding: 16}}>
-          <Tabs.FlatList
-            data={reputations}
-            ListHeaderComponent={<View style={{paddingBottom: 16}} />}
-            ItemSeparatorComponent={() => {
-              return (
-                <View style={[common.separator, common.mv16, {width: width}]} />
-              );
-            }}
-            renderItem={ReviewTab}
-            keyExtractor={(item: any) => item.seq}
-          />
-        </View>
+        <Tabs.FlatList
+          style={{padding: 16}}
+          data={reputations}
+          ListHeaderComponent={<View style={{paddingBottom: 16}} />}
+          ItemSeparatorComponent={() => {
+            return (
+              <View style={[common.separator, common.mv16, {width: width}]} />
+            );
+          }}
+          renderItem={ReviewTab}
+          keyExtractor={(item: any) => item.seq}
+        />
       </Tabs.Tab>
     </Tabs.Container>
   );
