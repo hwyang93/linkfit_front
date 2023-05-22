@@ -1,4 +1,4 @@
-import {CompanyDto} from './dto';
+import {CompanyEntity} from './entities';
 
 export type FetchMemberFollowingsParams = {
   type: 'COMPANY' | 'INSTRUCTOR';
@@ -30,7 +30,7 @@ export type FetchMemberFollowingsResponse = {
     status: null; // TODO: 타입 확인
     profileFileSeq: null; // TODO: 타입 확인
     isVerification: 'Y' | 'N'; // TODO: 타입 확인
-    company: CompanyDto | null; // TODO: 타입 확인
+    company: CompanyEntity | null; // TODO: 타입 확인
     profileImage: null; // TODO: 타입 확인
     resumes: {
       createdAt: string;
@@ -77,7 +77,7 @@ export type FetchMemberInfoResponse = {
   status: string; // TODO: 타입 확인
   profileFileSeq: number;
   isVerification: 'Y' | 'N';
-  company: CompanyDto;
+  company: CompanyEntity;
   links: {
     createdAt: string;
     updatedAt: string;

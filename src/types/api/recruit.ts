@@ -1,4 +1,4 @@
-import {CompanyDto} from './dto';
+import {CompanyEntity, RecruitApplyEntity, RecruitEntity} from './entities';
 
 export type FetchRecruitsParams = {
   noPaging?: boolean;
@@ -38,6 +38,11 @@ export type FetchRecruitsResponse = {
   writer: {
     name: string;
     profileImage: null;
-    company: CompanyDto;
+    company: CompanyEntity;
   };
 }[];
+
+export type FetchRecruitApplicationsMyResponse = {
+  recruit: RecruitEntity;
+  recruitApply: RecruitApplyEntity[];
+};
