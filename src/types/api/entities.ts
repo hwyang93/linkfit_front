@@ -1,9 +1,8 @@
-export type YesNoFlag = 'Y' | 'N';
+import {YesNoFlag} from '../common';
 
 export interface BaseEntity {
   createdAt: string;
   updatedAt: string;
-  deletedAt: string;
 }
 
 export interface CommonFileEntity extends BaseEntity {
@@ -38,21 +37,25 @@ export interface MemberEntity extends BaseEntity {
   birth: string;
   gender: string;
   phone: string;
-  type: string;
-  nickname: string;
+  type?: string;
+  nickname?: string;
   intro?: string;
-  address: string;
+  address?: string;
   addressDetail?: string;
   lastLogin?: string;
-  isOpenProfile: YesNoFlag;
+  isOpenProfile?: YesNoFlag;
   field?: string;
   status?: string;
   profileFileSeq?: number;
   isVerification?: YesNoFlag;
+  profileImage: CommonFileEntity;
   company: CompanyEntity;
   links: MemberLinkEntity[];
   regionAuth: RegionAuthEntity;
   resumes: ResumeEntity[];
+  recruits: RecruitEntity[];
+  licences: MemberLicenceEntity[];
+  follower: MemberFavoriteEntity[];
 }
 
 export interface MemberLinkEntity extends BaseEntity {
@@ -270,6 +273,7 @@ export interface RecruitEntity extends BaseEntity {
   pay: string;
   classType: string;
   content: string;
+  status: string;
   lon: number;
   lat: number;
   writerSeq: number;

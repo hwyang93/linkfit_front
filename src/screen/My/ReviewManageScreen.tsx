@@ -1,42 +1,17 @@
-import {Dimensions} from 'react-native';
-import {BLUE, GRAY} from '@styles/colors';
-import {createMaterialTopTabNavigator} from '@react-navigation/material-top-tabs';
-import EmployerReviewComponent from '@components/My/EmployerReviewComponent';
+import {materialTopTabNavigationOptions} from '@/utils/options/tab';
 import EmployeeReviewComponent from '@components/My/EmployeeReviewComponent';
+import EmployerReviewComponent from '@components/My/EmployerReviewComponent';
+import {createMaterialTopTabNavigator} from '@react-navigation/material-top-tabs';
 
 const Tab = createMaterialTopTabNavigator();
-const windowWidth = Dimensions.get('window').width;
-const tabWidth = (windowWidth - 32) / 2;
 
-function Tabs() {
+const ReviewManageScreen: React.FC = () => {
   return (
-    <>
-      <Tab.Navigator
-        screenOptions={{
-          tabBarLabelStyle: {fontSize: 16, fontWeight: '700'},
-          tabBarActiveTintColor: BLUE.DEFAULT,
-          tabBarInactiveTintColor: GRAY.DEFAULT,
-          tabBarItemStyle: {width: tabWidth},
-          tabBarContentContainerStyle: {
-            alignItems: 'center',
-            justifyContent: 'center',
-          },
-          tabBarIndicatorStyle: {width: tabWidth, marginLeft: 16},
-          tabBarStyle: {
-            elevation: 0, // for Android
-            shadowOffset: {
-              width: 0,
-              height: 0, // for iOS
-            },
-          },
-        }}>
-        <Tab.Screen name="구직" component={EmployeeReviewComponent} />
-        <Tab.Screen name="구인" component={EmployerReviewComponent} />
-      </Tab.Navigator>
-    </>
+    <Tab.Navigator screenOptions={materialTopTabNavigationOptions}>
+      <Tab.Screen name="구직" component={EmployeeReviewComponent} />
+      <Tab.Screen name="구인" component={EmployerReviewComponent} />
+    </Tab.Navigator>
   );
-}
+};
 
-export default function () {
-  return <Tabs />;
-}
+export default ReviewManageScreen;

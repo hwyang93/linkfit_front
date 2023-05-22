@@ -1,3 +1,10 @@
+import {iconPath} from '@/utils/iconPath';
+import Modal from '@components/ModalSheet';
+import ApplicantListItem from '@components/My/ApplicantListItem';
+import TopFilter from '@components/TopFilter';
+import {BLUE, WHITE} from '@styles/colors';
+import common from '@styles/common';
+import {SetStateAction, useCallback, useEffect, useState} from 'react';
 import {
   Image,
   Pressable,
@@ -6,18 +13,9 @@ import {
   Text,
   View,
 } from 'react-native';
-import {BLUE, WHITE} from '@styles/colors';
-import {NavigationProp, useNavigation} from '@react-navigation/native';
-import {LoggedInParamList} from '../../../AppInner';
-import {SetStateAction, useCallback, useEffect, useState} from 'react';
-import TopFilter from '@components/TopFilter';
-import ApplicantListItem from '@components/My/ApplicantListItem';
-import Modal from '@components/ModalSheet';
-import common from '@styles/common';
-import {iconPath} from '@/utils/iconPath';
 
 function ApplicantFinishComponent({list}: any) {
-  const navigation = useNavigation<NavigationProp<LoggedInParamList>>();
+  // const navigation = useNavigation<NavigationProp<LoggedInParamList>>();
   const [modalVisible, setModalVisible] =
     useState<SetStateAction<boolean>>(false);
 

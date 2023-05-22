@@ -1,3 +1,13 @@
+import {createCommunityPost} from '@api/community';
+import DismissKeyboardView from '@components/DismissKeyboardView';
+import Input, {KeyboardTypes} from '@components/Input';
+import SelectBox from '@components/SelectBox';
+import toast from '@hooks/toast';
+import {NativeStackScreenProps} from '@react-navigation/native-stack';
+import {WHITE} from '@styles/colors';
+import common from '@styles/common';
+import {isAxiosError} from 'axios';
+import {useCallback, useState} from 'react';
 import {
   ActivityIndicator,
   Pressable,
@@ -5,23 +15,16 @@ import {
   Text,
   View,
 } from 'react-native';
-import {WHITE} from '@styles/colors';
-import DismissKeyboardView from '@components/DismissKeyboardView';
-import common from '@styles/common';
-import Input, {KeyboardTypes} from '@components/Input';
-import {useCallback, useState} from 'react';
-import SelectBox from '@components/SelectBox';
 import LinearGradient from 'react-native-linear-gradient';
-import {createCommunityPost} from '@api/community';
-import toast from '@hooks/toast';
-import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import {LoggedInParamList} from '../../../AppInner';
 
 const CHANNEL = ['필라테스', '요가', '릴리리맘보'];
 type Props = NativeStackScreenProps<LoggedInParamList, 'CommunityPostForm'>;
 
-function CommunityPostFormScreen({navigation}: Props) {
-  const [loading, setLoading] = useState<boolean>(false);
+const CommunityPostFormScreen = ({navigation}: Props) => {
+  const [loading, setLoading] = useState(false);
+  console.log(setLoading);
+  // TODO: 로딩 상태 처리
   const [title, setTitle] = useState('');
   const [category, setCategory] = useState('');
   const [contents, setContents] = useState('');
@@ -35,8 +38,10 @@ function CommunityPostFormScreen({navigation}: Props) {
         toast.success({message: '게시글 등록이 완료되었어요!'});
         navigation.navigate('Community');
       })
-      .catch((e: any) => {
-        toast.error({message: e.message});
+      .catch(error => {
+        if (isAxiosError(error)) {
+          toast.error({message: error.message});
+        }
       });
   }, [category, contents, navigation, title]);
 
@@ -96,7 +101,7 @@ function CommunityPostFormScreen({navigation}: Props) {
       </View>
     </DismissKeyboardView>
   );
-}
+};
 
 const styles = StyleSheet.create({
   container: {

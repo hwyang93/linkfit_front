@@ -1,3 +1,4 @@
+import {FetchInstructorResponse} from '@/types/api/instructor';
 import request from './request';
 
 export function fetchInstructors() {
@@ -5,7 +6,7 @@ export function fetchInstructors() {
 }
 
 export function fetchInstructor(seq: number) {
-  return request.get(`/instructor/${seq}`);
+  return request.get<FetchInstructorResponse>(`/instructor/${seq}`);
 }
 
 export function createInstructorSuggest(data: object) {

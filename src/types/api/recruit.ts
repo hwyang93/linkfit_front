@@ -1,6 +1,6 @@
 import {CompanyEntity, RecruitApplyEntity, RecruitEntity} from './entities';
 
-export type FetchRecruitsParams = {
+export interface FetchRecruitsParams {
   noPaging?: boolean;
   curPage?: number;
   perPage?: number;
@@ -11,9 +11,9 @@ export type FetchRecruitsParams = {
   isWriter?: boolean;
   status?: string;
   period?: string;
-};
+}
 
-export type FetchRecruitsResponse = {
+export interface FetchRecruitsResponse {
   createdAt: string;
   updatedAt: string;
   seq: number;
@@ -40,9 +40,10 @@ export type FetchRecruitsResponse = {
     profileImage: null;
     company: CompanyEntity;
   };
-}[];
+}
+[];
 
-export type FetchRecruitApplicationsMyResponse = {
+export interface FetchRecruitApplicationsResponse {
   recruit: RecruitEntity;
   recruitApply: RecruitApplyEntity[];
-};
+}

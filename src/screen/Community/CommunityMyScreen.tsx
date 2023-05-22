@@ -1,3 +1,12 @@
+import {FetchMemberInfoResponse} from '@/types/api/member';
+import {iconPath} from '@/utils/iconPath';
+import {fetchMemberInfo} from '@api/member';
+import toast from '@hooks/toast';
+import CommunityMyScreenTabView from '@screen/Community/CommunityMyScreenTabView';
+import {BLUE, GRAY, WHITE} from '@styles/colors';
+import common from '@styles/common';
+import {isAxiosError} from 'axios';
+import {useCallback, useEffect, useState} from 'react';
 import {
   ActivityIndicator,
   Image,
@@ -6,33 +15,30 @@ import {
   Text,
   View,
 } from 'react-native';
-import {BLUE, GRAY, WHITE} from '@styles/colors';
-import common from '@styles/common';
-import {iconPath} from '@/utils/iconPath';
 import LinearGradient from 'react-native-linear-gradient';
-import {useCallback, useEffect, useState} from 'react';
-import CommunityMyScreenTabView from '@screen/Community/CommunityMyScreenTabView';
-import {fetchMemberInfo} from '@api/member';
-import toast from '@hooks/toast';
-import {fetchBookmarkCommunities, fetchCommunityPosts} from '@api/community';
 
-function CommunityMyScreen() {
-  const [loading, setLoading] = useState<boolean>(false);
-  const [memberInfo, setMemberInfo] = useState<any>({});
+const CommunityMyScreen: React.FC = () => {
+  const [loading, setLoading] = useState(false);
+  // TODO: 로딩 상태 처리
+  console.log(setLoading);
+
+  const [memberInfo, setMemberInfo] = useState<FetchMemberInfoResponse>();
 
   const getMemberInfo = useCallback(() => {
     fetchMemberInfo()
-      .then(({data}: any) => {
+      .then(({data}) => {
         setMemberInfo(data);
       })
-      .catch((e: any) => {
-        toast.error({message: e.message});
+      .catch(error => {
+        if (isAxiosError(error)) {
+          toast.error({message: error.message});
+        }
       });
   }, []);
 
   useEffect(() => {
     getMemberInfo();
-  }, []);
+  }, [getMemberInfo]);
 
   return (
     <>
@@ -46,11 +52,13 @@ function CommunityMyScreen() {
             <View>
               <View style={common.rowCenter}>
                 <Text style={[common.text_m, common.fwb, common.mr8]}>
-                  {memberInfo.nickname ? memberInfo.nickname : memberInfo.name}
+                  {memberInfo?.nickname
+                    ? memberInfo.nickname
+                    : memberInfo?.name}
                 </Text>
 
                 <View>
-                  {memberInfo.type === 'INSTRUCTOR' ? (
+                  {memberInfo?.type === 'INSTRUCTOR' ? (
                     <View style={common.rowCenter}>
                       <Text style={[common.text_s, {color: BLUE.DEFAULT}]}>
                         인증강사
@@ -63,7 +71,7 @@ function CommunityMyScreen() {
                   ) : (
                     <View style={common.rowCenter}>
                       <Text style={[common.text_s, {color: BLUE.DEFAULT}]}>
-                        {memberInfo.type === 'COMPANY' ? '센터' : '일반인'}
+                        {memberInfo?.type === 'COMPANY' ? '센터' : '일반인'}
                       </Text>
                     </View>
                   )}
@@ -71,12 +79,12 @@ function CommunityMyScreen() {
               </View>
               <View style={common.row}>
                 <Text style={[common.text_m, common.fwb, common.mr4]}>
-                  {memberInfo.type === 'COMPANY'
-                    ? memberInfo.company.field
-                    : memberInfo.field}
+                  {memberInfo?.type === 'COMPANY'
+                    ? memberInfo?.company.field
+                    : memberInfo?.field}
                 </Text>
                 <Text style={[common.text, {alignSelf: 'flex-end'}]}>
-                  {memberInfo.career}
+                  {memberInfo?.career}
                 </Text>
               </View>
               <Text style={[common.text_s, {color: GRAY.DARK}]}>
@@ -109,7 +117,7 @@ function CommunityMyScreen() {
       <CommunityMyScreenTabView />
     </>
   );
-}
+};
 
 const styles = StyleSheet.create({
   container: {

@@ -1,60 +1,57 @@
-import {
-  Dimensions,
-  Image,
-  Pressable,
-  StyleSheet,
-  Text,
-  View,
-} from 'react-native';
-import {BLUE, GRAY, WHITE} from '@styles/colors';
-
-import common from '@styles/common';
+import {RecruitApplyEntity, RecruitEntity} from '@/types/api/entities';
 import {iconPath} from '@/utils/iconPath';
-import {createMaterialTopTabNavigator} from '@react-navigation/material-top-tabs';
-import ApplicantWaitingComponent from '@components/My/ApplicantWaitingComponent';
-import ApplicantFinishComponent from '@components/My/ApplicantFinishComponent';
-import {NativeStackScreenProps} from '@react-navigation/native-stack';
-import {LoggedInParamList} from '../../../AppInner';
-import {SetStateAction, useCallback, useEffect, useState} from 'react';
+import {materialTopTabNavigationOptions} from '@/utils/options/tab';
 import {fetchRecruitApplications} from '@api/recruit';
-import {useIsFocused} from '@react-navigation/native';
 import Modal from '@components/ModalSheet';
+import ApplicantFinishComponent from '@components/My/ApplicantFinishComponent';
+import ApplicantWaitingComponent from '@components/My/ApplicantWaitingComponent';
 import toast from '@hooks/toast';
+import {createMaterialTopTabNavigator} from '@react-navigation/material-top-tabs';
+import {useIsFocused} from '@react-navigation/native';
+import {NativeStackScreenProps} from '@react-navigation/native-stack';
+import {WHITE} from '@styles/colors';
+import common from '@styles/common';
+import {isAxiosError} from 'axios';
+import {useCallback, useEffect, useState} from 'react';
+import {Image, Pressable, StyleSheet, Text, View} from 'react-native';
+import {LoggedInParamList} from '../../../AppInner';
 
 const Tab = createMaterialTopTabNavigator();
-const windowWidth = Dimensions.get('window').width;
-const tabWidth = (windowWidth - 32) / 2;
-type props = NativeStackScreenProps<LoggedInParamList, 'ApplicantStatus'>;
 
-type tabProps = {
-  waitingApplications: any[];
-  finishApplications: any[];
+type Props = NativeStackScreenProps<LoggedInParamList, 'ApplicantStatus'>;
+
+type TabProps = {
+  waitingApplications?: RecruitApplyEntity[];
+  finishApplications?: RecruitApplyEntity[];
   initList: object;
 };
 
-function ApplicantStatusScreen({route}: props) {
+const ApplicantStatusScreen = ({route}: Props) => {
   const isFocused = useIsFocused();
-  const [recruitInfo, setRecruitInfo] = useState<any>({});
-  const [waitingApplications, setWaitingApplications] = useState<any[]>([]);
-  const [finishApplications, setFinishApplications] = useState<any[]>([]);
-  const [modalVisible, setModalVisible] =
-    useState<SetStateAction<boolean>>(false);
+  const [recruitInfo, setRecruitInfo] = useState<RecruitEntity>();
+  const [waitingApplications, setWaitingApplications] =
+    useState<RecruitApplyEntity[]>();
+  const [finishApplications, setFinishApplications] =
+    useState<RecruitApplyEntity[]>();
+  const [modalVisible, setModalVisible] = useState(false);
   const getRecruitApplications = useCallback(() => {
     fetchRecruitApplications(route.params.recruitSeq)
-      .then(({data}: any) => {
-        const waitingList = data.recruitApply.filter((item: any) => {
+      .then(({data}) => {
+        const waitingList = data.recruitApply.filter(item => {
           return item.status === 'APPLY';
         });
 
-        const finishList = data.recruitApply.filter((item: any) => {
+        const finishList = data.recruitApply.filter(item => {
           return item.status !== 'APPLY';
         });
         setRecruitInfo(data.recruit);
         setWaitingApplications(waitingList);
         setFinishApplications(finishList);
       })
-      .catch((e: any) => {
-        toast.error({message: e.message});
+      .catch(error => {
+        if (isAxiosError(error)) {
+          toast.error({message: error.message});
+        }
       });
   }, [route.params.recruitSeq]);
 
@@ -62,7 +59,7 @@ function ApplicantStatusScreen({route}: props) {
     if (isFocused) {
       getRecruitApplications();
     }
-  }, [isFocused, route.params.recruitSeq]);
+  }, [isFocused, route.params.recruitSeq, getRecruitApplications]);
 
   const MODAL = [
     {
@@ -83,18 +80,18 @@ function ApplicantStatusScreen({route}: props) {
           <View style={[common.basicBox, common.mv8]}>
             <View style={common.rowCenter}>
               <Text style={[common.text_s, common.fcg]}>
-                {recruitInfo.createdAt} 작성
+                {recruitInfo?.createdAt} 작성
               </Text>
               <Text style={[common.mh8, common.fcg]}>|</Text>
               <Text style={[common.text_s, common.fcg]}>
-                {recruitInfo.status === 'ING' ? '진행중' : '마감'}
+                {recruitInfo?.status === 'ING' ? '진행중' : '마감'}
               </Text>
             </View>
             <Text style={[common.title, common.mv12]} numberOfLines={1}>
-              {recruitInfo.title}
+              {recruitInfo?.title}
             </Text>
             <Text style={[common.text_m, common.fwb]}>
-              {recruitInfo.position}
+              {recruitInfo?.position}
             </Text>
             <Pressable
               style={styles.kebabIcon}
@@ -142,35 +139,15 @@ function ApplicantStatusScreen({route}: props) {
       />
     </>
   );
-}
+};
 
-export function Tabs({
+export const Tabs = ({
   waitingApplications,
   finishApplications,
   initList,
-}: tabProps) {
+}: TabProps) => {
   return (
-    <Tab.Navigator
-      screenOptions={{
-        tabBarLabelStyle: {fontSize: 16, fontWeight: '700'},
-        tabBarActiveTintColor: BLUE.DEFAULT,
-        tabBarInactiveTintColor: GRAY.DEFAULT,
-        tabBarItemStyle: {
-          width: tabWidth,
-        },
-        tabBarContentContainerStyle: {
-          alignItems: 'center',
-          justifyContent: 'center',
-        },
-        tabBarIndicatorStyle: {width: tabWidth, marginLeft: 16},
-        tabBarStyle: {
-          elevation: 0, // for Android
-          shadowOffset: {
-            width: 0,
-            height: 0, // for iOS
-          },
-        },
-      }}>
+    <Tab.Navigator screenOptions={materialTopTabNavigationOptions}>
       <Tab.Screen
         name="대기중"
         children={() => (
@@ -191,7 +168,7 @@ export function Tabs({
       />
     </Tab.Navigator>
   );
-}
+};
 
 const styles = StyleSheet.create({
   container: {

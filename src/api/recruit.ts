@@ -1,4 +1,8 @@
-import {FetchRecruitsParams, FetchRecruitsResponse} from '@/types/api/recruit';
+import {
+  FetchRecruitApplicationsResponse,
+  FetchRecruitsParams,
+  FetchRecruitsResponse,
+} from '@/types/api/recruit';
 import request from './request';
 
 export function createRecruit(data: object) {
@@ -38,7 +42,7 @@ export function fetchRecruitApplicationsMy() {
 }
 
 export function fetchRecruitApplications(seq: number) {
-  return request.get(`/recruit/${seq}/apply`);
+  return request.get<FetchRecruitApplicationsResponse>(`/recruit/${seq}/apply`);
 }
 
 export function fetchRecruitApplication(seq: number) {

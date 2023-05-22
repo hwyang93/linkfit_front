@@ -1,37 +1,40 @@
-import {Alert, FlatList, StyleSheet, View} from 'react-native';
+import {FetchCommunityPostResponse} from '@/types/api/community';
+import {fetchCommunityPost} from '@api/community';
+import CommunityPostTop from '@components/Community/CommunityPostTop';
+import CommunityUserComponent from '@components/Community/CommunityUserComponent';
+import ReplyComponent from '@components/Community/ReplyComponent';
+import Modal from '@components/ModalSheet';
+import toast from '@hooks/toast';
+import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import {WHITE} from '@styles/colors';
 import common from '@styles/common';
-import ReplyComponent from '@components/Community/ReplyComponent';
-import CommunityUserComponent from '@components/Community/CommunityUserComponent';
-import Modal from '@components/ModalSheet';
-import {SetStateAction, useCallback, useEffect, useState} from 'react';
-import {NativeStackScreenProps} from '@react-navigation/native-stack';
+import {isAxiosError} from 'axios';
+import {useCallback, useEffect, useState} from 'react';
+import {Alert, FlatList, StyleSheet, View} from 'react-native';
 import {LoggedInParamList} from '../../../AppInner';
-import {fetchCommunityPost} from '@api/community';
-import toast from '@hooks/toast';
-import CommunityPostTop from '@components/Community/CommunityPostTop';
 
 type Props = NativeStackScreenProps<LoggedInParamList, 'CommunityPost'>;
 
-function CommunityPostScreen({route, navigation}: Props) {
-  const [modalVisible, setModalVisible] =
-    useState<SetStateAction<boolean>>(false);
+function CommunityPostScreen({route}: Props) {
+  const [modalVisible, setModalVisible] = useState(false);
 
-  const [post, setPost] = useState<any>({});
+  const [post, setPost] = useState<FetchCommunityPostResponse>();
 
   const getPost = useCallback(() => {
     fetchCommunityPost(route.params.postSeq)
-      .then(({data}: any) => {
+      .then(({data}) => {
         setPost(data);
       })
-      .catch((e: any) => {
-        toast.error({message: e.message});
+      .catch(error => {
+        if (isAxiosError(error)) {
+          toast.error({message: error.message});
+        }
       });
   }, [route.params.postSeq]);
 
   useEffect(() => {
     getPost();
-  }, []);
+  }, [getPost]);
 
   const MODAL = [
     {
@@ -50,15 +53,11 @@ function CommunityPostScreen({route, navigation}: Props) {
     },
   ];
 
-  const openModal = () => {
-    setModalVisible(true);
-  };
-
   return (
     <View style={styles.container}>
       <FlatList
-        data={post.comments}
-        keyExtractor={(item, index) => index.toString()}
+        data={post?.comments}
+        keyExtractor={(_, index) => index.toString()}
         renderItem={({item}) => {
           return (
             <View>
