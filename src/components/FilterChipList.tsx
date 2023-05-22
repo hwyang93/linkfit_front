@@ -2,19 +2,30 @@ import {iconPath} from '@/utils/iconPath';
 import {FlatList, Image, StyleSheet, View} from 'react-native';
 import Chip from './Common/Chip';
 
-function TopFilter({data}: any) {
+interface FilterChipListProps {
+  chipData: {
+    label: string;
+    value: string;
+  }[];
+  onChipPress: (label: string) => void;
+}
+
+const FilterChipList: React.FC<FilterChipListProps> = ({
+  chipData,
+  onChipPress,
+}) => {
   return (
     <View style={styles.filterBox}>
       <FlatList
         contentContainerStyle={{paddingHorizontal: 16}}
-        data={data}
+        data={chipData}
         keyExtractor={(_, index) => index.toString()}
         horizontal={true}
         renderItem={({item}) => (
           <Chip
             style={{marginRight: 8}}
-            label={item.value}
-            onPress={item.job}
+            label={item.label}
+            onPress={() => onChipPress(item.value)}
             rightIcon={
               <Image
                 style={styles.filterIcon}
@@ -27,7 +38,7 @@ function TopFilter({data}: any) {
       />
     </View>
   );
-}
+};
 
 const styles = StyleSheet.create({
   filterBox: {
@@ -40,4 +51,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default TopFilter;
+export default FilterChipList;

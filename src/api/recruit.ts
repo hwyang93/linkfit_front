@@ -1,3 +1,4 @@
+import {FetchRecruitsParams, FetchRecruitsResponse} from '@/types/api/recruit';
 import request from './request';
 
 export function createRecruit(data: object) {
@@ -8,8 +9,8 @@ export function fetchRecruit(seq: number) {
   return request.get(`/recruit/${seq}`);
 }
 
-export function fetchRecruits(params: object) {
-  return request.get('/recruit', {params});
+export function fetchRecruits(params: FetchRecruitsParams) {
+  return request.get<FetchRecruitsResponse>('/recruit', {params});
 }
 
 export function fetchBookmarkRecruits() {

@@ -13,23 +13,23 @@ import {
   View,
 } from 'react-native';
 
-type modalProps = {
+type BottomSheetProps = {
+  visible: boolean;
   title?: string;
-  link?: any;
-  modalVisible: any;
-  setModalVisible: any;
-  modalData?: any[];
-  // job?: () => void;
+  content?: React.ReactNode;
   modalHeight?: number;
-  type?: string;
-  onFilter?: () => void;
-  selected?: boolean;
-  onSelect?: any;
-  content?: any;
+  type?: 'button' | 'select' | 'tab';
+  onClose: () => void;
 };
 
-function ModalSheetSample(props: modalProps) {
-  const {modalVisible, setModalVisible} = props;
+const BottomSheet: React.FC<BottomSheetProps> = ({
+  title,
+  visible,
+  modalHeight,
+  type,
+  content,
+  onClose,
+}) => {
   const screenHeight = Dimensions.get('screen').height;
   const panY = useRef(new Animated.Value(screenHeight)).current;
   const translateY = panY.interpolate({
@@ -53,12 +53,11 @@ function ModalSheetSample(props: modalProps) {
     PanResponder.create({
       onStartShouldSetPanResponder: () => true,
       onMoveShouldSetPanResponder: () => false,
-      onPanResponderMove: (event, gestureState) => {
+      onPanResponderMove: (_, gestureState) => {
         panY.setValue(gestureState.dy);
       },
-      onPanResponderRelease: (event, gestureState) => {
+      onPanResponderRelease: (_, gestureState) => {
         if (gestureState.dy > 0) {
-          // if (gestureState.dy > 0 && gestureState.vy > 1.5) {
           closeModal();
         } else {
           resetBottomSheet.start();
@@ -68,20 +67,20 @@ function ModalSheetSample(props: modalProps) {
   ).current;
 
   useEffect(() => {
-    if (props.modalVisible) {
+    if (visible) {
       resetBottomSheet.start();
     }
-  }, [props.modalData, props.modalVisible, props.type, resetBottomSheet]);
+  }, [visible, resetBottomSheet]);
 
   const closeModal = () => {
     closeBottomSheet.start(() => {
-      setModalVisible(false);
+      onClose();
     });
   };
 
   return (
     <Modal
-      visible={modalVisible}
+      visible={visible}
       animationType={'fade'}
       transparent
       statusBarTranslucent>
@@ -95,7 +94,7 @@ function ModalSheetSample(props: modalProps) {
             {
               ...styles.bottomSheetContainer,
               transform: [{translateY: translateY}],
-              height: props.modalHeight,
+              height: modalHeight,
               paddingBottom: 32,
               maxHeight: '93%',
             },
@@ -115,21 +114,21 @@ function ModalSheetSample(props: modalProps) {
             <Text
               style={[
                 styles.modalTitle,
-                props.type === 'button' && {marginBottom: 16},
-                props.type === 'select' && {marginBottom: 16},
-                props.type === 'tab' && {marginBottom: 16},
+                type === 'button' && {marginBottom: 16},
+                type === 'select' && {marginBottom: 16},
+                type === 'tab' && {marginBottom: 16},
               ]}>
-              {props.title}
+              {title}
             </Text>
           </View>
           <ScrollView showsVerticalScrollIndicator={false}>
-            {props.content}
+            {content}
           </ScrollView>
         </Animated.View>
       </View>
     </Modal>
   );
-}
+};
 
 const styles = StyleSheet.create({
   overlay: {
@@ -190,4 +189,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default ModalSheetSample;
+export default BottomSheet;

@@ -1,7 +1,4 @@
-type CompanyDto = {
-  companyName: string;
-  field: string;
-};
+import {CompanyDto} from './dto';
 
 export type FetchMemberFollowingsParams = {
   type: 'COMPANY' | 'INSTRUCTOR';
@@ -80,7 +77,7 @@ export type FetchMemberInfoResponse = {
   status: string; // TODO: 타입 확인
   profileFileSeq: number;
   isVerification: 'Y' | 'N';
-  company: CompanyDto | null;
+  company: CompanyDto;
   links: {
     createdAt: string;
     updatedAt: string;
