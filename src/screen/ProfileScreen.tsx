@@ -1,17 +1,17 @@
 import {Pressable, SafeAreaView, StyleSheet, Text} from 'react-native';
 
-import ProfileScreenTabView from '@screen/ProfileScreenTabView';
-import LinearGradient from 'react-native-linear-gradient';
-import {WHITE} from '@styles/colors';
-import common from '@styles/common';
 import {
   NavigationProp,
   RouteProp,
   useNavigation,
   useRoute,
 } from '@react-navigation/native';
+import ProfileScreenTabView from '@screen/ProfileScreenTabView';
+import {WHITE} from '@styles/colors';
+import common from '@styles/common';
+import {useState} from 'react';
+import LinearGradient from 'react-native-linear-gradient';
 import {LoggedInParamList} from '../../AppInner';
-import {useEffect, useState} from 'react';
 
 const ProfileScreen = () => {
   const navigation = useNavigation<NavigationProp<LoggedInParamList>>();

@@ -1,32 +1,30 @@
-import {
-  View,
-  StyleSheet,
-  Dimensions,
-  Image,
-  Text,
-  Pressable,
-  Alert,
-  FlatList,
-} from 'react-native';
-import {BLUE, GRAY} from '@styles/colors';
-import common from '@styles/common';
+import {FetchMemberInfoResponse} from '@/types/api/member';
+import {SCREEN_WIDTH} from '@/utils/constants/common';
 import {iconPath} from '@/utils/iconPath';
+import {materialTopTabNavigationOptions} from '@/utils/options/tab';
+import {fetchMemberInfo} from '@api/member';
+import toast from '@hooks/toast';
+import {createMaterialTopTabNavigator} from '@react-navigation/material-top-tabs';
 import {
   NavigationProp,
   useIsFocused,
   useNavigation,
 } from '@react-navigation/native';
-import {LoggedInParamList} from '../../../AppInner';
-import React, {useEffect, useState} from 'react';
-import {fetchMemberInfo} from '@api/member';
-import toast from '@hooks/toast';
-import {
-  MaterialTopTabNavigationOptions,
-  createMaterialTopTabNavigator,
-} from '@react-navigation/material-top-tabs';
+import {BLUE, GRAY} from '@styles/colors';
+import common from '@styles/common';
 import {isAxiosError} from 'axios';
-import {FetchMemberInfoResponse} from '@/types/api/member';
-import {ImageSourcePropType} from 'react-native';
+import React, {useEffect, useState} from 'react';
+import {
+  Alert,
+  FlatList,
+  Image,
+  ImageSourcePropType,
+  Pressable,
+  StyleSheet,
+  Text,
+  View,
+} from 'react-native';
+import {LoggedInParamList} from '../../../AppInner';
 
 const DUMMY_MY_INTRODUCTION_DATA = [
   {src: require('@images/instructor_01.png')},
@@ -56,8 +54,7 @@ const DUMMY_REVIEW_DATA = [
 
 const Tab = createMaterialTopTabNavigator();
 
-const width = Dimensions.get('window').width - 32;
-const tabWidth = width / 2;
+const width = SCREEN_WIDTH - 32;
 const imageSize = (width - 6) / 3;
 
 interface HeaderProps {
@@ -202,7 +199,7 @@ const MyIntroductionTabItem: React.FC<MyIntroductionTabItemProps> = ({
   );
 };
 
-function MyProfileScreen() {
+const MyProfileScreen: React.FC = () => {
   const [memberInfo, setMemberInfo] = useState<FetchMemberInfoResponse>();
 
   const navigation = useNavigation<NavigationProp<LoggedInParamList>>();
@@ -268,22 +265,6 @@ function MyProfileScreen() {
     );
   };
 
-  const materialTopTabNavigationOption: MaterialTopTabNavigationOptions = {
-    tabBarLabelStyle: common.text_m,
-    tabBarInactiveTintColor: GRAY.DEFAULT,
-    tabBarItemStyle: {width: tabWidth},
-    tabBarIndicatorStyle: styles.indicator,
-    tabBarStyle: {
-      marginHorizontal: 16,
-    },
-    tabBarLabel: ({focused, children}) => (
-      <Text
-        style={[common.text_m, {color: focused ? BLUE.DEFAULT : GRAY.DEFAULT}]}>
-        {children}
-      </Text>
-    ),
-  };
-
   return (
     <>
       <Header
@@ -298,13 +279,13 @@ function MyProfileScreen() {
           navigation.navigate('ProfileEdit', {memberInfo})
         }
       />
-      <Tab.Navigator screenOptions={materialTopTabNavigationOption}>
+      <Tab.Navigator screenOptions={materialTopTabNavigationOptions}>
         <Tab.Screen name="내 소개" component={MyIntroductionTab} />
         <Tab.Screen name="받은 후기" component={ReviewTab} />
       </Tab.Navigator>
     </>
   );
-}
+};
 
 const styles = StyleSheet.create({
   pencil: {position: 'absolute', top: 16, right: 16},

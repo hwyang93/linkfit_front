@@ -1,8 +1,8 @@
-import {Alert, Pressable, StyleSheet, Text, View} from 'react-native';
 import {BLUE, WHITE} from '@styles/colors';
 import common from '@styles/common';
+import {Alert, Pressable, StyleSheet, Text, View} from 'react-native';
 
-function AccountScreen() {
+const AccountScreen: React.FC = () => {
   return (
     <View style={styles.container}>
       <View>
@@ -19,7 +19,7 @@ function AccountScreen() {
       </View>
     </View>
   );
-}
+};
 
 const styles = StyleSheet.create({
   container: {flex: 1, padding: 16, backgroundColor: WHITE},

@@ -1,23 +1,21 @@
+import {iconPath} from '@/utils/iconPath';
+import Modal from '@components/ModalSheet';
+import ApplicantListItem from '@components/My/ApplicantListItem';
+import TopFilter from '@components/TopFilter';
+import {BLUE, WHITE} from '@styles/colors';
+import common from '@styles/common';
+import {SetStateAction, useCallback, useEffect, useState} from 'react';
 import {
+  Image,
+  Pressable,
   ScrollView,
   StyleSheet,
-  View,
   Text,
-  Pressable,
-  Image,
+  View,
 } from 'react-native';
-import {BLUE, WHITE} from '@styles/colors';
-import ApplicantListItem from '@components/My/ApplicantListItem';
-import {NavigationProp, useNavigation} from '@react-navigation/native';
-import {LoggedInParamList} from '../../../AppInner';
-import {SetStateAction, useCallback, useEffect, useState} from 'react';
-import Modal from '@components/ModalSheet';
-import TopFilter from '@components/TopFilter';
-import common from '@styles/common';
-import {iconPath} from '@/utils/iconPath';
 
 function ApplicantWaitingComponent({list}: any) {
-  const navigation = useNavigation<NavigationProp<LoggedInParamList>>();
+  // const navigation = useNavigation<NavigationProp<LoggedInParamList>>();
   const [modalVisible, setModalVisible] =
     useState<SetStateAction<boolean>>(false);
 

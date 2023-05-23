@@ -1,35 +1,34 @@
-import {useState, useEffect, useRef} from 'react';
-import {
-  StyleSheet,
-  View,
-  Text,
-  Dimensions,
-  Animated,
-  PanResponder,
-  Platform,
-  Alert,
-  StatusBar,
-  Image,
-  Pressable,
-} from 'react-native';
-import {TabView, TabBar} from 'react-native-tab-view';
-import common from '@styles/common';
+import {MemberReputationEntity} from '@/types/api/entities';
+import {FetchInstructorResponse} from '@/types/api/instructor';
+import {SCREEN_HEIGHT, SCREEN_WIDTH} from '@/utils/constants/common';
 import {iconPath} from '@/utils/iconPath';
-import {BLUE, GRAY, WHITE} from '@styles/colors';
-// import LinkCollection from '@components/LinkCollection';
+import {fetchInstructor} from '@api/instructor';
 import {
   NavigationProp,
   RouteProp,
   useNavigation,
   useRoute,
 } from '@react-navigation/native';
-import {LoggedInParamList} from '../../AppInner';
-import {fetchInstructor} from '@api/instructor';
-import {useSelector} from 'react-redux';
 import {RootState} from '@store/reducer';
+import {BLUE, GRAY, WHITE} from '@styles/colors';
+import common from '@styles/common';
+import {useEffect, useRef, useState} from 'react';
+import {
+  Alert,
+  Animated,
+  Image,
+  PanResponder,
+  Platform,
+  Pressable,
+  StatusBar,
+  StyleSheet,
+  Text,
+  View,
+} from 'react-native';
+import {TabBar, TabView} from 'react-native-tab-view';
+import {useSelector} from 'react-redux';
+import {LoggedInParamList} from '../../AppInner';
 
-const windowHeight = Dimensions.get('window').height;
-const windowWidth = Dimensions.get('window').width;
 const TabBarHeight = 48;
 const HeaderHeight = 200;
 const SafeStatusBar = Platform.select({
@@ -37,24 +36,24 @@ const SafeStatusBar = Platform.select({
   android: StatusBar.currentHeight,
 });
 
-const imageSize = (windowWidth - 38) / 3;
+const imageSize = (SCREEN_WIDTH - 38) / 3;
 
-function ProfileScreenTabView() {
+const ProfileScreenTabView: React.FC = () => {
   const memberInfo = useSelector((state: RootState) => state.user);
   const route = useRoute<RouteProp<LoggedInParamList, 'Profile'>>();
   const navigation = useNavigation<NavigationProp<LoggedInParamList>>();
-  const [instructor, setInstructor] = useState({});
-  const [reputation, setReputation] = useState({});
+  const [instructor, setInstructor] = useState<FetchInstructorResponse>();
+  const [reputation, setReputation] = useState<MemberReputationEntity[]>();
 
   useEffect(() => {
     const loadData = async () => {
       await fetchInstructor(route.params.memberSeq)
-        .then(({data}: any) => {
+        .then(({data}) => {
           setInstructor(data);
           setReputation(data.reputations);
         })
-        .catch((e: any) => {
-          console.log(e);
+        .catch(error => {
+          console.log(error);
         });
     };
     loadData();
@@ -66,6 +65,7 @@ function ProfileScreenTabView() {
     {key: 'tab2', title: '강사후기'},
   ]);
   const [canScroll, setCanScroll] = useState(true);
+
   const tab1Data = [
     {src: require('@images/instructor_01.png')},
     {src: require('@images/instructor_02.png')},
@@ -86,20 +86,20 @@ function ProfileScreenTabView() {
   // PanResponder for header
   const headerPanResponder = useRef(
     PanResponder.create({
-      onStartShouldSetPanResponderCapture: (evt, gestureState) => false,
-      onMoveShouldSetPanResponderCapture: (evt, gestureState) => false,
-      onStartShouldSetPanResponder: (evt, gestureState) => {
+      onStartShouldSetPanResponderCapture: () => false,
+      onMoveShouldSetPanResponderCapture: () => false,
+      onStartShouldSetPanResponder: () => {
         headerScrollY.stopAnimation();
         syncScrollOffset();
         return false;
       },
 
-      onMoveShouldSetPanResponder: (evt, gestureState) => {
+      onMoveShouldSetPanResponder: (_, gestureState) => {
         headerScrollY.stopAnimation();
         return Math.abs(gestureState.dy) > 5;
       },
 
-      onPanResponderRelease: (evt, gestureState) => {
+      onPanResponderRelease: (_, gestureState) => {
         syncScrollOffset();
         if (Math.abs(gestureState.vy) < 0.2) {
           return;
@@ -126,7 +126,7 @@ function ProfileScreenTabView() {
         });
       },
       onShouldBlockNativeResponder: () => true,
-      onPanResponderGrant: (evt, gestureState) => {
+      onPanResponderGrant: () => {
         headerScrollStart.current = scrollY._value;
       },
     }),
@@ -135,15 +135,15 @@ function ProfileScreenTabView() {
   // PanResponder for list in tab scene
   const listPanResponder = useRef(
     PanResponder.create({
-      onStartShouldSetPanResponderCapture: (evt, gestureState) => false,
-      onMoveShouldSetPanResponderCapture: (evt, gestureState) => false,
-      onStartShouldSetPanResponder: (evt, gestureState) => false,
-      onMoveShouldSetPanResponder: (evt, gestureState) => {
+      onStartShouldSetPanResponderCapture: () => false,
+      onMoveShouldSetPanResponderCapture: () => false,
+      onStartShouldSetPanResponder: () => false,
+      onMoveShouldSetPanResponder: () => {
         headerScrollY.stopAnimation();
         return false;
       },
       onShouldBlockNativeResponder: () => true,
-      onPanResponderGrant: (evt, gestureState) => {
+      onPanResponderGrant: () => {
         headerScrollY.stopAnimation();
       },
     }),
@@ -242,7 +242,7 @@ function ProfileScreenTabView() {
           <View>
             <View style={common.rowCenter}>
               <Text style={[common.text_l, common.fwb, common.mr8]}>
-                {instructor.nickname}
+                {instructor?.nickname}
               </Text>
               <View style={common.rowCenter}>
                 <Text style={[common.text_s, {color: BLUE.DEFAULT}]}>
@@ -263,11 +263,11 @@ function ProfileScreenTabView() {
                 필라테스
               </Text>
               <Text style={[common.text, {alignSelf: 'flex-end'}]}>
-                {instructor.career}
+                {instructor?.career}
               </Text>
               <Text style={[common.mh8, common.fcg]}>|</Text>
               <Text style={[common.text_s, common.fcg]}>
-                {instructor.address}
+                {instructor?.address}
               </Text>
             </View>
 
@@ -279,7 +279,7 @@ function ProfileScreenTabView() {
                 />
               </Pressable>
               <Text style={[common.text_m, common.fwb, common.mr8]}>
-                {instructor.follower}
+                {instructor?.follower}
               </Text>
               <Text style={common.text}>3시간 전 접속</Text>
             </View>
@@ -295,7 +295,7 @@ function ProfileScreenTabView() {
 
         <View style={common.mb16}>
           <Text style={[common.text_m, common.fwb, common.mb8]}>소개글</Text>
-          <Text style={common.text_m}>{instructor.intro}</Text>
+          <Text style={common.text_m}>{instructor?.intro}</Text>
         </View>
 
         {/*링크 영역 */}
@@ -330,7 +330,11 @@ function ProfileScreenTabView() {
     item: {
       seq: number;
       updateAt: string;
-      evaluationMember: object;
+      evaluationMemberSeq: number;
+      evaluationMember: {
+        nickname: string;
+        type: string;
+      };
       comment: string;
     };
   };
@@ -472,7 +476,7 @@ function ProfileScreenTabView() {
         contentContainerStyle={{
           paddingTop: HeaderHeight + TabBarHeight + 7,
           paddingHorizontal: 16,
-          minHeight: windowHeight - SafeStatusBar + HeaderHeight,
+          minHeight: SCREEN_HEIGHT - SafeStatusBar + HeaderHeight,
         }}
         showsHorizontalScrollIndicator={false}
         data={data}
@@ -501,7 +505,7 @@ function ProfileScreenTabView() {
         {/* 강사소개 강사 후기 탭바 */}
         <TabBar
           {...props}
-          onTabPress={({route, preventDefault}) => {
+          onTabPress={({preventDefault}) => {
             if (isListGliding.current) {
               preventDefault();
             }
@@ -528,7 +532,7 @@ function ProfileScreenTabView() {
         renderTabBar={renderTabBar}
         initialLayout={{
           height: 0,
-          width: windowWidth,
+          width: SCREEN_WIDTH,
         }}
       />
     );
@@ -540,7 +544,7 @@ function ProfileScreenTabView() {
       {renderHeader()}
     </View>
   );
-}
+};
 
 const styles = StyleSheet.create({
   container: {

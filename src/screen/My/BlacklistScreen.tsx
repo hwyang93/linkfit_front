@@ -1,15 +1,14 @@
-import {Dimensions, StyleSheet, View} from 'react-native';
-import {BLUE, GRAY, WHITE} from '@styles/colors';
-import {createMaterialTopTabNavigator} from '@react-navigation/material-top-tabs';
-import BlockInstructorComponent from '@components/My/BlockInstructorComponent';
+import {materialTopTabNavigationOptions} from '@/utils/options/tab';
 import BlockCenterComponent from '@components/My/BlockCenterComponent';
+import BlockInstructorComponent from '@components/My/BlockInstructorComponent';
+import {createMaterialTopTabNavigator} from '@react-navigation/material-top-tabs';
+import {WHITE} from '@styles/colors';
+import {StyleSheet} from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
 
 const Tab = createMaterialTopTabNavigator();
-const windowWidth = Dimensions.get('window').width;
-const tabWidth = (windowWidth - 32) / 2;
 
-const First = () => {
+const BlockCenterTab: React.FC = () => {
   return (
     <SafeAreaView edges={['bottom', 'left', 'right']} style={styles.container}>
       <BlockCenterComponent />
@@ -17,46 +16,22 @@ const First = () => {
   );
 };
 
-function Second() {
+const BlockInstructorTab: React.FC = () => {
   return (
     <SafeAreaView edges={['bottom', 'left', 'right']} style={styles.container}>
       <BlockInstructorComponent />
     </SafeAreaView>
   );
-}
+};
 
-function Tabs() {
+const BlacklistScreen: React.FC = () => {
   return (
-    <>
-      <Tab.Navigator
-        screenOptions={{
-          tabBarLabelStyle: {fontSize: 16, fontWeight: '700'},
-          tabBarActiveTintColor: BLUE.DEFAULT,
-          tabBarInactiveTintColor: GRAY.DEFAULT,
-          tabBarItemStyle: {width: tabWidth},
-          tabBarContentContainerStyle: {
-            alignItems: 'center',
-            justifyContent: 'center',
-          },
-          tabBarIndicatorStyle: {width: tabWidth, marginLeft: 16},
-          tabBarStyle: {
-            elevation: 0, // for Android
-            shadowOffset: {
-              width: 0,
-              height: 0, // for iOS
-            },
-          },
-        }}>
-        <Tab.Screen name="센터" component={First} />
-        <Tab.Screen name="강사" component={Second} />
-      </Tab.Navigator>
-    </>
+    <Tab.Navigator screenOptions={materialTopTabNavigationOptions}>
+      <Tab.Screen name="센터" component={BlockCenterTab} />
+      <Tab.Screen name="강사" component={BlockInstructorTab} />
+    </Tab.Navigator>
   );
-}
-
-export default function () {
-  return <Tabs />;
-}
+};
 
 const styles = StyleSheet.create({
   container: {
@@ -67,3 +42,5 @@ const styles = StyleSheet.create({
     // height: '100%',
   },
 });
+
+export default BlacklistScreen;
