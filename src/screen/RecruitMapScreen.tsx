@@ -503,8 +503,6 @@ const RecruitMapScreen: React.FC<LoggedInParamList> = () => {
         </SafeAreaView>
       )}
       <View style={styles.fabContainer}>
-        {/* TODO: 임시 모달 열기 버튼 제거 */}
-        <FloatingActionButton iconSource={iconPath.APPLE} onPress={openModal} />
         <FloatingActionButton
           style={{marginTop: 16}}
           iconSource={iconPath.PENCIL_W}
