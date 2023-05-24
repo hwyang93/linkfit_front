@@ -1,3 +1,12 @@
+import {iconPath} from '@/utils/iconPath';
+import {fetchRecruitApplicationsMy} from '@api/recruit';
+import Modal from '@components/ModalSheet';
+import TopFilter from '@components/TopFilter';
+import toast from '@hooks/toast';
+import {NavigationProp, useNavigation} from '@react-navigation/native';
+import {BLUE, WHITE} from '@styles/colors';
+import common, {width} from '@styles/common';
+import {SetStateAction, useCallback, useEffect, useState} from 'react';
 import {
   Dimensions,
   Image,
@@ -7,22 +16,13 @@ import {
   Text,
   View,
 } from 'react-native';
-import {BLUE, WHITE} from '@styles/colors';
-import common, {width} from '@styles/common';
-import TopFilter from '@components/TopFilter';
-import {NavigationProp, useNavigation} from '@react-navigation/native';
-import {LoggedInParamList} from '../../../AppInner';
-import {SetStateAction, useCallback, useEffect, useState} from 'react';
-import Modal from '@components/ModalSheet';
-import {iconPath} from '@/utils/iconPath';
-import {fetchRecruitApplicationsMy} from '@api/recruit';
-import toast from '@hooks/toast';
 import {SafeAreaView} from 'react-native-safe-area-context';
+import {LoggedInParamList} from '../../../AppInner';
 
 const windowWidth = Dimensions.get('window').width;
 const columns2 = (windowWidth - 48) / 2;
 
-function ApplicationStatusScreen() {
+const ApplicationStatusScreen: React.FC = () => {
   const navigation = useNavigation<NavigationProp<LoggedInParamList>>();
   const [modalVisible, setModalVisible] =
     useState<SetStateAction<boolean>>(false);
@@ -273,7 +273,7 @@ function ApplicationStatusScreen() {
       </ScrollView>
     </SafeAreaView>
   );
-}
+};
 
 const styles = StyleSheet.create({
   container: {
