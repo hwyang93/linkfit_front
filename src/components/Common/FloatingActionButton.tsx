@@ -1,6 +1,6 @@
 import {WHITE} from '@/styles/colors';
 import common from '@/styles/common';
-import THEME from '@/styles/palette';
+import THEME from '@/styles/theme';
 import React from 'react';
 import {
   Image,
