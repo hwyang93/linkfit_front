@@ -1,4 +1,4 @@
-import THEME from '@/styles/palette';
+import THEME from '@/styles/theme';
 import React from 'react';
 import {StyleProp, View, ViewProps, ViewStyle} from 'react-native';
 
