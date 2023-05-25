@@ -1,5 +1,4 @@
-import {GRAY} from '@/styles/colors';
-import common from '@/styles/common';
+import THEME from '@/styles/theme';
 import React from 'react';
 import {
   Pressable,
@@ -27,7 +26,15 @@ const Chip: React.FC<ChipProps> = ({
 }) => {
   return (
     <Pressable style={[styles.container, style]} onPress={onPress} {...props}>
-      <Text style={[common.text_m, common.fcg]}>{label}</Text>
+      <Text
+        style={{
+          fontSize: 16,
+          fontWeight: '400',
+          color: THEME.GREY02,
+          lineHeight: 22,
+        }}>
+        {label}
+      </Text>
       {rightIcon && <View style={{marginLeft: 8}}>{rightIcon}</View>}
     </Pressable>
   );
@@ -36,13 +43,14 @@ const Chip: React.FC<ChipProps> = ({
 const styles = StyleSheet.create({
   container: {
     flexDirection: 'row',
+    paddingVertical: 6,
     paddingHorizontal: 12,
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: '#fff',
-    borderRadius: 32,
+    borderRadius: 16,
     borderWidth: 1,
-    borderColor: GRAY.LIGHT,
+    borderColor: THEME.GREY04,
   },
 });
 

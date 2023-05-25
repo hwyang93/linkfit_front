@@ -1,40 +1,37 @@
-import {
-  View,
-  StyleSheet,
-  Dimensions,
-  Image,
-  Text,
-  Pressable,
-} from 'react-native';
-import {
-  Tabs,
-  MaterialTabBar,
-  TabBarProps,
-} from 'react-native-collapsible-tab-view';
-import {BLUE, GRAY, WHITE} from '@styles/colors';
-import common from '@styles/common';
+import {FetchCompanyResponse} from '@/types/api/company';
+import {MemberReputationEntity, RecruitEntity} from '@/types/api/entities';
+import {fetchCompany} from '@api/company';
+import CenterInfoTop from '@components/CenterInfoTop';
+import EmptySet from '@components/EmptySet';
+import toast from '@hooks/toast';
 import {
   NavigationProp,
   RouteProp,
   useNavigation,
   useRoute,
 } from '@react-navigation/native';
-import {LoggedInParamList} from '../../AppInner';
+import {BLUE, GRAY, WHITE} from '@styles/colors';
+import common from '@styles/common';
+import {isAxiosError} from 'axios';
 import {useCallback, useEffect, useState} from 'react';
-import CenterInfoTop from '@components/CenterInfoTop';
-import toast from '@hooks/toast';
-import {fetchCompany} from '@api/company';
-import EmptySet from '@components/EmptySet';
-
-// const HEADER_HEIGHT = 250;
+import {
+  Dimensions,
+  Image,
+  Pressable,
+  StyleSheet,
+  Text,
+  View,
+} from 'react-native';
+import {
+  MaterialTabBar,
+  TabBarProps,
+  Tabs,
+} from 'react-native-collapsible-tab-view';
+import {LoggedInParamList} from '../../AppInner';
 
 const width = Dimensions.get('window').width - 32;
 const tabWidth = width / 2;
 const imageSize = (width - 6) / 3;
-type headerProps = {
-  centerInfo: any;
-  recruits: any[];
-};
 
 const tabBar = (props: TabBarProps) => (
   <MaterialTabBar
@@ -51,22 +48,25 @@ const tabBar = (props: TabBarProps) => (
   />
 );
 
-function CenterInfoScreen() {
+const CenterInfoScreen: React.FC = () => {
   const route = useRoute<RouteProp<LoggedInParamList, 'CenterInfo'>>();
   const navigation = useNavigation<NavigationProp<LoggedInParamList>>();
-  const [centerInfo, setCenterInfo] = useState<any>({});
-  const [recruits, setRecruits] = useState<any[]>([]);
-  const [reputations, setReputations] = useState<any[]>([]);
+  const [centerInfo, setCenterInfo] =
+    useState<Pick<FetchCompanyResponse, 'companyInfo'>>();
+  const [recruits, setRecruits] = useState<RecruitEntity[]>();
+  const [reputations, setReputations] = useState<MemberReputationEntity[]>();
 
   const getCenterInfo = useCallback(() => {
     fetchCompany(route.params.memberSeq)
-      .then(({data}: any) => {
+      .then(({data}) => {
         setCenterInfo(data.companyInfo);
         setRecruits(data.recruits);
         setReputations(data.reputations);
       })
-      .catch((e: any) => {
-        toast.error({message: e.message});
+      .catch(error => {
+        if (isAxiosError(error)) {
+          toast.error({message: error.message});
+        }
       });
   }, [route.params.memberSeq]);
 
@@ -74,7 +74,7 @@ function CenterInfoScreen() {
     getCenterInfo();
   }, [getCenterInfo]);
 
-  const IntroduceTabHeader = () => {
+  const IntroduceTabHeader: React.FC = () => {
     return (
       <View style={common.mb8}>
         <Text style={[common.text_m, common.fwb]}>센터 사진</Text>
@@ -82,12 +82,12 @@ function CenterInfoScreen() {
     );
   };
 
-  const IntroduceTabFooter = () => {
+  const IntroduceTabFooter: React.FC = () => {
     return (
       <View style={common.mt16}>
         <Text style={[common.text_m, common.fwb]}>센터 주소</Text>
         <Text style={common.text_m}>
-          {`${centerInfo.address} ${centerInfo.addressDetail}`}
+          {`${centerInfo?.address} ${centerInfo?.addressDetail}`}
         </Text>
       </View>
     );
@@ -124,16 +124,6 @@ function CenterInfoScreen() {
     [navigation],
   );
 
-  type reviewProps = {
-    item: {
-      id: number;
-      nickname: string;
-      type: string;
-      date: string;
-      review: string;
-    };
-  };
-
   const [textLine, setTextLine] = useState(2);
 
   const ReviewTab = useCallback(
@@ -147,7 +137,7 @@ function CenterInfoScreen() {
       };
       return (
         <>
-          {reputations.length < 1 ? (
+          {reputations && reputations.length < 1 ? (
             <View style={{flex: 1}}>
               <EmptySet text={'등록된 후기가 없어요.'} />
             </View>
@@ -184,15 +174,17 @@ function CenterInfoScreen() {
         </>
       );
     },
-    [reputations.length, textLine],
+    [textLine, reputations],
   );
 
   return (
     <Tabs.Container
       renderTabBar={tabBar}
-      renderHeader={() => (
-        <CenterInfoTop centerInfo={centerInfo} recruits={recruits} />
-      )}
+      renderHeader={() =>
+        recruits ? (
+          <CenterInfoTop centerInfo={centerInfo} recruits={recruits} />
+        ) : null
+      }
       allowHeaderOverscroll
       headerContainerStyle={{
         paddingTop: 16,
@@ -227,7 +219,7 @@ function CenterInfoScreen() {
       </Tabs.Tab>
     </Tabs.Container>
   );
-}
+};
 
 const styles = StyleSheet.create({
   pencil: {position: 'absolute', top: 0, right: 0},

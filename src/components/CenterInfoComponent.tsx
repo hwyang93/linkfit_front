@@ -1,8 +1,8 @@
-import {Alert, Image, Pressable, Text, View} from 'react-native';
-import common from '@styles/common';
-import {GRAY} from '@styles/colors';
 import {iconPath} from '@/utils/iconPath';
 import {NavigationProp, useNavigation} from '@react-navigation/native';
+import {GRAY} from '@styles/colors';
+import common from '@styles/common';
+import {Alert, Image, Pressable, Text, View} from 'react-native';
 import {LoggedInParamList} from '../../AppInner';
 
 type CenterInfoProps = {
@@ -19,12 +19,12 @@ function CenterInfoComponent({centerInfo}: CenterInfoProps) {
   return (
     <Pressable
       onPress={() =>
-        navigation.navigate('CenterInfo', {memberSeq: centerInfo.seq})
+        navigation.navigate('CenterInfo', {memberSeq: centerInfo?.seq})
       }>
-      {centerInfo.profileImage && (
+      {centerInfo?.profileImage && (
         <View style={common.mb16}>
           <Image
-            source={{uri: centerInfo.profileImage.originFileUrl}}
+            source={{uri: centerInfo?.profileImage.originFileUrl}}
             resizeMode={'cover'}
             style={common.imgBox}
           />
@@ -34,11 +34,11 @@ function CenterInfoComponent({centerInfo}: CenterInfoProps) {
       <Text style={common.title}>{centerInfo.company.companyName}</Text>
       <View style={common.rowCenterBetween}>
         <Text style={[common.text_s, {color: GRAY.DARK}]}>
-          {centerInfo.company.field +
+          {centerInfo?.company.field +
             ' | ' +
-            centerInfo.company.address +
+            centerInfo?.company.address +
             ' · ' +
-            centerInfo.company.addressDetail}
+            centerInfo?.company.addressDetail}
         </Text>
         <View style={common.rowCenterBetween}>
           <Pressable
@@ -56,7 +56,7 @@ function CenterInfoComponent({centerInfo}: CenterInfoProps) {
             onPress={() => Alert.alert('하트', '하트를 눌러주세용')}>
             <Image
               source={
-                centerInfo.isFollow === 'Y'
+                centerInfo?.isFollow === 'Y'
                   ? iconPath.FAVORITE_ON
                   : iconPath.FAVORITE
               }

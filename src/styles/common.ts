@@ -1,4 +1,4 @@
-import {StyleSheet, Dimensions} from 'react-native';
+import {Dimensions, StyleSheet} from 'react-native';
 import {BLACK, BLUE, GRAY, WHITE} from './colors';
 
 export const Font = {
@@ -279,6 +279,7 @@ const common = StyleSheet.create({
   },
   // icon
   CIRCLE_ARROW_RIGHT: {width: 16, height: 16},
+  size20: {width: 20, height: 20},
   size24: {width: 24, height: 24},
   size32: {width: 32, height: 32},
   size40: {width: 40, height: 40},

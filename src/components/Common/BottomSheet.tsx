@@ -1,9 +1,9 @@
+import {SCREEN_HEIGHT, SCREEN_WIDTH} from '@/utils/constants/common';
 import {BLACK, GRAY} from '@styles/colors';
 import common, {width} from '@styles/common';
 import {useEffect, useRef} from 'react';
 import {
   Animated,
-  Dimensions,
   Modal,
   PanResponder,
   ScrollView,
@@ -18,20 +18,17 @@ type BottomSheetProps = {
   title?: string;
   content?: React.ReactNode;
   modalHeight?: number;
-  type?: 'button' | 'select' | 'tab';
-  onClose: () => void;
+  onDismiss: () => void;
 };
 
 const BottomSheet: React.FC<BottomSheetProps> = ({
   title,
   visible,
   modalHeight,
-  type,
   content,
-  onClose,
+  onDismiss,
 }) => {
-  const screenHeight = Dimensions.get('screen').height;
-  const panY = useRef(new Animated.Value(screenHeight)).current;
+  const panY = useRef(new Animated.Value(SCREEN_HEIGHT)).current;
   const translateY = panY.interpolate({
     inputRange: [-1, 0, 1],
     outputRange: [0, 0, 1],
@@ -44,7 +41,7 @@ const BottomSheet: React.FC<BottomSheetProps> = ({
   });
 
   const closeBottomSheet = Animated.timing(panY, {
-    toValue: screenHeight,
+    toValue: SCREEN_HEIGHT,
     duration: 300,
     useNativeDriver: true,
   });
@@ -74,14 +71,14 @@ const BottomSheet: React.FC<BottomSheetProps> = ({
 
   const closeModal = () => {
     closeBottomSheet.start(() => {
-      onClose();
+      onDismiss();
     });
   };
 
   return (
     <Modal
       visible={visible}
-      animationType={'fade'}
+      animationType="fade"
       transparent
       statusBarTranslucent>
       <View style={styles.overlay}>
@@ -91,8 +88,8 @@ const BottomSheet: React.FC<BottomSheetProps> = ({
 
         <Animated.View
           style={[
+            styles.bottomSheetContainer,
             {
-              ...styles.bottomSheetContainer,
               transform: [{translateY: translateY}],
               height: modalHeight,
               paddingBottom: 32,
@@ -105,21 +102,13 @@ const BottomSheet: React.FC<BottomSheetProps> = ({
             hitSlop={{
               top: 32,
               bottom: 32,
-              left: Dimensions.get('screen').width / 2,
-              right: Dimensions.get('screen').width / 2,
+              left: SCREEN_WIDTH / 2,
+              right: SCREEN_WIDTH / 2,
             }}
           />
           {/* 모달 타이틀 */}
           <View style={common.mt16}>
-            <Text
-              style={[
-                styles.modalTitle,
-                type === 'button' && {marginBottom: 16},
-                type === 'select' && {marginBottom: 16},
-                type === 'tab' && {marginBottom: 16},
-              ]}>
-              {title}
-            </Text>
+            <Text style={styles.modalTitle}>{title}</Text>
           </View>
           <ScrollView showsVerticalScrollIndicator={false}>
             {content}
@@ -140,7 +129,6 @@ const styles = StyleSheet.create({
   bottomSheetContainer: {
     width: '100%',
     alignItems: 'center',
-    padding: 16,
     height: 320,
     backgroundColor: 'white',
     borderTopLeftRadius: 16,
@@ -170,22 +158,6 @@ const styles = StyleSheet.create({
     fontWeight: '700',
     textAlign: 'left',
     lineHeight: +width * 24,
-  },
-  itemBox: {
-    flexDirection: 'row',
-    width: '100%',
-    paddingVertical: 19,
-  },
-  selectBox: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    width: '100%',
-    paddingVertical: 8,
-    paddingHorizontal: 16,
-    marginVertical: 8,
-    borderWidth: 2,
-    borderColor: GRAY.LIGHT,
-    borderRadius: 8,
   },
 });
 

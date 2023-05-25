@@ -114,7 +114,7 @@ const FilterModalContent: React.FC<FilterModalContentProps> = ({
 };
 
 function RecruitListScreen() {
-  const [recruits, setRecruits] = useState<FetchRecruitsResponse>([]);
+  const [recruits, setRecruits] = useState<FetchRecruitsResponse>();
   const [modalType, setModalType] = useState<FilterType>('fields');
   const [filterValue, setFilterValue] = useState<Record<FilterType, string[]>>({
     fields: [],
@@ -227,7 +227,7 @@ function RecruitListScreen() {
       />
       <BottomSheet
         visible={modalVisible}
-        onClose={closeModal}
+        onDismiss={closeModal}
         title={MODAL_DATA[modalType].title}
         content={
           <FilterModalContent
