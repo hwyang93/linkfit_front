@@ -1,11 +1,11 @@
-import { createInstructorSuggest } from '@api/instructor';
+import {createInstructorSuggest} from '@api/instructor';
 import DismissKeyboardView from '@components/DismissKeyboardView';
-import Input, { KeyboardTypes } from '@components/Input';
+import Input, {KeyboardTypes} from '@components/Input';
 import SelectBox from '@components/SelectBox';
-import { RouteProp, useRoute } from '@react-navigation/native';
-import { NativeStackScreenProps } from '@react-navigation/native-stack';
+import {RouteProp, useRoute} from '@react-navigation/native';
+import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import common from '@styles/common';
-import { useCallback, useState } from 'react';
+import {useCallback, useState} from 'react';
 import {
   ActivityIndicator,
   Alert,
@@ -15,7 +15,7 @@ import {
   View,
 } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
-import { LoggedInParamList } from '../../AppInner';
+import {LoggedInParamList} from '../../AppInner';
 
 const SUGGESTION = [
   '필라테스 강사님 구합니다.',
@@ -36,7 +36,7 @@ type SuggestionScreenProps = NativeStackScreenProps<
 >;
 
 function SuggestionScreen({navigation}: SuggestionScreenProps) {
-  const [load                                                      ing, setLoading] = useState<boolean>(false);
+  const [loading, setLoading] = useState<boolean>(false);
   const route = useRoute<RouteProp<LoggedInParamList, 'Suggestion'>>();
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
