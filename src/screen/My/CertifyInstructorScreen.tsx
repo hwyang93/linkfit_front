@@ -1,3 +1,11 @@
+import {iconPath} from '@/utils/iconPath';
+import {cancelMemberLicence, fetchMemberLicences} from '@api/member';
+import Modal from '@components/ModalSheet';
+import toast from '@hooks/toast';
+import {useIsFocused} from '@react-navigation/native';
+import {GRAY, WHITE} from '@styles/colors';
+import common from '@styles/common';
+import {SetStateAction, useCallback, useEffect, useState} from 'react';
 import {
   Image,
   Pressable,
@@ -6,14 +14,6 @@ import {
   Text,
   View,
 } from 'react-native';
-import {GRAY, WHITE} from '@styles/colors';
-import common from '@styles/common';
-import {iconPath} from '@/utils/iconPath';
-import Modal from '@components/ModalSheet';
-import {SetStateAction, useCallback, useEffect, useState} from 'react';
-import {cancelMemberLicence, fetchMemberLicences} from '@api/member';
-import {useIsFocused} from '@react-navigation/native';
-import toast from '@hooks/toast';
 
 function CertifyInstructorScreen() {
   const isFocused = useIsFocused();
@@ -35,7 +35,7 @@ function CertifyInstructorScreen() {
   >([]);
 
   const getMemberLicences = useCallback(() => {
-    fetchMemberLicences({})
+    fetchMemberLicences()
       .then(({data}: any) => {
         setLicenses(data);
       })
@@ -46,7 +46,7 @@ function CertifyInstructorScreen() {
 
   useEffect(() => {
     if (isFocused) {
-      fetchMemberLicences({})
+      fetchMemberLicences()
         .then(({data}: any) => {
           setLicenses(data);
         })

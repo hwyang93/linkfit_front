@@ -49,7 +49,7 @@ export interface MemberEntity extends BaseEntity {
   profileFileSeq?: number;
   isVerification?: YesNoFlag;
   profileImage: CommonFileEntity;
-  company: CompanyEntity;
+  company?: CompanyEntity;
   links: MemberLinkEntity[];
   regionAuth: RegionAuthEntity;
   resumes: ResumeEntity[];
@@ -93,8 +93,8 @@ export interface MemberLicenceEntity extends BaseEntity {
   issuer: string;
   status: string;
   licenceFileSeq?: number;
-  licenceFile: CommonFileEntity;
-  member: MemberEntity;
+  licenceFile?: CommonFileEntity;
+  member?: MemberEntity;
 }
 
 export interface RegionAuthEntity extends BaseEntity {
@@ -104,7 +104,7 @@ export interface RegionAuthEntity extends BaseEntity {
   region1Depth: string;
   region2Depth: string;
   region3Depth: string;
-  member: MemberEntity;
+  member?: MemberEntity;
 }
 
 export interface ResumeEntity extends BaseEntity {
@@ -139,18 +139,6 @@ export interface CareerEntity extends BaseEntity {
   resumeSeq: number;
   writerSeq: number;
   resume: ResumeEntity;
-}
-
-export interface MemberLicenceEntity extends BaseEntity {
-  seq: number;
-  memberSeq: number;
-  field: string;
-  licenceNumber: string;
-  issuer: string;
-  status: string;
-  licenceFileSeq?: number;
-  licenceFile: CommonFileEntity;
-  member: MemberEntity;
 }
 
 export interface MemberReputationEntity extends BaseEntity {

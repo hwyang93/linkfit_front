@@ -1,14 +1,16 @@
-import {useState, useEffect, SetStateAction} from 'react';
-import {StyleSheet, Text, View} from 'react-native';
-import InstructorComponent from '@components/InstructorComponent';
-import {fetchInstructors} from '@api/instructor';
-import {SafeAreaView} from 'react-native-safe-area-context';
+import {FetchInstructorsResponse} from '@/types/api/instructor';
 import {iconPath} from '@/utils/iconPath';
+import {fetchInstructors} from '@api/instructor';
+import InstructorComponent from '@components/InstructorComponent';
 import TopFilter from '@components/TopFilter';
 import toast from '@hooks/toast';
+import {isAxiosError} from 'axios';
+import {SetStateAction, useCallback, useEffect, useState} from 'react';
+import {StyleSheet, View} from 'react-native';
+import {SafeAreaView} from 'react-native-safe-area-context';
 
 function InstructorListScreen() {
-  const [instructors, setInstructors] = useState(() => []);
+  const [instructors, setInstructors] = useState<FetchInstructorsResponse>();
   const [modalVisible, setModalVisible] =
     useState<SetStateAction<boolean>>(false);
   const [modalTitle, setModalTitle] = useState('');
@@ -47,16 +49,25 @@ function InstructorListScreen() {
       selected: false,
     },
   ]);
+  const getInstructorsData = useCallback(async () => {
+    try {
+      const response = await fetchInstructors({
+        noPaging: false,
+        curPage: 1,
+        perPage: 10,
+      });
+      console.log('@', response.pagingInfo);
+      setInstructors(response.data);
+    } catch (error) {
+      if (isAxiosError(error)) {
+        toast.error({message: error.message});
+      }
+    }
+  }, []);
 
   useEffect(() => {
-    fetchInstructors()
-      .then(({data}: any) => {
-        setInstructors(data);
-      })
-      .catch((e: {message: any}) => {
-        toast.error({message: e.message});
-      });
-  }, []);
+    getInstructorsData();
+  }, [getInstructorsData]);
 
   const openModal = () => {
     setModalVisible(true);
@@ -73,11 +84,13 @@ function InstructorListScreen() {
         {/* 필터 영역 */}
       </View>
       {/*강사 리스트 컴포넌트 */}
-      <InstructorComponent
-        list={instructors}
-        title={'내 주변 강사'}
-        text={'링크핏의 우수 강사를 확인하세요.'}
-      />
+      {instructors && (
+        <InstructorComponent
+          list={instructors}
+          title={'내 주변 강사'}
+          text={'링크핏의 우수 강사를 확인하세요.'}
+        />
+      )}
     </SafeAreaView>
   );
 }

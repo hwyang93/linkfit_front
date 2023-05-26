@@ -1,4 +1,4 @@
-import {CompanyEntity, RecruitApplyEntity, RecruitEntity} from './entities';
+import {RecruitApplyEntity, RecruitEntity} from './entities';
 
 export interface FetchRecruitsParams {
   noPaging?: boolean;
@@ -13,37 +13,28 @@ export interface FetchRecruitsParams {
   period?: string;
 }
 
-export interface FetchRecruitsResponse {
-  createdAt: string;
-  updatedAt: string;
-  seq: number;
-  title: string;
-  companyName: string;
-  position: string;
-  address: string;
-  addressDetail: string;
-  district: string;
-  phone: string;
-  recruitType: string;
-  career: string;
-  education: string;
-  payType: string;
-  pay: string;
-  classType: string;
-  content: string;
-  status: string;
-  lon: number;
-  lat: number;
-  writerSeq: number;
-  writer: {
-    name: string;
-    profileImage: null;
-    company: CompanyEntity;
-  };
-}
-[];
+export type FetchRecruitsResponse = RecruitEntity[];
 
 export interface FetchRecruitApplicationsResponse {
   recruit: RecruitEntity;
   recruitApply: RecruitApplyEntity[];
 }
+
+export type FetchRecruitResponse = RecruitEntity;
+
+export interface FetchBookmarkRecruitsResponse {
+  createdAt: string;
+  updatedAt: string;
+  seq: number;
+  memberSeq: number;
+  favoriteSeq: number;
+  recruit: RecruitEntity;
+}
+[];
+
+export interface FetchRecruitApplicationsMyParams {
+  period?: string;
+  status?: string;
+}
+
+export type FetchRecruitApplicationsMyResponse = RecruitApplyEntity[];

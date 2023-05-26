@@ -1,8 +1,9 @@
+import STORAGE_KEY from '@/utils/constants/storage';
 import {refreshToken} from '@api/auth';
-import axios from 'axios';
-import EncryptedStorage from 'react-native-encrypted-storage';
-import {Platform} from 'react-native';
 import toast from '@hooks/toast';
+import axios, {isAxiosError} from 'axios';
+import {Platform} from 'react-native';
+import EncryptedStorage from 'react-native-encrypted-storage';
 
 const uri =
   process.env.NODE_ENV === 'production'
@@ -21,9 +22,9 @@ export const getHeaders = async (tokenType: string) => {
   };
   let token;
   if (tokenType === 'access') {
-    token = await EncryptedStorage.getItem('accessToken');
+    token = await EncryptedStorage.getItem(STORAGE_KEY.ACCESS_TOKEN);
   } else {
-    token = await EncryptedStorage.getItem('refreshToken');
+    token = await EncryptedStorage.getItem(STORAGE_KEY.REFRESH_TOKEN);
   }
   if (token) {
     headers.Authorization = `Bearer ${token}`;
@@ -33,35 +34,36 @@ export const getHeaders = async (tokenType: string) => {
 };
 
 service.interceptors.request.use(
-  async (config: any) => {
+  async config => {
     let authHeader;
-    if (config.url.includes('/refresh')) {
+    if (config.url?.includes('/refresh')) {
       authHeader = await getHeaders('refresh');
     } else {
       authHeader = await getHeaders('access');
     }
-    config.headers = {...config.headers, ...authHeader};
+    config.headers.Authorization = authHeader.Authorization;
     return config;
   },
-  (error: any) => {
-    return Promise.reject(error);
-  },
+  error => Promise.reject(error),
 );
+
 service.interceptors.response.use(
-  (response: {data: any}) => {
-    return response.data;
-  },
-  async (error: any) => {
-    const {config} = error;
+  response => response.data,
+  async error => {
     if (error.response.data.message === 'expired') {
-      const originalRequest = config;
+      const originalRequest = error.config;
       await refreshToken()
-        .then(async ({data}: any) => {
-          await EncryptedStorage.setItem('accessToken', data.accessToken);
+        .then(async ({data}) => {
+          await EncryptedStorage.setItem(
+            STORAGE_KEY.ACCESS_TOKEN,
+            data.accessToken,
+          );
           service(originalRequest);
         })
-        .catch((e: any) => {
-          toast.error({message: e.message});
+        .catch(error => {
+          if (isAxiosError(error)) {
+            toast.error({message: error.message});
+          }
         });
     }
     return Promise.reject(error.response.data);

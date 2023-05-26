@@ -1,3 +1,11 @@
+import { createInstructorSuggest } from '@api/instructor';
+import DismissKeyboardView from '@components/DismissKeyboardView';
+import Input, { KeyboardTypes } from '@components/Input';
+import SelectBox from '@components/SelectBox';
+import { RouteProp, useRoute } from '@react-navigation/native';
+import { NativeStackScreenProps } from '@react-navigation/native-stack';
+import common from '@styles/common';
+import { useCallback, useState } from 'react';
 import {
   ActivityIndicator,
   Alert,
@@ -6,16 +14,8 @@ import {
   Text,
   View,
 } from 'react-native';
-import common from '@styles/common';
-import Input, {KeyboardTypes, ReturnKeyTypes} from '@components/Input';
-import {useCallback, useState} from 'react';
-import SelectBox from '@components/SelectBox';
 import LinearGradient from 'react-native-linear-gradient';
-import DismissKeyboardView from '@components/DismissKeyboardView';
-import {RouteProp, useRoute} from '@react-navigation/native';
-import {LoggedInParamList} from '../../AppInner';
-import {createInstructorSuggest} from '@api/instructor';
-import {NativeStackScreenProps} from '@react-navigation/native-stack';
+import { LoggedInParamList } from '../../AppInner';
 
 const SUGGESTION = [
   '필라테스 강사님 구합니다.',
@@ -36,7 +36,7 @@ type SuggestionScreenProps = NativeStackScreenProps<
 >;
 
 function SuggestionScreen({navigation}: SuggestionScreenProps) {
-  const [loading, setLoading] = useState<boolean>(false);
+  const [load                                                      ing, setLoading] = useState<boolean>(false);
   const route = useRoute<RouteProp<LoggedInParamList, 'Suggestion'>>();
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
@@ -49,7 +49,7 @@ function SuggestionScreen({navigation}: SuggestionScreenProps) {
     const data = {
       title: title,
       contents: content,
-      recruitSeq: recruitSeq,
+      recruitSeq: Number(recruitSeq),
       closingDate: closingDate,
       targetMemberSeq: route.params.targetMemberSeq,
     };

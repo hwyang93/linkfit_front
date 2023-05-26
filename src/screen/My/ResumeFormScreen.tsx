@@ -44,8 +44,7 @@ function ResumeFormScreen({navigation}: Props) {
   const [educations, setEducations] = useState<any>([{}]);
 
   useEffect(() => {
-    const params = {status: 'APPROVAL'};
-    fetchMemberLicences(params)
+    fetchMemberLicences()
       .then(({data}: any) => {
         setLicenses(data);
       })
