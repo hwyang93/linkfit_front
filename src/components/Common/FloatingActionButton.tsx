@@ -33,11 +33,10 @@ const FloatingActionButton: React.FC<FloatingActionButtonProps> = ({
   ...props
 }) => {
   return (
-    <Pressable style={style} onPress={onPress} {...props}>
+    <Pressable style={[styles.shadow, style]} onPress={onPress} {...props}>
       {variant === 'primary' && (
         <LinearGradient
           style={[
-            styles.shadow,
             styles.iconContainer,
             label ? styles.styleWithLabel : styles.styleWithoutLabel,
           ]}
