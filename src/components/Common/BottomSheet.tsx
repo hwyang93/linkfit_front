@@ -107,7 +107,7 @@ const BottomSheet: React.FC<BottomSheetProps> = ({
             }}
           />
           {/* 모달 타이틀 */}
-          <View style={common.mt16}>
+          <View style={common.mt30}>
             <Text style={styles.modalTitle}>{title}</Text>
           </View>
           <ScrollView showsVerticalScrollIndicator={false}>

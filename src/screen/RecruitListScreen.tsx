@@ -90,7 +90,7 @@ const FilterModalContent: React.FC<FilterModalContentProps> = ({
   };
 
   return (
-    <>
+    <View style={{marginHorizontal: 16}}>
       {modalData.options.map((item, index) => (
         <FilterModalRow
           key={index}
@@ -109,7 +109,7 @@ const FilterModalContent: React.FC<FilterModalContentProps> = ({
         style={{marginTop: 40}}
         onPress={() => onApplyFilterButtonPress(type, filterValue)}
       />
-    </>
+    </View>
   );
 };
 
@@ -206,7 +206,7 @@ function RecruitListScreen() {
         chipData={FILTER_CHIP_DATA}
         onChipPress={handleChipPress}
       />
-      <View style={{paddingHorizontal: 16}}>
+      <View style={{marginHorizontal: 16}}>
         <RecruitComponent
           list={recruits}
           title={'구인 공고'}
