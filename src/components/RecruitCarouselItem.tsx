@@ -1,5 +1,10 @@
+import {iconPath} from '@/utils/iconPath';
+import {createRecruitBookmark, deleteRecruitBookmark} from '@api/recruit';
+import toast from '@hooks/toast';
+import {NavigationProp, useNavigation} from '@react-navigation/native';
+import common from '@styles/common';
+import {useCallback, useEffect, useState} from 'react';
 import {
-  Alert,
   Dimensions,
   Image,
   Pressable,
@@ -7,13 +12,7 @@ import {
   Text,
   View,
 } from 'react-native';
-import common from '@styles/common';
-import {iconPath} from '@/utils/iconPath';
-import {NavigationProp, useNavigation} from '@react-navigation/native';
 import {LoggedInParamList} from '../../AppInner';
-import {useCallback, useEffect, useState} from 'react';
-import {createRecruitBookmark, deleteRecruitBookmark} from '@api/recruit';
-import toast from '@hooks/toast';
 
 const windowWidth = Dimensions.get('window').width;
 const imageSize = (windowWidth - 40) / 2;

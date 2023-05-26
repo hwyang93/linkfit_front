@@ -17,6 +17,7 @@ interface ChipProps extends PressableProps {
   onPress?: () => void;
 }
 
+// TODO: 안드로이드에서 텍스트가 약간 아래로 내려가있는 현상 수정
 const Chip: React.FC<ChipProps> = ({
   label,
   rightIcon,
@@ -31,7 +32,6 @@ const Chip: React.FC<ChipProps> = ({
           fontSize: 16,
           fontWeight: '400',
           color: THEME.GREY02,
-          lineHeight: 22,
         }}>
         {label}
       </Text>
@@ -47,7 +47,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 12,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#fff',
+    backgroundColor: THEME.WHITE,
     borderRadius: 16,
     borderWidth: 1,
     borderColor: THEME.GREY04,

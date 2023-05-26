@@ -1,3 +1,4 @@
+import Avatar from '@/components/Common/Avatar';
 import BottomSheet from '@/components/Common/BottomSheet';
 import Chip from '@/components/Common/Chip';
 import DotPagination from '@/components/Common/DotPagination';
@@ -5,10 +6,11 @@ import FloatingActionButton from '@/components/Common/FloatingActionButton';
 import Icon from '@/components/Common/Icon';
 import IconButton from '@/components/Common/IconButton';
 import LoadingFallback from '@/components/Common/LoadingFallback';
-import Skeleton from '@/components/Common/Skeleton';
 import useGeolocation from '@/hooks/useGeolocation';
 import useModal from '@/hooks/useModal';
+import common from '@/styles/common';
 import THEME from '@/styles/theme';
+import SRC from '@/utils/constants/assets';
 import {SCREEN_WIDTH} from '@/utils/constants/common';
 import {iconPath} from '@/utils/iconPath';
 import {materialTopTabNavigationOptions} from '@/utils/options/tab';
@@ -27,6 +29,8 @@ import {
 import MapView, {Marker, PROVIDER_GOOGLE} from 'react-native-maps';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {LoggedInParamList} from '../../AppInner';
+
+// TODO: 텍스트 스타일이 기존에 정의되어있는 스타일셋을 사용하도록 변경
 
 const DUMMY_MARKERS = [
   {
@@ -115,25 +119,25 @@ interface InstructorProfileProps extends ViewProps {
 const InstructorProfile: React.FC<InstructorProfileProps> = ({style}) => {
   return (
     <View style={[{alignItems: 'center'}, style]}>
-      <View style={{flexDirection: 'row', marginTop: 16}}>
-        {/* <Avatar size={64} style={{marginRight: 16}} /> */}
-        <Skeleton
-          variant="circle"
-          width={64}
-          height={64}
-          style={{marginRight: 12}}
+      <View style={[common.mt16, {flexDirection: 'row'}]}>
+        <Avatar
+          source={SRC.IMAGES.INSTRUCTOR01}
+          size={64}
+          style={common.mr16}
         />
         {<View />}
         <View style={{flex: 1}}>
           <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
             <View style={{flexDirection: 'row', alignItems: 'center'}}>
               <Text
-                style={{
-                  fontSize: 20,
-                  fontWeight: '700',
-                  marginRight: 8,
-                  color: THEME.BLACK,
-                }}>
+                style={[
+                  common.mr8,
+                  {
+                    fontSize: 20,
+                    fontWeight: '700',
+                    color: THEME.BLACK,
+                  },
+                ]}>
                 {'닉네임'}
               </Text>
               <Text
@@ -174,8 +178,8 @@ const InstructorProfile: React.FC<InstructorProfileProps> = ({style}) => {
               </Text>
             </View>
             <View style={{flexDirection: 'row'}}>
-              <IconButton source={iconPath.PHONE} style={{marginRight: 8}} />
-              <IconButton source={iconPath.MESSAGE} style={{marginRight: 8}} />
+              <IconButton source={iconPath.PHONE} style={common.mr8} />
+              <IconButton source={iconPath.MESSAGE} style={common.mr8} />
               <IconButton source={iconPath.FAVORITE} />
             </View>
           </View>
@@ -195,44 +199,43 @@ const CenterTab: React.FC = () => {
         alignItems: 'center',
         paddingHorizontal: 16,
       }}>
-      <View
-        style={{
-          width: '100%',
-          height: 160,
-          borderRadius: 8,
-          backgroundColor: THEME.GREY04,
-          marginTop: 16,
-        }}
+      <Image
+        style={[common.mt16, {width: '100%', height: 160, borderRadius: 8}]}
+        source={SRC.IMAGES.CENTER01}
       />
       <View
-        style={{
-          flexDirection: 'row',
-          width: '100%',
-          justifyContent: 'space-between',
-          marginTop: 16,
-        }}>
+        style={[
+          common.mt16,
+          {
+            flexDirection: 'row',
+            width: '100%',
+            justifyContent: 'space-between',
+          },
+        ]}>
         <View>
           <Text style={{fontSize: 20, fontWeight: '700', color: THEME.BLACK}}>
             {'링크 필라테스'}
           </Text>
           <Text
-            style={{
-              fontSize: 14,
-              fontWeight: '400',
-              color: THEME.GREY02,
-              marginTop: 8,
-            }}>
+            style={[
+              common.mt8,
+              {
+                fontSize: 14,
+                fontWeight: '400',
+                color: THEME.GREY02,
+              },
+            ]}>
             {'필라테스 | 서울 송파구'}
           </Text>
         </View>
         <View style={{flexDirection: 'row', alignItems: 'flex-end'}}>
-          <IconButton source={iconPath.PHONE} style={{marginRight: 12}} />
-          <IconButton source={iconPath.MESSAGE} style={{marginRight: 12}} />
+          <IconButton source={iconPath.PHONE} style={common.mr12} />
+          <IconButton source={iconPath.MESSAGE} style={common.mr12} />
           <IconButton source={iconPath.FAVORITE} />
         </View>
       </View>
-      <Card style={{marginTop: 16}} />
-      <Card style={{marginTop: 8}} />
+      <Card style={common.mt16} />
+      <Card style={common.mt8} />
     </View>
   );
 };
@@ -245,10 +248,10 @@ const InstructorTab: React.FC = () => {
         backgroundColor: THEME.WHITE,
         paddingHorizontal: 16,
       }}>
-      <InstructorProfile style={{marginTop: 16}} />
-      <Card style={{marginTop: 16}} />
-      <Card style={{marginTop: 8}} />
-      <Card style={{marginTop: 8}} />
+      <InstructorProfile style={common.mt16} />
+      <Card style={common.mt16} />
+      <Card style={common.mt8} />
+      <Card style={common.mt8} />
     </View>
   );
 };
@@ -444,7 +447,7 @@ const RecruitMapScreen: React.FC<LoggedInParamList> = () => {
           style={{paddingHorizontal: 16, paddingVertical: 8}}>
           <Chip
             label="포지션"
-            style={{marginRight: 8}}
+            style={common.mr8}
             rightIcon={
               <Image
                 style={{width: 10, height: 6}}
@@ -454,7 +457,7 @@ const RecruitMapScreen: React.FC<LoggedInParamList> = () => {
           />
           <Chip
             label="채용형태"
-            style={{marginRight: 8}}
+            style={common.mr8}
             rightIcon={
               <Image
                 style={{width: 10, height: 6}}
@@ -493,7 +496,7 @@ const RecruitMapScreen: React.FC<LoggedInParamList> = () => {
                 longitude: marker.longitude,
               }}
               onPress={onPressMarker}>
-              <Image source={marker.icon} style={{width: 24, height: 24}} />
+              <Icon source={marker.icon} size={24} />
             </Marker>
           ))}
         </MapView>
@@ -504,19 +507,19 @@ const RecruitMapScreen: React.FC<LoggedInParamList> = () => {
       )}
       <View style={styles.fabContainer}>
         <FloatingActionButton
-          style={{marginTop: 16}}
+          style={common.mt16}
           iconSource={iconPath.PENCIL_W}
           onPress={() => navigation.navigate('JobOfferForm')}
         />
         <FloatingActionButton
-          style={{marginTop: 16}}
+          style={common.mt16}
           iconSource={iconPath.LOCATION}
           variant="secondary"
           onPress={getCurrentPosition}
         />
         {/* TODO: MORE_VERT 아이콘 추가하고 적용하기 */}
         <FloatingActionButton
-          style={{marginTop: 16}}
+          style={common.mt16}
           iconSource={iconPath.LIST}
           variant="secondary"
           label="목록보기"
