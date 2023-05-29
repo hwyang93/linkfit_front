@@ -28,6 +28,7 @@ const CommunityPostFormScreen = ({navigation}: Props) => {
   const [title, setTitle] = useState('');
   const [category, setCategory] = useState('');
   const [contents, setContents] = useState('');
+
   const canGoNext = title && contents && category;
 
   const onCreateCommunityPost = useCallback(() => {

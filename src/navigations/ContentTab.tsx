@@ -131,7 +131,7 @@ const ContentTab = () => {
           />
         ) : (
           <Tab.Screen
-            name="My"
+            name="MyCenter"
             component={MyCenterScreen}
             options={{
               title: 'MY',

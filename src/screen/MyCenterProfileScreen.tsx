@@ -29,9 +29,10 @@ const Header: React.FC<HeaderProps> = ({centerInfo, recruits}) => {
 };
 // 센터 프로필 상단 영역 끝
 
-type Props = NativeStackScreenProps<LoggedInParamList, 'CenterInfo'>;
+// TODO: 스크린 이름 매칭 필요 (CenterProfile -> MyCenterProfile)
+type Props = NativeStackScreenProps<LoggedInParamList, 'CenterProfile'>;
 
-const CenterInfoScreen = ({navigation, route}: Props) => {
+const MyCenterProfileScreen = ({navigation, route}: Props) => {
   const [centerInfo, setCenterInfo] = useState<any>({});
   const [recruits, setRecruits] = useState<any[]>([]);
   const [reputations, setReputations] = useState<any[]>([]);
@@ -232,4 +233,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default CenterInfoScreen;
+export default MyCenterProfileScreen;

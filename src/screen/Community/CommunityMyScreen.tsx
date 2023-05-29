@@ -1,8 +1,10 @@
+import {LoggedInParamList} from '@/../AppInner';
 import CTAButton from '@/components/Common/CTAButton';
 import {FetchMemberInfoResponse} from '@/types/api/member';
 import {iconPath} from '@/utils/iconPath';
 import {fetchMemberInfo} from '@api/member';
 import toast from '@hooks/toast';
+import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import CommunityMyScreenTabView from '@screen/Community/CommunityMyScreenTabView';
 import {BLUE, GRAY, WHITE} from '@styles/colors';
 import common from '@styles/common';
@@ -10,7 +12,9 @@ import {isAxiosError} from 'axios';
 import {useCallback, useEffect, useState} from 'react';
 import {Image, StyleSheet, Text, View} from 'react-native';
 
-const CommunityMyScreen = () => {
+type Props = NativeStackScreenProps<LoggedInParamList, 'CommunityMy'>;
+
+const CommunityMyScreen = ({}: Props) => {
   const [memberInfo, setMemberInfo] = useState<FetchMemberInfoResponse>();
 
   const getMemberInfo = useCallback(() => {

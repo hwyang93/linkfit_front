@@ -16,9 +16,8 @@ import {LoggedInParamList} from '../../../AppInner';
 type Props = NativeStackScreenProps<LoggedInParamList, 'CommunityPost'>;
 
 const CommunityPostScreen = ({route}: Props) => {
-  const [modalVisible, setModalVisible] = useState(false);
-
   const [post, setPost] = useState<FetchCommunityPostResponse>();
+  const [modalVisible, setModalVisible] = useState(false);
 
   const getPost = useCallback(() => {
     fetchCommunityPost(route.params.postSeq)

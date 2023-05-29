@@ -212,7 +212,7 @@ const ResumeFormScreen = ({navigation}: Props) => {
         </View>
 
         {/* 경력 */}
-        {careers.map((_, index: number) => {
+        {careers.map((_: any, index: number) => {
           return (
             <View key={index} style={[common.mv20]}>
               {index !== 0 && (
@@ -250,7 +250,7 @@ const ResumeFormScreen = ({navigation}: Props) => {
         </View>
 
         {/* 학력 */}
-        {educations.map((_, index: number) => {
+        {educations.map((_: any, index: number) => {
           return (
             <View key={index} style={common.mv20}>
               {index !== 0 && (
@@ -298,7 +298,7 @@ const ResumeFormScreen = ({navigation}: Props) => {
             data={licenses.map(licence => {
               return licence.issuer + '_' + licence.field;
             })}
-            onSelect={(_, index: number) => selectLicence(index)}
+            onSelect={(_: any, index: number) => selectLicence(index)}
             defaultButtonText={'자격증을 선택하세요.'}
             selectKey={'index'}
           />

@@ -1,4 +1,4 @@
-import {LoggedInParamList} from '@/../AppInner';
+import {AuthStackParamList} from '@/navigations/AuthStack';
 import BirthdayPicker from '@components/BirthdayPicker';
 import DismissKeyboardView from '@components/DismissKeyboardView';
 import Input, {KeyboardTypes} from '@components/Input';
@@ -17,9 +17,9 @@ import {
 } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 
-type Props = NativeStackScreenProps<LoggedInParamList, 'SignUpForm'>;
+type Props = NativeStackScreenProps<AuthStackParamList, 'CompanySignUpForm'>;
 
-const SignUpFormScreen = ({}: Props) => {
+const CompanySignUpFormScreen = ({}: Props) => {
   const [businessNumber, setBusinessNumber] = useState<number>();
   const [companyName, setCompanyName] = useState('');
   const [ownerName, setOwnerName] = useState('');
@@ -209,4 +209,4 @@ const styles = StyleSheet.create({
     color: WHITE,
   },
 });
-export default SignUpFormScreen;
+export default CompanySignUpFormScreen;
