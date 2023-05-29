@@ -7,7 +7,15 @@ import toast from '@hooks/toast';
 import {GRAY, WHITE} from '@styles/colors';
 import common from '@styles/common';
 import {useCallback, useEffect, useState} from 'react';
-import {FlatList, Image, Pressable, StyleSheet, Text, View} from 'react-native';
+import {
+  FlatList,
+  Image,
+  Pressable,
+  ScrollView,
+  StyleSheet,
+  Text,
+  View,
+} from 'react-native';
 import BottomSheet from '../Common/BottomSheet';
 
 function CommunityMyPost() {
@@ -74,10 +82,14 @@ function CommunityMyPost() {
         onDismiss={closeModal}
         title="더보기"
         content={
-          <View style={{paddingHorizontal: 16}}>
-            <Text style={{padding: 16, fontSize: 18}}>수정하기</Text>
-            <Text style={[{padding: 16, fontSize: 18}]}>삭제하기</Text>
-          </View>
+          <ScrollView
+            style={{width: '100%'}}
+            showsVerticalScrollIndicator={false}>
+            <View style={{paddingHorizontal: 16}}>
+              <Text style={{padding: 16, fontSize: 18}}>수정하기</Text>
+              <Text style={[{padding: 16, fontSize: 18}]}>삭제하기</Text>
+            </View>
+          </ScrollView>
         }
       />
     </View>

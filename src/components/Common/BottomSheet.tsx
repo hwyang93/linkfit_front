@@ -6,7 +6,6 @@ import {
   Animated,
   Modal,
   PanResponder,
-  ScrollView,
   StyleSheet,
   Text,
   TouchableWithoutFeedback,
@@ -109,11 +108,7 @@ const BottomSheet: React.FC<BottomSheetProps> = ({
           <View style={common.mt30}>
             <Text style={styles.modalTitle}>{title}</Text>
           </View>
-          <ScrollView
-            style={{width: '100%'}}
-            showsVerticalScrollIndicator={false}>
-            {content}
-          </ScrollView>
+          {content}
         </Animated.View>
       </View>
     </Modal>

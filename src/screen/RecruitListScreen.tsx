@@ -18,6 +18,7 @@ import {
   Image,
   ImageSourcePropType,
   Pressable,
+  ScrollView,
   StyleSheet,
   Text,
   View,
@@ -232,12 +233,16 @@ const RecruitListScreen = ({navigation}: Props) => {
         onDismiss={closeModal}
         title={MODAL_DATA[modalType].title}
         content={
-          <FilterModalContent
-            type={modalType}
-            modalData={MODAL_DATA[modalType]}
-            initialFilterValue={filterValue[modalType]}
-            onApplyFilterButtonPress={handleApplyFilterButtonPress}
-          />
+          <ScrollView
+            style={{width: '100%'}}
+            showsVerticalScrollIndicator={false}>
+            <FilterModalContent
+              type={modalType}
+              modalData={MODAL_DATA[modalType]}
+              initialFilterValue={filterValue[modalType]}
+              onApplyFilterButtonPress={handleApplyFilterButtonPress}
+            />
+          </ScrollView>
         }
       />
     </SafeAreaView>
