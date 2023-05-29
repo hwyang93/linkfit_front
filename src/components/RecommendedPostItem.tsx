@@ -10,9 +10,9 @@ import {useCallback, useEffect, useState} from 'react';
 import {Pressable, Text, View} from 'react-native';
 import {LoggedInParamList} from '../../AppInner';
 
-type RecommendedPostItemProps = {
+interface RecommendedPostItemProps {
   item: CommunityEntity;
-};
+}
 
 const RecommendedPostItem: React.FC<RecommendedPostItemProps> = ({item}) => {
   const [postInfo, setPostInfo] = useState<CommunityEntity>(item);

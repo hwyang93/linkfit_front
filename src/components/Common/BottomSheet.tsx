@@ -12,13 +12,13 @@ import {
   View,
 } from 'react-native';
 
-type BottomSheetProps = {
+interface BottomSheetProps {
   visible: boolean;
   title?: string;
   content?: React.ReactNode;
   modalHeight?: number;
   onDismiss: () => void;
-};
+}
 
 const BottomSheet: React.FC<BottomSheetProps> = ({
   title,

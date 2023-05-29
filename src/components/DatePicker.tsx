@@ -5,11 +5,11 @@ import {useState} from 'react';
 import {Pressable, StyleSheet, Text, View} from 'react-native';
 import DateTimePickerModal from 'react-native-modal-datetime-picker';
 
-type DatePickerProps = {
+interface DatePickerProps {
   label: string;
   placeholder: string;
   onSelectDate: Function;
-};
+}
 
 const DatePicker: React.FC<DatePickerProps> = ({
   label,
@@ -24,6 +24,7 @@ const DatePicker: React.FC<DatePickerProps> = ({
     setFocus(true);
     setDatePickerVisibility(true);
   };
+
   const hideDatePicker = () => {
     setFocus(false);
     setDatePickerVisibility(false);
