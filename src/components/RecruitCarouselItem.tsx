@@ -1,23 +1,16 @@
+import {SCREEN_WIDTH} from '@/utils/constants/common';
 import {iconPath} from '@/utils/iconPath';
 import {createRecruitBookmark, deleteRecruitBookmark} from '@api/recruit';
 import toast from '@hooks/toast';
 import {NavigationProp, useNavigation} from '@react-navigation/native';
 import common from '@styles/common';
 import {useCallback, useEffect, useState} from 'react';
-import {
-  Dimensions,
-  Image,
-  Pressable,
-  StyleSheet,
-  Text,
-  View,
-} from 'react-native';
+import {Image, Pressable, StyleSheet, Text, View} from 'react-native';
 import {LoggedInParamList} from '../../AppInner';
 
-const windowWidth = Dimensions.get('window').width;
-const imageSize = (windowWidth - 40) / 2;
+const imageSize = (SCREEN_WIDTH - 40) / 2;
 
-function RecruitListItem({item}: any) {
+const RecruitListItem = ({item}: any) => {
   const navigation = useNavigation<NavigationProp<LoggedInParamList>>();
   const [recruitInfo, setRecruitInfo] = useState<any>({});
 
@@ -97,7 +90,7 @@ function RecruitListItem({item}: any) {
       </View>
     </Pressable>
   );
-}
+};
 
 const styles = StyleSheet.create({
   slideBox: {

@@ -12,7 +12,7 @@ import LinearGradient from 'react-native-linear-gradient';
 import {LoggedInParamList} from '../../AppInner';
 
 function LinkTop() {
-  const [recruits, setRecruits] = useState<any[]>([]);
+  const [recruits, setRecruits] = useState<[]>([]);
 
   const navigation = useNavigation<NavigationProp<LoggedInParamList>>();
 

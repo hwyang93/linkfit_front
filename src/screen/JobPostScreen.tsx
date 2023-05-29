@@ -127,47 +127,6 @@ const JobPostScreen = ({route}: Props) => {
       });
   }, [getRecruitInfo, recruitDates, recruitInfo.applyInfo]);
 
-  useEffect(() => {
-    getRecruitInfo();
-    getResumeList();
-  }, [getRecruitInfo, getResumeList]);
-
-  useEffect(() => {
-    setResumes(() => {
-      return resumes.map((resume: any) => {
-        resume.isSelected = false;
-        return resume;
-      });
-    });
-    setRecruitDates(() => {
-      return recruitDates.map((date: any) => {
-        date.isSelected = false;
-        return date;
-      });
-    });
-  }, [modalVisible, recruitDates, resumes]);
-
-  useEffect(() => {
-    const selectResume = resumes.find((resume: any) => {
-      return resume.isSelected;
-    });
-    const selectDate = recruitDates.filter((date: any) => {
-      return date.isSelected;
-    });
-    if (!selectResume) {
-      setStep('');
-      return;
-    }
-    if (selectResume && selectDate.length > 0) {
-      setStep('apply');
-      return;
-    }
-    if (selectResume) {
-      setStep('date');
-      return;
-    }
-  }, [recruitDates, resumes]);
-
   const onSelectResume = useCallback(
     (seq: number) => {
       setResumes(() => {
@@ -212,7 +171,51 @@ const JobPostScreen = ({route}: Props) => {
   const openModal = () => {
     setModalVisible(true);
   };
-  // todo: 지원을 안했으면 지원하기 버튼 표시 || 지원을 했으면 지원완료 메시지 표시
+
+  useEffect(() => {
+    getRecruitInfo();
+    getResumeList();
+  }, [getRecruitInfo, getResumeList]);
+
+  // TODO: 렌더링 최적화 필요 (무한 렌더링을 유발함)
+  useEffect(() => {
+    setResumes(() => {
+      return resumes.map((resume: any) => {
+        resume.isSelected = false;
+        return resume;
+      });
+    });
+    setRecruitDates(() => {
+      return recruitDates.map((date: any) => {
+        date.isSelected = false;
+        return date;
+      });
+    });
+  }, []);
+
+  useEffect(() => {
+    const selectResume = resumes.find((resume: any) => {
+      return resume.isSelected;
+    });
+    const selectDate = recruitDates.filter((date: any) => {
+      return date.isSelected;
+    });
+    if (!selectResume) {
+      setStep('');
+      return;
+    }
+    if (selectResume && selectDate.length > 0) {
+      setStep('apply');
+      return;
+    }
+    if (selectResume) {
+      setStep('date');
+      return;
+    }
+  }, [recruitDates, resumes]);
+
+  // TODO: 지원을 안했으면 지원하기 버튼 표시 || 지원을 했으면 지원완료 메시지 표시
+
   return (
     <>
       <SafeAreaView

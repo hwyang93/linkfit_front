@@ -8,7 +8,7 @@ type CarouselProps = {
   pageWidth: number;
 };
 
-function RecruitCarousel({links}: CarouselProps) {
+const RecruitCarousel = ({links}: CarouselProps) => {
   function renderItem({item}: any) {
     return <RecruitCarouselItem item={item} />;
   }
@@ -23,6 +23,6 @@ function RecruitCarousel({links}: CarouselProps) {
       showsHorizontalScrollIndicator={false}
     />
   );
-}
+};
 
 export default RecruitCarousel;
