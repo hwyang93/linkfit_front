@@ -12,6 +12,7 @@ interface CenterInfoTopProps {
   recruits: RecruitEntity[];
   fromMy?: boolean;
 }
+
 const CenterInfoTop: React.FC<CenterInfoTopProps> = ({
   centerInfo,
   recruits,

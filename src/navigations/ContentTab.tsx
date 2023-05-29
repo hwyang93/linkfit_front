@@ -20,7 +20,9 @@ const Tab = createBottomTabNavigator<LoggedInParamList>();
 
 const ContentTab = () => {
   const memberInfo = useSelector((state: RootState) => state.user);
+
   const tabOffsetValue = useRef(new Animated.Value(0)).current;
+
   const width = SCREEN_WIDTH / 4;
 
   return (

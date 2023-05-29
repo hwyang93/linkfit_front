@@ -1,4 +1,5 @@
-import {Dimensions, StyleSheet} from 'react-native';
+import {SCREEN_HEIGHT, SCREEN_WIDTH} from '@/utils/constants/common';
+import {StyleSheet} from 'react-native';
 import {BLACK, BLUE, GRAY, WHITE} from './colors';
 
 export const Font = {
@@ -12,14 +13,11 @@ export const basicDimensions = {
   height: 740,
 };
 
-export const fullWidth = Dimensions.get('window').width;
-export const fullHeight = Dimensions.get('window').height;
-
 export const height = // 높이 변환 작업
-  (Dimensions.get('screen').height * (1 / basicDimensions.height)).toFixed(2);
+  (SCREEN_HEIGHT * (1 / basicDimensions.height)).toFixed(2);
 
 export const width = // 가로 변환 작업
-  (Dimensions.get('screen').width * (1 / basicDimensions.width)).toFixed(2);
+  (SCREEN_WIDTH * (1 / basicDimensions.width)).toFixed(2);
 
 const common = StyleSheet.create({
   // space area
@@ -330,4 +328,5 @@ const common = StyleSheet.create({
     textAlign: 'center',
   },
 });
+
 export default common;

@@ -165,4 +165,5 @@ const styles = StyleSheet.create({
     textAlign: 'left',
   },
 });
+
 export default Toast;

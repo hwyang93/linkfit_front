@@ -16,7 +16,6 @@ import {
 
 const ApplicantWaitingComponent: React.FC<any> = ({list}) => {
   const [modalVisible, setModalVisible] = useState(false);
-
   const [modalTitle, setModalTitle] = useState('');
   const [modalData, setModalData] = useState<any[]>([]);
   const [applications, setApplications] = useState<any[]>([]);

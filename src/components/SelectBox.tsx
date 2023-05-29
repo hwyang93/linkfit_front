@@ -11,7 +11,7 @@ interface SelectBoxProps {
   onSelect: Function;
   defaultButtonText: string;
   label?: string;
-  onChangeSearchInputText?: any;
+  onChangeSearchInputText?: () => void;
   textAlign?: string;
   icon?: string;
   selectKey?: string;
