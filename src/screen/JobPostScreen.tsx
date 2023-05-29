@@ -12,7 +12,7 @@ import toast from '@hooks/toast';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import {BLUE, GRAY, WHITE} from '@styles/colors';
 import common from '@styles/common';
-import {SetStateAction, useCallback, useEffect, useState} from 'react';
+import {useCallback, useEffect, useState} from 'react';
 import {
   Image,
   NativeScrollEvent,
@@ -30,12 +30,10 @@ import {LoggedInParamList} from '../../AppInner';
 
 type Props = NativeStackScreenProps<LoggedInParamList, 'JobPost'>;
 
-function JobPostScreen({route}: Props) {
-  const [modalVisible, setModalVisible] =
-    useState<SetStateAction<boolean>>(false);
+const JobPostScreen = ({route}: Props) => {
+  const [modalVisible, setModalVisible] = useState(false);
   const [modalTitle, setModalTitle] = useState('');
-  // const [modalData, setModalData] = useState<any[]>([]);
-  const [modalType, setModalType] = useState<string>('');
+  const [modalType, setModalType] = useState('');
   const {recruitSeq} = route.params;
   const [recruitInfo, setRecruitInfo] = useState<any>({
     dates: [{day: '', time: ''}],
@@ -74,8 +72,8 @@ function JobPostScreen({route}: Props) {
         });
         setResumes(data);
       })
-      .catch((e: any) => {
-        toast.error({message: e.message});
+      .catch(error => {
+        toast.error({message: error.message});
       });
   }, []);
 
@@ -100,8 +98,8 @@ function JobPostScreen({route}: Props) {
         setModalVisible(false);
         getRecruitInfo();
       })
-      .catch((e: any) => {
-        toast.error({message: e.message});
+      .catch(error => {
+        toast.error({message: error.message});
       });
   }, [getRecruitInfo, recruitDates, recruitInfo.seq, resumes]);
 
@@ -124,8 +122,8 @@ function JobPostScreen({route}: Props) {
         setModalVisible(false);
         getRecruitInfo();
       })
-      .catch((e: any) => {
-        toast.error({message: e.message});
+      .catch(error => {
+        toast.error({message: error.message});
       });
   }, [getRecruitInfo, recruitDates, recruitInfo.applyInfo]);
 
@@ -607,7 +605,7 @@ function JobPostScreen({route}: Props) {
       />
     </>
   );
-}
+};
 
 const styles = StyleSheet.create({
   container: {

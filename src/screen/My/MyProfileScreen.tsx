@@ -5,11 +5,8 @@ import {materialTopTabNavigationOptions} from '@/utils/options/tab';
 import {fetchMemberInfo} from '@api/member';
 import toast from '@hooks/toast';
 import {createMaterialTopTabNavigator} from '@react-navigation/material-top-tabs';
-import {
-  NavigationProp,
-  useIsFocused,
-  useNavigation,
-} from '@react-navigation/native';
+import {useIsFocused} from '@react-navigation/native';
+import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import {BLUE, GRAY} from '@styles/colors';
 import common from '@styles/common';
 import {isAxiosError} from 'axios';
@@ -199,10 +196,11 @@ const MyIntroductionTabItem: React.FC<MyIntroductionTabItemProps> = ({
   );
 };
 
-const MyProfileScreen: React.FC = () => {
+type Props = NativeStackScreenProps<LoggedInParamList, 'MyProfile'>;
+
+const MyProfileScreen = ({navigation}: Props) => {
   const [memberInfo, setMemberInfo] = useState<FetchMemberInfoResponse>();
 
-  const navigation = useNavigation<NavigationProp<LoggedInParamList>>();
   const isFocused = useIsFocused();
 
   useEffect(() => {

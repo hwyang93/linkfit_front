@@ -3,12 +3,7 @@ import {fetchCheckNickname, updateProfile} from '@api/member';
 import DismissKeyboardView from '@components/DismissKeyboardView';
 import Input, {KeyboardTypes} from '@components/Input';
 import toast from '@hooks/toast';
-import {
-  NavigationProp,
-  RouteProp,
-  useNavigation,
-  useRoute,
-} from '@react-navigation/native';
+import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import {WHITE} from '@styles/colors';
 import common from '@styles/common';
 import {useCallback, useEffect, useState} from 'react';
@@ -25,9 +20,11 @@ import {Asset, MediaType, launchImageLibrary} from 'react-native-image-picker';
 import LinearGradient from 'react-native-linear-gradient';
 import {LoggedInParamList} from '../../../AppInner';
 
-function ProfileEditScreen() {
-  const navigation = useNavigation<NavigationProp<LoggedInParamList>>();
-  const route = useRoute<RouteProp<LoggedInParamList, 'ProfileEdit'>>();
+const LOADING = false;
+
+type Props = NativeStackScreenProps<LoggedInParamList, 'ProfileEdit'>;
+
+const ProfileEditScreen = ({navigation, route}: Props) => {
   const [nickname, setNickname] = useState('');
   const [intro, setIntro] = useState('');
   const [field, setField] = useState('');
@@ -39,7 +36,6 @@ function ProfileEditScreen() {
       url: '',
     },
   ]);
-  const LOADING = false;
   const [imageUri, setImageUri] = useState<any>({});
   const [imageObj, setImageObj] = useState<{
     name: string | undefined;
@@ -122,6 +118,7 @@ function ProfileEditScreen() {
   };
 
   const canGoNext = nickname && intro;
+
   return (
     <DismissKeyboardView>
       <View style={styles.container}>
@@ -241,7 +238,7 @@ function ProfileEditScreen() {
       </View>
     </DismissKeyboardView>
   );
-}
+};
 
 const styles = StyleSheet.create({
   container: {

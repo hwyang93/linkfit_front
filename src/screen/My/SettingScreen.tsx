@@ -1,6 +1,6 @@
 import useAuth from '@/hooks/useAuth';
 import {iconPath} from '@/utils/iconPath';
-import {NavigationProp, useNavigation} from '@react-navigation/native';
+import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import {BLUE, GRAY, WHITE} from '@styles/colors';
 import common from '@styles/common';
 import {useCallback} from 'react';
@@ -54,8 +54,9 @@ const DATA = [
   },
 ];
 
-function SettingScreen() {
-  const navigation = useNavigation<NavigationProp<LoggedInParamList>>();
+type Props = NativeStackScreenProps<LoggedInParamList, 'Setting'>;
+
+const SettingScreen = ({navigation}: Props) => {
   const {signOut} = useAuth();
 
   const onLogout = useCallback(async () => {
@@ -93,7 +94,7 @@ function SettingScreen() {
       </View>
     </ScrollView>
   );
-}
+};
 const styles = StyleSheet.create({
   container: {
     flex: 1,

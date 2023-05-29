@@ -1,21 +1,23 @@
+import BirthdayPicker from '@components/BirthdayPicker';
+import DismissKeyboardView from '@components/DismissKeyboardView';
+import Input, {KeyboardTypes} from '@components/Input';
+import SelectBox from '@components/SelectBox';
+import TabButton from '@components/TabButton';
+import {NativeStackScreenProps} from '@react-navigation/native-stack';
+import common from '@styles/common';
 import {useState} from 'react';
 import {ActivityIndicator, Pressable, Text, View} from 'react-native';
-import {NativeStackScreenProps} from '@react-navigation/native-stack';
-import {LoggedInParamList} from '../../../AppInner';
-import common from '@styles/common';
 import LinearGradient from 'react-native-linear-gradient';
-import Input, {KeyboardTypes} from '@components/Input';
-import TabButton from '@components/TabButton';
-import DismissKeyboardView from '@components/DismissKeyboardView';
-import BirthdayPicker from '@components/BirthdayPicker';
-import SelectBox from '@components/SelectBox';
+import {LoggedInParamList} from '../../../AppInner';
 
-type PasswordResetScreenProps = NativeStackScreenProps<
-  LoggedInParamList,
-  'PasswordReset'
->;
+const GENDER_DATA = [{value: '남자'}, {value: '여자'}];
+const AGENCY_DATA = ['SKT', 'KT', 'LG U+', '알뜰폰'];
+const LOADING = false;
+const CAN_GO_NEXT = true;
 
-function PasswordReset({}: PasswordResetScreenProps) {
+type Props = NativeStackScreenProps<LoggedInParamList, 'PasswordReset'>;
+
+const PasswordReset = ({}: Props) => {
   const [userName, setUserName] = useState('');
   const [birth, setBirth] = useState('');
   const [gender, setGender] = useState('');
@@ -24,10 +26,6 @@ function PasswordReset({}: PasswordResetScreenProps) {
   const [password, setPassword] = useState('');
   const [passwordConfirm, setPasswordConfirm] = useState('');
 
-  const genderData = [{value: '남자'}, {value: '여자'}];
-  const agencyData = ['SKT', 'KT', 'LG U+', '알뜰폰'];
-  const loading = false;
-  const canGoNext = true;
   return (
     <DismissKeyboardView>
       <View style={common.container}>
@@ -56,7 +54,7 @@ function PasswordReset({}: PasswordResetScreenProps) {
           </View>
           <View style={[common.mb16]}>
             <TabButton
-              genderData={genderData}
+              genderData={GENDER_DATA}
               onSelect={(value: any) => setGender(value)}
               value={gender}
             />
@@ -65,7 +63,7 @@ function PasswordReset({}: PasswordResetScreenProps) {
           <View style={[common.mb16, common.row]}>
             <View style={{flex: 1, marginRight: 8}}>
               <SelectBox
-                data={agencyData}
+                data={AGENCY_DATA}
                 onSelect={(value: any) => setAgency(value)}
                 defaultButtonText={'통신사'}
               />
@@ -112,9 +110,9 @@ function PasswordReset({}: PasswordResetScreenProps) {
                 start={{x: 0.1, y: 0.5}}
                 end={{x: 0.6, y: 1}}
                 colors={
-                  canGoNext ? ['#74ebe4', '#3962f3'] : ['#dcdcdc', '#dcdcdc']
+                  CAN_GO_NEXT ? ['#74ebe4', '#3962f3'] : ['#dcdcdc', '#dcdcdc']
                 }>
-                {loading ? (
+                {LOADING ? (
                   <ActivityIndicator color="white" />
                 ) : (
                   <Text style={common.buttonText}>본인인증</Text>
@@ -126,6 +124,6 @@ function PasswordReset({}: PasswordResetScreenProps) {
       </View>
     </DismissKeyboardView>
   );
-}
+};
 
 export default PasswordReset;

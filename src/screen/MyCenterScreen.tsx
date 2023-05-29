@@ -1,5 +1,14 @@
+import {SCREEN_WIDTH} from '@/utils/constants/common';
+import {iconPath} from '@/utils/iconPath';
+import {fetchMemberMyInfo} from '@api/member';
+import CenterProfileBox from '@components/CenterProfileBox';
+import MyTitle from '@components/My/MyTitle';
+import {useIsFocused} from '@react-navigation/native';
+import {NativeStackScreenProps} from '@react-navigation/native-stack';
+import {GRAY, WHITE} from '@styles/colors';
+import common from '@styles/common';
+import {useEffect, useState} from 'react';
 import {
-  Dimensions,
   Image,
   Pressable,
   ScrollView,
@@ -8,23 +17,11 @@ import {
   View,
 } from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
-import {GRAY, WHITE} from '@styles/colors';
-import common from '@styles/common';
-import {iconPath} from '@/utils/iconPath';
-import MyTitle from '@components/My/MyTitle';
-import {
-  NavigationProp,
-  useIsFocused,
-  useNavigation,
-} from '@react-navigation/native';
 import {LoggedInParamList} from '../../AppInner';
-import CenterProfileBox from '@components/CenterProfileBox';
-import {useEffect, useState} from 'react';
-import {fetchMemberMyInfo} from '@api/member';
 
-const windowWidth = Dimensions.get('window').width;
-const columns2 = (windowWidth - 32) / 2;
-const columns3 = (windowWidth - 32) / 3;
+const columns2 = (SCREEN_WIDTH - 32) / 2;
+const columns3 = (SCREEN_WIDTH - 32) / 3;
+
 const MENU = [
   {
     icon: iconPath.MY_FOLLOWING,
@@ -53,10 +50,12 @@ const MENU = [
   },
 ];
 
-function MyCenterScreen() {
-  const navigation = useNavigation<NavigationProp<LoggedInParamList>>();
-  const isFocused = useIsFocused();
+type Props = NativeStackScreenProps<LoggedInParamList, 'MyCenter'>;
+
+const MyCenterScreen = ({navigation}: Props) => {
   const [myInfo, setMyInfo] = useState<any>({});
+
+  const isFocused = useIsFocused();
 
   useEffect(() => {
     if (isFocused) {
@@ -191,7 +190,7 @@ function MyCenterScreen() {
       </ScrollView>
     </SafeAreaView>
   );
-}
+};
 const styles = StyleSheet.create({
   container: {
     flex: 1,

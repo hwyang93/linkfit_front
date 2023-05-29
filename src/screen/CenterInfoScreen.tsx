@@ -3,6 +3,7 @@ import {
   MemberReputationEntity,
   RecruitEntity,
 } from '@/types/api/entities';
+import {SCREEN_WIDTH} from '@/utils/constants/common';
 import {fetchCompany} from '@api/company';
 import CenterInfoTop from '@components/CenterInfoTop';
 import EmptySet from '@components/EmptySet';
@@ -12,14 +13,7 @@ import {BLUE, GRAY, WHITE} from '@styles/colors';
 import common from '@styles/common';
 import {isAxiosError} from 'axios';
 import {useCallback, useEffect, useState} from 'react';
-import {
-  Dimensions,
-  Image,
-  Pressable,
-  StyleSheet,
-  Text,
-  View,
-} from 'react-native';
+import {Image, Pressable, StyleSheet, Text, View} from 'react-native';
 import {
   MaterialTabBar,
   TabBarProps,
@@ -27,7 +21,7 @@ import {
 } from 'react-native-collapsible-tab-view';
 import {LoggedInParamList} from '../../AppInner';
 
-const width = Dimensions.get('window').width - 32;
+const width = SCREEN_WIDTH - 32;
 const tabWidth = width / 2;
 const imageSize = (width - 6) / 3;
 
@@ -46,12 +40,9 @@ const tabBar = (props: TabBarProps) => (
   />
 );
 
-type CenterInfoScreenProps = NativeStackScreenProps<
-  LoggedInParamList,
-  'CenterInfo'
->;
+type Props = NativeStackScreenProps<LoggedInParamList, 'CenterInfo'>;
 
-const CenterInfoScreen = ({navigation, route}: CenterInfoScreenProps) => {
+const CenterInfoScreen = ({navigation, route}: Props) => {
   const [centerInfo, setCenterInfo] = useState<CompanyEntity>();
   const [recruits, setRecruits] = useState<RecruitEntity[]>();
   const [reputations, setReputations] = useState<MemberReputationEntity[]>();

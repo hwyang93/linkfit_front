@@ -1,3 +1,4 @@
+import {SCREEN_WIDTH} from '@/utils/constants/common';
 import {iconPath} from '@/utils/iconPath';
 import {createRecruit} from '@api/recruit';
 import MultipleImagePicker, {
@@ -15,7 +16,6 @@ import {useCallback, useState} from 'react';
 import {
   ActivityIndicator,
   Alert,
-  Dimensions,
   Image,
   Pressable,
   StyleSheet,
@@ -35,11 +35,14 @@ const PAY_TYPE = ['시급', '주급', '월급', '연봉'];
 // 채용포지션이 필라테스 요가의 경우
 const RECRUIT_TYPE = ['전임', '파트', '대강'];
 
-const windowWidth = Dimensions.get('window').width;
-const columns7 = (windowWidth - 32) / 7;
-type Props = NativeStackScreenProps<LoggedInParamList>;
-function JobOfferFormScreen({navigation}: Props) {
-  const [loading, setLoading] = useState<boolean>(false);
+const CAN_GO_NEXT = true;
+
+const columns7 = (SCREEN_WIDTH - 32) / 7;
+
+type Props = NativeStackScreenProps<LoggedInParamList, 'JobOfferForm'>;
+
+const JobOfferFormScreen = ({navigation}: Props) => {
+  const [loading, setLoading] = useState(false);
   const [offerTitle, setOfferTitle] = useState('');
   const [position, setPosition] = useState('');
   const [education, setEducation] = useState('');
@@ -52,7 +55,7 @@ function JobOfferFormScreen({navigation}: Props) {
   const [day, setDay] = useState(''); // 요일
   const [date, setDate] = useState('');
   const [dateForm, setDateForm] = useState<any[]>([{}]);
-
+  const [images, setImages] = useState<any>([]);
   const [DAY, setDAY] = useState([
     {value: '월', selected: false},
     {value: '화', selected: false},
@@ -62,10 +65,6 @@ function JobOfferFormScreen({navigation}: Props) {
     {value: '토', selected: false},
     {value: '일', selected: false},
   ]);
-
-  const canGoNext = true;
-
-  const [images, setImages] = useState<any>([]);
 
   const openPicker = async () => {
     try {
@@ -138,8 +137,8 @@ function JobOfferFormScreen({navigation}: Props) {
         Alert.alert('채용 공고 등록이 완료되었어요!');
         navigation.pop();
       })
-      .catch((e: {message: any}) => {
-        toast.error({message: e.message});
+      .catch(error => {
+        toast.error({message: error.message});
       });
   }, [
     career,
@@ -344,7 +343,7 @@ function JobOfferFormScreen({navigation}: Props) {
               start={{x: 0.1, y: 0.5}}
               end={{x: 0.6, y: 1}}
               colors={
-                canGoNext ? ['#74ebe4', '#3962f3'] : ['#dcdcdc', '#dcdcdc']
+                CAN_GO_NEXT ? ['#74ebe4', '#3962f3'] : ['#dcdcdc', '#dcdcdc']
               }>
               {loading ? (
                 <ActivityIndicator color="white" />
@@ -357,7 +356,7 @@ function JobOfferFormScreen({navigation}: Props) {
       </View>
     </DismissKeyboardView>
   );
-}
+};
 const styles = StyleSheet.create({
   container: {
     flex: 1,

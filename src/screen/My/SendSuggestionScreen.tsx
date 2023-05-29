@@ -1,3 +1,10 @@
+import {iconPath} from '@/utils/iconPath';
+import Modal from '@components/ModalSheet';
+import TopFilter from '@components/TopFilter';
+import {NativeStackScreenProps} from '@react-navigation/native-stack';
+import {BLUE, GRAY, WHITE} from '@styles/colors';
+import common from '@styles/common';
+import {useCallback, useState} from 'react';
 import {
   Image,
   Pressable,
@@ -6,25 +13,16 @@ import {
   Text,
   View,
 } from 'react-native';
-import {BLUE, GRAY, WHITE} from '@styles/colors';
-import Modal from '@components/ModalSheet';
-import {SetStateAction, useCallback, useState} from 'react';
-import TopFilter from '@components/TopFilter';
-import common from '@styles/common';
-import {NavigationProp, useNavigation} from '@react-navigation/native';
-import {LoggedInParamList} from '../../../AppInner';
 import {SafeAreaView} from 'react-native-safe-area-context';
-import {iconPath} from '@/utils/iconPath';
+import {LoggedInParamList} from '../../../AppInner';
 
-function SendSuggestionScreen() {
-  const navigation = useNavigation<NavigationProp<LoggedInParamList>>();
-  const [modalVisible, setModalVisible] =
-    useState<SetStateAction<boolean>>(false);
+type Props = NativeStackScreenProps<LoggedInParamList, 'SendSuggestion'>;
 
+const SendSuggestionScreen = ({navigation}: Props) => {
+  const [modalVisible, setModalVisible] = useState(false);
   const [modalTitle, setModalTitle] = useState('');
   const [modalData, setModalData] = useState<any[]>([]);
   const [selectedFilter, setSelectedFilter] = useState('');
-
   const [FILTER, setFILTER] = useState([
     {
       key: 'period',
@@ -336,7 +334,7 @@ function SendSuggestionScreen() {
       </ScrollView>
     </SafeAreaView>
   );
-}
+};
 
 const styles = StyleSheet.create({
   container: {

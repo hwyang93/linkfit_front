@@ -24,7 +24,7 @@ const CommunityTab: React.FC = () => {
   );
 };
 
-const BookmarkManageScreen: React.FC = () => {
+const BookmarkManageScreen = () => {
   return (
     <Tab.Navigator screenOptions={materialTopTabNavigationOptions}>
       <Tab.Screen name="구인공고" component={JobOfferTab} />

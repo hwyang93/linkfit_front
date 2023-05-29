@@ -19,8 +19,8 @@ import LinearGradient from 'react-native-linear-gradient';
 import {LoggedInParamList} from '../../../AppInner';
 
 const LOADING = false;
-
 const CHANNEL = ['필라테스', '요가', '릴리리맘보'];
+
 type Props = NativeStackScreenProps<LoggedInParamList, 'CommunityPostForm'>;
 
 const CommunityPostFormScreen = ({navigation}: Props) => {

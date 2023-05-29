@@ -1,3 +1,14 @@
+import {iconPath} from '@/utils/iconPath';
+import {createMemberLicence} from '@api/member';
+import BirthdayPicker from '@components/BirthdayPicker';
+import Input, {KeyboardTypes} from '@components/Input';
+import SelectBox from '@components/SelectBox';
+import toast from '@hooks/toast';
+import {NativeStackScreenProps} from '@react-navigation/native-stack';
+import {RootState} from '@store/reducer';
+import {WHITE} from '@styles/colors';
+import common from '@styles/common';
+import {useCallback, useState} from 'react';
 import {
   ActivityIndicator,
   Image,
@@ -7,27 +18,18 @@ import {
   Text,
   View,
 } from 'react-native';
-import {WHITE} from '@styles/colors';
-import common from '@styles/common';
-import Input, {KeyboardTypes} from '@components/Input';
-import {useCallback, useState} from 'react';
-import BirthdayPicker from '@components/BirthdayPicker';
-import SelectBox from '@components/SelectBox';
-import {iconPath} from '@/utils/iconPath';
+import {Asset, MediaType, launchImageLibrary} from 'react-native-image-picker';
 import LinearGradient from 'react-native-linear-gradient';
-import {Asset, launchImageLibrary, MediaType} from 'react-native-image-picker';
 import {useSelector} from 'react-redux';
-import {RootState} from '@store/reducer';
-import {createMemberLicence} from '@api/member';
-import {NavigationProp, useNavigation} from '@react-navigation/native';
 import {LoggedInParamList} from '../../../AppInner';
-import toast from '@hooks/toast';
 
 const FIELD = ['필라테스', '요가'];
-function CertifyInstructorFormScreen() {
-  const navigation = useNavigation<NavigationProp<LoggedInParamList>>();
+
+type Props = NativeStackScreenProps<LoggedInParamList, 'CertifyInstructorForm'>;
+
+const CertifyInstructorFormScreen = ({navigation}: Props) => {
   const memberInfo = useSelector((state: RootState) => state.user);
-  const [loading, setLoading] = useState<boolean>(false);
+  const [loading, setLoading] = useState(false);
   const [name, setName] = useState(memberInfo.name);
   const [birth, setBirth] = useState(memberInfo.birth);
   const [field, setField] = useState('');
@@ -179,7 +181,7 @@ function CertifyInstructorFormScreen() {
       </View>
     </ScrollView>
   );
-}
+};
 const styles = StyleSheet.create({
   container: {
     flex: 1,

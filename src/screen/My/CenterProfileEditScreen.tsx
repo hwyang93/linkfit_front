@@ -1,3 +1,9 @@
+import DismissKeyboardView from '@components/DismissKeyboardView';
+import Input, {KeyboardTypes} from '@components/Input';
+import {NativeStackScreenProps} from '@react-navigation/native-stack';
+import {WHITE} from '@styles/colors';
+import common from '@styles/common';
+import {useState} from 'react';
 import {
   ActivityIndicator,
   Image,
@@ -6,38 +12,18 @@ import {
   Text,
   View,
 } from 'react-native';
-import {WHITE} from '@styles/colors';
-import DismissKeyboardView from '@components/DismissKeyboardView';
-import common from '@styles/common';
-import Input, {KeyboardTypes} from '@components/Input';
-import {useState} from 'react';
-import {iconPath} from '@/utils/iconPath';
+import {Asset, MediaType, launchImageLibrary} from 'react-native-image-picker';
 import LinearGradient from 'react-native-linear-gradient';
-
-import {
-  NavigationProp,
-  RouteProp,
-  useNavigation,
-  useRoute,
-} from '@react-navigation/native';
-import {LoggedInParamList} from '../../../AppInner';
-import {
-  Asset,
-  ImagePickerResponse,
-  launchImageLibrary,
-  MediaType,
-} from 'react-native-image-picker';
 import {SafeAreaView} from 'react-native-safe-area-context';
+import {LoggedInParamList} from '../../../AppInner';
 
-function CenterProfileEditScreen() {
-  const [loading, setLoading] = useState<boolean>(false);
-  const navigation = useNavigation<NavigationProp<LoggedInParamList>>();
-  const route = useRoute<RouteProp<LoggedInParamList, 'ProfileEdit'>>();
+type Props = NativeStackScreenProps<LoggedInParamList, 'CenterProfileEdit'>;
 
+const CenterProfileEditScreen = ({}: Props) => {
+  const [loading, setLoading] = useState(false);
   const [companyName, setCompanyName] = useState('');
   const [location, setLocation] = useState('');
   const [comment, setComment] = useState('');
-
   const [imageUri, setImageUri] = useState<{uri: string}>();
   const [imageObj, setImageObj] = useState<{
     name: string | undefined;
@@ -145,7 +131,7 @@ function CenterProfileEditScreen() {
       </DismissKeyboardView>
     </SafeAreaView>
   );
-}
+};
 
 const styles = StyleSheet.create({
   container: {

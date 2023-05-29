@@ -5,7 +5,6 @@ import Input, {KeyboardTypes} from '@components/Input';
 import SelectBox from '@components/SelectBox';
 import TabButton from '@components/TabButton';
 import toast from '@hooks/toast';
-import {RouteProp, useRoute} from '@react-navigation/native';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import common from '@styles/common';
 import {useCallback, useState} from 'react';
@@ -13,18 +12,13 @@ import {ActivityIndicator, Pressable, Text, View} from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 import {LoggedInParamList} from '../../../AppInner';
 
-const genderData = [{value: '남자'}, {value: '여자'}];
-const agencyData = ['SKT', 'KT', 'LG U+', '알뜰폰'];
+const GENDER_DATA = [{value: '남자'}, {value: '여자'}];
+const AGENCY_DATA = ['SKT', 'KT', 'LG U+', '알뜰폰'];
 
-type SignUpScreenProps = NativeStackScreenProps<
-  LoggedInParamList,
-  'SignUpForm'
->;
+type Props = NativeStackScreenProps<LoggedInParamList, 'SignUpForm'>;
 
-function SignUpFormScreen({navigation}: SignUpScreenProps) {
-  const [loading, setLoading] = useState<boolean>(false);
-  const route = useRoute<RouteProp<LoggedInParamList, 'SignUpForm'>>();
-
+const SignUpFormScreen = ({navigation, route}: Props) => {
+  const [loading, setLoading] = useState(false);
   const [email] = useState(route.params.email);
   const [userName, setUserName] = useState('');
   const [birth, setBirth] = useState('');
@@ -50,12 +44,11 @@ function SignUpFormScreen({navigation}: SignUpScreenProps) {
         navigation.navigate('SignIn');
         setLoading(false);
       })
-      .catch((e: {message: string}) => {
-        toast.error({message: e.message});
+      .catch(error => {
+        toast.error({message: error.message});
       });
   }, [email, birth, gender, navigation, password, phoneNumber, userName]);
 
-  // const canGoNext = true;
   const canGoNext =
     userName && gender && birth && phoneNumber && password && passwordConfirm;
 
@@ -82,7 +75,7 @@ function SignUpFormScreen({navigation}: SignUpScreenProps) {
           </View>
           <View style={[common.mb16]}>
             <TabButton
-              genderData={genderData}
+              genderData={GENDER_DATA}
               onSelect={(value: any) => setGender(value)}
               value={gender}
             />
@@ -99,7 +92,7 @@ function SignUpFormScreen({navigation}: SignUpScreenProps) {
             ]}>
             <View style={{flex: 1, marginRight: 8}}>
               <SelectBox
-                data={agencyData}
+                data={AGENCY_DATA}
                 onSelect={(value: any) => setAgency(value)}
                 defaultButtonText={'통신사'}
               />
@@ -160,6 +153,6 @@ function SignUpFormScreen({navigation}: SignUpScreenProps) {
       </View>
     </DismissKeyboardView>
   );
-}
+};
 
 export default SignUpFormScreen;

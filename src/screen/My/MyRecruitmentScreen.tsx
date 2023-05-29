@@ -14,16 +14,17 @@ import {fetchRecruits} from '@api/recruit';
 import Modal from '@components/ModalSheet';
 import TopFilter from '@components/TopFilter';
 import toast from '@hooks/toast';
-import {NavigationProp, useNavigation} from '@react-navigation/native';
+import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import common from '@styles/common';
-import {SetStateAction, useCallback, useEffect, useState} from 'react';
+import {useCallback, useEffect, useState} from 'react';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {LoggedInParamList} from '../../../AppInner';
 
-function MyRecruitmentScreen() {
-  const navigation = useNavigation<NavigationProp<LoggedInParamList>>();
-  const [modalVisible, setModalVisible] =
-    useState<SetStateAction<boolean>>(false);
+// TODO: Screen 이름 매칭 필요 (MyPost -> MyRecruitment)
+type Props = NativeStackScreenProps<LoggedInParamList, 'MyPost'>;
+
+const MyRecruitmentScreen = ({navigation}: Props) => {
+  const [modalVisible, setModalVisible] = useState(false);
   const [modalTitle, setModalTitle] = useState('');
   const [modalData, setModalData] = useState<any[]>([]);
   const [recruits, setRecruits] = useState<any[]>([]);
@@ -245,7 +246,7 @@ function MyRecruitmentScreen() {
       </ScrollView>
     </SafeAreaView>
   );
-}
+};
 
 const styles = StyleSheet.create({
   container: {

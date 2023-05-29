@@ -1,5 +1,6 @@
 import CTAButton from '@/components/Common/CTAButton';
 import toast from '@/hooks/toast';
+import {AuthStackParamList} from '@/navigations/AuthStack';
 import {removeWhitespace, validateEmail} from '@/utils/util';
 import {fetchMemberInfoByEmail} from '@api/member';
 import Input, {KeyboardTypes, ReturnKeyTypes} from '@components/Input';
@@ -18,14 +19,13 @@ import {
   View,
 } from 'react-native';
 import EncryptedStorage from 'react-native-encrypted-storage';
-import {LoggedInParamList} from '../../AppInner';
 import useInput from '../hooks/useInput';
-
-type SignInScreenProps = NativeStackScreenProps<LoggedInParamList, 'SignIn'>;
 
 const EMAIL_INVALID_ERROR_MESSAGE = '이메일 형식에 맞게 입력해 주세요.';
 
-function SignIn({navigation}: SignInScreenProps) {
+type Props = NativeStackScreenProps<AuthStackParamList, 'SignIn'>;
+
+const SignIn = ({navigation}: Props) => {
   const [loading, setLoading] = useState(false);
   const [email, setEmail] = useState('');
   const [isEmailValid, setIsEmailValid] = useState(true);
@@ -107,7 +107,7 @@ function SignIn({navigation}: SignInScreenProps) {
       </View>
     </TouchableWithoutFeedback>
   );
-}
+};
 
 const styles = StyleSheet.create({
   cautionText: {

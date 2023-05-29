@@ -1,5 +1,15 @@
+import {SCREEN_WIDTH} from '@/utils/constants/common';
+import {iconPath} from '@/utils/iconPath';
+import {fetchMemberMyInfo} from '@api/member';
+import MyTitle from '@components/My/MyTitle';
+import ProfileBox from '@components/ProfileBox';
+import toast from '@hooks/toast';
+import {useIsFocused} from '@react-navigation/native';
+import {NativeStackScreenProps} from '@react-navigation/native-stack';
+import {BLUE, GRAY, WHITE} from '@styles/colors';
+import common from '@styles/common';
+import {useEffect, useState} from 'react';
 import {
-  Dimensions,
   Image,
   Pressable,
   ScrollView,
@@ -8,24 +18,11 @@ import {
   View,
 } from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
-import {BLUE, GRAY, WHITE} from '@styles/colors';
-import ProfileBox from '@components/ProfileBox';
-import common from '@styles/common';
-import {iconPath} from '@/utils/iconPath';
-import MyTitle from '@components/My/MyTitle';
-import {useEffect, useState} from 'react';
-import {fetchMemberMyInfo} from '@api/member';
-import {
-  NavigationProp,
-  useIsFocused,
-  useNavigation,
-} from '@react-navigation/native';
 import {LoggedInParamList} from '../../AppInner';
-import toast from '@hooks/toast';
 
-const windowWidth = Dimensions.get('window').width;
-const columns3 = (windowWidth - 32) / 3;
-const columns4 = (windowWidth - 32) / 4;
+const columns3 = (SCREEN_WIDTH - 32) / 3;
+const columns4 = (SCREEN_WIDTH - 32) / 4;
+
 const MENU = [
   {
     icon: iconPath.MY_PLACE,
@@ -59,9 +56,9 @@ const MENU = [
   },
 ];
 
-function MyScreen() {
-  const navigation = useNavigation<NavigationProp<LoggedInParamList>>();
-  const isFocused = useIsFocused();
+type Props = NativeStackScreenProps<LoggedInParamList, 'My'>;
+
+const MyScreen = ({navigation}: Props) => {
   const [myInfo, setMyInfo] = useState<any>({
     memberInfo: {
       nickname: '',
@@ -91,14 +88,17 @@ function MyScreen() {
       seekCount: undefined,
     },
   });
+
+  const isFocused = useIsFocused();
+
   useEffect(() => {
     if (isFocused) {
       fetchMemberMyInfo()
         .then(({data}: any) => {
           setMyInfo(data);
         })
-        .catch((e: any) => {
-          toast.error({message: e.message});
+        .catch(error => {
+          toast.error({message: error.message});
         });
     }
   }, [isFocused]);
@@ -360,7 +360,7 @@ function MyScreen() {
       </ScrollView>
     </SafeAreaView>
   );
-}
+};
 const styles = StyleSheet.create({
   container: {
     flex: 1,

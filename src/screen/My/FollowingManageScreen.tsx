@@ -24,7 +24,7 @@ const InstructorTab: React.FC = () => {
   );
 };
 
-const FollowingManageScreen: React.FC = () => {
+const FollowingManageScreen = () => {
   return (
     <Tab.Navigator screenOptions={materialTopTabNavigationOptions}>
       <Tab.Screen name="센터" component={CenterTab} />

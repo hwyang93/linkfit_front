@@ -17,9 +17,9 @@ import {
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {LoggedInParamList} from '../../AppInner';
 
-type LogInScreenProps = NativeStackScreenProps<LoggedInParamList, 'LogIn'>;
+type Props = NativeStackScreenProps<LoggedInParamList, 'LogIn'>;
 
-const LogInScreen = ({navigation, route}: LogInScreenProps) => {
+const LogInScreen = ({navigation, route}: Props) => {
   const [password, setPassword] = useState('');
 
   const {signIn, isLoading} = useAuth();

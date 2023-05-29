@@ -20,8 +20,9 @@ import {
 import {TabBar, TabView} from 'react-native-tab-view';
 import {LoggedInParamList} from '../../AppInner';
 
-const TabBarHeight = 48;
-const HeaderHeight = 580;
+const TAB_BAR_HEIGHT = 48;
+const HEADER_HEIGHT = 580;
+
 const SafeStatusBar = Platform.select({
   ios: 44,
   android: StatusBar.currentHeight,
@@ -150,11 +151,11 @@ const CenterInfoScreenTabView = () => {
         if (item.key !== routes[tabIndex].key) {
           return;
         }
-        if (value > HeaderHeight || value < 0) {
+        if (value > HEADER_HEIGHT || value < 0) {
           headerScrollY.stopAnimation();
           syncScrollOffset();
         }
-        if (item.value && value <= HeaderHeight) {
+        if (item.value && value <= HEADER_HEIGHT) {
           item.value.scrollToOffset({
             offset: value,
             animated: false,
@@ -174,7 +175,7 @@ const CenterInfoScreenTabView = () => {
 
     listRefArr.current.forEach(item => {
       if (item.key !== curRouteKey) {
-        if (scrollY._value < HeaderHeight && scrollY._value >= 0) {
+        if (scrollY._value < HEADER_HEIGHT && scrollY._value >= 0) {
           if (item.value) {
             item.value.scrollToOffset({
               offset: scrollY._value,
@@ -182,17 +183,17 @@ const CenterInfoScreenTabView = () => {
             });
             listOffset.current[item.key] = scrollY._value;
           }
-        } else if (scrollY._value >= HeaderHeight) {
+        } else if (scrollY._value >= HEADER_HEIGHT) {
           if (
-            listOffset.current[item.key] < HeaderHeight ||
+            listOffset.current[item.key] < HEADER_HEIGHT ||
             listOffset.current[item.key] == null
           ) {
             if (item.value) {
               item.value.scrollToOffset({
-                offset: HeaderHeight,
+                offset: HEADER_HEIGHT,
                 animated: false,
               });
-              listOffset.current[item.key] = HeaderHeight;
+              listOffset.current[item.key] = HEADER_HEIGHT;
             }
           }
         }
@@ -216,8 +217,8 @@ const CenterInfoScreenTabView = () => {
   // render Helper
   const renderHeader = () => {
     const y = scrollY.interpolate({
-      inputRange: [0, HeaderHeight],
-      outputRange: [0, -HeaderHeight],
+      inputRange: [0, HEADER_HEIGHT],
+      outputRange: [0, -HEADER_HEIGHT],
       extrapolate: 'clamp',
     });
     return (
@@ -399,9 +400,9 @@ const CenterInfoScreenTabView = () => {
         ListHeaderComponent={ListHeaderComponent}
         ListFooterComponent={ListFooterComponent}
         contentContainerStyle={{
-          paddingTop: HeaderHeight + TabBarHeight + 7,
+          paddingTop: HEADER_HEIGHT + TAB_BAR_HEIGHT + 7,
           paddingHorizontal: 16,
-          minHeight: windowHeight - SafeStatusBar + HeaderHeight,
+          minHeight: windowHeight - SafeStatusBar + HEADER_HEIGHT,
         }}
         showsHorizontalScrollIndicator={false}
         data={data}
@@ -414,8 +415,8 @@ const CenterInfoScreenTabView = () => {
 
   const renderTabBar = (props: any) => {
     const y = scrollY.interpolate({
-      inputRange: [0, HeaderHeight],
-      outputRange: [HeaderHeight, 0],
+      inputRange: [0, HEADER_HEIGHT],
+      outputRange: [HEADER_HEIGHT, 0],
       extrapolate: 'clamp',
     });
     return (
@@ -477,7 +478,7 @@ const styles = StyleSheet.create({
     backgroundColor: WHITE,
   },
   header: {
-    height: HeaderHeight,
+    height: HEADER_HEIGHT,
     width: '100%',
     position: 'absolute',
     padding: 16,
@@ -490,7 +491,7 @@ const styles = StyleSheet.create({
     elevation: 0,
     shadowOpacity: 0,
     backgroundColor: WHITE,
-    height: TabBarHeight,
+    height: TAB_BAR_HEIGHT,
     borderBottomWidth: 1,
     borderColor: GRAY.LIGHT,
     marginHorizontal: 16,

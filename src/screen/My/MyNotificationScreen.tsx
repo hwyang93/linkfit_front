@@ -1,30 +1,35 @@
-import {ScrollView, StyleSheet, View, Text, Image} from 'react-native';
-import EmptySet from '@components/EmptySet';
+import {LoggedInParamList} from '@/../AppInner';
 import {iconPath} from '@/utils/iconPath';
-import {SafeAreaView} from 'react-native-safe-area-context';
+import EmptySet from '@components/EmptySet';
+import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import common from '@styles/common';
+import {Image, ScrollView, StyleSheet, Text, View} from 'react-native';
+import {SafeAreaView} from 'react-native-safe-area-context';
 
-function MyNotificationScreen() {
-  const DATA = [
-    {
-      id: 1,
-      icon: iconPath.BELL,
-      value: '알림 내용입니다. 알림 내용입니다. 알림 내용입니다.',
-      date: '2023.01.30',
-    },
-    {
-      id: 2,
-      icon: iconPath.BELL,
-      value: '알림 내용입니다. 알림 내용입니다. 알림 내용입니다.',
-      date: '2023.01.30',
-    },
-    {
-      id: 1,
-      icon: iconPath.BELL,
-      value: '널 만나고서부터 되는 일이 하나도 없어.',
-      date: '2023.01.30',
-    },
-  ];
+const DATA = [
+  {
+    id: 1,
+    icon: iconPath.BELL,
+    value: '알림 내용입니다. 알림 내용입니다. 알림 내용입니다.',
+    date: '2023.01.30',
+  },
+  {
+    id: 2,
+    icon: iconPath.BELL,
+    value: '알림 내용입니다. 알림 내용입니다. 알림 내용입니다.',
+    date: '2023.01.30',
+  },
+  {
+    id: 1,
+    icon: iconPath.BELL,
+    value: '널 만나고서부터 되는 일이 하나도 없어.',
+    date: '2023.01.30',
+  },
+];
+
+type Props = NativeStackScreenProps<LoggedInParamList, 'MyNotification'>;
+
+const MyNotificationScreen = ({}: Props) => {
   return (
     <SafeAreaView edges={['bottom', 'left', 'right']} style={styles.container}>
       {DATA.length > 0 ? (
@@ -51,7 +56,7 @@ function MyNotificationScreen() {
       )}
     </SafeAreaView>
   );
-}
+};
 
 const styles = StyleSheet.create({
   container: {

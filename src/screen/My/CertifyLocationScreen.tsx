@@ -1,8 +1,10 @@
+import {LoggedInParamList} from '@/../AppInner';
 import {FetchRegionAuthResponse} from '@/types/api/member';
 import {iconPath} from '@/utils/iconPath';
 import {createRegionAuth, deleteRegionAuth, fetchRegionAuth} from '@api/member';
 import LocationButton from '@components/LocationButton';
 import toast from '@hooks/toast';
+import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import {GRAY, WHITE} from '@styles/colors';
 import common from '@styles/common';
 import axios, {isAxiosError} from 'axios/index';
@@ -42,8 +44,10 @@ const requestPermission = async () => {
   }
 };
 
-const CertifyLocationScreen = () => {
-  const [loading, setLoading] = useState<boolean>(false);
+type Props = NativeStackScreenProps<LoggedInParamList, 'CertifyLocation'>;
+
+const CertifyLocationScreen = ({}: Props) => {
+  const [loading, setLoading] = useState(false);
   const [myLocation, setMyLocation] = useState<{
     latitude: number;
     longitude: number;

@@ -9,7 +9,7 @@ import FloatingLinkButton from '@components/FloatingLinkButton';
 import FloatingWriteButton from '@components/FloatingWriteButton';
 import RecruitComponent from '@components/RecruitComponent';
 import toast from '@hooks/toast';
-import {NavigationProp, useNavigation} from '@react-navigation/native';
+import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import {BLUE} from '@styles/colors';
 import common from '@styles/common';
 import {isAxiosError} from 'axios';
@@ -113,7 +113,9 @@ const FilterModalContent: React.FC<FilterModalContentProps> = ({
   );
 };
 
-function RecruitListScreen() {
+type Props = NativeStackScreenProps<LoggedInParamList, 'RecruitList'>;
+
+const RecruitListScreen = ({navigation}: Props) => {
   const [recruits, setRecruits] = useState<FetchRecruitsResponse>();
   const [modalType, setModalType] = useState<FilterType>('fields');
   const [filterValue, setFilterValue] = useState<Record<FilterType, string[]>>({
@@ -123,8 +125,6 @@ function RecruitListScreen() {
   });
 
   const {modalVisible, openModal, closeModal} = useModal();
-
-  const navigation = useNavigation<NavigationProp<LoggedInParamList>>();
 
   const getRecruits = useCallback(() => {
     const params = filterValue;
@@ -242,7 +242,7 @@ function RecruitListScreen() {
       />
     </SafeAreaView>
   );
-}
+};
 const styles = StyleSheet.create({
   container: {
     flex: 1,

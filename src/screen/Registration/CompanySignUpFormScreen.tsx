@@ -1,3 +1,13 @@
+import {LoggedInParamList} from '@/../AppInner';
+import BirthdayPicker from '@components/BirthdayPicker';
+import DismissKeyboardView from '@components/DismissKeyboardView';
+import Input, {KeyboardTypes} from '@components/Input';
+import SelectBox from '@components/SelectBox';
+import TabButton from '@components/TabButton';
+import {NativeStackScreenProps} from '@react-navigation/native-stack';
+import {WHITE} from '@styles/colors';
+import common from '@styles/common';
+import {useState} from 'react';
 import {
   ActivityIndicator,
   Pressable,
@@ -5,36 +15,29 @@ import {
   Text,
   View,
 } from 'react-native';
-import common from '@styles/common';
-import DismissKeyboardView from '@components/DismissKeyboardView';
-import Input, {KeyboardTypes} from '@components/Input';
-import {useState} from 'react';
-import {WHITE} from '@styles/colors';
 import LinearGradient from 'react-native-linear-gradient';
-import TabButton from '@components/TabButton';
-import SelectBox from '@components/SelectBox';
-import BirthdayPicker from '@components/BirthdayPicker';
 
-function SignUpFormScreen() {
+type Props = NativeStackScreenProps<LoggedInParamList, 'SignUpForm'>;
+
+const SignUpFormScreen = ({}: Props) => {
   const [businessNumber, setBusinessNumber] = useState<number>();
-  const [companyName, setCompanyName] = useState<string>('');
-  const [ownerName, setOwnerName] = useState<string>('');
+  const [companyName, setCompanyName] = useState('');
+  const [ownerName, setOwnerName] = useState('');
   const [postNumber, setPostNumber] = useState<number>();
-  const [companyAddress, setCompanyAddress] = useState<string>('');
+  const [companyAddress, setCompanyAddress] = useState('');
   const [birth, setBirth] = useState('');
-
   const [gender, setGender] = useState('');
   const [agency, setAgency] = useState('');
   const [category, setCategory] = useState('');
   const [phoneNumber, setPhoneNumber] = useState('');
   const [password, setPassword] = useState('');
   const [passwordConfirm, setPasswordConfirm] = useState('');
+  const [loading, setLoading] = useState(false);
 
   const categoryData = ['필라테스', '요가'];
   const genderData = [{value: '남자'}, {value: '여자'}];
   const agencyData = ['SKT', 'KT', 'LG U+', '알뜰폰'];
 
-  const [loading, setLoading] = useState<boolean>(false);
   const canGoNext = false;
 
   return (
@@ -199,7 +202,7 @@ function SignUpFormScreen() {
       </View>
     </DismissKeyboardView>
   );
-}
+};
 const styles = StyleSheet.create({
   confirm: {
     fontWeight: '700',

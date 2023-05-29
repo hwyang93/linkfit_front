@@ -1,3 +1,5 @@
+import {useAppSelector} from '@/store';
+import {FetchMemberLicencesResponse} from '@/types/api/member';
 import {iconPath} from '@/utils/iconPath';
 import {fetchMemberLicences} from '@api/member';
 import {createResume} from '@api/resume';
@@ -9,7 +11,6 @@ import SelectBox from '@components/SelectBox';
 import TabButton from '@components/TabButton';
 import toast from '@hooks/toast';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
-import {RootState} from '@store/reducer';
 import {WHITE} from '@styles/colors';
 import common from '@styles/common';
 import {useCallback, useEffect, useState} from 'react';
@@ -22,40 +23,43 @@ import {
   View,
 } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
-import {useSelector} from 'react-redux';
 import {LoggedInParamList} from '../../../AppInner';
-type Props = NativeStackScreenProps<LoggedInParamList, 'ResumeForm'>;
+
 const GENDER_DATA = [{value: '남자'}, {value: '여자'}];
-function ResumeFormScreen({navigation}: Props) {
-  const memberInfo = useSelector((state: RootState) => state.user);
-  const [loading, setLoading] = useState<boolean>(false);
+
+type Props = NativeStackScreenProps<LoggedInParamList, 'ResumeForm'>;
+
+const ResumeFormScreen = ({navigation}: Props) => {
+  const [loading, setLoading] = useState(false);
   const [title, setTitle] = useState('');
-  const [name, setName] = useState(memberInfo.name);
-  const [birth, setBirth] = useState(memberInfo.birth);
   const [gender, setGender] = useState('');
   const [address, setAddress] = useState('');
-  const [phoneNumber, setPhoneNumber] = useState(memberInfo.phone);
   const [licenseSeq, setLicenseSeq] = useState(0);
   const [introduce, setIntroduce] = useState('');
-  const [licenses, setLicenses] = useState<any[]>([]);
-  // const licenseData = [''];
-
+  const [licenses, setLicenses] = useState<FetchMemberLicencesResponse>([]);
   const [careers, setCareers] = useState<any>([{}]);
   const [educations, setEducations] = useState<any>([{}]);
 
+  const memberInfo = useAppSelector(state => state.user);
+
+  const [name, setName] = useState(memberInfo.name);
+  const [birth, setBirth] = useState(memberInfo.birth);
+  const [phoneNumber, setPhoneNumber] = useState(memberInfo.phone);
+
   useEffect(() => {
     fetchMemberLicences()
-      .then(({data}: any) => {
+      .then(({data}) => {
         setLicenses(data);
       })
-      .catch((e: any) => {
-        toast.error({message: e.message});
+      .catch(error => {
+        toast.error({message: error.message});
       });
   }, []);
 
   const addCareerForm = () => {
     setCareers([...careers, {}]);
   };
+
   const removeCareerForm = (index: any) => {
     const newCareerForm = [...careers];
     newCareerForm.splice(index, 1);
@@ -65,6 +69,7 @@ function ResumeFormScreen({navigation}: Props) {
   const addEducationForm = () => {
     setEducations([...educations, {}]);
   };
+
   const removeEducationForm = (index: any) => {
     const newEducationForm = [...educations];
     newEducationForm.splice(index, 1);
@@ -112,10 +117,9 @@ function ResumeFormScreen({navigation}: Props) {
         toast.success({message: '이력서 등록이 완료되었어요!'});
         navigation.goBack();
       })
-      .catch((e: any) => {
-        toast.error({message: e.message});
+      .catch(error => {
+        toast.error({message: error.message});
       });
-    console.log(data);
   }, [
     address,
     birth,
@@ -208,7 +212,7 @@ function ResumeFormScreen({navigation}: Props) {
         </View>
 
         {/* 경력 */}
-        {careers.map((item: any, index: number) => {
+        {careers.map((_, index: number) => {
           return (
             <View key={index} style={[common.mv20]}>
               {index !== 0 && (
@@ -246,7 +250,7 @@ function ResumeFormScreen({navigation}: Props) {
         </View>
 
         {/* 학력 */}
-        {educations.map((item: any, index: number) => {
+        {educations.map((_, index: number) => {
           return (
             <View key={index} style={common.mv20}>
               {index !== 0 && (
@@ -294,7 +298,7 @@ function ResumeFormScreen({navigation}: Props) {
             data={licenses.map(licence => {
               return licence.issuer + '_' + licence.field;
             })}
-            onSelect={(value: any, index: number) => selectLicence(index)}
+            onSelect={(_, index: number) => selectLicence(index)}
             defaultButtonText={'자격증을 선택하세요.'}
             selectKey={'index'}
           />
@@ -334,7 +338,7 @@ function ResumeFormScreen({navigation}: Props) {
       </View>
     </DismissKeyboardView>
   );
-}
+};
 
 const styles = StyleSheet.create({
   container: {

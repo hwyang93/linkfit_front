@@ -1,41 +1,41 @@
-import {Button, Image, Pressable, StyleSheet, Text, View} from 'react-native';
-import {NavigationProp, useNavigation} from '@react-navigation/native';
-import {LoggedInParamList} from '../../AppInner';
+import Modal from '@components/ModalSheet';
 import {BLUE, WHITE} from '@styles/colors';
 import common from '@styles/common';
-import Modal from '@components/ModalSheet';
+import {Button, Image, Pressable, StyleSheet, Text, View} from 'react-native';
+import {LoggedInParamList} from '../../AppInner';
 
-import {SetStateAction, useState} from 'react';
 import {iconPath} from '@/utils/iconPath';
 import toast from '@hooks/toast';
+import {NativeStackScreenProps} from '@react-navigation/native-stack';
+import {useState} from 'react';
 
-function MessageScreen() {
-  const navigation = useNavigation<NavigationProp<LoggedInParamList>>();
-  const [modalVisible, setModalVisible] =
-    useState<SetStateAction<boolean>>(false);
+const MODAL_DATA = [
+  {
+    value: '일주일',
+    selected: false,
+  },
+  {
+    value: '1개월',
+    selected: false,
+  },
+  {
+    value: '2개월',
+    selected: false,
+  },
+  {
+    value: '3개월 이상',
+    selected: false,
+  },
+];
+
+type Props = NativeStackScreenProps<LoggedInParamList, 'Message'>;
+
+const MessageScreen = ({navigation}: Props) => {
+  const [modalVisible, setModalVisible] = useState(false);
 
   const toastTest = () => {
     toast.success({message: 'test'});
   };
-
-  const modalData = [
-    {
-      value: '일주일',
-      selected: false,
-    },
-    {
-      value: '1개월',
-      selected: false,
-    },
-    {
-      value: '2개월',
-      selected: false,
-    },
-    {
-      value: '3개월 이상',
-      selected: false,
-    },
-  ];
 
   return (
     <View style={styles.container}>
@@ -57,7 +57,7 @@ function MessageScreen() {
         title={'타이틀'}
         content={
           <View>
-            {modalData.map((item, index) => {
+            {MODAL_DATA.map((item, index) => {
               return (
                 <View key={index} style={common.modalItemBox}>
                   <Pressable
@@ -83,7 +83,7 @@ function MessageScreen() {
       />
     </View>
   );
-}
+};
 
 const styles = StyleSheet.create({
   container: {

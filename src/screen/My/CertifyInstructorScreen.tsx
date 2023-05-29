@@ -1,9 +1,11 @@
+import {LoggedInParamList} from '@/../AppInner';
 import {FetchMemberLicencesResponse} from '@/types/api/member';
 import {iconPath} from '@/utils/iconPath';
 import {cancelMemberLicence, fetchMemberLicences} from '@api/member';
 import Modal from '@components/ModalSheet';
 import toast from '@hooks/toast';
 import {useIsFocused} from '@react-navigation/native';
+import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import {GRAY, WHITE} from '@styles/colors';
 import common from '@styles/common';
 import {SetStateAction, useCallback, useEffect, useState} from 'react';
@@ -16,7 +18,9 @@ import {
   View,
 } from 'react-native';
 
-function CertifyInstructorScreen() {
+type Props = NativeStackScreenProps<LoggedInParamList, 'CertifyInstructor'>;
+
+const CertifyInstructorScreen = ({}: Props) => {
   const isFocused = useIsFocused();
   const [modalVisible, setModalVisible] =
     useState<SetStateAction<boolean>>(false);
@@ -125,7 +129,7 @@ function CertifyInstructorScreen() {
       />
     </ScrollView>
   );
-}
+};
 const styles = StyleSheet.create({
   container: {
     flex: 1,

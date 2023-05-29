@@ -5,15 +5,12 @@ import InstructorListItem from '@components/InstructorListItem';
 import LinkTop from '@components/LinkTop';
 import Modal from '@components/ModalSheet';
 import toast from '@hooks/toast';
-import {
-  NavigationProp,
-  useFocusEffect,
-  useNavigation,
-} from '@react-navigation/native';
+import {useFocusEffect} from '@react-navigation/native';
+import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import {BLUE, WHITE} from '@styles/colors';
 import common from '@styles/common';
 import {isAxiosError} from 'axios';
-import {SetStateAction, useCallback, useEffect, useState} from 'react';
+import {useCallback, useEffect, useState} from 'react';
 import {
   Alert,
   BackHandler,
@@ -26,8 +23,9 @@ import {
 } from 'react-native';
 import {LoggedInParamList} from '../../AppInner';
 
-function Link() {
-  const navigation = useNavigation<NavigationProp<LoggedInParamList>>();
+type Props = NativeStackScreenProps<LoggedInParamList, 'Link'>;
+
+const LinkScreen = ({navigation}: Props) => {
   const MODAL = [
     {
       value: '구인 공고 등록',
@@ -48,10 +46,9 @@ function Link() {
     },
   ];
 
-  const [modalVisible, setModalVisible] =
-    useState<SetStateAction<boolean>>(false);
-
+  const [modalVisible, setModalVisible] = useState(false);
   const [instructors, setInstructors] = useState<any[]>([]);
+
   useEffect(() => {
     fetchRecommendedInstructors()
       .then(({data}) => {
@@ -135,7 +132,7 @@ function Link() {
       />
     </View>
   );
-}
+};
 
 const styles = StyleSheet.create({
   container: {
@@ -149,4 +146,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Link;
+export default LinkScreen;

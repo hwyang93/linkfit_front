@@ -1,4 +1,10 @@
+import {FetchPositionSuggestResponse} from '@/types/api/member';
+import {fetchPositionSuggest, updatePositionSuggestStatus} from '@api/member';
+import InstructorInfoComponent from '@components/InstructorInfoComponent';
+import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import {WHITE} from '@styles/colors';
+import common from '@styles/common';
+import {useCallback, useEffect, useState} from 'react';
 import {
   ActivityIndicator,
   Alert,
@@ -8,13 +14,6 @@ import {
   Text,
   View,
 } from 'react-native';
-
-import {FetchPositionSuggestResponse} from '@/types/api/member';
-import {fetchPositionSuggest, updatePositionSuggestStatus} from '@api/member';
-import InstructorInfoComponent from '@components/InstructorInfoComponent';
-import {NativeStackScreenProps} from '@react-navigation/native-stack';
-import common from '@styles/common';
-import {useCallback, useEffect, useState} from 'react';
 import LinearGradient from 'react-native-linear-gradient';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {LoggedInParamList} from '../../../AppInner';
@@ -26,7 +25,7 @@ type Props = NativeStackScreenProps<
   'ReceivedSuggestionDetail'
 >;
 
-function ReceivedSuggestionDetailScreen({route, navigation}: Props) {
+const ReceivedSuggestionDetailScreen = ({route, navigation}: Props) => {
   const [suggestInfo, setSuggestInfo] =
     useState<FetchPositionSuggestResponse>();
 
@@ -49,8 +48,8 @@ function ReceivedSuggestionDetailScreen({route, navigation}: Props) {
           Alert.alert('제안 답변이 완료되었습니다!');
           getSuggestInfo();
         })
-        .catch((e: any) => {
-          Alert.alert(e.message);
+        .catch(error => {
+          Alert.alert(error.message);
         });
     },
     [getSuggestInfo, route.params.suggestSeq],
@@ -186,7 +185,7 @@ function ReceivedSuggestionDetailScreen({route, navigation}: Props) {
       </ScrollView>
     </SafeAreaView>
   );
-}
+};
 
 const styles = StyleSheet.create({
   container: {

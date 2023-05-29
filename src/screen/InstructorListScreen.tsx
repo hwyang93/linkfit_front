@@ -1,43 +1,47 @@
+import {LoggedInParamList} from '@/../AppInner';
 import {FetchInstructorsResponse} from '@/types/api/instructor';
 import {fetchInstructors} from '@api/instructor';
 import InstructorComponent from '@components/InstructorComponent';
 import TopFilter from '@components/TopFilter';
 import toast from '@hooks/toast';
+import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import {isAxiosError} from 'axios';
 import {useCallback, useEffect, useState} from 'react';
 import {StyleSheet, View} from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
 
-const InstructorListScreen = () => {
+// const MODAL = [
+//   {
+//     icon: iconPath.LINK,
+//     iconOn: iconPath.LINK_ON,
+//     value: '전체',
+//     selected: false,
+//   },
+//   {
+//     icon: iconPath.PILATES,
+//     iconOn: iconPath.PILATES_ON,
+//     value: '필라테스',
+//     selected: false,
+//   },
+//   {
+//     icon: iconPath.YOGA,
+//     iconOn: iconPath.YOGA_ON,
+//     value: '요가',
+//     selected: false,
+//   },
+// ];
+
+const FILTER = [
+  {
+    key: 'position',
+    value: '포지션',
+  },
+];
+
+type Props = NativeStackScreenProps<LoggedInParamList, 'InstructorList'>;
+
+const InstructorListScreen = ({}: Props) => {
   const [instructors, setInstructors] = useState<FetchInstructorsResponse>();
-
-  const FILTER = [
-    {
-      key: 'position',
-      value: '포지션',
-    },
-  ];
-
-  // const MODAL = [
-  //   {
-  //     icon: iconPath.LINK,
-  //     iconOn: iconPath.LINK_ON,
-  //     value: '전체',
-  //     selected: false,
-  //   },
-  //   {
-  //     icon: iconPath.PILATES,
-  //     iconOn: iconPath.PILATES_ON,
-  //     value: '필라테스',
-  //     selected: false,
-  //   },
-  //   {
-  //     icon: iconPath.YOGA,
-  //     iconOn: iconPath.YOGA_ON,
-  //     value: '요가',
-  //     selected: false,
-  //   },
-  // ];
 
   const getInstructorsData = useCallback(async () => {
     try {

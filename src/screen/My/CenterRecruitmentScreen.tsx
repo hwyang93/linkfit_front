@@ -1,4 +1,11 @@
+import {LoggedInParamList} from '@/../AppInner';
+import {iconPath} from '@/utils/iconPath';
+import Modal from '@components/ModalSheet';
+import TopFilter from '@components/TopFilter';
+import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import {WHITE} from '@styles/colors';
+import common from '@styles/common';
+import {useState} from 'react';
 import {
   Image,
   Pressable,
@@ -7,20 +14,12 @@ import {
   Text,
   View,
 } from 'react-native';
-
-import {iconPath} from '@/utils/iconPath';
-import Modal from '@components/ModalSheet';
-import TopFilter from '@components/TopFilter';
-import common from '@styles/common';
-import {SetStateAction, useState} from 'react';
 import {SafeAreaView} from 'react-native-safe-area-context';
 
-// type Props = NativeStackScreenProps<LoggedInParamList, 'CenterRecruitment'>;
+type Props = NativeStackScreenProps<LoggedInParamList, 'CenterRecruitment'>;
 
-const CenterRecruitmentScreen = () => {
-  const [modalVisible, setModalVisible] =
-    useState<SetStateAction<boolean>>(false);
-
+const CenterRecruitmentScreen = ({}: Props) => {
+  const [modalVisible, setModalVisible] = useState(false);
   const [modalTitle, setModalTitle] = useState('');
   const [modalData, setModalData] = useState<any[]>([]);
 

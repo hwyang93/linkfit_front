@@ -14,15 +14,55 @@ import {useCallback, useEffect, useState} from 'react';
 import {FlatList, StyleSheet, Text, View} from 'react-native';
 import {LoggedInParamList} from '../../AppInner';
 
-type CommunityScreenProps = NativeStackScreenProps<
-  LoggedInParamList,
-  'Community'
->;
+const FILTER = [
+  {
+    value: '전체',
+    active: true,
+  },
+  {
+    value: '필라테스',
+    active: false,
+  },
+  {
+    value: '요가',
+    active: false,
+  },
+  {
+    value: '채널',
+    active: false,
+  },
+  {
+    value: '채널',
+    active: false,
+  },
+  {
+    value: '채널',
+    active: false,
+  },
+  {
+    value: '채널',
+    active: false,
+  },
+  {
+    value: '채널',
+    active: false,
+  },
+];
 
-const CommunityScreen = ({navigation}: CommunityScreenProps) => {
+type Props = NativeStackScreenProps<LoggedInParamList, 'Community'>;
+
+const CommunityScreen = ({navigation}: Props) => {
   const [posts, setPosts] = useState<FetchCommunityPostsResponse>([]);
 
   const isFocused = useIsFocused();
+
+  const renderItem = ({item}: {item: CommunityEntity}) => {
+    return <RecommendedPostItem item={item} />;
+  };
+
+  const onPressFAB = () => {
+    navigation.navigate('CommunityPostForm');
+  };
 
   const getPosts = useCallback(() => {
     fetchCommunityPosts()
@@ -41,49 +81,6 @@ const CommunityScreen = ({navigation}: CommunityScreenProps) => {
       getPosts();
     }
   }, [getPosts, isFocused]);
-
-  const FILTER = [
-    {
-      value: '전체',
-      active: true,
-    },
-    {
-      value: '필라테스',
-      active: false,
-    },
-    {
-      value: '요가',
-      active: false,
-    },
-    {
-      value: '채널',
-      active: false,
-    },
-    {
-      value: '채널',
-      active: false,
-    },
-    {
-      value: '채널',
-      active: false,
-    },
-    {
-      value: '채널',
-      active: false,
-    },
-    {
-      value: '채널',
-      active: false,
-    },
-  ];
-
-  function renderItem({item}: {item: CommunityEntity}) {
-    return <RecommendedPostItem item={item} />;
-  }
-
-  const onPressFAB = () => {
-    navigation.navigate('CommunityPostForm');
-  };
 
   return (
     <View style={styles.container}>

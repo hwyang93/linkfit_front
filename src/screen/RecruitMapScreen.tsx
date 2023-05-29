@@ -256,12 +256,9 @@ const InstructorTab: React.FC = () => {
   );
 };
 
-type RecruitMapScreenProps = NativeStackScreenProps<
-  LoggedInParamList,
-  'RecruitMap'
->;
+type Props = NativeStackScreenProps<LoggedInParamList, 'RecruitMap'>;
 
-const RecruitMapScreen = ({navigation}: RecruitMapScreenProps) => {
+const RecruitMapScreen = ({navigation}: Props) => {
   // const [modalVisible, setModalVisible] = useState(false);
   // const [modalVisible2, setModalVisible2] = useState(false);
   // const [modalTitle, setModalTitle] = useState('');

@@ -1,3 +1,8 @@
+import {iconPath} from '@/utils/iconPath';
+import Modal from '@components/ModalSheet';
+import {BLUE, GRAY, WHITE} from '@styles/colors';
+import common from '@styles/common';
+import {useCallback, useEffect, useState} from 'react';
 import {
   ActivityIndicator,
   Image,
@@ -7,33 +12,28 @@ import {
   Text,
   View,
 } from 'react-native';
-import {BLUE, GRAY, WHITE} from '@styles/colors';
-import common from '@styles/common';
-import {iconPath} from '@/utils/iconPath';
-import {SafeAreaView} from 'react-native-safe-area-context';
 import LinearGradient from 'react-native-linear-gradient';
-import {SetStateAction, useCallback, useEffect, useState} from 'react';
-import Modal from '@components/ModalSheet';
+import {SafeAreaView} from 'react-native-safe-area-context';
 
-import {LoggedInParamList} from '../../../AppInner';
-import {NativeStackScreenProps} from '@react-navigation/native-stack';
-import {fetchResume} from '@api/resume';
 import {fetchRecruitApplication, updateRecruitApplyStatus} from '@api/recruit';
-import {useSelector} from 'react-redux';
-import {RootState} from '@store/reducer';
+import {fetchResume} from '@api/resume';
 import toast from '@hooks/toast';
+import {NativeStackScreenProps} from '@react-navigation/native-stack';
+import {RootState} from '@store/reducer';
+import {useSelector} from 'react-redux';
+import {LoggedInParamList} from '../../../AppInner';
 
 type Props = NativeStackScreenProps<LoggedInParamList, 'ResumePreview'>;
 
-function ResumePreviewScreen({route, navigation}: Props) {
+const ResumePreviewScreen = ({route, navigation}: Props) => {
   const [loading, setLoading] = useState<boolean>(false);
-  const [modalVisible, setModalVisible] =
-    useState<SetStateAction<boolean>>(false);
+  const [modalVisible, setModalVisible] = useState(false);
   const [modalTitle, setModalTitle] = useState('');
   const [modalData, setModalData] = useState<any[]>([]);
   const [resume, setResume] = useState<any>({});
   const [applyResult, setApplyResult] = useState('');
   const [application, setApplication] = useState<any>({});
+
   const memberInfo = useSelector((state: RootState) => state.user);
 
   const getResume = useCallback(() => {
@@ -48,8 +48,8 @@ function ResumePreviewScreen({route, navigation}: Props) {
             setApplyResult(data.status);
           }
         })
-        .catch((e: any) => {
-          toast.error({message: e.message});
+        .catch(error => {
+          toast.error({message: error.message});
           navigation.goBack();
         });
     }
@@ -57,8 +57,8 @@ function ResumePreviewScreen({route, navigation}: Props) {
       .then(({data}: any) => {
         setResume(data);
       })
-      .catch((e: any) => {
-        toast.error({message: e.message});
+      .catch(error => {
+        toast.error({message: error.message});
         navigation.goBack();
       });
   }, [route.params.applySeq, route.params.resumeSeq, navigation]);
@@ -74,9 +74,9 @@ function ResumePreviewScreen({route, navigation}: Props) {
           });
           setLoading(false);
         })
-        .catch((e: any) => {
+        .catch(error => {
           setLoading(false);
-          toast.error({message: e.message});
+          toast.error({message: error.message});
         });
     },
     [navigation, route.params.applySeq, route.params.recruitSeq],
@@ -314,7 +314,7 @@ function ResumePreviewScreen({route, navigation}: Props) {
       </ScrollView>
     </SafeAreaView>
   );
-}
+};
 
 const styles = StyleSheet.create({
   container: {

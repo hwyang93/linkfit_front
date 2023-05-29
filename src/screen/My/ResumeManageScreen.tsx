@@ -1,3 +1,4 @@
+import {BLUE, GRAY, WHITE} from '@styles/colors';
 import {
   Alert,
   Image,
@@ -7,40 +8,35 @@ import {
   Text,
   View,
 } from 'react-native';
-import {BLUE, GRAY, WHITE} from '@styles/colors';
 
-import common from '@styles/common';
 import {iconPath} from '@/utils/iconPath';
-import Modal from '@components/ModalSheet';
-import {SetStateAction, useCallback, useEffect, useState} from 'react';
-import {
-  NavigationProp,
-  useIsFocused,
-  useNavigation,
-} from '@react-navigation/native';
-import {LoggedInParamList} from '../../../AppInner';
-import {deleteResume, fetchResumes, updateResumeMaster} from '@api/resume';
-import toast from '@hooks/toast';
 import {dateFormatter} from '@/utils/util';
+import {deleteResume, fetchResumes, updateResumeMaster} from '@api/resume';
+import Modal from '@components/ModalSheet';
+import toast from '@hooks/toast';
+import {useIsFocused} from '@react-navigation/native';
+import {NativeStackScreenProps} from '@react-navigation/native-stack';
+import common from '@styles/common';
+import {useCallback, useEffect, useState} from 'react';
+import {LoggedInParamList} from '../../../AppInner';
 
-function ResumeManageScreen() {
-  const isFocused = useIsFocused();
-  const navigation = useNavigation<NavigationProp<LoggedInParamList>>();
-  const [modalVisible, setModalVisible] =
-    useState<SetStateAction<boolean>>(false);
+type Props = NativeStackScreenProps<LoggedInParamList, 'ResumeManage'>;
 
+const ResumeManageScreen = ({navigation}: Props) => {
   const [resumes, setResumes] = useState<any[]>([]);
-
   const [selectedResume, setSelectedResume] = useState<any>({});
+  const [modalVisible, setModalVisible] = useState(false);
+
+  const isFocused = useIsFocused();
 
   const getResumes = useCallback(() => {
     if (isFocused) {
       fetchResumes()
-        .then(({data}: any) => {
+        .then(({data}) => {
           setResumes(data);
         })
-        .catch((e: any) => {
-          Alert.alert(e.message);
+        .catch(error => {
+          Alert.alert(error.message);
         });
     }
   }, [isFocused]);
@@ -52,8 +48,8 @@ function ResumeManageScreen() {
         toast.success({message: '대표이력서 설정이 완료되었어요!'});
         getResumes();
       })
-      .catch((e: any) => {
-        toast.error({message: e.message});
+      .catch(error => {
+        toast.error({message: error.message});
       });
   }, [getResumes, selectedResume.seq]);
 
@@ -64,8 +60,8 @@ function ResumeManageScreen() {
         toast.success({message: '이력서가 삭제되었습니다.'});
         getResumes();
       })
-      .catch((e: any) => {
-        toast.error({message: e.message});
+      .catch(error => {
+        toast.error({message: error.message});
       });
   }, [getResumes, selectedResume.seq]);
 
@@ -213,7 +209,7 @@ function ResumeManageScreen() {
       />
     </ScrollView>
   );
-}
+};
 
 const styles = StyleSheet.create({
   container: {

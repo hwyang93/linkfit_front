@@ -1,8 +1,12 @@
+import {LoggedInParamList} from '@/../AppInner';
+import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import {BLUE, WHITE} from '@styles/colors';
 import common from '@styles/common';
 import {Alert, Pressable, StyleSheet, Text, View} from 'react-native';
 
-const AccountScreen: React.FC = () => {
+type Props = NativeStackScreenProps<LoggedInParamList, 'Account'>;
+
+const AccountScreen = ({}: Props) => {
   return (
     <View style={styles.container}>
       <View>

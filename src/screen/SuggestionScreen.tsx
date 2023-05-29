@@ -2,7 +2,6 @@ import {createInstructorSuggest} from '@api/instructor';
 import DismissKeyboardView from '@components/DismissKeyboardView';
 import Input, {KeyboardTypes} from '@components/Input';
 import SelectBox from '@components/SelectBox';
-import {RouteProp, useRoute} from '@react-navigation/native';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import common from '@styles/common';
 import {useCallback, useState} from 'react';
@@ -30,15 +29,12 @@ const DEADLINE = [
   '2주 후',
   '한달 후',
 ];
-type SuggestionScreenProps = NativeStackScreenProps<
-  LoggedInParamList,
-  'Suggestion'
->;
 
-function SuggestionScreen({navigation}: SuggestionScreenProps) {
+type Props = NativeStackScreenProps<LoggedInParamList, 'Suggestion'>;
+
+const SuggestionScreen = ({navigation, route}: Props) => {
   const [loading, setLoading] = useState(false);
   console.log(setLoading);
-  const route = useRoute<RouteProp<LoggedInParamList, 'Suggestion'>>();
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
   const [recruitSeq, setRecruitSeq] = useState('');
@@ -136,7 +132,7 @@ function SuggestionScreen({navigation}: SuggestionScreenProps) {
       </View>
     </DismissKeyboardView>
   );
-}
+};
 
 const styles = StyleSheet.create({
   container: {

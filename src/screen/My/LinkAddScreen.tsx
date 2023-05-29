@@ -1,3 +1,9 @@
+import {LoggedInParamList} from '@/../AppInner';
+import Input, {KeyboardTypes} from '@components/Input';
+import {NativeStackScreenProps} from '@react-navigation/native-stack';
+import {WHITE} from '@styles/colors';
+import common from '@styles/common';
+import {useState} from 'react';
 import {
   ActivityIndicator,
   Pressable,
@@ -5,14 +11,12 @@ import {
   Text,
   View,
 } from 'react-native';
-import {WHITE} from '@styles/colors';
-import common from '@styles/common';
-import Input, {KeyboardTypes} from '@components/Input';
-import {useState} from 'react';
 import LinearGradient from 'react-native-linear-gradient';
 
-function LinkAddScreen() {
-  const [loading, setLoading] = useState<boolean>(false);
+type Props = NativeStackScreenProps<LoggedInParamList, 'LinkAdd'>;
+
+const LinkAddScreen = ({}: Props) => {
+  const [loading, setLoading] = useState(false);
   const [url, setUrl] = useState('');
   const [title, setTitle] = useState('');
 
@@ -59,7 +63,7 @@ function LinkAddScreen() {
       </View>
     </View>
   );
-}
+};
 const styles = StyleSheet.create({
   container: {
     flex: 1,
