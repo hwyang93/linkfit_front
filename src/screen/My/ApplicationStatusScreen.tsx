@@ -1,6 +1,7 @@
 import {FetchRecruitApplicationsMyResponse} from '@/types/api/recruit';
 import {SCREEN_WIDTH} from '@/utils/constants/common';
 import {iconPath} from '@/utils/iconPath';
+import {dateFormatter} from '@/utils/util';
 import {fetchRecruitApplicationsMy} from '@api/recruit';
 import Modal from '@components/ModalSheet';
 import TopFilter from '@components/TopFilter';
@@ -222,7 +223,9 @@ const ApplicationStatusScreen = ({navigation}: Props) => {
                     {application.recruit.companyName}
                   </Text>
                   {/* 지역 */}
-                  <Text style={common.text}>{application.createdAt} 지원</Text>
+                  <Text style={common.text}>
+                    {dateFormatter(application.createdAt, 'YYYY.MM.DD')} 지원
+                  </Text>
                   <Pressable
                     style={styles.resume}
                     onPress={() =>

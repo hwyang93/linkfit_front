@@ -65,6 +65,7 @@ interface HeaderProps {
   onPencilIconPress: () => void;
 }
 
+// TODO: 안드로이드에서 레이아웃이 깨지는 버그 수정
 const Header: React.FC<HeaderProps> = ({
   profileImageOriginFileUrl,
   nickname,
@@ -76,8 +77,8 @@ const Header: React.FC<HeaderProps> = ({
   onPencilIconPress,
 }) => {
   return (
-    <View style={styles.profileBox}>
-      <View style={[common.mr16, styles.thumbnailBox]}>
+    <View style={[styles.profileBox]}>
+      <View style={[styles.thumbnailBox, common.mr16]}>
         <Image
           source={
             profileImageOriginFileUrl
