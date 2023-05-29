@@ -1,5 +1,7 @@
+import {FetchMemberMyInfoResponse} from '@/types/api/member';
 import {SCREEN_WIDTH} from '@/utils/constants/common';
 import {iconPath} from '@/utils/iconPath';
+import {dateFormatter} from '@/utils/util';
 import {fetchMemberMyInfo} from '@api/member';
 import MyTitle from '@components/My/MyTitle';
 import ProfileBox from '@components/ProfileBox';
@@ -59,42 +61,14 @@ const MENU = [
 type Props = NativeStackScreenProps<LoggedInParamList, 'My'>;
 
 const MyScreen = ({navigation}: Props) => {
-  const [myInfo, setMyInfo] = useState<any>({
-    memberInfo: {
-      nickname: '',
-      intro: '',
-      field: '',
-      licences: {},
-      profileImage: {},
-    },
-    masterResume: {
-      title: undefined,
-    },
-    applyCountInfo: {
-      totalApplyCount: undefined,
-      passApplyCount: undefined,
-      failApplyCount: undefined,
-      cancelApplyCount: undefined,
-    },
-    suggestCountInfo: {
-      totalSuggestCount: undefined,
-      waitingSuggestCount: undefined,
-      completedSuggestCount: undefined,
-      closedSuggestCount: undefined,
-    },
-    noticeCountInfo: {
-      totalNoticeCount: undefined,
-      recruitCount: undefined,
-      seekCount: undefined,
-    },
-  });
+  const [myInfo, setMyInfo] = useState<FetchMemberMyInfoResponse>();
 
   const isFocused = useIsFocused();
 
   useEffect(() => {
     if (isFocused) {
       fetchMemberMyInfo()
-        .then(({data}: any) => {
+        .then(({data}) => {
           setMyInfo(data);
         })
         .catch(error => {
@@ -107,16 +81,17 @@ const MyScreen = ({navigation}: Props) => {
     <SafeAreaView edges={['left', 'right']} style={styles.container}>
       <ScrollView showsVerticalScrollIndicator={false}>
         <View style={common.mb20}>
-          <ProfileBox memberInfo={myInfo.memberInfo} />
+          {myInfo && <ProfileBox memberInfo={myInfo.memberInfo} />}
         </View>
 
         <View style={common.mb8}>
           <Text style={[common.title_s]}>프로필 메뉴</Text>
           <View style={[common.rowCenter, {flexWrap: 'wrap'}]}>
-            {MENU.map((item: any, index) => {
+            {/* TODO: 타입 정의 */}
+            {MENU.map((item, index) => {
               return (
                 <Pressable
-                  onPress={() => navigation.navigate(item.link)}
+                  onPress={() => navigation.navigate(item.link as any)}
                   key={index}
                   style={[styles.menuItem, {width: columns3, height: 80}]}>
                   <Image source={item.icon} style={common.size32} />
@@ -132,7 +107,7 @@ const MyScreen = ({navigation}: Props) => {
         </View>
 
         {/* 이력서 박스 */}
-        {myInfo.masterResume.seq ? (
+        {myInfo?.masterResume.seq ? (
           <View style={common.mb24}>
             <Pressable
               style={common.basicBox}
@@ -155,7 +130,7 @@ const MyScreen = ({navigation}: Props) => {
               </View>
               <Text style={common.title}>{myInfo.masterResume.title}</Text>
               <Text style={[common.text_s, {color: GRAY.DARK}]}>
-                {myInfo.masterResume.updatedAt}
+                {dateFormatter(myInfo.masterResume.updatedAt, 'YYYY.MM.DD')}
               </Text>
             </Pressable>
           </View>
@@ -186,7 +161,7 @@ const MyScreen = ({navigation}: Props) => {
               ]}>
               <Text style={common.text_s}>지원 완료</Text>
               <Text style={common.title_s}>
-                {myInfo.applyCountInfo.totalApplyCount}
+                {myInfo?.applyCountInfo.totalApplyCount}
               </Text>
             </View>
             <View
@@ -201,7 +176,7 @@ const MyScreen = ({navigation}: Props) => {
               ]}>
               <Text style={common.text_s}>합격</Text>
               <Text style={common.title_s}>
-                {myInfo.applyCountInfo.passApplyCount}
+                {myInfo?.applyCountInfo.passApplyCount}
               </Text>
             </View>
             <View
@@ -216,7 +191,7 @@ const MyScreen = ({navigation}: Props) => {
               ]}>
               <Text style={common.text_s}>불합격</Text>
               <Text style={common.title_s}>
-                {myInfo.applyCountInfo.failApplyCount}
+                {myInfo?.applyCountInfo.failApplyCount}
               </Text>
             </View>
             <View
@@ -229,7 +204,7 @@ const MyScreen = ({navigation}: Props) => {
               ]}>
               <Text style={common.text_s}>지원 취소</Text>
               <Text style={common.title_s}>
-                {myInfo.applyCountInfo.cancelApplyCount}
+                {myInfo?.applyCountInfo.cancelApplyCount}
               </Text>
             </View>
           </View>
@@ -257,7 +232,7 @@ const MyScreen = ({navigation}: Props) => {
               ]}>
               <Text style={common.text_s}>전체</Text>
               <Text style={common.title_s}>
-                {myInfo.suggestCountInfo.totalSuggestCount}
+                {myInfo?.suggestCountInfo.totalSuggestCount}
               </Text>
             </View>
             <View
@@ -272,7 +247,7 @@ const MyScreen = ({navigation}: Props) => {
               ]}>
               <Text style={common.text_s}>답변 대기중</Text>
               <Text style={common.title_s}>
-                {myInfo.suggestCountInfo.waitingSuggestCount}
+                {myInfo?.suggestCountInfo.waitingSuggestCount}
               </Text>
             </View>
             <View
@@ -287,7 +262,7 @@ const MyScreen = ({navigation}: Props) => {
               ]}>
               <Text style={common.text_s}>답변 완료</Text>
               <Text style={common.title_s}>
-                {myInfo.suggestCountInfo.completedSuggestCount}
+                {myInfo?.suggestCountInfo.completedSuggestCount}
               </Text>
             </View>
             <View
@@ -300,7 +275,7 @@ const MyScreen = ({navigation}: Props) => {
               ]}>
               <Text style={common.text_s}>마감</Text>
               <Text style={common.title_s}>
-                {myInfo.suggestCountInfo.closedSuggestCount}
+                {myInfo?.suggestCountInfo.closedSuggestCount}
               </Text>
             </View>
           </View>
@@ -324,7 +299,7 @@ const MyScreen = ({navigation}: Props) => {
               ]}>
               <Text style={common.text_s}>등록 완료</Text>
               <Text style={common.title_s}>
-                {myInfo.noticeCountInfo.totalNoticeCount}
+                {myInfo?.noticeCountInfo.totalNoticeCount}
               </Text>
             </View>
             <View
@@ -339,7 +314,7 @@ const MyScreen = ({navigation}: Props) => {
               ]}>
               <Text style={common.text_s}>구인 공고</Text>
               <Text style={common.title_s}>
-                {myInfo.noticeCountInfo.recruitCount}
+                {myInfo?.noticeCountInfo.recruitCount}
               </Text>
             </View>
             <View
@@ -352,7 +327,7 @@ const MyScreen = ({navigation}: Props) => {
               ]}>
               <Text style={common.text_s}>구직 공고</Text>
               <Text style={[common.title_s]}>
-                {myInfo.noticeCountInfo.seekCount}
+                {myInfo?.noticeCountInfo.seekCount}
               </Text>
             </View>
           </View>

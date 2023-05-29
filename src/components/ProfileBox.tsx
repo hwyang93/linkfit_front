@@ -1,3 +1,4 @@
+import {MemberEntity} from '@/types/api/entities';
 import {iconPath} from '@/utils/iconPath';
 import {NavigationProp, useNavigation} from '@react-navigation/native';
 import {BLUE, GRAY} from '@styles/colors';
@@ -6,7 +7,11 @@ import {Alert, Image, Pressable, StyleSheet, Text, View} from 'react-native';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import {LoggedInParamList} from '../../AppInner';
 
-const ProfileBox: React.FC<any> = ({memberInfo}) => {
+interface ProfileBoxProps {
+  memberInfo: MemberEntity;
+}
+
+const ProfileBox: React.FC<ProfileBoxProps> = ({memberInfo}) => {
   const navigation = useNavigation<NavigationProp<LoggedInParamList>>();
 
   return (

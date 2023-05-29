@@ -59,6 +59,7 @@ export interface MemberEntity extends BaseEntity {
   licences: MemberLicenceEntity[];
   follower: MemberFavoriteEntity[];
   followerCount: number;
+  career?: string;
 }
 
 export interface MemberLinkEntity extends BaseEntity {
