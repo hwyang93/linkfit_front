@@ -7,16 +7,16 @@ import {
   View,
 } from 'react-native';
 
-import common from '@styles/common';
-import {BLUE, GRAY, WHITE} from '@styles/colors';
+import {FetchMemberFollowingsResponse} from '@/types/api/member';
 import {iconPath} from '@/utils/iconPath';
-import {useCallback, useEffect, useState} from 'react';
 import {fetchMemberFollowings} from '@api/member';
 import toast from '@hooks/toast';
 import {NavigationProp, useNavigation} from '@react-navigation/native';
-import {LoggedInParamList} from '../../../AppInner';
-import {FetchMemberFollowingsResponse} from '@/types/api/member';
+import {BLUE, GRAY, WHITE} from '@styles/colors';
+import common from '@styles/common';
 import {isAxiosError} from 'axios';
+import {useCallback, useEffect, useState} from 'react';
+import {LoggedInParamList} from '../../../AppInner';
 
 function FollowingInstructorComponent() {
   const navigation = useNavigation<NavigationProp<LoggedInParamList>>();

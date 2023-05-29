@@ -106,11 +106,12 @@ const BottomSheet: React.FC<BottomSheetProps> = ({
               right: SCREEN_WIDTH / 2,
             }}
           />
-          {/* 모달 타이틀 */}
           <View style={common.mt30}>
             <Text style={styles.modalTitle}>{title}</Text>
           </View>
-          <ScrollView showsVerticalScrollIndicator={false}>
+          <ScrollView
+            style={{width: '100%'}}
+            showsVerticalScrollIndicator={false}>
             {content}
           </ScrollView>
         </Animated.View>

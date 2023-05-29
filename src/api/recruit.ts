@@ -23,7 +23,7 @@ export function fetchRecruit(seq: number) {
   return request.get<FetchRecruitResponse>(`/recruit/${seq}`);
 }
 
-export function fetchRecruits(params: FetchRecruitsParams) {
+export function fetchRecruits(params?: FetchRecruitsParams) {
   return request.get<FetchRecruitsResponse>('/recruit', {params});
 }
 
@@ -44,7 +44,7 @@ export function createRecruitApply(seq: number, data: CreateRecruitApplyDto) {
 }
 
 // TODO: Response 타입 추가
-export function updateRecruitApplyCancel(data: UpdateRecruitApplyDto) {
+export function updateRecruitApplyCancel(data: {seqs: number[]}) {
   return request.patch('/recruit/apply', data);
 }
 

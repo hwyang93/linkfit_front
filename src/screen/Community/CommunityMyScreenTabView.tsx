@@ -5,7 +5,7 @@ import {createMaterialTopTabNavigator} from '@react-navigation/material-top-tabs
 
 const Tab = createMaterialTopTabNavigator();
 
-const CommunityMyScreenTabView: React.FC = () => {
+const CommunityMyScreenTabView = () => {
   return (
     <Tab.Navigator screenOptions={materialTopTabNavigationOptions}>
       <Tab.Screen name="작성 내역" component={CommunityMyPost} />

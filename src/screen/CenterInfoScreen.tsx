@@ -1,15 +1,13 @@
-import {FetchCompanyResponse} from '@/types/api/company';
-import {MemberReputationEntity, RecruitEntity} from '@/types/api/entities';
+import {
+  CompanyEntity,
+  MemberReputationEntity,
+  RecruitEntity,
+} from '@/types/api/entities';
 import {fetchCompany} from '@api/company';
 import CenterInfoTop from '@components/CenterInfoTop';
 import EmptySet from '@components/EmptySet';
 import toast from '@hooks/toast';
-import {
-  NavigationProp,
-  RouteProp,
-  useNavigation,
-  useRoute,
-} from '@react-navigation/native';
+import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import {BLUE, GRAY, WHITE} from '@styles/colors';
 import common from '@styles/common';
 import {isAxiosError} from 'axios';
@@ -48,11 +46,13 @@ const tabBar = (props: TabBarProps) => (
   />
 );
 
-const CenterInfoScreen: React.FC = () => {
-  const route = useRoute<RouteProp<LoggedInParamList, 'CenterInfo'>>();
-  const navigation = useNavigation<NavigationProp<LoggedInParamList>>();
-  const [centerInfo, setCenterInfo] =
-    useState<Pick<FetchCompanyResponse, 'companyInfo'>>();
+type CenterInfoScreenProps = NativeStackScreenProps<
+  LoggedInParamList,
+  'CenterInfo'
+>;
+
+const CenterInfoScreen = ({navigation, route}: CenterInfoScreenProps) => {
+  const [centerInfo, setCenterInfo] = useState<CompanyEntity>();
   const [recruits, setRecruits] = useState<RecruitEntity[]>();
   const [reputations, setReputations] = useState<MemberReputationEntity[]>();
 

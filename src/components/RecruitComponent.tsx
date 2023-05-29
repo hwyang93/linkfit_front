@@ -1,9 +1,10 @@
-import {FlatList, Text, View} from 'react-native';
+import {FetchRecruitsResponse} from '@/types/api/recruit';
 import RecruitListItem from '@components/RecruitListItem';
 import common from '@styles/common';
+import {FlatList, Text, View} from 'react-native';
 
 type InstructorProps = {
-  list: any[];
+  list: FetchRecruitsResponse;
   title: string;
   text: string;
 };

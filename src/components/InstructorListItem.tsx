@@ -1,28 +1,20 @@
-import {Alert, Image, Pressable, StyleSheet, Text, View} from 'react-native';
-import common from '@styles/common';
+import {Instructor} from '@/types/api/instructor';
 import {iconPath} from '@/utils/iconPath';
-import {BLUE} from '@styles/colors';
-import {NavigationProp, useNavigation} from '@react-navigation/native';
-import {LoggedInParamList} from '../../AppInner';
-import {SetStateAction, useState} from 'react';
 import Modal from '@components/ModalSheet';
+import {NavigationProp, useNavigation} from '@react-navigation/native';
+import {BLUE} from '@styles/colors';
+import common from '@styles/common';
+import {useState} from 'react';
+import {Alert, Image, Pressable, StyleSheet, Text, View} from 'react-native';
+import {LoggedInParamList} from '../../AppInner';
 
 type ListProps = {
-  item: {
-    seq: number;
-    field: string;
-    career: string;
-    nickname: string;
-    address: string;
-    followerCount: number;
-    profileImage: any;
-  };
+  item: Instructor;
 };
 
-function InstructorListItem({item}: ListProps) {
+const InstructorListItem = ({item}: ListProps) => {
   const navigation = useNavigation<NavigationProp<LoggedInParamList>>();
-  const [modalVisible, setModalVisible] =
-    useState<SetStateAction<boolean>>(false);
+  const [modalVisible, setModalVisible] = useState(false);
 
   const MODAL = [
     {
@@ -112,7 +104,7 @@ function InstructorListItem({item}: ListProps) {
       />
     </View>
   );
-}
+};
 
 const styles = StyleSheet.create({
   listBox: {
@@ -121,6 +113,7 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-start',
     alignItems: 'center',
     paddingVertical: 16,
+    marginHorizontal: 16,
   },
   thumbnail: {width: 80, height: 80, borderRadius: 200},
   rightBox: {

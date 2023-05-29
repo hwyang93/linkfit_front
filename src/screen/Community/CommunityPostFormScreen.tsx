@@ -18,12 +18,12 @@ import {
 import LinearGradient from 'react-native-linear-gradient';
 import {LoggedInParamList} from '../../../AppInner';
 
+const LOADING = false;
+
 const CHANNEL = ['필라테스', '요가', '릴리리맘보'];
 type Props = NativeStackScreenProps<LoggedInParamList, 'CommunityPostForm'>;
 
 const CommunityPostFormScreen = ({navigation}: Props) => {
-  const [loading, setLoading] = useState(false);
-  console.log(setLoading);
   // TODO: 로딩 상태 처리
   const [title, setTitle] = useState('');
   const [category, setCategory] = useState('');
@@ -90,7 +90,7 @@ const CommunityPostFormScreen = ({navigation}: Props) => {
               colors={
                 canGoNext ? ['#74ebe4', '#3962f3'] : ['#dcdcdc', '#dcdcdc']
               }>
-              {loading ? (
+              {LOADING ? (
                 <ActivityIndicator color="white" />
               ) : (
                 <Text style={common.buttonText}>게시글 등록</Text>

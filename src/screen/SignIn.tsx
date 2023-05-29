@@ -1,39 +1,40 @@
+import CTAButton from '@/components/Common/CTAButton';
+import toast from '@/hooks/toast';
+import {removeWhitespace, validateEmail} from '@/utils/util';
+import {fetchMemberInfoByEmail} from '@api/member';
+import Input, {KeyboardTypes, ReturnKeyTypes} from '@components/Input';
+import Logo from '@components/Logo';
+import SimpleLogin from '@components/SimpleLogin';
+import {useIsFocused} from '@react-navigation/native';
+import {NativeStackScreenProps} from '@react-navigation/native-stack';
+import common from '@styles/common';
+import {isAxiosError} from 'axios';
 import {useCallback, useEffect, useState} from 'react';
 import {
-  Pressable,
+  Keyboard,
   StyleSheet,
   Text,
-  View,
-  ActivityIndicator,
   TouchableWithoutFeedback,
-  Keyboard,
+  View,
 } from 'react-native';
-import {NativeStackScreenProps} from '@react-navigation/native-stack';
-import {LoggedInParamList} from '../../AppInner';
-import {validateEmail, removeWhitespace} from '@/utils/util';
-import Input, {KeyboardTypes, ReturnKeyTypes} from '@components/Input';
-import useInput from '../hooks/useInput';
-import common from '@styles/common';
-import SimpleLogin from '@components/SimpleLogin';
-import LinearGradient from 'react-native-linear-gradient';
-import Logo from '@components/Logo';
-import {fetchMemberInfoByEmail} from '@api/member';
 import EncryptedStorage from 'react-native-encrypted-storage';
-import toast from '@hooks/toast';
-import {useFocusEffect, useIsFocused} from '@react-navigation/native';
+import {LoggedInParamList} from '../../AppInner';
+import useInput from '../hooks/useInput';
 
 type SignInScreenProps = NativeStackScreenProps<LoggedInParamList, 'SignIn'>;
 
+const EMAIL_INVALID_ERROR_MESSAGE = '이메일 형식에 맞게 입력해 주세요.';
+
 function SignIn({navigation}: SignInScreenProps) {
-  const isFocused = useIsFocused();
-  const [loading, setLoading] = useState<boolean>(false);
-  // 이메일, 비밀번호
-  const [email, setEmail] = useState<string>('');
+  const [loading, setLoading] = useState(false);
+  const [email, setEmail] = useState('');
+  const [isEmailValid, setIsEmailValid] = useState(true);
+
   const emailInput = useInput('', validateEmail);
-  // 오류메시지 상태저장
-  const [emailMessage, setEmailMessage] = useState<string>('');
-  // 유효성 검사
-  const [isEmail, setIsEmail] = useState<boolean>(false);
+
+  const isFocused = useIsFocused();
+
+  const canGoNext = isEmailValid && email.length > 0;
 
   useEffect(() => {
     if (isFocused) {
@@ -41,42 +42,30 @@ function SignIn({navigation}: SignInScreenProps) {
     }
   }, [isFocused]);
 
-  const onChangeEmail = useCallback(
-    (value: string) => {
-      const checkEmail = removeWhitespace(value);
-      setEmail(checkEmail);
-      setIsEmail(validateEmail(checkEmail));
-      if (!isEmail) {
-        setEmailMessage('이메일 형식에 맞게 입력해 주세요.');
-      } else {
-        setEmailMessage('');
-      }
-    },
-    [isEmail],
-  );
+  const onChangeEmail = useCallback((value: string) => {
+    const trimmedEmail = removeWhitespace(value);
+    setEmail(trimmedEmail);
+    setIsEmailValid(validateEmail(trimmedEmail));
+  }, []);
 
   const checkMember = async () => {
+    setLoading(true);
     await EncryptedStorage.clear();
-    await fetchMemberInfoByEmail(email)
-      .then(({data}: any) => {
-        if (data.seq) {
-          setLoading(true);
-          toast.success({message: '환영합니다. 회원님'});
-          navigation.navigate('LogIn', {email: email});
-          setLoading(false);
-        } else {
-          setLoading(false);
-          navigation.navigate('SignUp', {email: email});
-        }
-      })
-      .catch((e: {message: any}): any => {
-        // console.log(e.message);
-        toast.error({message: e.message});
-      });
+    try {
+      const response = await fetchMemberInfoByEmail(email);
+      if (response.data.seq) {
+        toast.success({message: '환영합니다. 회원님'});
+        navigation.navigate('LogIn', {email: email});
+      }
+    } catch (error) {
+      console.log(error);
+      if (isAxiosError(error)) {
+        toast.error({message: error.message});
+      }
+    } finally {
+      setLoading(false);
+    }
   };
-
-  // 이메일이 입력 되면 버튼 활성화
-  const canGoNext = isEmail;
 
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
@@ -94,33 +83,26 @@ function SignIn({navigation}: SignInScreenProps) {
               placeholder={'이메일을 입력해 주세요.'}
               keyboardType={KeyboardTypes.EMAIL}
               returnKeyType={ReturnKeyTypes.DONE}
-              isEmail={isEmail}
+              isEmail={isEmailValid}
               onChangeText={onChangeEmail}
               onSubmitEditing={checkMember}
             />
-            {!isEmail && <Text style={styles.cautionText}>{emailMessage}</Text>}
+            {!isEmailValid && (
+              <Text style={styles.cautionText}>
+                {EMAIL_INVALID_ERROR_MESSAGE}
+              </Text>
+            )}
           </View>
-
           <View style={common.mt30}>
-            <Pressable disabled={!canGoNext || loading} onPress={checkMember}>
-              <LinearGradient
-                style={common.button}
-                start={{x: 0.1, y: 0.5}}
-                end={{x: 0.6, y: 1}}
-                colors={
-                  canGoNext ? ['#74ebe4', '#3962f3'] : ['#dcdcdc', '#dcdcdc']
-                }>
-                {loading ? (
-                  <ActivityIndicator color="white" />
-                ) : (
-                  <Text style={common.buttonText}>이메일로 계속하기</Text>
-                )}
-              </LinearGradient>
-            </Pressable>
+            <CTAButton
+              label="이메일로 계속하기"
+              loading={loading}
+              disabled={!canGoNext}
+              onPress={checkMember}
+            />
           </View>
           {/* 간편 로그인 컴포넌트 */}
           <SimpleLogin />
-          {/* 간편 로그인 컴포넌트 */}
         </View>
       </View>
     </TouchableWithoutFeedback>

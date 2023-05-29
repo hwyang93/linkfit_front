@@ -15,7 +15,7 @@ export interface FetchMemberFollowingsParams {
   type: 'COMPANY' | 'INSTRUCTOR';
 }
 
-export interface FetchMemberFollowingsResponse {
+export type FetchMemberFollowingsResponse = {
   createdAt: string;
   updatedAt: string;
   seq: number;
@@ -23,8 +23,7 @@ export interface FetchMemberFollowingsResponse {
   favoriteSeq: number;
   followingMember: MemberEntity;
   career: string;
-}
-[];
+}[];
 
 export interface FetchMemberInfoResponse {
   createdAt: string;
@@ -94,7 +93,7 @@ export interface FetchMemberMyInfoResponse {
 
 export type FetchRegionAuthResponse = RegionAuthEntity;
 
-export type FetchMemberLicencesResponse = MemberLicenceEntity;
+export type FetchMemberLicencesResponse = MemberLicenceEntity[];
 
 export type FetchMemberReputationsResponse = MemberReputationEntity[];
 

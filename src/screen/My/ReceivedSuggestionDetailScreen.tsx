@@ -1,3 +1,4 @@
+import {WHITE} from '@styles/colors';
 import {
   ActivityIndicator,
   Alert,
@@ -7,18 +8,18 @@ import {
   Text,
   View,
 } from 'react-native';
-import {WHITE} from '@styles/colors';
 
-import common from '@styles/common';
-import CenterInfoComponent from '@components/CenterInfoComponent';
-import InstructorInfoComponent from '@components/InstructorInfoComponent';
-import {SafeAreaView} from 'react-native-safe-area-context';
-import LinearGradient from 'react-native-linear-gradient';
-import {useCallback, useEffect, useState} from 'react';
-import {NavigationProp, useNavigation} from '@react-navigation/native';
-import {LoggedInParamList} from '../../../AppInner';
-import {NativeStackScreenProps} from '@react-navigation/native-stack';
+import {FetchPositionSuggestResponse} from '@/types/api/member';
 import {fetchPositionSuggest, updatePositionSuggestStatus} from '@api/member';
+import InstructorInfoComponent from '@components/InstructorInfoComponent';
+import {NativeStackScreenProps} from '@react-navigation/native-stack';
+import common from '@styles/common';
+import {useCallback, useEffect, useState} from 'react';
+import LinearGradient from 'react-native-linear-gradient';
+import {SafeAreaView} from 'react-native-safe-area-context';
+import {LoggedInParamList} from '../../../AppInner';
+
+const LOADING = false;
 
 type Props = NativeStackScreenProps<
   LoggedInParamList,
@@ -26,16 +27,16 @@ type Props = NativeStackScreenProps<
 >;
 
 function ReceivedSuggestionDetailScreen({route, navigation}: Props) {
-  const [loading, setLoading] = useState<boolean>(false);
-  const [suggestInfo, setSuggestInfo] = useState<any>({});
+  const [suggestInfo, setSuggestInfo] =
+    useState<FetchPositionSuggestResponse>();
 
   const getSuggestInfo = useCallback(() => {
     fetchPositionSuggest(route.params.suggestSeq)
-      .then(({data}: any) => {
+      .then(({data}) => {
         setSuggestInfo(data);
       })
-      .catch((e: any) => {
-        Alert.alert(e.message);
+      .catch(error => {
+        Alert.alert(error.message);
         navigation.goBack();
       });
   }, [route.params.suggestSeq, navigation]);
@@ -57,7 +58,7 @@ function ReceivedSuggestionDetailScreen({route, navigation}: Props) {
 
   useEffect(() => {
     getSuggestInfo();
-  }, []);
+  }, [getSuggestInfo]);
 
   const toOffer = () => {
     // navigation.navigate('JobPost');
@@ -67,24 +68,24 @@ function ReceivedSuggestionDetailScreen({route, navigation}: Props) {
       <ScrollView showsVerticalScrollIndicator={false}>
         <View>
           <Text style={[common.title_l, common.mt16, common.mb16]}>
-            {suggestInfo.title}
+            {suggestInfo?.title}
           </Text>
           <View style={[common.row, common.mb24]}>
             <Text style={[common.text_s, common.fcg]}>
-              {!suggestInfo.closingDate
+              {!suggestInfo?.closingDate
                 ? '채용시 마감'
                 : `~${suggestInfo.closingDate} 마감`}
             </Text>
             <Text style={[common.text_s, common.fcg, common.mh8]}>|</Text>
             <Text style={[common.text_s, common.fcg]}>
-              {suggestInfo.status}
+              {suggestInfo?.status}
             </Text>
           </View>
           <Text style={[common.text_m, common.fwb, common.mb8]}>제안 내용</Text>
           <Text style={[common.text_m, common.mb24]}>
-            {suggestInfo.contents}
+            {suggestInfo?.contents}
           </Text>
-          {suggestInfo.recruit && (
+          {suggestInfo?.recruit && (
             <View>
               <Text style={[common.text_m, common.fwb, common.mb8]}>
                 구인 공고
@@ -107,25 +108,28 @@ function ReceivedSuggestionDetailScreen({route, navigation}: Props) {
           {/* 채용 기간 */}
           <Text style={[common.text_m, common.fwb, common.mb8]}>마감 기간</Text>
           <Text style={[common.text_m, common.mb24]}>
-            {!suggestInfo.closingDate
+            {!suggestInfo?.closingDate
               ? '채용시 마감'
               : `~${suggestInfo.closingDate} 마감`}
           </Text>
 
-          {suggestInfo.writer?.type === 'COMPANY' && (
+          {suggestInfo?.writer.type === 'COMPANY' && (
             <View style={common.mb24}>
-              <Pressable onPress={() => navigation.navigate('CenterInfo')}>
+              <Pressable
+                onPress={() =>
+                  navigation.navigate('CenterInfo', {
+                    memberSeq: suggestInfo.writer.memberSeq,
+                  })
+                }>
                 <Text style={[common.text_m, common.fwb, common.mb8]}>
                   제안한 센터 정보
                 </Text>
-                <View>
-                  <CenterInfoComponent />
-                </View>
+                <View>{/* <CenterInfoComponent centerInfo={}/> */}</View>
               </Pressable>
             </View>
           )}
 
-          {suggestInfo.writer?.type === 'INSTRUCTOR' && (
+          {suggestInfo?.writer.type === 'INSTRUCTOR' && (
             <View style={common.mb24}>
               <Text style={[common.text_m, common.fwb, common.mb8]}>
                 제안한 강사 정보
@@ -137,7 +141,7 @@ function ReceivedSuggestionDetailScreen({route, navigation}: Props) {
           )}
 
           {/* 수락하기 거절하기 버튼 */}
-          {suggestInfo.status === 'WAITING' && (
+          {suggestInfo?.status === 'WAITING' && (
             <View>
               <View style={common.mb16}>
                 <Pressable
@@ -149,7 +153,7 @@ function ReceivedSuggestionDetailScreen({route, navigation}: Props) {
                     start={{x: 0.1, y: 0.5}}
                     end={{x: 0.6, y: 1}}
                     colors={['#74ebe4', '#3962f3']}>
-                    {loading ? (
+                    {LOADING ? (
                       <ActivityIndicator color="white" />
                     ) : (
                       <Text style={common.buttonText}>수락하기</Text>
@@ -168,7 +172,7 @@ function ReceivedSuggestionDetailScreen({route, navigation}: Props) {
                     start={{x: 0.1, y: 0.5}}
                     end={{x: 0.6, y: 1}}
                     colors={['#74ebe4', '#3962f3']}>
-                    {loading ? (
+                    {LOADING ? (
                       <ActivityIndicator color="white" />
                     ) : (
                       <Text style={common.buttonText}>거절하기</Text>

@@ -2,7 +2,15 @@ import {iconPath} from '@/utils/iconPath';
 import {FlatList, Image, StyleSheet, View} from 'react-native';
 import Chip from './Common/Chip';
 
-function TopFilter({data}: any) {
+interface TopFilterProps {
+  data: {
+    key?: string;
+    value: string;
+    job?: () => void;
+  }[];
+}
+
+const TopFilter: React.FC<TopFilterProps> = ({data}) => {
   return (
     <View style={styles.filterBox}>
       <FlatList
@@ -27,7 +35,7 @@ function TopFilter({data}: any) {
       />
     </View>
   );
-}
+};
 
 const styles = StyleSheet.create({
   filterBox: {

@@ -1,9 +1,9 @@
-import {Dimensions, Text, View} from 'react-native';
-import common from '@styles/common';
+import {SCREEN_WIDTH} from '@/utils/constants/common';
 import PostCarousel from '@components/PostCarousel';
+import common from '@styles/common';
+import {Text, View} from 'react-native';
 
 function CommunityTop() {
-  const screenWidth = Dimensions.get('window').width;
   const POP = [
     {
       id: 1,
@@ -46,7 +46,7 @@ function CommunityTop() {
           gap={12}
           offset={0}
           links={POP}
-          pageWidth={screenWidth - 220}
+          pageWidth={SCREEN_WIDTH - 220}
         />
       </View>
 

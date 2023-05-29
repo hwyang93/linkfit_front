@@ -1,3 +1,20 @@
+import {CommunityEntity} from '@/types/api/entities';
+import {iconPath} from '@/utils/iconPath';
+import {dateFormatter} from '@/utils/util';
+import {
+  createCommunityBookmark,
+  createCommunityComment,
+  deleteCommunityBookmark,
+} from '@api/community';
+import CommunityUserComponent from '@components/Community/CommunityUserComponent';
+import BookmarkCounter from '@components/Counter/BookmarkCounter';
+import CommentCounter from '@components/Counter/CommentCounter';
+import Input, {KeyboardTypes} from '@components/Input';
+import toast from '@hooks/toast';
+import {WHITE} from '@styles/colors';
+import common from '@styles/common';
+import {isAxiosError} from 'axios';
+import {useCallback, useState} from 'react';
 import {
   ActivityIndicator,
   Alert,
@@ -7,78 +24,61 @@ import {
   Text,
   View,
 } from 'react-native';
-import common from '@styles/common';
-import {iconPath} from '@/utils/iconPath';
-import CommunityUserComponent from '@components/Community/CommunityUserComponent';
-import BookmarkCounter from '@components/Counter/BookmarkCounter';
-import CommentCounter from '@components/Counter/CommentCounter';
-import Input, {KeyboardTypes} from '@components/Input';
 import LinearGradient from 'react-native-linear-gradient';
-import {WHITE} from '@styles/colors';
-import {useCallback, useEffect, useState} from 'react';
-import {
-  createCommunityBookmark,
-  createCommunityComment,
-  deleteCommunityBookmark,
-} from '@api/community';
-import toast from '@hooks/toast';
-type listProps = {
-  item: any;
-};
 
-function CommunityPostTop({item}: listProps) {
-  const [loading, setLoading] = useState<boolean>(false);
-  const [postInfo, setPostInfo] = useState<any>(item);
+interface CommunityPostTopProps {
+  postInfo: CommunityEntity;
+}
+
+const CommunityPostTop = ({postInfo}: CommunityPostTopProps) => {
+  const [loading, setLoading] = useState(false);
+  const [isBookmark, setIsBookmark] = useState(postInfo.isBookmark);
+  const [bookmarkCount, setBookmarkCount] = useState(postInfo.bookmarkCount);
   const [comment, setComment] = useState('');
-  const canGoNext = comment;
-  useEffect(() => {
-    setPostInfo(item);
-  }, [item]);
+
+  const canGoNext = comment !== '';
+
   const onClickBookmark = useCallback(() => {
-    if (postInfo.isBookmark === 'N') {
+    if (isBookmark === 'N') {
       createCommunityBookmark(postInfo.seq)
         .then(() => {
           toast.success({message: '북마크 등록이 완료되었어요!'});
-          setPostInfo({
-            ...postInfo,
-            isBookmark: 'Y',
-            bookmarkCount: postInfo.bookmarkCount + 1,
-          });
+          setIsBookmark('Y');
+          setBookmarkCount(prev => prev + 1);
         })
-        .catch((e: any) => {
-          toast.error({message: e.message});
+        .catch(error => {
+          toast.error({message: error.message});
         });
     } else {
       deleteCommunityBookmark(postInfo.seq)
         .then(() => {
           toast.success({message: '북마크가 삭제되었어요!'});
-          setPostInfo({
-            ...postInfo,
-            isBookmark: 'N',
-            bookmarkCount: postInfo.bookmarkCount - 1,
-          });
+          setIsBookmark('N');
+          setBookmarkCount(prev => prev - 1);
         })
-        .catch((e: any) => {
-          toast.error({message: e.message});
+        .catch(error => {
+          toast.error({message: error.message});
         });
     }
-  }, [postInfo]);
+  }, [isBookmark, postInfo.seq]);
 
-  const createComment = useCallback(() => {
+  const createComment = useCallback(async () => {
     const data = {
       contents: comment,
     };
-    createCommunityComment(postInfo.seq, data)
-      .then(() => {
-        setLoading(true);
-        toast.success({message: '댓글이 작성 되었습니다!'});
-        setComment('');
-        setLoading(false);
-      })
-      .catch((e: any) => {
-        setLoading(false);
-        toast.error({message: e.message});
-      });
+
+    try {
+      setLoading(true);
+      createCommunityComment(postInfo.seq, data);
+      toast.success({message: '댓글이 작성 되었습니다!'});
+      setComment('');
+    } catch (error) {
+      if (isAxiosError(error)) {
+        toast.error({message: error.message});
+      }
+    } finally {
+      setLoading(false);
+    }
   }, [postInfo.seq, comment]);
 
   return (
@@ -91,7 +91,9 @@ function CommunityPostTop({item}: listProps) {
             <Image source={iconPath.SHARE} style={common.size24} />
           </Pressable>
         </View>
-        <Text style={[common.text_s, common.fcg]}>{postInfo.updatedAt}</Text>
+        <Text style={[common.text_s, common.fcg]}>
+          {dateFormatter(postInfo.updatedAt, 'YYYY.MM.DD')}
+        </Text>
       </View>
 
       <View style={[common.mv16, common.row]}>
@@ -112,8 +114,8 @@ function CommunityPostTop({item}: listProps) {
         <View style={common.rowCenter}>
           <BookmarkCounter
             seq={postInfo.seq}
-            isBookmark={postInfo.isBookmark}
-            counter={postInfo.bookmarkCount}
+            isBookmark={isBookmark}
+            counter={bookmarkCount}
             onClick={onClickBookmark}
           />
           <CommentCounter counter={postInfo.comments?.length} />
@@ -153,7 +155,7 @@ function CommunityPostTop({item}: listProps) {
       </View>
     </View>
   );
-}
+};
 
 const styles = StyleSheet.create({
   confirm: {

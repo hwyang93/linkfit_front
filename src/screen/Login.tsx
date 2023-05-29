@@ -1,17 +1,12 @@
+import CTAButton from '@/components/Common/CTAButton';
 import useAuth from '@/hooks/useAuth';
 import Input, {KeyboardTypes, ReturnKeyTypes} from '@components/Input';
 import Logo from '@components/Logo';
-import {
-  NavigationProp,
-  RouteProp,
-  useNavigation,
-  useRoute,
-} from '@react-navigation/native';
+import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import {BLACK} from '@styles/colors';
 import common from '@styles/common';
 import {useState} from 'react';
 import {
-  ActivityIndicator,
   Keyboard,
   Pressable,
   StyleSheet,
@@ -19,19 +14,17 @@ import {
   TouchableWithoutFeedback,
   View,
 } from 'react-native';
-import LinearGradient from 'react-native-linear-gradient';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {LoggedInParamList} from '../../AppInner';
 
-function LogIn() {
-  const rootNavigation = useNavigation<NavigationProp<LoggedInParamList>>();
-  const route = useRoute<RouteProp<LoggedInParamList, 'LogIn'>>();
+type LogInScreenProps = NativeStackScreenProps<LoggedInParamList, 'LogIn'>;
 
-  const [password, setPassword] = useState<string>('');
+const LogInScreen = ({navigation, route}: LogInScreenProps) => {
+  const [password, setPassword] = useState('');
 
   const {signIn, isLoading} = useAuth();
 
-  const canGoNext = password;
+  const canGoNext = password.length > 0;
 
   const onSubmit = async () => {
     const loginInfo = {
@@ -63,28 +56,17 @@ function LogIn() {
                 onSubmitEditing={onSubmit}
               />
             </View>
-
             <View style={common.mt30}>
-              <Pressable disabled={!canGoNext || isLoading} onPress={onSubmit}>
-                <LinearGradient
-                  style={common.button}
-                  start={{x: 0.1, y: 0.5}}
-                  end={{x: 0.6, y: 1}}
-                  colors={
-                    canGoNext ? ['#74ebe4', '#3962f3'] : ['#dcdcdc', '#dcdcdc']
-                  }>
-                  {isLoading ? (
-                    <ActivityIndicator color="white" />
-                  ) : (
-                    <Text style={common.buttonText}>로그인</Text>
-                  )}
-                </LinearGradient>
-              </Pressable>
+              <CTAButton
+                label="로그인"
+                loading={isLoading}
+                disabled={!canGoNext}
+                onPress={onSubmit}
+              />
             </View>
             <View style={styles.findPassword}>
               <Text style={styles.leftBox}>비밀번호를 잊으셨나요?</Text>
-              <Pressable
-                onPress={() => rootNavigation.navigate('PasswordReset')}>
+              <Pressable onPress={() => navigation.navigate('PasswordReset')}>
                 <Text style={styles.rightBox}>비밀번호 재설정</Text>
               </Pressable>
             </View>
@@ -93,7 +75,7 @@ function LogIn() {
       </TouchableWithoutFeedback>
     </SafeAreaView>
   );
-}
+};
 
 const styles = StyleSheet.create({
   findPassword: {
@@ -116,4 +98,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default LogIn;
+export default LogInScreen;

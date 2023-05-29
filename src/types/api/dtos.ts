@@ -60,11 +60,11 @@ export interface CreateMemberDto {
   birth: string;
   gender: string;
   phone: string;
-  type: string;
-  nickname: string;
-  address: string;
-  addressDetail: string;
-  company: CreateCompanyDto;
+  type?: string;
+  nickname?: string;
+  address?: string;
+  addressDetail?: string;
+  company?: CreateCompanyDto;
 }
 
 export type UpdateMemberDto = Partial<CreateMemberDto>;
@@ -75,12 +75,12 @@ export interface UpdateMemberLinkDto {
   url: string;
 }
 
-export interface UpdateMemberProfileDto {
+export type UpdateMemberProfileDto = {
   nickname: string;
   intro: string;
   field: string;
   links: UpdateMemberLinkDto[];
-}
+};
 
 export interface CreateMemberLicenceDto {
   field: string;

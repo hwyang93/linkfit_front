@@ -11,7 +11,6 @@ type CenterInfoProps = {
 
 function CenterInfoComponent({centerInfo}: CenterInfoProps) {
   const navigation = useNavigation<NavigationProp<LoggedInParamList>>();
-  // console.log('centerInfoComponent.tsx', link.title);
   // todo: 전화걸기 (시뮬레이션 환경에선 안됨)
   // import { Linking } from 'react-native';
   // () => Linking.openURL(`tel:01099003171`)

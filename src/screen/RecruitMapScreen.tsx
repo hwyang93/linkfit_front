@@ -15,7 +15,7 @@ import {SCREEN_WIDTH} from '@/utils/constants/common';
 import {iconPath} from '@/utils/iconPath';
 import {materialTopTabNavigationOptions} from '@/utils/options/tab';
 import {createMaterialTopTabNavigator} from '@react-navigation/material-top-tabs';
-import {NavigationProp, useNavigation} from '@react-navigation/native';
+import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import {
   Image,
   ScrollView,
@@ -256,8 +256,12 @@ const InstructorTab: React.FC = () => {
   );
 };
 
-const RecruitMapScreen: React.FC<LoggedInParamList> = () => {
-  const navigation = useNavigation<NavigationProp<LoggedInParamList>>();
+type RecruitMapScreenProps = NativeStackScreenProps<
+  LoggedInParamList,
+  'RecruitMap'
+>;
+
+const RecruitMapScreen = ({navigation}: RecruitMapScreenProps) => {
   // const [modalVisible, setModalVisible] = useState(false);
   // const [modalVisible2, setModalVisible2] = useState(false);
   // const [modalTitle, setModalTitle] = useState('');

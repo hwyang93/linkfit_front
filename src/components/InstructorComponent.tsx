@@ -1,23 +1,24 @@
+import {FetchInstructorsResponse, Instructor} from '@/types/api/instructor';
+import common from '@styles/common';
 import {FlatList, Text, View} from 'react-native';
 import InstructorListItem from './InstructorListItem';
-import common from '@styles/common';
 
 type InstructorProps = {
-  list: any[];
+  list: FetchInstructorsResponse;
   title?: string;
   text?: string;
 };
 
-function InstructorComponent({list, title, text}: InstructorProps) {
-  function renderItem({item}: any) {
+const InstructorComponent = ({list, title, text}: InstructorProps) => {
+  const renderItem = ({item}: {item: Instructor}) => {
     return <InstructorListItem item={item} />;
-  }
+  };
 
   return (
     <FlatList
       nestedScrollEnabled={true}
       data={list}
-      keyExtractor={(item, index) => index.toString()}
+      keyExtractor={(_, index) => index.toString()}
       decelerationRate="fast"
       renderItem={renderItem}
       snapToAlignment="start"
@@ -30,6 +31,6 @@ function InstructorComponent({list, title, text}: InstructorProps) {
       }
     />
   );
-}
+};
 
 export default InstructorComponent;

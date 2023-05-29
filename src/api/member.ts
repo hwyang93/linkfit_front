@@ -1,9 +1,7 @@
 import {
   CreateMemberDto,
-  CreateMemberLicenceDto,
   CreateMemberReputationDto,
   CreateRegionAuthDto,
-  UpdateMemberProfileDto,
   UpdateMemberReputationDto,
   UpdatePositionSuggestDto,
 } from '@/types/api/dtos';
@@ -53,7 +51,8 @@ export function fetchMemberMyInfo() {
 }
 
 // TODO: Response 타입 추가
-export function updateProfile(data: UpdateMemberProfileDto) {
+// TODO: data 타입 확인
+export function updateProfile(data: FormData) {
   return request.patch('/member/profile', data, {
     headers: {'content-type': 'multipart/form-data'},
   });
@@ -75,7 +74,7 @@ export function fetchMemberLicences() {
   return request.get<FetchMemberLicencesResponse>('/member/licence');
 }
 
-export function createMemberLicence(data: CreateMemberLicenceDto) {
+export function createMemberLicence(data: FormData) {
   return request.post<PostResponse>('/member/licence', data, {
     headers: {'content-type': 'multipart/form-data'},
   });

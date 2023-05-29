@@ -27,10 +27,12 @@ export interface CompanyEntity extends BaseEntity {
   lon: string;
   lat: string;
   member: MemberEntity;
+  isFollow: YesNoFlag;
 }
 
 export interface MemberEntity extends BaseEntity {
   seq: number;
+  memberSeq: number;
   email: string;
   password: string;
   name: string;
@@ -56,6 +58,7 @@ export interface MemberEntity extends BaseEntity {
   recruits: RecruitEntity[];
   licences: MemberLicenceEntity[];
   follower: MemberFavoriteEntity[];
+  followerCount: number;
 }
 
 export interface MemberLinkEntity extends BaseEntity {
@@ -101,9 +104,9 @@ export interface RegionAuthEntity extends BaseEntity {
   memberSeq: number;
   lon: number;
   lat: number;
-  region1Depth: string;
-  region2Depth: string;
-  region3Depth: string;
+  region1depth: string;
+  region2depth: string;
+  region3depth: string;
   member?: MemberEntity;
 }
 
@@ -190,6 +193,8 @@ export interface CommunityEntity extends BaseEntity {
   comments: CommunityCommentEntity[];
   writer: MemberEntity;
   bookmarks: CommunityFavoriteEntity[];
+  isBookmark: YesNoFlag;
+  bookmarkCount: number;
 }
 
 export interface CsEntity extends BaseEntity {
@@ -228,6 +233,7 @@ export interface PositionSuggestEntity extends BaseEntity {
   targetMemberSeq: number;
   status: string;
   writer: MemberEntity;
+  recruit?: RecruitEntity;
 }
 
 export interface RecruitDateEntity extends BaseEntity {

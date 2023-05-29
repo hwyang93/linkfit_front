@@ -1,3 +1,4 @@
+import {BLUE, WHITE} from '@styles/colors';
 import {
   Image,
   Pressable,
@@ -6,18 +7,18 @@ import {
   Text,
   View,
 } from 'react-native';
-import {BLUE, WHITE} from '@styles/colors';
 
-import common from '@styles/common';
-import TopFilter from '@components/TopFilter';
-import {NavigationProp, useNavigation} from '@react-navigation/native';
-import {LoggedInParamList} from '../../../AppInner';
-import {SetStateAction, useCallback, useEffect, useState} from 'react';
-import Modal from '@components/ModalSheet';
+import {YesNoFlag} from '@/types/common';
 import {iconPath} from '@/utils/iconPath';
-import {SafeAreaView} from 'react-native-safe-area-context';
 import {fetchRecruits} from '@api/recruit';
+import Modal from '@components/ModalSheet';
+import TopFilter from '@components/TopFilter';
 import toast from '@hooks/toast';
+import {NavigationProp, useNavigation} from '@react-navigation/native';
+import common from '@styles/common';
+import {SetStateAction, useCallback, useEffect, useState} from 'react';
+import {SafeAreaView} from 'react-native-safe-area-context';
+import {LoggedInParamList} from '../../../AppInner';
 
 function MyRecruitmentScreen() {
   const navigation = useNavigation<NavigationProp<LoggedInParamList>>();
@@ -29,7 +30,7 @@ function MyRecruitmentScreen() {
   const [selectedFilter, setSelectedFilter] = useState('');
 
   const getRecruits = useCallback(() => {
-    const params = {isWriter: 'Y'};
+    const params = {isWriter: 'Y' as YesNoFlag};
     fetchRecruits(params)
       .then(({data}: any) => {
         setRecruits(data);
@@ -41,7 +42,7 @@ function MyRecruitmentScreen() {
 
   useEffect(() => {
     getRecruits();
-  }, []);
+  }, [getRecruits]);
 
   const [FILTER, setFILTER] = useState([
     {

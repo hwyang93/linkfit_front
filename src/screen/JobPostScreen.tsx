@@ -1,5 +1,19 @@
+import {iconPath} from '@/utils/iconPath';
 import {
-  Alert,
+  createRecruitApply,
+  fetchRecruit,
+  updateRecruitApplyCancel,
+} from '@api/recruit';
+import {fetchResumes} from '@api/resume';
+import CenterInfoComponent from '@components/CenterInfoComponent';
+import FloatingLinkButton from '@components/FloatingLinkButton';
+import Modal from '@components/ModalSheet';
+import toast from '@hooks/toast';
+import {NativeStackScreenProps} from '@react-navigation/native-stack';
+import {BLUE, GRAY, WHITE} from '@styles/colors';
+import common from '@styles/common';
+import {SetStateAction, useCallback, useEffect, useState} from 'react';
+import {
   Image,
   NativeScrollEvent,
   NativeSyntheticEvent,
@@ -9,30 +23,14 @@ import {
   Text,
   View,
 } from 'react-native';
-import {BLUE, GRAY, WHITE} from '@styles/colors';
-import common from '@styles/common';
-import {SafeAreaView} from 'react-native-safe-area-context';
-import CenterInfoComponent from '@components/CenterInfoComponent';
-import {NativeStackScreenProps} from '@react-navigation/native-stack';
-import {LoggedInParamList} from '../../AppInner';
-import {SetStateAction, useCallback, useEffect, useState} from 'react';
-import {
-  createRecruitApply,
-  fetchRecruit,
-  updateRecruitApplyCancel,
-} from '@api/recruit';
-import FloatingLinkButton from '@components/FloatingLinkButton';
-import Modal from '@components/ModalSheet';
 import LinearGradient from 'react-native-linear-gradient';
-import {iconPath} from '@/utils/iconPath';
 import MapView, {Marker, PROVIDER_GOOGLE} from 'react-native-maps';
-import {fetchResumes} from '@api/resume';
-import toast from '@hooks/toast';
+import {SafeAreaView} from 'react-native-safe-area-context';
+import {LoggedInParamList} from '../../AppInner';
 
 type Props = NativeStackScreenProps<LoggedInParamList, 'JobPost'>;
 
-function JobPostScreen({route, navigation}: Props) {
-  const [loading, setLoading] = useState<boolean>(false);
+function JobPostScreen({route}: Props) {
   const [modalVisible, setModalVisible] =
     useState<SetStateAction<boolean>>(false);
   const [modalTitle, setModalTitle] = useState('');
@@ -58,7 +56,6 @@ function JobPostScreen({route, navigation}: Props) {
     fetchRecruit(recruitSeq)
       .then(({data}: any) => {
         setRecruitInfo(data);
-        console.log(data);
         data.dates.forEach((date: any) => {
           date.isSelected = false;
         });
@@ -91,7 +88,11 @@ function JobPostScreen({route, navigation}: Props) {
     const resumeSeq = resumes.find((resume: any) => {
       return resume.isSelected;
     }).seq;
-    const data = {recruitDateSeq: dates, resumeSeq: resumeSeq};
+    const data = {
+      recruitDateSeq: dates,
+      resumeSeq: resumeSeq,
+      recruitSeq: recruitInfo.seq,
+    };
 
     createRecruitApply(recruitInfo.seq, data)
       .then(() => {
@@ -105,8 +106,8 @@ function JobPostScreen({route, navigation}: Props) {
   }, [getRecruitInfo, recruitDates, recruitInfo.seq, resumes]);
 
   const onCancelApply = useCallback(() => {
-    const dates: any[] = [];
-    recruitDates.forEach((date: any) => {
+    const dates: number[] = [];
+    recruitDates.forEach(date => {
       if (date.isSelected) {
         const applySeq = recruitInfo.applyInfo.find((item: any) => {
           return item.recruitDateSeq === date.seq;
@@ -115,7 +116,7 @@ function JobPostScreen({route, navigation}: Props) {
         return dates.push(applySeq);
       }
     });
-    const data = {recruitDateSeqs: dates};
+    const data = {seqs: dates};
 
     updateRecruitApplyCancel(data)
       .then(() => {
@@ -126,7 +127,7 @@ function JobPostScreen({route, navigation}: Props) {
       .catch((e: any) => {
         toast.error({message: e.message});
       });
-  }, [getRecruitInfo, recruitDates]);
+  }, [getRecruitInfo, recruitDates, recruitInfo.applyInfo]);
 
   useEffect(() => {
     getRecruitInfo();
@@ -146,7 +147,7 @@ function JobPostScreen({route, navigation}: Props) {
         return date;
       });
     });
-  }, [modalVisible]);
+  }, [modalVisible, recruitDates, resumes]);
 
   useEffect(() => {
     const selectResume = resumes.find((resume: any) => {

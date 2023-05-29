@@ -15,7 +15,7 @@ import {LoggedInParamList} from '../../../AppInner';
 
 type Props = NativeStackScreenProps<LoggedInParamList, 'CommunityPost'>;
 
-function CommunityPostScreen({route}: Props) {
+const CommunityPostScreen = ({route}: Props) => {
   const [modalVisible, setModalVisible] = useState(false);
 
   const [post, setPost] = useState<FetchCommunityPostResponse>();
@@ -66,7 +66,7 @@ function CommunityPostScreen({route}: Props) {
             </View>
           );
         }}
-        ListHeaderComponent={<CommunityPostTop item={post} />}
+        ListHeaderComponent={post && <CommunityPostTop postInfo={post} />}
         showsVerticalScrollIndicator={false}
         ItemSeparatorComponent={() => (
           <View style={[common.separator, common.mv16]} />
@@ -80,7 +80,7 @@ function CommunityPostScreen({route}: Props) {
       />
     </View>
   );
-}
+};
 
 const styles = StyleSheet.create({
   container: {

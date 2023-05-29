@@ -36,7 +36,8 @@ type SuggestionScreenProps = NativeStackScreenProps<
 >;
 
 function SuggestionScreen({navigation}: SuggestionScreenProps) {
-  const [loading, setLoading] = useState<boolean>(false);
+  const [loading, setLoading] = useState(false);
+  console.log(setLoading);
   const route = useRoute<RouteProp<LoggedInParamList, 'Suggestion'>>();
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
@@ -58,8 +59,8 @@ function SuggestionScreen({navigation}: SuggestionScreenProps) {
         Alert.alert('제안 성공!!!');
         navigation.pop();
       })
-      .catch((e: {message: any}) => {
-        console.log(e.message);
+      .catch(error => {
+        console.log(error.message);
       });
   }, [
     closingDate,

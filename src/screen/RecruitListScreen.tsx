@@ -207,11 +207,13 @@ function RecruitListScreen() {
         onChipPress={handleChipPress}
       />
       <View style={{marginHorizontal: 16}}>
-        <RecruitComponent
-          list={recruits}
-          title={'구인 공고'}
-          text={'내 주변의 구인 공고를 만나보세요!'}
-        />
+        {recruits && (
+          <RecruitComponent
+            list={recruits}
+            title={'구인 공고'}
+            text={'내 주변의 구인 공고를 만나보세요!'}
+          />
+        )}
       </View>
       {/* Floating Button */}
       <FloatingWriteButton

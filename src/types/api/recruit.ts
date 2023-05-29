@@ -1,3 +1,4 @@
+import {YesNoFlag} from '../common';
 import {RecruitApplyEntity, RecruitEntity} from './entities';
 
 export interface FetchRecruitsParams {
@@ -8,7 +9,7 @@ export interface FetchRecruitsParams {
   fields?: string[];
   recruitTypes?: string[];
   area?: string;
-  isWriter?: boolean;
+  isWriter?: YesNoFlag;
   status?: string;
   period?: string;
 }

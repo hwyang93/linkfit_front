@@ -8,7 +8,7 @@ export interface FetchInstructorsParams {
   fields?: string;
 }
 
-export interface FetchInstructorsResponse {
+export type Instructor = {
   seq: number;
   name: string;
   nickname: string;
@@ -17,8 +17,12 @@ export interface FetchInstructorsResponse {
   career: string;
   followerCount: number;
   isFollow: YesNoFlag;
-}
-[];
+  profileImage: {
+    originFileUrl: string;
+  };
+};
+
+export type FetchInstructorsResponse = Instructor[];
 
 export interface FetchInstructorResponse {
   seq: number;

@@ -77,7 +77,7 @@ export type LoggedInParamList = {
   PasswordReset: undefined;
 };
 
-async function requestPermission() {
+const requestPermission = async () => {
   try {
     // IOS 위치 정보 수집 권한 요청
     if (Platform.OS === 'ios') {
@@ -92,7 +92,7 @@ async function requestPermission() {
   } catch (e) {
     console.log(e);
   }
-}
+};
 
 function AppInner() {
   const [initialized, setInitialized] = useState(false);

@@ -1,32 +1,25 @@
-import {useState, useEffect, useRef} from 'react';
+import {SCREEN_WIDTH} from '@/utils/constants/common';
+import {iconPath} from '@/utils/iconPath';
+import CenterInfoTop from '@components/CenterInfoTop';
+import {NavigationProp, useNavigation} from '@react-navigation/native';
+import {BLUE, GRAY, WHITE} from '@styles/colors';
+import common from '@styles/common';
+import {useEffect, useRef, useState} from 'react';
 import {
-  StyleSheet,
-  View,
-  Text,
-  Dimensions,
+  Alert,
   Animated,
+  Image,
   PanResponder,
   Platform,
-  Alert,
-  StatusBar,
-  Image,
   Pressable,
+  StatusBar,
+  StyleSheet,
+  Text,
+  View,
 } from 'react-native';
-import {TabView, TabBar} from 'react-native-tab-view';
-import common from '@styles/common';
-import {iconPath} from '@/utils/iconPath';
-import {BLUE, GRAY, WHITE} from '@styles/colors';
-import {
-  NavigationProp,
-  RouteProp,
-  useNavigation,
-  useRoute,
-} from '@react-navigation/native';
+import {TabBar, TabView} from 'react-native-tab-view';
 import {LoggedInParamList} from '../../AppInner';
-import CenterInfoTop from '@components/CenterInfoTop';
 
-const windowHeight = Dimensions.get('window').height;
-const windowWidth = Dimensions.get('window').width;
 const TabBarHeight = 48;
 const HeaderHeight = 580;
 const SafeStatusBar = Platform.select({
@@ -34,10 +27,9 @@ const SafeStatusBar = Platform.select({
   android: StatusBar.currentHeight,
 });
 
-const imageSize = (windowWidth - 38) / 3;
+const imageSize = (SCREEN_WIDTH - 38) / 3;
 
-function CenterInfoScreenTabView() {
-  const route = useRoute<RouteProp<LoggedInParamList, 'CenterInfo'>>();
+const CenterInfoScreenTabView = () => {
   const navigation = useNavigation<NavigationProp<LoggedInParamList>>();
 
   // stats
@@ -83,20 +75,20 @@ function CenterInfoScreenTabView() {
   // PanResponder for header
   const headerPanResponder = useRef(
     PanResponder.create({
-      onStartShouldSetPanResponderCapture: (evt, gestureState) => false,
-      onMoveShouldSetPanResponderCapture: (evt, gestureState) => false,
-      onStartShouldSetPanResponder: (evt, gestureState) => {
+      onStartShouldSetPanResponderCapture: () => false,
+      onMoveShouldSetPanResponderCapture: () => false,
+      onStartShouldSetPanResponder: () => {
         headerScrollY.stopAnimation();
         syncScrollOffset();
         return false;
       },
 
-      onMoveShouldSetPanResponder: (evt, gestureState) => {
+      onMoveShouldSetPanResponder: (_, gestureState) => {
         headerScrollY.stopAnimation();
         return Math.abs(gestureState.dy) > 5;
       },
 
-      onPanResponderRelease: (evt, gestureState) => {
+      onPanResponderRelease: (_, gestureState) => {
         syncScrollOffset();
         if (Math.abs(gestureState.vy) < 0.2) {
           return;
@@ -109,7 +101,7 @@ function CenterInfoScreenTabView() {
           syncScrollOffset();
         });
       },
-      onPanResponderMove: (evt, gestureState) => {
+      onPanResponderMove: (_, gestureState) => {
         listRefArr.current.forEach(item => {
           if (item.key !== routes[_tabIndex.current].key) {
             return;
@@ -123,7 +115,7 @@ function CenterInfoScreenTabView() {
         });
       },
       onShouldBlockNativeResponder: () => true,
-      onPanResponderGrant: (evt, gestureState) => {
+      onPanResponderGrant: () => {
         headerScrollStart.current = scrollY._value;
       },
     }),
@@ -132,15 +124,15 @@ function CenterInfoScreenTabView() {
   // PanResponder for list in tab scene
   const listPanResponder = useRef(
     PanResponder.create({
-      onStartShouldSetPanResponderCapture: (evt, gestureState) => false,
-      onMoveShouldSetPanResponderCapture: (evt, gestureState) => false,
-      onStartShouldSetPanResponder: (evt, gestureState) => false,
-      onMoveShouldSetPanResponder: (evt, gestureState) => {
+      onStartShouldSetPanResponderCapture: () => false,
+      onMoveShouldSetPanResponderCapture: () => false,
+      onStartShouldSetPanResponder: () => false,
+      onMoveShouldSetPanResponder: () => {
         headerScrollY.stopAnimation();
         return false;
       },
       onShouldBlockNativeResponder: () => true,
-      onPanResponderGrant: (evt, gestureState) => {
+      onPanResponderGrant: () => {
         headerScrollY.stopAnimation();
       },
     }),
@@ -346,7 +338,7 @@ function CenterInfoScreenTabView() {
     );
   };
 
-  const renderScene = ({route}) => {
+  const renderScene = ({route}: any) => {
     const focused = route.key === routes[tabIndex].key;
     let numCols;
     let data;
@@ -438,7 +430,7 @@ function CenterInfoScreenTabView() {
         {/* 강사소개 강사 후기 탭바 */}
         <TabBar
           {...props}
-          onTabPress={({route, preventDefault}) => {
+          onTabPress={({_, preventDefault}) => {
             if (isListGliding.current) {
               preventDefault();
             }
@@ -465,7 +457,7 @@ function CenterInfoScreenTabView() {
         renderTabBar={renderTabBar}
         initialLayout={{
           height: 0,
-          width: windowWidth,
+          width: SCREEN_WIDTH,
         }}
       />
     );
@@ -477,7 +469,7 @@ function CenterInfoScreenTabView() {
       {renderHeader()}
     </View>
   );
-}
+};
 
 const styles = StyleSheet.create({
   container: {

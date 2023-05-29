@@ -1,3 +1,17 @@
+import {iconPath} from '@/utils/iconPath';
+import {createRecruit} from '@api/recruit';
+import MultipleImagePicker, {
+  MediaType,
+} from '@baronha/react-native-multiple-image-picker';
+import DismissKeyboardView from '@components/DismissKeyboardView';
+import Input, {KeyboardTypes} from '@components/Input';
+import TimeComponent from '@components/Offer/TimeComponent';
+import SelectBox from '@components/SelectBox';
+import toast from '@hooks/toast';
+import {NativeStackScreenProps} from '@react-navigation/native-stack';
+import {GRAY, WHITE} from '@styles/colors';
+import common from '@styles/common';
+import {useCallback, useState} from 'react';
 import {
   ActivityIndicator,
   Alert,
@@ -8,21 +22,7 @@ import {
   Text,
   View,
 } from 'react-native';
-import {GRAY, WHITE} from '@styles/colors';
-import DismissKeyboardView from '@components/DismissKeyboardView';
-import {iconPath} from '@/utils/iconPath';
-import common from '@styles/common';
-import Input, {KeyboardTypes} from '@components/Input';
-import {Key, useCallback, useState} from 'react';
-import SelectBox from '@components/SelectBox';
 import LinearGradient from 'react-native-linear-gradient';
-import MultipleImagePicker, {
-  MediaType,
-} from '@baronha/react-native-multiple-image-picker';
-import TimeComponent from '@components/Offer/TimeComponent';
-import toast from '@hooks/toast';
-import {createRecruit} from '@api/recruit';
-import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import {LoggedInParamList} from '../../AppInner';
 
 const POSITION = ['실장', '필라테스', '요가'];
@@ -70,16 +70,11 @@ function JobOfferFormScreen({navigation}: Props) {
   const openPicker = async () => {
     try {
       const response = await MultipleImagePicker.openPicker({
-        mediaType: 'image',
+        mediaType: MediaType.IMAGE,
         selectedAssets: images,
-        isExportThumbnail: true,
         maxSelectedAssets: 5,
-        maxVideo: 0,
         usedCameraButton: false,
-        isCrop: true,
-        isCropCircle: true,
       });
-      console.log('response: ', response);
       setImages(response);
     } catch (e: any) {
       console.log(e.code, e.message);
@@ -138,7 +133,6 @@ function JobOfferFormScreen({navigation}: Props) {
       lat: 0,
       dates: dateForm,
     };
-    console.log(data);
     createRecruit(data)
       .then(() => {
         Alert.alert('채용 공고 등록이 완료되었어요!');

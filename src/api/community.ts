@@ -4,7 +4,7 @@ import {
   FetchCommunityPostsParams,
   FetchCommunityPostsResponse,
 } from '@/types/api/community';
-import {CreateCommunityDto} from '@/types/api/dtos';
+import {CreateCommunityCommentDto, CreateCommunityDto} from '@/types/api/dtos';
 import {DeleteResponse, PostResponse} from '@/types/common';
 import request from './request';
 
@@ -12,7 +12,7 @@ export function createCommunityPost(data: CreateCommunityDto) {
   return request.post<PostResponse>('/community', data);
 }
 
-export function fetchCommunityPosts(params: FetchCommunityPostsParams) {
+export function fetchCommunityPosts(params?: FetchCommunityPostsParams) {
   return request.get<FetchCommunityPostsResponse>('/community', {params});
 }
 
@@ -24,7 +24,10 @@ export function fetchBookmarkCommunities() {
   return request.get<FetchBookmarkCommunitiesResponse>('/community/bookmark');
 }
 
-export function createCommunityComment(seq: number, data: CreateCommunityDto) {
+export function createCommunityComment(
+  seq: number,
+  data: CreateCommunityCommentDto,
+) {
   return request.post<PostResponse>(`/community/${seq}/comment`, data);
 }
 

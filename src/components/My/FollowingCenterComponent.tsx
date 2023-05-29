@@ -1,3 +1,12 @@
+import {FetchMemberFollowingsResponse} from '@/types/api/member';
+import {iconPath} from '@/utils/iconPath';
+import {fetchMemberFollowings} from '@api/member';
+import toast from '@hooks/toast';
+import {NavigationProp, useNavigation} from '@react-navigation/native';
+import {GRAY} from '@styles/colors';
+import common from '@styles/common';
+import {isAxiosError} from 'axios';
+import {useCallback, useEffect, useState} from 'react';
 import {
   Alert,
   Image,
@@ -7,17 +16,8 @@ import {
   Text,
   View,
 } from 'react-native';
-import {GRAY} from '@styles/colors';
-import hairlineWidth = StyleSheet.hairlineWidth;
-import common from '@styles/common';
-import {iconPath} from '@/utils/iconPath';
-import {NavigationProp, useNavigation} from '@react-navigation/native';
 import {LoggedInParamList} from '../../../AppInner';
-import {useCallback, useEffect, useState} from 'react';
-import {fetchMemberFollowings} from '@api/member';
-import toast from '@hooks/toast';
-import {FetchMemberFollowingsResponse} from '@/types/api/member';
-import {isAxiosError} from 'axios';
+import hairlineWidth = StyleSheet.hairlineWidth;
 
 function FollowingCenterComponent() {
   const navigation = useNavigation<NavigationProp<LoggedInParamList>>();

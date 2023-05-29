@@ -8,7 +8,6 @@ type SignInScreenProps = NativeStackScreenProps<LoggedInParamList, 'SignUp'>;
 
 function SignUp({navigation}: SignInScreenProps) {
   const route = useRoute<RouteProp<LoggedInParamList, 'SignUp'>>();
-  console.log('signup', route);
   return (
     <View style={styles.container}>
       <View style={common.mt40}>

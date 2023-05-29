@@ -1,33 +1,36 @@
-import LinearGradient from 'react-native-linear-gradient';
-import {Dimensions, Pressable, StyleSheet, Text, View} from 'react-native';
-import common from '@styles/common';
-import {WHITE} from '@styles/colors';
-import RecruitCarousel from '@components/RecruitCarousel';
-import {NavigationProp, useNavigation} from '@react-navigation/native';
-import {LoggedInParamList} from '../../AppInner';
-import {useEffect, useState} from 'react';
-import toast from '@hooks/toast';
+import {SCREEN_WIDTH} from '@/utils/constants/common';
 import {fetchRecommendedRecruits} from '@api/recruit';
+import RecruitCarousel from '@components/RecruitCarousel';
+import toast from '@hooks/toast';
+import {NavigationProp, useNavigation} from '@react-navigation/native';
+import {WHITE} from '@styles/colors';
+import common from '@styles/common';
+import {isAxiosError} from 'axios';
+import {useEffect, useState} from 'react';
+import {Pressable, StyleSheet, Text, View} from 'react-native';
+import LinearGradient from 'react-native-linear-gradient';
+import {LoggedInParamList} from '../../AppInner';
 
 function LinkTop() {
-  const screenWidth = Dimensions.get('window').width;
   const [recruits, setRecruits] = useState<any[]>([]);
-
-  useEffect(() => {
-    fetchRecommendedRecruits()
-      .then(({data}: any) => {
-        setRecruits(data);
-      })
-      .catch((e: any) => {
-        toast.error({message: e.message});
-      });
-  }, []);
 
   const navigation = useNavigation<NavigationProp<LoggedInParamList>>();
 
+  useEffect(() => {
+    fetchRecommendedRecruits()
+      .then(({data}) => {
+        setRecruits(data);
+      })
+      .catch(error => {
+        if (isAxiosError(error)) {
+          toast.error({message: error.message});
+        }
+      });
+  }, []);
+
   return (
-    <View>
-      <View>
+    <View style={{marginTop: 32}}>
+      <View style={{marginHorizontal: 16}}>
         <LinearGradient
           style={[styles.tabBox]}
           start={{x: 0.1, y: 0.5}}
@@ -52,22 +55,23 @@ function LinkTop() {
       </View>
       {/* 채용 슬라이더 영역 */}
       <View style={common.mt40}>
-        <Text style={[common.title]}>추천 채용</Text>
-        <Text style={common.text_m}>
-          내 주변의 채용중인 센터! 지금 바로 지원해 보세요.
-        </Text>
-
+        <View style={{marginHorizontal: 16}}>
+          <Text style={[common.title]}>추천 채용</Text>
+          <Text style={common.text_m}>
+            내 주변의 채용중인 센터! 지금 바로 지원해 보세요.
+          </Text>
+        </View>
         <View style={common.mt16}>
           {/* 슬라이드 아이템 */}
           <RecruitCarousel
             gap={8}
             offset={32}
             links={recruits}
-            pageWidth={screenWidth - (8 + 32) / 2}
+            pageWidth={SCREEN_WIDTH - (8 + 32) / 2}
           />
         </View>
       </View>
-      <View style={common.mt40}>
+      <View style={[common.mt40, {marginHorizontal: 16}]}>
         <Text style={[common.title]}>추천 강사</Text>
         <Text style={common.text_m}>
           능력있는 강사들을 지금 바로 만나보세요!
@@ -78,11 +82,6 @@ function LinkTop() {
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    paddingHorizontal: 16,
-    paddingVertical: 16,
-  },
   tabBox: {
     position: 'relative',
     flexDirection: 'row',

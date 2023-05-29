@@ -1,3 +1,4 @@
+import CTAButton from '@/components/Common/CTAButton';
 import {FetchMemberInfoResponse} from '@/types/api/member';
 import {iconPath} from '@/utils/iconPath';
 import {fetchMemberInfo} from '@api/member';
@@ -7,21 +8,9 @@ import {BLUE, GRAY, WHITE} from '@styles/colors';
 import common from '@styles/common';
 import {isAxiosError} from 'axios';
 import {useCallback, useEffect, useState} from 'react';
-import {
-  ActivityIndicator,
-  Image,
-  Pressable,
-  StyleSheet,
-  Text,
-  View,
-} from 'react-native';
-import LinearGradient from 'react-native-linear-gradient';
+import {Image, StyleSheet, Text, View} from 'react-native';
 
-const CommunityMyScreen: React.FC = () => {
-  const [loading, setLoading] = useState(false);
-  // TODO: 로딩 상태 처리
-  console.log(setLoading);
-
+const CommunityMyScreen = () => {
   const [memberInfo, setMemberInfo] = useState<FetchMemberInfoResponse>();
 
   const getMemberInfo = useCallback(() => {
@@ -56,7 +45,6 @@ const CommunityMyScreen: React.FC = () => {
                     ? memberInfo.nickname
                     : memberInfo?.name}
                 </Text>
-
                 <View>
                   {memberInfo?.type === 'INSTRUCTOR' ? (
                     <View style={common.rowCenter}>
@@ -95,22 +83,8 @@ const CommunityMyScreen: React.FC = () => {
             {/*  <Image source={iconPath.KEBAB} style={[common.size24]} />*/}
             {/*</Pressable>*/}
           </View>
-
-          {/* MY 프로필 수정하기 버튼 */}
           <View style={common.mt16}>
-            <Pressable>
-              <LinearGradient
-                style={common.button}
-                start={{x: 0.1, y: 0.5}}
-                end={{x: 0.6, y: 1}}
-                colors={['#74ebe4', '#3962f3']}>
-                {loading ? (
-                  <ActivityIndicator color="white" />
-                ) : (
-                  <Text style={common.buttonText}>MY 프로필 수정하기</Text>
-                )}
-              </LinearGradient>
-            </Pressable>
+            <CTAButton label="MY 프로필 수정하기" />
           </View>
         </View>
       </View>
@@ -121,7 +95,6 @@ const CommunityMyScreen: React.FC = () => {
 
 const styles = StyleSheet.create({
   container: {
-    // flex: 1,
     padding: 16,
     backgroundColor: WHITE,
   },

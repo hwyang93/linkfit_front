@@ -1,3 +1,4 @@
+import {FetchMemberLicencesResponse} from '@/types/api/member';
 import {iconPath} from '@/utils/iconPath';
 import {cancelMemberLicence, fetchMemberLicences} from '@api/member';
 import Modal from '@components/ModalSheet';
@@ -20,38 +21,26 @@ function CertifyInstructorScreen() {
   const [modalVisible, setModalVisible] =
     useState<SetStateAction<boolean>>(false);
   const [selectedLicenceSeq, setSelectedLicenceSeq] = useState<number>(0);
-  const [licences, setLicenses] = useState<
-    [
-      {
-        updatedAt: string;
-        seq: number;
-        field: string;
-        licenceNumber: string;
-        issuer: string;
-        status: string;
-        licenceFileSeq: number;
-      },
-    ]
-  >([]);
+  const [licences, setLicenses] = useState<FetchMemberLicencesResponse>([]);
 
   const getMemberLicences = useCallback(() => {
     fetchMemberLicences()
-      .then(({data}: any) => {
+      .then(({data}) => {
         setLicenses(data);
       })
-      .catch((e: any) => {
-        toast.error({message: e.message});
+      .catch(error => {
+        toast.error({message: error.message});
       });
   }, []);
 
   useEffect(() => {
     if (isFocused) {
       fetchMemberLicences()
-        .then(({data}: any) => {
+        .then(({data}) => {
           setLicenses(data);
         })
-        .catch((e: any) => {
-          toast.error({message: e.message});
+        .catch(error => {
+          toast.error({message: error.message});
         });
     }
   }, [isFocused]);
@@ -63,8 +52,8 @@ function CertifyInstructorScreen() {
         setModalVisible(false);
         getMemberLicences();
       })
-      .catch((e: any) => {
-        toast.error({message: e.message});
+      .catch(error => {
+        toast.error({message: error.message});
       });
   }, [getMemberLicences, selectedLicenceSeq]);
 
