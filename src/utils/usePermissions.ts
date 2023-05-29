@@ -1,11 +1,12 @@
 import {useEffect} from 'react';
-import {Alert, Linking, Platform} from 'react-native';
-import {check, PERMISSIONS, request, RESULTS} from 'react-native-permissions';
+import {Alert, Linking} from 'react-native';
+import {PERMISSIONS, RESULTS, check, request} from 'react-native-permissions';
+import {IS_ANDROID, IS_IOS} from './constants/common';
 
-function usePermissions() {
+const usePermissions = () => {
   // 권한 관련
   useEffect(() => {
-    if (Platform.OS === 'android') {
+    if (IS_ANDROID) {
       check(PERMISSIONS.ANDROID.ACCESS_FINE_LOCATION)
         .then(result => {
           console.log('check location :', result);
@@ -29,7 +30,7 @@ function usePermissions() {
           }
         })
         .catch(console.error);
-    } else if (Platform.OS === 'ios') {
+    } else if (IS_IOS) {
       check(PERMISSIONS.IOS.LOCATION_WHEN_IN_USE)
         .then(result => {
           if (result === RESULTS.BLOCKED || result === RESULTS.DENIED) {
@@ -52,7 +53,7 @@ function usePermissions() {
         })
         .catch(console.error);
     }
-    if (Platform.OS === 'android') {
+    if (IS_ANDROID) {
       check(PERMISSIONS.ANDROID.CAMERA)
         .then(result => {
           if (result === RESULTS.DENIED || result === RESULTS.GRANTED) {
@@ -80,6 +81,6 @@ function usePermissions() {
         .catch(console.error);
     }
   }, []);
-}
+};
 
 export default usePermissions;

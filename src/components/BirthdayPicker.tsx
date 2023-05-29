@@ -1,12 +1,12 @@
-import {Image, Pressable, StyleSheet, Text, View} from 'react-native';
-import DateTimePickerModal from 'react-native-modal-datetime-picker';
+import {iconPath} from '@/utils/iconPath';
+import {GRAY, INPUT} from '@styles/colors';
+import common from '@styles/common';
 import moment from 'moment';
 import {useState} from 'react';
-import common from '@styles/common';
-import {GRAY, INPUT} from '@styles/colors';
-import {iconPath} from '@/utils/iconPath';
+import {Image, Pressable, StyleSheet, Text, View} from 'react-native';
+import DateTimePickerModal from 'react-native-modal-datetime-picker';
 
-type birthProps = {
+interface BirthdayPickerProps {
   label?: string;
   onSelect?: any;
   value?: string;
@@ -14,27 +14,30 @@ type birthProps = {
   disabled?: boolean;
   textAlign?: string;
   icon?: string;
-};
+}
 
-function BirthdayPicker({
+const BirthdayPicker: React.FC<BirthdayPickerProps> = ({
   label,
   onSelect,
   placeholder,
   disabled,
   textAlign,
   icon,
-}: birthProps) {
+}) => {
   const [focus, setFocus] = useState(false);
   const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
   const [birth, setBirth] = useState('');
+
   const showDatePicker = () => {
     setFocus(true);
     setDatePickerVisibility(true);
   };
+
   const hideDatePicker = () => {
     setFocus(false);
     setDatePickerVisibility(false);
   };
+
   const handleConfirm = (date: any) => {
     setBirth(moment(date).format('YYYY.MM.DD'));
     onSelect(date);
@@ -88,7 +91,7 @@ function BirthdayPicker({
       />
     </View>
   );
-}
+};
 
 const styles = StyleSheet.create({
   text: {

@@ -5,10 +5,10 @@ import {
 } from '@/types/api/auth';
 import request from './request';
 
-export function login(params: LoginParams) {
+export const login = (params: LoginParams) => {
   return request.post<LoginResponse>('/auth/login', params);
-}
+};
 
-export function refreshToken() {
+export const refreshToken = () => {
   return request.post<refreshTokenResponse>('/auth/refresh');
-}
+};

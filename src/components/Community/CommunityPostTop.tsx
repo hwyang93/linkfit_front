@@ -30,7 +30,7 @@ interface CommunityPostTopProps {
   postInfo: CommunityEntity;
 }
 
-const CommunityPostTop = ({postInfo}: CommunityPostTopProps) => {
+const CommunityPostTop: React.FC<CommunityPostTopProps> = ({postInfo}) => {
   const [loading, setLoading] = useState(false);
   const [isBookmark, setIsBookmark] = useState(postInfo.isBookmark);
   const [bookmarkCount, setBookmarkCount] = useState(postInfo.bookmarkCount);

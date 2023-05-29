@@ -1,12 +1,12 @@
 import useAuth from '@/hooks/useAuth';
 import {AuthStackParamList} from '@/navigations/AuthStack';
+import {IS_ANDROID} from '@/utils/constants/common';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import {AxiosError} from 'axios';
 import {useCallback, useRef, useState} from 'react';
 import {
   ActivityIndicator,
   Alert,
-  Platform,
   Pressable,
   StyleSheet,
   Text,
@@ -124,7 +124,7 @@ const SignUp = ({navigation}: Props) => {
           placeholderTextColor="#666"
           onChangeText={onChangePassword}
           value={password}
-          keyboardType={Platform.OS === 'android' ? 'default' : 'ascii-capable'}
+          keyboardType={IS_ANDROID ? 'default' : 'ascii-capable'}
           textContentType="password"
           secureTextEntry
           returnKeyType="send"

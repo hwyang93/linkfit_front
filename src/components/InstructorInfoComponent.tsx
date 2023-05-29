@@ -1,12 +1,12 @@
-import {Alert, Image, Pressable, StyleSheet, Text, View} from 'react-native';
-import common from '@styles/common';
 import {iconPath} from '@/utils/iconPath';
 import {BLUE, GRAY} from '@styles/colors';
+import common from '@styles/common';
+import {Alert, Image, Pressable, StyleSheet, Text, View} from 'react-native';
 
-function InstructorInfoComponent(props: any) {
+const InstructorInfoComponent: React.FC<any> = ({from, job}) => {
   return (
     <View>
-      {props.from === 'center' ? (
+      {from === 'center' ? (
         <Pressable style={styles.profileBox} onPress={() => {}}>
           <View style={[common.mr16, styles.thumbnailBox]}>
             <Image source={iconPath.PILATES} style={styles.thumbnail} />
@@ -35,7 +35,7 @@ function InstructorInfoComponent(props: any) {
             </View>
             <Text style={[common.text, {color: GRAY.DARK}]}>서울 · 송파구</Text>
           </View>
-          <Pressable style={styles.kebabIcon} hitSlop={10} onPress={props.job}>
+          <Pressable style={styles.kebabIcon} hitSlop={10} onPress={job}>
             <Image source={iconPath.KEBAB} style={[common.size24]} />
           </Pressable>
           {/* 아이콘 모음 */}
@@ -108,7 +108,7 @@ function InstructorInfoComponent(props: any) {
       )}
     </View>
   );
-}
+};
 
 const styles = StyleSheet.create({
   profileBox: {

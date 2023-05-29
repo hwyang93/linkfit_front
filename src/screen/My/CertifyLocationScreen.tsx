@@ -1,5 +1,6 @@
 import {LoggedInParamList} from '@/../AppInner';
 import {FetchRegionAuthResponse} from '@/types/api/member';
+import {IS_ANDROID, IS_IOS} from '@/utils/constants/common';
 import {iconPath} from '@/utils/iconPath';
 import {createRegionAuth, deleteRegionAuth, fetchRegionAuth} from '@api/member';
 import LocationButton from '@components/LocationButton';
@@ -13,7 +14,6 @@ import {
   ActivityIndicator,
   Image,
   PermissionsAndroid,
-  Platform,
   Pressable,
   ScrollView,
   StyleSheet,
@@ -28,11 +28,11 @@ import {SafeAreaView} from 'react-native-safe-area-context';
 const requestPermission = async () => {
   try {
     // IOS 위치 정보 수집 권한 요청
-    if (Platform.OS === 'ios') {
+    if (IS_IOS) {
       return await Geolocation.requestAuthorization('always');
     }
     // 안드로이드 위치 정보 수집 권한 요청
-    if (Platform.OS === 'android') {
+    if (IS_ANDROID) {
       return await PermissionsAndroid.request(
         PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
       );

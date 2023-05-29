@@ -8,24 +8,25 @@ import {useState} from 'react';
 import {Alert, Image, Pressable, StyleSheet, Text, View} from 'react-native';
 import {LoggedInParamList} from '../../AppInner';
 
-type ListProps = {
+const MODAL = [
+  {
+    value: '차단하기',
+    job: () => {},
+  },
+  {
+    value: '신고하기',
+    job: () => {},
+  },
+];
+interface InstructorListItemProps {
   item: Instructor;
-};
+}
 
-const InstructorListItem = ({item}: ListProps) => {
-  const navigation = useNavigation<NavigationProp<LoggedInParamList>>();
+const InstructorListItem: React.FC<InstructorListItemProps> = ({item}) => {
   const [modalVisible, setModalVisible] = useState(false);
 
-  const MODAL = [
-    {
-      value: '차단하기',
-      job: () => {},
-    },
-    {
-      value: '신고하기',
-      job: () => {},
-    },
-  ];
+  const navigation = useNavigation<NavigationProp<LoggedInParamList>>();
+
   return (
     <View style={styles.listBox}>
       <Pressable

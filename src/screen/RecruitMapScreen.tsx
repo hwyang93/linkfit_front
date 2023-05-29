@@ -59,22 +59,24 @@ const DUMMY_MARKERS = [
   },
 ];
 
-// async function requestPermission() {
+// const requestPermission = async () => {
 //   try {
 //     // IOS 위치 정보 수집 권한 요청
-//     if (Platform.OS === 'ios') {
+//     if (IS_IOS) {
 //       return await Geolocation.requestAuthorization('always');
 //     }
 //     // 안드로이드 위치 정보 수집 권한 요청
-//     if (Platform.OS === 'android') {
+//     if (IS_ANDROID) {
 //       return await PermissionsAndroid.request(
 //         PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
 //       );
 //     }
-//   } catch (e: any) {
-//     toast.error({message: e.message});
+//   } catch (error) {
+//     if (isAxiosError(error)) {
+//       toast.error({message: error.message});
+//     }
 //   }
-// }
+// };
 
 // TODO: 컴포넌트 props 정의하고 파일 분리하기
 interface CardProps extends ViewProps {

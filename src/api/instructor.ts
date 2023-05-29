@@ -7,21 +7,22 @@ import {
 import {AxiosResponseWithPagingInfo, PostResponse} from '@/types/common';
 import request from './request';
 
-export function fetchInstructors(
+// TODO: data 바깥 타입 지정하는 방법 찾아보기
+export const fetchInstructors = (
   params?: FetchInstructorsParams,
-): Promise<AxiosResponseWithPagingInfo<FetchInstructorsResponse>> {
+): Promise<AxiosResponseWithPagingInfo<FetchInstructorsResponse>> => {
   return request.get<FetchInstructorsResponse>('/instructor', {params});
-}
+};
 
-export function fetchInstructor(seq: number) {
+export const fetchInstructor = (seq: number) => {
   return request.get<FetchInstructorResponse>(`/instructor/${seq}`);
-}
+};
 
-export function createInstructorSuggest(data: CreateinstructorSuggestDto) {
+export const createInstructorSuggest = (data: CreateinstructorSuggestDto) => {
   return request.post<PostResponse>('/instructor/suggest', data);
-}
+};
 
 // TODO: fetchRecommendedInstructors Response 타입 추가
-export function fetchRecommendedInstructors() {
+export const fetchRecommendedInstructors = () => {
   return request.get('/instructor/recommended');
-}
+};

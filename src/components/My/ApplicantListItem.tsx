@@ -1,16 +1,19 @@
-import common from '@styles/common';
-import {Image, Pressable, Text, View} from 'react-native';
 import {iconPath} from '@/utils/iconPath';
-import {useEffect, useState} from 'react';
 import {NavigationProp, useNavigation} from '@react-navigation/native';
+import common from '@styles/common';
+import {useEffect, useState} from 'react';
+import {Image, Pressable, Text, View} from 'react-native';
 import {LoggedInParamList} from '../../../AppInner';
 
-function ApplicantListItem({list}: any) {
-  const navigation = useNavigation<NavigationProp<LoggedInParamList>>();
+const ApplicantListItem: React.FC<any> = ({list}) => {
   const [applications, setApplications] = useState<any[]>([]);
+
+  const navigation = useNavigation<NavigationProp<LoggedInParamList>>();
+
   useEffect(() => {
     setApplications(list);
   }, [list]);
+
   return (
     <View>
       {applications?.map((application: any, index: number) => {
@@ -48,6 +51,6 @@ function ApplicantListItem({list}: any) {
       })}
     </View>
   );
-}
+};
 
 export default ApplicantListItem;

@@ -1,3 +1,15 @@
+import {iconPath} from '@/utils/iconPath';
+import {deleteMemberReputation, fetchMemberReputations} from '@api/member';
+import Modal from '@components/ModalSheet';
+import toast from '@hooks/toast';
+import {
+  NavigationProp,
+  useIsFocused,
+  useNavigation,
+} from '@react-navigation/native';
+import {BLUE, GRAY, WHITE} from '@styles/colors';
+import common from '@styles/common';
+import {useCallback, useEffect, useState} from 'react';
 import {
   Image,
   Pressable,
@@ -6,30 +18,18 @@ import {
   Text,
   View,
 } from 'react-native';
-
-import common from '@styles/common';
-import {BLUE, GRAY, WHITE} from '@styles/colors';
-import {iconPath} from '@/utils/iconPath';
-import {SetStateAction, useCallback, useEffect, useState} from 'react';
-import Modal from '@components/ModalSheet';
-import {
-  NavigationProp,
-  useIsFocused,
-  useNavigation,
-} from '@react-navigation/native';
 import {LoggedInParamList} from '../../../AppInner';
-import {deleteMemberReputation, fetchMemberReputations} from '@api/member';
-import toast from '@hooks/toast';
 
-function EmployeeReviewComponent() {
-  const isFocused = useIsFocused();
-  const navigation = useNavigation<NavigationProp<LoggedInParamList>>();
-  const [modalVisible, setModalVisible] =
-    useState<SetStateAction<boolean>>(false);
+const EmployeeReviewComponent: React.FC = () => {
+  const [modalVisible, setModalVisible] = useState(false);
   const [reputations, setReputations] = useState<any[]>([]);
   const [selectedReputation, setSelectedReputation] = useState({
     seq: 0,
   });
+
+  const isFocused = useIsFocused();
+  const navigation = useNavigation<NavigationProp<LoggedInParamList>>();
+
   const openModal = () => {
     setModalVisible(true);
   };
@@ -39,8 +39,8 @@ function EmployeeReviewComponent() {
       .then(({data}: any) => {
         setReputations(data);
       })
-      .catch((e: any) => {
-        toast.error({message: e.message});
+      .catch(error => {
+        toast.error({message: error.message});
       });
   }, []);
 
@@ -159,7 +159,7 @@ function EmployeeReviewComponent() {
       />
     </ScrollView>
   );
-}
+};
 const styles = StyleSheet.create({
   container: {flex: 1, padding: 16, backgroundColor: WHITE},
   reviewBox: {

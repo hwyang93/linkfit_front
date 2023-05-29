@@ -1,12 +1,12 @@
+import {iconPath} from '@/utils/iconPath';
+import {GRAY, INPUT} from '@styles/colors';
+import common from '@styles/common';
 import {useState} from 'react';
 import {Image, StyleSheet, Text, View} from 'react-native';
 import SelectDropdown from 'react-native-select-dropdown';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
-import {GRAY, INPUT} from '@styles/colors';
-import common from '@styles/common';
-import {iconPath} from '@/utils/iconPath';
 
-type selectProps = {
+interface SelectBoxProps {
   data: any;
   onSelect: Function;
   defaultButtonText: string;
@@ -15,9 +15,9 @@ type selectProps = {
   textAlign?: string;
   icon?: string;
   selectKey?: string;
-};
+}
 
-const SelectBox = ({
+const SelectBox: React.FC<SelectBoxProps> = ({
   data,
   onSelect,
   defaultButtonText,
@@ -26,7 +26,7 @@ const SelectBox = ({
   textAlign,
   icon,
   selectKey,
-}: selectProps) => {
+}) => {
   const [focus, setFocus] = useState(false);
   const [, setSelectItem] = useState('');
 

@@ -1,8 +1,8 @@
-import {Alert, Image, Pressable, View} from 'react-native';
-import common from '@styles/common';
 import {iconPath} from '@/utils/iconPath';
+import common from '@styles/common';
+import {Alert, Image, Pressable, View} from 'react-native';
 
-function LinkCollection() {
+const LinkCollection: React.FC = () => {
   return (
     <View style={[common.rowCenterBetween]}>
       <View style={[common.rowCenter, {justifyContent: 'space-around'}]}>
@@ -24,6 +24,6 @@ function LinkCollection() {
       </View>
     </View>
   );
-}
+};
 
 export default LinkCollection;

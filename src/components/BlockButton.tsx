@@ -2,7 +2,7 @@ import common from '@styles/common';
 import {ActivityIndicator, Pressable, Text, View} from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 
-type BlockButtonProps = {
+interface BlockButtonProps {
   title: string;
   loading?: any;
   top?: number;
@@ -10,9 +10,9 @@ type BlockButtonProps = {
   left?: number;
   bottom?: number;
   job: () => void;
-};
+}
 
-function BlockButton({
+const BlockButton: React.FC<BlockButtonProps> = ({
   title,
   loading,
   top,
@@ -20,7 +20,7 @@ function BlockButton({
   bottom,
   left,
   job,
-}: BlockButtonProps) {
+}) => {
   return (
     <View>
       <Pressable
@@ -46,6 +46,6 @@ function BlockButton({
       </Pressable>
     </View>
   );
-}
+};
 
 export default BlockButton;

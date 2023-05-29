@@ -1,16 +1,16 @@
+import {NavigationProp, useNavigation} from '@react-navigation/native';
 import common from '@styles/common';
 import {Pressable, Text, View} from 'react-native';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
-import {NavigationProp, useNavigation} from '@react-navigation/native';
 import {LoggedInParamList} from '../../../AppInner';
 
-type titleProps = {
+interface MyTitleProps {
   title: string;
   link?: any;
   button?: boolean;
-};
+}
 
-function MyTitle({title, button, link}: titleProps) {
+const MyTitle: React.FC<MyTitleProps> = ({title, button, link}) => {
   const navigation = useNavigation<NavigationProp<LoggedInParamList>>();
 
   return (
@@ -25,6 +25,6 @@ function MyTitle({title, button, link}: titleProps) {
       )}
     </Pressable>
   );
-}
+};
 
 export default MyTitle;

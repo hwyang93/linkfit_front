@@ -2,15 +2,14 @@ import {iconPath} from '@/utils/iconPath';
 import {GRAY} from '@styles/colors';
 import common from '@styles/common';
 import {Image, Pressable, StyleSheet, Text, View} from 'react-native';
-// import {useState} from 'react';
 
-type titleProps = {
+interface FilterProps {
   title: string;
   index: number;
   setModalVisible: (pressButton: boolean) => void;
   setSelected: any;
   filterType: string;
-};
+}
 
 export const FilterTypes = {
   POSITION: 'POSITION',
@@ -19,11 +18,16 @@ export const FilterTypes = {
   RESET: 'RESET',
 };
 
-function Filter({title, setModalVisible, setSelected}: titleProps) {
+const Filter: React.FC<FilterProps> = ({
+  title,
+  setModalVisible,
+  setSelected,
+}) => {
   const pressButton = (item: any) => {
     setSelected(item);
     setModalVisible(true);
   };
+
   return (
     <View style={styles.box}>
       <Pressable onPress={pressButton} style={styles.item}>
@@ -34,7 +38,7 @@ function Filter({title, setModalVisible, setSelected}: titleProps) {
       </Pressable>
     </View>
   );
-}
+};
 const styles = StyleSheet.create({
   box: {
     justifyContent: 'center',

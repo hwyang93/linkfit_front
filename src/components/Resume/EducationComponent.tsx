@@ -1,30 +1,28 @@
-import {Dimensions, View} from 'react-native';
-import common from '@styles/common';
-import SelectBox from '@components/SelectBox';
-import Input, {KeyboardTypes} from '@components/Input';
+import {SCREEN_WIDTH} from '@/utils/constants/common';
 import DatePicker from '@components/DatePicker';
+import Input, {KeyboardTypes} from '@components/Input';
+import SelectBox from '@components/SelectBox';
+import common from '@styles/common';
 import {useState} from 'react';
+import {View} from 'react-native';
 
-const windowWidth = Dimensions.get('window').width;
-const columns2 = (windowWidth - 40) / 2;
+const columns2 = (SCREEN_WIDTH - 40) / 2;
 
-type educationProps = {
+interface EducationComponentProps {
   onSelectSchool: Function;
   onSelectMajor: Function;
   onSelectStartDate: Function;
   onSelectEndDate: Function;
   onSelectStatus: Function;
-};
+}
 
-function EducationComponent({
+const EducationComponent: React.FC<EducationComponentProps> = ({
   onSelectSchool,
   onSelectMajor,
   onSelectStartDate,
   onSelectEndDate,
-}: // onSelectStatus,
-educationProps) {
+}) => {
   const [school, setSchool] = useState('');
-  // const [education, setEducation] = useState('');
 
   const educationData = ['고등학교 졸업', '대학교 졸업'];
   return (
@@ -75,6 +73,6 @@ educationProps) {
       </View>
     </>
   );
-}
+};
 
 export default EducationComponent;

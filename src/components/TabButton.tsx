@@ -1,14 +1,14 @@
-import {useState} from 'react';
-import {View, Text, Pressable, StyleSheet} from 'react-native';
 import {GRAY} from '@styles/colors';
+import {useState} from 'react';
+import {Pressable, StyleSheet, Text, View} from 'react-native';
 
-type TabProps = {
+interface TabButtonProps {
   genderData: Array<any>;
   value: string;
   onSelect: Function;
-};
+}
 
-const TabButton = ({genderData, onSelect}: TabProps) => {
+const TabButton: React.FC<TabButtonProps> = ({genderData, onSelect}) => {
   const [userOption, setUserOption] = useState('');
 
   const selectHandler = (value: any) => {

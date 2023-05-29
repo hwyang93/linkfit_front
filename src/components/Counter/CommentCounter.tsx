@@ -1,18 +1,14 @@
-import common from '@styles/common';
-import {Alert, Image, Pressable, Text, View} from 'react-native';
 import {iconPath} from '@/utils/iconPath';
+import common from '@styles/common';
+import {Image, Text, View} from 'react-native';
 
-function CommentCounter(props: any) {
+const CommentCounter: React.FC<any> = ({counter}) => {
   return (
     <View style={common.rowCenter}>
-      {/*<Pressable onPress={() => Alert.alert('test', 'test')}>*/}
       <Image source={iconPath.COMMENT} style={[common.size24, common.mr4]} />
-      {/*</Pressable>*/}
-      <Text style={[common.text_m, common.fwb, common.mr8]}>
-        {props.counter}
-      </Text>
+      <Text style={[common.text_m, common.fwb, common.mr8]}>{counter}</Text>
     </View>
   );
-}
+};
 
 export default CommentCounter;

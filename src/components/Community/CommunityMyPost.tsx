@@ -18,10 +18,11 @@ import {
 } from 'react-native';
 import BottomSheet from '../Common/BottomSheet';
 
-function CommunityMyPost() {
-  // const navigation = useNavigation<NavigationProp<LoggedInParamList>>();
+const CommunityMyPost: React.FC = () => {
   const [posts, setPosts] = useState<FetchCommunityPostsResponse>([]);
   const [textLine, setTextLine] = useState(2);
+
+  // const navigation = useNavigation<NavigationProp<LoggedInParamList>>();
 
   const {modalVisible, openModal, closeModal} = useModal();
 
@@ -94,7 +95,7 @@ function CommunityMyPost() {
       />
     </View>
   );
-}
+};
 const styles = StyleSheet.create({
   container: {flex: 1, paddingHorizontal: 16, backgroundColor: WHITE},
   postBox: {

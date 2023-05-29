@@ -1,21 +1,23 @@
+import {IS_IOS} from '@/utils/constants/common';
 import STORAGE_KEY from '@/utils/constants/storage';
 import {refreshToken} from '@api/auth';
 import toast from '@hooks/toast';
 import axios, {isAxiosError} from 'axios';
-import {Platform} from 'react-native';
 import EncryptedStorage from 'react-native-encrypted-storage';
 
 const uri =
   process.env.NODE_ENV === 'production'
     ? 'http://linkfit-back-api.works/api/v1'
-    : Platform.OS === 'ios'
+    : IS_IOS
     ? 'http://127.0.0.1:3000/api/v1'
     : 'http://10.0.2.2:3000/api/v1';
+
 const service = axios.create({
   // baseURL: 'http://172.30.1.89:3000/api/v1',
   baseURL: uri,
   timeout: 600000,
 });
+
 export const getHeaders = async (tokenType: string) => {
   const headers = {
     Authorization: '',

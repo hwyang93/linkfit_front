@@ -1,17 +1,17 @@
 import RecruitCarouselItem from '@components/RecruitCarouselItem';
 import {FlatList} from 'react-native';
 
-type CarouselProps = {
+interface RecruitCarouselProps {
   links: any[];
   gap: number;
   offset: number;
   pageWidth: number;
-};
+}
 
-const RecruitCarousel = ({links}: CarouselProps) => {
-  function renderItem({item}: any) {
+const RecruitCarousel: React.FC<RecruitCarouselProps> = ({links}) => {
+  const renderItem = ({item}: any) => {
     return <RecruitCarouselItem item={item} />;
-  }
+  };
 
   return (
     <FlatList

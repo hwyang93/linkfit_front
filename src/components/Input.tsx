@@ -54,9 +54,11 @@ const Input = ({
   ...props
 }: InputProps) => {
   const [isFocused, setIsFocused] = useState(false);
+
   const onBlur = () => {
     setIsFocused(false);
   };
+
   const onFocus = () => {
     setIsFocused(true);
   };

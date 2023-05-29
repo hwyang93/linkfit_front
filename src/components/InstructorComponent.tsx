@@ -3,13 +3,17 @@ import common from '@styles/common';
 import {FlatList, Text, View} from 'react-native';
 import InstructorListItem from './InstructorListItem';
 
-type InstructorProps = {
+interface InstructorComponentProps {
   list: FetchInstructorsResponse;
   title?: string;
   text?: string;
-};
+}
 
-const InstructorComponent = ({list, title, text}: InstructorProps) => {
+const InstructorComponent: React.FC<InstructorComponentProps> = ({
+  list,
+  title,
+  text,
+}) => {
   const renderItem = ({item}: {item: Instructor}) => {
     return <InstructorListItem item={item} />;
   };

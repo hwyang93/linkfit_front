@@ -1,11 +1,12 @@
+import {iconPath} from '@/utils/iconPath';
 import {Alert, Image, Pressable, StyleSheet, Text, View} from 'react-native';
 import common, {width} from '../styles/common';
-import {iconPath} from '@/utils/iconPath';
 
-const SimpleLogin = () => {
+const SimpleLogin: React.FC = () => {
   const testClick = () => {
     Alert.alert('알림', '클릭테스트에용');
   };
+
   return (
     <View>
       <View style={common.mv30}>

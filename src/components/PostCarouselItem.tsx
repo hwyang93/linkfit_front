@@ -3,7 +3,7 @@ import common from '@styles/common';
 import {Pressable, StyleSheet, Text, View} from 'react-native';
 import {LoggedInParamList} from '../../AppInner';
 
-type listProps = {
+interface PostCarouselItemProps {
   item: {
     id: number;
     title: string;
@@ -12,9 +12,9 @@ type listProps = {
     type: string;
     date: string;
   };
-};
+}
 
-const PostCarouselItem = ({item}: listProps) => {
+const PostCarouselItem: React.FC<PostCarouselItemProps> = ({item}) => {
   const navigation = useNavigation<NavigationProp<LoggedInParamList>>();
   return (
     <Pressable
@@ -39,6 +39,7 @@ const PostCarouselItem = ({item}: listProps) => {
     </Pressable>
   );
 };
+
 const styles = StyleSheet.create({
   postBox: {
     padding: 16,

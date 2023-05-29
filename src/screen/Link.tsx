@@ -76,9 +76,9 @@ const LinkScreen = ({navigation}: Props) => {
     }, [navigation]),
   );
 
-  function renderItem({item}: any) {
+  const renderItem = ({item}: any) => {
     return <InstructorListItem item={item} />;
-  }
+  };
 
   const openModal = () => {
     navigation.navigate('JobOfferForm');

@@ -4,11 +4,11 @@ import {Image, View} from 'react-native';
 import {LoggedInParamList} from '../../../AppInner';
 import IconButton from '../Common/IconButton';
 
-interface Props {
+interface LinkHeaderProps {
   toCommunityMy?: boolean;
 }
 
-const LinkHeader: React.FC<Props> = ({toCommunityMy}) => {
+const LinkHeader: React.FC<LinkHeaderProps> = ({toCommunityMy}) => {
   const navigation = useNavigation<NavigationProp<LoggedInParamList>>();
 
   const handleMyIconPress = () => {

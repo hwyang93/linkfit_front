@@ -10,17 +10,14 @@ import {useCallback, useEffect, useState} from 'react';
 import {Pressable, Text, View} from 'react-native';
 import {LoggedInParamList} from '../../AppInner';
 
-type listProps = {
+type RecommendedPostItemProps = {
   item: CommunityEntity;
 };
 
-function RecommendedPostItem({item}: listProps) {
-  const navigation = useNavigation<NavigationProp<LoggedInParamList>>();
+const RecommendedPostItem: React.FC<RecommendedPostItemProps> = ({item}) => {
   const [postInfo, setPostInfo] = useState<CommunityEntity>(item);
 
-  useEffect(() => {
-    setPostInfo(item);
-  }, [item]);
+  const navigation = useNavigation<NavigationProp<LoggedInParamList>>();
 
   const onClickBookmark = useCallback(() => {
     if (postInfo.isBookmark === 'N') {
@@ -51,6 +48,10 @@ function RecommendedPostItem({item}: listProps) {
         });
     }
   }, [postInfo]);
+
+  useEffect(() => {
+    setPostInfo(item);
+  }, [item]);
 
   return (
     <Pressable
@@ -100,6 +101,6 @@ function RecommendedPostItem({item}: listProps) {
       </View>
     </Pressable>
   );
-}
+};
 
 export default RecommendedPostItem;

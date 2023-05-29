@@ -10,33 +10,37 @@ import {
   Text,
   View,
 } from 'react-native';
+
 import hairlineWidth = StyleSheet.hairlineWidth;
+
+const BLACKLIST = [
+  {
+    image: require('@images/center_01.png'),
+    title: '링크 필라테스',
+    field: '필라테스',
+    location: '서울 · 송파구',
+    phoneNumber: '',
+    message: '',
+    favorite: '',
+    blocked: true,
+  },
+  {
+    image: require('@images/center_02.png'),
+    title: '링크 필라테스',
+    field: '필라테스',
+    location: '서울 · 송파구',
+    phoneNumber: '',
+    message: '',
+    favorite: '',
+    blocked: true,
+  },
+];
 
 const BlockCenterComponent: React.FC = () => {
   // const navigation = useNavigation<NavigationProp<LoggedInParamList>>();
-  const BLACKLIST = [
-    {
-      image: require('@images/center_01.png'),
-      title: '링크 필라테스',
-      field: '필라테스',
-      location: '서울 · 송파구',
-      phoneNumber: '',
-      message: '',
-      favorite: '',
-      blocked: true,
-    },
-    {
-      image: require('@images/center_02.png'),
-      title: '링크 필라테스',
-      field: '필라테스',
-      location: '서울 · 송파구',
-      phoneNumber: '',
-      message: '',
-      favorite: '',
-      blocked: true,
-    },
-  ];
+
   const onBlock = () => {};
+
   return (
     <>
       {BLACKLIST.length > 0 ? (

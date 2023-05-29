@@ -1,11 +1,11 @@
-import {Image, Platform, Pressable, StyleSheet, Text} from 'react-native';
-import common from '@styles/common';
-import {WHITE} from '@styles/colors';
 import {NavigationProp, useNavigation} from '@react-navigation/native';
-import {LoggedInParamList} from '../../AppInner';
+import {WHITE} from '@styles/colors';
+import common from '@styles/common';
+import {Image, Platform, Pressable, StyleSheet, Text} from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
+import {LoggedInParamList} from '../../AppInner';
 
-type ButtonProps = {
+interface FloatingLinkButtonProps {
   title: string;
   link?: any;
   icon?: object;
@@ -13,9 +13,9 @@ type ButtonProps = {
   right?: number;
   bottom?: number;
   job?: () => void;
-};
+}
 
-const FloatingLinkButton = ({
+const FloatingLinkButton: React.FC<FloatingLinkButtonProps> = ({
   title,
   link,
   icon,
@@ -23,7 +23,7 @@ const FloatingLinkButton = ({
   right,
   bottom,
   job,
-}: ButtonProps) => {
+}) => {
   const navigation = useNavigation<NavigationProp<LoggedInParamList>>();
 
   return (

@@ -1,16 +1,20 @@
-import {Image, Platform, Pressable, StyleSheet} from 'react-native';
 import common from '@styles/common';
+import {Image, Platform, Pressable, StyleSheet} from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 
-type ButtonProps = {
+interface FloatingLinkButtonProps {
   title?: string;
   link?: any;
   icon: object;
   job?: () => void;
   bottom?: number;
-};
+}
 
-const FloatingLinkButton = ({icon, job, bottom}: ButtonProps) => {
+const FloatingLinkButton: React.FC<FloatingLinkButtonProps> = ({
+  icon,
+  job,
+  bottom,
+}) => {
   return (
     <Pressable style={[styles.buttonPosition, {bottom}]} onPress={job}>
       <LinearGradient
@@ -23,6 +27,7 @@ const FloatingLinkButton = ({icon, job, bottom}: ButtonProps) => {
     </Pressable>
   );
 };
+
 const styles = StyleSheet.create({
   buttonPosition: {
     position: 'absolute',
@@ -49,4 +54,5 @@ const styles = StyleSheet.create({
     borderRadius: 20,
   },
 });
+
 export default FloatingLinkButton;

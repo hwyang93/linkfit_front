@@ -11,7 +11,7 @@ import {Pressable, StyleSheet, Text, View} from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 import {LoggedInParamList} from '../../AppInner';
 
-function LinkTop() {
+const LinkTop: React.FC = () => {
   const [recruits, setRecruits] = useState<[]>([]);
 
   const navigation = useNavigation<NavigationProp<LoggedInParamList>>();
@@ -79,7 +79,7 @@ function LinkTop() {
       </View>
     </View>
   );
-}
+};
 
 const styles = StyleSheet.create({
   tabBox: {

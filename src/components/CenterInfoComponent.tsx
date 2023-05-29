@@ -5,16 +5,17 @@ import common from '@styles/common';
 import {Alert, Image, Pressable, Text, View} from 'react-native';
 import {LoggedInParamList} from '../../AppInner';
 
-type CenterInfoProps = {
+interface CenterInfoProps {
   centerInfo: any;
-};
+}
 
-function CenterInfoComponent({centerInfo}: CenterInfoProps) {
+const CenterInfoComponent: React.FC<CenterInfoProps> = ({centerInfo}) => {
   const navigation = useNavigation<NavigationProp<LoggedInParamList>>();
   // todo: 전화걸기 (시뮬레이션 환경에선 안됨)
   // import { Linking } from 'react-native';
   // () => Linking.openURL(`tel:01099003171`)
   // {Linking.openURL(`tel:${phoneNumber}`)}
+
   return (
     <Pressable
       onPress={() =>
@@ -66,5 +67,5 @@ function CenterInfoComponent({centerInfo}: CenterInfoProps) {
       </View>
     </Pressable>
   );
-}
+};
 export default CenterInfoComponent;

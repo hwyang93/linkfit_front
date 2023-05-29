@@ -10,17 +10,10 @@ import {LoggedInParamList} from '../../AppInner';
 
 const imageSize = (SCREEN_WIDTH - 40) / 2;
 
-const RecruitListItem = ({item}: any) => {
-  const navigation = useNavigation<NavigationProp<LoggedInParamList>>();
+const RecruitListItem: React.FC<any> = ({item}) => {
   const [recruitInfo, setRecruitInfo] = useState<any>({});
 
-  useEffect(() => {
-    if (item.recruit) {
-      setRecruitInfo(item.recruit);
-    } else {
-      setRecruitInfo(item);
-    }
-  }, [item]);
+  const navigation = useNavigation<NavigationProp<LoggedInParamList>>();
 
   const onClickBookmark = useCallback(() => {
     if (recruitInfo.isBookmark === 'N') {
@@ -32,8 +25,8 @@ const RecruitListItem = ({item}: any) => {
             isBookmark: 'Y',
           });
         })
-        .catch((e: any) => {
-          toast.error({message: e.message});
+        .catch(error => {
+          toast.error({message: error.message});
         });
     } else {
       deleteRecruitBookmark(recruitInfo.seq)
@@ -44,11 +37,20 @@ const RecruitListItem = ({item}: any) => {
             isBookmark: 'N',
           });
         })
-        .catch((e: any) => {
-          toast.error({message: e.message});
+        .catch(error => {
+          toast.error({message: error.message});
         });
     }
   }, [recruitInfo]);
+
+  useEffect(() => {
+    if (item.recruit) {
+      setRecruitInfo(item.recruit);
+    } else {
+      setRecruitInfo(item);
+    }
+  }, [item]);
+
   return (
     <Pressable
       style={styles.slideBox}

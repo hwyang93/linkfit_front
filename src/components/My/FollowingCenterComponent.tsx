@@ -17,11 +17,13 @@ import {
   View,
 } from 'react-native';
 import {LoggedInParamList} from '../../../AppInner';
+
 import hairlineWidth = StyleSheet.hairlineWidth;
 
-function FollowingCenterComponent() {
-  const navigation = useNavigation<NavigationProp<LoggedInParamList>>();
+const FollowingCenterComponent: React.FC = () => {
   const [followings, setFollowings] = useState<FetchMemberFollowingsResponse>();
+
+  const navigation = useNavigation<NavigationProp<LoggedInParamList>>();
 
   const getMemberFollowingList = useCallback(() => {
     fetchMemberFollowings({type: 'COMPANY'})
@@ -99,7 +101,7 @@ function FollowingCenterComponent() {
       {/*</View>*/}
     </ScrollView>
   );
-}
+};
 const styles = StyleSheet.create({
   listBox: {
     paddingVertical: 16,

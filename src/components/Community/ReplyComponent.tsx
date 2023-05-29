@@ -1,15 +1,8 @@
-import {Pressable, Text, View} from 'react-native';
 import common from '@styles/common';
 import {useState} from 'react';
+import {Pressable, Text, View} from 'react-native';
 
-type ReplyProps = {
-  item: {
-    date: string;
-    comment: string;
-  };
-};
-
-function ReplyComponent({commentInfo}: any) {
+const ReplyComponent: React.FC<any> = ({commentInfo}) => {
   const [textLine, setTextLine] = useState(2);
   const textExpansion = () => {
     if (textLine === 2) {
@@ -32,6 +25,6 @@ function ReplyComponent({commentInfo}: any) {
       </View>
     </View>
   );
-}
+};
 
 export default ReplyComponent;

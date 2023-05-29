@@ -1,20 +1,20 @@
-import {Image, StyleSheet, Text, View} from 'react-native';
 import {iconPath} from '@/utils/iconPath';
-import common from '@styles/common';
 import {GRAY} from '@styles/colors';
+import common from '@styles/common';
+import {Image, StyleSheet, Text, View} from 'react-native';
 
-type Props = {
+type EmptySetProps = {
   text: string;
 };
 
-function EmptySet({text}: Props) {
+const EmptySet: React.FC<EmptySetProps> = ({text}) => {
   return (
     <View style={styles.container}>
       <Image source={iconPath.EMPTY} style={styles.empty} />
       <Text style={[common.text_m, {color: GRAY.DARK}]}>{text}</Text>
     </View>
   );
-}
+};
 
 const styles = StyleSheet.create({
   container: {
