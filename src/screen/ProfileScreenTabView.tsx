@@ -1,3 +1,4 @@
+import {useAppSelector} from '@/store';
 import {MemberReputationEntity} from '@/types/api/entities';
 import {FetchInstructorResponse} from '@/types/api/instructor';
 import {SCREEN_HEIGHT, SCREEN_WIDTH} from '@/utils/constants/common';
@@ -9,7 +10,6 @@ import {
   useNavigation,
   useRoute,
 } from '@react-navigation/native';
-import {RootState} from '@store/reducer';
 import {BLUE, GRAY, WHITE} from '@styles/colors';
 import common from '@styles/common';
 import {useEffect, useRef, useState} from 'react';
@@ -26,11 +26,19 @@ import {
   View,
 } from 'react-native';
 import {TabBar, TabView} from 'react-native-tab-view';
-import {useSelector} from 'react-redux';
 import {LoggedInParamList} from '../../AppInner';
 
-const TabBarHeight = 48;
-const HeaderHeight = 200;
+const TAB_BAR_HEIGHT = 48;
+const HEADER_HEIGHT = 200;
+
+const TAB1_DATA = [
+  {src: require('@images/instructor_01.png')},
+  {src: require('@images/instructor_02.png')},
+  {src: require('@images/instructor_03.png')},
+  {src: require('@images/instructor_04.png')},
+  {src: require('@images/instructor_05.png')},
+];
+
 const SafeStatusBar = Platform.select({
   ios: 44,
   android: StatusBar.currentHeight,
@@ -38,12 +46,14 @@ const SafeStatusBar = Platform.select({
 
 const imageSize = (SCREEN_WIDTH - 38) / 3;
 
-const ProfileScreenTabView: React.FC = () => {
-  const memberInfo = useSelector((state: RootState) => state.user);
-  const route = useRoute<RouteProp<LoggedInParamList, 'Profile'>>();
-  const navigation = useNavigation<NavigationProp<LoggedInParamList>>();
+const ProfileScreenTabView = () => {
   const [instructor, setInstructor] = useState<FetchInstructorResponse>();
   const [reputation, setReputation] = useState<MemberReputationEntity[]>();
+
+  const memberInfo = useAppSelector(state => state.user);
+
+  const navigation = useNavigation<NavigationProp<LoggedInParamList>>();
+  const route = useRoute<RouteProp<LoggedInParamList, 'Profile'>>();
 
   useEffect(() => {
     const loadData = async () => {
@@ -65,14 +75,6 @@ const ProfileScreenTabView: React.FC = () => {
     {key: 'tab2', title: '강사후기'},
   ]);
   const [canScroll, setCanScroll] = useState(true);
-
-  const tab1Data = [
-    {src: require('@images/instructor_01.png')},
-    {src: require('@images/instructor_02.png')},
-    {src: require('@images/instructor_03.png')},
-    {src: require('@images/instructor_04.png')},
-    {src: require('@images/instructor_05.png')},
-  ];
 
   // ref
   const scrollY = useRef(new Animated.Value(0)).current;
@@ -161,11 +163,11 @@ const ProfileScreenTabView: React.FC = () => {
         if (item.key !== routes[tabIndex].key) {
           return;
         }
-        if (value > HeaderHeight || value < 0) {
+        if (value > HEADER_HEIGHT || value < 0) {
           headerScrollY.stopAnimation();
           syncScrollOffset();
         }
-        if (item.value && value <= HeaderHeight) {
+        if (item.value && value <= HEADER_HEIGHT) {
           item.value.scrollToOffset({
             offset: value,
             animated: false,
@@ -185,7 +187,7 @@ const ProfileScreenTabView: React.FC = () => {
 
     listRefArr.current.forEach(item => {
       if (item.key !== curRouteKey) {
-        if (scrollY._value < HeaderHeight && scrollY._value >= 0) {
+        if (scrollY._value < HEADER_HEIGHT && scrollY._value >= 0) {
           if (item.value) {
             item.value.scrollToOffset({
               offset: scrollY._value,
@@ -193,17 +195,18 @@ const ProfileScreenTabView: React.FC = () => {
             });
             listOffset.current[item.key] = scrollY._value;
           }
-        } else if (scrollY._value >= HeaderHeight) {
+        } else if (scrollY._value >= HEADER_HEIGHT) {
           if (
-            listOffset.current[item.key] < HeaderHeight ||
+            listOffset.current[item.key] < HEADER_HEIGHT ||
             listOffset.current[item.key] == null
           ) {
             if (item.value) {
               item.value.scrollToOffset({
-                offset: HeaderHeight,
+                offset: HEADER_HEIGHT,
+
                 animated: false,
               });
-              listOffset.current[item.key] = HeaderHeight;
+              listOffset.current[item.key] = HEADER_HEIGHT;
             }
           }
         }
@@ -227,8 +230,10 @@ const ProfileScreenTabView: React.FC = () => {
   // render Helper
   const renderHeader = () => {
     const y = scrollY.interpolate({
-      inputRange: [0, HeaderHeight],
-      outputRange: [0, -HeaderHeight],
+      inputRange: [0, HEADER_HEIGHT],
+
+      outputRange: [0, -HEADER_HEIGHT],
+
       extrapolate: 'clamp',
     });
     return (
@@ -421,7 +426,7 @@ const ProfileScreenTabView: React.FC = () => {
     switch (route.key) {
       case 'tab1':
         numCols = 3;
-        data = tab1Data;
+        data = TAB1_DATA;
         renderItem = renderTab1Item;
         ListHeaderComponent = Tab1Header;
         ItemSeparatorComponent = Tab1Separator;
@@ -474,9 +479,10 @@ const ProfileScreenTabView: React.FC = () => {
         ListHeaderComponent={ListHeaderComponent}
         ListFooterComponent={ListFooterComponent}
         contentContainerStyle={{
-          paddingTop: HeaderHeight + TabBarHeight + 7,
+          paddingTop: HEADER_HEIGHT + TAB_BAR_HEIGHT + 7,
+
           paddingHorizontal: 16,
-          minHeight: SCREEN_HEIGHT - SafeStatusBar + HeaderHeight,
+          minHeight: SCREEN_HEIGHT - SafeStatusBar + HEADER_HEIGHT,
         }}
         showsHorizontalScrollIndicator={false}
         data={data}
@@ -489,8 +495,10 @@ const ProfileScreenTabView: React.FC = () => {
 
   const renderTabBar = (props: any) => {
     const y = scrollY.interpolate({
-      inputRange: [0, HeaderHeight],
-      outputRange: [HeaderHeight, 0],
+      inputRange: [0, HEADER_HEIGHT],
+
+      outputRange: [HEADER_HEIGHT, 0],
+
       extrapolate: 'clamp',
     });
     return (
@@ -552,7 +560,8 @@ const styles = StyleSheet.create({
     backgroundColor: WHITE,
   },
   header: {
-    height: HeaderHeight,
+    height: HEADER_HEIGHT,
+
     width: '100%',
     position: 'absolute',
     padding: 16,
@@ -565,7 +574,7 @@ const styles = StyleSheet.create({
     elevation: 0,
     shadowOpacity: 0,
     backgroundColor: WHITE,
-    height: TabBarHeight,
+    height: TAB_BAR_HEIGHT,
     borderBottomWidth: 1,
     borderColor: GRAY.LIGHT,
     marginHorizontal: 16,

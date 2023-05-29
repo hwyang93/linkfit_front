@@ -1,23 +1,23 @@
+import {SHOW_TOAST_MESSAGE} from '@/utils/toast';
 import {useCallback, useEffect, useRef, useState} from 'react';
 import {
-  Text,
   DeviceEventEmitter,
-  TouchableOpacity,
-  Platform,
-  ToastAndroid,
-  StyleSheet,
   Image,
+  StyleSheet,
+  Text,
+  ToastAndroid,
+  TouchableOpacity,
   View,
 } from 'react-native';
-import {SHOW_TOAST_MESSAGE} from '@/utils/toast';
 
-import Animated, {
-  withTiming,
-  useSharedValue,
-  useAnimatedStyle,
-} from 'react-native-reanimated';
+import {IS_ANDROID, IS_IOS} from '@/utils/constants/common';
 import {iconPath} from '@/utils/iconPath';
 import common from '@styles/common';
+import Animated, {
+  useAnimatedStyle,
+  useSharedValue,
+  withTiming,
+} from 'react-native-reanimated';
 
 type Colors = {
   info: string;
@@ -25,18 +25,21 @@ type Colors = {
   warn: string;
   error: string;
 };
+
 type Icons = {
   info: any;
   success: any;
   warn: any;
   error: any;
 };
+
 const colors = {
   info: '#cae9ff',
   success: '#cbf4d4',
   warn: '#ffeec3',
   error: '#ffd3d6',
 } as Colors;
+
 const icons = {
   info: iconPath.TOAST_INFO,
   success: iconPath.TOAST_SUCCESS,
@@ -51,11 +54,14 @@ type ToastData = {
   type: keyof Colors | keyof Icons;
 };
 
-const Toast = () => {
+const Toast: React.FC = () => {
   const [messageType, setMessageType] = useState<
     null | keyof Colors | keyof Icons
   >(null);
-  const timeOutRef = useRef<null | NodeJS.Timer>(null);
+  const [message, setMessage] = useState<string | null>(null);
+  const [timeOutDuration, setTimeOutDuration] = useState(2000);
+
+  const timeOutRef = useRef<NodeJS.Timer | null>(null);
 
   const animatedOpacity = useSharedValue(0);
 
@@ -65,12 +71,8 @@ const Toast = () => {
     };
   }, []);
 
-  const [timeOutDuration, setTimeOutDuration] = useState(2000);
-
-  const [message, setMessage] = useState<null | string>(null);
-
   const onNewToast = (data: ToastData) => {
-    if (Platform.OS === 'android' && data.useNativeToast) {
+    if (IS_ANDROID && data.useNativeToast) {
       return ToastAndroid.show(data.message, ToastAndroid.LONG);
     }
     if (data.duration) {
@@ -136,7 +138,7 @@ const Toast = () => {
           />
           <Text style={[styles.text, common.text_m]}>{message}</Text>
         </View>
-        {Platform.OS === 'ios' && (
+        {IS_IOS && (
           <Image source={iconPath.TOAST_CLOSE} style={common.size24} />
         )}
       </TouchableOpacity>
@@ -163,4 +165,5 @@ const styles = StyleSheet.create({
     textAlign: 'left',
   },
 });
+
 export default Toast;

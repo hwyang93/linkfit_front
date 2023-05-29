@@ -1,5 +1,20 @@
+import {iconPath} from '@/utils/iconPath';
+import {dateFormatter} from '@/utils/util';
 import {
-  Alert,
+  createRecruitApply,
+  fetchRecruit,
+  updateRecruitApplyCancel,
+} from '@api/recruit';
+import {fetchResumes} from '@api/resume';
+import CenterInfoComponent from '@components/CenterInfoComponent';
+import FloatingLinkButton from '@components/FloatingLinkButton';
+import Modal from '@components/ModalSheet';
+import toast from '@hooks/toast';
+import {NativeStackScreenProps} from '@react-navigation/native-stack';
+import {BLUE, GRAY, WHITE} from '@styles/colors';
+import common from '@styles/common';
+import {useCallback, useEffect, useState} from 'react';
+import {
   Image,
   NativeScrollEvent,
   NativeSyntheticEvent,
@@ -9,35 +24,17 @@ import {
   Text,
   View,
 } from 'react-native';
-import {BLUE, GRAY, WHITE} from '@styles/colors';
-import common from '@styles/common';
-import {SafeAreaView} from 'react-native-safe-area-context';
-import CenterInfoComponent from '@components/CenterInfoComponent';
-import {NativeStackScreenProps} from '@react-navigation/native-stack';
-import {LoggedInParamList} from '../../AppInner';
-import {SetStateAction, useCallback, useEffect, useState} from 'react';
-import {
-  createRecruitApply,
-  fetchRecruit,
-  updateRecruitApplyCancel,
-} from '@api/recruit';
-import FloatingLinkButton from '@components/FloatingLinkButton';
-import Modal from '@components/ModalSheet';
 import LinearGradient from 'react-native-linear-gradient';
-import {iconPath} from '@/utils/iconPath';
 import MapView, {Marker, PROVIDER_GOOGLE} from 'react-native-maps';
-import {fetchResumes} from '@api/resume';
-import toast from '@hooks/toast';
+import {SafeAreaView} from 'react-native-safe-area-context';
+import {LoggedInParamList} from '../../AppInner';
 
 type Props = NativeStackScreenProps<LoggedInParamList, 'JobPost'>;
 
-function JobPostScreen({route, navigation}: Props) {
-  const [loading, setLoading] = useState<boolean>(false);
-  const [modalVisible, setModalVisible] =
-    useState<SetStateAction<boolean>>(false);
+const JobPostScreen = ({route}: Props) => {
+  const [modalVisible, setModalVisible] = useState(false);
   const [modalTitle, setModalTitle] = useState('');
-  // const [modalData, setModalData] = useState<any[]>([]);
-  const [modalType, setModalType] = useState<string>('');
+  const [modalType, setModalType] = useState('');
   const {recruitSeq} = route.params;
   const [recruitInfo, setRecruitInfo] = useState<any>({
     dates: [{day: '', time: ''}],
@@ -58,7 +55,6 @@ function JobPostScreen({route, navigation}: Props) {
     fetchRecruit(recruitSeq)
       .then(({data}: any) => {
         setRecruitInfo(data);
-        console.log(data);
         data.dates.forEach((date: any) => {
           date.isSelected = false;
         });
@@ -77,8 +73,8 @@ function JobPostScreen({route, navigation}: Props) {
         });
         setResumes(data);
       })
-      .catch((e: any) => {
-        toast.error({message: e.message});
+      .catch(error => {
+        toast.error({message: error.message});
       });
   }, []);
 
@@ -91,7 +87,11 @@ function JobPostScreen({route, navigation}: Props) {
     const resumeSeq = resumes.find((resume: any) => {
       return resume.isSelected;
     }).seq;
-    const data = {recruitDateSeq: dates, resumeSeq: resumeSeq};
+    const data = {
+      recruitDateSeq: dates,
+      resumeSeq: resumeSeq,
+      recruitSeq: recruitInfo.seq,
+    };
 
     createRecruitApply(recruitInfo.seq, data)
       .then(() => {
@@ -99,14 +99,14 @@ function JobPostScreen({route, navigation}: Props) {
         setModalVisible(false);
         getRecruitInfo();
       })
-      .catch((e: any) => {
-        toast.error({message: e.message});
+      .catch(error => {
+        toast.error({message: error.message});
       });
   }, [getRecruitInfo, recruitDates, recruitInfo.seq, resumes]);
 
   const onCancelApply = useCallback(() => {
-    const dates: any[] = [];
-    recruitDates.forEach((date: any) => {
+    const dates: number[] = [];
+    recruitDates.forEach(date => {
       if (date.isSelected) {
         const applySeq = recruitInfo.applyInfo.find((item: any) => {
           return item.recruitDateSeq === date.seq;
@@ -115,7 +115,7 @@ function JobPostScreen({route, navigation}: Props) {
         return dates.push(applySeq);
       }
     });
-    const data = {recruitDateSeqs: dates};
+    const data = {seqs: dates};
 
     updateRecruitApplyCancel(data)
       .then(() => {
@@ -123,51 +123,10 @@ function JobPostScreen({route, navigation}: Props) {
         setModalVisible(false);
         getRecruitInfo();
       })
-      .catch((e: any) => {
-        toast.error({message: e.message});
+      .catch(error => {
+        toast.error({message: error.message});
       });
-  }, [getRecruitInfo, recruitDates]);
-
-  useEffect(() => {
-    getRecruitInfo();
-    getResumeList();
-  }, [getRecruitInfo, getResumeList]);
-
-  useEffect(() => {
-    setResumes(() => {
-      return resumes.map((resume: any) => {
-        resume.isSelected = false;
-        return resume;
-      });
-    });
-    setRecruitDates(() => {
-      return recruitDates.map((date: any) => {
-        date.isSelected = false;
-        return date;
-      });
-    });
-  }, [modalVisible]);
-
-  useEffect(() => {
-    const selectResume = resumes.find((resume: any) => {
-      return resume.isSelected;
-    });
-    const selectDate = recruitDates.filter((date: any) => {
-      return date.isSelected;
-    });
-    if (!selectResume) {
-      setStep('');
-      return;
-    }
-    if (selectResume && selectDate.length > 0) {
-      setStep('apply');
-      return;
-    }
-    if (selectResume) {
-      setStep('date');
-      return;
-    }
-  }, [recruitDates, resumes]);
+  }, [getRecruitInfo, recruitDates, recruitInfo.applyInfo]);
 
   const onSelectResume = useCallback(
     (seq: number) => {
@@ -213,7 +172,51 @@ function JobPostScreen({route, navigation}: Props) {
   const openModal = () => {
     setModalVisible(true);
   };
-  // todo: 지원을 안했으면 지원하기 버튼 표시 || 지원을 했으면 지원완료 메시지 표시
+
+  useEffect(() => {
+    getRecruitInfo();
+    getResumeList();
+  }, [getRecruitInfo, getResumeList]);
+
+  // TODO: 렌더링 최적화 필요 (무한 렌더링을 유발함)
+  useEffect(() => {
+    setResumes(() => {
+      return resumes.map((resume: any) => {
+        resume.isSelected = false;
+        return resume;
+      });
+    });
+    setRecruitDates(() => {
+      return recruitDates.map((date: any) => {
+        date.isSelected = false;
+        return date;
+      });
+    });
+  }, []);
+
+  useEffect(() => {
+    const selectResume = resumes.find((resume: any) => {
+      return resume.isSelected;
+    });
+    const selectDate = recruitDates.filter((date: any) => {
+      return date.isSelected;
+    });
+    if (!selectResume) {
+      setStep('');
+      return;
+    }
+    if (selectResume && selectDate.length > 0) {
+      setStep('apply');
+      return;
+    }
+    if (selectResume) {
+      setStep('date');
+      return;
+    }
+  }, [recruitDates, resumes]);
+
+  // TODO: 지원을 안했으면 지원하기 버튼 표시 || 지원을 했으면 지원완료 메시지 표시
+
   return (
     <>
       <SafeAreaView
@@ -243,7 +246,11 @@ function JobPostScreen({route, navigation}: Props) {
             </Text>
             {recruitInfo.applyInfo?.length > 0 && (
               <Text style={[common.text_s, {color: GRAY.DARK}]}>
-                {recruitInfo.applyInfo[0].updatedAt} 지원 완료
+                {dateFormatter(
+                  recruitInfo.applyInfo[0].updatedAt,
+                  'YYYY.MM.DD',
+                )}{' '}
+                지원 완료
               </Text>
             )}
           </View>
@@ -606,7 +613,7 @@ function JobPostScreen({route, navigation}: Props) {
       />
     </>
   );
-}
+};
 
 const styles = StyleSheet.create({
   container: {

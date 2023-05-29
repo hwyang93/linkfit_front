@@ -1,3 +1,4 @@
+import {BLUE, WHITE} from '@styles/colors';
 import {
   Image,
   Pressable,
@@ -6,42 +7,85 @@ import {
   Text,
   View,
 } from 'react-native';
-import {BLUE, WHITE} from '@styles/colors';
 
-import common from '@styles/common';
-import TopFilter from '@components/TopFilter';
-import {NavigationProp, useNavigation} from '@react-navigation/native';
-import {LoggedInParamList} from '../../../AppInner';
-import {SetStateAction, useCallback, useEffect, useState} from 'react';
-import Modal from '@components/ModalSheet';
+import {FetchRecruitsResponse} from '@/types/api/recruit';
+import {YesNoFlag} from '@/types/common';
 import {iconPath} from '@/utils/iconPath';
-import {SafeAreaView} from 'react-native-safe-area-context';
+import {dateFormatter} from '@/utils/util';
 import {fetchRecruits} from '@api/recruit';
+import Modal from '@components/ModalSheet';
+import TopFilter from '@components/TopFilter';
 import toast from '@hooks/toast';
+import {NativeStackScreenProps} from '@react-navigation/native-stack';
+import common from '@styles/common';
+import {useCallback, useEffect, useState} from 'react';
+import {SafeAreaView} from 'react-native-safe-area-context';
+import {LoggedInParamList} from '../../../AppInner';
 
-function MyRecruitmentScreen() {
-  const navigation = useNavigation<NavigationProp<LoggedInParamList>>();
-  const [modalVisible, setModalVisible] =
-    useState<SetStateAction<boolean>>(false);
+interface MyRecruitmentListItemProps {
+  onPress: () => void;
+  onKebabIconPress: () => void;
+  status: string;
+  title: string;
+  createdAt: string;
+  position: string;
+}
+
+const MyRecruitmentListItem: React.FC<MyRecruitmentListItemProps> = ({
+  onPress,
+  onKebabIconPress,
+  status,
+  title,
+  createdAt,
+  position,
+}) => {
+  return (
+    <Pressable style={[common.basicBox, common.mv8]} onPress={onPress}>
+      <View style={common.rowCenter}>
+        <Text style={[common.text_s, common.fcg]}>{createdAt}</Text>
+        <Text style={[common.mh8, common.fcg]}>|</Text>
+        <Text style={[common.text_s, common.fcg]}>
+          {status === 'ING' ? '진행중' : '마감'}
+        </Text>
+      </View>
+      <Text style={[common.title, common.mv8]} numberOfLines={1}>
+        {title}
+      </Text>
+      <Text style={[common.text_m, common.fwb]}>{position}</Text>
+      <Pressable
+        style={styles.kebabIcon}
+        hitSlop={10}
+        onPress={onKebabIconPress}>
+        <Image source={iconPath.KEBAB} style={[common.size24]} />
+      </Pressable>
+    </Pressable>
+  );
+};
+
+// TODO: Screen 이름 매칭 필요 (MyPost -> MyRecruitment)
+type Props = NativeStackScreenProps<LoggedInParamList, 'MyPost'>;
+
+const MyRecruitmentScreen = ({navigation}: Props) => {
+  const [modalVisible, setModalVisible] = useState(false);
   const [modalTitle, setModalTitle] = useState('');
   const [modalData, setModalData] = useState<any[]>([]);
-  const [recruits, setRecruits] = useState<any[]>([]);
+  const [recruits, setRecruits] = useState<FetchRecruitsResponse>([]);
   const [selectedFilter, setSelectedFilter] = useState('');
 
   const getRecruits = useCallback(() => {
-    const params = {isWriter: 'Y'};
+    const params = {isWriter: 'Y' as YesNoFlag};
     fetchRecruits(params)
-      .then(({data}: any) => {
+      .then(({data}) => {
         setRecruits(data);
       })
-      .catch((e: any) => {
-        toast.error({message: e.message});
+      .catch(error => {
+        toast.error({message: error.message});
       });
   }, []);
 
   useEffect(() => {
     getRecruits();
-  }, []);
+  }, [getRecruits]);
 
   const [FILTER, setFILTER] = useState([
     {
@@ -159,7 +203,14 @@ function MyRecruitmentScreen() {
     },
     [FILTER, MODAL, MODAL2, modalData, selectedFilter],
   );
-  const clickKebab = () => {
+
+  const handleMyRecruitmentListItemPress = (recruitSeq: number) => {
+    navigation.navigate('ApplicantStatus', {
+      recruitSeq,
+    });
+  };
+
+  const handleKebeabIconPress = () => {
     setModalTitle('더보기');
     setModalData(MODAL3);
     openModal();
@@ -167,50 +218,21 @@ function MyRecruitmentScreen() {
 
   return (
     <SafeAreaView edges={['bottom', 'left', 'right']} style={styles.container}>
-      {/* 필터 영역 */}
       <TopFilter data={FILTER} />
-      {/* 필터 영역 */}
       <ScrollView showsVerticalScrollIndicator={false}>
-        {/* 컨텐츠 영역 */}
         <View style={common.mb24}>
-          {recruits.map((recruit, index) => {
-            return (
-              <Pressable
-                key={index}
-                style={[common.basicBox, common.mv8]}
-                onPress={() => {
-                  navigation.navigate('ApplicantStatus', {
-                    recruitSeq: recruit.seq,
-                  });
-                }}>
-                <View style={common.rowCenter}>
-                  <Text style={[common.text_s, common.fcg]}>
-                    {recruit.createdAt}
-                  </Text>
-                  <Text style={[common.mh8, common.fcg]}>|</Text>
-                  <Text style={[common.text_s, common.fcg]}>
-                    {recruit.status === 'ING' ? '진행중' : '마감'}
-                  </Text>
-                </View>
-                <Text style={[common.title, common.mv8]} numberOfLines={1}>
-                  {recruit.title}
-                </Text>
-                <Text style={[common.text_m, common.fwb]}>
-                  {recruit.position}
-                </Text>
-                <Pressable
-                  style={styles.kebabIcon}
-                  hitSlop={10}
-                  onPress={clickKebab}>
-                  <Image source={iconPath.KEBAB} style={[common.size24]} />
-                </Pressable>
-              </Pressable>
-            );
-          })}
+          {recruits.map((recruit, index) => (
+            <MyRecruitmentListItem
+              key={index}
+              title={recruit.title}
+              position={recruit.position}
+              status={recruit.status}
+              createdAt={dateFormatter(recruit.createdAt, 'YYYY.MM.DD')}
+              onKebabIconPress={handleKebeabIconPress}
+              onPress={() => handleMyRecruitmentListItemPress(recruit.seq)}
+            />
+          ))}
         </View>
-        {/* 컨텐츠 영역 */}
-
-        {/* 모달 */}
         <Modal
           modalVisible={modalVisible}
           setModalVisible={setModalVisible}
@@ -244,7 +266,7 @@ function MyRecruitmentScreen() {
       </ScrollView>
     </SafeAreaView>
   );
-}
+};
 
 const styles = StyleSheet.create({
   container: {

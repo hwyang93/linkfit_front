@@ -1,62 +1,45 @@
+import useModal from '@/hooks/useModal';
+import {FetchCommunityPostsResponse} from '@/types/api/community';
+import {iconPath} from '@/utils/iconPath';
+import {dateFormatter} from '@/utils/util';
+import {fetchCommunityPosts} from '@api/community';
+import toast from '@hooks/toast';
+import {GRAY, WHITE} from '@styles/colors';
+import common from '@styles/common';
+import {useCallback, useEffect, useState} from 'react';
 import {
-  Alert,
   FlatList,
   Image,
   Pressable,
+  ScrollView,
   StyleSheet,
   Text,
   View,
 } from 'react-native';
+import BottomSheet from '../Common/BottomSheet';
 
-import common from '@styles/common';
-import {GRAY, WHITE} from '@styles/colors';
-import {iconPath} from '@/utils/iconPath';
-import {SetStateAction, useCallback, useEffect, useState} from 'react';
-import Modal from '@components/ModalSheet';
-import {NavigationProp, useNavigation} from '@react-navigation/native';
-import {LoggedInParamList} from '../../../AppInner';
-import {fetchCommunityPosts} from '@api/community';
-import toast from '@hooks/toast';
+const CommunityMyPost: React.FC = () => {
+  const [posts, setPosts] = useState<FetchCommunityPostsResponse>([]);
+  const [textLine, setTextLine] = useState(2);
 
-function CommunityMyPost() {
-  const navigation = useNavigation<NavigationProp<LoggedInParamList>>();
-  const [modalVisible, setModalVisible] =
-    useState<SetStateAction<boolean>>(false);
-  const [posts, setPosts] = useState<any[]>([]);
+  // const navigation = useNavigation<NavigationProp<LoggedInParamList>>();
 
-  const openModal = () => {
-    setModalVisible(true);
-  };
+  const {modalVisible, openModal, closeModal} = useModal();
 
   const getPosts = useCallback(() => {
     fetchCommunityPosts({isWriter: 'Y'})
-      .then(({data}: any) => {
+      .then(({data}) => {
         setPosts(data);
       })
-      .catch((e: any) => {
-        toast.error({message: e.message});
+      .catch(error => {
+        toast.error({message: error.message});
       });
   }, []);
 
   useEffect(() => {
     getPosts();
-  }, []);
+  }, [getPosts]);
 
-  const MODAL = [
-    {
-      value: '수정하기',
-      job: () => {
-        setModalVisible(false);
-        Alert.alert('text', '수정하라!');
-      },
-    },
-    {
-      value: '삭제하기',
-      job: () => Alert.alert('text', '삭제하라!'),
-    },
-  ];
-
-  const [textLine, setTextLine] = useState(2);
   const textExpansion = () => {
     if (textLine === 2) {
       setTextLine(0);
@@ -64,10 +47,6 @@ function CommunityMyPost() {
       setTextLine(2);
     }
   };
-
-  type Props = [
-    {id: number; type: string; title: string; date: string; content: string},
-  ];
 
   return (
     <View style={styles.container}>
@@ -81,16 +60,14 @@ function CommunityMyPost() {
                   {item.title}
                 </Text>
                 <Text style={[common.text, {alignSelf: 'flex-end'}]}>
-                  {item.updatedAt}
+                  {dateFormatter(item.updatedAt, 'YYYY.MM.DD')}
                 </Text>
               </View>
-
               <Pressable onPress={textExpansion}>
                 <Text style={common.text_m} numberOfLines={textLine}>
                   {item.contents}
                 </Text>
               </Pressable>
-
               <Pressable
                 style={styles.kebabIcon}
                 hitSlop={10}
@@ -101,17 +78,26 @@ function CommunityMyPost() {
           );
         }}
       />
-      <Modal
-        modalVisible={modalVisible}
-        setModalVisible={setModalVisible}
-        title={'더보기'}
-        modalData={MODAL}
+      <BottomSheet
+        visible={modalVisible}
+        onDismiss={closeModal}
+        title="더보기"
+        content={
+          <ScrollView
+            style={{width: '100%'}}
+            showsVerticalScrollIndicator={false}>
+            <View style={{paddingHorizontal: 16}}>
+              <Text style={{padding: 16, fontSize: 18}}>수정하기</Text>
+              <Text style={[{padding: 16, fontSize: 18}]}>삭제하기</Text>
+            </View>
+          </ScrollView>
+        }
       />
     </View>
   );
-}
+};
 const styles = StyleSheet.create({
-  container: {flex: 1, padding: 16, backgroundColor: WHITE},
+  container: {flex: 1, paddingHorizontal: 16, backgroundColor: WHITE},
   postBox: {
     paddingVertical: 16,
     borderBottomWidth: 1,

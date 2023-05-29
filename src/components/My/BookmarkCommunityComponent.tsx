@@ -1,3 +1,10 @@
+import {iconPath} from '@/utils/iconPath';
+import {fetchBookmarkCommunities} from '@api/community';
+import toast from '@hooks/toast';
+import {NavigationProp, useNavigation} from '@react-navigation/native';
+import {GRAY} from '@styles/colors';
+import common from '@styles/common';
+import {useCallback, useEffect, useState} from 'react';
 import {
   Image,
   Pressable,
@@ -6,26 +13,20 @@ import {
   Text,
   View,
 } from 'react-native';
-import common from '@styles/common';
-import {GRAY} from '@styles/colors';
-import {iconPath} from '@/utils/iconPath';
-import {useCallback, useEffect, useState} from 'react';
-import {fetchBookmarkCommunities} from '@api/community';
-import toast from '@hooks/toast';
-import {NavigationProp, useNavigation} from '@react-navigation/native';
 import {LoggedInParamList} from '../../../AppInner';
 
-function BookmarkCommunityComponent() {
-  const navigation = useNavigation<NavigationProp<LoggedInParamList>>();
+const BookmarkCommunityComponent: React.FC = () => {
   const [bookmarks, setBookmarks] = useState<any[]>([]);
+
+  const navigation = useNavigation<NavigationProp<LoggedInParamList>>();
 
   const getBookmarkCommunities = useCallback(() => {
     fetchBookmarkCommunities()
       .then(({data}: any) => {
         setBookmarks(data);
       })
-      .catch((e: any) => {
-        toast.error({message: e.message});
+      .catch(error => {
+        toast.error({message: error.message});
       });
   }, []);
 
@@ -110,7 +111,7 @@ function BookmarkCommunityComponent() {
       })}
     </ScrollView>
   );
-}
+};
 
 const styles = StyleSheet.create({
   listBox: {

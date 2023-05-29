@@ -1,91 +1,93 @@
-import {FlatList, StyleSheet, Text, View} from 'react-native';
-
+import FloatingActionButton from '@/components/Common/FloatingActionButton';
+import {FetchCommunityPostsResponse} from '@/types/api/community';
+import {CommunityEntity} from '@/types/api/entities';
+import {iconPath} from '@/utils/iconPath';
+import {fetchCommunityPosts} from '@api/community';
+import RecommendedPostItem from '@components/RecommendedPostItem';
+import toast from '@hooks/toast';
+import {useIsFocused} from '@react-navigation/native';
+import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import {WHITE} from '@styles/colors';
 import common from '@styles/common';
-
-import CommunityTop from '@components/CommunityTop';
-import RecommendedPostItem from '@components/RecommendedPostItem';
-import {iconPath} from '@/utils/iconPath';
-import FloatingWriteButton from '@components/FloatingWriteButton';
-import {
-  NavigationProp,
-  useIsFocused,
-  useNavigation,
-} from '@react-navigation/native';
-import {LoggedInParamList} from '../../AppInner';
+import {isAxiosError} from 'axios';
 import {useCallback, useEffect, useState} from 'react';
-import {fetchCommunityPosts} from '@api/community';
-import toast from '@hooks/toast';
+import {FlatList, StyleSheet, Text, View} from 'react-native';
+import {LoggedInParamList} from '../../AppInner';
 
-function CommunityScreen() {
+const FILTER = [
+  {
+    value: '전체',
+    active: true,
+  },
+  {
+    value: '필라테스',
+    active: false,
+  },
+  {
+    value: '요가',
+    active: false,
+  },
+  {
+    value: '채널',
+    active: false,
+  },
+  {
+    value: '채널',
+    active: false,
+  },
+  {
+    value: '채널',
+    active: false,
+  },
+  {
+    value: '채널',
+    active: false,
+  },
+  {
+    value: '채널',
+    active: false,
+  },
+];
+
+type Props = NativeStackScreenProps<LoggedInParamList, 'Community'>;
+
+const CommunityScreen = ({navigation}: Props) => {
+  const [posts, setPosts] = useState<FetchCommunityPostsResponse>([]);
+
   const isFocused = useIsFocused();
-  const navigation = useNavigation<NavigationProp<LoggedInParamList>>();
-  const [posts, setPosts] = useState<any[]>([]);
+
+  const renderItem = ({item}: {item: CommunityEntity}) => {
+    return <RecommendedPostItem item={item} />;
+  };
+
+  const onPressFAB = () => {
+    navigation.navigate('CommunityPostForm');
+  };
 
   const getPosts = useCallback(() => {
-    const params = {};
-    fetchCommunityPosts(params)
-      .then(({data}: any) => {
+    fetchCommunityPosts()
+      .then(({data}) => {
         setPosts(data);
       })
-      .catch((e: any) => {
-        toast.error({message: e.message});
+      .catch(error => {
+        if (isAxiosError(error)) {
+          toast.error({message: error.message});
+        }
       });
   }, []);
+
   useEffect(() => {
     if (isFocused) {
       getPosts();
     }
   }, [getPosts, isFocused]);
 
-  const FILTER = [
-    {
-      value: '전체',
-      active: true,
-    },
-    {
-      value: '필라테스',
-      active: false,
-    },
-    {
-      value: '요가',
-      active: false,
-    },
-    {
-      value: '채널',
-      active: false,
-    },
-    {
-      value: '채널',
-      active: false,
-    },
-    {
-      value: '채널',
-      active: false,
-    },
-    {
-      value: '채널',
-      active: false,
-    },
-    {
-      value: '채널',
-      active: false,
-    },
-  ];
-
-  function renderItem({item}: any) {
-    return <RecommendedPostItem item={item} />;
-  }
-
-  const moveToForm = () => {
-    navigation.navigate('CommunityPostForm');
-  };
-
   return (
     <View style={styles.container}>
       {/* 필터 영역 */}
       <View style={styles.filterContainer}>
         <FlatList
+          contentContainerStyle={{marginHorizontal: 16}}
           horizontal={true}
           data={FILTER}
           renderItem={({item}) => (
@@ -104,36 +106,42 @@ function CommunityScreen() {
         />
       </View>
       {/* 필터 영역 */}
-
-      <FlatList
-        data={posts}
-        keyExtractor={(item, index) => index.toString()}
-        renderItem={renderItem}
-        ListHeaderComponent={() => (
-          <View style={common.mb16}>
-            <Text style={[common.title]}>최근 게시글</Text>
-          </View>
-        )}
-        ItemSeparatorComponent={() => (
-          <View style={[common.separator, common.mv16]} />
-        )}
-        showsVerticalScrollIndicator={false}
-      />
-
-      <FloatingWriteButton
-        icon={iconPath.PENCIL_W}
-        job={moveToForm}
-        bottom={16}
-      />
+      <View style={{marginHorizontal: 16}}>
+        <FlatList
+          data={posts}
+          keyExtractor={(_, index) => index.toString()}
+          renderItem={renderItem}
+          contentContainerStyle={{marginTop: 16}}
+          ListHeaderComponent={() => (
+            <View style={common.mb16}>
+              <Text style={[common.title]}>최근 게시글</Text>
+            </View>
+          )}
+          ItemSeparatorComponent={() => (
+            <View style={[common.separator, common.mv16]} />
+          )}
+          showsVerticalScrollIndicator={false}
+        />
+      </View>
+      <View style={styles.fabContainer}>
+        <FloatingActionButton
+          iconSource={iconPath.PENCIL_W}
+          onPress={onPressFAB}
+        />
+      </View>
     </View>
   );
-}
+};
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    padding: 16,
     backgroundColor: WHITE,
+  },
+  fabContainer: {
+    position: 'absolute',
+    bottom: 16,
+    right: 16,
   },
   filterContainer: {
     paddingVertical: 8,

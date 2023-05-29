@@ -1,4 +1,28 @@
+import {YesNoFlag} from '../common';
 import {MemberLinkEntity, MemberReputationEntity} from './entities';
+
+export interface FetchInstructorsParams {
+  noPaging?: boolean;
+  curPage?: number;
+  perPage?: number;
+  fields?: string;
+}
+
+export type Instructor = {
+  seq: number;
+  name: string;
+  nickname: string;
+  field: string;
+  address: string;
+  career: string;
+  followerCount: number;
+  isFollow: YesNoFlag;
+  profileImage: {
+    originFileUrl: string;
+  };
+};
+
+export type FetchInstructorsResponse = Instructor[];
 
 export interface FetchInstructorResponse {
   seq: number;

@@ -1,11 +1,6 @@
 import {Pressable, SafeAreaView, StyleSheet, Text} from 'react-native';
 
-import {
-  NavigationProp,
-  RouteProp,
-  useNavigation,
-  useRoute,
-} from '@react-navigation/native';
+import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import ProfileScreenTabView from '@screen/ProfileScreenTabView';
 import {WHITE} from '@styles/colors';
 import common from '@styles/common';
@@ -13,9 +8,9 @@ import {useState} from 'react';
 import LinearGradient from 'react-native-linear-gradient';
 import {LoggedInParamList} from '../../AppInner';
 
-const ProfileScreen = () => {
-  const navigation = useNavigation<NavigationProp<LoggedInParamList>>();
-  const route = useRoute<RouteProp<LoggedInParamList, 'Profile'>>();
+type Props = NativeStackScreenProps<LoggedInParamList, 'Profile'>;
+
+const ProfileScreen = ({navigation, route}: Props) => {
   const [memberSeq] = useState(route.params.memberSeq);
 
   return (

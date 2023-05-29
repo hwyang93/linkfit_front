@@ -1,3 +1,9 @@
+import {iconPath} from '@/utils/iconPath';
+import EmptySet from '@components/EmptySet';
+import FloatingLinkButton from '@components/FloatingLinkButton';
+import {NativeStackScreenProps} from '@react-navigation/native-stack';
+import {BLUE, GRAY, WHITE} from '@styles/colors';
+import common from '@styles/common';
 import {
   Image,
   Pressable,
@@ -6,33 +12,29 @@ import {
   Text,
   View,
 } from 'react-native';
-import {BLUE, GRAY, WHITE} from '@styles/colors';
-import common from '@styles/common';
 import {SafeAreaView} from 'react-native-safe-area-context';
-import {iconPath} from '@/utils/iconPath';
-import EmptySet from '@components/EmptySet';
-import FloatingLinkButton from '@components/FloatingLinkButton';
-import {NavigationProp, useNavigation} from '@react-navigation/native';
 import {LoggedInParamList} from '../../../AppInner';
 
-function InquiryScreen() {
-  const navigation = useNavigation<NavigationProp<LoggedInParamList>>();
-  const DATA = [
-    {
-      title: '문의 제목입니다.',
-      date: '2023.01.30',
-      finished: false,
-    },
-    {
-      title: '문의를 했는데 문희가 어떻게 됨?',
-      date: '2023.01.30',
-      finished: true,
-    },
-  ];
+const DATA = [
+  {
+    title: '문의 제목입니다.',
+    date: '2023.01.30',
+    finished: false,
+  },
+  {
+    title: '문의를 했는데 문희가 어떻게 됨?',
+    date: '2023.01.30',
+    finished: true,
+  },
+];
 
+type Props = NativeStackScreenProps<LoggedInParamList, 'Inquiry'>;
+
+const InquiryScreen = ({navigation}: Props) => {
   const toInquiry = () => {
     navigation.navigate('InquiryForm');
   };
+
   return (
     <SafeAreaView edges={['bottom', 'left', 'right']} style={styles.container}>
       {DATA.length > 0 ? (
@@ -95,7 +97,7 @@ function InquiryScreen() {
       />
     </SafeAreaView>
   );
-}
+};
 
 const styles = StyleSheet.create({
   container: {flex: 1, padding: 16, backgroundColor: WHITE},

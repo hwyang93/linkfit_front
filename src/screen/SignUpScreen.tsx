@@ -1,14 +1,12 @@
 import CTAButton from '@/components/Common/CTAButton';
-import {RouteProp, useRoute} from '@react-navigation/native';
+import {AuthStackParamList} from '@/navigations/AuthStack';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import common from '@styles/common';
 import {StyleSheet, Text, View} from 'react-native';
-import {LoggedInParamList} from '../../AppInner';
-type SignInScreenProps = NativeStackScreenProps<LoggedInParamList, 'SignUp'>;
 
-function SignUp({navigation}: SignInScreenProps) {
-  const route = useRoute<RouteProp<LoggedInParamList, 'SignUp'>>();
-  console.log('signup', route);
+type Props = NativeStackScreenProps<AuthStackParamList, 'SignUp'>;
+
+const SignUpScreen = ({navigation, route}: Props) => {
   return (
     <View style={styles.container}>
       <View style={common.mt40}>
@@ -38,11 +36,11 @@ function SignUp({navigation}: SignInScreenProps) {
       </View>
     </View>
   );
-}
+};
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     paddingHorizontal: 16,
   },
 });
-export default SignUp;
+export default SignUpScreen;

@@ -1,104 +1,150 @@
 import {
+  CreateMemberDto,
+  CreateMemberReputationDto,
+  CreateRegionAuthDto,
+  UpdateMemberReputationDto,
+  UpdatePositionSuggestDto,
+} from '@/types/api/dtos';
+import {
+  FetchCheckNicknameResponse,
   FetchMemberFollowingsParams,
   FetchMemberFollowingsResponse,
+  FetchMemberInfoByEmailResponse,
+  FetchMemberInfoBySeqResponse,
   FetchMemberInfoResponse,
+  FetchMemberLicencesResponse,
+  FetchMemberMyInfoResponse,
+  FetchMemberReputationsResponse,
+  FetchPositionSuggestResponse,
+  FetchReceivePositionSuggestsParams,
+  FetchReceivePositionSuggestsResponse,
+  FetchRecruitByMemberResponse,
+  FetchRegionAuthResponse,
+  FetchSendPositionSuggestsParams,
+  FetchSendPositionSuggestsResponse,
 } from '@/types/api/member';
+import {DeleteResponse, PostResponse} from '@/types/common';
 import request from './request';
 
-export function createMember(data: object) {
-  return request.post('/member', data);
-}
+export const createMember = (data: CreateMemberDto) => {
+  return request.post<PostResponse>('/member', data);
+};
 
-export function fetchMemberInfo() {
+export const fetchMemberInfo = () => {
   return request.get<FetchMemberInfoResponse>('/member');
-}
+};
 
-export function fetchMemberInfoByEmail(email: string) {
-  return request.get(`/member/check/email/${email}`);
-}
+export const fetchMemberInfoByEmail = (email: string) => {
+  return request.get<FetchMemberInfoByEmailResponse>(
+    `/member/check/email/${email}`,
+  );
+};
 
-export function fetchCheckNickname(nickname: string) {
-  return request.get(`/member/check/nickname/${nickname}`);
-}
+export const fetchCheckNickname = (nickname: string) => {
+  return request.get<FetchCheckNicknameResponse>(
+    `/member/check/nickname/${nickname}`,
+  );
+};
 
-export function fetchMemberMyInfo() {
-  return request.get('/member/my');
-}
+export const fetchMemberMyInfo = () => {
+  return request.get<FetchMemberMyInfoResponse>('/member/my');
+};
 
-export function updateProfile(data: object) {
+// TODO: Response 타입 추가
+// TODO: data 타입 확인
+export const updateProfile = (data: FormData) => {
   return request.patch('/member/profile', data, {
     headers: {'content-type': 'multipart/form-data'},
   });
-}
+};
 
-export function createRegionAuth(data: object) {
-  return request.post('/member/region', data);
-}
+export const createRegionAuth = (data: CreateRegionAuthDto) => {
+  return request.post<PostResponse>('/member/region', data);
+};
 
-export function fetchRegionAuth() {
-  return request.get('/member/region');
-}
+export const fetchRegionAuth = () => {
+  return request.get<FetchRegionAuthResponse>('/member/region');
+};
 
-export function deleteRegionAuth(seq: number) {
-  return request.delete(`/member/region/${seq}`);
-}
+export const deleteRegionAuth = (seq: number) => {
+  return request.delete<DeleteResponse>(`/member/region/${seq}`);
+};
 
-export function fetchMemberLicences(params: object) {
-  return request.get('/member/licence', {params});
-}
+export const fetchMemberLicences = () => {
+  return request.get<FetchMemberLicencesResponse>('/member/licence');
+};
 
-export function createMemberLicence(data: object) {
-  return request.post('/member/licence', data, {
+export const createMemberLicence = (data: FormData) => {
+  return request.post<PostResponse>('/member/licence', data, {
     headers: {'content-type': 'multipart/form-data'},
   });
-}
+};
 
-export function cancelMemberLicence(seq: number) {
+// TODO: Response 타입 추가
+export const cancelMemberLicence = (seq: number) => {
   return request.patch(`/member/licence/${seq}`);
-}
+};
 
-export function fetchMemberReputations() {
-  return request.get('/member/reputation');
-}
+export const fetchMemberReputations = () => {
+  return request.get<FetchMemberReputationsResponse>('/member/reputation');
+};
 
-export function createReview(data: object) {
-  return request.post('/member/reputation', data);
-}
+export const createReview = (data: CreateMemberReputationDto) => {
+  return request.post<PostResponse>('/member/reputation', data);
+};
 
-export function updateMemberReputation(seq: number, data: object) {
+// TODO: Response 타입 추가
+export const updateMemberReputation = (
+  seq: number,
+  data: UpdateMemberReputationDto,
+) => {
   return request.patch(`/member/reputation/${seq}`, data);
-}
+};
 
-export function deleteMemberReputation(seq: number) {
-  return request.delete(`/member/reputation/${seq}`);
-}
+export const deleteMemberReputation = (seq: number) => {
+  return request.delete<DeleteResponse>(`/member/reputation/${seq}`);
+};
 
-export function fetchReceivePositionSuggests() {
-  return request.get('/member/suggest/to');
-}
+export const fetchReceivePositionSuggests = (
+  params?: FetchReceivePositionSuggestsParams,
+) => {
+  return request.get<FetchReceivePositionSuggestsResponse>(
+    '/member/suggest/to',
+    {params},
+  );
+};
 
-export function fetchSendPositionSuggests() {
-  return request.get('/member/suggest/from');
-}
+export const fetchSendPositionSuggests = (
+  params?: FetchSendPositionSuggestsParams,
+) => {
+  return request.get<FetchSendPositionSuggestsResponse>(
+    '/member/suggest/from',
+    {params},
+  );
+};
 
-export function fetchPositionSuggest(seq: number) {
-  return request.get(`/member/suggest/${seq}`);
-}
+export const fetchPositionSuggest = (seq: number) => {
+  return request.get<FetchPositionSuggestResponse>(`/member/suggest/${seq}`);
+};
 
-export function updatePositionSuggestStatus(seq: number, data: object) {
+// TODO: Response 타입 추가
+export const updatePositionSuggestStatus = (
+  seq: number,
+  data: UpdatePositionSuggestDto,
+) => {
   return request.patch(`/member/suggest/${seq}`, data);
-}
+};
 
-export function fetchMemberFollowings({type}: FetchMemberFollowingsParams) {
+export const fetchMemberFollowings = ({type}: FetchMemberFollowingsParams) => {
   return request.get<FetchMemberFollowingsResponse>(
     `/member/following/${type}`,
   );
-}
+};
 
-export function fetchMemberInfoBySeq(seq: number) {
-  return request.get(`/member/${seq}`);
-}
+export const fetchMemberInfoBySeq = (seq: number) => {
+  return request.get<FetchMemberInfoBySeqResponse>(`/member/${seq}`);
+};
 
-export function fetchRecruitByMember(seq: number) {
-  return request.get(`/member/${seq}/recruit`);
-}
+export const fetchRecruitByMember = (seq: number) => {
+  return request.get<FetchRecruitByMemberResponse>(`/member/${seq}/recruit`);
+};

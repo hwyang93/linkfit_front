@@ -1,21 +1,9 @@
-import common from '@styles/common';
-import {Image, Pressable, StyleSheet, Text, View} from 'react-native';
 import {iconPath} from '@/utils/iconPath';
 import {BLUE} from '@styles/colors';
+import common from '@styles/common';
+import {Image, Pressable, StyleSheet, Text, View} from 'react-native';
 
-type UserProps = {
-  data: {
-    id: number;
-    image: any;
-    nickname: string;
-    certified: boolean;
-    field: string;
-    career: string;
-    job: () => void;
-  };
-};
-
-function CommunityUserComponent({writerInfo}: any) {
+const CommunityUserComponent: React.FC<any> = ({writerInfo}) => {
   return (
     <View style={common.row}>
       <Image
@@ -70,7 +58,7 @@ function CommunityUserComponent({writerInfo}: any) {
       </Pressable>
     </View>
   );
-}
+};
 
 const styles = StyleSheet.create({
   kebabIcon: {position: 'absolute', top: 16, right: 0},

@@ -1,17 +1,10 @@
-import {Alert, Image, Pressable, View} from 'react-native';
-// import {useNavigation} from '@react-navigation/native';
 import {iconPath} from '@/utils/iconPath';
 import common from '@styles/common';
+import {Alert, Image, Pressable, View} from 'react-native';
 
-type HeaderRightProps = {
-  // canGoBack: boolean;
-  // tintColor?: string;
-};
+// TODO : props 에 따른 헤더 형태 변경
 
-// todo : props 에 따른 헤더 형태 변경
-
-// const HeaderLeft: React.FC<HeaderLeftProps> = ({canGoBack, tintColor}) => {
-const HeaderRight = ({}: HeaderRightProps) => {
+const HeaderRight: React.FC = () => {
   // const navigation = useNavigation();
 
   return (

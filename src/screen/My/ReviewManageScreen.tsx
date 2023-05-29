@@ -5,7 +5,7 @@ import {createMaterialTopTabNavigator} from '@react-navigation/material-top-tabs
 
 const Tab = createMaterialTopTabNavigator();
 
-const ReviewManageScreen: React.FC = () => {
+const ReviewManageScreen = () => {
   return (
     <Tab.Navigator screenOptions={materialTopTabNavigationOptions}>
       <Tab.Screen name="구직" component={EmployeeReviewComponent} />

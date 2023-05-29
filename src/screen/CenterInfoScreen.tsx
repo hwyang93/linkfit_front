@@ -1,27 +1,19 @@
-import {FetchCompanyResponse} from '@/types/api/company';
-import {MemberReputationEntity, RecruitEntity} from '@/types/api/entities';
+import {
+  CompanyEntity,
+  MemberReputationEntity,
+  RecruitEntity,
+} from '@/types/api/entities';
+import {SCREEN_WIDTH} from '@/utils/constants/common';
 import {fetchCompany} from '@api/company';
 import CenterInfoTop from '@components/CenterInfoTop';
 import EmptySet from '@components/EmptySet';
 import toast from '@hooks/toast';
-import {
-  NavigationProp,
-  RouteProp,
-  useNavigation,
-  useRoute,
-} from '@react-navigation/native';
+import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import {BLUE, GRAY, WHITE} from '@styles/colors';
 import common from '@styles/common';
 import {isAxiosError} from 'axios';
 import {useCallback, useEffect, useState} from 'react';
-import {
-  Dimensions,
-  Image,
-  Pressable,
-  StyleSheet,
-  Text,
-  View,
-} from 'react-native';
+import {Image, Pressable, StyleSheet, Text, View} from 'react-native';
 import {
   MaterialTabBar,
   TabBarProps,
@@ -29,7 +21,7 @@ import {
 } from 'react-native-collapsible-tab-view';
 import {LoggedInParamList} from '../../AppInner';
 
-const width = Dimensions.get('window').width - 32;
+const width = SCREEN_WIDTH - 32;
 const tabWidth = width / 2;
 const imageSize = (width - 6) / 3;
 
@@ -48,11 +40,10 @@ const tabBar = (props: TabBarProps) => (
   />
 );
 
-const CenterInfoScreen: React.FC = () => {
-  const route = useRoute<RouteProp<LoggedInParamList, 'CenterInfo'>>();
-  const navigation = useNavigation<NavigationProp<LoggedInParamList>>();
-  const [centerInfo, setCenterInfo] =
-    useState<Pick<FetchCompanyResponse, 'companyInfo'>>();
+type Props = NativeStackScreenProps<LoggedInParamList, 'CenterInfo'>;
+
+const CenterInfoScreen = ({navigation, route}: Props) => {
+  const [centerInfo, setCenterInfo] = useState<CompanyEntity>();
   const [recruits, setRecruits] = useState<RecruitEntity[]>();
   const [reputations, setReputations] = useState<MemberReputationEntity[]>();
 

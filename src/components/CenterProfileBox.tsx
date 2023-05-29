@@ -1,12 +1,12 @@
-import {Alert, Image, Pressable, StyleSheet, Text, View} from 'react-native';
-import common from '@styles/common';
 import {iconPath} from '@/utils/iconPath';
-import {GRAY} from '@styles/colors';
-import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import {NavigationProp, useNavigation} from '@react-navigation/native';
+import {GRAY} from '@styles/colors';
+import common from '@styles/common';
+import {Alert, Image, Pressable, StyleSheet, Text, View} from 'react-native';
+import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import {LoggedInParamList} from '../../AppInner';
 
-function ProfileBox({memberInfo}: any) {
+const ProfileBox: React.FC<any> = ({memberInfo}) => {
   const navigation = useNavigation<NavigationProp<LoggedInParamList>>();
 
   return (
@@ -55,7 +55,7 @@ function ProfileBox({memberInfo}: any) {
       </Pressable>
     </View>
   );
-}
+};
 
 const styles = StyleSheet.create({
   container: {

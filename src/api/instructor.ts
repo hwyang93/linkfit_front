@@ -1,18 +1,28 @@
-import {FetchInstructorResponse} from '@/types/api/instructor';
+import {CreateinstructorSuggestDto} from '@/types/api/dtos';
+import {
+  FetchInstructorResponse,
+  FetchInstructorsParams,
+  FetchInstructorsResponse,
+} from '@/types/api/instructor';
+import {AxiosResponseWithPagingInfo, PostResponse} from '@/types/common';
 import request from './request';
 
-export function fetchInstructors() {
-  return request.get('/instructor');
-}
+// TODO: data 바깥 타입 지정하는 방법 찾아보기
+export const fetchInstructors = (
+  params?: FetchInstructorsParams,
+): Promise<AxiosResponseWithPagingInfo<FetchInstructorsResponse>> => {
+  return request.get<FetchInstructorsResponse>('/instructor', {params});
+};
 
-export function fetchInstructor(seq: number) {
+export const fetchInstructor = (seq: number) => {
   return request.get<FetchInstructorResponse>(`/instructor/${seq}`);
-}
+};
 
-export function createInstructorSuggest(data: object) {
-  return request.post('/instructor/suggest', data);
-}
+export const createInstructorSuggest = (data: CreateinstructorSuggestDto) => {
+  return request.post<PostResponse>('/instructor/suggest', data);
+};
 
-export function fetchRecommendedInstructors() {
+// TODO: fetchRecommendedInstructors Response 타입 추가
+export const fetchRecommendedInstructors = () => {
   return request.get('/instructor/recommended');
-}
+};

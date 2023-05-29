@@ -1,43 +1,36 @@
-import {useState, useEffect, useRef} from 'react';
+import {SCREEN_WIDTH} from '@/utils/constants/common';
+import {iconPath} from '@/utils/iconPath';
+import CenterInfoTop from '@components/CenterInfoTop';
+import {NavigationProp, useNavigation} from '@react-navigation/native';
+import {BLUE, GRAY, WHITE} from '@styles/colors';
+import common from '@styles/common';
+import {useEffect, useRef, useState} from 'react';
 import {
-  StyleSheet,
-  View,
-  Text,
-  Dimensions,
+  Alert,
   Animated,
+  Image,
   PanResponder,
   Platform,
-  Alert,
-  StatusBar,
-  Image,
   Pressable,
+  StatusBar,
+  StyleSheet,
+  Text,
+  View,
 } from 'react-native';
-import {TabView, TabBar} from 'react-native-tab-view';
-import common from '@styles/common';
-import {iconPath} from '@/utils/iconPath';
-import {BLUE, GRAY, WHITE} from '@styles/colors';
-import {
-  NavigationProp,
-  RouteProp,
-  useNavigation,
-  useRoute,
-} from '@react-navigation/native';
+import {TabBar, TabView} from 'react-native-tab-view';
 import {LoggedInParamList} from '../../AppInner';
-import CenterInfoTop from '@components/CenterInfoTop';
 
-const windowHeight = Dimensions.get('window').height;
-const windowWidth = Dimensions.get('window').width;
-const TabBarHeight = 48;
-const HeaderHeight = 580;
+const TAB_BAR_HEIGHT = 48;
+const HEADER_HEIGHT = 580;
+
 const SafeStatusBar = Platform.select({
   ios: 44,
   android: StatusBar.currentHeight,
 });
 
-const imageSize = (windowWidth - 38) / 3;
+const imageSize = (SCREEN_WIDTH - 38) / 3;
 
-function CenterInfoScreenTabView() {
-  const route = useRoute<RouteProp<LoggedInParamList, 'CenterInfo'>>();
+const CenterInfoScreenTabView = () => {
   const navigation = useNavigation<NavigationProp<LoggedInParamList>>();
 
   // stats
@@ -83,20 +76,20 @@ function CenterInfoScreenTabView() {
   // PanResponder for header
   const headerPanResponder = useRef(
     PanResponder.create({
-      onStartShouldSetPanResponderCapture: (evt, gestureState) => false,
-      onMoveShouldSetPanResponderCapture: (evt, gestureState) => false,
-      onStartShouldSetPanResponder: (evt, gestureState) => {
+      onStartShouldSetPanResponderCapture: () => false,
+      onMoveShouldSetPanResponderCapture: () => false,
+      onStartShouldSetPanResponder: () => {
         headerScrollY.stopAnimation();
         syncScrollOffset();
         return false;
       },
 
-      onMoveShouldSetPanResponder: (evt, gestureState) => {
+      onMoveShouldSetPanResponder: (_, gestureState) => {
         headerScrollY.stopAnimation();
         return Math.abs(gestureState.dy) > 5;
       },
 
-      onPanResponderRelease: (evt, gestureState) => {
+      onPanResponderRelease: (_, gestureState) => {
         syncScrollOffset();
         if (Math.abs(gestureState.vy) < 0.2) {
           return;
@@ -109,7 +102,7 @@ function CenterInfoScreenTabView() {
           syncScrollOffset();
         });
       },
-      onPanResponderMove: (evt, gestureState) => {
+      onPanResponderMove: (_, gestureState) => {
         listRefArr.current.forEach(item => {
           if (item.key !== routes[_tabIndex.current].key) {
             return;
@@ -123,7 +116,7 @@ function CenterInfoScreenTabView() {
         });
       },
       onShouldBlockNativeResponder: () => true,
-      onPanResponderGrant: (evt, gestureState) => {
+      onPanResponderGrant: () => {
         headerScrollStart.current = scrollY._value;
       },
     }),
@@ -132,15 +125,15 @@ function CenterInfoScreenTabView() {
   // PanResponder for list in tab scene
   const listPanResponder = useRef(
     PanResponder.create({
-      onStartShouldSetPanResponderCapture: (evt, gestureState) => false,
-      onMoveShouldSetPanResponderCapture: (evt, gestureState) => false,
-      onStartShouldSetPanResponder: (evt, gestureState) => false,
-      onMoveShouldSetPanResponder: (evt, gestureState) => {
+      onStartShouldSetPanResponderCapture: () => false,
+      onMoveShouldSetPanResponderCapture: () => false,
+      onStartShouldSetPanResponder: () => false,
+      onMoveShouldSetPanResponder: () => {
         headerScrollY.stopAnimation();
         return false;
       },
       onShouldBlockNativeResponder: () => true,
-      onPanResponderGrant: (evt, gestureState) => {
+      onPanResponderGrant: () => {
         headerScrollY.stopAnimation();
       },
     }),
@@ -158,11 +151,11 @@ function CenterInfoScreenTabView() {
         if (item.key !== routes[tabIndex].key) {
           return;
         }
-        if (value > HeaderHeight || value < 0) {
+        if (value > HEADER_HEIGHT || value < 0) {
           headerScrollY.stopAnimation();
           syncScrollOffset();
         }
-        if (item.value && value <= HeaderHeight) {
+        if (item.value && value <= HEADER_HEIGHT) {
           item.value.scrollToOffset({
             offset: value,
             animated: false,
@@ -182,7 +175,7 @@ function CenterInfoScreenTabView() {
 
     listRefArr.current.forEach(item => {
       if (item.key !== curRouteKey) {
-        if (scrollY._value < HeaderHeight && scrollY._value >= 0) {
+        if (scrollY._value < HEADER_HEIGHT && scrollY._value >= 0) {
           if (item.value) {
             item.value.scrollToOffset({
               offset: scrollY._value,
@@ -190,17 +183,17 @@ function CenterInfoScreenTabView() {
             });
             listOffset.current[item.key] = scrollY._value;
           }
-        } else if (scrollY._value >= HeaderHeight) {
+        } else if (scrollY._value >= HEADER_HEIGHT) {
           if (
-            listOffset.current[item.key] < HeaderHeight ||
+            listOffset.current[item.key] < HEADER_HEIGHT ||
             listOffset.current[item.key] == null
           ) {
             if (item.value) {
               item.value.scrollToOffset({
-                offset: HeaderHeight,
+                offset: HEADER_HEIGHT,
                 animated: false,
               });
-              listOffset.current[item.key] = HeaderHeight;
+              listOffset.current[item.key] = HEADER_HEIGHT;
             }
           }
         }
@@ -224,8 +217,8 @@ function CenterInfoScreenTabView() {
   // render Helper
   const renderHeader = () => {
     const y = scrollY.interpolate({
-      inputRange: [0, HeaderHeight],
-      outputRange: [0, -HeaderHeight],
+      inputRange: [0, HEADER_HEIGHT],
+      outputRange: [0, -HEADER_HEIGHT],
       extrapolate: 'clamp',
     });
     return (
@@ -346,7 +339,7 @@ function CenterInfoScreenTabView() {
     );
   };
 
-  const renderScene = ({route}) => {
+  const renderScene = ({route}: any) => {
     const focused = route.key === routes[tabIndex].key;
     let numCols;
     let data;
@@ -407,9 +400,9 @@ function CenterInfoScreenTabView() {
         ListHeaderComponent={ListHeaderComponent}
         ListFooterComponent={ListFooterComponent}
         contentContainerStyle={{
-          paddingTop: HeaderHeight + TabBarHeight + 7,
+          paddingTop: HEADER_HEIGHT + TAB_BAR_HEIGHT + 7,
           paddingHorizontal: 16,
-          minHeight: windowHeight - SafeStatusBar + HeaderHeight,
+          minHeight: windowHeight - SafeStatusBar + HEADER_HEIGHT,
         }}
         showsHorizontalScrollIndicator={false}
         data={data}
@@ -422,8 +415,8 @@ function CenterInfoScreenTabView() {
 
   const renderTabBar = (props: any) => {
     const y = scrollY.interpolate({
-      inputRange: [0, HeaderHeight],
-      outputRange: [HeaderHeight, 0],
+      inputRange: [0, HEADER_HEIGHT],
+      outputRange: [HEADER_HEIGHT, 0],
       extrapolate: 'clamp',
     });
     return (
@@ -438,7 +431,7 @@ function CenterInfoScreenTabView() {
         {/* 강사소개 강사 후기 탭바 */}
         <TabBar
           {...props}
-          onTabPress={({route, preventDefault}) => {
+          onTabPress={({_, preventDefault}) => {
             if (isListGliding.current) {
               preventDefault();
             }
@@ -465,7 +458,7 @@ function CenterInfoScreenTabView() {
         renderTabBar={renderTabBar}
         initialLayout={{
           height: 0,
-          width: windowWidth,
+          width: SCREEN_WIDTH,
         }}
       />
     );
@@ -477,7 +470,7 @@ function CenterInfoScreenTabView() {
       {renderHeader()}
     </View>
   );
-}
+};
 
 const styles = StyleSheet.create({
   container: {
@@ -485,7 +478,7 @@ const styles = StyleSheet.create({
     backgroundColor: WHITE,
   },
   header: {
-    height: HeaderHeight,
+    height: HEADER_HEIGHT,
     width: '100%',
     position: 'absolute',
     padding: 16,
@@ -498,7 +491,7 @@ const styles = StyleSheet.create({
     elevation: 0,
     shadowOpacity: 0,
     backgroundColor: WHITE,
-    height: TabBarHeight,
+    height: TAB_BAR_HEIGHT,
     borderBottomWidth: 1,
     borderColor: GRAY.LIGHT,
     marginHorizontal: 16,

@@ -1,5 +1,8 @@
+import BlockButton from '@components/BlockButton';
+import EmptySet from '@components/EmptySet';
+import {GRAY} from '@styles/colors';
+import common from '@styles/common';
 import {
-  Alert,
   Image,
   Pressable,
   ScrollView,
@@ -7,39 +10,37 @@ import {
   Text,
   View,
 } from 'react-native';
-import {GRAY} from '@styles/colors';
-import hairlineWidth = StyleSheet.hairlineWidth;
-import common from '@styles/common';
-import {NavigationProp, useNavigation} from '@react-navigation/native';
-import {LoggedInParamList} from '../../../AppInner';
-import BlockButton from '@components/BlockButton';
-import EmptySet from '@components/EmptySet';
 
-function BlockCenterComponent() {
-  const navigation = useNavigation<NavigationProp<LoggedInParamList>>();
-  const BLACKLIST = [
-    {
-      image: require('@images/center_01.png'),
-      title: '링크 필라테스',
-      field: '필라테스',
-      location: '서울 · 송파구',
-      phoneNumber: '',
-      message: '',
-      favorite: '',
-      blocked: true,
-    },
-    {
-      image: require('@images/center_02.png'),
-      title: '링크 필라테스',
-      field: '필라테스',
-      location: '서울 · 송파구',
-      phoneNumber: '',
-      message: '',
-      favorite: '',
-      blocked: true,
-    },
-  ];
+import hairlineWidth = StyleSheet.hairlineWidth;
+
+const BLACKLIST = [
+  {
+    image: require('@images/center_01.png'),
+    title: '링크 필라테스',
+    field: '필라테스',
+    location: '서울 · 송파구',
+    phoneNumber: '',
+    message: '',
+    favorite: '',
+    blocked: true,
+  },
+  {
+    image: require('@images/center_02.png'),
+    title: '링크 필라테스',
+    field: '필라테스',
+    location: '서울 · 송파구',
+    phoneNumber: '',
+    message: '',
+    favorite: '',
+    blocked: true,
+  },
+];
+
+const BlockCenterComponent: React.FC = () => {
+  // const navigation = useNavigation<NavigationProp<LoggedInParamList>>();
+
   const onBlock = () => {};
+
   return (
     <>
       {BLACKLIST.length > 0 ? (
@@ -47,7 +48,8 @@ function BlockCenterComponent() {
           {BLACKLIST.map((item, index) => {
             return (
               <View key={index} style={styles.listBox}>
-                <Pressable onPress={() => navigation.navigate('CenterInfo')}>
+                {/* TODO: CenterInfo 스크린 퍼러미터로 memberSeq이 필요함 */}
+                <Pressable onPress={() => {}}>
                   <View style={common.mb16}>
                     <Image
                       source={item.image}
@@ -84,7 +86,7 @@ function BlockCenterComponent() {
       )}
     </>
   );
-}
+};
 const styles = StyleSheet.create({
   listBox: {
     paddingVertical: 16,

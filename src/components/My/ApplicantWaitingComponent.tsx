@@ -4,7 +4,7 @@ import ApplicantListItem from '@components/My/ApplicantListItem';
 import TopFilter from '@components/TopFilter';
 import {BLUE, WHITE} from '@styles/colors';
 import common from '@styles/common';
-import {SetStateAction, useCallback, useEffect, useState} from 'react';
+import {useCallback, useEffect, useState} from 'react';
 import {
   Image,
   Pressable,
@@ -14,15 +14,14 @@ import {
   View,
 } from 'react-native';
 
-function ApplicantWaitingComponent({list}: any) {
-  // const navigation = useNavigation<NavigationProp<LoggedInParamList>>();
-  const [modalVisible, setModalVisible] =
-    useState<SetStateAction<boolean>>(false);
-
+const ApplicantWaitingComponent: React.FC<any> = ({list}) => {
+  const [modalVisible, setModalVisible] = useState(false);
   const [modalTitle, setModalTitle] = useState('');
   const [modalData, setModalData] = useState<any[]>([]);
   const [applications, setApplications] = useState<any[]>([]);
   const [selectedFilter, setSelectedFilter] = useState('');
+
+  // const navigation = useNavigation<NavigationProp<LoggedInParamList>>();
 
   useEffect(() => {
     setApplications(list);
@@ -141,7 +140,7 @@ function ApplicantWaitingComponent({list}: any) {
       />
     </>
   );
-}
+};
 
 const styles = StyleSheet.create({
   container: {

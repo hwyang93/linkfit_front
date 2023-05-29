@@ -1,3 +1,10 @@
+import {createReview, updateMemberReputation} from '@api/member';
+import Input, {KeyboardTypes} from '@components/Input';
+import toast from '@hooks/toast';
+import {NativeStackScreenProps} from '@react-navigation/native-stack';
+import {WHITE} from '@styles/colors';
+import common from '@styles/common';
+import {useCallback, useEffect, useState} from 'react';
 import {
   ActivityIndicator,
   Pressable,
@@ -5,25 +12,13 @@ import {
   Text,
   View,
 } from 'react-native';
-import common from '@styles/common';
-import {WHITE} from '@styles/colors';
-import Input, {KeyboardTypes} from '@components/Input';
-import {useCallback, useEffect, useState} from 'react';
 import LinearGradient from 'react-native-linear-gradient';
-import {
-  NavigationProp,
-  RouteProp,
-  useNavigation,
-  useRoute,
-} from '@react-navigation/native';
 import {LoggedInParamList} from '../../../AppInner';
-import {createReview, updateMemberReputation} from '@api/member';
-import toast from '@hooks/toast';
 
-function ReviewFormScreen() {
-  const [loading, setLoading] = useState<boolean>(false);
-  const navigation = useNavigation<NavigationProp<LoggedInParamList>>();
-  const route = useRoute<RouteProp<LoggedInParamList, 'ReviewForm'>>();
+type Props = NativeStackScreenProps<LoggedInParamList, 'ReviewForm'>;
+
+const ReviewFormScreen = ({navigation, route}: Props) => {
+  const [loading, setLoading] = useState(false);
   const [reputationInfo] = useState<any>(route.params.reputationInfo);
   const [comment, setComment] = useState(reputationInfo?.comment);
   const [status, setStatus] = useState('');
@@ -42,11 +37,17 @@ function ReviewFormScreen() {
         navigation.goBack();
         setLoading(false);
       })
-      .catch((e: any) => {
+      .catch(error => {
         setLoading(false);
-        toast.error({message: e.message});
+        toast.error({message: error.message});
       });
-  }, [comment, reputationInfo?.seq]);
+  }, [
+    comment,
+    reputationInfo.evaluationMemberSeq,
+    reputationInfo.recruitSeq,
+    reputationInfo.targetMemberSeq,
+    navigation,
+  ]);
 
   const onUpdateReputation = useCallback(() => {
     const data = {comment: comment};
@@ -57,11 +58,11 @@ function ReviewFormScreen() {
         navigation.goBack();
         setLoading(false);
       })
-      .catch((e: any) => {
+      .catch(error => {
         setLoading(false);
-        toast.error({message: e.message});
+        toast.error({message: error.message});
       });
-  }, [comment, reputationInfo?.seq]);
+  }, [comment, reputationInfo?.seq, navigation]);
 
   const onSubmitHandler = useCallback(() => {
     if (status === 'create') {
@@ -116,7 +117,7 @@ function ReviewFormScreen() {
       </View>
     </View>
   );
-}
+};
 const styles = StyleSheet.create({
   container: {flex: 1, padding: 16, backgroundColor: WHITE},
 });

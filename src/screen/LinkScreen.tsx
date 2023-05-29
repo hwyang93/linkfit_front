@@ -1,32 +1,31 @@
+import FloatingActionButton from '@/components/Common/FloatingActionButton';
+import {iconPath} from '@/utils/iconPath';
+import {fetchRecommendedInstructors} from '@api/instructor';
+import InstructorListItem from '@components/InstructorListItem';
+import LinkTop from '@components/LinkTop';
+import Modal from '@components/ModalSheet';
+import toast from '@hooks/toast';
+import {useFocusEffect} from '@react-navigation/native';
+import {NativeStackScreenProps} from '@react-navigation/native-stack';
+import {BLUE, WHITE} from '@styles/colors';
+import common from '@styles/common';
+import {isAxiosError} from 'axios';
+import {useCallback, useEffect, useState} from 'react';
 import {
   Alert,
   BackHandler,
   FlatList,
-  StyleSheet,
-  View,
-  Pressable,
-  Text,
   Image,
+  Pressable,
+  StyleSheet,
+  Text,
+  View,
 } from 'react-native';
-import {BLUE, WHITE} from '@styles/colors';
-import common from '@styles/common';
-import LinkTop from '@components/LinkTop';
-import InstructorListItem from '@components/InstructorListItem';
-import {iconPath} from '@/utils/iconPath';
-import FloatingWriteButton from '@components/FloatingWriteButton';
-import Modal from '@components/ModalSheet';
-import {SetStateAction, useCallback, useEffect, useState} from 'react';
-import {fetchRecommendedInstructors} from '@api/instructor';
-import {
-  NavigationProp,
-  useFocusEffect,
-  useNavigation,
-} from '@react-navigation/native';
 import {LoggedInParamList} from '../../AppInner';
-import toast from '@hooks/toast';
 
-function Link() {
-  const navigation = useNavigation<NavigationProp<LoggedInParamList>>();
+type Props = NativeStackScreenProps<LoggedInParamList, 'Link'>;
+
+const LinkScreen = ({navigation}: Props) => {
   const MODAL = [
     {
       value: '구인 공고 등록',
@@ -47,17 +46,18 @@ function Link() {
     },
   ];
 
-  const [modalVisible, setModalVisible] =
-    useState<SetStateAction<boolean>>(false);
-
+  const [modalVisible, setModalVisible] = useState(false);
   const [instructors, setInstructors] = useState<any[]>([]);
+
   useEffect(() => {
     fetchRecommendedInstructors()
-      .then(({data}: any) => {
+      .then(({data}) => {
         setInstructors(data);
       })
-      .catch((e: any) => {
-        toast.error({message: e.message});
+      .catch(error => {
+        if (isAxiosError(error)) {
+          toast.error({message: error.message});
+        }
       });
   }, []);
 
@@ -76,9 +76,9 @@ function Link() {
     }, [navigation]),
   );
 
-  function renderItem({item}: any) {
+  const renderItem = ({item}: any) => {
     return <InstructorListItem item={item} />;
-  }
+  };
 
   const openModal = () => {
     navigation.navigate('JobOfferForm');
@@ -95,11 +95,12 @@ function Link() {
         ItemSeparatorComponent={() => <View style={common.separator} />}
         showsVerticalScrollIndicator={false}
       />
-      <FloatingWriteButton
-        bottom={16}
-        icon={iconPath.PENCIL_W}
-        job={openModal}
-      />
+      <View style={styles.fabContainer}>
+        <FloatingActionButton
+          iconSource={iconPath.PENCIL_W}
+          onPress={openModal}
+        />
+      </View>
       <Modal
         modalVisible={modalVisible}
         setModalVisible={setModalVisible}
@@ -131,14 +132,18 @@ function Link() {
       />
     </View>
   );
-}
+};
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    padding: 16,
     backgroundColor: WHITE,
+  },
+  fabContainer: {
+    position: 'absolute',
+    bottom: 16,
+    right: 16,
   },
 });
 
-export default Link;
+export default LinkScreen;

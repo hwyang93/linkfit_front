@@ -1,56 +1,58 @@
+import {LoggedInParamList} from '@/../AppInner';
+import {FetchRegionAuthResponse} from '@/types/api/member';
+import {IS_ANDROID, IS_IOS} from '@/utils/constants/common';
+import {iconPath} from '@/utils/iconPath';
+import {createRegionAuth, deleteRegionAuth, fetchRegionAuth} from '@api/member';
+import LocationButton from '@components/LocationButton';
+import toast from '@hooks/toast';
+import {NativeStackScreenProps} from '@react-navigation/native-stack';
+import {GRAY, WHITE} from '@styles/colors';
+import common from '@styles/common';
+import axios, {isAxiosError} from 'axios/index';
+import {useCallback, useEffect, useState} from 'react';
 import {
   ActivityIndicator,
   Image,
   PermissionsAndroid,
-  Platform,
   Pressable,
   ScrollView,
   StyleSheet,
   Text,
   View,
 } from 'react-native';
-import {GRAY, WHITE} from '@styles/colors';
-import {useCallback, useEffect, useState} from 'react';
-import common from '@styles/common';
-import LinearGradient from 'react-native-linear-gradient';
-import LocationButton from '@components/LocationButton';
-import axios from 'axios/index';
 import Geolocation from 'react-native-geolocation-service';
-import {iconPath} from '@/utils/iconPath';
-import {createRegionAuth, deleteRegionAuth, fetchRegionAuth} from '@api/member';
-import {SafeAreaView} from 'react-native-safe-area-context';
-import toast from '@hooks/toast';
+import LinearGradient from 'react-native-linear-gradient';
 import MapView, {Marker, PROVIDER_GOOGLE} from 'react-native-maps';
+import {SafeAreaView} from 'react-native-safe-area-context';
 
-async function requestPermission() {
+const requestPermission = async () => {
   try {
     // IOS 위치 정보 수집 권한 요청
-    if (Platform.OS === 'ios') {
+    if (IS_IOS) {
       return await Geolocation.requestAuthorization('always');
     }
     // 안드로이드 위치 정보 수집 권한 요청
-    if (Platform.OS === 'android') {
+    if (IS_ANDROID) {
       return await PermissionsAndroid.request(
         PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
       );
     }
-  } catch (e: any) {
-    toast.error({message: e.message});
+  } catch (error) {
+    if (isAxiosError(error)) {
+      toast.error({message: error.message});
+    }
   }
-}
+};
 
-function CertifyLocationScreen() {
-  const [loading, setLoading] = useState<boolean>(false);
+type Props = NativeStackScreenProps<LoggedInParamList, 'CertifyLocation'>;
+
+const CertifyLocationScreen = ({}: Props) => {
+  const [loading, setLoading] = useState(false);
   const [myLocation, setMyLocation] = useState<{
     latitude: number;
     longitude: number;
   } | null>(null);
-  const [authInfo, setAuthInfo] = useState<{
-    seq: number;
-    region1depth: string;
-    region2depth: string;
-    region3depth: string;
-  } | null>(null);
+  const [authInfo, setAuthInfo] = useState<FetchRegionAuthResponse>();
   const [locationObj, setLocationObj] = useState<{
     region1depth: string;
     region2depth: string;
@@ -60,51 +62,40 @@ function CertifyLocationScreen() {
 
   let P0 = {latitude: 37.503979, longitude: 127.036201};
 
-  useEffect(() => {
-    getAuthInfo();
-  }, []);
-
   const getAuthInfo = useCallback(async () => {
     await fetchRegionAuth()
-      .then(({data}: any) => {
-        setAuthInfo({
-          seq: data.seq,
-          region1depth: data.region1depth,
-          region2depth: data.region2depth,
-          region3depth: data.region3depth,
-        });
+      .then(({data}) => {
+        setAuthInfo(data);
       })
-      .catch((e: any) => {
-        toast.error({message: e.message});
+      .catch(error => {
+        toast.error({message: error.message});
       });
   }, []);
 
   const onRegionAuth = useCallback(async () => {
+    if (!locationObj) {
+      return;
+    }
+
     const data = {
       // lon: myLocation?.longitude,
       // lat: myLocation?.latitude,
       // 임시 위도 경도 지정
       lon: P0.longitude,
       lat: P0.latitude,
-      region1depth: locationObj?.region1depth,
-      region2depth: locationObj?.region2depth,
-      region3depth: locationObj?.region3depth,
+      region1depth: locationObj.region1depth,
+      region2depth: locationObj.region2depth,
+      region3depth: locationObj.region3depth,
     };
     await createRegionAuth(data)
       .then(() => {
         getAuthInfo();
         toast.success({message: '현재 위치로 인증되었어요!'});
       })
-      .catch((e: any) => {
-        toast.error({message: e.message});
+      .catch(error => {
+        toast.error({message: error.message});
       });
-  }, [
-    locationObj?.region1depth,
-    locationObj?.region2depth,
-    locationObj?.region3depth,
-    myLocation?.latitude,
-    myLocation?.longitude,
-  ]);
+  }, [P0.latitude, P0.longitude, getAuthInfo, locationObj]);
 
   const onDeleteRegion = useCallback(() => {
     deleteRegionAuth(selectedRegion.seq)
@@ -114,31 +105,7 @@ function CertifyLocationScreen() {
       });
   }, [selectedRegion.seq]);
 
-  useEffect(() => {
-    requestPermission().then(result => {
-      if (result === 'granted') {
-        Geolocation.getCurrentPosition(
-          (pos: any) => {
-            setMyLocation({
-              latitude: pos.coords.latitude,
-              longitude: pos.coords.longitude,
-            });
-          },
-          error => {
-            console.log(error);
-          },
-          {
-            enableHighAccuracy: true,
-            timeout: 3600,
-            maximumAge: 3600,
-          },
-        );
-      }
-    });
-    mapApi();
-  }, []);
-
-  const mapApi = async () => {
+  const mapApi = useCallback(async () => {
     try {
       await axios
         .get(
@@ -163,9 +130,37 @@ function CertifyLocationScreen() {
     } catch (e: any) {
       toast.error({message: e.message});
     }
-  };
+  }, [P0.latitude, P0.longitude]);
 
   const canGoNext = true;
+
+  useEffect(() => {
+    getAuthInfo();
+  }, [getAuthInfo]);
+
+  useEffect(() => {
+    requestPermission().then(result => {
+      if (result === 'granted') {
+        Geolocation.getCurrentPosition(
+          (pos: any) => {
+            setMyLocation({
+              latitude: pos.coords.latitude,
+              longitude: pos.coords.longitude,
+            });
+          },
+          error => {
+            console.log(error);
+          },
+          {
+            enableHighAccuracy: true,
+            timeout: 3600,
+            maximumAge: 3600,
+          },
+        );
+      }
+    });
+    mapApi();
+  }, [mapApi]);
 
   return (
     <SafeAreaView edges={['bottom', 'left', 'right']} style={styles.container}>
@@ -249,7 +244,7 @@ function CertifyLocationScreen() {
       </ScrollView>
     </SafeAreaView>
   );
-}
+};
 const styles = StyleSheet.create({
   container: {
     flex: 1,

@@ -1,20 +1,18 @@
-import {Image, Platform, Pressable, StyleSheet} from 'react-native';
-import {WHITE} from '@styles/colors';
 import {iconPath} from '@/utils/iconPath';
+import {WHITE} from '@styles/colors';
 import common from '@styles/common';
+import {Image, Platform, Pressable, StyleSheet} from 'react-native';
 
-// todo : 프롭스로 bottom 스타일 값 받아와서 적용하기
+// TODO : 프롭스로 bottom 스타일 값 받아와서 적용하기
 
-type Props = {
+interface LocationButtonProps {
   bottom?: number;
   job?: () => void;
-};
+}
 
-const LocationButton = (props: Props) => {
+const LocationButton: React.FC<LocationButtonProps> = ({job, bottom}) => {
   return (
-    <Pressable
-      style={[styles.locationButton, {bottom: props.bottom}]}
-      onPress={props.job}>
+    <Pressable style={[styles.locationButton, {bottom: bottom}]} onPress={job}>
       <Image style={common.size24} source={iconPath.LOCATION} />
     </Pressable>
   );
@@ -44,4 +42,5 @@ const styles = StyleSheet.create({
     }),
   },
 });
+
 export default LocationButton;

@@ -1,17 +1,22 @@
-import {FlatList, Text, View} from 'react-native';
+import {FetchRecruitsResponse} from '@/types/api/recruit';
 import RecruitListItem from '@components/RecruitListItem';
 import common from '@styles/common';
+import {FlatList, Text, View} from 'react-native';
 
-type InstructorProps = {
-  list: any[];
+interface RecruitComponentProps {
+  list: FetchRecruitsResponse;
   title: string;
   text: string;
-};
+}
 
-function RecruitComponent({list, title, text}: InstructorProps) {
-  function renderItem({item}: any) {
+const RecruitComponent: React.FC<RecruitComponentProps> = ({
+  list,
+  title,
+  text,
+}) => {
+  const renderItem = ({item}: any) => {
     return <RecruitListItem item={item} />;
-  }
+  };
 
   return (
     <FlatList
@@ -29,6 +34,6 @@ function RecruitComponent({list, title, text}: InstructorProps) {
       showsVerticalScrollIndicator={false}
     />
   );
-}
+};
 
 export default RecruitComponent;

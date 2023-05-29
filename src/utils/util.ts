@@ -3,7 +3,7 @@ import moment from 'moment/moment';
 
 export const validateEmail = (email: string) => {
   const regex =
-    /^[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/;
+    /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/;
   return regex.test(email);
 };
 
@@ -20,7 +20,7 @@ export const removeWhitespace = (text: string) => {
   return text.replace(regex, '');
 };
 
-export const dateFormatter = (date: any, format: string) => {
+export const dateFormatter = (date: string | number | Date, format: string) => {
   const dateObj = new Date(date);
   return moment(dateObj).format(format);
 };

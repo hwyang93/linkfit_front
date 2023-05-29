@@ -1,3 +1,12 @@
+import {FetchMemberFollowingsResponse} from '@/types/api/member';
+import {iconPath} from '@/utils/iconPath';
+import {fetchMemberFollowings} from '@api/member';
+import toast from '@hooks/toast';
+import {NavigationProp, useNavigation} from '@react-navigation/native';
+import {BLUE, GRAY, WHITE} from '@styles/colors';
+import common from '@styles/common';
+import {isAxiosError} from 'axios';
+import {useCallback, useEffect, useState} from 'react';
 import {
   Image,
   Pressable,
@@ -6,21 +15,12 @@ import {
   Text,
   View,
 } from 'react-native';
-
-import common from '@styles/common';
-import {BLUE, GRAY, WHITE} from '@styles/colors';
-import {iconPath} from '@/utils/iconPath';
-import {useCallback, useEffect, useState} from 'react';
-import {fetchMemberFollowings} from '@api/member';
-import toast from '@hooks/toast';
-import {NavigationProp, useNavigation} from '@react-navigation/native';
 import {LoggedInParamList} from '../../../AppInner';
-import {FetchMemberFollowingsResponse} from '@/types/api/member';
-import {isAxiosError} from 'axios';
 
-function FollowingInstructorComponent() {
-  const navigation = useNavigation<NavigationProp<LoggedInParamList>>();
+const FollowingInstructorComponent: React.FC = () => {
   const [followings, setFollowings] = useState<FetchMemberFollowingsResponse>();
+
+  const navigation = useNavigation<NavigationProp<LoggedInParamList>>();
 
   const getMemberFollowingList = useCallback(() => {
     fetchMemberFollowings({type: 'INSTRUCTOR'})
@@ -116,7 +116,7 @@ function FollowingInstructorComponent() {
       {/*</View>*/}
     </ScrollView>
   );
-}
+};
 const styles = StyleSheet.create({
   container: {flex: 1, padding: 16, backgroundColor: WHITE},
   reviewBox: {

@@ -1,7 +1,6 @@
 import CTAButton from '@/components/Common/CTAButton';
 import Checkbox from '@/components/Common/Checkbox';
 import {iconPath} from '@/utils/iconPath';
-import {RouteProp, useRoute} from '@react-navigation/native';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import {BLUE} from '@styles/colors';
 import common from '@styles/common';
@@ -23,14 +22,12 @@ const TERMS = [
   {id: 4, title: '마케팅 수신 동의', required: false},
 ];
 
-type SignInScreenProps = NativeStackScreenProps<LoggedInParamList, 'Terms'>;
+type Props = NativeStackScreenProps<LoggedInParamList, 'Terms'>;
 
-// todo: 필수항목 전체 동의, 필수 항목 체크 후 다음 버튼 동작, 보기 버튼 클릭 시 약관 확인
+// TODO: 필수항목 전체 동의, 필수 항목 체크 후 다음 버튼 동작, 보기 버튼 클릭 시 약관 확인
 
-function SignUpFormScreen({navigation}: SignInScreenProps) {
+const TermsScreen = ({navigation, route}: Props) => {
   const [checkedTermIds, setCheckedTermIds] = useState<number[]>([]);
-
-  const route = useRoute<RouteProp<LoggedInParamList, 'Terms'>>();
 
   const requiredTerms = TERMS.filter(item => item.required);
 
@@ -141,7 +138,7 @@ function SignUpFormScreen({navigation}: SignInScreenProps) {
       </View>
     </View>
   );
-}
+};
 
 const styles = StyleSheet.create({
   container: {
@@ -169,4 +166,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default SignUpFormScreen;
+export default TermsScreen;

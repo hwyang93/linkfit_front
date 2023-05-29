@@ -1,14 +1,14 @@
-import {Image, Pressable, View} from 'react-native';
 import {iconPath} from '@/utils/iconPath';
-import common from '@styles/common';
 import {NavigationProp, useNavigation} from '@react-navigation/native';
+import common from '@styles/common';
+import {Image, Pressable, View} from 'react-native';
 import {LoggedInParamList} from '../../../AppInner';
 
 type HeaderProps = {
   link?: any;
 };
 
-function MyHeader({link}: HeaderProps) {
+const MyHeader = ({link}: HeaderProps) => {
   const navigation = useNavigation<NavigationProp<LoggedInParamList>>();
   return (
     <View
@@ -34,6 +34,6 @@ function MyHeader({link}: HeaderProps) {
       </View>
     </View>
   );
-}
+};
 
 export default MyHeader;

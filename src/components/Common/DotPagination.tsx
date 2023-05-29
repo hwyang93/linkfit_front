@@ -1,3 +1,4 @@
+import THEME from '@/styles/theme';
 import React from 'react';
 import {View} from 'react-native';
 
@@ -19,7 +20,8 @@ const DotPagination: React.FC<DotPaginationProps> = ({
             width: 8,
             height: 8,
             borderRadius: 4,
-            backgroundColor: currentPage === index + 1 ? '#3962f3' : '#d3d3d3',
+            backgroundColor:
+              currentPage === index + 1 ? THEME.PRIMARY : THEME.GREY04,
             marginRight: index === totalPages - 1 ? 0 : 4,
           }}
         />

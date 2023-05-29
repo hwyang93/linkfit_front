@@ -1,16 +1,22 @@
-import {Image, Pressable, View} from 'react-native';
 import {iconPath} from '@/utils/iconPath';
-import common from '@styles/common';
 import {NavigationProp, useNavigation} from '@react-navigation/native';
+import {Image, View} from 'react-native';
 import {LoggedInParamList} from '../../../AppInner';
+import IconButton from '../Common/IconButton';
 
-type HeaderProps = {
-  toPush?: any;
-  toMy?: any;
-};
+interface LinkHeaderProps {
+  toCommunityMy?: boolean;
+}
 
-function LinkHeader({toPush, toMy}: HeaderProps) {
+const LinkHeader: React.FC<LinkHeaderProps> = ({toCommunityMy}) => {
   const navigation = useNavigation<NavigationProp<LoggedInParamList>>();
+
+  const handleMyIconPress = () => {
+    toCommunityMy
+      ? navigation.navigate('CommunityMy')
+      : navigation.navigate('My');
+  };
+
   return (
     <View
       style={{
@@ -29,17 +35,15 @@ function LinkHeader({toPush, toMy}: HeaderProps) {
           justifyContent: 'space-between',
           alignItems: 'center',
         }}>
-        <Pressable
+        <IconButton
+          source={iconPath.BELL}
           style={{marginRight: 16}}
-          onPress={() => navigation.navigate(toPush)}>
-          <Image source={iconPath.BELL} style={common.size24} />
-        </Pressable>
-        <Pressable onPress={() => navigation.navigate(toMy)}>
-          <Image source={iconPath.MY} style={common.size24} />
-        </Pressable>
+          onPress={() => navigation.navigate('MyNotification')}
+        />
+        <IconButton source={iconPath.MY} onPress={handleMyIconPress} />
       </View>
     </View>
   );
-}
+};
 
 export default LinkHeader;

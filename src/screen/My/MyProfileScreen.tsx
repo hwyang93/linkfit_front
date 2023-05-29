@@ -5,11 +5,8 @@ import {materialTopTabNavigationOptions} from '@/utils/options/tab';
 import {fetchMemberInfo} from '@api/member';
 import toast from '@hooks/toast';
 import {createMaterialTopTabNavigator} from '@react-navigation/material-top-tabs';
-import {
-  NavigationProp,
-  useIsFocused,
-  useNavigation,
-} from '@react-navigation/native';
+import {useIsFocused} from '@react-navigation/native';
+import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import {BLUE, GRAY} from '@styles/colors';
 import common from '@styles/common';
 import {isAxiosError} from 'axios';
@@ -68,6 +65,7 @@ interface HeaderProps {
   onPencilIconPress: () => void;
 }
 
+// TODO: 안드로이드에서 레이아웃이 깨지는 버그 수정
 const Header: React.FC<HeaderProps> = ({
   profileImageOriginFileUrl,
   nickname,
@@ -79,8 +77,8 @@ const Header: React.FC<HeaderProps> = ({
   onPencilIconPress,
 }) => {
   return (
-    <View style={styles.profileBox}>
-      <View style={[common.mr16, styles.thumbnailBox]}>
+    <View style={[styles.profileBox]}>
+      <View style={[styles.thumbnailBox, common.mr16]}>
         <Image
           source={
             profileImageOriginFileUrl
@@ -199,10 +197,11 @@ const MyIntroductionTabItem: React.FC<MyIntroductionTabItemProps> = ({
   );
 };
 
-const MyProfileScreen: React.FC = () => {
+type Props = NativeStackScreenProps<LoggedInParamList, 'MyProfile'>;
+
+const MyProfileScreen = ({navigation}: Props) => {
   const [memberInfo, setMemberInfo] = useState<FetchMemberInfoResponse>();
 
-  const navigation = useNavigation<NavigationProp<LoggedInParamList>>();
   const isFocused = useIsFocused();
 
   useEffect(() => {

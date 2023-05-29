@@ -1,11 +1,15 @@
-import {Pressable, StyleSheet, Switch, Text, View} from 'react-native';
+import {LoggedInParamList} from '@/../AppInner';
+import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import {BLUE, GRAY, WHITE} from '@styles/colors';
 import common from '@styles/common';
 import {useState} from 'react';
+import {Pressable, StyleSheet, Switch, Text, View} from 'react-native';
 import DateTimePickerModal from 'react-native-modal-datetime-picker';
 
-function NotificationSettingScreen() {
-  const [isEnable, setIsEnable] = useState<boolean>(false);
+type Props = NativeStackScreenProps<LoggedInParamList, 'NotificationSetting'>;
+
+const NotificationSettingScreen = ({}: Props) => {
+  const [isEnable, setIsEnable] = useState(false);
   const [visible, setVisible] = useState(false);
   const [startTime, setStartTime] = useState<any>('12:00');
   const [endTime, setEndTime] = useState<any>('12:00');
@@ -116,7 +120,7 @@ function NotificationSettingScreen() {
       />
     </View>
   );
-}
+};
 
 const styles = StyleSheet.create({
   container: {flex: 1, padding: 16, backgroundColor: WHITE},

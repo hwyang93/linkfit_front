@@ -4,13 +4,18 @@ import {
   MemberEntity,
   MemberLicenceEntity,
   MemberLinkEntity,
+  MemberReputationEntity,
+  PositionSuggestEntity,
+  RecruitEntity,
+  RegionAuthEntity,
+  ResumeEntity,
 } from './entities';
 
 export interface FetchMemberFollowingsParams {
   type: 'COMPANY' | 'INSTRUCTOR';
 }
 
-export interface FetchMemberFollowingsResponse {
+export type FetchMemberFollowingsResponse = {
   createdAt: string;
   updatedAt: string;
   seq: number;
@@ -18,8 +23,7 @@ export interface FetchMemberFollowingsResponse {
   favoriteSeq: number;
   followingMember: MemberEntity;
   career: string;
-}
-[];
+}[];
 
 export interface FetchMemberInfoResponse {
   createdAt: string;
@@ -56,3 +60,59 @@ export interface FetchMemberInfoResponse {
   followerCount: number;
   career: string | null; // TODO: 타입 확인
 }
+
+export interface FetchMemberInfoByEmailResponse {
+  seq: number;
+}
+
+export interface FetchCheckNicknameResponse {
+  duplication: boolean;
+}
+
+export interface FetchMemberMyInfoResponse {
+  memberInfo: MemberEntity;
+  masterResume: ResumeEntity;
+  applyCountInfo: {
+    totalApplyCount: string;
+    passApplyCount: string;
+    failApplyCount: string;
+    cancelApplyCount: string;
+  };
+  suggestCountInfo: {
+    totalSuggestCount: string;
+    waitingSuggestCount: string;
+    completedSuggestCount: string;
+    closedSuggestCount: string;
+  };
+  noticeCountInfo: {
+    totalNoticeCount: string;
+    recruitCount: string;
+    seekCount: string;
+  };
+}
+
+export type FetchRegionAuthResponse = RegionAuthEntity;
+
+export type FetchMemberLicencesResponse = MemberLicenceEntity[];
+
+export type FetchMemberReputationsResponse = MemberReputationEntity[];
+
+export interface FetchSendPositionSuggestsParams {
+  period?: string;
+  status?: string;
+}
+
+export type FetchSendPositionSuggestsResponse = PositionSuggestEntity[];
+
+export interface FetchReceivePositionSuggestsParams {
+  period?: string;
+  status?: string;
+}
+
+export type FetchReceivePositionSuggestsResponse = PositionSuggestEntity[];
+
+export type FetchPositionSuggestResponse = PositionSuggestEntity;
+
+export type FetchMemberInfoBySeqResponse = MemberEntity;
+
+export type FetchRecruitByMemberResponse = RecruitEntity[];

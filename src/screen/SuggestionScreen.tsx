@@ -1,3 +1,10 @@
+import {createInstructorSuggest} from '@api/instructor';
+import DismissKeyboardView from '@components/DismissKeyboardView';
+import Input, {KeyboardTypes} from '@components/Input';
+import SelectBox from '@components/SelectBox';
+import {NativeStackScreenProps} from '@react-navigation/native-stack';
+import common from '@styles/common';
+import {useCallback, useState} from 'react';
 import {
   ActivityIndicator,
   Alert,
@@ -6,16 +13,8 @@ import {
   Text,
   View,
 } from 'react-native';
-import common from '@styles/common';
-import Input, {KeyboardTypes, ReturnKeyTypes} from '@components/Input';
-import {useCallback, useState} from 'react';
-import SelectBox from '@components/SelectBox';
 import LinearGradient from 'react-native-linear-gradient';
-import DismissKeyboardView from '@components/DismissKeyboardView';
-import {RouteProp, useRoute} from '@react-navigation/native';
 import {LoggedInParamList} from '../../AppInner';
-import {createInstructorSuggest} from '@api/instructor';
-import {NativeStackScreenProps} from '@react-navigation/native-stack';
 
 const SUGGESTION = [
   '필라테스 강사님 구합니다.',
@@ -30,14 +29,12 @@ const DEADLINE = [
   '2주 후',
   '한달 후',
 ];
-type SuggestionScreenProps = NativeStackScreenProps<
-  LoggedInParamList,
-  'Suggestion'
->;
 
-function SuggestionScreen({navigation}: SuggestionScreenProps) {
-  const [loading, setLoading] = useState<boolean>(false);
-  const route = useRoute<RouteProp<LoggedInParamList, 'Suggestion'>>();
+type Props = NativeStackScreenProps<LoggedInParamList, 'Suggestion'>;
+
+const SuggestionScreen = ({navigation, route}: Props) => {
+  const [loading, setLoading] = useState(false);
+  console.log(setLoading);
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
   const [recruitSeq, setRecruitSeq] = useState('');
@@ -49,7 +46,7 @@ function SuggestionScreen({navigation}: SuggestionScreenProps) {
     const data = {
       title: title,
       contents: content,
-      recruitSeq: recruitSeq,
+      recruitSeq: Number(recruitSeq),
       closingDate: closingDate,
       targetMemberSeq: route.params.targetMemberSeq,
     };
@@ -58,8 +55,8 @@ function SuggestionScreen({navigation}: SuggestionScreenProps) {
         Alert.alert('제안 성공!!!');
         navigation.pop();
       })
-      .catch((e: {message: any}) => {
-        console.log(e.message);
+      .catch(error => {
+        console.log(error.message);
       });
   }, [
     closingDate,
@@ -135,7 +132,7 @@ function SuggestionScreen({navigation}: SuggestionScreenProps) {
       </View>
     </DismissKeyboardView>
   );
-}
+};
 
 const styles = StyleSheet.create({
   container: {

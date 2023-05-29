@@ -1,10 +1,7 @@
-import {YesNoFlag} from '../common';
-import {MemberReputationEntity, RecruitEntity} from './entities';
+import {CompanyEntity, MemberReputationEntity, RecruitEntity} from './entities';
 
 export interface FetchCompanyResponse {
-  companyInfo: {
-    isFollow: YesNoFlag;
-  };
+  companyInfo?: CompanyEntity;
   recruits?: RecruitEntity[];
   reputations?: MemberReputationEntity[];
 }

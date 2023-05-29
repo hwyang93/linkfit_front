@@ -1,59 +1,41 @@
-import {useRef} from 'react';
-import {Animated, Dimensions, Image, Platform} from 'react-native';
+import LinkScreen from '@/screen/LinkScreen';
+import {useAppSelector} from '@/store';
+import {IS_ANDROID, SCREEN_WIDTH} from '@/utils/constants/common';
+import {iconPath} from '@/utils/iconPath';
+import {bottomTabNavigationOptions} from '@/utils/options/tab';
+import LinkHeader from '@components/Header/LinkHeader';
+import MyHeader from '@components/Header/MyHeader';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
-import Link from '@screen/Link';
 import CommunityScreen from '@screen/CommunityScreen';
 import MessageScreen from '@screen/MessageScreen';
-import MyScreen from '@screen/MyScreen';
-import {LoggedInParamList} from '../../AppInner';
-import common from '@styles/common';
-import {iconPath} from '@/utils/iconPath';
-import MyHeader from '@components/Header/MyHeader';
-import LinkHeader from '@components/Header/LinkHeader';
-import {useSelector} from 'react-redux';
-import {RootState} from '@store/reducer';
 import MyCenterScreen from '@screen/MyCenterScreen';
+import MyScreen from '@screen/MyScreen';
+import common from '@styles/common';
+import {useRef} from 'react';
+import {Animated, Image} from 'react-native';
+import {LoggedInParamList} from '../../AppInner';
 
 const Tab = createBottomTabNavigator<LoggedInParamList>();
 
 const ContentTab = () => {
-  const memberInfo = useSelector((state: RootState) => state.user);
+  const memberInfo = useAppSelector(state => state.user);
+
   const tabOffsetValue = useRef(new Animated.Value(0)).current;
-  function getWidth() {
-    let width = Dimensions.get('window').width;
-    // width = width ;
-    return width / 4;
-  }
+
+  const width = SCREEN_WIDTH / 4;
 
   return (
     <>
       <Tab.Navigator
-        initialRouteName={'Link'}
-        screenOptions={{
-          headerTitleAlign: 'center',
-          headerTitleStyle: {
-            fontWeight: '500',
-          },
-          tabBarStyle: {
-            height: Platform.OS === 'android' ? 80 : 100,
-            backgroundColor: '#fff',
-            paddingTop: 20,
-          },
-          tabBarLabelStyle: {fontSize: 16, marginVertical: 16},
-          tabBarAllowFontScaling: true,
-          headerShadowVisible: false,
-        }}>
+        initialRouteName="Link"
+        screenOptions={bottomTabNavigationOptions}>
         <Tab.Screen
           name="Link"
-          component={Link}
+          component={LinkScreen}
           options={{
             title: '채용',
-            headerTitle: () => {
-              return <LinkHeader toPush={'MyNotification'} toMy={'My'} />;
-            },
-            headerLeft: () => {
-              return null;
-            },
+            headerTitle: () => <LinkHeader />,
+            headerLeft: () => null,
             tabBarIcon: ({focused}) => (
               <Image
                 source={
@@ -77,11 +59,7 @@ const ContentTab = () => {
           component={CommunityScreen}
           options={{
             title: '커뮤니티',
-            headerTitle: () => {
-              return (
-                <LinkHeader toPush={'MyNotification'} toMy={'CommunityMy'} />
-              );
-            },
+            headerTitle: () => <LinkHeader toCommunityMy />,
             tabBarIcon: ({focused}) => (
               <Image
                 source={
@@ -94,7 +72,7 @@ const ContentTab = () => {
           listeners={() => ({
             focus: () => {
               Animated.spring(tabOffsetValue, {
-                toValue: getWidth(),
+                toValue: width,
                 useNativeDriver: true,
               }).start();
             },
@@ -105,9 +83,7 @@ const ContentTab = () => {
           component={MessageScreen}
           options={{
             title: '쪽지',
-            headerTitle: () => {
-              return <LinkHeader toPush={'MyNotification'} toMy={'My'} />;
-            },
+            headerTitle: () => <LinkHeader />,
             tabBarIcon: ({focused}) => (
               <Image
                 source={
@@ -120,7 +96,7 @@ const ContentTab = () => {
           listeners={() => ({
             focus: () => {
               Animated.spring(tabOffsetValue, {
-                toValue: getWidth() * 2,
+                toValue: width * 2,
                 useNativeDriver: true,
               }).start();
             },
@@ -133,9 +109,7 @@ const ContentTab = () => {
             options={{
               title: 'MY',
               headerTitleAlign: 'left',
-              headerTitle: () => {
-                return <MyHeader link={'MyNotification'} />;
-              },
+              headerTitle: () => <MyHeader link={'MyNotification'} />,
               tabBarIcon: ({focused}) => (
                 <Image
                   source={
@@ -150,7 +124,7 @@ const ContentTab = () => {
             listeners={() => ({
               focus: () => {
                 Animated.spring(tabOffsetValue, {
-                  toValue: getWidth() * 3,
+                  toValue: width * 3,
                   useNativeDriver: true,
                 }).start();
               },
@@ -158,14 +132,12 @@ const ContentTab = () => {
           />
         ) : (
           <Tab.Screen
-            name="My"
+            name="MyCenter"
             component={MyCenterScreen}
             options={{
               title: 'MY',
               headerTitleAlign: 'left',
-              headerTitle: () => {
-                return <MyHeader link={'MyNotification'} />;
-              },
+              headerTitle: () => <MyHeader link={'MyNotification'} />,
               tabBarIcon: ({focused}) => (
                 <Image
                   source={
@@ -180,7 +152,7 @@ const ContentTab = () => {
             listeners={() => ({
               focus: () => {
                 Animated.spring(tabOffsetValue, {
-                  toValue: getWidth() * 3,
+                  toValue: width * 3,
                   useNativeDriver: true,
                 }).start();
               },
@@ -191,9 +163,9 @@ const ContentTab = () => {
       <Animated.View
         style={{
           position: 'absolute',
-          bottom: Platform.OS === 'android' ? 79 : 99,
+          bottom: IS_ANDROID ? 79 : 99,
           left: 0,
-          width: getWidth(),
+          width: width,
           height: 2,
           backgroundColor: '#3962f3',
           borderRadius: 20,

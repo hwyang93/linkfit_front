@@ -1,9 +1,9 @@
+import {SCREEN_HEIGHT, SCREEN_WIDTH} from '@/utils/constants/common';
 import {BLACK, GRAY} from '@styles/colors';
 import common, {width} from '@styles/common';
 import {useEffect, useRef} from 'react';
 import {
   Animated,
-  Dimensions,
   Modal,
   PanResponder,
   ScrollView,
@@ -13,7 +13,7 @@ import {
   View,
 } from 'react-native';
 
-type modalProps = {
+interface ModalSheetProps {
   title?: string;
   link?: any;
   modalVisible: any;
@@ -26,12 +26,13 @@ type modalProps = {
   selected?: boolean;
   onSelect?: any;
   content?: any;
-};
+}
 
-function ModalSheetSample(props: modalProps) {
+const ModalSheet: React.FC<ModalSheetProps> = props => {
   const {modalVisible, setModalVisible} = props;
-  const screenHeight = Dimensions.get('screen').height;
-  const panY = useRef(new Animated.Value(screenHeight)).current;
+
+  const panY = useRef(new Animated.Value(SCREEN_HEIGHT)).current;
+
   const translateY = panY.interpolate({
     inputRange: [-1, 0, 1],
     outputRange: [0, 0, 1],
@@ -44,7 +45,7 @@ function ModalSheetSample(props: modalProps) {
   });
 
   const closeBottomSheet = Animated.timing(panY, {
-    toValue: screenHeight,
+    toValue: SCREEN_HEIGHT,
     duration: 300,
     useNativeDriver: true,
   });
@@ -106,8 +107,8 @@ function ModalSheetSample(props: modalProps) {
             hitSlop={{
               top: 32,
               bottom: 32,
-              left: Dimensions.get('screen').width / 2,
-              right: Dimensions.get('screen').width / 2,
+              left: SCREEN_WIDTH / 2,
+              right: SCREEN_WIDTH / 2,
             }}
           />
           {/* 모달 타이틀 */}
@@ -129,7 +130,7 @@ function ModalSheetSample(props: modalProps) {
       </View>
     </Modal>
   );
-}
+};
 
 const styles = StyleSheet.create({
   overlay: {
@@ -190,4 +191,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default ModalSheetSample;
+export default ModalSheet;

@@ -1,12 +1,12 @@
+import LogInScreen from '@/screen/LogInScreen';
+import PasswordResetScreen from '@/screen/Registration/PasswordResetScreen';
+import SignInScreen from '@/screen/SignInScreen';
+import SignUpScreen from '@/screen/SignUpScreen';
 import HeaderLeft from '@components/HeaderLeft';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
-import Login from '@screen/Login';
 import CompanySignUpFormScreen from '@screen/Registration/CompanySignUpFormScreen';
-import PasswordReset from '@screen/Registration/PasswordReset';
 import SignUpFormScreen from '@screen/Registration/SignUpFormScreen';
 import TermsScreen from '@screen/Registration/TermsScreen';
-import SignIn from '@screen/SignIn';
-import SignUp from '@screen/SignUp';
 import {WHITE} from '@styles/colors';
 
 export type AuthStackParamList = {
@@ -36,12 +36,12 @@ const AuthStack = () => {
       }}>
       <Stack.Screen
         name="SignIn"
-        component={SignIn}
+        component={SignInScreen}
         options={{headerShown: false}}
       />
       <Stack.Screen
         name="LogIn"
-        component={Login}
+        component={LogInScreen}
         options={{title: '로그인'}}
       />
       <Stack.Screen
@@ -51,7 +51,7 @@ const AuthStack = () => {
       />
       <Stack.Screen
         name="SignUp"
-        component={SignUp}
+        component={SignUpScreen}
         options={{title: '회원가입'}}
       />
       <Stack.Screen
@@ -66,7 +66,7 @@ const AuthStack = () => {
       />
       <Stack.Screen
         name="PasswordReset"
-        component={PasswordReset}
+        component={PasswordResetScreen}
         options={{title: '비밀번호 재설정'}}
       />
     </Stack.Navigator>

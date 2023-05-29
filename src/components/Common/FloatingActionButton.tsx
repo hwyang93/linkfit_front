@@ -33,31 +33,29 @@ const FloatingActionButton: React.FC<FloatingActionButtonProps> = ({
   ...props
 }) => {
   return (
-    <Pressable style={style} onPress={onPress} {...props}>
+    <Pressable style={[styles.shadow, style]} onPress={onPress} {...props}>
       {variant === 'primary' && (
-        <View style={styles.shadow}>
-          <LinearGradient
+        <LinearGradient
+          style={[
+            styles.iconContainer,
+            label ? styles.styleWithLabel : styles.styleWithoutLabel,
+          ]}
+          start={{x: 0.1, y: 0.5}}
+          end={{x: 0.6, y: 1}}
+          colors={['#74ebe4', '#3962f3']}>
+          <Image
+            source={iconSource}
             style={[
-              styles.iconContainer,
-              label ? styles.styleWithLabel : styles.styleWithoutLabel,
+              label ? common.size20 : common.size24,
+              {
+                marginRight: label ? 4 : 0,
+              },
             ]}
-            start={{x: 0.1, y: 0.5}}
-            end={{x: 0.6, y: 1}}
-            colors={['#74ebe4', '#3962f3']}>
-            <Image
-              source={iconSource}
-              style={[
-                label ? common.size20 : common.size24,
-                {
-                  marginRight: label ? 4 : 0,
-                },
-              ]}
-            />
-            {label && (
-              <Text style={[styles.text, {color: THEME.WHITE}]}>{label}</Text>
-            )}
-          </LinearGradient>
-        </View>
+          />
+          {label && (
+            <Text style={[styles.text, {color: THEME.WHITE}]}>{label}</Text>
+          )}
+        </LinearGradient>
       )}
       {variant === 'secondary' && (
         <View

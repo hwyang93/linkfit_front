@@ -1,39 +1,32 @@
-import {Alert, Image, Pressable, StyleSheet, Text, View} from 'react-native';
-import common from '@styles/common';
+import {Instructor} from '@/types/api/instructor';
 import {iconPath} from '@/utils/iconPath';
-import {BLUE} from '@styles/colors';
-import {NavigationProp, useNavigation} from '@react-navigation/native';
-import {LoggedInParamList} from '../../AppInner';
-import {SetStateAction, useState} from 'react';
 import Modal from '@components/ModalSheet';
+import {NavigationProp, useNavigation} from '@react-navigation/native';
+import {BLUE} from '@styles/colors';
+import common from '@styles/common';
+import {useState} from 'react';
+import {Alert, Image, Pressable, StyleSheet, Text, View} from 'react-native';
+import {LoggedInParamList} from '../../AppInner';
 
-type ListProps = {
-  item: {
-    seq: number;
-    field: string;
-    career: string;
-    nickname: string;
-    address: string;
-    followerCount: number;
-    profileImage: any;
-  };
-};
+const MODAL = [
+  {
+    value: '차단하기',
+    job: () => {},
+  },
+  {
+    value: '신고하기',
+    job: () => {},
+  },
+];
+interface InstructorListItemProps {
+  item: Instructor;
+}
 
-function InstructorListItem({item}: ListProps) {
+const InstructorListItem: React.FC<InstructorListItemProps> = ({item}) => {
+  const [modalVisible, setModalVisible] = useState(false);
+
   const navigation = useNavigation<NavigationProp<LoggedInParamList>>();
-  const [modalVisible, setModalVisible] =
-    useState<SetStateAction<boolean>>(false);
 
-  const MODAL = [
-    {
-      value: '차단하기',
-      job: () => {},
-    },
-    {
-      value: '신고하기',
-      job: () => {},
-    },
-  ];
   return (
     <View style={styles.listBox}>
       <Pressable
@@ -112,7 +105,7 @@ function InstructorListItem({item}: ListProps) {
       />
     </View>
   );
-}
+};
 
 const styles = StyleSheet.create({
   listBox: {
@@ -121,6 +114,7 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-start',
     alignItems: 'center',
     paddingVertical: 16,
+    marginHorizontal: 16,
   },
   thumbnail: {width: 80, height: 80, borderRadius: 200},
   rightBox: {

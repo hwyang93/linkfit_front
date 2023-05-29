@@ -1,8 +1,8 @@
-import {Image, StyleSheet, Text, View} from 'react-native';
-import common, {width} from '@styles/common';
 import {iconPath} from '@/utils/iconPath';
+import common, {width} from '@styles/common';
+import {Image, StyleSheet, Text, View} from 'react-native';
 
-function Logo() {
+const Logo: React.FC = () => {
   return (
     <View style={styles.logoArea}>
       <View style={styles.logoBox}>
@@ -22,7 +22,7 @@ function Logo() {
       </Text>
     </View>
   );
-}
+};
 
 const styles = StyleSheet.create({
   logoArea: {

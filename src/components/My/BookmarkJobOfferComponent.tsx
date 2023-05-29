@@ -1,9 +1,9 @@
-import {Alert, FlatList, View} from 'react-native';
+import {fetchBookmarkRecruits} from '@api/recruit';
 import RecruitCarouselItem from '@components/RecruitCarouselItem';
 import {useCallback, useEffect, useState} from 'react';
-import {fetchBookmarkRecruits} from '@api/recruit';
+import {Alert, FlatList, View} from 'react-native';
 
-function BookmarkJobOfferComponent() {
+const BookmarkJobOfferComponent: React.FC = () => {
   const [bookmarkedRecruits, setBookmarkedRecruits] = useState<any[]>();
 
   const getBookmarkRecruits = useCallback(() => {
@@ -11,8 +11,8 @@ function BookmarkJobOfferComponent() {
       .then(({data}: any) => {
         setBookmarkedRecruits(data);
       })
-      .catch((e: any) => {
-        Alert.alert(e.message);
+      .catch(error => {
+        Alert.alert(error.message);
       });
   }, []);
 
@@ -20,9 +20,9 @@ function BookmarkJobOfferComponent() {
     getBookmarkRecruits();
   }, [getBookmarkRecruits]);
 
-  function renderItem({item}: any) {
+  const renderItem = ({item}: any) => {
     return <RecruitCarouselItem item={item} />;
-  }
+  };
 
   return (
     <FlatList
@@ -33,6 +33,6 @@ function BookmarkJobOfferComponent() {
       ItemSeparatorComponent={() => <View style={{marginBottom: 16}} />}
     />
   );
-}
+};
 
 export default BookmarkJobOfferComponent;

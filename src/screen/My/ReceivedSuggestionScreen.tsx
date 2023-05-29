@@ -1,3 +1,14 @@
+import {iconPath} from '@/utils/iconPath';
+import {dateFormatter} from '@/utils/util';
+import {fetchReceivePositionSuggests} from '@api/member';
+import Modal from '@components/ModalSheet';
+import TopFilter from '@components/TopFilter';
+import toast from '@hooks/toast';
+import {useIsFocused} from '@react-navigation/native';
+import {NativeStackScreenProps} from '@react-navigation/native-stack';
+import {BLUE, WHITE} from '@styles/colors';
+import common from '@styles/common';
+import {useCallback, useEffect, useState} from 'react';
 import {
   Image,
   Pressable,
@@ -6,40 +17,27 @@ import {
   Text,
   View,
 } from 'react-native';
-import {BLUE, WHITE} from '@styles/colors';
-
-import Modal from '@components/ModalSheet';
-import {SetStateAction, useCallback, useEffect, useState} from 'react';
-import TopFilter from '@components/TopFilter';
-import common from '@styles/common';
-import {
-  NavigationProp,
-  useIsFocused,
-  useNavigation,
-} from '@react-navigation/native';
-import {LoggedInParamList} from '../../../AppInner';
 import {SafeAreaView} from 'react-native-safe-area-context';
-import {fetchReceivePositionSuggests} from '@api/member';
-import {iconPath} from '@/utils/iconPath';
-import toast from '@hooks/toast';
+import {LoggedInParamList} from '../../../AppInner';
 
-function ReceivedSuggestionScreen() {
-  const isFocused = useIsFocused();
-  const navigation = useNavigation<NavigationProp<LoggedInParamList>>();
-  const [modalVisible, setModalVisible] =
-    useState<SetStateAction<boolean>>(false);
+type Props = NativeStackScreenProps<LoggedInParamList, 'ReceivedSuggestion'>;
+
+const ReceivedSuggestionScreen = ({navigation}: Props) => {
+  const [modalVisible, setModalVisible] = useState(false);
   const [modalTitle, setModalTitle] = useState('');
   const [modalData, setModalData] = useState<any[]>([]);
   const [suggests, setSuggests] = useState<any[]>([]);
   const [selectedFilter, setSelectedFilter] = useState('');
 
+  const isFocused = useIsFocused();
+
   const getPositionSuggests = useCallback(() => {
     fetchReceivePositionSuggests()
-      .then(({data}: any) => {
+      .then(({data}) => {
         setSuggests(data);
       })
-      .catch((e: any) => {
-        toast.error({message: e.message});
+      .catch(error => {
+        toast.error({message: error.message});
       });
   }, []);
 
@@ -47,7 +45,7 @@ function ReceivedSuggestionScreen() {
     if (isFocused) {
       getPositionSuggests();
     }
-  }, [isFocused]);
+  }, [isFocused, getPositionSuggests]);
 
   const [FILTER, setFILTER] = useState([
     {
@@ -183,7 +181,7 @@ function ReceivedSuggestionScreen() {
                   })
                 }>
                 <Text style={[common.text_s, common.fcg, common.mb12]}>
-                  {suggest.createdAt}
+                  {dateFormatter(suggest.createdAt, 'YYYY.MM.DD')}
                 </Text>
                 <Text style={[common.title, common.mb12]} numberOfLines={1}>
                   {suggest.title}
@@ -237,7 +235,7 @@ function ReceivedSuggestionScreen() {
       </ScrollView>
     </SafeAreaView>
   );
-}
+};
 
 const styles = StyleSheet.create({
   container: {

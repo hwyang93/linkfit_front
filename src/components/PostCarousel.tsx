@@ -1,22 +1,22 @@
-import {FlatList} from 'react-native';
 import PostCarouselItem from '@components/PostCarouselItem';
+import {FlatList} from 'react-native';
 
-type CarouselProps = {
+interface PostCarouselProps {
   links: any[];
   gap: number;
   offset: number;
   pageWidth: number;
-};
+}
 
-function PostCarousel({links, pageWidth, offset, gap}: CarouselProps) {
-  function renderItem({item}: any) {
+const PostCarousel: React.FC<PostCarouselProps> = ({links, pageWidth, gap}) => {
+  const renderItem = ({item}: any) => {
     return <PostCarouselItem item={item} />;
-  }
+  };
 
   return (
     <FlatList
       automaticallyAdjustContentInsets={false}
-      keyExtractor={(item, index) => index.toString()}
+      keyExtractor={(_, index) => index.toString()}
       data={links}
       decelerationRate="fast"
       horizontal
@@ -29,6 +29,6 @@ function PostCarousel({links, pageWidth, offset, gap}: CarouselProps) {
       }}
     />
   );
-}
+};
 
 export default PostCarousel;

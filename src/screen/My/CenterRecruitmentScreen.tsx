@@ -1,3 +1,11 @@
+import {LoggedInParamList} from '@/../AppInner';
+import {iconPath} from '@/utils/iconPath';
+import Modal from '@components/ModalSheet';
+import TopFilter from '@components/TopFilter';
+import {NativeStackScreenProps} from '@react-navigation/native-stack';
+import {WHITE} from '@styles/colors';
+import common from '@styles/common';
+import {useState} from 'react';
 import {
   Image,
   Pressable,
@@ -6,22 +14,12 @@ import {
   Text,
   View,
 } from 'react-native';
-import {WHITE} from '@styles/colors';
-
-import common from '@styles/common';
-import TopFilter from '@components/TopFilter';
-import {NavigationProp, useNavigation} from '@react-navigation/native';
-import {LoggedInParamList} from '../../../AppInner';
-import {SetStateAction, useState} from 'react';
-import Modal from '@components/ModalSheet';
-import {iconPath} from '@/utils/iconPath';
 import {SafeAreaView} from 'react-native-safe-area-context';
 
-function CenterRecruitmentScreen() {
-  const navigation = useNavigation<NavigationProp<LoggedInParamList>>();
-  const [modalVisible, setModalVisible] =
-    useState<SetStateAction<boolean>>(false);
+type Props = NativeStackScreenProps<LoggedInParamList, 'CenterRecruitment'>;
 
+const CenterRecruitmentScreen = ({}: Props) => {
+  const [modalVisible, setModalVisible] = useState(false);
   const [modalTitle, setModalTitle] = useState('');
   const [modalData, setModalData] = useState<any[]>([]);
 
@@ -97,7 +95,7 @@ function CenterRecruitmentScreen() {
       title: '공고 제목',
       field: '필라테스',
       job: () => {
-        navigation.navigate('ApplicantStatus');
+        // navigation.navigate('ApplicantStatus');
       },
       kebab: () => {
         clickKebab();
@@ -110,7 +108,7 @@ function CenterRecruitmentScreen() {
       title: '공고 제목',
       field: '필라테스',
       job: () => {
-        navigation.navigate('ApplicantStatus');
+        // navigation.navigate('ApplicantStatus');
       },
       kebab: () => {
         clickKebab();
@@ -123,7 +121,7 @@ function CenterRecruitmentScreen() {
       title: '오늘부터 우리는 같이 일하는 건가요',
       field: '요가',
       job: () => {
-        navigation.navigate('ApplicantStatus');
+        // navigation.navigate('ApplicantStatus');
       },
       kebab: () => {
         clickKebab();
@@ -185,7 +183,7 @@ function CenterRecruitmentScreen() {
       </ScrollView>
     </SafeAreaView>
   );
-}
+};
 
 const styles = StyleSheet.create({
   container: {

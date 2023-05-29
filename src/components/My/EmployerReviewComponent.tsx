@@ -1,3 +1,8 @@
+import {iconPath} from '@/utils/iconPath';
+import Modal from '@components/ModalSheet';
+import {BLUE, GRAY, WHITE} from '@styles/colors';
+import common from '@styles/common';
+import {useState} from 'react';
 import {
   Image,
   Pressable,
@@ -7,29 +12,23 @@ import {
   View,
 } from 'react-native';
 
-import common from '@styles/common';
-import {BLUE, GRAY, WHITE} from '@styles/colors';
-import {iconPath} from '@/utils/iconPath';
-import Modal from '@components/ModalSheet';
-import {SetStateAction, useState} from 'react';
+const DATA = [
+  {
+    value: '후기 수정하기',
+    link: 'ReviewForm',
+  },
+  {
+    value: '후기 삭제하기',
+  },
+];
 
-function EmployerReviewComponent() {
-  const [modalVisible, setModalVisible] =
-    useState<SetStateAction<boolean>>(false);
+const EmployerReviewComponent: React.FC = () => {
+  const [modalVisible, setModalVisible] = useState(false);
 
   const openModal = () => {
     setModalVisible(true);
   };
 
-  const DATA = [
-    {
-      value: '후기 수정하기',
-      link: 'ReviewForm',
-    },
-    {
-      value: '후기 삭제하기',
-    },
-  ];
   return (
     <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
       <View style={styles.reviewBox}>
@@ -91,7 +90,7 @@ function EmployerReviewComponent() {
       />
     </ScrollView>
   );
-}
+};
 const styles = StyleSheet.create({
   container: {flex: 1, padding: 16, backgroundColor: WHITE},
   reviewBox: {

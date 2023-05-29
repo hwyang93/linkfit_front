@@ -1,48 +1,32 @@
-import {
-  Alert,
-  FlatList,
-  Image,
-  Pressable,
-  StyleSheet,
-  Text,
-  View,
-} from 'react-native';
-
-import common from '@styles/common';
-import {BLUE, GRAY, WHITE} from '@styles/colors';
-import {iconPath} from '@/utils/iconPath';
-import {SetStateAction, useCallback, useEffect, useState} from 'react';
-import Modal from '@components/ModalSheet';
-import {NavigationProp, useNavigation} from '@react-navigation/native';
-import {LoggedInParamList} from '../../../AppInner';
+import {fetchBookmarkCommunities} from '@api/community';
 import BookmarkCounter from '@components/Counter/BookmarkCounter';
 import CommentCounter from '@components/Counter/CommentCounter';
-import {fetchBookmarkCommunities} from '@api/community';
+import Modal from '@components/ModalSheet';
 import toast from '@hooks/toast';
+import {GRAY, WHITE} from '@styles/colors';
+import common from '@styles/common';
+import {useCallback, useEffect, useState} from 'react';
+import {Alert, FlatList, Pressable, StyleSheet, Text, View} from 'react-native';
 
-function CommunityMyPost() {
-  const navigation = useNavigation<NavigationProp<LoggedInParamList>>();
-  const [modalVisible, setModalVisible] =
-    useState<SetStateAction<boolean>>(false);
+const CommunityMyPost: React.FC = () => {
+  const [modalVisible, setModalVisible] = useState(false);
   const [bookmarks, setBookmarks] = useState<any[]>([]);
 
-  const openModal = () => {
-    setModalVisible(true);
-  };
+  // const navigation = useNavigation<NavigationProp<LoggedInParamList>>();
 
   const getBookmarks = useCallback(() => {
     fetchBookmarkCommunities()
       .then(({data}: any) => {
         setBookmarks(data);
       })
-      .catch((e: any) => {
-        toast.error({message: e.message});
+      .catch(error => {
+        toast.error({message: error.message});
       });
   }, []);
 
   useEffect(() => {
     getBookmarks();
-  }, []);
+  }, [getBookmarks]);
 
   const MODAL = [
     {
@@ -66,10 +50,6 @@ function CommunityMyPost() {
       setTextLine(2);
     }
   };
-
-  type Props = [
-    {id: number; type: string; title: string; date: string; content: string},
-  ];
 
   return (
     <View style={styles.container}>
@@ -140,7 +120,8 @@ function CommunityMyPost() {
       />
     </View>
   );
-}
+};
+
 const styles = StyleSheet.create({
   container: {flex: 1, padding: 16, backgroundColor: WHITE},
   postBox: {

@@ -1,8 +1,8 @@
+import {iconPath} from '@/utils/iconPath';
+import {GRAY, INPUT} from '@styles/colors';
+import common from '@styles/common';
 import {useState} from 'react';
 import {Image, StyleSheet, Text, TextInput, View} from 'react-native';
-import common from '@styles/common';
-import {GRAY, INPUT} from '@styles/colors';
-import {iconPath} from '@/utils/iconPath';
 
 export const KeyboardTypes = {
   DEFAULT: 'default',
@@ -10,6 +10,7 @@ export const KeyboardTypes = {
   PHONE: 'phone-pad',
   NUMBER: 'number-pad',
 };
+
 export const ReturnKeyTypes = {
   DONE: 'done',
   NEXT: 'next',
@@ -54,11 +55,11 @@ const Input = ({
   ...props
 }: InputProps) => {
   const [isFocused, setIsFocused] = useState(false);
-  // console.log('style : ', propStyles);
-  // console.log(icon);
+
   const onBlur = () => {
     setIsFocused(false);
   };
+
   const onFocus = () => {
     setIsFocused(true);
   };

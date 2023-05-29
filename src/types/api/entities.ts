@@ -27,10 +27,12 @@ export interface CompanyEntity extends BaseEntity {
   lon: string;
   lat: string;
   member: MemberEntity;
+  isFollow: YesNoFlag;
 }
 
 export interface MemberEntity extends BaseEntity {
   seq: number;
+  memberSeq: number;
   email: string;
   password: string;
   name: string;
@@ -49,13 +51,15 @@ export interface MemberEntity extends BaseEntity {
   profileFileSeq?: number;
   isVerification?: YesNoFlag;
   profileImage: CommonFileEntity;
-  company: CompanyEntity;
+  company?: CompanyEntity;
   links: MemberLinkEntity[];
   regionAuth: RegionAuthEntity;
   resumes: ResumeEntity[];
   recruits: RecruitEntity[];
   licences: MemberLicenceEntity[];
   follower: MemberFavoriteEntity[];
+  followerCount: number;
+  career?: string;
 }
 
 export interface MemberLinkEntity extends BaseEntity {
@@ -93,18 +97,18 @@ export interface MemberLicenceEntity extends BaseEntity {
   issuer: string;
   status: string;
   licenceFileSeq?: number;
-  licenceFile: CommonFileEntity;
-  member: MemberEntity;
+  licenceFile?: CommonFileEntity;
+  member?: MemberEntity;
 }
 
 export interface RegionAuthEntity extends BaseEntity {
   memberSeq: number;
   lon: number;
   lat: number;
-  region1Depth: string;
-  region2Depth: string;
-  region3Depth: string;
-  member: MemberEntity;
+  region1depth: string;
+  region2depth: string;
+  region3depth: string;
+  member?: MemberEntity;
 }
 
 export interface ResumeEntity extends BaseEntity {
@@ -139,18 +143,6 @@ export interface CareerEntity extends BaseEntity {
   resumeSeq: number;
   writerSeq: number;
   resume: ResumeEntity;
-}
-
-export interface MemberLicenceEntity extends BaseEntity {
-  seq: number;
-  memberSeq: number;
-  field: string;
-  licenceNumber: string;
-  issuer: string;
-  status: string;
-  licenceFileSeq?: number;
-  licenceFile: CommonFileEntity;
-  member: MemberEntity;
 }
 
 export interface MemberReputationEntity extends BaseEntity {
@@ -202,6 +194,8 @@ export interface CommunityEntity extends BaseEntity {
   comments: CommunityCommentEntity[];
   writer: MemberEntity;
   bookmarks: CommunityFavoriteEntity[];
+  isBookmark: YesNoFlag;
+  bookmarkCount: number;
 }
 
 export interface CsEntity extends BaseEntity {
@@ -240,6 +234,7 @@ export interface PositionSuggestEntity extends BaseEntity {
   targetMemberSeq: number;
   status: string;
   writer: MemberEntity;
+  recruit?: RecruitEntity;
 }
 
 export interface RecruitDateEntity extends BaseEntity {

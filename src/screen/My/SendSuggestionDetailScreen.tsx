@@ -1,17 +1,17 @@
-import {Pressable, ScrollView, StyleSheet, Text, View} from 'react-native';
+import InstructorInfoComponent from '@components/InstructorInfoComponent';
+import Modal from '@components/ModalSheet';
+import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import {WHITE} from '@styles/colors';
 import common from '@styles/common';
-import InstructorInfoComponent from '@components/InstructorInfoComponent';
+import {useState} from 'react';
+import {Pressable, ScrollView, StyleSheet, Text, View} from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
-import {NavigationProp, useNavigation} from '@react-navigation/native';
 import {LoggedInParamList} from '../../../AppInner';
-import Modal from '@components/ModalSheet';
-import {SetStateAction, useState} from 'react';
 
-function SendSuggestionDetailScreen() {
-  const navigation = useNavigation<NavigationProp<LoggedInParamList>>();
-  const [modalVisible, setModalVisible] =
-    useState<SetStateAction<boolean>>(false);
+type Props = NativeStackScreenProps<LoggedInParamList, 'SendSuggestionDetail'>;
+
+const SendSuggestionDetailScreen = ({}: Props) => {
+  const [modalVisible, setModalVisible] = useState(false);
 
   const MODAL = [
     {
@@ -101,7 +101,7 @@ function SendSuggestionDetailScreen() {
       </ScrollView>
     </SafeAreaView>
   );
-}
+};
 
 const styles = StyleSheet.create({
   container: {

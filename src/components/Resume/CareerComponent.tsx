@@ -1,36 +1,33 @@
-import {Dimensions, View} from 'react-native';
-import common from '@styles/common';
-import SelectBox from '@components/SelectBox';
+import {SCREEN_WIDTH} from '@/utils/constants/common';
 import DatePicker from '@components/DatePicker';
-import {useState} from 'react';
+import SelectBox from '@components/SelectBox';
+import common from '@styles/common';
+import {View} from 'react-native';
+const columns2 = (SCREEN_WIDTH - 40) / 2;
 
-const windowWidth = Dimensions.get('window').width;
-const columns2 = (windowWidth - 40) / 2;
+const CAREER_DATA = ['필라테스', '요가'];
+const WORK_DATA = ['정규직', '계약직'];
 
-type careerProps = {
+interface CareerComponentProps {
   onSelectPosition: Function;
   onSelectWorkType: Function;
   onSelectStartDate: Function;
   onSelectEndDate: Function;
-};
+}
 
-function CareerComponent({
+const CareerComponent: React.FC<CareerComponentProps> = ({
   onSelectStartDate,
   onSelectEndDate,
   onSelectWorkType,
   onSelectPosition,
-}: careerProps) {
-  // const [career, setCareer] = useState('');
-  // const [workType, setWorkType] = useState('');
-  const careerData = ['필라테스', '요가'];
-  const workData = ['정규직', '계약직'];
+}) => {
   return (
     <>
       {/* 경력 */}
       <View style={common.mb16}>
         <SelectBox
           label={'경력'}
-          data={careerData}
+          data={CAREER_DATA}
           onSelect={(value: any) => onSelectPosition(value)}
           defaultButtonText={'포지션을 선택하세요. (ex. 필라테스)'}
         />
@@ -40,7 +37,7 @@ function CareerComponent({
       <View style={common.mb16}>
         <SelectBox
           label={'근무 형태'}
-          data={workData}
+          data={WORK_DATA}
           onSelect={(value: any) => onSelectWorkType(value)}
           defaultButtonText={'근무 형태를 선택하세요.'}
         />
@@ -68,6 +65,6 @@ function CareerComponent({
       </View>
     </>
   );
-}
+};
 
 export default CareerComponent;

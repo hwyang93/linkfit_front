@@ -1,28 +1,29 @@
-import {Alert, Image, Pressable, StyleSheet, Text, View} from 'react-native';
-import common from '@styles/common';
-import {GRAY} from '@styles/colors';
 import {iconPath} from '@/utils/iconPath';
-import {useEffect, useState} from 'react';
-import Icon from 'react-native-vector-icons/FontAwesome';
 import {NavigationProp, useNavigation} from '@react-navigation/native';
+import {GRAY} from '@styles/colors';
+import common from '@styles/common';
+import {useEffect, useState} from 'react';
+import {Alert, Image, Pressable, StyleSheet, Text, View} from 'react-native';
+import Icon from 'react-native-vector-icons/FontAwesome';
 import {LoggedInParamList} from '../../AppInner';
 
-type offerProps = {
+interface OfferListItemProps {
   offer: any[];
   button: boolean;
-};
+}
 
-function OfferListItem({offer, button}: offerProps) {
-  const navigation = useNavigation<NavigationProp<LoggedInParamList>>();
+const OfferListItem: React.FC<OfferListItemProps> = ({offer, button}) => {
   const [isMore, setIsMore] = useState(false);
   const [showingItems, setShowingItems] = useState(offer);
+
+  const navigation = useNavigation<NavigationProp<LoggedInParamList>>();
 
   useEffect(() => {
     setShowingItems([...offer.slice(0, 1)]);
     setIsMore(false);
   }, [offer]);
 
-  const moreLoad = () => {
+  const loadMore = () => {
     if (!isMore) {
       setShowingItems(offer.slice(0, offer.length));
       setIsMore(true);
@@ -66,12 +67,9 @@ function OfferListItem({offer, button}: offerProps) {
           </Pressable>
         );
       })}
-      {/*
-        더보기 버튼
-        : 부모의 button true 일 경우 표시
-      */}
+      {/* TODO: 부모의 button true 일 경우 더보기 버튼 표시 */}
       {button && (
-        <Pressable onPress={moreLoad} style={styles.moreButton}>
+        <Pressable onPress={loadMore} style={styles.moreButton}>
           <Text style={[common.text_m, common.tac, common.mr8]}>
             {isMore ? '접기' : '더보기'}
           </Text>
@@ -84,7 +82,7 @@ function OfferListItem({offer, button}: offerProps) {
       )}
     </View>
   );
-}
+};
 
 const styles = StyleSheet.create({
   offer: {

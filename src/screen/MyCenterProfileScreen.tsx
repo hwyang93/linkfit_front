@@ -1,47 +1,38 @@
-import {
-  View,
-  StyleSheet,
-  Dimensions,
-  Image,
-  Text,
-  Pressable,
-} from 'react-native';
-import {Tabs, MaterialTabBar} from 'react-native-collapsible-tab-view';
+import {SCREEN_WIDTH} from '@/utils/constants/common';
+import {fetchCompany} from '@api/company';
+import CenterInfoTop from '@components/CenterInfoTop';
+import EmptySet from '@components/EmptySet';
+import toast from '@hooks/toast';
+import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import {BLUE, GRAY, WHITE} from '@styles/colors';
 import common from '@styles/common';
-import {
-  NavigationProp,
-  RouteProp,
-  useNavigation,
-  useRoute,
-} from '@react-navigation/native';
-import {LoggedInParamList} from '../../AppInner';
 import {useCallback, useEffect, useState} from 'react';
-import CenterInfoTop from '@components/CenterInfoTop';
-import toast from '@hooks/toast';
-import {fetchCompany} from '@api/company';
-import EmptySet from '@components/EmptySet';
+import {Image, Pressable, StyleSheet, Text, View} from 'react-native';
+import {MaterialTabBar, Tabs} from 'react-native-collapsible-tab-view';
+import {LoggedInParamList} from '../../AppInner';
 
 // const HEADER_HEIGHT = 250;
 
-const width = Dimensions.get('window').width - 32;
+const width = SCREEN_WIDTH - 32;
 const tabWidth = width / 2;
 const imageSize = (width - 6) / 3;
-type headerProps = {
+
+type HeaderProps = {
   centerInfo: any;
   recruits: any[];
 };
 // 센터 프로필 상단 영역 시작
-function Header({centerInfo, recruits}: headerProps) {
+const Header: React.FC<HeaderProps> = ({centerInfo, recruits}) => {
   return (
     <CenterInfoTop centerInfo={centerInfo} recruits={recruits} fromMy={true} />
   );
-}
+};
 // 센터 프로필 상단 영역 끝
 
-function CenterInfoScreen() {
-  const route = useRoute<RouteProp<LoggedInParamList, 'CenterInfo'>>();
-  const navigation = useNavigation<NavigationProp<LoggedInParamList>>();
+// TODO: 스크린 이름 매칭 필요 (CenterProfile -> MyCenterProfile)
+type Props = NativeStackScreenProps<LoggedInParamList, 'CenterProfile'>;
+
+const MyCenterProfileScreen = ({navigation, route}: Props) => {
   const [centerInfo, setCenterInfo] = useState<any>({});
   const [recruits, setRecruits] = useState<any[]>([]);
   const [reputations, setReputations] = useState<any[]>([]);
@@ -53,8 +44,8 @@ function CenterInfoScreen() {
         setRecruits(data.recruits);
         setReputations(data.reputations);
       })
-      .catch((e: any) => {
-        toast.error({message: e.message});
+      .catch(error => {
+        toast.error({message: error.message});
       });
   }, [route.params.memberSeq]);
 
@@ -97,7 +88,7 @@ function CenterInfoScreen() {
     );
   };
 
-  const tab1Data = [
+  const TAB1_DATA = [
     {src: require('@images/center_01.png')},
     {src: require('@images/center_02.png')},
     {src: require('@images/center_03.png')},
@@ -105,12 +96,12 @@ function CenterInfoScreen() {
     {src: require('@images/center_05.png')},
   ];
 
-  type imageProps = {
+  type ImageProps = {
     item: any;
   };
 
   const IntroduceTab = useCallback(
-    ({item}: imageProps) => {
+    ({item}: ImageProps) => {
       return (
         <>
           <Pressable onPress={() => navigation.navigate('Gallery')}>
@@ -129,16 +120,6 @@ function CenterInfoScreen() {
     },
     [navigation],
   );
-
-  type reviewProps = {
-    item: {
-      id: number;
-      nickname: string;
-      type: string;
-      date: string;
-      review: string;
-    };
-  };
 
   const [textLine, setTextLine] = useState(2);
 
@@ -211,7 +192,7 @@ function CenterInfoScreen() {
       <Tabs.Tab name="센터 소개">
         <View style={{padding: 16}}>
           <Tabs.FlatList
-            data={tab1Data}
+            data={TAB1_DATA}
             ListHeaderComponent={() => <IntroduceTabHeader />}
             ListFooterComponent={() => <IntroduceTabFooter />}
             renderItem={IntroduceTab}
@@ -237,7 +218,7 @@ function CenterInfoScreen() {
       </Tabs.Tab>
     </Tabs.Container>
   );
-}
+};
 
 const styles = StyleSheet.create({
   pencil: {position: 'absolute', top: 0, right: 0},
@@ -252,4 +233,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default CenterInfoScreen;
+export default MyCenterProfileScreen;

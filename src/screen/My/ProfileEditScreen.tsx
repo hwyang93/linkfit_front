@@ -1,3 +1,12 @@
+import {iconPath} from '@/utils/iconPath';
+import {fetchCheckNickname, updateProfile} from '@api/member';
+import DismissKeyboardView from '@components/DismissKeyboardView';
+import Input, {KeyboardTypes} from '@components/Input';
+import toast from '@hooks/toast';
+import {NativeStackScreenProps} from '@react-navigation/native-stack';
+import {WHITE} from '@styles/colors';
+import common from '@styles/common';
+import {useCallback, useEffect, useState} from 'react';
 import {
   ActivityIndicator,
   Alert,
@@ -7,27 +16,15 @@ import {
   Text,
   View,
 } from 'react-native';
-import {WHITE} from '@styles/colors';
-import DismissKeyboardView from '@components/DismissKeyboardView';
-import common from '@styles/common';
-import Input, {KeyboardTypes} from '@components/Input';
-import {useCallback, useEffect, useState} from 'react';
-import {iconPath} from '@/utils/iconPath';
+import {Asset, MediaType, launchImageLibrary} from 'react-native-image-picker';
 import LinearGradient from 'react-native-linear-gradient';
-import {fetchCheckNickname, updateProfile} from '@api/member';
-import {
-  NavigationProp,
-  RouteProp,
-  useNavigation,
-  useRoute,
-} from '@react-navigation/native';
 import {LoggedInParamList} from '../../../AppInner';
-import {Asset, launchImageLibrary, MediaType} from 'react-native-image-picker';
-import toast from '@hooks/toast';
 
-function ProfileEditScreen() {
-  const navigation = useNavigation<NavigationProp<LoggedInParamList>>();
-  const route = useRoute<RouteProp<LoggedInParamList, 'ProfileEdit'>>();
+const LOADING = false;
+
+type Props = NativeStackScreenProps<LoggedInParamList, 'ProfileEdit'>;
+
+const ProfileEditScreen = ({navigation, route}: Props) => {
   const [nickname, setNickname] = useState('');
   const [intro, setIntro] = useState('');
   const [field, setField] = useState('');
@@ -39,7 +36,6 @@ function ProfileEditScreen() {
       url: '',
     },
   ]);
-  const [loading, setLoading] = useState<boolean>(false);
   const [imageUri, setImageUri] = useState<any>({});
   const [imageObj, setImageObj] = useState<{
     name: string | undefined;
@@ -122,6 +118,7 @@ function ProfileEditScreen() {
   };
 
   const canGoNext = nickname && intro;
+
   return (
     <DismissKeyboardView>
       <View style={styles.container}>
@@ -155,7 +152,7 @@ function ProfileEditScreen() {
               colors={
                 canGoNext ? ['#74ebe4', '#3962f3'] : ['#dcdcdc', '#dcdcdc']
               }>
-              {loading ? (
+              {LOADING ? (
                 <ActivityIndicator color="white" />
               ) : (
                 <Text style={[common.text_s, styles.confirm]}>확인</Text>
@@ -230,7 +227,7 @@ function ProfileEditScreen() {
               colors={
                 canGoNext ? ['#74ebe4', '#3962f3'] : ['#dcdcdc', '#dcdcdc']
               }>
-              {loading ? (
+              {LOADING ? (
                 <ActivityIndicator color="white" />
               ) : (
                 <Text style={common.buttonText}>완료</Text>
@@ -241,7 +238,7 @@ function ProfileEditScreen() {
       </View>
     </DismissKeyboardView>
   );
-}
+};
 
 const styles = StyleSheet.create({
   container: {

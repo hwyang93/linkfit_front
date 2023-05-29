@@ -1,5 +1,17 @@
+import {FetchMemberMyInfoResponse} from '@/types/api/member';
+import {SCREEN_WIDTH} from '@/utils/constants/common';
+import {iconPath} from '@/utils/iconPath';
+import {dateFormatter} from '@/utils/util';
+import {fetchMemberMyInfo} from '@api/member';
+import MyTitle from '@components/My/MyTitle';
+import ProfileBox from '@components/ProfileBox';
+import toast from '@hooks/toast';
+import {useIsFocused} from '@react-navigation/native';
+import {NativeStackScreenProps} from '@react-navigation/native-stack';
+import {BLUE, GRAY, WHITE} from '@styles/colors';
+import common from '@styles/common';
+import {useEffect, useState} from 'react';
 import {
-  Dimensions,
   Image,
   Pressable,
   ScrollView,
@@ -8,24 +20,11 @@ import {
   View,
 } from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
-import {BLUE, GRAY, WHITE} from '@styles/colors';
-import ProfileBox from '@components/ProfileBox';
-import common from '@styles/common';
-import {iconPath} from '@/utils/iconPath';
-import MyTitle from '@components/My/MyTitle';
-import {useEffect, useState} from 'react';
-import {fetchMemberMyInfo} from '@api/member';
-import {
-  NavigationProp,
-  useIsFocused,
-  useNavigation,
-} from '@react-navigation/native';
 import {LoggedInParamList} from '../../AppInner';
-import toast from '@hooks/toast';
 
-const windowWidth = Dimensions.get('window').width;
-const columns3 = (windowWidth - 32) / 3;
-const columns4 = (windowWidth - 32) / 4;
+const columns3 = (SCREEN_WIDTH - 32) / 3;
+const columns4 = (SCREEN_WIDTH - 32) / 4;
+
 const MENU = [
   {
     icon: iconPath.MY_PLACE,
@@ -59,46 +58,21 @@ const MENU = [
   },
 ];
 
-function MyScreen() {
-  const navigation = useNavigation<NavigationProp<LoggedInParamList>>();
+type Props = NativeStackScreenProps<LoggedInParamList, 'My'>;
+
+const MyScreen = ({navigation}: Props) => {
+  const [myInfo, setMyInfo] = useState<FetchMemberMyInfoResponse>();
+
   const isFocused = useIsFocused();
-  const [myInfo, setMyInfo] = useState<any>({
-    memberInfo: {
-      nickname: '',
-      intro: '',
-      field: '',
-      licences: {},
-      profileImage: {},
-    },
-    masterResume: {
-      title: undefined,
-    },
-    applyCountInfo: {
-      totalApplyCount: undefined,
-      passApplyCount: undefined,
-      failApplyCount: undefined,
-      cancelApplyCount: undefined,
-    },
-    suggestCountInfo: {
-      totalSuggestCount: undefined,
-      waitingSuggestCount: undefined,
-      completedSuggestCount: undefined,
-      closedSuggestCount: undefined,
-    },
-    noticeCountInfo: {
-      totalNoticeCount: undefined,
-      recruitCount: undefined,
-      seekCount: undefined,
-    },
-  });
+
   useEffect(() => {
     if (isFocused) {
       fetchMemberMyInfo()
-        .then(({data}: any) => {
+        .then(({data}) => {
           setMyInfo(data);
         })
-        .catch((e: any) => {
-          toast.error({message: e.message});
+        .catch(error => {
+          toast.error({message: error.message});
         });
     }
   }, [isFocused]);
@@ -107,16 +81,17 @@ function MyScreen() {
     <SafeAreaView edges={['left', 'right']} style={styles.container}>
       <ScrollView showsVerticalScrollIndicator={false}>
         <View style={common.mb20}>
-          <ProfileBox memberInfo={myInfo.memberInfo} />
+          {myInfo && <ProfileBox memberInfo={myInfo.memberInfo} />}
         </View>
 
         <View style={common.mb8}>
           <Text style={[common.title_s]}>프로필 메뉴</Text>
           <View style={[common.rowCenter, {flexWrap: 'wrap'}]}>
-            {MENU.map((item: any, index) => {
+            {/* TODO: 타입 정의 */}
+            {MENU.map((item, index) => {
               return (
                 <Pressable
-                  onPress={() => navigation.navigate(item.link)}
+                  onPress={() => navigation.navigate(item.link as any)}
                   key={index}
                   style={[styles.menuItem, {width: columns3, height: 80}]}>
                   <Image source={item.icon} style={common.size32} />
@@ -132,7 +107,7 @@ function MyScreen() {
         </View>
 
         {/* 이력서 박스 */}
-        {myInfo.masterResume.seq ? (
+        {myInfo?.masterResume.seq ? (
           <View style={common.mb24}>
             <Pressable
               style={common.basicBox}
@@ -155,7 +130,7 @@ function MyScreen() {
               </View>
               <Text style={common.title}>{myInfo.masterResume.title}</Text>
               <Text style={[common.text_s, {color: GRAY.DARK}]}>
-                {myInfo.masterResume.updatedAt}
+                {dateFormatter(myInfo.masterResume.updatedAt, 'YYYY.MM.DD')}
               </Text>
             </Pressable>
           </View>
@@ -186,7 +161,7 @@ function MyScreen() {
               ]}>
               <Text style={common.text_s}>지원 완료</Text>
               <Text style={common.title_s}>
-                {myInfo.applyCountInfo.totalApplyCount}
+                {myInfo?.applyCountInfo.totalApplyCount}
               </Text>
             </View>
             <View
@@ -201,7 +176,7 @@ function MyScreen() {
               ]}>
               <Text style={common.text_s}>합격</Text>
               <Text style={common.title_s}>
-                {myInfo.applyCountInfo.passApplyCount}
+                {myInfo?.applyCountInfo.passApplyCount}
               </Text>
             </View>
             <View
@@ -216,7 +191,7 @@ function MyScreen() {
               ]}>
               <Text style={common.text_s}>불합격</Text>
               <Text style={common.title_s}>
-                {myInfo.applyCountInfo.failApplyCount}
+                {myInfo?.applyCountInfo.failApplyCount}
               </Text>
             </View>
             <View
@@ -229,7 +204,7 @@ function MyScreen() {
               ]}>
               <Text style={common.text_s}>지원 취소</Text>
               <Text style={common.title_s}>
-                {myInfo.applyCountInfo.cancelApplyCount}
+                {myInfo?.applyCountInfo.cancelApplyCount}
               </Text>
             </View>
           </View>
@@ -257,7 +232,7 @@ function MyScreen() {
               ]}>
               <Text style={common.text_s}>전체</Text>
               <Text style={common.title_s}>
-                {myInfo.suggestCountInfo.totalSuggestCount}
+                {myInfo?.suggestCountInfo.totalSuggestCount}
               </Text>
             </View>
             <View
@@ -272,7 +247,7 @@ function MyScreen() {
               ]}>
               <Text style={common.text_s}>답변 대기중</Text>
               <Text style={common.title_s}>
-                {myInfo.suggestCountInfo.waitingSuggestCount}
+                {myInfo?.suggestCountInfo.waitingSuggestCount}
               </Text>
             </View>
             <View
@@ -287,7 +262,7 @@ function MyScreen() {
               ]}>
               <Text style={common.text_s}>답변 완료</Text>
               <Text style={common.title_s}>
-                {myInfo.suggestCountInfo.completedSuggestCount}
+                {myInfo?.suggestCountInfo.completedSuggestCount}
               </Text>
             </View>
             <View
@@ -300,7 +275,7 @@ function MyScreen() {
               ]}>
               <Text style={common.text_s}>마감</Text>
               <Text style={common.title_s}>
-                {myInfo.suggestCountInfo.closedSuggestCount}
+                {myInfo?.suggestCountInfo.closedSuggestCount}
               </Text>
             </View>
           </View>
@@ -324,7 +299,7 @@ function MyScreen() {
               ]}>
               <Text style={common.text_s}>등록 완료</Text>
               <Text style={common.title_s}>
-                {myInfo.noticeCountInfo.totalNoticeCount}
+                {myInfo?.noticeCountInfo.totalNoticeCount}
               </Text>
             </View>
             <View
@@ -339,7 +314,7 @@ function MyScreen() {
               ]}>
               <Text style={common.text_s}>구인 공고</Text>
               <Text style={common.title_s}>
-                {myInfo.noticeCountInfo.recruitCount}
+                {myInfo?.noticeCountInfo.recruitCount}
               </Text>
             </View>
             <View
@@ -352,7 +327,7 @@ function MyScreen() {
               ]}>
               <Text style={common.text_s}>구직 공고</Text>
               <Text style={[common.title_s]}>
-                {myInfo.noticeCountInfo.seekCount}
+                {myInfo?.noticeCountInfo.seekCount}
               </Text>
             </View>
           </View>
@@ -360,7 +335,7 @@ function MyScreen() {
       </ScrollView>
     </SafeAreaView>
   );
-}
+};
 const styles = StyleSheet.create({
   container: {
     flex: 1,

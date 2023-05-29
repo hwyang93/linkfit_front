@@ -24,7 +24,7 @@ const BlockInstructorTab: React.FC = () => {
   );
 };
 
-const BlacklistScreen: React.FC = () => {
+const BlacklistScreen = () => {
   return (
     <Tab.Navigator screenOptions={materialTopTabNavigationOptions}>
       <Tab.Screen name="센터" component={BlockCenterTab} />

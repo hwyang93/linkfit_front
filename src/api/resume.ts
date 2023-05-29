@@ -1,21 +1,21 @@
 import request from '@api/request';
 
-export function createResume(data: object) {
+export const createResume = (data: object) => {
   return request.post('/resume', data);
-}
+};
 
-export function fetchResumes() {
+export const fetchResumes = () => {
   return request.get('/resume');
-}
+};
 
-export function fetchResume(seq: number) {
+export const fetchResume = (seq: number) => {
   return request.get(`/resume/${seq}`);
-}
+};
 
-export function updateResumeMaster(seq: number) {
+export const updateResumeMaster = (seq: number) => {
   return request.patch(`/resume/master/${seq}`);
-}
+};
 
-export function deleteResume(seq: number) {
+export const deleteResume = (seq: number) => {
   return request.delete(`/resume/${seq}`);
-}
+};

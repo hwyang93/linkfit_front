@@ -9,7 +9,7 @@ import FloatingLinkButton from '@components/FloatingLinkButton';
 import FloatingWriteButton from '@components/FloatingWriteButton';
 import RecruitComponent from '@components/RecruitComponent';
 import toast from '@hooks/toast';
-import {NavigationProp, useNavigation} from '@react-navigation/native';
+import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import {BLUE} from '@styles/colors';
 import common from '@styles/common';
 import {isAxiosError} from 'axios';
@@ -18,6 +18,7 @@ import {
   Image,
   ImageSourcePropType,
   Pressable,
+  ScrollView,
   StyleSheet,
   Text,
   View,
@@ -90,7 +91,7 @@ const FilterModalContent: React.FC<FilterModalContentProps> = ({
   };
 
   return (
-    <>
+    <View style={{marginHorizontal: 16}}>
       {modalData.options.map((item, index) => (
         <FilterModalRow
           key={index}
@@ -109,11 +110,13 @@ const FilterModalContent: React.FC<FilterModalContentProps> = ({
         style={{marginTop: 40}}
         onPress={() => onApplyFilterButtonPress(type, filterValue)}
       />
-    </>
+    </View>
   );
 };
 
-function RecruitListScreen() {
+type Props = NativeStackScreenProps<LoggedInParamList, 'RecruitList'>;
+
+const RecruitListScreen = ({navigation}: Props) => {
   const [recruits, setRecruits] = useState<FetchRecruitsResponse>();
   const [modalType, setModalType] = useState<FilterType>('fields');
   const [filterValue, setFilterValue] = useState<Record<FilterType, string[]>>({
@@ -123,8 +126,6 @@ function RecruitListScreen() {
   });
 
   const {modalVisible, openModal, closeModal} = useModal();
-
-  const navigation = useNavigation<NavigationProp<LoggedInParamList>>();
 
   const getRecruits = useCallback(() => {
     const params = filterValue;
@@ -206,12 +207,14 @@ function RecruitListScreen() {
         chipData={FILTER_CHIP_DATA}
         onChipPress={handleChipPress}
       />
-      <View style={{paddingHorizontal: 16}}>
-        <RecruitComponent
-          list={recruits}
-          title={'구인 공고'}
-          text={'내 주변의 구인 공고를 만나보세요!'}
-        />
+      <View style={{marginHorizontal: 16}}>
+        {recruits && (
+          <RecruitComponent
+            list={recruits}
+            title={'구인 공고'}
+            text={'내 주변의 구인 공고를 만나보세요!'}
+          />
+        )}
       </View>
       {/* Floating Button */}
       <FloatingWriteButton
@@ -230,17 +233,21 @@ function RecruitListScreen() {
         onDismiss={closeModal}
         title={MODAL_DATA[modalType].title}
         content={
-          <FilterModalContent
-            type={modalType}
-            modalData={MODAL_DATA[modalType]}
-            initialFilterValue={filterValue[modalType]}
-            onApplyFilterButtonPress={handleApplyFilterButtonPress}
-          />
+          <ScrollView
+            style={{width: '100%'}}
+            showsVerticalScrollIndicator={false}>
+            <FilterModalContent
+              type={modalType}
+              modalData={MODAL_DATA[modalType]}
+              initialFilterValue={filterValue[modalType]}
+              onApplyFilterButtonPress={handleApplyFilterButtonPress}
+            />
+          </ScrollView>
         }
       />
     </SafeAreaView>
   );
-}
+};
 const styles = StyleSheet.create({
   container: {
     flex: 1,

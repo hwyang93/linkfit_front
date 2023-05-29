@@ -1,3 +1,11 @@
+import {LoggedInParamList} from '@/../AppInner';
+import DismissKeyboardView from '@components/DismissKeyboardView';
+import Input, {KeyboardTypes} from '@components/Input';
+import SelectBox from '@components/SelectBox';
+import {NativeStackScreenProps} from '@react-navigation/native-stack';
+import {WHITE} from '@styles/colors';
+import common from '@styles/common';
+import {useState} from 'react';
 import {
   ActivityIndicator,
   Pressable,
@@ -5,23 +13,20 @@ import {
   Text,
   View,
 } from 'react-native';
-import {WHITE} from '@styles/colors';
-import DismissKeyboardView from '@components/DismissKeyboardView';
-import common from '@styles/common';
-import SelectBox from '@components/SelectBox';
-import {useState} from 'react';
-import Input, {KeyboardTypes} from '@components/Input';
 import LinearGradient from 'react-native-linear-gradient';
 import {SafeAreaView} from 'react-native-safe-area-context';
 
-function InquiryFormScreen() {
-  const [loading, setLoading] = useState<boolean>(false);
+type Props = NativeStackScreenProps<LoggedInParamList, 'InquiryForm'>;
+
+const InquiryFormScreen = ({}: Props) => {
+  const [loading, setLoading] = useState(false);
   const [select, setSelect] = useState('');
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
   const DATA = [''];
 
   const canGoNext = select && title && content;
+
   return (
     <SafeAreaView edges={['bottom', 'left', 'right']} style={styles.container}>
       <DismissKeyboardView>
@@ -78,7 +83,7 @@ function InquiryFormScreen() {
       </DismissKeyboardView>
     </SafeAreaView>
   );
-}
+};
 const styles = StyleSheet.create({
   container: {
     flex: 1,

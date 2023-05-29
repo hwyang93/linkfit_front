@@ -1,24 +1,23 @@
-import {Pressable, Text, View} from 'react-native';
-import common from '@styles/common';
+import {CommunityEntity} from '@/types/api/entities';
+import {dateFormatter} from '@/utils/util';
+import {createCommunityBookmark, deleteCommunityBookmark} from '@api/community';
 import BookmarkCounter from '@components/Counter/BookmarkCounter';
 import CommentCounter from '@components/Counter/CommentCounter';
-import {NavigationProp, useNavigation} from '@react-navigation/native';
-import {LoggedInParamList} from '../../AppInner';
-import {useCallback, useEffect, useState} from 'react';
-import {createCommunityBookmark, deleteCommunityBookmark} from '@api/community';
 import toast from '@hooks/toast';
+import {NavigationProp, useNavigation} from '@react-navigation/native';
+import common from '@styles/common';
+import {useCallback, useEffect, useState} from 'react';
+import {Pressable, Text, View} from 'react-native';
+import {LoggedInParamList} from '../../AppInner';
 
-type listProps = {
-  item: any;
-};
+interface RecommendedPostItemProps {
+  item: CommunityEntity;
+}
 
-function RecommendedPostItem({item}: listProps) {
+const RecommendedPostItem: React.FC<RecommendedPostItemProps> = ({item}) => {
+  const [postInfo, setPostInfo] = useState<CommunityEntity>(item);
+
   const navigation = useNavigation<NavigationProp<LoggedInParamList>>();
-  const [postInfo, setPostInfo] = useState<any>(item);
-
-  useEffect(() => {
-    setPostInfo(item);
-  }, [item]);
 
   const onClickBookmark = useCallback(() => {
     if (postInfo.isBookmark === 'N') {
@@ -31,8 +30,8 @@ function RecommendedPostItem({item}: listProps) {
             bookmarkCount: postInfo.bookmarkCount + 1,
           });
         })
-        .catch((e: any) => {
-          toast.error({message: e.message});
+        .catch(error => {
+          toast.error({message: error.message});
         });
     } else {
       deleteCommunityBookmark(postInfo.seq)
@@ -44,11 +43,15 @@ function RecommendedPostItem({item}: listProps) {
             bookmarkCount: postInfo.bookmarkCount - 1,
           });
         })
-        .catch((e: any) => {
-          toast.error({message: e.message});
+        .catch(error => {
+          toast.error({message: error.message});
         });
     }
   }, [postInfo]);
+
+  useEffect(() => {
+    setPostInfo(item);
+  }, [item]);
 
   return (
     <Pressable
@@ -76,7 +79,9 @@ function RecommendedPostItem({item}: listProps) {
               ? '센터'
               : '일반'}
           </Text>
-          <Text style={common.text}>{postInfo.updatedAt}</Text>
+          <Text style={common.text}>
+            {dateFormatter(postInfo.updatedAt, 'YYYY.MM.DD')}
+          </Text>
         </View>
         <Text style={[common.mb8, common.text_m]}>{postInfo.contents}</Text>
         <View style={common.rowCenterBetween}>
@@ -96,6 +101,6 @@ function RecommendedPostItem({item}: listProps) {
       </View>
     </Pressable>
   );
-}
+};
 
 export default RecommendedPostItem;

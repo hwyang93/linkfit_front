@@ -1,28 +1,28 @@
+import {SCREEN_WIDTH} from '@/utils/constants/common';
+import {iconPath} from '@/utils/iconPath';
+import {createRecruit} from '@api/recruit';
+import MultipleImagePicker, {
+  MediaType,
+} from '@baronha/react-native-multiple-image-picker';
+import DismissKeyboardView from '@components/DismissKeyboardView';
+import Input, {KeyboardTypes} from '@components/Input';
+import TimeComponent from '@components/Offer/TimeComponent';
+import SelectBox from '@components/SelectBox';
+import toast from '@hooks/toast';
+import {NativeStackScreenProps} from '@react-navigation/native-stack';
+import {GRAY, WHITE} from '@styles/colors';
+import common from '@styles/common';
+import {useCallback, useState} from 'react';
 import {
   ActivityIndicator,
   Alert,
-  Dimensions,
   Image,
   Pressable,
   StyleSheet,
   Text,
   View,
 } from 'react-native';
-import {GRAY, WHITE} from '@styles/colors';
-import DismissKeyboardView from '@components/DismissKeyboardView';
-import {iconPath} from '@/utils/iconPath';
-import common from '@styles/common';
-import Input, {KeyboardTypes} from '@components/Input';
-import {Key, useCallback, useState} from 'react';
-import SelectBox from '@components/SelectBox';
 import LinearGradient from 'react-native-linear-gradient';
-import MultipleImagePicker, {
-  MediaType,
-} from '@baronha/react-native-multiple-image-picker';
-import TimeComponent from '@components/Offer/TimeComponent';
-import toast from '@hooks/toast';
-import {createRecruit} from '@api/recruit';
-import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import {LoggedInParamList} from '../../AppInner';
 
 const POSITION = ['실장', '필라테스', '요가'];
@@ -35,11 +35,14 @@ const PAY_TYPE = ['시급', '주급', '월급', '연봉'];
 // 채용포지션이 필라테스 요가의 경우
 const RECRUIT_TYPE = ['전임', '파트', '대강'];
 
-const windowWidth = Dimensions.get('window').width;
-const columns7 = (windowWidth - 32) / 7;
-type Props = NativeStackScreenProps<LoggedInParamList>;
-function JobOfferFormScreen({navigation}: Props) {
-  const [loading, setLoading] = useState<boolean>(false);
+const CAN_GO_NEXT = true;
+
+const columns7 = (SCREEN_WIDTH - 32) / 7;
+
+type Props = NativeStackScreenProps<LoggedInParamList, 'JobOfferForm'>;
+
+const JobOfferFormScreen = ({navigation}: Props) => {
+  const [loading, setLoading] = useState(false);
   const [offerTitle, setOfferTitle] = useState('');
   const [position, setPosition] = useState('');
   const [education, setEducation] = useState('');
@@ -52,7 +55,7 @@ function JobOfferFormScreen({navigation}: Props) {
   const [day, setDay] = useState(''); // 요일
   const [date, setDate] = useState('');
   const [dateForm, setDateForm] = useState<any[]>([{}]);
-
+  const [images, setImages] = useState<any>([]);
   const [DAY, setDAY] = useState([
     {value: '월', selected: false},
     {value: '화', selected: false},
@@ -63,23 +66,14 @@ function JobOfferFormScreen({navigation}: Props) {
     {value: '일', selected: false},
   ]);
 
-  const canGoNext = true;
-
-  const [images, setImages] = useState<any>([]);
-
   const openPicker = async () => {
     try {
       const response = await MultipleImagePicker.openPicker({
-        mediaType: 'image',
+        mediaType: MediaType.IMAGE,
         selectedAssets: images,
-        isExportThumbnail: true,
         maxSelectedAssets: 5,
-        maxVideo: 0,
         usedCameraButton: false,
-        isCrop: true,
-        isCropCircle: true,
       });
-      console.log('response: ', response);
       setImages(response);
     } catch (e: any) {
       console.log(e.code, e.message);
@@ -138,14 +132,13 @@ function JobOfferFormScreen({navigation}: Props) {
       lat: 0,
       dates: dateForm,
     };
-    console.log(data);
     createRecruit(data)
       .then(() => {
         Alert.alert('채용 공고 등록이 완료되었어요!');
         navigation.pop();
       })
-      .catch((e: {message: any}) => {
-        toast.error({message: e.message});
+      .catch(error => {
+        toast.error({message: error.message});
       });
   }, [
     career,
@@ -350,7 +343,7 @@ function JobOfferFormScreen({navigation}: Props) {
               start={{x: 0.1, y: 0.5}}
               end={{x: 0.6, y: 1}}
               colors={
-                canGoNext ? ['#74ebe4', '#3962f3'] : ['#dcdcdc', '#dcdcdc']
+                CAN_GO_NEXT ? ['#74ebe4', '#3962f3'] : ['#dcdcdc', '#dcdcdc']
               }>
               {loading ? (
                 <ActivityIndicator color="white" />
@@ -363,7 +356,7 @@ function JobOfferFormScreen({navigation}: Props) {
       </View>
     </DismissKeyboardView>
   );
-}
+};
 const styles = StyleSheet.create({
   container: {
     flex: 1,

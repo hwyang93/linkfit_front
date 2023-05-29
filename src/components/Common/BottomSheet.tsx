@@ -6,20 +6,19 @@ import {
   Animated,
   Modal,
   PanResponder,
-  ScrollView,
   StyleSheet,
   Text,
   TouchableWithoutFeedback,
   View,
 } from 'react-native';
 
-type BottomSheetProps = {
+interface BottomSheetProps {
   visible: boolean;
   title?: string;
   content?: React.ReactNode;
   modalHeight?: number;
   onDismiss: () => void;
-};
+}
 
 const BottomSheet: React.FC<BottomSheetProps> = ({
   title,
@@ -106,13 +105,10 @@ const BottomSheet: React.FC<BottomSheetProps> = ({
               right: SCREEN_WIDTH / 2,
             }}
           />
-          {/* 모달 타이틀 */}
-          <View style={common.mt16}>
+          <View style={common.mt30}>
             <Text style={styles.modalTitle}>{title}</Text>
           </View>
-          <ScrollView showsVerticalScrollIndicator={false}>
-            {content}
-          </ScrollView>
+          {content}
         </Animated.View>
       </View>
     </Modal>

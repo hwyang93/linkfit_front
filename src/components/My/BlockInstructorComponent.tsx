@@ -1,20 +1,9 @@
-import {
-  ActivityIndicator,
-  Alert,
-  Image,
-  Pressable,
-  ScrollView,
-  StyleSheet,
-  Text,
-  View,
-} from 'react-native';
-
-import common from '@styles/common';
-import {BLUE, GRAY, WHITE} from '@styles/colors';
 import {iconPath} from '@/utils/iconPath';
-import {useState} from 'react';
 import BlockButton from '@components/BlockButton';
 import EmptySet from '@components/EmptySet';
+import {BLUE, GRAY, WHITE} from '@styles/colors';
+import common from '@styles/common';
+import {Image, ScrollView, StyleSheet, Text, View} from 'react-native';
 
 const BLACKLIST = [
   {
@@ -37,9 +26,7 @@ const BLACKLIST = [
   },
 ];
 
-function BlockInstructorComponent() {
-  const [loading, setLoading] = useState<boolean>(false);
-
+const BlockInstructorComponent: React.FC = () => {
   const onBlock = () => {};
   return (
     <>
@@ -94,7 +81,7 @@ function BlockInstructorComponent() {
       )}
     </>
   );
-}
+};
 const styles = StyleSheet.create({
   container: {flex: 1, padding: 16, backgroundColor: WHITE},
   listBox: {

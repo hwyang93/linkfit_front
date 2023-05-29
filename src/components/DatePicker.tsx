@@ -1,18 +1,21 @@
-import {Image, Pressable, StyleSheet, Text, View} from 'react-native';
-import Input from '@components/Input';
-import DateTimePickerModal from 'react-native-modal-datetime-picker';
+import {GRAY, INPUT} from '@styles/colors';
+import common from '@styles/common';
 import moment from 'moment';
 import {useState} from 'react';
-import common from '@styles/common';
-import {GRAY, INPUT} from '@styles/colors';
+import {Pressable, StyleSheet, Text, View} from 'react-native';
+import DateTimePickerModal from 'react-native-modal-datetime-picker';
 
-type Props = {
+interface DatePickerProps {
   label: string;
   placeholder: string;
   onSelectDate: Function;
-};
+}
 
-function DatePicker({label, placeholder, onSelectDate}: Props) {
+const DatePicker: React.FC<DatePickerProps> = ({
+  label,
+  placeholder,
+  onSelectDate,
+}) => {
   const [focus, setFocus] = useState(false);
   const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
   const [date, setDate] = useState('');
@@ -21,6 +24,7 @@ function DatePicker({label, placeholder, onSelectDate}: Props) {
     setFocus(true);
     setDatePickerVisibility(true);
   };
+
   const hideDatePicker = () => {
     setFocus(false);
     setDatePickerVisibility(false);
@@ -57,7 +61,7 @@ function DatePicker({label, placeholder, onSelectDate}: Props) {
       />
     </View>
   );
-}
+};
 
 const styles = StyleSheet.create({
   text: {

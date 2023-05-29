@@ -1,12 +1,12 @@
 import useAuth from '@/hooks/useAuth';
 import {AuthStackParamList} from '@/navigations/AuthStack';
+import {IS_ANDROID} from '@/utils/constants/common';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import {AxiosError} from 'axios';
 import {useCallback, useRef, useState} from 'react';
 import {
   ActivityIndicator,
   Alert,
-  Platform,
   Pressable,
   StyleSheet,
   Text,
@@ -14,14 +14,14 @@ import {
   View,
 } from 'react-native';
 import DismissKeyboardView from '../components/DismissKeyboardView';
-// import Config from 'react-native-config';
 
-type SignUpScreenProps = NativeStackScreenProps<AuthStackParamList, 'SignUp'>;
+type Props = NativeStackScreenProps<AuthStackParamList, 'SignUp'>;
 
-function SignUp({navigation}: SignUpScreenProps) {
+const SignUp = ({navigation}: Props) => {
   const [email, setEmail] = useState('');
   const [name, setName] = useState('');
   const [password, setPassword] = useState('');
+
   const emailRef = useRef<TextInput | null>(null);
   const nameRef = useRef<TextInput | null>(null);
   const passwordRef = useRef<TextInput | null>(null);
@@ -31,12 +31,15 @@ function SignUp({navigation}: SignUpScreenProps) {
   const onChangeEmail = useCallback((text: string) => {
     setEmail(text.trim());
   }, []);
+
   const onChangeName = useCallback((text: string) => {
     setName(text.trim());
   }, []);
+
   const onChangePassword = useCallback((text: string) => {
     setPassword(text.trim());
   }, []);
+
   const onSubmit = useCallback(async () => {
     if (isLoading) {
       return;
@@ -51,19 +54,20 @@ function SignUp({navigation}: SignUpScreenProps) {
       return Alert.alert('알림', '비밀번호를 입력해주세요.');
     }
     if (
-      !/^(([^<>()\[\]\.,;:\s@\"]+(\.[^<>()\[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/.test(
+      !/^(([^<>()[\].,;:\s@"]+(\.[^<>()[\].,;:\s@"]+)*)|(".+"))@(([^<>()[\].,;:\s@"]+\.)+[^<>()[\].,;:\s@"]{2,})$/.test(
         email,
       )
     ) {
       return Alert.alert('알림', '올바른 이메일 주소가 아닙니다.');
     }
+
     if (!/^(?=.*[A-Za-z])(?=.*[0-9])(?=.*[$@^!%*#?&]).{8,50}$/.test(password)) {
       return Alert.alert(
         '알림',
         '비밀번호는 영문,숫자,특수문자($@^!%*#?&)를 모두 포함하여 8자 이상 입력해야합니다.',
       );
     }
-    console.log(email, name, password);
+
     try {
       await signUp({email, name, password});
       navigation.navigate('SignIn');
@@ -77,6 +81,7 @@ function SignUp({navigation}: SignUpScreenProps) {
   }, [navigation, email, name, password, signUp, isLoading]);
 
   const canGoNext = email && name && password;
+
   return (
     <DismissKeyboardView>
       <View style={styles.inputWrapper}>
@@ -119,7 +124,7 @@ function SignUp({navigation}: SignUpScreenProps) {
           placeholderTextColor="#666"
           onChangeText={onChangePassword}
           value={password}
-          keyboardType={Platform.OS === 'android' ? 'default' : 'ascii-capable'}
+          keyboardType={IS_ANDROID ? 'default' : 'ascii-capable'}
           textContentType="password"
           secureTextEntry
           returnKeyType="send"
@@ -146,7 +151,7 @@ function SignUp({navigation}: SignUpScreenProps) {
       </View>
     </DismissKeyboardView>
   );
-}
+};
 
 const styles = StyleSheet.create({
   textInput: {

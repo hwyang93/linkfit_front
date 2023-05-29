@@ -1,45 +1,23 @@
-import {
-  Alert,
-  Dimensions,
-  Image,
-  Pressable,
-  StyleSheet,
-  Text,
-  View,
-} from 'react-native';
-import common from '@styles/common';
+import {SCREEN_WIDTH} from '@/utils/constants/common';
 import {iconPath} from '@/utils/iconPath';
-import {NavigationProp, useNavigation} from '@react-navigation/native';
-import {LoggedInParamList} from '../../AppInner';
-import {useCallback, useEffect, useState} from 'react';
-import {createCommunityBookmark, deleteCommunityBookmark} from '@api/community';
-import toast from '@hooks/toast';
 import {createRecruitBookmark, deleteRecruitBookmark} from '@api/recruit';
+import toast from '@hooks/toast';
+import {NavigationProp, useNavigation} from '@react-navigation/native';
+import common from '@styles/common';
+import {useCallback, useEffect, useState} from 'react';
+import {Image, Pressable, StyleSheet, Text, View} from 'react-native';
+import {LoggedInParamList} from '../../AppInner';
 
-type ListProps = {
-  // item: {
-  //   seq: number;
-  //   position: string;
-  //   title: string;
-  //   companyName: string;
-  //   address: string;
-  //   src: any;
-  //   // color: string;
-  //   writer: any;
-  // };
+const columns2 = (SCREEN_WIDTH - 48) / 2;
+
+interface RecruitListItemProps {
   item: any;
-};
+}
 
-const windowWidth = Dimensions.get('window').width;
-const columns2 = (windowWidth - 48) / 2;
-
-function RecruitListItem({item}: ListProps) {
-  const navigation = useNavigation<NavigationProp<LoggedInParamList>>();
+const RecruitListItem: React.FC<RecruitListItemProps> = ({item}) => {
   const [recruitInfo, setRecruitInfo] = useState(item);
 
-  useEffect(() => {
-    setRecruitInfo(item);
-  }, [item]);
+  const navigation = useNavigation<NavigationProp<LoggedInParamList>>();
 
   const onClickBookmark = useCallback(() => {
     if (recruitInfo.isBookmark === 'N') {
@@ -51,8 +29,8 @@ function RecruitListItem({item}: ListProps) {
             isBookmark: 'Y',
           });
         })
-        .catch((e: any) => {
-          toast.error({message: e.message});
+        .catch(error => {
+          toast.error({message: error.message});
         });
     } else {
       deleteRecruitBookmark(recruitInfo.seq)
@@ -63,11 +41,15 @@ function RecruitListItem({item}: ListProps) {
             isBookmark: 'N',
           });
         })
-        .catch((e: any) => {
-          toast.error({message: e.message});
+        .catch(error => {
+          toast.error({message: error.message});
         });
     }
   }, [recruitInfo]);
+
+  useEffect(() => {
+    setRecruitInfo(item);
+  }, [item]);
 
   return (
     <Pressable
@@ -112,7 +94,7 @@ function RecruitListItem({item}: ListProps) {
       </View>
     </Pressable>
   );
-}
+};
 
 const styles = StyleSheet.create({
   itemBox: {width: columns2, marginBottom: 16, marginHorizontal: 4},

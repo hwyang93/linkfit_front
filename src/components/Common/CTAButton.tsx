@@ -1,5 +1,6 @@
-import {BLUE, WHITE} from '@/styles/colors';
+import {BLUE} from '@/styles/colors';
 import common from '@/styles/common';
+import THEME from '@/styles/theme';
 import React from 'react';
 import {
   ActivityIndicator,
@@ -40,10 +41,10 @@ const CTAButton: React.FC<CTAButtonProps> = ({
               end={{x: 0.6, y: 1}}
               colors={
                 disabled
-                  ? ['#dcdcdc', '#dcdcdc']
+                  ? [THEME.GREY04, THEME.GREY04]
                   : pressed
                   ? ['#062DB8', '#062DB8']
-                  : ['#74ebe4', '#3962f3']
+                  : ['#74ebe4', THEME.PRIMARY]
               }>
               {loading && <ActivityIndicator color="white" />}
               {!loading && <Text style={common.buttonText}>{label}</Text>}
@@ -58,10 +59,10 @@ const CTAButton: React.FC<CTAButtonProps> = ({
               style={[
                 common.button,
                 {
-                  backgroundColor: pressed ? '#E8EDFF' : WHITE,
+                  backgroundColor: pressed ? '#E8EDFF' : THEME.WHITE,
                   borderWidth: 2,
                   borderColor: disabled
-                    ? '#DCDCDC'
+                    ? THEME.GREY04
                     : pressed
                     ? BLUE.DEFAULT
                     : BLUE.DEFAULT,
@@ -72,7 +73,7 @@ const CTAButton: React.FC<CTAButtonProps> = ({
                 <Text
                   style={[
                     common.buttonText,
-                    {color: disabled ? '#DCDCDC' : BLUE.DEFAULT},
+                    {color: disabled ? THEME.GREY04 : BLUE.DEFAULT},
                   ]}>
                   {label}
                 </Text>

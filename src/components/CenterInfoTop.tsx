@@ -1,20 +1,25 @@
+import {RecruitEntity} from '@/types/api/entities';
 import {iconPath} from '@/utils/iconPath';
+import OfferListItem from '@components/OfferListItem';
+import {NavigationProp, useNavigation} from '@react-navigation/native';
 import {GRAY} from '@styles/colors';
 import common from '@styles/common';
 import {Image, Pressable, StyleSheet, Text, View} from 'react-native';
-// import LinkCollection from '@components/LinkCollection';
-import {RecruitEntity} from '@/types/api/entities';
-import OfferListItem from '@components/OfferListItem';
-import {NavigationProp, useNavigation} from '@react-navigation/native';
 import {LoggedInParamList} from '../../AppInner';
 
-type Props = {
+interface CenterInfoTopProps {
   centerInfo: any;
   recruits: RecruitEntity[];
   fromMy?: boolean;
-};
-function CenterInfoTop({centerInfo, recruits, fromMy}: Props) {
+}
+
+const CenterInfoTop: React.FC<CenterInfoTopProps> = ({
+  centerInfo,
+  recruits,
+  fromMy,
+}) => {
   const navigation = useNavigation<NavigationProp<LoggedInParamList>>();
+
   return (
     <View>
       {centerInfo.member?.profileImage && (
@@ -77,7 +82,7 @@ function CenterInfoTop({centerInfo, recruits, fromMy}: Props) {
       </View>
     </View>
   );
-}
+};
 
 const styles = StyleSheet.create({
   pencil: {position: 'absolute', top: 0, right: 0},
