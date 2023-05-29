@@ -25,7 +25,7 @@ const EMAIL_INVALID_ERROR_MESSAGE = '이메일 형식에 맞게 입력해 주세
 
 type Props = NativeStackScreenProps<AuthStackParamList, 'SignIn'>;
 
-const SignIn = ({navigation}: Props) => {
+const SignInScreen = ({navigation}: Props) => {
   const [loading, setLoading] = useState(false);
   const [email, setEmail] = useState('');
   const [isEmailValid, setIsEmailValid] = useState(true);
@@ -124,4 +124,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default SignIn;
+export default SignInScreen;

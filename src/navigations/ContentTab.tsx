@@ -1,3 +1,5 @@
+import LinkScreen from '@/screen/LinkScreen';
+import {useAppSelector} from '@/store';
 import {IS_ANDROID, SCREEN_WIDTH} from '@/utils/constants/common';
 import {iconPath} from '@/utils/iconPath';
 import {bottomTabNavigationOptions} from '@/utils/options/tab';
@@ -5,21 +7,18 @@ import LinkHeader from '@components/Header/LinkHeader';
 import MyHeader from '@components/Header/MyHeader';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import CommunityScreen from '@screen/CommunityScreen';
-import Link from '@screen/Link';
 import MessageScreen from '@screen/MessageScreen';
 import MyCenterScreen from '@screen/MyCenterScreen';
 import MyScreen from '@screen/MyScreen';
-import {RootState} from '@store/reducer';
 import common from '@styles/common';
 import {useRef} from 'react';
 import {Animated, Image} from 'react-native';
-import {useSelector} from 'react-redux';
 import {LoggedInParamList} from '../../AppInner';
 
 const Tab = createBottomTabNavigator<LoggedInParamList>();
 
 const ContentTab = () => {
-  const memberInfo = useSelector((state: RootState) => state.user);
+  const memberInfo = useAppSelector(state => state.user);
 
   const tabOffsetValue = useRef(new Animated.Value(0)).current;
 
@@ -32,7 +31,7 @@ const ContentTab = () => {
         screenOptions={bottomTabNavigationOptions}>
         <Tab.Screen
           name="Link"
-          component={Link}
+          component={LinkScreen}
           options={{
             title: '채용',
             headerTitle: () => <LinkHeader />,

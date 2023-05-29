@@ -17,7 +17,7 @@ const CAN_GO_NEXT = true;
 
 type Props = NativeStackScreenProps<LoggedInParamList, 'PasswordReset'>;
 
-const PasswordReset = ({}: Props) => {
+const PasswordResetScreen = ({}: Props) => {
   const [userName, setUserName] = useState('');
   const [birth, setBirth] = useState('');
   const [gender, setGender] = useState('');
@@ -126,4 +126,4 @@ const PasswordReset = ({}: Props) => {
   );
 };
 
-export default PasswordReset;
+export default PasswordResetScreen;

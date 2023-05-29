@@ -10,6 +10,7 @@ export const KeyboardTypes = {
   PHONE: 'phone-pad',
   NUMBER: 'number-pad',
 };
+
 export const ReturnKeyTypes = {
   DONE: 'done',
   NEXT: 'next',

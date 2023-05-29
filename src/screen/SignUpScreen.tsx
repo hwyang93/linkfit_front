@@ -6,7 +6,7 @@ import {StyleSheet, Text, View} from 'react-native';
 
 type Props = NativeStackScreenProps<AuthStackParamList, 'SignUp'>;
 
-const SignUp = ({navigation, route}: Props) => {
+const SignUpScreen = ({navigation, route}: Props) => {
   return (
     <View style={styles.container}>
       <View style={common.mt40}>
@@ -43,4 +43,4 @@ const styles = StyleSheet.create({
     paddingHorizontal: 16,
   },
 });
-export default SignUp;
+export default SignUpScreen;

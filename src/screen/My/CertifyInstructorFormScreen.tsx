@@ -1,3 +1,4 @@
+import {useAppSelector} from '@/store';
 import {iconPath} from '@/utils/iconPath';
 import {createMemberLicence} from '@api/member';
 import BirthdayPicker from '@components/BirthdayPicker';
@@ -5,7 +6,6 @@ import Input, {KeyboardTypes} from '@components/Input';
 import SelectBox from '@components/SelectBox';
 import toast from '@hooks/toast';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
-import {RootState} from '@store/reducer';
 import {WHITE} from '@styles/colors';
 import common from '@styles/common';
 import {useCallback, useState} from 'react';
@@ -20,7 +20,6 @@ import {
 } from 'react-native';
 import {Asset, MediaType, launchImageLibrary} from 'react-native-image-picker';
 import LinearGradient from 'react-native-linear-gradient';
-import {useSelector} from 'react-redux';
 import {LoggedInParamList} from '../../../AppInner';
 
 const FIELD = ['필라테스', '요가'];
@@ -28,7 +27,8 @@ const FIELD = ['필라테스', '요가'];
 type Props = NativeStackScreenProps<LoggedInParamList, 'CertifyInstructorForm'>;
 
 const CertifyInstructorFormScreen = ({navigation}: Props) => {
-  const memberInfo = useSelector((state: RootState) => state.user);
+  const memberInfo = useAppSelector(state => state.user);
+
   const [loading, setLoading] = useState(false);
   const [name, setName] = useState(memberInfo.name);
   const [birth, setBirth] = useState(memberInfo.birth);

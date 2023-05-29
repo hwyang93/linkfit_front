@@ -1,3 +1,4 @@
+import {useAppSelector} from '@/store';
 import {MemberReputationEntity} from '@/types/api/entities';
 import {FetchInstructorResponse} from '@/types/api/instructor';
 import {SCREEN_HEIGHT, SCREEN_WIDTH} from '@/utils/constants/common';
@@ -9,7 +10,6 @@ import {
   useNavigation,
   useRoute,
 } from '@react-navigation/native';
-import {RootState} from '@store/reducer';
 import {BLUE, GRAY, WHITE} from '@styles/colors';
 import common from '@styles/common';
 import {useEffect, useRef, useState} from 'react';
@@ -26,7 +26,6 @@ import {
   View,
 } from 'react-native';
 import {TabBar, TabView} from 'react-native-tab-view';
-import {useSelector} from 'react-redux';
 import {LoggedInParamList} from '../../AppInner';
 
 const TAB_BAR_HEIGHT = 48;
@@ -48,11 +47,13 @@ const SafeStatusBar = Platform.select({
 const imageSize = (SCREEN_WIDTH - 38) / 3;
 
 const ProfileScreenTabView = () => {
-  const memberInfo = useSelector((state: RootState) => state.user);
-  const route = useRoute<RouteProp<LoggedInParamList, 'Profile'>>();
-  const navigation = useNavigation<NavigationProp<LoggedInParamList>>();
   const [instructor, setInstructor] = useState<FetchInstructorResponse>();
   const [reputation, setReputation] = useState<MemberReputationEntity[]>();
+
+  const memberInfo = useAppSelector(state => state.user);
+
+  const navigation = useNavigation<NavigationProp<LoggedInParamList>>();
+  const route = useRoute<RouteProp<LoggedInParamList, 'Profile'>>();
 
   useEffect(() => {
     const loadData = async () => {

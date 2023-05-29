@@ -15,18 +15,17 @@ import {
 import LinearGradient from 'react-native-linear-gradient';
 import {SafeAreaView} from 'react-native-safe-area-context';
 
+import {useAppSelector} from '@/store';
 import {fetchRecruitApplication, updateRecruitApplyStatus} from '@api/recruit';
 import {fetchResume} from '@api/resume';
 import toast from '@hooks/toast';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
-import {RootState} from '@store/reducer';
-import {useSelector} from 'react-redux';
 import {LoggedInParamList} from '../../../AppInner';
 
 type Props = NativeStackScreenProps<LoggedInParamList, 'ResumePreview'>;
 
 const ResumePreviewScreen = ({route, navigation}: Props) => {
-  const [loading, setLoading] = useState<boolean>(false);
+  const [loading, setLoading] = useState(false);
   const [modalVisible, setModalVisible] = useState(false);
   const [modalTitle, setModalTitle] = useState('');
   const [modalData, setModalData] = useState<any[]>([]);
@@ -34,7 +33,7 @@ const ResumePreviewScreen = ({route, navigation}: Props) => {
   const [applyResult, setApplyResult] = useState('');
   const [application, setApplication] = useState<any>({});
 
-  const memberInfo = useSelector((state: RootState) => state.user);
+  const memberInfo = useAppSelector(state => state.user);
 
   const getResume = useCallback(() => {
     if (route.params.applySeq) {
@@ -84,7 +83,7 @@ const ResumePreviewScreen = ({route, navigation}: Props) => {
 
   useEffect(() => {
     getResume();
-  }, []);
+  }, [getResume]);
 
   const MODAL = [
     {
