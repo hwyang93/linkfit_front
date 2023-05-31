@@ -24,6 +24,7 @@ import {
 } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 import {LoggedInParamList} from '../../AppInner';
+import SearchAddressInput from '@components/Common/SearchAddressInput';
 
 const POSITION = ['실장', '필라테스', '요가'];
 const EDUCATION = ['학력 무관', '고졸 이상', '대졸 이상'];
@@ -109,6 +110,10 @@ const JobOfferFormScreen = ({navigation}: Props) => {
     const newDates = dateForm;
     newDates[index][type] = value;
     setDateForm(newDates);
+  };
+
+  const setCompanyAddressInfo = (data: any) => {
+    console.log(data);
   };
 
   const onCreateRecruit = useCallback(() => {
@@ -320,6 +325,16 @@ const JobOfferFormScreen = ({navigation}: Props) => {
             placeholder={'급여를 입력하세요.'}
             keyboardType={KeyboardTypes.DEFAULT}
             editable={true}
+          />
+        </View>
+        <View style={common.mb16}>
+          <SearchAddressInput
+            label={'업체 주소'}
+            onChangeText={(data: any) => setCompanyAddressInfo(data)}
+            value={pay}
+            placeholder={'주소를 검색하세요.'}
+            keyboardType={KeyboardTypes.DEFAULT}
+            editable={false}
           />
         </View>
         {/* 상세 정보 */}

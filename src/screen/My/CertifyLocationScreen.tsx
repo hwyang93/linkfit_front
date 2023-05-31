@@ -24,6 +24,7 @@ import Geolocation from 'react-native-geolocation-service';
 import LinearGradient from 'react-native-linear-gradient';
 import MapView, {Marker, PROVIDER_GOOGLE} from 'react-native-maps';
 import {SafeAreaView} from 'react-native-safe-area-context';
+import Config from 'react-native-config';
 
 const requestPermission = async () => {
   try {
@@ -112,7 +113,7 @@ const CertifyLocationScreen = ({}: Props) => {
           `https://dapi.kakao.com/v2/local/geo/coord2regioncode.json?input_coord=WGS84&x=${P0.longitude}&y=${P0.latitude}`,
           {
             headers: {
-              Authorization: 'KakaoAK 39e13da7b6ee3bc9291ca64a8c84ceb8',
+              Authorization: `KakaoAK ${Config.KAKAO_API_REST_KEY}`,
             },
           },
         )
