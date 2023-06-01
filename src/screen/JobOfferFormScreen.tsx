@@ -15,7 +15,6 @@ import common from '@styles/common';
 import {useCallback, useState} from 'react';
 import {
   ActivityIndicator,
-  Alert,
   Image,
   Pressable,
   StyleSheet,
@@ -25,6 +24,7 @@ import {
 import LinearGradient from 'react-native-linear-gradient';
 import {LoggedInParamList} from '../../AppInner';
 import SearchAddressInput from '@components/Common/SearchAddressInput';
+import {useAppSelector} from '@/store';
 
 const POSITION = ['실장', '필라테스', '요가'];
 const EDUCATION = ['학력 무관', '고졸 이상', '대졸 이상'];
@@ -43,19 +43,25 @@ const columns7 = (SCREEN_WIDTH - 32) / 7;
 type Props = NativeStackScreenProps<LoggedInParamList, 'JobOfferForm'>;
 
 const JobOfferFormScreen = ({navigation}: Props) => {
+  const memberInfo = useAppSelector(state => state.user);
   const [loading, setLoading] = useState(false);
   const [offerTitle, setOfferTitle] = useState('');
   const [position, setPosition] = useState('');
   const [education, setEducation] = useState('');
   const [career, setCareer] = useState('');
-  const [time, setTime] = useState('');
+  // const [time, setTime] = useState('');
   const [payType, setPayType] = useState('');
   const [pay, setPay] = useState('');
   const [content, setContent] = useState('');
   const [recruitType, setRecruitType] = useState(''); // 채용 형태
   const [day, setDay] = useState(''); // 요일
-  const [date, setDate] = useState('');
+  // const [date, setDate] = useState('');
   const [dateForm, setDateForm] = useState<any[]>([{}]);
+  const [companyName, setCompanyName] = useState('');
+  const [address, setAddress] = useState('');
+  const [addressDetail, setAddressDetail] = useState('');
+  const [lon, setLon] = useState<number | null>(null);
+  const [lat, setLat] = useState<number | null>(null);
   const [images, setImages] = useState<any>([]);
   const [DAY, setDAY] = useState([
     {value: '월', selected: false},
@@ -113,19 +119,21 @@ const JobOfferFormScreen = ({navigation}: Props) => {
   };
 
   const setCompanyAddressInfo = (data: any) => {
-    console.log(data);
+    setAddress(data.address);
+    setLat(data.coordinate?.y);
+    setLon(data.coordinate?.x);
   };
 
   const onCreateRecruit = useCallback(() => {
     // toast.error({message: e.message});
     const data = {
       title: offerTitle,
-      companyName: 'string',
+      companyName: companyName,
       position: position,
-      address: 'string',
-      addressDetail: 'string',
+      address: address,
+      addressDetail: addressDetail,
       district: 'string',
-      phone: 'string',
+      phone: memberInfo.phone,
       recruitType: recruitType,
       career: career,
       education: education,
@@ -133,23 +141,29 @@ const JobOfferFormScreen = ({navigation}: Props) => {
       pay: pay,
       classType: 'string',
       content: content,
-      lon: 0,
-      lat: 0,
+      lon: lon,
+      lat: lat,
       dates: dateForm,
     };
     createRecruit(data)
       .then(() => {
-        Alert.alert('채용 공고 등록이 완료되었어요!');
+        toast.success({message: '채용 공고 등록이 완료되었어요!'});
         navigation.pop();
       })
       .catch(error => {
         toast.error({message: error.message});
       });
   }, [
+    address,
+    addressDetail,
     career,
+    companyName,
     content,
     dateForm,
     education,
+    lat,
+    lon,
+    memberInfo.phone,
     navigation,
     offerTitle,
     pay,
@@ -161,10 +175,11 @@ const JobOfferFormScreen = ({navigation}: Props) => {
   return (
     <DismissKeyboardView>
       <View style={styles.container}>
-        <Pressable style={[styles.photoBox, common.mb16]} onPress={openPicker}>
-          <Image source={iconPath.PHOTO} style={[common.size24]} />
-          <Text style={common.text_s}>0/5</Text>
-        </Pressable>
+        {/*이미지 올리기 임시 주석처리*/}
+        {/*<Pressable style={[styles.photoBox, common.mb16]} onPress={openPicker}>*/}
+        {/*  <Image source={iconPath.PHOTO} style={[common.size24]} />*/}
+        {/*  <Text style={common.text_s}>0/5</Text>*/}
+        {/*</Pressable>*/}
 
         {/* 글 제목 */}
         <View style={common.mb16}>
@@ -327,16 +342,39 @@ const JobOfferFormScreen = ({navigation}: Props) => {
             editable={true}
           />
         </View>
-        <View style={common.mb16}>
-          <SearchAddressInput
-            label={'업체 주소'}
-            onChangeText={(data: any) => setCompanyAddressInfo(data)}
-            value={pay}
-            placeholder={'주소를 검색하세요.'}
-            keyboardType={KeyboardTypes.DEFAULT}
-            editable={false}
-          />
-        </View>
+
+        {memberInfo.type !== 'COMPANY' && (
+          <View>
+            <View style={common.mb16}>
+              <Input
+                label={'업체명'}
+                onChangeText={(text: string) => setCompanyName(text)}
+                value={companyName}
+                placeholder={'업체명을 입력하세요.'}
+                keyboardType={KeyboardTypes.DEFAULT}
+                editable={true}
+              />
+            </View>
+            <View style={common.mb8}>
+              <SearchAddressInput
+                label={'업체 주소'}
+                onChangeText={(data: any) => setCompanyAddressInfo(data)}
+                value={address}
+                keyboardType={KeyboardTypes.DEFAULT}
+              />
+            </View>
+            <View style={common.mb16}>
+              <Input
+                onChangeText={(text: string) => setAddressDetail(text)}
+                value={addressDetail}
+                placeholder={'상세 주소를 입력하세요.'}
+                keyboardType={KeyboardTypes.DEFAULT}
+                editable={true}
+              />
+            </View>
+          </View>
+        )}
+
         {/* 상세 정보 */}
         <View style={common.mb16}>
           <Input

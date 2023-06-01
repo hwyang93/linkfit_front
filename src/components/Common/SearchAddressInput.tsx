@@ -1,7 +1,7 @@
 import {iconPath} from '@/utils/iconPath';
 import {GRAY, INPUT} from '@styles/colors';
 import common from '@styles/common';
-import {useCallback, useState} from 'react';
+import {useCallback, useEffect, useState} from 'react';
 import {
   Image,
   Pressable,
@@ -33,19 +33,15 @@ export const ReturnKeyTypes = {
 interface InputProps {
   pointerEvents?: any;
   label?: string;
-  placeholder: string;
   value?: any;
   onChangeText?: any;
   keyboardType?: any;
   secureTextEntry?: boolean;
-  isEmail?: boolean;
   propStyles?: {
     inputWrapper?: object;
   };
   onSubmitEditing?: any;
   blurOnSubmit?: boolean;
-  editable?: boolean;
-  multiline?: boolean;
   numberOfLines?: number;
   maxLength?: number;
   comment?: boolean;
@@ -55,21 +51,16 @@ interface InputProps {
 
 const SearchAddressInput = ({
   label,
-  placeholder,
   value,
   propStyles,
   pointerEvents,
-  editable,
-  multiline,
-  numberOfLines,
-  maxLength,
   comment,
   icon,
   textAlign,
   onChangeText,
   ...props
 }: InputProps) => {
-  const [isFocused, setIsFocused] = useState(false);
+  // const [isFocused, setIsFocused] = useState(false);
   const {modalVisible, openModal, closeModal} = useModal();
   const [address, setAddress] = useState('');
   const [coordinate, setCoordinate] = useState<{
@@ -77,19 +68,18 @@ const SearchAddressInput = ({
     y: number | null;
   }>({x: null, y: null});
 
-  const onBlur = () => {
-    setIsFocused(false);
-  };
-
-  const onFocus = () => {
-    setIsFocused(true);
-  };
-
-  const searchCoord = async (address: string) => {
+  // const onBlur = () => {
+  //   setIsFocused(false);
+  // };
+  //
+  // const onFocus = () => {
+  //   setIsFocused(true);
+  // };
+  const searchCoord = (address: string) => {
     try {
-      await axios
+      axios
         .get(
-          `https://dapi.kakao.com//v2/local/search/address.json?analyze_type=exact&query=${address}`,
+          `https://dapi.kakao.com/v2/local/search/address.json?analyze_type=exact&query=${address}`,
           {
             headers: {
               Authorization: `KakaoAK ${Config.KAKAO_API_REST_KEY}`,
@@ -110,37 +100,31 @@ const SearchAddressInput = ({
   };
 
   const selectAddress = useCallback(
-    async (data: any) => {
+    (data: any) => {
       setAddress(data.address);
       searchCoord(data.address);
-      onChangeText({address, coordinate});
       closeModal();
     },
-    [address, closeModal, coordinate, onChangeText],
+    [closeModal],
   );
+
+  useEffect(() => {
+    onChangeText({address, coordinate});
+  }, [address, coordinate, onChangeText]);
 
   return (
     <View>
       <Pressable onPress={() => openModal()}>
         <View style={[common.inputWrapper, propStyles?.inputWrapper]}>
-          <Text
-            style={[
-              common.label,
-              {color: value || isFocused ? INPUT.FOCUS : GRAY.LIGHT},
-              // {color: value && !isFocused ? INPUT.DEFAULT : INPUT.DEFAULT},
-            ]}>
-            {label}
-          </Text>
+          <Text style={[common.label]}>{label}</Text>
 
           <TextInput
             {...props}
             style={[
               common.textInput,
               {
-                borderColor: value || isFocused ? INPUT.FOCUS : GRAY.LIGHT,
                 paddingLeft: icon && 50,
               },
-              multiline && styles.multiline,
               comment && styles.comment,
             ]}
             value={address}
@@ -149,15 +133,12 @@ const SearchAddressInput = ({
             clearButtonMode="while-editing"
             autoCapitalize="none"
             blurOnSubmit={false}
-            placeholder={placeholder}
+            placeholder={'주소를 검색하세요.'}
             textContentType={'none'}
             pointerEvents={pointerEvents}
-            onBlur={onBlur}
-            onFocus={onFocus}
-            editable={editable}
-            multiline={multiline}
-            numberOfLines={numberOfLines}
-            maxLength={maxLength}
+            editable={false}
+            multiline={false}
+            numberOfLines={1}
             textAlign={textAlign}
           />
           <View style={{position: 'absolute', right: 16, top: 16}}>
