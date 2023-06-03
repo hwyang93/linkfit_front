@@ -1,6 +1,6 @@
 import {iconPath} from '@/utils/iconPath';
 import {FlatList, Image, StyleSheet, View} from 'react-native';
-import Chip from './Common/Chip';
+import FilterChip from './Common/FilterChip';
 
 interface TopFilterProps {
   data: {
@@ -19,7 +19,7 @@ const TopFilter: React.FC<TopFilterProps> = ({data}) => {
         keyExtractor={(_, index) => index.toString()}
         horizontal={true}
         renderItem={({item}) => (
-          <Chip
+          <FilterChip
             style={{marginRight: 8}}
             label={item.value}
             onPress={item.job}

@@ -1,14 +1,16 @@
+import Card from '@/components/Common/Card';
+import Chip from '@/components/Common/Chip';
+import SectionHeader from '@/components/Common/SectionHeader';
 import {FetchMemberMyInfoResponse} from '@/types/api/member';
 import {SCREEN_WIDTH} from '@/utils/constants/common';
 import {iconPath} from '@/utils/iconPath';
 import {dateFormatter} from '@/utils/util';
 import {fetchMemberMyInfo} from '@api/member';
-import MyTitle from '@components/My/MyTitle';
 import ProfileBox from '@components/ProfileBox';
 import toast from '@hooks/toast';
 import {useIsFocused} from '@react-navigation/native';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
-import {BLUE, GRAY, WHITE} from '@styles/colors';
+import {GRAY, WHITE} from '@styles/colors';
 import common from '@styles/common';
 import {useEffect, useState} from 'react';
 import {
@@ -20,7 +22,7 @@ import {
   View,
 } from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
-import {LoggedInParamList} from '../../AppInner';
+import {LoggedInParamList} from '../../../AppInner';
 
 const columns3 = (SCREEN_WIDTH - 32) / 3;
 const columns4 = (SCREEN_WIDTH - 32) / 4;
@@ -60,10 +62,18 @@ const MENU = [
 
 type Props = NativeStackScreenProps<LoggedInParamList, 'My'>;
 
-const MyScreen = ({navigation}: Props) => {
+const MyTab = ({navigation}: Props) => {
   const [myInfo, setMyInfo] = useState<FetchMemberMyInfoResponse>();
 
   const isFocused = useIsFocused();
+
+  const handleResumeCardPress = (resumeSeq: number) => {
+    navigation.navigate('ResumePreview', {
+      resumeSeq: resumeSeq,
+      applySeq: null,
+      recruitSeq: null,
+    });
+  };
 
   useEffect(() => {
     if (isFocused) {
@@ -83,70 +93,45 @@ const MyScreen = ({navigation}: Props) => {
         <View style={common.mb20}>
           {myInfo && <ProfileBox memberInfo={myInfo.memberInfo} />}
         </View>
-
         <View style={common.mb8}>
-          <Text style={[common.title_s]}>프로필 메뉴</Text>
+          <SectionHeader title="프로필 메뉴" />
           <View style={[common.rowCenter, {flexWrap: 'wrap'}]}>
             {/* TODO: 타입 정의 */}
-            {MENU.map((item, index) => {
-              return (
-                <Pressable
-                  onPress={() => navigation.navigate(item.link as any)}
-                  key={index}
-                  style={[styles.menuItem, {width: columns3, height: 80}]}>
-                  <Image source={item.icon} style={common.size32} />
-                  <Text style={common.text_s}>{item.title}</Text>
-                </Pressable>
-              );
-            })}
+            {MENU.map((item, index) => (
+              <Pressable
+                key={index}
+                style={[styles.menuItem, {width: columns3, height: 80}]}
+                onPress={() => navigation.navigate(item.link as any)}>
+                <Image source={item.icon} style={common.size32} />
+                <Text style={common.text_s}>{item.title}</Text>
+              </Pressable>
+            ))}
           </View>
         </View>
-
-        <View style={[common.mb8]}>
-          <MyTitle title={'이력서'} button={true} link={'ResumeManage'} />
-        </View>
-
-        {/* 이력서 박스 */}
+        <SectionHeader
+          style={{marginBottom: 8}}
+          title="이력서"
+          onPress={() => navigation.navigate('ResumeManage')}
+        />
+        {/* 플레이스홀더 UI 추가 */}
         {myInfo?.masterResume.seq ? (
-          <View style={common.mb24}>
-            <Pressable
-              style={common.basicBox}
-              onPress={() =>
-                navigation.navigate('ResumePreview', {
-                  resumeSeq: myInfo.masterResume.seq,
-                  applySeq: null,
-                  recruitSeq: null,
-                })
-              }>
-              <View style={[common.resumeBadge]}>
-                <Text
-                  style={[
-                    common.text,
-                    common.fs10,
-                    {color: BLUE.DEFAULT, textAlign: 'center'},
-                  ]}>
-                  대표
-                </Text>
-              </View>
-              <Text style={common.title}>{myInfo.masterResume.title}</Text>
-              <Text style={[common.text_s, {color: GRAY.DARK}]}>
-                {dateFormatter(myInfo.masterResume.updatedAt, 'YYYY.MM.DD')}
-              </Text>
-            </Pressable>
-          </View>
+          <Card
+            style={{marginBottom: 16}}
+            onPress={() => handleResumeCardPress(myInfo.masterResume.seq)}>
+            <Chip label="대표" />
+            <Text style={common.title}>{myInfo.masterResume.title}</Text>
+            <Text style={[common.text_s, {color: GRAY.DARK}]}>
+              {dateFormatter(myInfo.masterResume.updatedAt, 'YYYY.MM.DD')}
+            </Text>
+          </Card>
         ) : (
           <View style={{marginBottom: 16}} />
         )}
-        {/* 이력서 박스 */}
-
-        <View style={[common.mb8]}>
-          <MyTitle
-            title={'지원 현황'}
-            button={true}
-            link={'ApplicationStatus'}
-          />
-        </View>
-
+        <SectionHeader
+          style={{marginBottom: 8}}
+          title="지원 현황"
+          onPress={() => navigation.navigate('ApplicationStatus')}
+        />
         <View style={common.mb24}>
           <View style={[common.rowCenter, {flexWrap: 'wrap'}]}>
             <View
@@ -209,15 +194,12 @@ const MyScreen = ({navigation}: Props) => {
             </View>
           </View>
         </View>
-
         <View style={[common.mb8]}>
-          <MyTitle
-            title={'받은 포지션 제안'}
-            button={true}
-            link={'ReceivedSuggestion'}
+          <SectionHeader
+            title="받은 포지션 제안"
+            onPress={() => navigation.navigate('ReceivedSuggestion')}
           />
         </View>
-
         <View style={common.mb24}>
           <View style={[common.rowCenter, {flexWrap: 'wrap'}]}>
             <View
@@ -280,11 +262,12 @@ const MyScreen = ({navigation}: Props) => {
             </View>
           </View>
         </View>
-
         <View style={[common.mb8]}>
-          <MyTitle title={'내 공고'} button={true} link={'MyPost'} />
+          <SectionHeader
+            title="내 공고"
+            onPress={() => navigation.navigate('MyPost')}
+          />
         </View>
-
         <View style={common.mb16}>
           <View style={[common.rowCenter, {flexWrap: 'wrap'}]}>
             <View
@@ -336,10 +319,12 @@ const MyScreen = ({navigation}: Props) => {
     </SafeAreaView>
   );
 };
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    padding: 16,
+    paddingHorizontal: 16,
+    paddingTop: 16,
     backgroundColor: WHITE,
   },
   menuItem: {
@@ -352,4 +337,4 @@ const styles = StyleSheet.create({
     right: 16,
   },
 });
-export default MyScreen;
+export default MyTab;

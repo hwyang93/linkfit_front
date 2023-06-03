@@ -1,14 +1,13 @@
 import {fetchMemberInfo} from '@/api/member';
 import AuthStack from '@/navigations/AuthStack';
 import {useAppDispatch, useAppSelector} from '@/store';
-import {IS_ANDROID, IS_IOS} from '@/utils/constants/common';
 import STORAGE_KEY from '@/utils/constants/storage';
+import {requestPermission} from '@/utils/util';
 import toast from '@hooks/toast';
 import MainStack from '@navigations/MainStack';
 import userSlice from '@slices/user';
 import {isAxiosError} from 'axios';
 import {useCallback, useEffect, useState} from 'react';
-import {PermissionsAndroid} from 'react-native';
 import EncryptedStorage from 'react-native-encrypted-storage';
 import Geolocation from 'react-native-geolocation-service';
 import SplashScreen from 'react-native-splash-screen';
@@ -76,23 +75,6 @@ export type LoggedInParamList = {
   SignUpForm: {email: string};
   CompanySignUpForm: {email: string};
   PasswordReset: undefined;
-};
-
-const requestPermission = async () => {
-  try {
-    // IOS 위치 정보 수집 권한 요청
-    if (IS_IOS) {
-      return await Geolocation.requestAuthorization('always');
-    }
-    // 안드로이드 위치 정보 수집 권한 요청
-    if (IS_ANDROID) {
-      return await PermissionsAndroid.request(
-        PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
-      );
-    }
-  } catch (e) {
-    console.log(e);
-  }
 };
 
 const AppInner = () => {

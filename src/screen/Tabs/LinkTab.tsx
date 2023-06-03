@@ -3,50 +3,39 @@ import {iconPath} from '@/utils/iconPath';
 import {fetchRecommendedInstructors} from '@api/instructor';
 import InstructorListItem from '@components/InstructorListItem';
 import LinkTop from '@components/LinkTop';
-import Modal from '@components/ModalSheet';
 import toast from '@hooks/toast';
 import {useFocusEffect} from '@react-navigation/native';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
-import {BLUE, WHITE} from '@styles/colors';
+import {WHITE} from '@styles/colors';
 import common from '@styles/common';
 import {isAxiosError} from 'axios';
 import {useCallback, useEffect, useState} from 'react';
-import {
-  Alert,
-  BackHandler,
-  FlatList,
-  Image,
-  Pressable,
-  StyleSheet,
-  Text,
-  View,
-} from 'react-native';
-import {LoggedInParamList} from '../../AppInner';
+import {Alert, BackHandler, FlatList, StyleSheet, View} from 'react-native';
+import {LoggedInParamList} from '../../../AppInner';
 
 type Props = NativeStackScreenProps<LoggedInParamList, 'Link'>;
 
 const LinkScreen = ({navigation}: Props) => {
-  const MODAL = [
-    {
-      value: '구인 공고 등록',
-      selected: false,
-      link: 'JobOfferForm',
-      job: () => {
-        setModalVisible(false);
-        navigation.navigate('JobOfferForm');
-      },
-    },
-    {
-      value: '구직 공고 등록',
-      selected: false,
-      job: () => {
-        setModalVisible(false);
-        Alert.alert('text', '아직 준비중이에요!');
-      },
-    },
-  ];
+  // const MODAL = [
+  //   {
+  //     value: '구인 공고 등록',
+  //     selected: false,
+  //     link: 'JobOfferForm',
+  //     job: () => {
+  //       setModalVisible(false);
+  //       navigation.navigate('JobOfferForm');
+  //     },
+  //   },
+  //   {
+  //     value: '구직 공고 등록',
+  //     selected: false,
+  //     job: () => {
+  //       setModalVisible(false);
+  //       Alert.alert('text', '아직 준비중이에요!');
+  //     },
+  //   },
+  // ];
 
-  const [modalVisible, setModalVisible] = useState(false);
   const [instructors, setInstructors] = useState<any[]>([]);
 
   useEffect(() => {
@@ -80,11 +69,6 @@ const LinkScreen = ({navigation}: Props) => {
     return <InstructorListItem item={item} />;
   };
 
-  const openModal = () => {
-    navigation.navigate('JobOfferForm');
-    // setModalVisible(true);
-  };
-
   return (
     <View style={styles.container}>
       <FlatList
@@ -98,10 +82,10 @@ const LinkScreen = ({navigation}: Props) => {
       <View style={styles.fabContainer}>
         <FloatingActionButton
           iconSource={iconPath.PENCIL_W}
-          onPress={openModal}
+          onPress={() => navigation.navigate('JobOfferForm')}
         />
       </View>
-      <Modal
+      {/* <Modal
         modalVisible={modalVisible}
         setModalVisible={setModalVisible}
         title={'공고 등록하기'}
@@ -129,7 +113,7 @@ const LinkScreen = ({navigation}: Props) => {
             })}
           </View>
         }
-      />
+      /> */}
     </View>
   );
 };

@@ -44,7 +44,7 @@ const CTAButton: React.FC<CTAButtonProps> = ({
                   ? [THEME.GREY04, THEME.GREY04]
                   : pressed
                   ? ['#062DB8', '#062DB8']
-                  : ['#74ebe4', THEME.PRIMARY]
+                  : ['#62C1E9', THEME.PRIMARY]
               }>
               {loading && <ActivityIndicator color="white" />}
               {!loading && <Text style={common.buttonText}>{label}</Text>}

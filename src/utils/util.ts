@@ -1,5 +1,8 @@
 // email 형식 확인
 import moment from 'moment/moment';
+import {PermissionsAndroid} from 'react-native';
+import Geolocation from 'react-native-geolocation-service';
+import {IS_ANDROID, IS_IOS} from './constants/common';
 
 export const validateEmail = (email: string) => {
   const regex =
@@ -23,4 +26,21 @@ export const removeWhitespace = (text: string) => {
 export const dateFormatter = (date: string | number | Date, format: string) => {
   const dateObj = new Date(date);
   return moment(dateObj).format(format);
+};
+
+export const requestPermission = async () => {
+  try {
+    // IOS 위치 정보 수집 권한 요청
+    if (IS_IOS) {
+      return await Geolocation.requestAuthorization('always');
+    }
+    // 안드로이드 위치 정보 수집 권한 요청
+    if (IS_ANDROID) {
+      return await PermissionsAndroid.request(
+        PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
+      );
+    }
+  } catch (e) {
+    console.log(e);
+  }
 };

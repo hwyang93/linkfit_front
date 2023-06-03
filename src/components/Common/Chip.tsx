@@ -1,57 +1,36 @@
 import THEME from '@/styles/theme';
 import React from 'react';
-import {
-  Pressable,
-  PressableProps,
-  StyleProp,
-  StyleSheet,
-  Text,
-  View,
-  ViewStyle,
-} from 'react-native';
+import {StyleProp, Text, View, ViewProps, ViewStyle} from 'react-native';
 
-interface ChipProps extends PressableProps {
-  label: string;
+interface ChipProps extends ViewProps {
   style?: StyleProp<ViewStyle>;
-  rightIcon?: React.ReactNode;
-  onPress?: () => void;
+  label: string;
 }
 
-// TODO: 안드로이드에서 텍스트가 약간 아래로 내려가있는 현상 수정
-const Chip: React.FC<ChipProps> = ({
-  label,
-  rightIcon,
-  style,
-  onPress,
-  ...props
-}) => {
+const Chip: React.FC<ChipProps> = ({label, style, ...props}) => {
   return (
-    <Pressable style={[styles.container, style]} onPress={onPress} {...props}>
+    <View
+      style={[
+        {
+          alignSelf: 'flex-start',
+          paddingVertical: 4,
+          paddingHorizontal: 8,
+          marginBottom: 8,
+          backgroundColor: '#d7e0fd',
+          borderRadius: 12,
+        },
+        style,
+      ]}
+      {...props}>
       <Text
         style={{
-          fontSize: 16,
-          fontWeight: '400',
-          color: THEME.GREY02,
+          color: THEME.PRIMARY,
+          fontSize: 10,
         }}>
         {label}
       </Text>
-      {rightIcon && <View style={{marginLeft: 8}}>{rightIcon}</View>}
-    </Pressable>
+    </View>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    flexDirection: 'row',
-    paddingVertical: 6,
-    paddingHorizontal: 12,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: THEME.WHITE,
-    borderRadius: 16,
-    borderWidth: 1,
-    borderColor: THEME.GREY04,
-  },
-});
 
 export default Chip;

@@ -1,13 +1,13 @@
 import BottomSheet from '@/components/Common/BottomSheet';
 import CTAButton from '@/components/Common/CTAButton';
+import FabContainer from '@/components/Common/FabContainer';
+import FloatingActionButton from '@/components/Common/FloatingActionButton';
 import FilterChipList from '@/components/FilterChipList';
+import RecruitListItem from '@/components/RecruitListItem';
 import useModal from '@/hooks/useModal';
 import {FetchRecruitsResponse} from '@/types/api/recruit';
 import {iconPath} from '@/utils/iconPath';
 import {fetchRecruits} from '@api/recruit';
-import FloatingLinkButton from '@components/FloatingLinkButton';
-import FloatingWriteButton from '@components/FloatingWriteButton';
-import RecruitComponent from '@components/RecruitComponent';
 import toast from '@hooks/toast';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import {BLUE} from '@styles/colors';
@@ -15,6 +15,7 @@ import common from '@styles/common';
 import {isAxiosError} from 'axios';
 import React, {useCallback, useEffect, useState} from 'react';
 import {
+  FlatList,
   Image,
   ImageSourcePropType,
   Pressable,
@@ -191,8 +192,8 @@ const RecruitListScreen = ({navigation}: Props) => {
     closeModal();
   };
 
-  const handleFloatingWriteButtonPress = () => {
-    navigation.navigate('JobOfferForm');
+  const renderItem = ({item}: any) => {
+    return <RecruitListItem item={item} />;
   };
 
   useEffect(() => {
@@ -201,33 +202,42 @@ const RecruitListScreen = ({navigation}: Props) => {
 
   return (
     <SafeAreaView edges={['bottom', 'left', 'right']} style={styles.container}>
-      {/* 구인공고 */}
-      {/* 필터 영역 */}
       <FilterChipList
         chipData={FILTER_CHIP_DATA}
         onChipPress={handleChipPress}
       />
       <View style={{marginHorizontal: 16}}>
-        {recruits && (
-          <RecruitComponent
-            list={recruits}
-            title={'구인 공고'}
-            text={'내 주변의 구인 공고를 만나보세요!'}
-          />
-        )}
+        <FlatList
+          data={recruits}
+          decelerationRate="fast"
+          renderItem={renderItem}
+          snapToAlignment="start"
+          numColumns={2}
+          contentContainerStyle={{paddingBottom: 32}}
+          ListHeaderComponent={
+            <View style={{paddingVertical: 16}}>
+              <Text style={[common.title]}>구인 공고</Text>
+              <Text style={common.text_m}>
+                내 주변의 구인 공고를 만나보세요!
+              </Text>
+            </View>
+          }
+          showsVerticalScrollIndicator={false}
+        />
       </View>
-      {/* Floating Button */}
-      <FloatingWriteButton
-        bottom={88}
-        icon={iconPath.PENCIL_W}
-        job={handleFloatingWriteButtonPress}
-      />
-      {/* 페이지 이동 버튼 */}
-      <FloatingLinkButton
-        link={'RecruitMap'}
-        title={'지도보기'}
-        icon={iconPath.MAP}
-      />
+      <FabContainer>
+        <FloatingActionButton
+          iconSource={iconPath.PENCIL_W}
+          onPress={() => navigation.navigate('JobOfferForm')}
+        />
+        <FloatingActionButton
+          style={{marginTop: 16}}
+          iconSource={iconPath.MAP}
+          variant="secondary"
+          label="지도보기"
+          onPress={() => navigation.navigate('RecruitMap')}
+        />
+      </FabContainer>
       <BottomSheet
         visible={modalVisible}
         onDismiss={closeModal}

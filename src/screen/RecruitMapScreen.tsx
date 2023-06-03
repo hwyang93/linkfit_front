@@ -1,7 +1,7 @@
 import Avatar from '@/components/Common/Avatar';
 import BottomSheet from '@/components/Common/BottomSheet';
-import Chip from '@/components/Common/Chip';
 import DotPagination from '@/components/Common/DotPagination';
+import FilterChip from '@/components/Common/FilterChip';
 import FloatingActionButton from '@/components/Common/FloatingActionButton';
 import Icon from '@/components/Common/Icon';
 import IconButton from '@/components/Common/IconButton';
@@ -278,7 +278,7 @@ const RecruitMapScreen = ({navigation}: Props) => {
         <ScrollView
           horizontal
           style={{paddingHorizontal: 16, paddingVertical: 8}}>
-          <Chip
+          <FilterChip
             label="포지션"
             style={common.mr8}
             rightIcon={
@@ -288,7 +288,7 @@ const RecruitMapScreen = ({navigation}: Props) => {
               />
             }
           />
-          <Chip
+          <FilterChip
             label="채용형태"
             style={common.mr8}
             rightIcon={
@@ -298,7 +298,7 @@ const RecruitMapScreen = ({navigation}: Props) => {
               />
             }
           />
-          <Chip
+          <FilterChip
             label="수업시간"
             rightIcon={
               <Image

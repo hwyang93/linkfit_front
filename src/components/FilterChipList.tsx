@@ -1,6 +1,6 @@
 import {iconPath} from '@/utils/iconPath';
 import {FlatList, Image, StyleSheet, View} from 'react-native';
-import Chip from './Common/Chip';
+import FilterChip from './Common/FilterChip';
 
 interface FilterChipListProps {
   chipData: {
@@ -22,7 +22,7 @@ const FilterChipList: React.FC<FilterChipListProps> = ({
         keyExtractor={(_, index) => index.toString()}
         horizontal={true}
         renderItem={({item}) => (
-          <Chip
+          <FilterChip
             style={{marginRight: 8}}
             label={item.label}
             onPress={() => onChipPress(item.value)}

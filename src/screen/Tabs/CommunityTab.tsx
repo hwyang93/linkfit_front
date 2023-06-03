@@ -12,7 +12,7 @@ import common from '@styles/common';
 import {isAxiosError} from 'axios';
 import {useCallback, useEffect, useState} from 'react';
 import {FlatList, StyleSheet, Text, View} from 'react-native';
-import {LoggedInParamList} from '../../AppInner';
+import {LoggedInParamList} from '../../../AppInner';
 
 const FILTER = [
   {
@@ -51,7 +51,7 @@ const FILTER = [
 
 type Props = NativeStackScreenProps<LoggedInParamList, 'Community'>;
 
-const CommunityScreen = ({navigation}: Props) => {
+const CommunityTab = ({navigation}: Props) => {
   const [posts, setPosts] = useState<FetchCommunityPostsResponse>([]);
 
   const isFocused = useIsFocused();
@@ -148,4 +148,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default CommunityScreen;
+export default CommunityTab;

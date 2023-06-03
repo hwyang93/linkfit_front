@@ -1,4 +1,7 @@
-import {SHOW_TOAST_MESSAGE} from '@/utils/toast';
+import {IS_ANDROID, IS_IOS} from '@/utils/constants/common';
+import SHOW_TOAST_MESSAGE from '@/utils/constants/toast';
+import {iconPath} from '@/utils/iconPath';
+import common from '@styles/common';
 import {useCallback, useEffect, useRef, useState} from 'react';
 import {
   DeviceEventEmitter,
@@ -9,10 +12,6 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-
-import {IS_ANDROID, IS_IOS} from '@/utils/constants/common';
-import {iconPath} from '@/utils/iconPath';
-import common from '@styles/common';
 import Animated, {
   useAnimatedStyle,
   useSharedValue,
