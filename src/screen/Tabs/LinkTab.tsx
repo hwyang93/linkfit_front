@@ -73,7 +73,7 @@ const LinkScreen = ({navigation}: Props) => {
     <View style={styles.container}>
       <FlatList
         data={instructors}
-        keyExtractor={item => 'recommendedInstructor' + item.seq}
+        keyExtractor={item => item.seq}
         renderItem={renderItem}
         ListHeaderComponent={<LinkTop />}
         ItemSeparatorComponent={() => <View style={common.separator} />}

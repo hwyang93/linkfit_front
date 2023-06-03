@@ -191,6 +191,7 @@ const MyCenterScreen = ({navigation}: Props) => {
     </SafeAreaView>
   );
 };
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -213,4 +214,5 @@ const styles = StyleSheet.create({
     right: 16,
   },
 });
+
 export default MyCenterScreen;

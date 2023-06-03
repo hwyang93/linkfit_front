@@ -1,4 +1,3 @@
-import {BLUE} from '@/styles/colors';
 import common from '@/styles/common';
 import THEME from '@/styles/theme';
 import React from 'react';
@@ -6,6 +5,7 @@ import {
   ActivityIndicator,
   Pressable,
   PressableProps,
+  StyleSheet,
   Text,
   View,
 } from 'react-native';
@@ -53,37 +53,59 @@ const CTAButton: React.FC<CTAButtonProps> = ({
         </Pressable>
       )}
       {variant === 'stroked' && (
-        <Pressable onPress={onPress} disabled={disabled || loading} {...props}>
+        <Pressable onPress={onPress} disabled={loading || disabled}>
           {({pressed}) => (
-            <View
-              style={[
-                common.button,
-                {
-                  backgroundColor: pressed ? '#E8EDFF' : THEME.WHITE,
-                  borderWidth: 2,
-                  borderColor: disabled
-                    ? THEME.GREY04
-                    : pressed
-                    ? BLUE.DEFAULT
-                    : BLUE.DEFAULT,
-                },
-              ]}>
-              {loading && <ActivityIndicator />}
-              {!loading && (
-                <Text
-                  style={[
-                    common.buttonText,
-                    {color: disabled ? THEME.GREY04 : BLUE.DEFAULT},
-                  ]}>
-                  {label}
-                </Text>
-              )}
-            </View>
+            <LinearGradient
+              style={styles.gradientBorder}
+              start={{x: 0, y: 1}}
+              end={{x: 1, y: 1}}
+              colors={
+                disabled
+                  ? [THEME.GREY04, THEME.GREY04]
+                  : ['#74ebe4', THEME.PRIMARY]
+              }>
+              <View
+                style={[
+                  styles.gradientBorderInner,
+                  {backgroundColor: pressed ? '#E8EDFF' : THEME.WHITE},
+                ]}>
+                {loading && <ActivityIndicator color={THEME.PRIMARY} />}
+                {!loading && (
+                  <Text
+                    style={{
+                      fontSize: 16,
+                      fontWeight: '700',
+                      textAlign: 'center',
+                      color: disabled ? THEME.GREY03 : THEME.PRIMARY,
+                    }}>
+                    {label}
+                  </Text>
+                )}
+              </View>
+            </LinearGradient>
           )}
         </Pressable>
       )}
     </>
   );
 };
+
+const styles = StyleSheet.create({
+  gradientBorder: {
+    height: 56,
+    width: '100%',
+    justifyContent: 'center',
+    alignSelf: 'center',
+    borderRadius: 28,
+  },
+  gradientBorderInner: {
+    flex: 1,
+    alignSelf: 'center',
+    justifyContent: 'center',
+    width: '99%',
+    margin: 1,
+    borderRadius: 28,
+  },
+});
 
 export default CTAButton;

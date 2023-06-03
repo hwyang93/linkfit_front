@@ -1,15 +1,18 @@
-import {SCREEN_WIDTH} from '@/utils/constants/common';
+import {LoggedInParamList} from '@/../AppInner';
 import {fetchRecommendedRecruits} from '@api/recruit';
-import RecruitCarousel from '@components/RecruitCarousel';
+import RecruitCarouselItem from '@components/RecruitCarouselItem';
 import toast from '@hooks/toast';
+import {NavigationProp, useNavigation} from '@react-navigation/native';
 import common from '@styles/common';
 import {isAxiosError} from 'axios';
 import {useEffect, useState} from 'react';
-import {Text, View} from 'react-native';
+import {FlatList, Text, View} from 'react-native';
 import GradientNaivgationTab from './GradientNavigationTab';
 
 const LinkTop: React.FC = () => {
-  const [recruits, setRecruits] = useState<[]>([]);
+  const [recruits, setRecruits] = useState([]);
+
+  const navigation = useNavigation<NavigationProp<LoggedInParamList>>();
 
   useEffect(() => {
     fetchRecommendedRecruits()
@@ -22,6 +25,21 @@ const LinkTop: React.FC = () => {
         }
       });
   }, []);
+
+  const renderItem = ({item}: any) => {
+    return (
+      <RecruitCarouselItem
+        seq={item.seq}
+        title={item.title}
+        position={item.position}
+        companyName={item.companyName}
+        address={item.address}
+        bookmarkChecked={item.isBookmark === 'Y'}
+        imageSrc={item.writer?.profileImage?.originFileUrl}
+        onPress={() => navigation.navigate('JobPost', {recruitSeq: item.seq})}
+      />
+    );
+  };
 
   return (
     <View style={{marginTop: 32}}>
@@ -36,11 +54,13 @@ const LinkTop: React.FC = () => {
           </Text>
         </View>
         <View style={common.mt16}>
-          <RecruitCarousel
-            gap={8}
-            offset={32}
-            links={recruits}
-            pageWidth={SCREEN_WIDTH - (8 + 32) / 2}
+          <FlatList
+            contentContainerStyle={{paddingHorizontal: 16}}
+            keyExtractor={(_, index) => index.toString()}
+            data={recruits}
+            horizontal
+            renderItem={renderItem}
+            showsHorizontalScrollIndicator={false}
           />
         </View>
       </View>
