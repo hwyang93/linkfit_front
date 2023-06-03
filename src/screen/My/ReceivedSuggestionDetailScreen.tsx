@@ -17,6 +17,7 @@ import {
 import LinearGradient from 'react-native-linear-gradient';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {LoggedInParamList} from '../../../AppInner';
+import toast from '@hooks/toast';
 
 const LOADING = false;
 
@@ -35,7 +36,7 @@ const ReceivedSuggestionDetailScreen = ({route, navigation}: Props) => {
         setSuggestInfo(data);
       })
       .catch(error => {
-        Alert.alert(error.message);
+        toast.alert(error.message);
         navigation.goBack();
       });
   }, [route.params.suggestSeq, navigation]);
@@ -45,11 +46,11 @@ const ReceivedSuggestionDetailScreen = ({route, navigation}: Props) => {
       const data = {status: status};
       updatePositionSuggestStatus(route.params.suggestSeq, data)
         .then(() => {
-          Alert.alert('제안 답변이 완료되었습니다!');
+          toast.success({message: '제안 답변이 완료되었습니다!'});
           getSuggestInfo();
         })
         .catch(error => {
-          Alert.alert(error.message);
+          toast.error({message: error.message});
         });
     },
     [getSuggestInfo, route.params.suggestSeq],

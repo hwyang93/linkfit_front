@@ -82,4 +82,5 @@ export const iconPath = {
   DAY: require('@images/icon/day.png'),
   CANCEL: require('@images/icon/cancel.png'),
   TIME: require('@images/icon/time.png'),
+  SEARCH: require('@images/icon/search.png'),
 };

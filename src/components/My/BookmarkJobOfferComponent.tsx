@@ -2,6 +2,7 @@ import {fetchBookmarkRecruits} from '@api/recruit';
 import RecruitCarouselItem from '@components/RecruitCarouselItem';
 import {useCallback, useEffect, useState} from 'react';
 import {Alert, FlatList, View} from 'react-native';
+import toast from '@hooks/toast';
 
 const BookmarkJobOfferComponent: React.FC = () => {
   const [bookmarkedRecruits, setBookmarkedRecruits] = useState<any[]>();
@@ -12,7 +13,7 @@ const BookmarkJobOfferComponent: React.FC = () => {
         setBookmarkedRecruits(data);
       })
       .catch(error => {
-        Alert.alert(error.message);
+        toast.error({message: error.message});
       });
   }, []);
 

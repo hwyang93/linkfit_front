@@ -78,9 +78,9 @@ const ProfileEditScreen = ({navigation, route}: Props) => {
     await fetchCheckNickname(nickname)
       .then(({data}: any) => {
         if (!data.duplication) {
-          Alert.alert('사용 가능한 닉네임입니다.');
+          toast.info({message: '사용 가능한 닉네임입니다.'});
         } else {
-          Alert.alert('이미 사용 중인 닉네임입니다.');
+          toast.warn({message: '이미 사용 중인 닉네임입니다.'});
         }
       })
       .catch((e: any) => {

@@ -15,6 +15,7 @@ import {
 } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 import {LoggedInParamList} from '../../AppInner';
+import toast from '@hooks/toast';
 
 const SUGGESTION = [
   '필라테스 강사님 구합니다.',
@@ -53,11 +54,11 @@ const SuggestionScreen = ({navigation, route}: Props) => {
     };
     await createInstructorSuggest(data)
       .then(() => {
-        Alert.alert('제안 성공!!!');
+        toast.success('포지션 제안이 완료되었어요!');
         navigation.pop();
       })
       .catch(error => {
-        console.log(error.message);
+        toast.error({message: error.message});
       });
   }, [
     closingDate,

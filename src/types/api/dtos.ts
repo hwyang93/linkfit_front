@@ -20,8 +20,8 @@ export interface CreateRecruitDto {
   pay: string;
   classType: string;
   content: string;
-  lon: number;
-  lat: number;
+  lon: number | null;
+  lat: number | null;
   dates: CreateRecruitDateDto[];
 }
 
