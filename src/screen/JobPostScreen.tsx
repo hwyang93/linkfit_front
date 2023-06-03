@@ -1,5 +1,7 @@
 import BottomSheet from '@/components/Common/BottomSheet';
+import BoxButton from '@/components/Common/BoxButton';
 import CTAButton from '@/components/Common/CTAButton';
+import FabContainer from '@/components/Common/FabContainer';
 import useModal from '@/hooks/useModal';
 import {iconPath} from '@/utils/iconPath';
 import {formatDate} from '@/utils/util';
@@ -10,7 +12,6 @@ import {
 } from '@api/recruit';
 import {fetchResumes} from '@api/resume';
 import CenterInfoComponent from '@components/CenterInfoComponent';
-import FloatingLinkButton from '@components/FloatingLinkButton';
 import toast from '@hooks/toast';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import {BLUE, GRAY, WHITE} from '@styles/colors';
@@ -420,13 +421,9 @@ const JobPostScreen = ({route}: Props) => {
         </ScrollView>
       </SafeAreaView>
       {contentVerticalOffset <= 500 && (
-        <FloatingLinkButton
-          title="지원하기"
-          type="gradient"
-          right={16}
-          bottom={32}
-          job={openApplyModal}
-        />
+        <FabContainer>
+          <BoxButton label="지원하기" onPress={openApplyModal} />
+        </FabContainer>
       )}
       <BottomSheet
         visible={cancelModalVisible}
