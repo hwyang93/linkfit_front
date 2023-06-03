@@ -235,7 +235,7 @@ const JobPostScreen = ({route}: Props) => {
       });
   }, [getRecruitInfo, recruitDates, recruitInfo.seq, resumes, closeApplyModal]);
 
-  const handleCancelButtonPress = useCallback(() => {
+  const handleCancelButtonPress = () => {
     const dates: number[] = [];
     recruitDates.forEach(date => {
       if (date.isSelected) {
@@ -257,7 +257,7 @@ const JobPostScreen = ({route}: Props) => {
       .catch(error => {
         toast.error({message: error.message});
       });
-  }, [getRecruitInfo, recruitDates, recruitInfo.applyInfo, closeCancelModal]);
+  };
 
   const handleResumeListItemPress = (seq: number) => {
     selectedResumes.includes(seq)
@@ -289,10 +289,9 @@ const JobPostScreen = ({route}: Props) => {
 
   return (
     <>
-      <SafeAreaView
-        edges={['bottom', 'left', 'right']}
-        style={styles.container}>
+      <SafeAreaView edges={['left', 'right']} style={styles.container}>
         <ScrollView
+          contentContainerStyle={{paddingBottom: 40}}
           showsVerticalScrollIndicator={false}
           scrollEventThrottle={0}
           onScroll={onScrollHandler}>
@@ -513,7 +512,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     paddingHorizontal: 16,
-    paddingBottom: 16,
     backgroundColor: WHITE,
   },
   imgBox: {
