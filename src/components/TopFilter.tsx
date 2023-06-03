@@ -1,5 +1,4 @@
-import {iconPath} from '@/utils/iconPath';
-import {FlatList, Image, StyleSheet, View} from 'react-native';
+import {FlatList, StyleSheet, View} from 'react-native';
 import FilterChip from './Common/FilterChip';
 
 interface TopFilterProps {
@@ -23,12 +22,7 @@ const TopFilter: React.FC<TopFilterProps> = ({data}) => {
             style={{marginRight: 8}}
             label={item.value}
             onPress={item.job}
-            rightIcon={
-              <Image
-                style={styles.filterIcon}
-                source={iconPath.MORE_ARROW_DOWN}
-              />
-            }
+            rightIcon
           />
         )}
         showsHorizontalScrollIndicator={false}

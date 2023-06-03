@@ -2,12 +2,12 @@ import {createInstructorSuggest} from '@api/instructor';
 import DismissKeyboardView from '@components/DismissKeyboardView';
 import Input, {KeyboardTypes} from '@components/Input';
 import SelectBox from '@components/SelectBox';
+import toast from '@hooks/toast';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import common from '@styles/common';
 import {useCallback, useState} from 'react';
 import {
   ActivityIndicator,
-  Alert,
   Pressable,
   StyleSheet,
   Text,
@@ -15,7 +15,6 @@ import {
 } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 import {LoggedInParamList} from '../../AppInner';
-import toast from '@hooks/toast';
 
 const SUGGESTION = [
   '필라테스 강사님 구합니다.',

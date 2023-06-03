@@ -5,7 +5,16 @@ import {NavigationProp, useNavigation} from '@react-navigation/native';
 import {BLUE} from '@styles/colors';
 import common from '@styles/common';
 import {useState} from 'react';
-import {Alert, Image, Pressable, StyleSheet, Text, View} from 'react-native';
+import {
+  Alert,
+  Image,
+  Pressable,
+  StyleProp,
+  StyleSheet,
+  Text,
+  View,
+  ViewStyle,
+} from 'react-native';
 import {LoggedInParamList} from '../../AppInner';
 
 const MODAL = [
@@ -20,15 +29,19 @@ const MODAL = [
 ];
 interface InstructorListItemProps {
   item: Instructor;
+  style?: StyleProp<ViewStyle>;
 }
 
-const InstructorListItem: React.FC<InstructorListItemProps> = ({item}) => {
+const InstructorListItem: React.FC<InstructorListItemProps> = ({
+  item,
+  style,
+}) => {
   const [modalVisible, setModalVisible] = useState(false);
 
   const navigation = useNavigation<NavigationProp<LoggedInParamList>>();
 
   return (
-    <View style={styles.listBox}>
+    <View style={[styles.listBox, style]}>
       <Pressable
         style={common.mr16}
         onPress={() => navigation.navigate('Profile', {memberSeq: item.seq})}>
@@ -114,7 +127,6 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-start',
     alignItems: 'center',
     paddingVertical: 16,
-    marginHorizontal: 16,
   },
   thumbnail: {width: 80, height: 80, borderRadius: 200},
   rightBox: {

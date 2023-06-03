@@ -1,7 +1,7 @@
 import useModal from '@/hooks/useModal';
 import {FetchCommunityPostsResponse} from '@/types/api/community';
 import {iconPath} from '@/utils/iconPath';
-import {dateFormatter} from '@/utils/util';
+import {formatDate} from '@/utils/util';
 import {fetchCommunityPosts} from '@api/community';
 import toast from '@hooks/toast';
 import {GRAY, WHITE} from '@styles/colors';
@@ -60,7 +60,7 @@ const CommunityMyPost: React.FC = () => {
                   {item.title}
                 </Text>
                 <Text style={[common.text, {alignSelf: 'flex-end'}]}>
-                  {dateFormatter(item.updatedAt, 'YYYY.MM.DD')}
+                  {formatDate(item.updatedAt)}
                 </Text>
               </View>
               <Pressable onPress={textExpansion}>

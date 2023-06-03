@@ -4,7 +4,7 @@ import SectionHeader from '@/components/Common/SectionHeader';
 import {FetchMemberMyInfoResponse} from '@/types/api/member';
 import {SCREEN_WIDTH} from '@/utils/constants/common';
 import {iconPath} from '@/utils/iconPath';
-import {dateFormatter} from '@/utils/util';
+import {formatDate} from '@/utils/util';
 import {fetchMemberMyInfo} from '@api/member';
 import ProfileBox from '@components/ProfileBox';
 import toast from '@hooks/toast';
@@ -121,7 +121,7 @@ const MyTab = ({navigation}: Props) => {
             <Chip label="대표" />
             <Text style={common.title}>{myInfo.masterResume.title}</Text>
             <Text style={[common.text_s, {color: GRAY.DARK}]}>
-              {dateFormatter(myInfo.masterResume.updatedAt, 'YYYY.MM.DD')}
+              {formatDate(myInfo.masterResume.updatedAt)}
             </Text>
           </Card>
         ) : (

@@ -1,5 +1,5 @@
 import {CommunityEntity} from '@/types/api/entities';
-import {dateFormatter} from '@/utils/util';
+import {formatDate} from '@/utils/util';
 import {createCommunityBookmark, deleteCommunityBookmark} from '@api/community';
 import BookmarkCounter from '@components/Counter/BookmarkCounter';
 import CommentCounter from '@components/Counter/CommentCounter';
@@ -79,9 +79,7 @@ const RecommendedPostItem: React.FC<RecommendedPostItemProps> = ({item}) => {
               ? '센터'
               : '일반'}
           </Text>
-          <Text style={common.text}>
-            {dateFormatter(postInfo.updatedAt, 'YYYY.MM.DD')}
-          </Text>
+          <Text style={common.text}>{formatDate(postInfo.updatedAt)}</Text>
         </View>
         <Text style={[common.mb8, common.text_m]}>{postInfo.contents}</Text>
         <View style={common.rowCenterBetween}>

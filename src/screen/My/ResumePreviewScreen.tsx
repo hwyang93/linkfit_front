@@ -15,6 +15,7 @@ import {
 import LinearGradient from 'react-native-linear-gradient';
 import {SafeAreaView} from 'react-native-safe-area-context';
 
+import Chip from '@/components/Common/Chip';
 import {useAppSelector} from '@/store';
 import {fetchRecruitApplication, updateRecruitApplyStatus} from '@api/recruit';
 import {fetchResume} from '@api/resume';
@@ -122,25 +123,12 @@ const ResumePreviewScreen = ({route, navigation}: Props) => {
   return (
     <SafeAreaView edges={['bottom', 'left', 'right']} style={styles.container}>
       <ScrollView showsVerticalScrollIndicator={false}>
-        {applyResult !== 'APPLY' && applyResult !== 'PASS' ? (
-          <>
-            {resume.isMaster === 'Y' && (
-              <View style={common.rowCenter}>
-                <View style={[styles.box, common.mb8]}>
-                  <Text
-                    style={[common.text, common.fs10, {color: BLUE.DEFAULT}]}>
-                    대표
-                  </Text>
-                </View>
-              </View>
-            )}
-          </>
-        ) : null}
-
+        {applyResult !== 'APPLY' &&
+          applyResult !== 'PASS' &&
+          resume.isMaster === 'Y' && <Chip label="대표" />}
         <View style={common.mb24}>
           <Text style={common.title_l}>{resume.title}</Text>
         </View>
-
         {/* 인적사항 */}
         <View style={common.mb24}>
           <View style={[common.rowCenter, common.mb8]}>

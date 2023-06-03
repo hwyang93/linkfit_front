@@ -1,3 +1,4 @@
+import DismissKeyboardView from '@/components/DismissKeyboardView';
 import useAuth from '@/hooks/useAuth';
 import {AuthStackParamList} from '@/navigations/AuthStack';
 import {IS_ANDROID} from '@/utils/constants/common';
@@ -13,7 +14,6 @@ import {
   TextInput,
   View,
 } from 'react-native';
-import DismissKeyboardView from '../components/DismissKeyboardView';
 
 type Props = NativeStackScreenProps<AuthStackParamList, 'SignUp'>;
 

@@ -1,5 +1,5 @@
 import {iconPath} from '@/utils/iconPath';
-import {dateFormatter} from '@/utils/util';
+import {formatDate} from '@/utils/util';
 import {
   createRecruitApply,
   fetchRecruit,
@@ -246,11 +246,7 @@ const JobPostScreen = ({route}: Props) => {
             </Text>
             {recruitInfo.applyInfo?.length > 0 && (
               <Text style={[common.text_s, {color: GRAY.DARK}]}>
-                {dateFormatter(
-                  recruitInfo.applyInfo[0].updatedAt,
-                  'YYYY.MM.DD',
-                )}{' '}
-                지원 완료
+                {formatDate(recruitInfo.applyInfo[0].updatedAt)} 지원 완료
               </Text>
             )}
           </View>

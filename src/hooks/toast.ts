@@ -14,6 +14,9 @@ const toast = {
   error: (options: any) => {
     DeviceEventEmitter.emit(SHOW_TOAST_MESSAGE, {...options, type: 'error'});
   },
+  alert: (options: any) => {
+    DeviceEventEmitter.emit(SHOW_TOAST_MESSAGE, {...options, type: 'alert'});
+  },
 };
 
 export default toast;

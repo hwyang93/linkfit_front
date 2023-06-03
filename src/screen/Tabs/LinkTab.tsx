@@ -66,7 +66,7 @@ const LinkScreen = ({navigation}: Props) => {
   );
 
   const renderItem = ({item}: any) => {
-    return <InstructorListItem item={item} />;
+    return <InstructorListItem item={item} style={{marginHorizontal: 16}} />;
   };
 
   return (

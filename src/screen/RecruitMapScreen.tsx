@@ -59,25 +59,6 @@ const DUMMY_MARKERS = [
   },
 ];
 
-// const requestPermission = async () => {
-//   try {
-//     // IOS 위치 정보 수집 권한 요청
-//     if (IS_IOS) {
-//       return await Geolocation.requestAuthorization('always');
-//     }
-//     // 안드로이드 위치 정보 수집 권한 요청
-//     if (IS_ANDROID) {
-//       return await PermissionsAndroid.request(
-//         PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
-//       );
-//     }
-//   } catch (error) {
-//     if (isAxiosError(error)) {
-//       toast.error({message: error.message});
-//     }
-//   }
-// };
-
 // TODO: 컴포넌트 props 정의하고 파일 분리하기
 interface CardProps extends ViewProps {
   style?: StyleProp<ViewStyle>;
@@ -278,35 +259,9 @@ const RecruitMapScreen = ({navigation}: Props) => {
         <ScrollView
           horizontal
           style={{paddingHorizontal: 16, paddingVertical: 8}}>
-          <FilterChip
-            label="포지션"
-            style={common.mr8}
-            rightIcon={
-              <Image
-                style={{width: 10, height: 6}}
-                source={iconPath.MORE_ARROW_DOWN}
-              />
-            }
-          />
-          <FilterChip
-            label="채용형태"
-            style={common.mr8}
-            rightIcon={
-              <Image
-                style={{width: 10, height: 6}}
-                source={iconPath.MORE_ARROW_DOWN}
-              />
-            }
-          />
-          <FilterChip
-            label="수업시간"
-            rightIcon={
-              <Image
-                style={{width: 10, height: 6}}
-                source={iconPath.MORE_ARROW_DOWN}
-              />
-            }
-          />
+          <FilterChip label="포지션" style={common.mr8} rightIcon />
+          <FilterChip label="채용형태" style={common.mr8} rightIcon />
+          <FilterChip label="수업시간" rightIcon />
         </ScrollView>
       </View>
       {position ? (

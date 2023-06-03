@@ -1,4 +1,5 @@
 import {iconPath} from '@/utils/iconPath';
+import {formatDate} from '@/utils/util';
 import {deleteMemberReputation, fetchMemberReputations} from '@api/member';
 import Modal from '@components/ModalSheet';
 import toast from '@hooks/toast';
@@ -116,7 +117,9 @@ const EmployeeReviewComponent: React.FC = () => {
                 </View>
               </View>
             </View>
-            <Text style={[common.mt8, common.text]}>{item.updatedAt}</Text>
+            <Text style={[common.mt8, common.text]}>
+              {formatDate(item.updatedAt)}
+            </Text>
             <Text style={common.text_m}>{item.comment}</Text>
             <Pressable
               style={styles.kebabIcon}
@@ -136,7 +139,9 @@ const EmployeeReviewComponent: React.FC = () => {
               </Text>
               <Text style={common.text}>{item.targetMember.company.field}</Text>
             </View>
-            <Text style={[common.mt8, common.text]}>{item.updatedAt}</Text>
+            <Text style={[common.mt8, common.text]}>
+              {formatDate(item.updatedAt)}
+            </Text>
             <Text style={common.text_m}>{item.comment}</Text>
             <Pressable
               style={styles.kebabIcon}

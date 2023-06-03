@@ -1,5 +1,5 @@
 import {iconPath} from '@/utils/iconPath';
-import {dateFormatter} from '@/utils/util';
+import {formatDate} from '@/utils/util';
 import {fetchReceivePositionSuggests} from '@api/member';
 import Modal from '@components/ModalSheet';
 import TopFilter from '@components/TopFilter';
@@ -181,7 +181,7 @@ const ReceivedSuggestionScreen = ({navigation}: Props) => {
                   })
                 }>
                 <Text style={[common.text_s, common.fcg, common.mb12]}>
-                  {dateFormatter(suggest.createdAt, 'YYYY.MM.DD')}
+                  {formatDate(suggest.createdAt)}
                 </Text>
                 <Text style={[common.title, common.mb12]} numberOfLines={1}>
                   {suggest.title}

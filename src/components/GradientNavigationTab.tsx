@@ -1,6 +1,7 @@
 import {LoggedInParamList} from '@/../AppInner';
 import {WHITE} from '@/styles/colors';
 import common from '@/styles/common';
+import THEME from '@/styles/theme';
 import {NavigationProp, useNavigation} from '@react-navigation/native';
 import React from 'react';
 import {Pressable, StyleSheet, Text, View} from 'react-native';
@@ -13,7 +14,7 @@ const GradientNaivgationTab: React.FC = () => {
       style={[styles.tabBox]}
       start={{x: 0, y: 0}}
       end={{x: 1, y: 0}}
-      colors={['#62C1E9', '#3962f3']}>
+      colors={['#62C1E9', THEME.PRIMARY]}>
       <Pressable
         style={styles.tabItem}
         onPress={() => navigation.navigate('RecruitMap')}>
