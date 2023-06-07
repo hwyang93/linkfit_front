@@ -1,6 +1,6 @@
 import {LoggedInParamList} from '@/../AppInner';
+import RecruitCarouselItem from '@/components/Compound/RecruitCarouselItem';
 import {fetchRecommendedRecruits} from '@api/recruit';
-import RecruitCarouselItem from '@components/RecruitCarouselItem';
 import toast from '@hooks/toast';
 import {NavigationProp, useNavigation} from '@react-navigation/native';
 import common from '@styles/common';
