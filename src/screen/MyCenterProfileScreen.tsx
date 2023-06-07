@@ -8,7 +8,11 @@ import {BLUE, GRAY, WHITE} from '@styles/colors';
 import common from '@styles/common';
 import {useCallback, useEffect, useState} from 'react';
 import {Image, Pressable, StyleSheet, Text, View} from 'react-native';
-import {MaterialTabBar, Tabs} from 'react-native-collapsible-tab-view';
+import {
+  MaterialTabBar,
+  TabBarProps,
+  Tabs,
+} from 'react-native-collapsible-tab-view';
 import {LoggedInParamList} from '../../AppInner';
 
 // const HEADER_HEIGHT = 250;
@@ -54,14 +58,13 @@ const MyCenterProfileScreen = ({navigation, route}: Props) => {
   }, [getCenterInfo]);
 
   // 탭 바 영역
-  const tabBar = (props: any) => (
+  const tabBar = (props: TabBarProps) => (
     <MaterialTabBar
       {...props}
       style={styles.tab}
       inactiveColor={GRAY.DEFAULT}
       indicatorStyle={styles.indicator}
       activeColor={BLUE.DEFAULT}
-      itemStyle={{width: tabWidth}}
       labelStyle={common.text_m}
       contentContainerStyle={{
         flex: 1,
