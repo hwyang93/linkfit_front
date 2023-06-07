@@ -1,12 +1,13 @@
 import {LoggedInParamList} from '@/../AppInner';
 import {fetchBookmarkCommunities} from '@/api/community';
 import {fetchBookmarkRecruits} from '@/api/recruit';
+import RecruitCarouselItem from '@/components/Compound/RecruitCarouselItem';
 import toast from '@/hooks/toast';
 import common from '@/styles/common';
+import {FetchBookmarkRecruitsResponse} from '@/types/api/recruit';
 import {iconPath} from '@/utils/iconPath';
 import {materialTopTabNavigationOptions} from '@/utils/options/tab';
 import {formatDate} from '@/utils/util';
-import RecruitCarouselItem from '@components/RecruitCarouselItem';
 import {createMaterialTopTabNavigator} from '@react-navigation/material-top-tabs';
 import {NavigationProp, useNavigation} from '@react-navigation/native';
 import {GRAY, WHITE} from '@styles/colors';
@@ -98,7 +99,8 @@ const BookmarkCommunityListItem: React.FC<BookmarkCommunityListItemProps> = ({
 const Tab = createMaterialTopTabNavigator();
 
 const JobOfferTab: React.FC = () => {
-  const [bookmarkedRecruits, setBookmarkedRecruits] = useState<any[]>();
+  const [bookmarkedRecruits, setBookmarkedRecruits] =
+    useState<FetchBookmarkRecruitsResponse>();
 
   const getBookmarkRecruits = useCallback(() => {
     fetchBookmarkRecruits()
@@ -114,16 +116,22 @@ const JobOfferTab: React.FC = () => {
     getBookmarkRecruits();
   }, [getBookmarkRecruits]);
 
-  const renderItem = ({item}: any) => {
-    return <RecruitCarouselItem item={item} />;
-  };
-
   return (
     <View style={[styles.container]}>
       <FlatList
         contentContainerStyle={{marginTop: 16}}
         data={bookmarkedRecruits}
-        renderItem={renderItem}
+        renderItem={({item}) => (
+          <RecruitCarouselItem
+            seq={item.seq}
+            position={item.recruit.position}
+            title={item.recruit.title}
+            companyName={item.recruit.companyName}
+            address={item.recruit.address}
+            bookmarkChecked={item.recruit.isBookmark === 'Y'}
+            imageSrc={item.recruit.writer?.profileImage?.originFileUrl}
+          />
+        )}
         numColumns={2}
         keyExtractor={item => 'bookmarkedRecruit' + item.seq}
         ItemSeparatorComponent={() => <View style={{marginBottom: 16}} />}
