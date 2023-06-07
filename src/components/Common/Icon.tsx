@@ -6,14 +6,18 @@ interface IconProps extends ImageProps {
   size?: number;
 }
 
-const Icon: React.FC<IconProps> = ({source, size = 24}) => {
+const Icon: React.FC<IconProps> = ({source, size = 24, style, ...props}) => {
   return (
     <Image
       source={source}
-      style={{
-        width: size,
-        height: size,
-      }}
+      style={[
+        {
+          width: size,
+          height: size,
+        },
+        style,
+      ]}
+      {...props}
     />
   );
 };
