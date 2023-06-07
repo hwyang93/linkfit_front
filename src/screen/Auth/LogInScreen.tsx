@@ -1,3 +1,4 @@
+import {LoggedInParamList} from '@/../AppInner';
 import CTAButton from '@/components/Common/CTAButton';
 import useAuth from '@/hooks/useAuth';
 import Input, {KeyboardTypes, ReturnKeyTypes} from '@components/Input';
@@ -15,7 +16,6 @@ import {
   View,
 } from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
-import {LoggedInParamList} from '../../AppInner';
 
 type Props = NativeStackScreenProps<LoggedInParamList, 'LogIn'>;
 

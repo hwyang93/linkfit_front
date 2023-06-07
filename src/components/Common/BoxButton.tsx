@@ -1,4 +1,3 @@
-import common from '@/styles/common';
 import THEME from '@/styles/theme';
 import React from 'react';
 import {
@@ -11,7 +10,7 @@ import {
 } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 
-interface CTAButtonProps extends PressableProps {
+interface BoxButtonProps extends PressableProps {
   label: string;
   variant?: 'filled' | 'stroked';
   disabled?: boolean;
@@ -19,7 +18,7 @@ interface CTAButtonProps extends PressableProps {
   onPress?: () => void;
 }
 
-const CTAButton: React.FC<CTAButtonProps> = ({
+const BoxButton: React.FC<BoxButtonProps> = ({
   label,
   variant = 'filled',
   disabled = false,
@@ -33,7 +32,14 @@ const CTAButton: React.FC<CTAButtonProps> = ({
         <Pressable onPress={onPress} disabled={disabled || loading} {...props}>
           {({pressed}) => (
             <LinearGradient
-              style={common.button}
+              style={{
+                alignSelf: 'flex-start',
+                justifyContent: 'center',
+                alignItems: 'center',
+                paddingVertical: 10,
+                paddingHorizontal: 24,
+                borderRadius: 20,
+              }}
               start={{x: 0.1, y: 0.5}}
               end={{x: 0.6, y: 1}}
               colors={
@@ -43,8 +49,24 @@ const CTAButton: React.FC<CTAButtonProps> = ({
                   ? ['#062DB8', '#062DB8']
                   : ['#62C1E9', THEME.PRIMARY]
               }>
-              {loading && <ActivityIndicator color="white" />}
-              {!loading && <Text style={common.buttonText}>{label}</Text>}
+              {loading && (
+                <ActivityIndicator
+                  style={{
+                    position: 'absolute',
+                    alignSelf: 'center',
+                  }}
+                  color="white"
+                />
+              )}
+              <Text
+                style={{
+                  fontSize: 14,
+                  fontWeight: '700',
+                  color: THEME.WHITE,
+                  opacity: loading ? 0 : 1,
+                }}>
+                {label}
+              </Text>
             </LinearGradient>
           )}
         </Pressable>
@@ -66,18 +88,25 @@ const CTAButton: React.FC<CTAButtonProps> = ({
                   styles.gradientBorderInner,
                   {backgroundColor: pressed ? '#E8EDFF' : THEME.WHITE},
                 ]}>
-                {loading && <ActivityIndicator color={THEME.PRIMARY} />}
-                {!loading && (
-                  <Text
+                {loading && (
+                  <ActivityIndicator
                     style={{
-                      fontSize: 16,
-                      fontWeight: '700',
-                      textAlign: 'center',
-                      color: disabled ? THEME.GREY03 : THEME.PRIMARY,
-                    }}>
-                    {label}
-                  </Text>
+                      position: 'absolute',
+                      alignSelf: 'center',
+                    }}
+                    color={THEME.PRIMARY}
+                  />
                 )}
+                <Text
+                  style={{
+                    fontSize: 14,
+                    fontWeight: '700',
+                    textAlign: 'center',
+                    color: disabled ? THEME.GREY03 : THEME.PRIMARY,
+                    opacity: loading ? 0 : 1,
+                  }}>
+                  {label}
+                </Text>
               </View>
             </LinearGradient>
           )}
@@ -89,20 +118,21 @@ const CTAButton: React.FC<CTAButtonProps> = ({
 
 const styles = StyleSheet.create({
   gradientBorder: {
-    height: 56,
-    width: '100%',
     justifyContent: 'center',
     alignSelf: 'center',
-    borderRadius: 28,
+    borderRadius: 20,
   },
   gradientBorderInner: {
+    position: 'relative',
     flex: 1,
+    paddingHorizontal: 24,
+    paddingVertical: 10,
     alignSelf: 'center',
     justifyContent: 'center',
     width: '99%',
     margin: 1,
-    borderRadius: 28,
+    borderRadius: 20,
   },
 });
 
-export default CTAButton;
+export default BoxButton;

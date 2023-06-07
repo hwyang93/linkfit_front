@@ -10,8 +10,8 @@ interface IconButtonProps extends PressableProps {
 
 const IconButton: React.FC<IconButtonProps> = ({
   source,
-  onPress,
   size = 24,
+  onPress,
   ...props
 }) => {
   return (

@@ -1,5 +1,6 @@
 import CTAButton from '@/components/Common/CTAButton';
 import toast from '@/hooks/toast';
+import useInput from '@/hooks/useInput';
 import {AuthStackParamList} from '@/navigations/AuthStack';
 import {removeWhitespace, validateEmail} from '@/utils/util';
 import {fetchMemberInfoByEmail} from '@api/member';
@@ -19,7 +20,6 @@ import {
   View,
 } from 'react-native';
 import EncryptedStorage from 'react-native-encrypted-storage';
-import useInput from '../hooks/useInput';
 
 const EMAIL_INVALID_ERROR_MESSAGE = '이메일 형식에 맞게 입력해 주세요.';
 

@@ -1,13 +1,13 @@
 import {FetchPositionSuggestResponse} from '@/types/api/member';
 import {fetchPositionSuggest, updatePositionSuggestStatus} from '@api/member';
 import InstructorInfoComponent from '@components/InstructorInfoComponent';
+import toast from '@hooks/toast';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import {WHITE} from '@styles/colors';
 import common from '@styles/common';
 import {useCallback, useEffect, useState} from 'react';
 import {
   ActivityIndicator,
-  Alert,
   Pressable,
   ScrollView,
   StyleSheet,
@@ -17,7 +17,6 @@ import {
 import LinearGradient from 'react-native-linear-gradient';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {LoggedInParamList} from '../../../AppInner';
-import toast from '@hooks/toast';
 
 const LOADING = false;
 

@@ -1,3 +1,6 @@
+import EmptyState from '@/components/Common/EmptyState';
+import FabContainer from '@/components/Common/FabContainer';
+import FilterChip from '@/components/Common/FilterChip';
 import FloatingActionButton from '@/components/Common/FloatingActionButton';
 import {FetchCommunityPostsResponse} from '@/types/api/community';
 import {CommunityEntity} from '@/types/api/entities';
@@ -11,48 +14,13 @@ import {WHITE} from '@styles/colors';
 import common from '@styles/common';
 import {isAxiosError} from 'axios';
 import {useCallback, useEffect, useState} from 'react';
-import {FlatList, StyleSheet, Text, View} from 'react-native';
-import {LoggedInParamList} from '../../AppInner';
-
-const FILTER = [
-  {
-    value: '전체',
-    active: true,
-  },
-  {
-    value: '필라테스',
-    active: false,
-  },
-  {
-    value: '요가',
-    active: false,
-  },
-  {
-    value: '채널',
-    active: false,
-  },
-  {
-    value: '채널',
-    active: false,
-  },
-  {
-    value: '채널',
-    active: false,
-  },
-  {
-    value: '채널',
-    active: false,
-  },
-  {
-    value: '채널',
-    active: false,
-  },
-];
+import {FlatList, ScrollView, StyleSheet, Text, View} from 'react-native';
+import {LoggedInParamList} from '../../../AppInner';
 
 type Props = NativeStackScreenProps<LoggedInParamList, 'Community'>;
 
-const CommunityScreen = ({navigation}: Props) => {
-  const [posts, setPosts] = useState<FetchCommunityPostsResponse>([]);
+const CommunityTab = ({navigation}: Props) => {
+  const [posts, setPosts] = useState<FetchCommunityPostsResponse>();
 
   const isFocused = useIsFocused();
 
@@ -84,51 +52,41 @@ const CommunityScreen = ({navigation}: Props) => {
 
   return (
     <View style={styles.container}>
-      {/* 필터 영역 */}
-      <View style={styles.filterContainer}>
-        <FlatList
-          contentContainerStyle={{marginHorizontal: 16}}
-          horizontal={true}
-          data={FILTER}
-          renderItem={({item}) => (
-            <View
-              style={[common.filterBox, item.active && common.filterBoxActive]}>
-              <Text
-                style={[
-                  common.filterText,
-                  item.active && common.filterTextActive,
-                ]}>
-                {item.value}
-              </Text>
-            </View>
-          )}
-          showsHorizontalScrollIndicator={false}
-        />
+      <View>
+        <ScrollView
+          horizontal
+          style={{
+            paddingHorizontal: 16,
+            paddingVertical: 8,
+          }}>
+          <FilterChip label="필라테스" style={{marginRight: 8}} />
+          <FilterChip label="요가" style={{marginRight: 8}} />
+          <FilterChip label="강사" style={{marginRight: 8}} />
+          <FilterChip label="센터" />
+        </ScrollView>
       </View>
-      {/* 필터 영역 */}
-      <View style={{marginHorizontal: 16}}>
+      <Text style={[common.title, {margin: 16}]}>최근 게시글</Text>
+      {posts?.length !== 0 && (
         <FlatList
           data={posts}
           keyExtractor={(_, index) => index.toString()}
+          showsVerticalScrollIndicator={false}
           renderItem={renderItem}
-          contentContainerStyle={{marginTop: 16}}
-          ListHeaderComponent={() => (
-            <View style={common.mb16}>
-              <Text style={[common.title]}>최근 게시글</Text>
-            </View>
-          )}
+          contentContainerStyle={{
+            padding: 16,
+          }}
           ItemSeparatorComponent={() => (
             <View style={[common.separator, common.mv16]} />
           )}
-          showsVerticalScrollIndicator={false}
         />
-      </View>
-      <View style={styles.fabContainer}>
+      )}
+      {posts?.length === 0 && <EmptyState />}
+      <FabContainer style={{bottom: 16}}>
         <FloatingActionButton
           iconSource={iconPath.PENCIL_W}
           onPress={onPressFAB}
         />
-      </View>
+      </FabContainer>
     </View>
   );
 };
@@ -138,14 +96,6 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: WHITE,
   },
-  fabContainer: {
-    position: 'absolute',
-    bottom: 16,
-    right: 16,
-  },
-  filterContainer: {
-    paddingVertical: 8,
-  },
 });
 
-export default CommunityScreen;
+export default CommunityTab;

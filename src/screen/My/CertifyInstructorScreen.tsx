@@ -1,6 +1,8 @@
 import {LoggedInParamList} from '@/../AppInner';
+import IconButton from '@/components/Common/IconButton';
 import {FetchMemberLicencesResponse} from '@/types/api/member';
 import {iconPath} from '@/utils/iconPath';
+import {formatDate} from '@/utils/util';
 import {cancelMemberLicence, fetchMemberLicences} from '@api/member';
 import Modal from '@components/ModalSheet';
 import toast from '@hooks/toast';
@@ -8,23 +10,15 @@ import {useIsFocused} from '@react-navigation/native';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import {GRAY, WHITE} from '@styles/colors';
 import common from '@styles/common';
-import {SetStateAction, useCallback, useEffect, useState} from 'react';
-import {
-  Image,
-  Pressable,
-  ScrollView,
-  StyleSheet,
-  Text,
-  View,
-} from 'react-native';
+import {useCallback, useEffect, useState} from 'react';
+import {Pressable, ScrollView, StyleSheet, Text, View} from 'react-native';
 
 type Props = NativeStackScreenProps<LoggedInParamList, 'CertifyInstructor'>;
 
 const CertifyInstructorScreen = ({}: Props) => {
   const isFocused = useIsFocused();
-  const [modalVisible, setModalVisible] =
-    useState<SetStateAction<boolean>>(false);
-  const [selectedLicenceSeq, setSelectedLicenceSeq] = useState<number>(0);
+  const [modalVisible, setModalVisible] = useState(false);
+  const [selectedLicenceSeq, setSelectedLicenceSeq] = useState(0);
   const [licences, setLicenses] = useState<FetchMemberLicencesResponse>([]);
 
   const getMemberLicences = useCallback(() => {
@@ -73,38 +67,38 @@ const CertifyInstructorScreen = ({}: Props) => {
   const openModal = () => {
     setModalVisible(true);
   };
+
+  const handleKebabIconPress = (seq: number) => {
+    setSelectedLicenceSeq(seq);
+    openModal();
+  };
+
   return (
     <ScrollView showsVerticalScrollIndicator={false}>
       <View style={styles.container}>
-        {licences.map((item, index) => {
-          return (
-            <View key={index} style={styles.box}>
-              <Text style={[common.title, common.mb8]}>{item.field}</Text>
-              <Text style={[common.title_s, common.mb8]}>{item.issuer}</Text>
-              <Text style={common.text_s}>
-                {item.updatedAt} |{' '}
-                {item.status === 'PROCESS'
-                  ? '인증 대기중'
-                  : item.status === 'APPROVAL'
-                  ? '인증 승인'
-                  : item.status === 'CANCEL'
-                  ? '인증 취소'
-                  : '인증 거부'}
-              </Text>
-              {item.status === 'PROCESS' && (
-                <Pressable
-                  style={styles.kebabIcon}
-                  hitSlop={10}
-                  onPress={() => {
-                    setSelectedLicenceSeq(item.seq);
-                    openModal();
-                  }}>
-                  <Image source={iconPath.KEBAB} style={[common.size24]} />
-                </Pressable>
-              )}
-            </View>
-          );
-        })}
+        {licences.map((item, index) => (
+          <View key={index} style={styles.box}>
+            <Text style={[common.title, common.mb8]}>{item.field}</Text>
+            <Text style={[common.title_s, common.mb8]}>{item.issuer}</Text>
+            <Text style={common.text_s}>
+              {formatDate(item.updatedAt)} |{' '}
+              {item.status === 'PROCESS'
+                ? '인증 대기중'
+                : item.status === 'APPROVAL'
+                ? '인증 승인'
+                : item.status === 'CANCEL'
+                ? '인증 취소'
+                : '인증 거부'}
+            </Text>
+            {item.status === 'PROCESS' && (
+              <IconButton
+                style={styles.kebabIcon}
+                source={iconPath.KEBAB}
+                onPress={() => handleKebabIconPress(item.seq)}
+              />
+            )}
+          </View>
+        ))}
       </View>
       <Modal
         modalVisible={modalVisible}
@@ -113,17 +107,15 @@ const CertifyInstructorScreen = ({}: Props) => {
         modalData={MODAL}
         content={
           <View>
-            {MODAL.map((item, index) => {
-              return (
-                <View key={index} style={common.modalItemBox}>
-                  <Pressable
-                    onPress={item.job}
-                    style={[common.rowCenterBetween, {width: '100%'}]}>
-                    <Text style={[common.modalText]}>{item.value}</Text>
-                  </Pressable>
-                </View>
-              );
-            })}
+            {MODAL.map((item, index) => (
+              <View key={index} style={common.modalItemBox}>
+                <Pressable
+                  onPress={item.job}
+                  style={[common.rowCenterBetween, {width: '100%'}]}>
+                  <Text style={[common.modalText]}>{item.value}</Text>
+                </Pressable>
+              </View>
+            ))}
           </View>
         }
       />

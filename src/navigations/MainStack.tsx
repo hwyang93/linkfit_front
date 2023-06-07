@@ -1,8 +1,8 @@
+import BottomTabs from '@/navigations/BottomTabs';
 import {iconPath} from '@/utils/iconPath';
 import HeaderLeft from '@components/HeaderLeft';
 import HeaderRight from '@components/HeaderRight';
 import Modal from '@components/ModalSheet';
-import ContentTab from '@navigations/ContentTab';
 import {NavigationProp, useNavigation} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import CenterInfoScreen from '@screen/CenterInfoScreen';
@@ -82,7 +82,7 @@ const MainStack = () => {
       <Stack.Group>
         <Stack.Screen
           name="ContentTab"
-          component={ContentTab}
+          component={BottomTabs}
           options={{headerShown: false, gestureEnabled: false}}
         />
         <Stack.Screen

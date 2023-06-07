@@ -1,4 +1,13 @@
+import {iconPath} from '@/utils/iconPath';
+import {formatDate} from '@/utils/util';
+import {deleteResume, fetchResumes, updateResumeMaster} from '@api/resume';
+import Modal from '@components/ModalSheet';
+import toast from '@hooks/toast';
+import {useIsFocused} from '@react-navigation/native';
+import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import {BLUE, GRAY, WHITE} from '@styles/colors';
+import common from '@styles/common';
+import {useCallback, useEffect, useState} from 'react';
 import {
   Alert,
   Image,
@@ -8,16 +17,6 @@ import {
   Text,
   View,
 } from 'react-native';
-
-import {iconPath} from '@/utils/iconPath';
-import {dateFormatter} from '@/utils/util';
-import {deleteResume, fetchResumes, updateResumeMaster} from '@api/resume';
-import Modal from '@components/ModalSheet';
-import toast from '@hooks/toast';
-import {useIsFocused} from '@react-navigation/native';
-import {NativeStackScreenProps} from '@react-navigation/native-stack';
-import common from '@styles/common';
-import {useCallback, useEffect, useState} from 'react';
 import {LoggedInParamList} from '../../../AppInner';
 
 type Props = NativeStackScreenProps<LoggedInParamList, 'ResumeManage'>;
@@ -162,7 +161,7 @@ const ResumeManageScreen = ({navigation}: Props) => {
                 {resume.title}
               </Text>
               <Text style={[common.text_s, {color: GRAY.DARK}]}>
-                {dateFormatter(resume.updatedAt, 'YYYY.MM.DD')}
+                {formatDate(resume.updatedAt)}
               </Text>
               <Pressable
                 style={styles.kebabIcon}

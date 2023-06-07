@@ -1,4 +1,7 @@
-import LinkScreen from '@/screen/LinkScreen';
+import CommunityTab from '@/screen/Tabs/CommunityTab';
+import LinkTab from '@/screen/Tabs/LinkTab';
+import MessageTab from '@/screen/Tabs/MessageTab';
+import MyTab from '@/screen/Tabs/MyTab';
 import {useAppSelector} from '@/store';
 import {IS_ANDROID, SCREEN_WIDTH} from '@/utils/constants/common';
 import {iconPath} from '@/utils/iconPath';
@@ -6,10 +9,7 @@ import {bottomTabNavigationOptions} from '@/utils/options/tab';
 import LinkHeader from '@components/Header/LinkHeader';
 import MyHeader from '@components/Header/MyHeader';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
-import CommunityScreen from '@screen/CommunityScreen';
-import MessageScreen from '@screen/MessageScreen';
 import MyCenterScreen from '@screen/MyCenterScreen';
-import MyScreen from '@screen/MyScreen';
 import common from '@styles/common';
 import {useRef} from 'react';
 import {Animated, Image} from 'react-native';
@@ -31,7 +31,7 @@ const ContentTab = () => {
         screenOptions={bottomTabNavigationOptions}>
         <Tab.Screen
           name="Link"
-          component={LinkScreen}
+          component={LinkTab}
           options={{
             title: '채용',
             headerTitle: () => <LinkHeader />,
@@ -56,7 +56,7 @@ const ContentTab = () => {
         />
         <Tab.Screen
           name="Community"
-          component={CommunityScreen}
+          component={CommunityTab}
           options={{
             title: '커뮤니티',
             headerTitle: () => <LinkHeader toCommunityMy />,
@@ -80,7 +80,7 @@ const ContentTab = () => {
         />
         <Tab.Screen
           name="Message"
-          component={MessageScreen}
+          component={MessageTab}
           options={{
             title: '쪽지',
             headerTitle: () => <LinkHeader />,
@@ -105,7 +105,7 @@ const ContentTab = () => {
         {memberInfo.type !== 'COMPANY' ? (
           <Tab.Screen
             name="My"
-            component={MyScreen}
+            component={MyTab}
             options={{
               title: 'MY',
               headerTitleAlign: 'left',

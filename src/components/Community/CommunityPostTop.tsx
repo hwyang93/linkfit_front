@@ -1,6 +1,6 @@
 import {CommunityEntity} from '@/types/api/entities';
 import {iconPath} from '@/utils/iconPath';
-import {dateFormatter} from '@/utils/util';
+import {formatDate} from '@/utils/util';
 import {
   createCommunityBookmark,
   createCommunityComment,
@@ -92,7 +92,7 @@ const CommunityPostTop: React.FC<CommunityPostTopProps> = ({postInfo}) => {
           </Pressable>
         </View>
         <Text style={[common.text_s, common.fcg]}>
-          {dateFormatter(postInfo.updatedAt, 'YYYY.MM.DD')}
+          {formatDate(postInfo.updatedAt)}
         </Text>
       </View>
 

@@ -1,13 +1,12 @@
-import Modal from '@components/ModalSheet';
-import {BLUE, WHITE} from '@styles/colors';
-import common from '@styles/common';
-import {Button, Image, Pressable, StyleSheet, Text, View} from 'react-native';
-import {LoggedInParamList} from '../../AppInner';
-
 import {iconPath} from '@/utils/iconPath';
+import Modal from '@components/ModalSheet';
 import toast from '@hooks/toast';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
+import {BLUE, WHITE} from '@styles/colors';
+import common from '@styles/common';
 import {useState} from 'react';
+import {Button, Image, Pressable, StyleSheet, Text, View} from 'react-native';
+import {LoggedInParamList} from '../../../AppInner';
 
 const MODAL_DATA = [
   {
@@ -30,7 +29,7 @@ const MODAL_DATA = [
 
 type Props = NativeStackScreenProps<LoggedInParamList, 'Message'>;
 
-const MessageScreen = ({navigation}: Props) => {
+const MessageTab = ({navigation}: Props) => {
   const [modalVisible, setModalVisible] = useState(false);
 
   const toastTest = () => {
@@ -93,4 +92,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default MessageScreen;
+export default MessageTab;

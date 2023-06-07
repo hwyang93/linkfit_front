@@ -1,91 +1,82 @@
+import {createRecruitBookmark, deleteRecruitBookmark} from '@/api/recruit';
+import toast from '@/hooks/toast';
 import {SCREEN_WIDTH} from '@/utils/constants/common';
 import {iconPath} from '@/utils/iconPath';
-import {createRecruitBookmark, deleteRecruitBookmark} from '@api/recruit';
-import toast from '@hooks/toast';
-import {NavigationProp, useNavigation} from '@react-navigation/native';
 import common from '@styles/common';
-import {useCallback, useEffect, useState} from 'react';
-import {Image, Pressable, StyleSheet, Text, View} from 'react-native';
-import {LoggedInParamList} from '../../AppInner';
+import {useState} from 'react';
+import {
+  Image,
+  ImageSourcePropType,
+  Pressable,
+  StyleSheet,
+  Text,
+  View,
+} from 'react-native';
 
 const imageSize = (SCREEN_WIDTH - 40) / 2;
 
-const RecruitListItem: React.FC<any> = ({item}) => {
-  const [recruitInfo, setRecruitInfo] = useState<any>({});
+interface RecruitListItemProps {
+  seq: number;
+  position: string;
+  title: string;
+  companyName: string;
+  address: string;
+  bookmarkChecked: boolean;
+  imageSrc?: ImageSourcePropType;
+  onPress: () => void;
+}
 
-  const navigation = useNavigation<NavigationProp<LoggedInParamList>>();
+const RecruitListItem: React.FC<RecruitListItemProps> = ({
+  seq,
+  position,
+  title,
+  companyName,
+  address,
+  bookmarkChecked,
+  imageSrc,
+  onPress,
+}) => {
+  const [isBookmarkChecked, setIsBookmarkChecked] = useState(bookmarkChecked);
 
-  const onClickBookmark = useCallback(() => {
-    if (recruitInfo.isBookmark === 'N') {
-      createRecruitBookmark(recruitInfo.seq)
+  const handleBookmarkPress = () => {
+    if (isBookmarkChecked) {
+      setIsBookmarkChecked(true);
+      createRecruitBookmark(seq)
         .then(() => {
           toast.success({message: '북마크 등록이 완료되었어요!'});
-          setRecruitInfo({
-            ...recruitInfo,
-            isBookmark: 'Y',
-          });
         })
         .catch(error => {
           toast.error({message: error.message});
         });
     } else {
-      deleteRecruitBookmark(recruitInfo.seq)
+      setIsBookmarkChecked(false);
+      deleteRecruitBookmark(seq)
         .then(() => {
           toast.success({message: '북마크가 삭제되었어요!'});
-          setRecruitInfo({
-            ...recruitInfo,
-            isBookmark: 'N',
-          });
         })
         .catch(error => {
           toast.error({message: error.message});
         });
     }
-  }, [recruitInfo]);
-
-  useEffect(() => {
-    if (item.recruit) {
-      setRecruitInfo(item.recruit);
-    } else {
-      setRecruitInfo(item);
-    }
-  }, [item]);
+  };
 
   return (
-    <Pressable
-      style={styles.slideBox}
-      onPress={() =>
-        navigation.navigate('JobPost', {recruitSeq: recruitInfo.seq})
-      }>
+    <Pressable style={styles.slideBox} onPress={onPress}>
       <View>
         <Image
-          source={
-            recruitInfo.writer?.profileImage
-              ? {uri: recruitInfo.writer.profileImage.originFileUrl}
-              : iconPath.CENTER_DEFAULT
-          }
+          source={imageSrc ? {url: imageSrc} : iconPath.CENTER_DEFAULT}
           style={styles.imgBox}
           resizeMode={'cover'}
         />
       </View>
-
       <View style={styles.infoBox}>
-        {/* 포지션 */}
-        <Text style={[common.text_m, common.fwb]}>{recruitInfo.position}</Text>
-        {/* 업체명 */}
-        <Text style={[common.text_s, common.fwb]}>{recruitInfo.title}</Text>
-        <Text style={[common.text_s, common.fwb]}>
-          {recruitInfo.companyName}
-        </Text>
-        {/* 지역 */}
-        <Text style={[common.text_s, common.fcg]}>{recruitInfo.address}</Text>
-        <Pressable style={styles.bookmark} onPress={() => onClickBookmark()}>
+        <Text style={[common.text_m, common.fwb]}>{position}</Text>
+        <Text style={[common.text_s, common.fwb]}>{title}</Text>
+        <Text style={[common.text_s, common.fwb]}>{companyName}</Text>
+        <Text style={[common.text_s, common.fcg]}>{address}</Text>
+        <Pressable style={styles.bookmark} onPress={handleBookmarkPress}>
           <Image
-            source={
-              recruitInfo.isBookmark === 'Y'
-                ? iconPath.BOOKMARK_ON
-                : iconPath.BOOKMARK
-            }
+            source={bookmarkChecked ? iconPath.BOOKMARK_ON : iconPath.BOOKMARK}
             style={[common.size24]}
           />
         </Pressable>

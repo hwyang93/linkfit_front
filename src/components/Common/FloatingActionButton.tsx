@@ -40,9 +40,9 @@ const FloatingActionButton: React.FC<FloatingActionButtonProps> = ({
             styles.iconContainer,
             label ? styles.styleWithLabel : styles.styleWithoutLabel,
           ]}
-          start={{x: 0.1, y: 0.5}}
-          end={{x: 0.6, y: 1}}
-          colors={['#74ebe4', '#3962f3']}>
+          start={{x: 0, y: 0}}
+          end={{x: 1, y: 0}}
+          colors={['#62C1E9', '#3962f3']}>
           <Image
             source={iconSource}
             style={[

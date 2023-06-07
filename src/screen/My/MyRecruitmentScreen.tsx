@@ -11,7 +11,7 @@ import {
 import {FetchRecruitsResponse} from '@/types/api/recruit';
 import {YesNoFlag} from '@/types/common';
 import {iconPath} from '@/utils/iconPath';
-import {dateFormatter} from '@/utils/util';
+import {formatDate} from '@/utils/util';
 import {fetchRecruits} from '@api/recruit';
 import Modal from '@components/ModalSheet';
 import TopFilter from '@components/TopFilter';
@@ -227,7 +227,7 @@ const MyRecruitmentScreen = ({navigation}: Props) => {
               title={recruit.title}
               position={recruit.position}
               status={recruit.status}
-              createdAt={dateFormatter(recruit.createdAt, 'YYYY.MM.DD')}
+              createdAt={formatDate(recruit.createdAt)}
               onKebabIconPress={handleKebeabIconPress}
               onPress={() => handleMyRecruitmentListItemPress(recruit.seq)}
             />
