@@ -4,14 +4,7 @@ import {SCREEN_WIDTH} from '@/utils/constants/common';
 import {iconPath} from '@/utils/iconPath';
 import common from '@styles/common';
 import {useState} from 'react';
-import {
-  Image,
-  ImageSourcePropType,
-  Pressable,
-  StyleSheet,
-  Text,
-  View,
-} from 'react-native';
+import {Image, Pressable, StyleSheet, Text, View} from 'react-native';
 
 const imageSize = (SCREEN_WIDTH - 40) / 2;
 
@@ -22,8 +15,8 @@ interface RecruitListItemProps {
   companyName: string;
   address: string;
   bookmarkChecked: boolean;
-  imageSrc?: ImageSourcePropType;
-  onPress: () => void;
+  imageSrc?: string;
+  onPress?: () => void;
 }
 
 const RecruitListItem: React.FC<RecruitListItemProps> = ({
