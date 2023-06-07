@@ -50,7 +50,7 @@ export interface MemberEntity extends BaseEntity {
   status?: string;
   profileFileSeq?: number;
   isVerification?: YesNoFlag;
-  profileImage: CommonFileEntity;
+  profileImage?: CommonFileEntity;
   company?: CompanyEntity;
   links: MemberLinkEntity[];
   regionAuth: RegionAuthEntity;
@@ -272,9 +272,10 @@ export interface RecruitEntity extends BaseEntity {
   lon: number;
   lat: number;
   writerSeq: number;
-  writer: MemberEntity;
+  writer?: MemberEntity;
   dates: RecruitDateEntity[];
   bookmarks: RecruitFavoriteEntity[];
+  isBookmark: YesNoFlag;
 }
 
 export interface RecruitApplyEntity extends BaseEntity {

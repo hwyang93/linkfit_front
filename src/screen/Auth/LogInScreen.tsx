@@ -1,12 +1,12 @@
 import {LoggedInParamList} from '@/../AppInner';
 import CTAButton from '@/components/Common/CTAButton';
 import useAuth from '@/hooks/useAuth';
+import useInput from '@/hooks/useInput';
 import Input, {KeyboardTypes, ReturnKeyTypes} from '@components/Input';
 import Logo from '@components/Logo';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import {BLACK} from '@styles/colors';
 import common from '@styles/common';
-import {useState} from 'react';
 import {
   Keyboard,
   Pressable,
@@ -20,16 +20,16 @@ import {SafeAreaView} from 'react-native-safe-area-context';
 type Props = NativeStackScreenProps<LoggedInParamList, 'LogIn'>;
 
 const LogInScreen = ({navigation, route}: Props) => {
-  const [password, setPassword] = useState('');
+  const password = useInput();
 
   const {signIn, isLoading} = useAuth();
 
-  const canGoNext = password.length > 0;
+  const canGoNext = password.value.length > 0;
 
   const onSubmit = async () => {
     const loginInfo = {
       email: route.params.email,
-      password: password,
+      password: password.value,
     };
 
     signIn(loginInfo);
@@ -39,19 +39,16 @@ const LogInScreen = ({navigation, route}: Props) => {
     <SafeAreaView edges={['bottom', 'left', 'right']} style={{flex: 1}}>
       <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
         <View style={common.container}>
-          {/* 로고 컴포넌트 */}
           <Logo />
-          {/* 로고 컴포넌트 */}
           <View>
-            {/* 비밀번호 입력 && 로그인 버튼 */}
             <View style={common.mt40}>
               <Input
-                value={password}
-                label={'비밀번호'}
-                placeholder={'비밀번호를 입력해 주세요.'}
+                value={password.value}
+                label="비밀번호"
+                placeholder="비밀번호를 입력해 주세요."
                 keyboardType={KeyboardTypes.DEFAULT}
                 returnKeyType={ReturnKeyTypes.DONE}
-                onChangeText={(text: string) => setPassword(text.trim())}
+                onChangeText={(text: string) => password.setValue(text.trim())}
                 secureTextEntry
                 onSubmitEditing={onSubmit}
               />
