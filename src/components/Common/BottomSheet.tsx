@@ -6,6 +6,7 @@ import {
   Animated,
   Modal,
   PanResponder,
+  ScrollView,
   StyleSheet,
   Text,
   TouchableWithoutFeedback,
@@ -18,6 +19,7 @@ interface BottomSheetProps {
   content?: React.ReactNode;
   modalHeight?: number;
   onDismiss: () => void;
+  useScroll?: boolean;
 }
 
 const BottomSheet: React.FC<BottomSheetProps> = ({
@@ -26,6 +28,7 @@ const BottomSheet: React.FC<BottomSheetProps> = ({
   modalHeight,
   content,
   onDismiss,
+  useScroll = true,
 }) => {
   const panY = useRef(new Animated.Value(SCREEN_HEIGHT)).current;
   const translateY = panY.interpolate({
@@ -108,7 +111,16 @@ const BottomSheet: React.FC<BottomSheetProps> = ({
           <View style={common.mt30}>
             <Text style={styles.modalTitle}>{title}</Text>
           </View>
-          {content}
+
+          {useScroll ? (
+            <ScrollView
+              style={{width: '100%'}}
+              showsVerticalScrollIndicator={false}>
+              {content}
+            </ScrollView>
+          ) : (
+            content
+          )}
         </Animated.View>
       </View>
     </Modal>
