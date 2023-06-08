@@ -149,6 +149,7 @@ const SearchAddressInput = ({
       <BottomSheet
         visible={modalVisible}
         onDismiss={closeModal}
+        useScroll={false}
         content={
           <SearchAddress onSelectAddress={(data: any) => selectAddress(data)} />
         }
