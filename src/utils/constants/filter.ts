@@ -18,6 +18,10 @@ const FILTER = {
     {label: '합격', value: ''},
     {label: '불합격', value: ''},
   ],
+  PROGRESSION: [
+    {label: '진행중', value: ''},
+    {label: '마감', value: ''},
+  ],
 };
 
 export default FILTER;
