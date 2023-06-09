@@ -428,79 +428,75 @@ const JobPostScreen = ({route}: Props) => {
       <BottomSheet
         visible={cancelModalVisible}
         onDismiss={closeCancelModal}
-        title="지원 취소할 날짜 및 시간을 선택하세요."
-        content={
-          <View style={{paddingHorizontal: 16}}>
-            {recruitDates.map((item, index) => (
-              <ResumeDateListItem
-                key={index}
-                selected={item.isSelected}
-                disabled={item.isApplied}
-                onPress={() => handleResumeDateListItemPress(item.seq)}
-                day={item.day}
-                time={item.time}
-              />
-            ))}
-            <View style={common.mt40}>
-              <CTAButton
-                label="지원 취소하기"
-                variant="stroked"
-                disabled={selectedRecruitDates.length === 0}
-                onPress={handleCancelButtonPress}
-              />
-            </View>
+        title="지원 취소할 날짜 및 시간을 선택하세요.">
+        <View style={{paddingHorizontal: 16}}>
+          {recruitDates.map((item, index) => (
+            <ResumeDateListItem
+              key={index}
+              selected={item.isSelected}
+              disabled={item.isApplied}
+              onPress={() => handleResumeDateListItemPress(item.seq)}
+              day={item.day}
+              time={item.time}
+            />
+          ))}
+          <View style={common.mt40}>
+            <CTAButton
+              label="지원 취소하기"
+              variant="stroked"
+              disabled={selectedRecruitDates.length === 0}
+              onPress={handleCancelButtonPress}
+            />
           </View>
-        }
-      />
+        </View>
+      </BottomSheet>
       <BottomSheet
         visible={applyModalVisible}
         onDismiss={closeApplyModal}
-        title="지원하기"
-        content={
-          <View style={{width: '100%', paddingHorizontal: 16}}>
-            {resumes.length === 0 && <RegisterResumeButton />}
-            {resumes.map((item, index) => (
-              <ResumeListItem
-                key={index}
-                selected={selectedResumes.includes(item.seq)}
-                isMaster={item.isMaster === 'Y'}
-                title={item.title}
-                updatedAt={formatDate(item.updatedAt)}
-                onPress={() => handleResumeListItemPress(item.seq)}
-              />
-            ))}
-            {selectedResumes.length > 0 && (
-              <>
-                <View style={[common.mt40, common.mb8]}>
-                  <Text style={common.title_s}>
-                    지원할 날짜 및 시간을 선택하세요.
-                  </Text>
-                </View>
-                {recruitDates.map((item: any, index) => (
-                  <ResumeDateListItem
-                    key={index}
-                    selected={item.isSelected}
-                    disabled={item.isApplied}
-                    onPress={() => handleResumeDateListItemPress(item.seq)}
-                    day={item.day}
-                    time={item.time}
-                  />
-                ))}
-              </>
-            )}
-            <View style={common.mt40}>
-              <CTAButton
-                label="지원하기"
-                disabled={
-                  selectedResumes.length === 0 ||
-                  selectedRecruitDates.length === 0
-                }
-                onPress={onApplyButtonPress}
-              />
-            </View>
+        title="지원하기">
+        <View style={{width: '100%', paddingHorizontal: 16}}>
+          {resumes.length === 0 && <RegisterResumeButton />}
+          {resumes.map((item, index) => (
+            <ResumeListItem
+              key={index}
+              selected={selectedResumes.includes(item.seq)}
+              isMaster={item.isMaster === 'Y'}
+              title={item.title}
+              updatedAt={formatDate(item.updatedAt)}
+              onPress={() => handleResumeListItemPress(item.seq)}
+            />
+          ))}
+          {selectedResumes.length > 0 && (
+            <>
+              <View style={[common.mt40, common.mb8]}>
+                <Text style={common.title_s}>
+                  지원할 날짜 및 시간을 선택하세요.
+                </Text>
+              </View>
+              {recruitDates.map((item: any, index) => (
+                <ResumeDateListItem
+                  key={index}
+                  selected={item.isSelected}
+                  disabled={item.isApplied}
+                  onPress={() => handleResumeDateListItemPress(item.seq)}
+                  day={item.day}
+                  time={item.time}
+                />
+              ))}
+            </>
+          )}
+          <View style={common.mt40}>
+            <CTAButton
+              label="지원하기"
+              disabled={
+                selectedResumes.length === 0 ||
+                selectedRecruitDates.length === 0
+              }
+              onPress={onApplyButtonPress}
+            />
           </View>
-        }
-      />
+        </View>
+      </BottomSheet>
     </>
   );
 };

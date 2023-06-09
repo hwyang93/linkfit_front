@@ -314,22 +314,18 @@ const RecruitMapScreen = ({navigation}: Props) => {
           onPress={() => navigation.navigate('RecruitList')}
         />
       </View>
-      <BottomSheet
-        visible={modalVisible}
-        onDismiss={closeModal}
-        content={
-          <View style={{alignItems: 'center'}}>
-            {/* TODO: width와 height를 지정하지 않으면 UI가 깨지는 버그 수정 */}
-            <View style={{width: SCREEN_WIDTH, height: 550}}>
-              <Tab.Navigator screenOptions={materialTopTabNavigationOptions}>
-                <Tab.Screen name="센터" component={CenterTab} />
-                <Tab.Screen name="강사" component={InstructorTab} />
-              </Tab.Navigator>
-            </View>
-            <DotPagination currentPage={1} totalPages={2} />
+      <BottomSheet visible={modalVisible} onDismiss={closeModal}>
+        <View style={{alignItems: 'center'}}>
+          {/* TODO: width와 height를 지정하지 않으면 UI가 깨지는 버그 수정 */}
+          <View style={{width: SCREEN_WIDTH, height: 550}}>
+            <Tab.Navigator screenOptions={materialTopTabNavigationOptions}>
+              <Tab.Screen name="센터" component={CenterTab} />
+              <Tab.Screen name="강사" component={InstructorTab} />
+            </Tab.Navigator>
           </View>
-        }
-      />
+          <DotPagination currentPage={1} totalPages={2} />
+        </View>
+      </BottomSheet>
     </SafeAreaView>
   );
 };

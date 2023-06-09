@@ -14,21 +14,21 @@ import {
 } from 'react-native';
 
 interface BottomSheetProps {
+  children?: React.ReactNode;
   visible: boolean;
   title?: string;
-  content?: React.ReactNode;
   modalHeight?: number;
-  onDismiss: () => void;
   useScroll?: boolean;
+  onDismiss: () => void;
 }
 
 const BottomSheet: React.FC<BottomSheetProps> = ({
+  children,
   title,
   visible,
   modalHeight,
-  content,
-  onDismiss,
   useScroll = true,
+  onDismiss,
 }) => {
   const panY = useRef(new Animated.Value(SCREEN_HEIGHT)).current;
   const translateY = panY.interpolate({
@@ -116,10 +116,10 @@ const BottomSheet: React.FC<BottomSheetProps> = ({
             <ScrollView
               style={{width: '100%'}}
               showsVerticalScrollIndicator={false}>
-              {content}
+              {children}
             </ScrollView>
           ) : (
-            content
+            children
           )}
         </Animated.View>
       </View>

@@ -241,20 +241,18 @@ const RecruitListScreen = ({navigation}: Props) => {
       <BottomSheet
         visible={modalVisible}
         onDismiss={closeModal}
-        title={MODAL_DATA[modalType].title}
-        content={
-          <ScrollView
-            style={{width: '100%'}}
-            showsVerticalScrollIndicator={false}>
-            <FilterModalContent
-              type={modalType}
-              modalData={MODAL_DATA[modalType]}
-              initialFilterValue={filterValue[modalType]}
-              onApplyFilterButtonPress={handleApplyFilterButtonPress}
-            />
-          </ScrollView>
-        }
-      />
+        title={MODAL_DATA[modalType].title}>
+        <ScrollView
+          style={{width: '100%'}}
+          showsVerticalScrollIndicator={false}>
+          <FilterModalContent
+            type={modalType}
+            modalData={MODAL_DATA[modalType]}
+            initialFilterValue={filterValue[modalType]}
+            onApplyFilterButtonPress={handleApplyFilterButtonPress}
+          />
+        </ScrollView>
+      </BottomSheet>
     </SafeAreaView>
   );
 };
