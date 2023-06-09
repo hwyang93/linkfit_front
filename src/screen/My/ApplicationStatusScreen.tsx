@@ -1,15 +1,19 @@
+import {fetchRecruitApplicationsMy} from '@/api/recruit';
+import BottomSheet from '@/components/Common/BottomSheet';
+import BottomSheetOption from '@/components/Common/BottomSheetOption';
+import FilterChip from '@/components/Common/FilterChip';
+import IconButton from '@/components/Common/IconButton';
+import toast from '@/hooks/toast';
+import useModal from '@/hooks/useModal';
 import {FetchRecruitApplicationsMyResponse} from '@/types/api/recruit';
+import {PeriodFilter, StatusFilter} from '@/types/common';
 import {SCREEN_WIDTH} from '@/utils/constants/common';
 import {iconPath} from '@/utils/iconPath';
 import {formatDate} from '@/utils/util';
-import {fetchRecruitApplicationsMy} from '@api/recruit';
-import Modal from '@components/ModalSheet';
-import TopFilter from '@components/TopFilter';
-import toast from '@hooks/toast';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import {BLUE, WHITE} from '@styles/colors';
 import common, {width} from '@styles/common';
-import {useCallback, useEffect, useState} from 'react';
+import {useEffect, useState} from 'react';
 import {
   Image,
   Pressable,
@@ -21,17 +25,117 @@ import {
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {LoggedInParamList} from '../../../AppInner';
 
+const PERIOD_FILTER_OPTIONS: PeriodFilter[] = [
+  '일주일',
+  '1개월',
+  '2개월',
+  '3개월 이상',
+];
+
+const STATUS_FILTER_OPTIONS: StatusFilter[] = [
+  '지원 완료',
+  '지원 취소',
+  '열람',
+  '합격',
+  '불합격',
+];
+
+const statusMap: any = {
+  APPLY: '지원 완료',
+  CANCEL: '지원 취소',
+  OPEN: '열람',
+  PASS: '합격',
+  FAIL: '불합격',
+};
+
 const columns2 = (SCREEN_WIDTH - 48) / 2;
+
+interface MyApplicationItemProps {
+  status: string;
+  position: string;
+  title: string;
+  companyName: string;
+  timestamp: string;
+  onResumeIconPress: () => void;
+  onPress: () => void;
+}
+
+const MyApplicationListItem: React.FC<MyApplicationItemProps> = ({
+  status,
+  position,
+  title,
+  companyName,
+  timestamp,
+  onResumeIconPress,
+  onPress,
+}) => {
+  return (
+    <Pressable style={styles.itemBox} onPress={onPress}>
+      <View style={styles.imgBox}>
+        <Image
+          style={styles.img}
+          source={require('assets/images/sample_02.png')}
+        />
+        <View style={[styles.statusBox]}>
+          <Text style={[styles.statusText]}>{statusMap[status]}</Text>
+        </View>
+      </View>
+      <View>
+        <Text style={[common.text]}>{position}</Text>
+        <Text style={[common.text_m, common.fwb]} numberOfLines={1}>
+          {title}
+        </Text>
+        <Text style={[common.text_s, common.fwb]}>{companyName}</Text>
+        <Text style={common.text}>{timestamp} 지원</Text>
+        <IconButton
+          style={styles.resume}
+          source={iconPath.RESUME}
+          onPress={onResumeIconPress}
+        />
+      </View>
+    </Pressable>
+  );
+};
 
 type Props = NativeStackScreenProps<LoggedInParamList, 'ApplicationStatus'>;
 
 const ApplicationStatusScreen = ({navigation}: Props) => {
-  const [modalVisible, setModalVisible] = useState(false);
-  const [modalTitle, setModalTitle] = useState('');
-  const [modalData, setModalData] = useState<any[]>([]);
   const [applications, setApplications] =
     useState<FetchRecruitApplicationsMyResponse>([]);
-  const [selectedFilter, setSelectedFilter] = useState('');
+
+  const [periodFilterValue, setPeriodFilterValue] =
+    useState<PeriodFilter | null>(null);
+
+  const [statusFilterValue, setStatusFilterValue] =
+    useState<StatusFilter | null>(null);
+
+  const {
+    modalVisible: periodModalVisible,
+    openModal: openPeriodModal,
+    closeModal: closePeriodModal,
+  } = useModal();
+
+  const {
+    modalVisible: statusModalVisible,
+    openModal: openStatusModal,
+    closeModal: closeStatusModal,
+  } = useModal();
+
+  const handleListItemPress = (seq: number) => {
+    navigation.navigate('JobPost', {
+      recruitSeq: seq,
+    });
+  };
+
+  const handlePeriodOptionPress = (option: PeriodFilter) => {
+    setPeriodFilterValue(option);
+    closePeriodModal();
+  };
+
+  const handleStatusOptionPress = (option: StatusFilter) => {
+    setStatusFilterValue(option);
+    closeStatusModal();
+  };
 
   useEffect(() => {
     fetchRecruitApplicationsMy()
@@ -43,237 +147,77 @@ const ApplicationStatusScreen = ({navigation}: Props) => {
       });
   }, []);
 
-  const [FILTER, setFILTER] = useState([
-    {
-      key: 'period',
-      value: '기간',
-      job: () => {
-        setSelectedFilter('period');
-        setModalTitle('기간');
-        setModalData(MODAL);
-        openModal();
-      },
-    },
-    {
-      key: 'status',
-      value: '지원 상태',
-      job: () => {
-        setSelectedFilter('status');
-        setModalTitle('지원상태');
-        setModalData(MODAL2);
-        openModal();
-      },
-    },
-  ]);
-
-  const [MODAL, setMODAL] = useState([
-    {
-      value: '일주일',
-      selected: false,
-    },
-    {
-      value: '1개월',
-      selected: false,
-    },
-    {
-      value: '2개월',
-      selected: false,
-    },
-    {
-      value: '3개월 이상',
-      selected: false,
-    },
-  ]);
-  const [MODAL2, setMODAL2] = useState([
-    {
-      value: '지원완료',
-      selected: false,
-    },
-    {
-      value: '지원취소',
-      selected: false,
-    },
-    {
-      value: '열람',
-      selected: false,
-    },
-    {
-      value: '미열람',
-      selected: false,
-    },
-    {
-      value: '합격',
-      selected: false,
-    },
-    {
-      value: '불합격',
-      selected: false,
-    },
-  ]);
-
-  const openModal = () => {
-    setModalVisible(true);
-  };
-
-  const onSelectFilter = useCallback(
-    (selectItem: any) => {
-      if (selectedFilter === 'period') {
-        setMODAL(() => {
-          return MODAL.map(item => {
-            if (item.value === selectItem.value) {
-              item.selected = !item.selected;
-            } else {
-              item.selected = false;
-            }
-            return item;
-          });
-        });
-        setFILTER(() => {
-          return FILTER.map(filter => {
-            if (filter.key === 'period') {
-              const value = modalData.find((item: any) => {
-                return item.selected;
-              })?.value;
-              filter.value = value ? value : '기간';
-            }
-            return filter;
-          });
-        });
-      } else if (selectedFilter === 'status') {
-        setMODAL2(() => {
-          return MODAL2.map(item => {
-            if (item.value === selectItem.value) {
-              item.selected = !item.selected;
-            } else {
-              item.selected = false;
-            }
-            return item;
-          });
-        });
-        setFILTER(() => {
-          return FILTER.map(filter => {
-            if (filter.key === 'status') {
-              const value = modalData.find((item: any) => {
-                return item.selected;
-              })?.value;
-              filter.value = value ? value : '지원 상태';
-            }
-            return filter;
-          });
-        });
-      }
-      setModalVisible(false);
-    },
-    [FILTER, MODAL, MODAL2, modalData, selectedFilter],
-  );
   return (
-    <SafeAreaView edges={['bottom', 'left', 'right']} style={styles.container}>
-      {/* 필터 영역 */}
-      <TopFilter data={FILTER} />
-      {/* 필터 영역 */}
-      <ScrollView showsVerticalScrollIndicator={false}>
-        {/* 컨첸츠 영역 */}
+    <SafeAreaView edges={['left', 'right']} style={styles.container}>
+      <ScrollView
+        contentContainerStyle={{marginHorizontal: 16, marginVertical: 8}}
+        horizontal>
+        <FilterChip
+          label={periodFilterValue || '기간'}
+          style={{marginRight: 8}}
+          rightIcon
+          onPress={openPeriodModal}
+        />
+        <FilterChip
+          label={statusFilterValue || '지원 상태'}
+          rightIcon
+          onPress={openStatusModal}
+        />
+      </ScrollView>
+      <ScrollView
+        contentContainerStyle={{margin: 16}}
+        showsVerticalScrollIndicator={false}>
         <View
           style={{flexWrap: 'wrap', flexDirection: 'row', paddingVertical: 8}}>
-          {applications.map((application, index) => {
-            return (
-              <Pressable
-                key={`application${index}`}
-                style={styles.itemBox}
-                onPress={() =>
-                  navigation.navigate('JobPost', {
-                    recruitSeq: application.recruit.seq,
-                  })
-                }>
-                <View style={styles.imgBox}>
-                  <Image
-                    style={styles.img}
-                    source={require('assets/images/sample_02.png')}
-                  />
-                  <View style={[styles.statusBox]}>
-                    <Text style={[styles.statusText]}>
-                      {(() => {
-                        switch (application.status) {
-                          case 'APPLY':
-                            return '지원 완료';
-                          case 'CANCEL':
-                            return '지원 취소';
-                          case 'OPEN':
-                            return '열람';
-                          case 'PASS':
-                            return '합격';
-                          case 'FAIL':
-                            return '불합격';
-                        }
-                      })()}
-                    </Text>
-                  </View>
-                </View>
-                <View>
-                  {/* 포지션 */}
-                  <Text style={[common.text]}>
-                    {application.recruit.position}
-                  </Text>
-                  {/* 제목 */}
-                  <Text style={[common.text_m, common.fwb]} numberOfLines={1}>
-                    {application.recruit.title}
-                  </Text>
-                  {/* 업체명 */}
-                  <Text style={[common.text_s, common.fwb]}>
-                    {application.recruit.companyName}
-                  </Text>
-                  {/* 지역 */}
-                  <Text style={common.text}>
-                    {formatDate(application.createdAt)} 지원
-                  </Text>
-                  <Pressable
-                    style={styles.resume}
-                    onPress={() =>
-                      navigation.navigate('ResumePreview', {
-                        resumeSeq: application.resumeSeq,
-                        applySeq: application.seq,
-                        recruitSeq: application.recruitSeq,
-                      })
-                    }>
-                    <Image source={iconPath.RESUME} style={[common.size24]} />
-                  </Pressable>
-                </View>
-              </Pressable>
-            );
-          })}
+          {applications.map((item, index) => (
+            <MyApplicationListItem
+              key={index}
+              status={item.status}
+              position={item.recruit.position}
+              title={item.recruit.title}
+              companyName={item.recruit.companyName}
+              timestamp={formatDate(item.createdAt)}
+              onPress={() => handleListItemPress(item.recruit.seq)}
+              onResumeIconPress={() =>
+                navigation.navigate('ResumePreview', {
+                  resumeSeq: item.resumeSeq,
+                  applySeq: item.seq,
+                  recruitSeq: item.recruitSeq,
+                })
+              }
+            />
+          ))}
         </View>
-
-        {/* 모달 */}
-        <Modal
-          modalVisible={modalVisible}
-          setModalVisible={setModalVisible}
-          title={modalTitle}
-          modalData={modalData}
-          content={
-            <View>
-              {modalData.map((item, index) => {
-                return (
-                  <View key={index} style={common.modalItemBox}>
-                    <Pressable
-                      onPress={() => onSelectFilter(item)}
-                      style={[common.rowCenterBetween, {width: '100%'}]}>
-                      <Text
-                        style={[
-                          common.modalText,
-                          item.selected && {color: BLUE.DEFAULT},
-                        ]}>
-                        {item.value}
-                      </Text>
-                      {item.selected && (
-                        <Image source={iconPath.CHECK} style={common.size24} />
-                      )}
-                    </Pressable>
-                  </View>
-                );
-              })}
-            </View>
-          }
-        />
+        <BottomSheet
+          visible={periodModalVisible}
+          onDismiss={closePeriodModal}
+          title="기간">
+          <View>
+            {PERIOD_FILTER_OPTIONS.map((option, index) => (
+              <BottomSheetOption
+                key={index}
+                label={option}
+                selected={periodFilterValue === option}
+                onPress={() => handlePeriodOptionPress(option)}
+              />
+            ))}
+          </View>
+        </BottomSheet>
+        <BottomSheet
+          visible={statusModalVisible}
+          onDismiss={closeStatusModal}
+          title="지원 상태">
+          <View>
+            {STATUS_FILTER_OPTIONS.map((option, index) => (
+              <BottomSheetOption
+                key={index}
+                label={option}
+                selected={statusFilterValue === option}
+                onPress={() => handleStatusOptionPress(option)}
+              />
+            ))}
+          </View>
+        </BottomSheet>
       </ScrollView>
     </SafeAreaView>
   );
@@ -282,7 +226,6 @@ const ApplicationStatusScreen = ({navigation}: Props) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    padding: 16,
     backgroundColor: WHITE,
   },
   itemBox: {width: columns2, marginBottom: 16, marginHorizontal: 4},
