@@ -1,4 +1,19 @@
-import {BLUE, WHITE} from '@styles/colors';
+import BottomSheet from '@/components/Common/BottomSheet';
+import BottomSheetOption from '@/components/Common/BottomSheetOption';
+import FilterChip from '@/components/Common/FilterChip';
+import FilterChipContainer from '@/components/Common/FilterChipContainer';
+import useModal from '@/hooks/useModal';
+import {FetchRecruitsResponse} from '@/types/api/recruit';
+import {FilterState, YesNoFlag} from '@/types/common';
+import FILTER from '@/utils/constants/filter';
+import {iconPath} from '@/utils/iconPath';
+import {formatDate} from '@/utils/util';
+import {fetchRecruits} from '@api/recruit';
+import toast from '@hooks/toast';
+import {NativeStackScreenProps} from '@react-navigation/native-stack';
+import {WHITE} from '@styles/colors';
+import common from '@styles/common';
+import {useCallback, useEffect, useState} from 'react';
 import {
   Image,
   Pressable,
@@ -7,37 +22,25 @@ import {
   Text,
   View,
 } from 'react-native';
-
-import {FetchRecruitsResponse} from '@/types/api/recruit';
-import {YesNoFlag} from '@/types/common';
-import {iconPath} from '@/utils/iconPath';
-import {formatDate} from '@/utils/util';
-import {fetchRecruits} from '@api/recruit';
-import Modal from '@components/ModalSheet';
-import TopFilter from '@components/TopFilter';
-import toast from '@hooks/toast';
-import {NativeStackScreenProps} from '@react-navigation/native-stack';
-import common from '@styles/common';
-import {useCallback, useEffect, useState} from 'react';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {LoggedInParamList} from '../../../AppInner';
 
 interface MyRecruitmentListItemProps {
-  onPress: () => void;
-  onKebabIconPress: () => void;
   status: string;
   title: string;
   createdAt: string;
   position: string;
+  onPress: () => void;
+  onKebabIconPress: () => void;
 }
 
 const MyRecruitmentListItem: React.FC<MyRecruitmentListItemProps> = ({
-  onPress,
-  onKebabIconPress,
   status,
   title,
   createdAt,
   position,
+  onPress,
+  onKebabIconPress,
 }) => {
   return (
     <Pressable style={[common.basicBox, common.mv8]} onPress={onPress}>
@@ -62,15 +65,32 @@ const MyRecruitmentListItem: React.FC<MyRecruitmentListItemProps> = ({
   );
 };
 
-// TODO: Screen 이름 매칭 필요 (MyPost -> MyRecruitment)
 type Props = NativeStackScreenProps<LoggedInParamList, 'MyPost'>;
 
 const MyRecruitmentScreen = ({navigation}: Props) => {
-  const [modalVisible, setModalVisible] = useState(false);
-  const [modalTitle, setModalTitle] = useState('');
-  const [modalData, setModalData] = useState<any[]>([]);
   const [recruits, setRecruits] = useState<FetchRecruitsResponse>([]);
-  const [selectedFilter, setSelectedFilter] = useState('');
+
+  const [periodFilter, setPeriodFilter] = useState<FilterState | null>(null);
+  const [progressionFilter, setProgressionFilter] =
+    useState<FilterState | null>(null);
+
+  const {
+    modalVisible: periodModalVisible,
+    openModal: openPeriodModal,
+    closeModal: closePeriodModal,
+  } = useModal();
+
+  const {
+    modalVisible: progressionModalVisible,
+    openModal: openProgressionModal,
+    closeModal: closeProgressionModal,
+  } = useModal();
+
+  const {
+    modalVisible: kebabModalVisible,
+    openModal: openKebabModal,
+    closeModal: closeKebabModal,
+  } = useModal();
 
   const getRecruits = useCallback(() => {
     const params = {isWriter: 'Y' as YesNoFlag};
@@ -83,126 +103,19 @@ const MyRecruitmentScreen = ({navigation}: Props) => {
       });
   }, []);
 
+  const handlePeriodOptionPress = (option: FilterState) => {
+    setPeriodFilter(option);
+    closePeriodModal();
+  };
+
+  const handleProgressionOptionPress = (option: FilterState) => {
+    setProgressionFilter(option);
+    closeProgressionModal();
+  };
+
   useEffect(() => {
     getRecruits();
   }, [getRecruits]);
-
-  const [FILTER, setFILTER] = useState([
-    {
-      key: 'period',
-      value: '기간',
-      job: () => {
-        setSelectedFilter('period');
-        setModalTitle('기간');
-        setModalData(MODAL);
-        openModal();
-      },
-    },
-    {
-      key: 'status',
-      value: '진행 여부',
-      job: () => {
-        setSelectedFilter('status');
-        setModalTitle('진행 여부');
-        setModalData(MODAL2);
-        openModal();
-      },
-    },
-  ]);
-  const [MODAL, setMODAL] = useState([
-    {
-      value: '일주일',
-      selected: false,
-    },
-    {
-      value: '1개월',
-      selected: false,
-    },
-    {
-      value: '2개월',
-      selected: false,
-    },
-    {
-      value: '3개월 이상',
-      selected: false,
-    },
-  ]);
-  const [MODAL2, setMODAL2] = useState([
-    {
-      value: '진행 중',
-      selected: false,
-    },
-    {
-      value: '마감',
-      selected: false,
-    },
-  ]);
-  const MODAL3 = [
-    {
-      value: '공고 수정하기',
-      job: () => {},
-    },
-    {
-      value: '공고 복사하기',
-      job: () => {},
-    },
-  ];
-
-  const openModal = () => {
-    setModalVisible(true);
-  };
-
-  const onSelectFilter = useCallback(
-    (selectItem: any) => {
-      if (selectedFilter === 'period') {
-        setMODAL(() => {
-          return MODAL.map(item => {
-            if (item.value === selectItem.value) {
-              item.selected = !item.selected;
-            } else {
-              item.selected = false;
-            }
-            return item;
-          });
-        });
-        setFILTER(() => {
-          return FILTER.map(filter => {
-            if (filter.key === 'period') {
-              const value = modalData.find((item: any) => {
-                return item.selected;
-              })?.value;
-              filter.value = value ? value : '기간';
-            }
-            return filter;
-          });
-        });
-      } else if (selectedFilter === 'status') {
-        setMODAL2(() => {
-          return MODAL2.map(item => {
-            if (item.value === selectItem.value) {
-              item.selected = !item.selected;
-            } else {
-              item.selected = false;
-            }
-            return item;
-          });
-        });
-        setFILTER(() => {
-          return FILTER.map(filter => {
-            if (filter.key === 'status') {
-              const value = modalData.find((item: any) => {
-                return item.selected;
-              })?.value;
-              filter.value = value ? value : '진행 여부';
-            }
-            return filter;
-          });
-        });
-      }
-      setModalVisible(false);
-    },
-    [FILTER, MODAL, MODAL2, modalData, selectedFilter],
-  );
 
   const handleMyRecruitmentListItemPress = (recruitSeq: number) => {
     navigation.navigate('ApplicantStatus', {
@@ -210,60 +123,64 @@ const MyRecruitmentScreen = ({navigation}: Props) => {
     });
   };
 
-  const handleKebeabIconPress = () => {
-    setModalTitle('더보기');
-    setModalData(MODAL3);
-    openModal();
-  };
-
   return (
-    <SafeAreaView edges={['bottom', 'left', 'right']} style={styles.container}>
-      <TopFilter data={FILTER} />
-      <ScrollView showsVerticalScrollIndicator={false}>
-        <View style={common.mb24}>
-          {recruits.map((recruit, index) => (
-            <MyRecruitmentListItem
-              key={index}
-              title={recruit.title}
-              position={recruit.position}
-              status={recruit.status}
-              createdAt={formatDate(recruit.createdAt)}
-              onKebabIconPress={handleKebeabIconPress}
-              onPress={() => handleMyRecruitmentListItemPress(recruit.seq)}
-            />
-          ))}
-        </View>
-        <Modal
-          modalVisible={modalVisible}
-          setModalVisible={setModalVisible}
-          title={modalTitle}
-          modalData={modalData}
-          content={
-            <View>
-              {modalData.map((item, index) => {
-                return (
-                  <View key={index} style={common.modalItemBox}>
-                    <Pressable
-                      onPress={() => onSelectFilter(item)}
-                      style={[common.rowCenterBetween, {width: '100%'}]}>
-                      <Text
-                        style={[
-                          common.modalText,
-                          item.selected && {color: BLUE.DEFAULT},
-                        ]}>
-                        {item.value}
-                      </Text>
-                      {item.selected && (
-                        <Image source={iconPath.CHECK} style={common.size24} />
-                      )}
-                    </Pressable>
-                  </View>
-                );
-              })}
-            </View>
-          }
+    <SafeAreaView edges={['left', 'right']} style={styles.container}>
+      <FilterChipContainer>
+        <FilterChip
+          label={periodFilter?.label || '기간'}
+          onPress={openPeriodModal}
         />
+        <FilterChip
+          label={progressionFilter?.label || '진행 상태'}
+          onPress={openProgressionModal}
+        />
+      </FilterChipContainer>
+      <ScrollView
+        contentContainerStyle={{marginHorizontal: 16, paddingBottom: 24}}
+        showsVerticalScrollIndicator={false}>
+        {recruits.map((recruit, index) => (
+          <MyRecruitmentListItem
+            key={index}
+            title={recruit.title}
+            position={recruit.position}
+            status={recruit.status}
+            createdAt={formatDate(recruit.createdAt)}
+            onKebabIconPress={openKebabModal}
+            onPress={() => handleMyRecruitmentListItemPress(recruit.seq)}
+          />
+        ))}
       </ScrollView>
+      <BottomSheet
+        visible={periodModalVisible}
+        onDismiss={closePeriodModal}
+        title="기간">
+        {FILTER.PERIOD.map((option, index) => (
+          <BottomSheetOption
+            key={index}
+            label={option.label}
+            onPress={() => handlePeriodOptionPress(option)}
+          />
+        ))}
+      </BottomSheet>
+      <BottomSheet
+        visible={progressionModalVisible}
+        onDismiss={closeProgressionModal}
+        title="진행 상태">
+        {FILTER.PROGRESSION.map((option, index) => (
+          <BottomSheetOption
+            key={index}
+            label={option.label}
+            onPress={() => handleProgressionOptionPress(option)}
+          />
+        ))}
+      </BottomSheet>
+      <BottomSheet
+        visible={kebabModalVisible}
+        onDismiss={closeKebabModal}
+        title="더보기">
+        <BottomSheetOption label="공고 수정하기" />
+        <BottomSheetOption label="공고 복사하기" />
+      </BottomSheet>
     </SafeAreaView>
   );
 };
@@ -271,7 +188,6 @@ const MyRecruitmentScreen = ({navigation}: Props) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    padding: 16,
     backgroundColor: WHITE,
   },
   kebabIcon: {position: 'absolute', top: 16, right: 16},
