@@ -8,6 +8,8 @@ import {Image, Pressable, StyleSheet, Text, View} from 'react-native';
 
 const imageSize = (SCREEN_WIDTH - 40) / 2;
 
+// TODO: 북마크 클릭 로직 밖으로 분리
+
 interface RecruitListItemProps {
   seq: number;
   position: string;

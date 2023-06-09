@@ -34,6 +34,7 @@ const ApplicantStatusScreen = ({route}: Props) => {
   const [finishApplications, setFinishApplications] =
     useState<RecruitApplyEntity[]>();
   const [modalVisible, setModalVisible] = useState(false);
+
   const getRecruitApplications = useCallback(() => {
     fetchRecruitApplications(route.params.recruitSeq)
       .then(({data}) => {
@@ -75,7 +76,6 @@ const ApplicantStatusScreen = ({route}: Props) => {
   return (
     <>
       <View style={styles.container}>
-        {/* 컨텐츠 영역 */}
         <View>
           <View style={[common.basicBox, common.mv8]}>
             <View style={common.rowCenter}>
@@ -101,33 +101,19 @@ const ApplicantStatusScreen = ({route}: Props) => {
             </Pressable>
           </View>
         </View>
-        {/* 컨텐츠 영역 */}
         <Modal
           modalVisible={modalVisible}
           setModalVisible={setModalVisible}
           title={'타이틀'}
           content={
             <View>
-              {MODAL.map((item, index) => {
-                return (
-                  <View key={index} style={common.modalItemBox}>
-                    <Pressable
-                      // onPress={() => onClickItem(item)}
-                      style={[common.rowCenterBetween, {width: '100%'}]}>
-                      <Text
-                        style={[
-                          common.modalText,
-                          // item.selected && {color: BLUE.DEFAULT},
-                        ]}>
-                        {item.value}
-                      </Text>
-                      {/*{item.selected && (*/}
-                      {/*  <Image source={iconPath.CHECK} style={common.size24} />*/}
-                      {/*)}*/}
-                    </Pressable>
-                  </View>
-                );
-              })}
+              {MODAL.map((item, index) => (
+                <View key={index} style={common.modalItemBox}>
+                  <Pressable style={[common.rowCenterBetween, {width: '100%'}]}>
+                    <Text style={[common.modalText]}>{item.value}</Text>
+                  </Pressable>
+                </View>
+              ))}
             </View>
           }
         />
@@ -172,7 +158,6 @@ export const Tabs = ({
 
 const styles = StyleSheet.create({
   container: {
-    // flex: 1,
     padding: 16,
     backgroundColor: WHITE,
   },
