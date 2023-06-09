@@ -2,12 +2,14 @@ import {fetchRecruitApplicationsMy} from '@/api/recruit';
 import BottomSheet from '@/components/Common/BottomSheet';
 import BottomSheetOption from '@/components/Common/BottomSheetOption';
 import FilterChip from '@/components/Common/FilterChip';
+import FilterChipContainer from '@/components/Common/FilterChipContainer';
 import IconButton from '@/components/Common/IconButton';
 import toast from '@/hooks/toast';
 import useModal from '@/hooks/useModal';
 import {FetchRecruitApplicationsMyResponse} from '@/types/api/recruit';
-import {PeriodFilter, StatusFilter} from '@/types/common';
+import {FilterState} from '@/types/common';
 import {SCREEN_WIDTH} from '@/utils/constants/common';
+import FILTER from '@/utils/constants/filter';
 import {iconPath} from '@/utils/iconPath';
 import {formatDate} from '@/utils/util';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
@@ -24,21 +26,6 @@ import {
 } from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {LoggedInParamList} from '../../../AppInner';
-
-const PERIOD_FILTER_OPTIONS: PeriodFilter[] = [
-  '일주일',
-  '1개월',
-  '2개월',
-  '3개월 이상',
-];
-
-const STATUS_FILTER_OPTIONS: StatusFilter[] = [
-  '지원 완료',
-  '지원 취소',
-  '열람',
-  '합격',
-  '불합격',
-];
 
 const statusMap: any = {
   APPLY: '지원 완료',
@@ -103,11 +90,8 @@ const ApplicationStatusScreen = ({navigation}: Props) => {
   const [applications, setApplications] =
     useState<FetchRecruitApplicationsMyResponse>([]);
 
-  const [periodFilterValue, setPeriodFilterValue] =
-    useState<PeriodFilter | null>(null);
-
-  const [statusFilterValue, setStatusFilterValue] =
-    useState<StatusFilter | null>(null);
+  const [periodFilter, setPeriodFilter] = useState<FilterState | null>(null);
+  const [statusFilter, setStatusFilter] = useState<FilterState | null>(null);
 
   const {
     modalVisible: periodModalVisible,
@@ -127,13 +111,13 @@ const ApplicationStatusScreen = ({navigation}: Props) => {
     });
   };
 
-  const handlePeriodOptionPress = (option: PeriodFilter) => {
-    setPeriodFilterValue(option);
+  const handlePeriodOptionPress = (option: {label: string; value: string}) => {
+    setPeriodFilter(option);
     closePeriodModal();
   };
 
-  const handleStatusOptionPress = (option: StatusFilter) => {
-    setStatusFilterValue(option);
+  const handleStatusOptionPress = (option: {label: string; value: string}) => {
+    setStatusFilter(option);
     closeStatusModal();
   };
 
@@ -149,21 +133,19 @@ const ApplicationStatusScreen = ({navigation}: Props) => {
 
   return (
     <SafeAreaView edges={['left', 'right']} style={styles.container}>
-      <ScrollView
-        contentContainerStyle={{marginHorizontal: 16, marginVertical: 8}}
-        horizontal>
+      <FilterChipContainer>
         <FilterChip
-          label={periodFilterValue || '기간'}
+          label={periodFilter?.label || '기간'}
           style={{marginRight: 8}}
           rightIcon
           onPress={openPeriodModal}
         />
         <FilterChip
-          label={statusFilterValue || '지원 상태'}
+          label={statusFilter?.label || '지원 상태'}
           rightIcon
           onPress={openStatusModal}
         />
-      </ScrollView>
+      </FilterChipContainer>
       <ScrollView
         contentContainerStyle={{margin: 16}}
         showsVerticalScrollIndicator={false}>
@@ -193,11 +175,11 @@ const ApplicationStatusScreen = ({navigation}: Props) => {
           onDismiss={closePeriodModal}
           title="기간">
           <View>
-            {PERIOD_FILTER_OPTIONS.map((option, index) => (
+            {FILTER.PERIOD.map((option, index) => (
               <BottomSheetOption
                 key={index}
-                label={option}
-                selected={periodFilterValue === option}
+                label={option.label}
+                selected={periodFilter?.value === option.value}
                 onPress={() => handlePeriodOptionPress(option)}
               />
             ))}
@@ -208,11 +190,11 @@ const ApplicationStatusScreen = ({navigation}: Props) => {
           onDismiss={closeStatusModal}
           title="지원 상태">
           <View>
-            {STATUS_FILTER_OPTIONS.map((option, index) => (
+            {FILTER.STATUS.map((option, index) => (
               <BottomSheetOption
                 key={index}
-                label={option}
-                selected={statusFilterValue === option}
+                label={option.label}
+                selected={statusFilter === option}
                 onPress={() => handleStatusOptionPress(option)}
               />
             ))}

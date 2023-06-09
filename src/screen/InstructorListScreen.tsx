@@ -1,5 +1,6 @@
 import {LoggedInParamList} from '@/../AppInner';
 import FilterChip from '@/components/Common/FilterChip';
+import FilterChipContainer from '@/components/Common/FilterChipContainer';
 import InstructorListItem from '@/components/Compound/InstructorListItem';
 import common from '@/styles/common';
 import {FetchInstructorsResponse, Instructor} from '@/types/api/instructor';
@@ -8,7 +9,7 @@ import toast from '@hooks/toast';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import {isAxiosError} from 'axios';
 import {useCallback, useEffect, useState} from 'react';
-import {FlatList, ScrollView, Text, View} from 'react-native';
+import {FlatList, Text, View} from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
 
 type Props = NativeStackScreenProps<LoggedInParamList, 'InstructorList'>;
@@ -38,11 +39,9 @@ const InstructorListScreen = ({}: Props) => {
   return (
     <SafeAreaView edges={['bottom', 'left', 'right']} style={{flex: 1}}>
       <View>
-        <ScrollView
-          horizontal
-          contentContainerStyle={{marginHorizontal: 16, marginVertical: 8}}>
+        <FilterChipContainer>
           <FilterChip label="포지션" rightIcon />
-        </ScrollView>
+        </FilterChipContainer>
       </View>
       <FlatList
         contentContainerStyle={{margin: 16}}

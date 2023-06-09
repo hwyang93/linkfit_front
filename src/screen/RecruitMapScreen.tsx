@@ -2,6 +2,7 @@ import Avatar from '@/components/Common/Avatar';
 import BottomSheet from '@/components/Common/BottomSheet';
 import DotPagination from '@/components/Common/DotPagination';
 import FilterChip from '@/components/Common/FilterChip';
+import FilterChipContainer from '@/components/Common/FilterChipContainer';
 import FloatingActionButton from '@/components/Common/FloatingActionButton';
 import Icon from '@/components/Common/Icon';
 import IconButton from '@/components/Common/IconButton';
@@ -256,13 +257,11 @@ const RecruitMapScreen = ({navigation}: Props) => {
   return (
     <SafeAreaView edges={['left', 'right']} style={{flex: 1}}>
       <View>
-        <ScrollView
-          horizontal
-          style={{paddingHorizontal: 16, paddingVertical: 8}}>
+        <FilterChipContainer>
           <FilterChip label="포지션" style={common.mr8} rightIcon />
           <FilterChip label="채용형태" style={common.mr8} rightIcon />
           <FilterChip label="수업시간" rightIcon />
-        </ScrollView>
+        </FilterChipContainer>
       </View>
       {position ? (
         <MapView
