@@ -53,14 +53,12 @@ const CommunityTab = ({navigation}: Props) => {
 
   return (
     <View style={styles.container}>
-      <View>
-        <FilterChipContainer>
-          <FilterChip label="필라테스" style={{marginRight: 8}} />
-          <FilterChip label="요가" style={{marginRight: 8}} />
-          <FilterChip label="강사" style={{marginRight: 8}} />
-          <FilterChip label="센터" />
-        </FilterChipContainer>
-      </View>
+      <FilterChipContainer>
+        <FilterChip label="필라테스" style={{marginRight: 8}} />
+        <FilterChip label="요가" style={{marginRight: 8}} />
+        <FilterChip label="강사" style={{marginRight: 8}} />
+        <FilterChip label="센터" />
+      </FilterChipContainer>
       <Text style={[common.title, {margin: 16}]}>최근 게시글</Text>
       {posts?.length !== 0 && (
         <FlatList

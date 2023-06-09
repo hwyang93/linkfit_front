@@ -256,13 +256,11 @@ const RecruitMapScreen = ({navigation}: Props) => {
 
   return (
     <SafeAreaView edges={['left', 'right']} style={{flex: 1}}>
-      <View>
-        <FilterChipContainer>
-          <FilterChip label="포지션" style={common.mr8} rightIcon />
-          <FilterChip label="채용형태" style={common.mr8} rightIcon />
-          <FilterChip label="수업시간" rightIcon />
-        </FilterChipContainer>
-      </View>
+      <FilterChipContainer>
+        <FilterChip label="포지션" style={common.mr8} rightIcon />
+        <FilterChip label="채용형태" style={common.mr8} rightIcon />
+        <FilterChip label="수업시간" rightIcon />
+      </FilterChipContainer>
       {position ? (
         <MapView
           style={{flex: 1}}

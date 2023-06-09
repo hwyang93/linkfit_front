@@ -38,11 +38,9 @@ const InstructorListScreen = ({}: Props) => {
 
   return (
     <SafeAreaView edges={['bottom', 'left', 'right']} style={{flex: 1}}>
-      <View>
-        <FilterChipContainer>
-          <FilterChip label="포지션" rightIcon />
-        </FilterChipContainer>
-      </View>
+      <FilterChipContainer>
+        <FilterChip label="포지션" rightIcon />
+      </FilterChipContainer>
       <FlatList
         contentContainerStyle={{margin: 16}}
         data={instructors}
