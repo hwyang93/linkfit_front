@@ -51,6 +51,7 @@ const FilterChip: React.FC<FilterChipProps> = ({
 
 const styles = StyleSheet.create({
   container: {
+    height: 28,
     alignSelf: 'flex-start',
     flexDirection: 'row',
     paddingVertical: 6,
