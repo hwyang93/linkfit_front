@@ -1,5 +1,4 @@
 import {iconPath} from '@/utils/iconPath';
-import {GRAY, INPUT} from '@styles/colors';
 import common from '@styles/common';
 import {useCallback, useEffect, useState} from 'react';
 import {
@@ -11,12 +10,12 @@ import {
   View,
 } from 'react-native';
 
-import SearchAddress from '@components/Common/SearchAddress';
 import BottomSheet from '@components/Common/BottomSheet';
+import SearchAddress from '@components/Common/SearchAddress';
+import toast from '@hooks/toast';
 import useModal from '@hooks/useModal';
 import axios, {isAxiosError} from 'axios';
 import Config from 'react-native-config';
-import toast from '@hooks/toast';
 
 export const KeyboardTypes = {
   DEFAULT: 'default',
@@ -149,11 +148,9 @@ const SearchAddressInput = ({
       <BottomSheet
         visible={modalVisible}
         onDismiss={closeModal}
-        useScroll={false}
-        content={
-          <SearchAddress onSelectAddress={(data: any) => selectAddress(data)} />
-        }
-      />
+        useScroll={false}>
+        <SearchAddress onSelectAddress={(data: any) => selectAddress(data)} />
+      </BottomSheet>
     </View>
   );
 };
