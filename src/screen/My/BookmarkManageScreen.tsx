@@ -4,6 +4,7 @@ import {fetchBookmarkRecruits} from '@/api/recruit';
 import RecruitCarouselItem from '@/components/Compound/RecruitCarouselItem';
 import toast from '@/hooks/toast';
 import common from '@/styles/common';
+import {FetchBookmarkCommunitiesResponse} from '@/types/api/community';
 import {FetchBookmarkRecruitsResponse} from '@/types/api/recruit';
 import {iconPath} from '@/utils/iconPath';
 import {materialTopTabNavigationOptions} from '@/utils/options/tab';
@@ -104,7 +105,7 @@ const JobOfferTab: React.FC = () => {
 
   const getBookmarkRecruits = useCallback(() => {
     fetchBookmarkRecruits()
-      .then(({data}: any) => {
+      .then(({data}) => {
         setBookmarkedRecruits(data);
       })
       .catch(error => {
@@ -141,13 +142,14 @@ const JobOfferTab: React.FC = () => {
 };
 
 const CommunityTab: React.FC = () => {
-  const [bookmarks, setBookmarks] = useState<any[]>([]);
+  const [bookmarks, setBookmarks] =
+    useState<FetchBookmarkCommunitiesResponse>();
 
   const navigation = useNavigation<NavigationProp<LoggedInParamList>>();
 
   const getBookmarkCommunities = useCallback(() => {
     fetchBookmarkCommunities()
-      .then(({data}: any) => {
+      .then(({data}) => {
         setBookmarks(data);
       })
       .catch(error => {
@@ -159,10 +161,12 @@ const CommunityTab: React.FC = () => {
     getBookmarkCommunities();
   }, [getBookmarkCommunities]);
 
+  console.log('@', bookmarks);
+
   return (
     <View style={styles.container}>
       <ScrollView showsVerticalScrollIndicator={false}>
-        {bookmarks.map((bookmark, index) => (
+        {bookmarks?.map((bookmark, index) => (
           <BookmarkCommunityListItem
             key={index}
             title={bookmark.community.title}

@@ -1,5 +1,11 @@
+import Chip from '@/components/Common/Chip';
+import {useAppSelector} from '@/store';
 import {iconPath} from '@/utils/iconPath';
+import {fetchRecruitApplication, updateRecruitApplyStatus} from '@api/recruit';
+import {fetchResume} from '@api/resume';
 import Modal from '@components/ModalSheet';
+import toast from '@hooks/toast';
+import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import {BLUE, GRAY, WHITE} from '@styles/colors';
 import common from '@styles/common';
 import {useCallback, useEffect, useState} from 'react';
@@ -14,13 +20,6 @@ import {
 } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 import {SafeAreaView} from 'react-native-safe-area-context';
-
-import Chip from '@/components/Common/Chip';
-import {useAppSelector} from '@/store';
-import {fetchRecruitApplication, updateRecruitApplyStatus} from '@api/recruit';
-import {fetchResume} from '@api/resume';
-import toast from '@hooks/toast';
-import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import {LoggedInParamList} from '../../../AppInner';
 
 type Props = NativeStackScreenProps<LoggedInParamList, 'ResumePreview'>;
@@ -121,15 +120,16 @@ const ResumePreviewScreen = ({route, navigation}: Props) => {
   };
 
   return (
-    <SafeAreaView edges={['bottom', 'left', 'right']} style={styles.container}>
-      <ScrollView showsVerticalScrollIndicator={false}>
+    <SafeAreaView edges={['left', 'right']} style={styles.container}>
+      <ScrollView
+        showsVerticalScrollIndicator={false}
+        contentContainerStyle={{margin: 16, paddingBottom: 32}}>
         {applyResult !== 'APPLY' &&
           applyResult !== 'PASS' &&
           resume.isMaster === 'Y' && <Chip label="대표" />}
         <View style={common.mb24}>
           <Text style={common.title_l}>{resume.title}</Text>
         </View>
-        {/* 인적사항 */}
         <View style={common.mb24}>
           <View style={[common.rowCenter, common.mb8]}>
             <Text style={[common.title, common.mr8]}>{resume.name}</Text>
@@ -138,7 +138,6 @@ const ResumePreviewScreen = ({route, navigation}: Props) => {
                 <Text style={[common.text_s, {color: BLUE.DEFAULT}]}>
                   인증강사
                 </Text>
-
                 <Image
                   style={{marginLeft: 2, width: 14, height: 14}}
                   source={iconPath.CERTIFICATION}
@@ -306,7 +305,6 @@ const ResumePreviewScreen = ({route, navigation}: Props) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    padding: 16,
     backgroundColor: WHITE,
   },
   box: {

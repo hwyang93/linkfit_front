@@ -1,7 +1,6 @@
 import FloatingActionButton from '@/components/Common/FloatingActionButton';
 import InstructorListItem from '@/components/Compound/InstructorListItem';
 import useExitAlert from '@/hooks/useExitAlert';
-import useQuery from '@/hooks/useQuery';
 import {iconPath} from '@/utils/iconPath';
 import {fetchRecommendedInstructors} from '@api/instructor';
 import LinkTop from '@components/LinkTop';
@@ -10,20 +9,26 @@ import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import {WHITE} from '@styles/colors';
 import common from '@styles/common';
 import {isAxiosError} from 'axios';
+import {useEffect, useState} from 'react';
 import {FlatList, StyleSheet, View} from 'react-native';
 import {LoggedInParamList} from '../../../AppInner';
 
 type Props = NativeStackScreenProps<LoggedInParamList, 'Link'>;
 
 const LinkScreen = ({navigation}: Props) => {
-  const {data: instructors} = useQuery({
-    queryFn: () => fetchRecommendedInstructors().then(res => res.data),
-    onError: error => {
-      if (isAxiosError(error)) {
-        toast.error({message: error.message});
-      }
-    },
-  });
+  const [instructors, setInstructors] = useState<any[]>([]);
+
+  useEffect(() => {
+    fetchRecommendedInstructors()
+      .then(({data}) => {
+        setInstructors(data);
+      })
+      .catch(error => {
+        if (isAxiosError(error)) {
+          toast.error({message: error.message});
+        }
+      });
+  }, []);
 
   useExitAlert();
 
