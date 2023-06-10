@@ -25,6 +25,7 @@ const BottomSheetOption: React.FC<Props> = ({
         justifyContent: 'space-between',
         marginHorizontal: 16,
         paddingVertical: 16,
+        height: 56,
       }}
       onPress={onPress}>
       <View style={{flexDirection: 'row', alignItems: 'center'}}>
@@ -32,6 +33,7 @@ const BottomSheetOption: React.FC<Props> = ({
         <Text
           style={[
             {fontSize: 18, marginLeft: leftIcon ? 10 : 0},
+            {fontWeight: selected ? '700' : '400'},
             selected && {color: THEME.PRIMARY},
           ]}>
           {label}

@@ -4,7 +4,7 @@ import FilterChip from '@/components/Common/FilterChip';
 import FilterChipContainer from '@/components/Common/FilterChipContainer';
 import useModal from '@/hooks/useModal';
 import {FetchRecruitsResponse} from '@/types/api/recruit';
-import {FilterState, YesNoFlag} from '@/types/common';
+import {YesNoFlag} from '@/types/common';
 import FILTER from '@/utils/constants/filter';
 import {iconPath} from '@/utils/iconPath';
 import {formatDate} from '@/utils/util';
@@ -70,9 +70,10 @@ type Props = NativeStackScreenProps<LoggedInParamList, 'MyPost'>;
 const MyRecruitmentScreen = ({navigation}: Props) => {
   const [recruits, setRecruits] = useState<FetchRecruitsResponse>([]);
 
-  const [periodFilter, setPeriodFilter] = useState<FilterState | null>(null);
-  const [progressionFilter, setProgressionFilter] =
-    useState<FilterState | null>(null);
+  const [periodFilter, setPeriodFilter] = useState<string | null>(null);
+  const [progressionFilter, setProgressionFilter] = useState<string | null>(
+    null,
+  );
 
   const {
     modalVisible: periodModalVisible,
@@ -103,12 +104,12 @@ const MyRecruitmentScreen = ({navigation}: Props) => {
       });
   }, []);
 
-  const handlePeriodOptionPress = (option: FilterState) => {
+  const handlePeriodOptionPress = (option: string) => {
     setPeriodFilter(option);
     closePeriodModal();
   };
 
-  const handleProgressionOptionPress = (option: FilterState) => {
+  const handleProgressionOptionPress = (option: string) => {
     setProgressionFilter(option);
     closeProgressionModal();
   };
@@ -126,12 +127,9 @@ const MyRecruitmentScreen = ({navigation}: Props) => {
   return (
     <SafeAreaView edges={['left', 'right']} style={styles.container}>
       <FilterChipContainer>
+        <FilterChip label={periodFilter || '기간'} onPress={openPeriodModal} />
         <FilterChip
-          label={periodFilter?.label || '기간'}
-          onPress={openPeriodModal}
-        />
-        <FilterChip
-          label={progressionFilter?.label || '진행 상태'}
+          label={progressionFilter || '진행 상태'}
           onPress={openProgressionModal}
         />
       </FilterChipContainer>
@@ -157,7 +155,7 @@ const MyRecruitmentScreen = ({navigation}: Props) => {
         {FILTER.PERIOD.map((option, index) => (
           <BottomSheetOption
             key={index}
-            label={option.label}
+            label={option}
             onPress={() => handlePeriodOptionPress(option)}
           />
         ))}
@@ -169,7 +167,7 @@ const MyRecruitmentScreen = ({navigation}: Props) => {
         {FILTER.PROGRESSION.map((option, index) => (
           <BottomSheetOption
             key={index}
-            label={option.label}
+            label={option}
             onPress={() => handleProgressionOptionPress(option)}
           />
         ))}

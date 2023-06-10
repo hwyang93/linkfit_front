@@ -5,40 +5,24 @@ import FabContainer from '@/components/Common/FabContainer';
 import FilterChip from '@/components/Common/FilterChip';
 import FilterChipContainer from '@/components/Common/FilterChipContainer';
 import FloatingActionButton from '@/components/Common/FloatingActionButton';
-import Icon from '@/components/Common/Icon';
 import RecruitListItem from '@/components/Compound/RecruitListItem';
+import PositionFilterModal from '@/components/Modal/PositionFilterModal';
+import RecruitTypeFilterModal from '@/components/Modal/RecruitTypeFilterModal';
+import TimeFilterModal from '@/components/Modal/TimeFilterModal';
 import useModal from '@/hooks/useModal';
 import THEME from '@/styles/theme';
 import {FetchRecruitsResponse} from '@/types/api/recruit';
-import FILTER from '@/utils/constants/filter';
 import {iconPath} from '@/utils/iconPath';
+import {getFilterChipLabel} from '@/utils/util';
 import {fetchRecruits} from '@api/recruit';
 import toast from '@hooks/toast';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import common from '@styles/common';
 import {isAxiosError} from 'axios';
 import {useCallback, useEffect, useState} from 'react';
-import {
-  FlatList,
-  ImageSourcePropType,
-  StyleSheet,
-  Text,
-  View,
-} from 'react-native';
+import {FlatList, StyleSheet, Text, View} from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {LoggedInParamList} from '../../AppInner';
-
-const positionOptionIcon: {[key: string]: ImageSourcePropType} = {
-  전체: iconPath.LINK,
-  필라테스: iconPath.PILATES,
-  요가: iconPath.YOGA,
-};
-
-const selectedPositionOptionIcon: {[key: string]: ImageSourcePropType} = {
-  전체: iconPath.LINK_ON,
-  필라테스: iconPath.PILATES_ON,
-  요가: iconPath.YOGA_ON,
-};
 
 type Props = NativeStackScreenProps<LoggedInParamList, 'RecruitList'>;
 
@@ -51,7 +35,7 @@ const RecruitListScreen = ({navigation}: Props) => {
   const [recruitTypeFilterValueList, setRecruitTypeFilterValueList] = useState<
     string[]
   >([]);
-  const [timeFilterValueList, setTimeFilterValueList] = useState([]);
+  const [timeFilterValueList, setTimeFilterValueList] = useState<string[]>([]);
 
   const {
     modalVisible: positionModalVisible,
@@ -76,7 +60,7 @@ const RecruitListScreen = ({navigation}: Props) => {
     closeModal: closeViewModal,
   } = useModal();
 
-  const showResetChip =
+  const resetChipVisible =
     positionFilterValueList.length > 0 ||
     recruitTypeFilterValueList.length > 0 ||
     timeFilterValueList.length > 0;
@@ -87,18 +71,18 @@ const RecruitListScreen = ({navigation}: Props) => {
     setTimeFilterValueList([]);
   };
 
-  const handlePositionFilterApply = () => {
-    setPositionFilterValueList([]);
+  const handlePositionFilterApply = (selectedOptions: string[]) => {
+    setPositionFilterValueList(selectedOptions);
     closePositionModal();
   };
 
-  const handleRecruitTypeFilterApply = () => {
-    setRecruitTypeFilterValueList([]);
+  const handleRecruitTypeFilterApply = (selectedOptions: string[]) => {
+    setRecruitTypeFilterValueList(selectedOptions);
     closeRecruitTypeModal();
   };
 
-  const handleTimeFilterApply = () => {
-    setTimeFilterValueList([]);
+  const handleTimeFilterApply = (selectedOptions: string[]) => {
+    setTimeFilterValueList(selectedOptions);
     closeTimeModal();
   };
 
@@ -135,7 +119,7 @@ const RecruitListScreen = ({navigation}: Props) => {
   return (
     <SafeAreaView edges={['bottom', 'left', 'right']} style={styles.container}>
       <FilterChipContainer>
-        {showResetChip && (
+        {resetChipVisible && (
           <FilterChip
             variant="reset"
             label="초기화"
@@ -145,20 +129,20 @@ const RecruitListScreen = ({navigation}: Props) => {
         )}
         <FilterChip
           active={positionFilterValueList.length > 0}
-          label="포지션"
+          label={getFilterChipLabel(positionFilterValueList, '포지션')}
           rightIcon
           onPress={openPositionModal}
         />
         <FilterChip
           active={recruitTypeFilterValueList.length > 0}
-          label="채용형태"
+          label={getFilterChipLabel(recruitTypeFilterValueList, '구인형태')}
           style={{marginLeft: 8}}
           rightIcon
           onPress={openRecruitTypeModal}
         />
         <FilterChip
           active={timeFilterValueList.length > 0}
-          label="수업시간"
+          label={getFilterChipLabel(timeFilterValueList, '수업시간')}
           style={{marginLeft: 8}}
           rightIcon
           onPress={openTimeModal}
@@ -219,68 +203,24 @@ const RecruitListScreen = ({navigation}: Props) => {
           onPress={() => navigation.navigate('RecruitMap')}
         /> */}
       </FabContainer>
-      <BottomSheet
+      <PositionFilterModal
         visible={positionModalVisible}
         onDismiss={closePositionModal}
-        title="포지션">
-        {FILTER.FIELD.map((option, index) => (
-          <BottomSheetOption
-            key={index}
-            label={option.label}
-            selected={positionFilterValueList.includes(option.value)}
-            leftIcon={
-              <Icon
-                source={
-                  positionFilterValueList.includes(option.value)
-                    ? selectedPositionOptionIcon[option.label]
-                    : positionOptionIcon[option.label]
-                }
-              />
-            }
-            onPress={closePositionModal}
-          />
-        ))}
-        <CTAButton
-          style={{marginHorizontal: 16, marginTop: 32}}
-          label="필터 적용"
-          onPress={handlePositionFilterApply}
-        />
-      </BottomSheet>
-      <BottomSheet
+        iniitalOptions={positionFilterValueList}
+        onApply={handlePositionFilterApply}
+      />
+      <RecruitTypeFilterModal
         visible={recruitTypeModalVisible}
         onDismiss={closeRecruitTypeModal}
-        title="채용형태">
-        {FILTER.RECRUIT_TYPE.map((option, index) => (
-          <BottomSheetOption
-            key={index}
-            label={option.label}
-            selected={recruitTypeFilterValueList.includes(option.value)}
-            onPress={closeRecruitTypeModal}
-          />
-        ))}
-        <CTAButton
-          style={{marginHorizontal: 16, marginTop: 32}}
-          label="필터 적용"
-          onPress={handleRecruitTypeFilterApply}
-        />
-      </BottomSheet>
-      <BottomSheet
+        iniitalOptions={recruitTypeFilterValueList}
+        onApply={handleRecruitTypeFilterApply}
+      />
+      <TimeFilterModal
         visible={timeModalVisible}
         onDismiss={closeTimeModal}
-        title="수업시간">
-        {FILTER.TIME.map((option, index) => (
-          <BottomSheetOption
-            key={index}
-            label={option.label}
-            onPress={closeTimeModal}
-          />
-        ))}
-        <CTAButton
-          style={{marginHorizontal: 16, marginTop: 32}}
-          label="필터 적용"
-          onPress={handleTimeFilterApply}
-        />
-      </BottomSheet>
+        iniitalOptions={timeFilterValueList}
+        onApply={handleTimeFilterApply}
+      />
       <BottomSheet
         visible={viewModalVisible}
         onDismiss={closeViewModal}

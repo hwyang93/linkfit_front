@@ -7,7 +7,6 @@ import IconButton from '@/components/Common/IconButton';
 import toast from '@/hooks/toast';
 import useModal from '@/hooks/useModal';
 import {FetchRecruitApplicationsMyResponse} from '@/types/api/recruit';
-import {FilterState} from '@/types/common';
 import {SCREEN_WIDTH} from '@/utils/constants/common';
 import FILTER from '@/utils/constants/filter';
 import {iconPath} from '@/utils/iconPath';
@@ -90,8 +89,8 @@ const ApplicationStatusScreen = ({navigation}: Props) => {
   const [applications, setApplications] =
     useState<FetchRecruitApplicationsMyResponse>([]);
 
-  const [periodFilter, setPeriodFilter] = useState<FilterState | null>(null);
-  const [statusFilter, setStatusFilter] = useState<FilterState | null>(null);
+  const [periodFilter, setPeriodFilter] = useState<string | null>(null);
+  const [statusFilter, setStatusFilter] = useState<string | null>(null);
 
   const {
     modalVisible: periodModalVisible,
@@ -111,12 +110,12 @@ const ApplicationStatusScreen = ({navigation}: Props) => {
     });
   };
 
-  const handlePeriodOptionPress = (option: {label: string; value: string}) => {
+  const handlePeriodOptionPress = (option: string) => {
     setPeriodFilter(option);
     closePeriodModal();
   };
 
-  const handleStatusOptionPress = (option: {label: string; value: string}) => {
+  const handleStatusOptionPress = (option: string) => {
     setStatusFilter(option);
     closeStatusModal();
   };
@@ -135,13 +134,13 @@ const ApplicationStatusScreen = ({navigation}: Props) => {
     <SafeAreaView edges={['left', 'right']} style={styles.container}>
       <FilterChipContainer>
         <FilterChip
-          label={periodFilter?.label || '기간'}
+          label={periodFilter || '기간'}
           style={{marginRight: 8}}
           rightIcon
           onPress={openPeriodModal}
         />
         <FilterChip
-          label={statusFilter?.label || '지원 상태'}
+          label={statusFilter || '지원 상태'}
           rightIcon
           onPress={openStatusModal}
         />
@@ -178,8 +177,8 @@ const ApplicationStatusScreen = ({navigation}: Props) => {
             {FILTER.PERIOD.map((option, index) => (
               <BottomSheetOption
                 key={index}
-                label={option.label}
-                selected={periodFilter?.value === option.value}
+                label={option}
+                selected={periodFilter === option}
                 onPress={() => handlePeriodOptionPress(option)}
               />
             ))}
@@ -193,7 +192,7 @@ const ApplicationStatusScreen = ({navigation}: Props) => {
             {FILTER.STATUS.map((option, index) => (
               <BottomSheetOption
                 key={index}
-                label={option.label}
+                label={option}
                 selected={statusFilter === option}
                 onPress={() => handleStatusOptionPress(option)}
               />
