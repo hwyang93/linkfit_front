@@ -171,7 +171,7 @@ const JobOfferFormScreen = ({navigation}: Props) => {
 
   return (
     <DismissKeyboardView>
-      <View style={{margin: 16, marginBottom: 0}}>
+      <View style={{margin: 16, marginBottom: 32}}>
         {/*이미지 올리기 임시 주석처리*/}
         {/*<Pressable style={[styles.photoBox, common.mb16]} onPress={openPicker}>*/}
         {/*  <Image source={iconPath.PHOTO} style={[common.size24]} />*/}
