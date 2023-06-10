@@ -6,7 +6,8 @@ const FilterChipContainer: React.FC<PropsWithChildren> = ({children}) => {
     <View>
       <ScrollView
         horizontal
-        contentContainerStyle={{marginHorizontal: 16, marginVertical: 8}}>
+        contentContainerStyle={{paddingHorizontal: 16, marginVertical: 8}}
+        showsHorizontalScrollIndicator={false}>
         {children}
       </ScrollView>
     </View>
