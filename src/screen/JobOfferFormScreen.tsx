@@ -11,7 +11,7 @@ import TimeComponent from '@components/Offer/TimeComponent';
 import SelectBox from '@components/SelectBox';
 import toast from '@hooks/toast';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
-import {GRAY, WHITE} from '@styles/colors';
+import {GRAY} from '@styles/colors';
 import common from '@styles/common';
 import {useCallback, useState} from 'react';
 import {Image, Pressable, StyleSheet, Text, View} from 'react-native';
@@ -171,7 +171,7 @@ const JobOfferFormScreen = ({navigation}: Props) => {
 
   return (
     <DismissKeyboardView>
-      <View style={{margin: 16}}>
+      <View style={{margin: 16, marginBottom: 0}}>
         {/*이미지 올리기 임시 주석처리*/}
         {/*<Pressable style={[styles.photoBox, common.mb16]} onPress={openPicker}>*/}
         {/*  <Image source={iconPath.PHOTO} style={[common.size24]} />*/}
@@ -341,8 +341,8 @@ const JobOfferFormScreen = ({navigation}: Props) => {
             </View>
             <View style={common.mb8}>
               <SearchAddressInput
-                label={'업체 주소'}
-                onChangeAddress={data => setCompanyAddressInfo(data)}
+                label="업체 주소"
+                onChangeAddress={setCompanyAddressInfo}
                 value={address}
                 keyboardType={KeyboardTypes.DEFAULT}
               />
@@ -376,11 +376,6 @@ const JobOfferFormScreen = ({navigation}: Props) => {
 };
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    padding: 16,
-    backgroundColor: WHITE,
-  },
   photoBox: {
     alignItems: 'center',
     justifyContent: 'center',

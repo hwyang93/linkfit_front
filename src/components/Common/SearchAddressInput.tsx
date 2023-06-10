@@ -20,11 +20,7 @@ import {
 import Icon from './Icon';
 
 interface SearchAddressInputProps extends TextInputProps {
-  label?: string;
-  secureTextEntry?: boolean;
-  propStyles?: {
-    inputWrapper?: object;
-  };
+  label: string;
   comment?: boolean;
   icon?: string;
   onChangeAddress: ({
@@ -38,7 +34,6 @@ interface SearchAddressInputProps extends TextInputProps {
 
 const SearchAddressInput: React.FC<SearchAddressInputProps> = ({
   label,
-  propStyles,
   comment,
   icon,
   onChangeAddress,
@@ -75,7 +70,7 @@ const SearchAddressInput: React.FC<SearchAddressInputProps> = ({
   return (
     <View>
       <Pressable onPress={openModal}>
-        <View style={[common.inputWrapper, propStyles?.inputWrapper]}>
+        <View style={common.inputWrapper}>
           <Text style={[common.label]}>{label}</Text>
           <TextInput
             style={[
