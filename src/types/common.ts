@@ -34,3 +34,8 @@ export type StatusFilter =
   | '열람'
   | '합격'
   | '불합격';
+
+export type Coordinate = {
+  x: number;
+  y: number;
+};

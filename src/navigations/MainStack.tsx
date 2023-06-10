@@ -54,16 +54,17 @@ import RecruitMapScreen from '@screen/RecruitMapScreen';
 import SuggestionScreen from '@screen/SuggestionScreen';
 import {WHITE} from '@styles/colors';
 import common from '@styles/common';
-import {SetStateAction, useState} from 'react';
+import {useState} from 'react';
 import {Alert, Image, Pressable} from 'react-native';
 import {LoggedInParamList} from '../../AppInner';
 
 const Stack = createNativeStackNavigator<LoggedInParamList>();
 
 const MainStack = () => {
-  const [modalVisible, setModalVisible] =
-    useState<SetStateAction<boolean>>(false);
+  const [modalVisible, setModalVisible] = useState(false);
+
   const navigation = useNavigation<NavigationProp<LoggedInParamList>>();
+
   return (
     <Stack.Navigator
       initialRouteName={'ContentTab'}

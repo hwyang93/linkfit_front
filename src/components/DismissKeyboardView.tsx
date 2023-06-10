@@ -14,10 +14,11 @@ interface DismissKeyboardViewProps {
 
 const DismissKeyboardView: React.FC<DismissKeyboardViewProps> = ({
   children,
+  style,
   ...props
 }) => (
   <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
-    <KeyboardAwareScrollView {...props} style={props.style}>
+    <KeyboardAwareScrollView style={style} {...props}>
       {children}
     </KeyboardAwareScrollView>
   </TouchableWithoutFeedback>

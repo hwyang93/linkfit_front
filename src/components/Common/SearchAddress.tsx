@@ -1,11 +1,12 @@
 import Postcode from '@actbase/react-daum-postcode';
+import {OnCompleteParams} from '@actbase/react-daum-postcode/lib/types';
 
 interface SearchAddress {
-  onSelectAddress: Function;
+  onSelectAddress: (data: OnCompleteParams) => void;
 }
 
 const SearchAddress: React.FC<SearchAddress> = ({onSelectAddress}) => {
-  const onSelect = (data: any) => {
+  const onSelect = (data: OnCompleteParams) => {
     onSelectAddress(data);
   };
   return (

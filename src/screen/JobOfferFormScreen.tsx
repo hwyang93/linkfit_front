@@ -1,5 +1,6 @@
 import CTAButton from '@/components/Common/CTAButton';
 import {useAppSelector} from '@/store';
+import {Coordinate} from '@/types/common';
 import {SCREEN_WIDTH} from '@/utils/constants/common';
 import {iconPath} from '@/utils/iconPath';
 import {createRecruit} from '@api/recruit';
@@ -14,7 +15,6 @@ import {GRAY, WHITE} from '@styles/colors';
 import common from '@styles/common';
 import {useCallback, useState} from 'react';
 import {Image, Pressable, StyleSheet, Text, View} from 'react-native';
-import {SafeAreaView} from 'react-native-safe-area-context';
 import {LoggedInParamList} from '../../AppInner';
 
 const POSITION = ['실장', '필라테스', '요가'];
@@ -101,16 +101,23 @@ const JobOfferFormScreen = ({navigation}: Props) => {
     newDate[0].time = time;
     setDateForm(newDate);
   };
+
   const handleAddDates = (value: string, type: string, index: number) => {
     const newDates = dateForm;
     newDates[index][type] = value;
     setDateForm(newDates);
   };
 
-  const setCompanyAddressInfo = (data: any) => {
+  const setCompanyAddressInfo = (data: {
+    address: string;
+    coordinate: Coordinate | null;
+  }) => {
     setAddress(data.address);
-    setLat(data.coordinate?.y);
-    setLon(data.coordinate?.x);
+
+    if (data.coordinate) {
+      setLat(data.coordinate.y);
+      setLon(data.coordinate.x);
+    }
   };
 
   const onCreateRecruit = useCallback(() => {
@@ -134,6 +141,7 @@ const JobOfferFormScreen = ({navigation}: Props) => {
       lat: lat,
       dates: dateForm,
     };
+
     createRecruit(data)
       .then(() => {
         toast.success({message: '채용 공고 등록이 완료되었어요!'});
@@ -162,229 +170,211 @@ const JobOfferFormScreen = ({navigation}: Props) => {
   ]);
 
   return (
-    <SafeAreaView edges={['bottom']} style={{flex: 1, marginHorizontal: 16}}>
-      <DismissKeyboardView>
-        <View>
-          {/*이미지 올리기 임시 주석처리*/}
-          {/*<Pressable style={[styles.photoBox, common.mb16]} onPress={openPicker}>*/}
-          {/*  <Image source={iconPath.PHOTO} style={[common.size24]} />*/}
-          {/*  <Text style={common.text_s}>0/5</Text>*/}
-          {/*</Pressable>*/}
-
-          {/* 글 제목 */}
-          <View style={common.mb16}>
-            <Input
-              label={'글 제목'}
-              onChangeText={(text: string) => setOfferTitle(text)}
-              value={offerTitle}
-              placeholder={'공고 제목을 입력하세요.'}
-              keyboardType={KeyboardTypes.DEFAULT}
-              editable={true}
-            />
-          </View>
-          {/* 채용 포지션 */}
-          <View style={common.mb16}>
-            <SelectBox
-              label={'채용 포지션'}
-              data={POSITION}
-              onSelect={(value: any) => setPosition(value)}
-              defaultButtonText={'채용 포지션'}
-            />
-          </View>
-
-          {/* 요가, 필라테스의 경우 표시 */}
-          {position === '실장' || position === '' ? null : (
-            <View style={common.mb16}>
-              <SelectBox
-                label={'채용 형태'}
-                data={RECRUIT_TYPE}
-                onSelect={(value: any) => setRecruitType(value)}
-                defaultButtonText={'채용 형태'}
-              />
-            </View>
-          )}
-
-          {/* 학력 */}
-          <View style={common.mb16}>
-            <SelectBox
-              label={'학력'}
-              data={EDUCATION}
-              onSelect={(value: any) => setEducation(value)}
-              defaultButtonText={'학력을 선택하세요.'}
-            />
-          </View>
-
-          {/* 경력 */}
-          <View style={common.mb16}>
-            <SelectBox
-              label={'경력'}
-              data={CAREER}
-              onSelect={(value: any) => setCareer(value)}
-              defaultButtonText={'경력을 선택하세요.'}
-            />
-          </View>
-
-          {/* 날짜 선택 조건 */}
-          {/* 포지션이 실장일 경우 */}
-          {position === '' || position === '실장' ? (
-            <View style={common.mb16}>
-              <SelectBox
-                label={'시간'}
-                data={TIME}
-                onSelect={(value: any) => setDateForm([{day: '', time: value}])}
-                defaultButtonText={'시간을 선택하세요.'}
-              />
-            </View>
-          ) : (
-            <>
-              {recruitType !== '대강' ? (
-                <>
-                  <View style={common.mb16}>
-                    <Input
-                      label={'요일'}
-                      onChangeText={(item: any) => setDay(item)}
-                      value={day}
-                      icon={'day'}
-                      placeholder={'요일을 선택하세요.'}
-                      keyboardType={KeyboardTypes.DEFAULT}
-                      textAlign={'right'}
-                      editable={false}
-                    />
-                  </View>
-                  <View style={[common.mb16, common.row]}>
-                    {DAY.map((item, index) => {
-                      return (
-                        <Pressable
-                          key={index}
-                          onPress={() => handleDaySelection(index)}
-                          style={[
-                            styles.dateItem,
-                            item.selected && {backgroundColor: '#d7e0fd'},
-                          ]}>
-                          <Text style={[common.text_m, {color: '#292929'}]}>
-                            {item.value}
-                          </Text>
-                        </Pressable>
-                      );
-                    })}
-                  </View>
-                  <View style={common.mb16}>
-                    <SelectBox
-                      label={'시간'}
-                      data={TIME2}
-                      onSelect={(value: any) => handleTimeSelection(value)}
-                      defaultButtonText={'선택한 요일의 시간을 선택하세요.'}
-                    />
-                  </View>
-                </>
-              ) : (
-                <>
-                  {dateForm.map((item: any, index: number) => {
-                    return (
-                      <View key={'dateFrom' + index}>
-                        <TimeComponent
-                          onSelectDay={(value: string) =>
-                            handleAddDates(value, 'day', index)
-                          }
-                          onSelectTime={(value: string) =>
-                            handleAddDates(value, 'time', index)
-                          }
-                        />
-                      </View>
-                    );
-                  })}
-
-                  {/* 추가 버튼 */}
-                  {dateForm.length < 3 ? (
-                    <View style={common.mb16}>
-                      <Pressable
-                        style={{alignSelf: 'center'}}
-                        onPress={addTimetable}>
-                        <Image
-                          source={iconPath.ADD_BUTTON}
-                          style={common.size40}
-                        />
-                      </Pressable>
-                    </View>
-                  ) : null}
-                </>
-              )}
-            </>
-          )}
-
-          {/* 급여 형태 */}
-          <View style={common.mb16}>
-            <SelectBox
-              label={'급여 형태'}
-              data={PAY_TYPE}
-              onSelect={(value: any) => setPayType(value)}
-              defaultButtonText={'급여 형태를 선택하세요.'}
-            />
-          </View>
-          {/* 급여 */}
-          <View style={common.mb16}>
-            <Input
-              label={'급여'}
-              onChangeText={(text: string) => setPay(text)}
-              value={pay}
-              placeholder={'급여를 입력하세요.'}
-              keyboardType={KeyboardTypes.DEFAULT}
-              editable={true}
-            />
-          </View>
-
-          {memberInfo.type !== 'COMPANY' && (
-            <View>
-              <View style={common.mb16}>
-                <Input
-                  label={'업체명'}
-                  onChangeText={(text: string) => setCompanyName(text)}
-                  value={companyName}
-                  placeholder={'업체명을 입력하세요.'}
-                  keyboardType={KeyboardTypes.DEFAULT}
-                  editable={true}
-                />
-              </View>
-              <View style={common.mb8}>
-                <SearchAddressInput
-                  label={'업체 주소'}
-                  onChangeText={(data: any) => setCompanyAddressInfo(data)}
-                  value={address}
-                  keyboardType={KeyboardTypes.DEFAULT}
-                />
-              </View>
-              <View style={common.mb16}>
-                <Input
-                  onChangeText={(text: string) => setAddressDetail(text)}
-                  value={addressDetail}
-                  placeholder={'상세 주소를 입력하세요.'}
-                  keyboardType={KeyboardTypes.DEFAULT}
-                  editable={true}
-                />
-              </View>
-            </View>
-          )}
-
-          {/* 상세 정보 */}
-          <View style={common.mb16}>
-            <Input
-              label={'상세 정보'}
-              onChangeText={(text: string) => setContent(text)}
-              value={content}
-              placeholder={'상세 정보를 작성해주세요.'}
-              keyboardType={KeyboardTypes.DEFAULT}
-              editable={true}
-              multiline={true}
-            />
-          </View>
-
-          {/* 채용 공고 등록 버튼 */}
+    <DismissKeyboardView>
+      <View style={{margin: 16}}>
+        {/*이미지 올리기 임시 주석처리*/}
+        {/*<Pressable style={[styles.photoBox, common.mb16]} onPress={openPicker}>*/}
+        {/*  <Image source={iconPath.PHOTO} style={[common.size24]} />*/}
+        {/*  <Text style={common.text_s}>0/5</Text>*/}
+        {/*</Pressable>*/}
+        <View style={common.mb16}>
+          <Input
+            label={'글 제목'}
+            onChangeText={(text: string) => setOfferTitle(text)}
+            value={offerTitle}
+            placeholder={'공고 제목을 입력하세요.'}
+            keyboardType={KeyboardTypes.DEFAULT}
+            editable={true}
+          />
         </View>
-      </DismissKeyboardView>
-      <CTAButton label="채용 공고 등록" onPress={onCreateRecruit} />
-    </SafeAreaView>
+        <View style={common.mb16}>
+          <SelectBox
+            label={'채용 포지션'}
+            data={POSITION}
+            onSelect={(value: any) => setPosition(value)}
+            defaultButtonText={'채용 포지션'}
+          />
+        </View>
+        {/* 요가, 필라테스의 경우 표시 */}
+        {position === '실장' || position === '' ? null : (
+          <View style={common.mb16}>
+            <SelectBox
+              label={'채용 형태'}
+              data={RECRUIT_TYPE}
+              onSelect={(value: any) => setRecruitType(value)}
+              defaultButtonText={'채용 형태'}
+            />
+          </View>
+        )}
+        <View style={common.mb16}>
+          <SelectBox
+            label={'학력'}
+            data={EDUCATION}
+            onSelect={(value: any) => setEducation(value)}
+            defaultButtonText={'학력을 선택하세요.'}
+          />
+        </View>
+        <View style={common.mb16}>
+          <SelectBox
+            label={'경력'}
+            data={CAREER}
+            onSelect={(value: any) => setCareer(value)}
+            defaultButtonText={'경력을 선택하세요.'}
+          />
+        </View>
+        {/* 날짜 선택 조건 */}
+        {/* 포지션이 실장일 경우 */}
+        {position === '' || position === '실장' ? (
+          <View style={common.mb16}>
+            <SelectBox
+              label={'시간'}
+              data={TIME}
+              onSelect={(value: any) => setDateForm([{day: '', time: value}])}
+              defaultButtonText={'시간을 선택하세요.'}
+            />
+          </View>
+        ) : (
+          <>
+            {recruitType !== '대강' ? (
+              <>
+                <View style={common.mb16}>
+                  <Input
+                    label={'요일'}
+                    onChangeText={(item: any) => setDay(item)}
+                    value={day}
+                    icon={'day'}
+                    placeholder={'요일을 선택하세요.'}
+                    keyboardType={KeyboardTypes.DEFAULT}
+                    textAlign={'right'}
+                    editable={false}
+                  />
+                </View>
+                <View style={[common.mb16, common.row]}>
+                  {DAY.map((item, index) => (
+                    <Pressable
+                      key={index}
+                      onPress={() => handleDaySelection(index)}
+                      style={[
+                        styles.dateItem,
+                        item.selected && {backgroundColor: '#d7e0fd'},
+                      ]}>
+                      <Text style={[common.text_m, {color: '#292929'}]}>
+                        {item.value}
+                      </Text>
+                    </Pressable>
+                  ))}
+                </View>
+                <View style={common.mb16}>
+                  <SelectBox
+                    label={'시간'}
+                    data={TIME2}
+                    onSelect={(value: any) => handleTimeSelection(value)}
+                    defaultButtonText={'선택한 요일의 시간을 선택하세요.'}
+                  />
+                </View>
+              </>
+            ) : (
+              <>
+                {dateForm.map((_, index: number) => (
+                  <View key={'dateFrom' + index}>
+                    <TimeComponent
+                      onSelectDay={(value: string) =>
+                        handleAddDates(value, 'day', index)
+                      }
+                      onSelectTime={(value: string) =>
+                        handleAddDates(value, 'time', index)
+                      }
+                    />
+                  </View>
+                ))}
+
+                {/* 추가 버튼 */}
+                {dateForm.length < 3 ? (
+                  <View style={common.mb16}>
+                    <Pressable
+                      style={{alignSelf: 'center'}}
+                      onPress={addTimetable}>
+                      <Image
+                        source={iconPath.ADD_BUTTON}
+                        style={common.size40}
+                      />
+                    </Pressable>
+                  </View>
+                ) : null}
+              </>
+            )}
+          </>
+        )}
+
+        {/* 급여 형태 */}
+        <View style={common.mb16}>
+          <SelectBox
+            label={'급여 형태'}
+            data={PAY_TYPE}
+            onSelect={(value: any) => setPayType(value)}
+            defaultButtonText={'급여 형태를 선택하세요.'}
+          />
+        </View>
+        {/* 급여 */}
+        <View style={common.mb16}>
+          <Input
+            label={'급여'}
+            onChangeText={(text: string) => setPay(text)}
+            value={pay}
+            placeholder={'급여를 입력하세요.'}
+            keyboardType={KeyboardTypes.DEFAULT}
+            editable={true}
+          />
+        </View>
+
+        {memberInfo.type !== 'COMPANY' && (
+          <View>
+            <View style={common.mb16}>
+              <Input
+                label={'업체명'}
+                onChangeText={(text: string) => setCompanyName(text)}
+                value={companyName}
+                placeholder={'업체명을 입력하세요.'}
+                keyboardType={KeyboardTypes.DEFAULT}
+                editable={true}
+              />
+            </View>
+            <View style={common.mb8}>
+              <SearchAddressInput
+                label={'업체 주소'}
+                onChangeAddress={data => setCompanyAddressInfo(data)}
+                value={address}
+                keyboardType={KeyboardTypes.DEFAULT}
+              />
+            </View>
+            <View style={common.mb16}>
+              <Input
+                onChangeText={(text: string) => setAddressDetail(text)}
+                value={addressDetail}
+                placeholder={'상세 주소를 입력하세요.'}
+                keyboardType={KeyboardTypes.DEFAULT}
+                editable={true}
+              />
+            </View>
+          </View>
+        )}
+        <View style={common.mb16}>
+          <Input
+            label={'상세 정보'}
+            onChangeText={(text: string) => setContent(text)}
+            value={content}
+            placeholder={'상세 정보를 작성해주세요.'}
+            keyboardType={KeyboardTypes.DEFAULT}
+            editable={true}
+            multiline={true}
+          />
+        </View>
+        <CTAButton label="채용 공고 등록" onPress={onCreateRecruit} />
+      </View>
+    </DismissKeyboardView>
   );
 };
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
