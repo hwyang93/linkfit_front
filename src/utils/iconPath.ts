@@ -85,4 +85,5 @@ export const iconPath = {
   SEARCH: require('@images/icon/search.png'),
   CHEVRON_UP: require('@images/icon/chevron_up.png'),
   CHEVRON_DOWN: require('@images/icon/chevron_down.png'),
+  CHEVRON_RIGHT: require('@images/icon/chevron_right.png'),
 };
