@@ -130,6 +130,7 @@ export interface ResumeEntity extends BaseEntity {
   educations: EducationEntity[];
   licence: MemberLicenceEntity;
   writer: MemberEntity;
+  isSelected: boolean;
 }
 
 export interface CareerEntity extends BaseEntity {
@@ -241,6 +242,8 @@ export interface RecruitDateEntity extends BaseEntity {
   seq: number;
   day: string;
   time: string;
+  isSelected: boolean;
+  isApplied: boolean;
   recruitSeq: number;
   recruit: RecruitEntity;
 }
@@ -276,6 +279,7 @@ export interface RecruitEntity extends BaseEntity {
   dates: RecruitDateEntity[];
   bookmarks: RecruitFavoriteEntity[];
   isBookmark: YesNoFlag;
+  applyInfo?: RecruitApplyEntity[];
 }
 
 export interface RecruitApplyEntity extends BaseEntity {

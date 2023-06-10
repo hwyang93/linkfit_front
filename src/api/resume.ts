@@ -1,3 +1,4 @@
+import {FetchResumesResponse} from '@/types/api/resume';
 import request from '@api/request';
 
 export const createResume = (data: object) => {
@@ -5,7 +6,7 @@ export const createResume = (data: object) => {
 };
 
 export const fetchResumes = () => {
-  return request.get('/resume');
+  return request.get<FetchResumesResponse>('/resume');
 };
 
 export const fetchResume = (seq: number) => {

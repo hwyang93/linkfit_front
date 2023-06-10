@@ -3,6 +3,9 @@ import BoxButton from '@/components/Common/BoxButton';
 import CTAButton from '@/components/Common/CTAButton';
 import FabContainer from '@/components/Common/FabContainer';
 import useModal from '@/hooks/useModal';
+import {RecruitDateEntity} from '@/types/api/entities';
+import {FetchRecruitResponse} from '@/types/api/recruit';
+import {FetchResumesResponse} from '@/types/api/resume';
 import {iconPath} from '@/utils/iconPath';
 import {formatDate} from '@/utils/util';
 import {
@@ -161,19 +164,19 @@ const JobPostScreen = ({route}: Props) => {
   } = useModal();
 
   const {recruitSeq} = route.params;
-  const [recruitInfo, setRecruitInfo] = useState<any>({
-    dates: [{day: '', time: ''}],
-    writer: {},
-  });
 
-  const [resumes, setResumes] = useState<any[]>([]);
+  const [recruitInfo, setRecruitInfo] = useState<FetchRecruitResponse>();
 
-  const [selectedResumes, setSelectedResumes] = useState<number[]>([]);
+  const [resumes, setResumes] = useState<FetchResumesResponse>([]);
+
+  const [selectedResumeSeq, setSelectedResumeSeq] = useState<number | null>(
+    null,
+  );
   const [selectedRecruitDates, setSelectedRecruitDates] = useState<number[]>(
     [],
   );
 
-  const [recruitDates, setRecruitDates] = useState<any[]>([]);
+  const [recruitDates, setRecruitDates] = useState<RecruitDateEntity[]>([]);
 
   const [contentVerticalOffset, setContentVerticalOffset] = useState(0);
 
@@ -181,13 +184,20 @@ const JobPostScreen = ({route}: Props) => {
     setContentVerticalOffset(event.nativeEvent.contentOffset.y);
   };
 
+  const selectedResumesSeqList = resumes
+    .filter(resume => resume.isSelected === true)
+    .map(item => item.seq);
+
+  const selectedDatesSeqList = recruitDates
+    .filter(date => {
+      return date.isSelected;
+    })
+    .map(item => item.seq);
+
   const getRecruitInfo = useCallback(() => {
     fetchRecruit(recruitSeq)
-      .then(({data}: any) => {
+      .then(({data}) => {
         setRecruitInfo(data);
-        data.dates.forEach((date: any) => {
-          date.isSelected = false;
-        });
         setRecruitDates(data.dates);
       })
       .catch(error => {
@@ -197,10 +207,7 @@ const JobPostScreen = ({route}: Props) => {
 
   const getResumeList = useCallback(() => {
     fetchResumes()
-      .then(({data}: any) => {
-        data.forEach((resume: any) => {
-          resume.isSelected = false;
-        });
+      .then(({data}) => {
         setResumes(data);
       })
       .catch(error => {
@@ -208,21 +215,16 @@ const JobPostScreen = ({route}: Props) => {
       });
   }, []);
 
-  const onApplyButtonPress = useCallback(() => {
-    const dates = recruitDates.filter((date: any) => {
-      if (date.isSelected) {
-        return date.seq;
-      }
-    });
+  const onApplyButtonPress = () => {
+    if (!recruitInfo) {
+      return;
+    }
 
-    const resumeSeq = resumes.find((resume: any) => {
-      return resume.isSelected;
-    }).seq;
-
+    // TODO: 타입 에러 수정
     const data = {
-      recruitDateSeq: dates,
-      resumeSeq: resumeSeq,
+      recruitDateSeq: selectedDatesSeqList,
       recruitSeq: recruitInfo.seq,
+      resumeSeq: selectedResumesSeqList,
     };
 
     createRecruitApply(recruitInfo.seq, data)
@@ -234,20 +236,10 @@ const JobPostScreen = ({route}: Props) => {
       .catch(error => {
         toast.error({message: error.message});
       });
-  }, [getRecruitInfo, recruitDates, recruitInfo.seq, resumes, closeApplyModal]);
+  };
 
   const handleCancelButtonPress = () => {
-    const dates: number[] = [];
-    recruitDates.forEach(date => {
-      if (date.isSelected) {
-        const applySeq = recruitInfo.applyInfo.find((item: any) => {
-          return item.recruitDateSeq === date.seq;
-        }).seq;
-
-        return dates.push(applySeq);
-      }
-    });
-    const data = {seqs: dates};
+    const data = {seqs: selectedDatesSeqList};
 
     updateRecruitApplyCancel(data)
       .then(() => {
@@ -261,14 +253,12 @@ const JobPostScreen = ({route}: Props) => {
   };
 
   const handleResumeListItemPress = (seq: number) => {
-    selectedResumes.includes(seq)
-      ? setSelectedResumes(prev => prev.filter(item => item !== seq))
-      : setSelectedResumes(prev => [...prev, seq]);
+    setSelectedResumeSeq(seq);
   };
 
   const handleResumeDateListItemPress = (seq: number) => {
     setRecruitDates(() => {
-      return recruitDates.map((date: any) => {
+      return recruitDates.map(date => {
         if (date.seq === seq) {
           date.isSelected = !date.isSelected;
         }
@@ -281,6 +271,12 @@ const JobPostScreen = ({route}: Props) => {
       : setSelectedRecruitDates(prev => [...prev, seq]);
   };
 
+  const handleApplyModalClose = () => {
+    closeApplyModal();
+    setSelectedRecruitDates([]);
+    setSelectedResumeSeq(null);
+  };
+
   useEffect(() => {
     getRecruitInfo();
     getResumeList();
@@ -290,190 +286,162 @@ const JobPostScreen = ({route}: Props) => {
 
   return (
     <>
-      <SafeAreaView edges={['left', 'right']} style={styles.container}>
-        <ScrollView
-          contentContainerStyle={{paddingBottom: 40}}
-          showsVerticalScrollIndicator={false}
-          scrollEventThrottle={0}
-          onScroll={onScrollHandler}>
-          <View style={common.mb40}>
-            {recruitInfo.writer.profileImage && (
-              <View style={common.mb16}>
-                <Image
-                  source={{uri: recruitInfo.writer.profileImage.originFileUrl}}
-                  resizeMode={'cover'}
-                  style={styles.imgBox}
-                />
-              </View>
-            )}
-            <Text style={[common.mb16, common.title_l]}>
-              {recruitInfo.title}
-            </Text>
-            <Text style={[common.mb16, common.text_s, {color: GRAY.DARK}]}>
-              {recruitInfo.companyName} | 서울 · 송파구
-            </Text>
-            {recruitInfo.applyInfo?.length > 0 && (
-              <Text style={[common.text_s, {color: GRAY.DARK}]}>
-                {formatDate(recruitInfo.applyInfo[0].updatedAt)} 지원 완료
-              </Text>
-            )}
-          </View>
-          <View style={common.mb24}>
-            <Text style={[common.mb8, common.text_m, common.fwb]}>
-              채용형태
-            </Text>
-            <Text style={common.text_m}>{recruitInfo.recruitType}</Text>
-          </View>
-          {recruitInfo.recruitType === '대강' ? (
-            <View style={common.mb24}>
-              <Text style={[common.mb8, common.text_m, common.fwb]}>
-                수업날짜 및 시간
-              </Text>
-              {recruitInfo.dates.map((item: any) => {
-                return (
-                  <Text key={item.day + ' ' + item.time} style={common.text_m}>
-                    {item.day} {item.time}
+      {recruitInfo && (
+        <>
+          <SafeAreaView edges={['left', 'right']} style={styles.container}>
+            <ScrollView
+              contentContainerStyle={{paddingBottom: 40}}
+              showsVerticalScrollIndicator={false}
+              scrollEventThrottle={0}
+              onScroll={onScrollHandler}>
+              <View style={common.mb40}>
+                {recruitInfo.writer?.profileImage && (
+                  <View style={common.mb16}>
+                    <Image
+                      source={{
+                        uri: recruitInfo.writer.profileImage.originFileUrl,
+                      }}
+                      resizeMode={'cover'}
+                      style={styles.imgBox}
+                    />
+                  </View>
+                )}
+                <Text style={[common.mb16, common.title_l]}>
+                  {recruitInfo.title}
+                </Text>
+                <Text style={[common.mb16, common.text_s, {color: GRAY.DARK}]}>
+                  {recruitInfo.companyName} | 서울 · 송파구
+                </Text>
+                {recruitInfo.applyInfo && recruitInfo.applyInfo.length > 0 && (
+                  <Text style={[common.text_s, {color: GRAY.DARK}]}>
+                    {formatDate(recruitInfo.applyInfo[0].updatedAt)} 지원 완료
                   </Text>
-                );
-              })}
-            </View>
-          ) : (
-            <View>
-              <View style={common.mb24}>
-                <Text style={[common.mb8, common.text_m, common.fwb]}>
-                  수업날짜
-                </Text>
-                <Text style={common.text_m}>{recruitInfo.dates[0].day}</Text>
+                )}
               </View>
               <View style={common.mb24}>
                 <Text style={[common.mb8, common.text_m, common.fwb]}>
-                  수업시간
+                  채용형태
                 </Text>
-                <Text style={common.text_m}>{recruitInfo.dates[0].time}</Text>
+                <Text style={common.text_m}>{recruitInfo.recruitType}</Text>
               </View>
-            </View>
-          )}
-          <View style={common.mb24}>
-            <Text style={[common.mb8, common.text_m, common.fwb]}>
-              수업내용
-            </Text>
-            <Text style={common.text_m}>{recruitInfo.content}</Text>
-          </View>
-          <View style={common.mb24}>
-            <Text style={[common.mb8, common.text_m, common.fwb]}>경력</Text>
-            <Text style={common.text_m}>{recruitInfo.career}</Text>
-          </View>
-          <View style={common.mb24}>
-            <Text style={[common.mb8, common.text_m, common.fwb]}>학력</Text>
-            <Text style={common.text_m}>{recruitInfo.education}</Text>
-          </View>
-          <View style={common.mb24}>
-            <Text style={[common.mb8, common.text_m, common.fwb]}>급여</Text>
-            <Text style={common.text_m}>{recruitInfo.pay}</Text>
-          </View>
-          <View style={common.mb8}>
-            <Text style={[common.mb8, common.text_m, common.fwb]}>
-              센터 위치
-            </Text>
-            <Text style={common.text_m}>{recruitInfo.address}</Text>
-          </View>
-
-          <View style={common.mb24}>
-            {/*<Image*/}
-            {/*  style={common.mapBox}*/}
-            {/*  source={require('../assets/images/map_sample.png')}*/}
-            {/*/>*/}
-            <MapView
-              style={common.mapBox}
-              provider={PROVIDER_GOOGLE}
-              initialRegion={{
-                latitude: 53.339688,
-                longitude: -6.236688,
-                latitudeDelta: 0.0922,
-                longitudeDelta: 0.0421,
-              }}>
-              <Marker
-                coordinate={{
-                  latitude: 53.339688,
-                  longitude: -6.236688,
-                }}
-                pinColor="#2D63E2"
-                title="하이"
-                description="테스트"
-              />
-            </MapView>
-          </View>
-          {recruitInfo.writer.type === 'COMPANY' && (
-            <View>
-              <Text style={[common.mb8, common.text_m, common.fwb]}>
-                센터 정보
-              </Text>
-              <CenterInfoComponent centerInfo={recruitInfo.writer} />
-            </View>
-          )}
-          <View style={common.mt40}>
-            <CTAButton
-              label="지원 취소하기"
-              variant="stroked"
-              onPress={openCancelModal}
-            />
-          </View>
-        </ScrollView>
-      </SafeAreaView>
-      {contentVerticalOffset <= 500 && (
-        <FabContainer>
-          <BoxButton label="지원하기" onPress={openApplyModal} />
-        </FabContainer>
-      )}
-      <BottomSheet
-        visible={cancelModalVisible}
-        onDismiss={closeCancelModal}
-        title="지원 취소할 날짜 및 시간을 선택하세요.">
-        <View style={{paddingHorizontal: 16}}>
-          {recruitDates.map((item, index) => (
-            <ResumeDateListItem
-              key={index}
-              selected={item.isSelected}
-              disabled={item.isApplied}
-              onPress={() => handleResumeDateListItemPress(item.seq)}
-              day={item.day}
-              time={item.time}
-            />
-          ))}
-          <View style={common.mt40}>
-            <CTAButton
-              label="지원 취소하기"
-              variant="stroked"
-              disabled={selectedRecruitDates.length === 0}
-              onPress={handleCancelButtonPress}
-            />
-          </View>
-        </View>
-      </BottomSheet>
-      <BottomSheet
-        visible={applyModalVisible}
-        onDismiss={closeApplyModal}
-        title="지원하기">
-        <View style={{width: '100%', paddingHorizontal: 16}}>
-          {resumes.length === 0 && <RegisterResumeButton />}
-          {resumes.map((item, index) => (
-            <ResumeListItem
-              key={index}
-              selected={selectedResumes.includes(item.seq)}
-              isMaster={item.isMaster === 'Y'}
-              title={item.title}
-              updatedAt={formatDate(item.updatedAt)}
-              onPress={() => handleResumeListItemPress(item.seq)}
-            />
-          ))}
-          {selectedResumes.length > 0 && (
-            <>
-              <View style={[common.mt40, common.mb8]}>
-                <Text style={common.title_s}>
-                  지원할 날짜 및 시간을 선택하세요.
+              {recruitInfo.recruitType === '대강' ? (
+                <View style={common.mb24}>
+                  <Text style={[common.mb8, common.text_m, common.fwb]}>
+                    수업날짜 및 시간
+                  </Text>
+                  {recruitInfo.dates.map(item => (
+                    <Text
+                      key={item.day + ' ' + item.time}
+                      style={common.text_m}>
+                      {item.day} {item.time}
+                    </Text>
+                  ))}
+                </View>
+              ) : (
+                <View>
+                  <View style={common.mb24}>
+                    <Text style={[common.mb8, common.text_m, common.fwb]}>
+                      수업날짜
+                    </Text>
+                    <Text style={common.text_m}>
+                      {recruitInfo.dates[0].day}
+                    </Text>
+                  </View>
+                  <View style={common.mb24}>
+                    <Text style={[common.mb8, common.text_m, common.fwb]}>
+                      수업시간
+                    </Text>
+                    <Text style={common.text_m}>
+                      {recruitInfo.dates[0].time}
+                    </Text>
+                  </View>
+                </View>
+              )}
+              <View style={common.mb24}>
+                <Text style={[common.mb8, common.text_m, common.fwb]}>
+                  수업내용
                 </Text>
+                <Text style={common.text_m}>{recruitInfo.content}</Text>
               </View>
-              {recruitDates.map((item: any, index) => (
+              <View style={common.mb24}>
+                <Text style={[common.mb8, common.text_m, common.fwb]}>
+                  경력
+                </Text>
+                <Text style={common.text_m}>{recruitInfo.career}</Text>
+              </View>
+              <View style={common.mb24}>
+                <Text style={[common.mb8, common.text_m, common.fwb]}>
+                  학력
+                </Text>
+                <Text style={common.text_m}>{recruitInfo.education}</Text>
+              </View>
+              <View style={common.mb24}>
+                <Text style={[common.mb8, common.text_m, common.fwb]}>
+                  급여
+                </Text>
+                <Text style={common.text_m}>{recruitInfo.pay}</Text>
+              </View>
+              <View style={common.mb8}>
+                <Text style={[common.mb8, common.text_m, common.fwb]}>
+                  센터 위치
+                </Text>
+                <Text style={common.text_m}>{recruitInfo.address}</Text>
+              </View>
+              <View style={common.mb24}>
+                {/*<Image*/}
+                {/*  style={common.mapBox}*/}
+                {/*  source={require('../assets/images/map_sample.png')}*/}
+                {/*/>*/}
+                <MapView
+                  style={common.mapBox}
+                  provider={PROVIDER_GOOGLE}
+                  initialRegion={{
+                    latitude: 53.339688,
+                    longitude: -6.236688,
+                    latitudeDelta: 0.0922,
+                    longitudeDelta: 0.0421,
+                  }}>
+                  <Marker
+                    coordinate={{
+                      latitude: 53.339688,
+                      longitude: -6.236688,
+                    }}
+                    pinColor="#2D63E2"
+                    title="하이"
+                    description="테스트"
+                  />
+                </MapView>
+              </View>
+              {recruitInfo.writer?.type === 'COMPANY' && (
+                <View>
+                  <Text style={[common.mb8, common.text_m, common.fwb]}>
+                    센터 정보
+                  </Text>
+                  <CenterInfoComponent centerInfo={recruitInfo.writer} />
+                </View>
+              )}
+              <View style={common.mt40}>
+                {recruitInfo.applyInfo && recruitInfo.applyInfo.length > 0 && (
+                  <CTAButton
+                    label="지원 취소하기"
+                    variant="stroked"
+                    onPress={openCancelModal}
+                  />
+                )}
+              </View>
+            </ScrollView>
+          </SafeAreaView>
+          {contentVerticalOffset <= 500 && (
+            <FabContainer>
+              <BoxButton label="지원하기" onPress={openApplyModal} />
+            </FabContainer>
+          )}
+          <BottomSheet
+            visible={cancelModalVisible}
+            onDismiss={closeCancelModal}
+            title="지원 취소할 날짜 및 시간을 선택하세요.">
+            <View style={{paddingHorizontal: 16}}>
+              {recruitDates.map((item, index) => (
                 <ResumeDateListItem
                   key={index}
                   selected={item.isSelected}
@@ -483,20 +451,64 @@ const JobPostScreen = ({route}: Props) => {
                   time={item.time}
                 />
               ))}
-            </>
-          )}
-          <View style={common.mt40}>
-            <CTAButton
-              label="지원하기"
-              disabled={
-                selectedResumes.length === 0 ||
-                selectedRecruitDates.length === 0
-              }
-              onPress={onApplyButtonPress}
-            />
-          </View>
-        </View>
-      </BottomSheet>
+              <View style={common.mt40}>
+                <CTAButton
+                  label="지원 취소하기"
+                  variant="stroked"
+                  disabled={selectedRecruitDates.length === 0}
+                  onPress={handleCancelButtonPress}
+                />
+              </View>
+            </View>
+          </BottomSheet>
+          <BottomSheet
+            visible={applyModalVisible}
+            onDismiss={handleApplyModalClose}
+            title="지원하기">
+            <View style={{width: '100%', paddingHorizontal: 16}}>
+              {resumes.length === 0 && <RegisterResumeButton />}
+              {resumes.map((item, index) => (
+                <ResumeListItem
+                  key={index}
+                  selected={selectedResumeSeq === item.seq}
+                  isMaster={item.isMaster === 'Y'}
+                  title={item.title}
+                  updatedAt={formatDate(item.updatedAt)}
+                  onPress={() => handleResumeListItemPress(item.seq)}
+                />
+              ))}
+              {selectedResumeSeq && (
+                <>
+                  <View style={[common.mt40, common.mb8]}>
+                    <Text style={common.title_s}>
+                      지원할 날짜 및 시간을 선택하세요.
+                    </Text>
+                  </View>
+                  {recruitDates.map((item, index) => (
+                    <ResumeDateListItem
+                      key={index}
+                      selected={item.isSelected}
+                      disabled={item.isApplied}
+                      onPress={() => handleResumeDateListItemPress(item.seq)}
+                      day={item.day}
+                      time={item.time}
+                    />
+                  ))}
+                </>
+              )}
+              <View style={common.mt40}>
+                <CTAButton
+                  label="지원하기"
+                  disabled={
+                    !selectedResumeSeq || selectedRecruitDates.length === 0
+                  }
+                  onPress={onApplyButtonPress}
+                />
+              </View>
+            </View>
+          </BottomSheet>
+        </>
+      )}
     </>
   );
 };
