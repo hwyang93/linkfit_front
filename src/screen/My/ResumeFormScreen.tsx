@@ -1,3 +1,4 @@
+import CTAButton from '@/components/Common/CTAButton';
 import {useAppSelector} from '@/store';
 import {FetchMemberLicencesResponse} from '@/types/api/member';
 import {iconPath} from '@/utils/iconPath';
@@ -14,15 +15,7 @@ import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import {WHITE} from '@styles/colors';
 import common from '@styles/common';
 import {useCallback, useEffect, useState} from 'react';
-import {
-  ActivityIndicator,
-  Image,
-  Pressable,
-  StyleSheet,
-  Text,
-  View,
-} from 'react-native';
-import LinearGradient from 'react-native-linear-gradient';
+import {Image, Pressable, StyleSheet, View} from 'react-native';
 import {LoggedInParamList} from '../../../AppInner';
 
 const GENDER_DATA = [{value: '남자'}, {value: '여자'}];
@@ -316,24 +309,13 @@ const ResumeFormScreen = ({navigation}: Props) => {
             multiline={true}
           />
         </View>
-
-        {/* 작성완료 버튼 */}
         <View style={common.mt20}>
-          <Pressable disabled={!canGoNext} onPress={onCreateResume}>
-            <LinearGradient
-              style={common.button}
-              start={{x: 0.1, y: 0.5}}
-              end={{x: 0.6, y: 1}}
-              colors={
-                canGoNext ? ['#74ebe4', '#3962f3'] : ['#dcdcdc', '#dcdcdc']
-              }>
-              {loading ? (
-                <ActivityIndicator color="white" />
-              ) : (
-                <Text style={common.buttonText}>작성 완료</Text>
-              )}
-            </LinearGradient>
-          </Pressable>
+          <CTAButton
+            label="작성 완료"
+            loading={loading}
+            disabled={!canGoNext}
+            onPress={onCreateResume}
+          />
         </View>
       </View>
     </DismissKeyboardView>
