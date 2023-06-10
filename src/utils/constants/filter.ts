@@ -22,6 +22,23 @@ const FILTER = {
     {label: '진행중', value: ''},
     {label: '마감', value: ''},
   ],
+  FIELD: [
+    {label: '전체', value: ''},
+    {label: '필라테스', value: ''},
+    {label: '요가', value: ''},
+  ],
+  RECRUIT_TYPE: [
+    {label: '전임', value: ''},
+    {label: '파트타임', value: ''},
+    {label: '대강', value: ''},
+    {label: '실장', value: ''},
+  ],
+  TIME: [
+    {label: '오전', value: ''},
+    {label: '오후', value: ''},
+    {label: '전일', value: ''},
+    {label: '협의', value: ''},
+  ],
 };
 
 export default FILTER;
