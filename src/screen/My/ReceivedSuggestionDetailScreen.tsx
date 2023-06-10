@@ -1,3 +1,4 @@
+import CTAButton from '@/components/Common/CTAButton';
 import {FetchPositionSuggestResponse} from '@/types/api/member';
 import {fetchPositionSuggest, updatePositionSuggestStatus} from '@api/member';
 import InstructorInfoComponent from '@components/InstructorInfoComponent';
@@ -6,15 +7,7 @@ import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import {WHITE} from '@styles/colors';
 import common from '@styles/common';
 import {useCallback, useEffect, useState} from 'react';
-import {
-  ActivityIndicator,
-  Pressable,
-  ScrollView,
-  StyleSheet,
-  Text,
-  View,
-} from 'react-native';
-import LinearGradient from 'react-native-linear-gradient';
+import {Pressable, ScrollView, StyleSheet, Text, View} from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {LoggedInParamList} from '../../../AppInner';
 
@@ -127,7 +120,6 @@ const ReceivedSuggestionDetailScreen = ({route, navigation}: Props) => {
               </Pressable>
             </View>
           )}
-
           {suggestInfo?.writer.type === 'INSTRUCTOR' && (
             <View style={common.mb24}>
               <Text style={[common.text_m, common.fwb, common.mb8]}>
@@ -138,46 +130,21 @@ const ReceivedSuggestionDetailScreen = ({route, navigation}: Props) => {
               </View>
             </View>
           )}
-
-          {/* 수락하기 거절하기 버튼 */}
           {suggestInfo?.status === 'WAITING' && (
             <View>
               <View style={common.mb16}>
-                <Pressable
-                  onPress={() => {
-                    onUpdateSuggestStatus('ACCEPT');
-                  }}>
-                  <LinearGradient
-                    style={common.button}
-                    start={{x: 0.1, y: 0.5}}
-                    end={{x: 0.6, y: 1}}
-                    colors={['#74ebe4', '#3962f3']}>
-                    {LOADING ? (
-                      <ActivityIndicator color="white" />
-                    ) : (
-                      <Text style={common.buttonText}>수락하기</Text>
-                    )}
-                  </LinearGradient>
-                </Pressable>
+                <CTAButton
+                  label="수락하기"
+                  loading={LOADING}
+                  onPress={() => onUpdateSuggestStatus('ACCEPT')}
+                />
               </View>
-
               <View>
-                <Pressable
-                  onPress={() => {
-                    onUpdateSuggestStatus('REJECT');
-                  }}>
-                  <LinearGradient
-                    style={common.button}
-                    start={{x: 0.1, y: 0.5}}
-                    end={{x: 0.6, y: 1}}
-                    colors={['#74ebe4', '#3962f3']}>
-                    {LOADING ? (
-                      <ActivityIndicator color="white" />
-                    ) : (
-                      <Text style={common.buttonText}>거절하기</Text>
-                    )}
-                  </LinearGradient>
-                </Pressable>
+                <CTAButton
+                  label="거절하기"
+                  loading={LOADING}
+                  onPress={() => onUpdateSuggestStatus('REJECT')}
+                />
               </View>
             </View>
           )}

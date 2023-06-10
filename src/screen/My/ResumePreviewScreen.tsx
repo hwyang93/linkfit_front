@@ -1,3 +1,4 @@
+import CTAButton from '@/components/Common/CTAButton';
 import Chip from '@/components/Common/Chip';
 import {useAppSelector} from '@/store';
 import {iconPath} from '@/utils/iconPath';
@@ -10,7 +11,6 @@ import {BLUE, GRAY, WHITE} from '@styles/colors';
 import common from '@styles/common';
 import {useCallback, useEffect, useState} from 'react';
 import {
-  ActivityIndicator,
   Image,
   Pressable,
   ScrollView,
@@ -18,7 +18,6 @@ import {
   Text,
   View,
 } from 'react-native';
-import LinearGradient from 'react-native-linear-gradient';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {LoggedInParamList} from '../../../AppInner';
 
@@ -226,45 +225,24 @@ const ResumePreviewScreen = ({route, navigation}: Props) => {
             </View>
           )}
         </View>
-
-        {/* 합격 여부 전달하기 버튼 */}
         {applyResult === 'APPLY' && (
           <View style={common.mt20}>
-            <Pressable onPress={passModal}>
-              <LinearGradient
-                style={common.button}
-                start={{x: 0.1, y: 0.5}}
-                end={{x: 0.6, y: 1}}
-                colors={['#74ebe4', '#3962f3']}>
-                {loading ? (
-                  <ActivityIndicator color="white" />
-                ) : (
-                  <Text style={common.buttonText}>합격 여부 전달하기</Text>
-                )}
-              </LinearGradient>
-            </Pressable>
+            <CTAButton
+              label="합격 여부 전달하기"
+              loading={loading}
+              onPress={passModal}
+            />
           </View>
         )}
-
         {applyResult === 'PASS' && (
           <View style={common.mt20}>
-            <Pressable onPress={toReview}>
-              <LinearGradient
-                style={common.button}
-                start={{x: 0.1, y: 0.5}}
-                end={{x: 0.6, y: 1}}
-                colors={['#74ebe4', '#3962f3']}>
-                {loading ? (
-                  <ActivityIndicator color="white" />
-                ) : (
-                  <Text style={common.buttonText}>후기 작성하기</Text>
-                )}
-              </LinearGradient>
-            </Pressable>
+            <CTAButton
+              label="후기 작성하기"
+              loading={loading}
+              onPress={toReview}
+            />
           </View>
         )}
-
-        {/* 모달 */}
         <Modal
           modalVisible={modalVisible}
           setModalVisible={setModalVisible}
@@ -273,27 +251,17 @@ const ResumePreviewScreen = ({route, navigation}: Props) => {
           type={'button'}
           content={
             <View>
-              {MODAL.map((item, index) => {
-                return (
-                  <View
-                    key={index}
-                    style={[common.modalItemBox, {paddingVertical: 8}]}>
-                    <Pressable onPress={item.job} style={{flex: 1}}>
-                      <LinearGradient
-                        style={[common.button]}
-                        start={{x: 0.1, y: 0.5}}
-                        end={{x: 0.6, y: 1}}
-                        colors={['#74ebe4', '#3962f3']}>
-                        {loading ? (
-                          <ActivityIndicator color="white" />
-                        ) : (
-                          <Text style={common.buttonText}>{item.value}</Text>
-                        )}
-                      </LinearGradient>
-                    </Pressable>
-                  </View>
-                );
-              })}
+              {MODAL.map((item, index) => (
+                <View
+                  key={index}
+                  style={[common.modalItemBox, {paddingVertical: 8}]}>
+                  <CTAButton
+                    label={item.value}
+                    loading={loading}
+                    onPress={item.job}
+                  />
+                </View>
+              ))}
             </View>
           }
         />

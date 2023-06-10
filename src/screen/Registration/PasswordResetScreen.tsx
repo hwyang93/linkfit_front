@@ -1,3 +1,4 @@
+import CTAButton from '@/components/Common/CTAButton';
 import BirthdayPicker from '@components/BirthdayPicker';
 import DismissKeyboardView from '@components/DismissKeyboardView';
 import Input, {KeyboardTypes} from '@components/Input';
@@ -6,8 +7,7 @@ import TabButton from '@components/TabButton';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import common from '@styles/common';
 import {useState} from 'react';
-import {ActivityIndicator, Pressable, Text, View} from 'react-native';
-import LinearGradient from 'react-native-linear-gradient';
+import {Text, View} from 'react-native';
 import {LoggedInParamList} from '../../../AppInner';
 
 const GENDER_DATA = [{value: '남자'}, {value: '여자'}];
@@ -104,21 +104,12 @@ const PasswordResetScreen = ({}: Props) => {
           </View>
 
           <View style={common.mt20}>
-            <Pressable onPress={() => console.log(agency)}>
-              <LinearGradient
-                style={common.button}
-                start={{x: 0.1, y: 0.5}}
-                end={{x: 0.6, y: 1}}
-                colors={
-                  CAN_GO_NEXT ? ['#74ebe4', '#3962f3'] : ['#dcdcdc', '#dcdcdc']
-                }>
-                {LOADING ? (
-                  <ActivityIndicator color="white" />
-                ) : (
-                  <Text style={common.buttonText}>본인인증</Text>
-                )}
-              </LinearGradient>
-            </Pressable>
+            <CTAButton
+              label="본인인증"
+              loading={LOADING}
+              disabled={!CAN_GO_NEXT}
+              onPress={() => console.log(agency)}
+            />
           </View>
         </View>
       </View>

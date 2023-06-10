@@ -1,17 +1,11 @@
 import {LoggedInParamList} from '@/../AppInner';
+import CTAButton from '@/components/Common/CTAButton';
 import Input, {KeyboardTypes} from '@components/Input';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import {WHITE} from '@styles/colors';
 import common from '@styles/common';
 import {useState} from 'react';
-import {
-  ActivityIndicator,
-  Pressable,
-  StyleSheet,
-  Text,
-  View,
-} from 'react-native';
-import LinearGradient from 'react-native-linear-gradient';
+import {StyleSheet, View} from 'react-native';
 
 type Props = NativeStackScreenProps<LoggedInParamList, 'LinkAdd'>;
 
@@ -42,24 +36,8 @@ const LinkAddScreen = ({}: Props) => {
           keyboardType={KeyboardTypes.DEFAULT}
         />
       </View>
-
-      {/* 완료 버튼 */}
       <View style={common.mt40}>
-        <Pressable disabled={!canGoNext} onPress={() => {}}>
-          <LinearGradient
-            style={common.button}
-            start={{x: 0.1, y: 0.5}}
-            end={{x: 0.6, y: 1}}
-            colors={
-              canGoNext ? ['#74ebe4', '#3962f3'] : ['#dcdcdc', '#dcdcdc']
-            }>
-            {loading ? (
-              <ActivityIndicator color="white" />
-            ) : (
-              <Text style={common.buttonText}>완료</Text>
-            )}
-          </LinearGradient>
-        </Pressable>
+        <CTAButton label="완료" loading={loading} disabled={!canGoNext} />
       </View>
     </View>
   );

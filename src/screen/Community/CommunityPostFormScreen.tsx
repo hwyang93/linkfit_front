@@ -1,3 +1,4 @@
+import CTAButton from '@/components/Common/CTAButton';
 import {createCommunityPost} from '@api/community';
 import DismissKeyboardView from '@components/DismissKeyboardView';
 import Input, {KeyboardTypes} from '@components/Input';
@@ -8,14 +9,7 @@ import {WHITE} from '@styles/colors';
 import common from '@styles/common';
 import {isAxiosError} from 'axios';
 import {useCallback, useState} from 'react';
-import {
-  ActivityIndicator,
-  Pressable,
-  StyleSheet,
-  Text,
-  View,
-} from 'react-native';
-import LinearGradient from 'react-native-linear-gradient';
+import {StyleSheet, View} from 'react-native';
 import {LoggedInParamList} from '../../../AppInner';
 
 const LOADING = false;
@@ -80,24 +74,13 @@ const CommunityPostFormScreen = ({navigation}: Props) => {
             multiline={true}
           />
         </View>
-
-        {/* 게시글 등록 버튼 */}
         <View style={common.mt20}>
-          <Pressable disabled={!canGoNext} onPress={onCreateCommunityPost}>
-            <LinearGradient
-              style={common.button}
-              start={{x: 0.1, y: 0.5}}
-              end={{x: 0.6, y: 1}}
-              colors={
-                canGoNext ? ['#74ebe4', '#3962f3'] : ['#dcdcdc', '#dcdcdc']
-              }>
-              {LOADING ? (
-                <ActivityIndicator color="white" />
-              ) : (
-                <Text style={common.buttonText}>게시글 등록</Text>
-              )}
-            </LinearGradient>
-          </Pressable>
+          <CTAButton
+            label="게시글 등록"
+            loading={LOADING}
+            disabled={!canGoNext}
+            onPress={onCreateCommunityPost}
+          />
         </View>
       </View>
     </DismissKeyboardView>

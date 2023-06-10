@@ -1,3 +1,4 @@
+import CTAButton from '@/components/Common/CTAButton';
 import {createReview, updateMemberReputation} from '@api/member';
 import Input, {KeyboardTypes} from '@components/Input';
 import toast from '@hooks/toast';
@@ -5,14 +6,7 @@ import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import {WHITE} from '@styles/colors';
 import common from '@styles/common';
 import {useCallback, useEffect, useState} from 'react';
-import {
-  ActivityIndicator,
-  Pressable,
-  StyleSheet,
-  Text,
-  View,
-} from 'react-native';
-import LinearGradient from 'react-native-linear-gradient';
+import {StyleSheet, View} from 'react-native';
 import {LoggedInParamList} from '../../../AppInner';
 
 type Props = NativeStackScreenProps<LoggedInParamList, 'ReviewForm'>;
@@ -94,26 +88,13 @@ const ReviewFormScreen = ({navigation, route}: Props) => {
           multiline={true}
         />
       </View>
-
-      {/* 수정하기 버튼 */}
       <View style={common.mt20}>
-        <Pressable disabled={!canGoNext} onPress={onSubmitHandler}>
-          <LinearGradient
-            style={common.button}
-            start={{x: 0.1, y: 0.5}}
-            end={{x: 0.6, y: 1}}
-            colors={
-              canGoNext ? ['#74ebe4', '#3962f3'] : ['#dcdcdc', '#dcdcdc']
-            }>
-            {loading ? (
-              <ActivityIndicator color="white" />
-            ) : (
-              <Text style={common.buttonText}>
-                {status === 'create' ? '후기 작성하기' : '후기 수정하기'}
-              </Text>
-            )}
-          </LinearGradient>
-        </Pressable>
+        <CTAButton
+          label={status === 'create' ? '후기 작성하기' : '후기 수정하기'}
+          loading={loading}
+          disabled={!canGoNext}
+          onPress={onSubmitHandler}
+        />
       </View>
     </View>
   );
