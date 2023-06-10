@@ -22,8 +22,6 @@ interface FilterChipProps extends PressableProps {
   onPress?: () => void;
 }
 
-// TODO: 안드로이드에서 텍스트가 약간 아래로 내려가있는 현상 수정
-// TODO: 텍스트 아래가 잘리는 현상 수정
 // TODO: 그림자가 적용되지 않는 현상 수정
 const FilterChip: React.FC<FilterChipProps> = ({
   variant = 'default',
@@ -82,7 +80,6 @@ const styles = StyleSheet.create({
     height: 28,
     alignSelf: 'flex-start',
     flexDirection: 'row',
-    paddingVertical: 6,
     paddingHorizontal: 12,
     justifyContent: 'center',
     alignItems: 'center',
