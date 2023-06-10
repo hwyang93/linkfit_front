@@ -18,8 +18,8 @@ interface SectionHeaderProps extends TextProps {
 
 const SectionHeader: React.FC<SectionHeaderProps> = ({
   title,
-  onPress,
   style,
+  onPress,
   ...props
 }) => {
   return (
@@ -27,7 +27,14 @@ const SectionHeader: React.FC<SectionHeaderProps> = ({
       style={[common.rowCenterBetween, style]}
       onPress={onPress}
       {...props}>
-      <Text style={common.title_s}>{title}</Text>
+      <Text
+        style={{
+          fontSize: 16,
+          fontWeight: '700',
+          lineHeight: 16,
+        }}>
+        {title}
+      </Text>
       {onPress && (
         <View>
           <FontAwesome name="chevron-right" color="black" />
