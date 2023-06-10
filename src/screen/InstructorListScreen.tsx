@@ -14,7 +14,7 @@ import {SafeAreaView} from 'react-native-safe-area-context';
 
 type Props = NativeStackScreenProps<LoggedInParamList, 'InstructorList'>;
 
-const InstructorListScreen = ({}: Props) => {
+const InstructorListScreen = ({navigation}: Props) => {
   const [instructors, setInstructors] = useState<FetchInstructorsResponse>();
 
   const getInstructorsData = useCallback(async () => {
@@ -62,6 +62,11 @@ const InstructorListScreen = ({}: Props) => {
             address={item.address}
             followerCount={item.followerCount}
             isCertificated
+            onAvatarPress={() =>
+              navigation.navigate('Profile', {
+                memberSeq: item.seq,
+              })
+            }
           />
         )}
         ItemSeparatorComponent={() => <View style={common.separator} />}

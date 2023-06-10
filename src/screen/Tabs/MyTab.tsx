@@ -136,7 +136,6 @@ const MyTab = ({navigation}: Props) => {
                 <View
                   style={[
                     styles.menuItem,
-
                     {
                       width: columns4,
                       height: 56,
