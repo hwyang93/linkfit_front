@@ -8,6 +8,7 @@ import FloatingActionButton from '@/components/Common/FloatingActionButton';
 import Icon from '@/components/Common/Icon';
 import RecruitListItem from '@/components/Compound/RecruitListItem';
 import useModal from '@/hooks/useModal';
+import THEME from '@/styles/theme';
 import {FetchRecruitsResponse} from '@/types/api/recruit';
 import FILTER from '@/utils/constants/filter';
 import {iconPath} from '@/utils/iconPath';
@@ -75,6 +76,17 @@ const RecruitListScreen = ({navigation}: Props) => {
     closeModal: closeViewModal,
   } = useModal();
 
+  const showResetChip =
+    positionFilterValueList.length > 0 ||
+    recruitTypeFilterValueList.length > 0 ||
+    timeFilterValueList.length > 0;
+
+  const resetFilter = () => {
+    setPositionFilterValueList([]);
+    setRecruitTypeFilterValueList([]);
+    setTimeFilterValueList([]);
+  };
+
   const handlePositionFilterApply = () => {
     setPositionFilterValueList([]);
     closePositionModal();
@@ -123,19 +135,35 @@ const RecruitListScreen = ({navigation}: Props) => {
   return (
     <SafeAreaView edges={['bottom', 'left', 'right']} style={styles.container}>
       <FilterChipContainer>
-        <FilterChip label="포지션" rightIcon onPress={openPositionModal} />
+        {showResetChip && (
+          <FilterChip
+            variant="reset"
+            label="초기화"
+            style={{marginRight: 8}}
+            onPress={resetFilter}
+          />
+        )}
         <FilterChip
+          active={positionFilterValueList.length > 0}
+          label="포지션"
+          rightIcon
+          onPress={openPositionModal}
+        />
+        <FilterChip
+          active={recruitTypeFilterValueList.length > 0}
           label="채용형태"
           style={{marginLeft: 8}}
           rightIcon
           onPress={openRecruitTypeModal}
         />
         <FilterChip
+          active={timeFilterValueList.length > 0}
           label="수업시간"
           style={{marginLeft: 8}}
           rightIcon
           onPress={openTimeModal}
         />
+        {/* TODO: 조회순 필터 기능 추가 */}
         <FilterChip
           label="조회순"
           style={{marginLeft: 8}}
@@ -272,6 +300,7 @@ const RecruitListScreen = ({navigation}: Props) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    backgroundColor: THEME.WHITE,
   },
 });
 
