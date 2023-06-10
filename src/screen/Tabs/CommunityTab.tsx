@@ -1,5 +1,5 @@
 import EmptyState from '@/components/Common/EmptyState';
-import FabContainer from '@/components/Common/FabContainer';
+import FABContainer from '@/components/Common/FABContainer';
 import FilterChip from '@/components/Common/FilterChip';
 import FilterChipContainer from '@/components/Common/FilterChipContainer';
 import FloatingActionButton from '@/components/Common/FloatingActionButton';
@@ -75,12 +75,12 @@ const CommunityTab = ({navigation}: Props) => {
         />
       )}
       {posts?.length === 0 && <EmptyState />}
-      <FabContainer style={{bottom: 16}}>
+      <FABContainer style={{bottom: 16}}>
         <FloatingActionButton
           iconSource={iconPath.PENCIL_W}
           onPress={onPressFAB}
         />
-      </FabContainer>
+      </FABContainer>
     </View>
   );
 };

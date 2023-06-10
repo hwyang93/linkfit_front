@@ -1,4 +1,4 @@
-import FabContainer from '@/components/Common/FabContainer';
+import FABContainer from '@/components/Common/FABContainer';
 import FloatingActionButton from '@/components/Common/FloatingActionButton';
 import {iconPath} from '@/utils/iconPath';
 import EmptySet from '@components/EmptySet';
@@ -88,13 +88,13 @@ const InquiryScreen = ({navigation}: Props) => {
       ) : (
         <EmptySet text={'등록된 문의 내역이 없어요.'} />
       )}
-      <FabContainer>
+      <FABContainer>
         <FloatingActionButton
           iconSource={iconPath.LIST}
           label="문의하기"
           onPress={toInquiry}
         />
-      </FabContainer>
+      </FABContainer>
     </SafeAreaView>
   );
 };

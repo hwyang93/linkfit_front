@@ -1,7 +1,7 @@
 import BottomSheet from '@/components/Common/BottomSheet';
 import BottomSheetOption from '@/components/Common/BottomSheetOption';
 import CTAButton from '@/components/Common/CTAButton';
-import FabContainer from '@/components/Common/FabContainer';
+import FABContainer from '@/components/Common/FABContainer';
 import FilterChip from '@/components/Common/FilterChip';
 import FilterChipContainer from '@/components/Common/FilterChipContainer';
 import FloatingActionButton from '@/components/Common/FloatingActionButton';
@@ -189,7 +189,7 @@ const RecruitListScreen = ({navigation}: Props) => {
           showsVerticalScrollIndicator={false}
         />
       </View>
-      <FabContainer>
+      <FABContainer>
         <FloatingActionButton
           iconSource={iconPath.PENCIL_W}
           onPress={() => navigation.navigate('JobOfferForm')}
@@ -202,7 +202,7 @@ const RecruitListScreen = ({navigation}: Props) => {
           label="지도보기"
           onPress={() => navigation.navigate('RecruitMap')}
         /> */}
-      </FabContainer>
+      </FABContainer>
       <PositionFilterModal
         visible={positionModalVisible}
         onDismiss={closePositionModal}

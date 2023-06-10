@@ -190,10 +190,14 @@ export interface CommunityEntity extends BaseEntity {
   category: string;
   title: string;
   contents: string;
+  writer: MemberEntity;
   viewCount: number;
   writerSeq: number;
+  writerType: string;
+  writerCompanyName: string;
+  writerName: string;
   comments: CommunityCommentEntity[];
-  writer: MemberEntity;
+  commentsLength: number;
   bookmarks: CommunityFavoriteEntity[];
   isBookmark: YesNoFlag;
   bookmarkCount: number;

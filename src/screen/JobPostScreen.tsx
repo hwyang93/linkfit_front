@@ -1,7 +1,7 @@
 import BottomSheet from '@/components/Common/BottomSheet';
 import BoxButton from '@/components/Common/BoxButton';
 import CTAButton from '@/components/Common/CTAButton';
-import FabContainer from '@/components/Common/FabContainer';
+import FABContainer from '@/components/Common/FABContainer';
 import useModal from '@/hooks/useModal';
 import {RecruitDateEntity} from '@/types/api/entities';
 import {FetchRecruitResponse} from '@/types/api/recruit';
@@ -184,9 +184,11 @@ const JobPostScreen = ({route}: Props) => {
     setContentVerticalOffset(event.nativeEvent.contentOffset.y);
   };
 
-  const selectedResumesSeqList = resumes
-    .filter(resume => resume.isSelected === true)
-    .map(item => item.seq);
+  const firstSelectedResume = resumes.find(
+    resume => resume.isSelected === true,
+  );
+
+  const firstSelectedResumeSeq = firstSelectedResume?.seq;
 
   const selectedDatesSeqList = recruitDates
     .filter(date => {
@@ -216,15 +218,14 @@ const JobPostScreen = ({route}: Props) => {
   }, []);
 
   const onApplyButtonPress = () => {
-    if (!recruitInfo) {
+    if (!recruitInfo || !firstSelectedResumeSeq) {
       return;
     }
 
-    // TODO: 타입 에러 수정
     const data = {
       recruitDateSeq: selectedDatesSeqList,
       recruitSeq: recruitInfo.seq,
-      resumeSeq: selectedResumesSeqList,
+      resumeSeq: firstSelectedResumeSeq,
     };
 
     createRecruitApply(recruitInfo.seq, data)
@@ -432,9 +433,9 @@ const JobPostScreen = ({route}: Props) => {
             </ScrollView>
           </SafeAreaView>
           {contentVerticalOffset <= 500 && (
-            <FabContainer>
+            <FABContainer>
               <BoxButton label="지원하기" onPress={openApplyModal} />
-            </FabContainer>
+            </FABContainer>
           )}
           <BottomSheet
             visible={cancelModalVisible}
