@@ -1,7 +1,7 @@
 import {LoggedInParamList} from '@/../AppInner';
 import {fetchBookmarkCommunities} from '@/api/community';
 import {fetchBookmarkRecruits} from '@/api/recruit';
-import RecruitCarouselItem from '@/components/Compound/RecruitCarouselItem';
+import RecruitListItem from '@/components/Compound/RecruitListItem';
 import toast from '@/hooks/toast';
 import common from '@/styles/common';
 import {FetchBookmarkCommunitiesResponse} from '@/types/api/community';
@@ -123,7 +123,7 @@ const JobOfferTab: React.FC = () => {
         contentContainerStyle={{marginTop: 16}}
         data={bookmarkedRecruits}
         renderItem={({item}) => (
-          <RecruitCarouselItem
+          <RecruitListItem
             seq={item.seq}
             position={item.recruit.position}
             title={item.recruit.title}

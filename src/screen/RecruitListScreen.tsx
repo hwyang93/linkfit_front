@@ -6,7 +6,7 @@ import FilterChip from '@/components/Common/FilterChip';
 import FilterChipContainer from '@/components/Common/FilterChipContainer';
 import FloatingActionButton from '@/components/Common/FloatingActionButton';
 import Icon from '@/components/Common/Icon';
-import RecruitListItem from '@/components/RecruitListItem';
+import RecruitListItem from '@/components/Compound/RecruitListItem';
 import useModal from '@/hooks/useModal';
 import {FetchRecruitsResponse} from '@/types/api/recruit';
 import FILTER from '@/utils/constants/filter';
@@ -147,7 +147,22 @@ const RecruitListScreen = ({navigation}: Props) => {
         <FlatList
           data={recruits}
           decelerationRate="fast"
-          renderItem={({item}) => <RecruitListItem item={item} />}
+          renderItem={({item}) => (
+            <View style={{marginBottom: 16}}>
+              <RecruitListItem
+                seq={item.seq}
+                position={item.position}
+                title={item.title}
+                companyName={item.companyName}
+                address={item.companyName}
+                bookmarkChecked={item.isBookmark === 'Y'}
+                imageSrc={item.writer?.profileImage?.originFileUrl}
+                onPress={() =>
+                  navigation.navigate('JobPost', {recruitSeq: item.seq})
+                }
+              />
+            </View>
+          )}
           snapToAlignment="start"
           numColumns={2}
           contentContainerStyle={{paddingBottom: 32}}
