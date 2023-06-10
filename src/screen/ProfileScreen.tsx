@@ -1,17 +1,29 @@
 import {fetchInstructor} from '@/api/instructor';
 import ExpandButton from '@/components/Common/ExpandButton';
 import IconButton from '@/components/Common/IconButton';
+import RowView from '@/components/Common/RowView';
 import SectionHeader from '@/components/Common/SectionHeader';
 import InstructorProfile from '@/components/Compound/InstructorProfile';
 import RecruitCard from '@/components/Compound/RecruitCard';
+import ReviewListItem from '@/components/Compound/ReviewListItem';
 import {useAppSelector} from '@/store';
 import {MemberReputationEntity} from '@/types/api/entities';
 import {FetchInstructorResponse} from '@/types/api/instructor';
+import {SCREEN_WIDTH} from '@/utils/constants/common';
 import {iconPath} from '@/utils/iconPath';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import {useEffect, useState} from 'react';
-import {SafeAreaView, ScrollView, Text, View} from 'react-native';
+import {Image, Pressable, ScrollView, Text, View} from 'react-native';
+import {SafeAreaView} from 'react-native-safe-area-context';
 import {LoggedInParamList} from '../../AppInner';
+
+const DUMMY_IMAGES = [
+  require('@images/center_01.png'),
+  require('@images/center_02.png'),
+  require('@images/center_03.png'),
+  require('@images/center_04.png'),
+  require('@images/center_05.png'),
+];
 
 type Props = NativeStackScreenProps<LoggedInParamList, 'Profile'>;
 
@@ -39,9 +51,9 @@ const ProfileScreen = ({navigation, route}: Props) => {
   }, [route.params.memberSeq]);
 
   return (
-    <SafeAreaView style={{flex: 1}}>
+    <SafeAreaView edges={['left', 'right']} style={{flex: 1}}>
       {instructor && (
-        <ScrollView contentContainerStyle={{padding: 16}}>
+        <ScrollView contentContainerStyle={{padding: 16, paddingBottom: 32}}>
           <InstructorProfile
             nickname={instructor.nickname}
             field="필라테스"
@@ -54,14 +66,13 @@ const ProfileScreen = ({navigation, route}: Props) => {
           <Text style={{fontSize: 16, lineHeight: 24, marginTop: 8}}>
             강남구 역삼동에 위치해있는 필라테스 센터입니다.
           </Text>
-          <View
+          <RowView
             style={{
               marginTop: 20,
-              flexDirection: 'row',
               justifyContent: 'space-between',
             }}>
             <SectionHeader title="링크" />
-            <View style={{flexDirection: 'row'}}>
+            <RowView>
               <IconButton source={iconPath.LINK_URL} />
               <IconButton
                 source={iconPath.LINK_BLOG}
@@ -71,8 +82,8 @@ const ProfileScreen = ({navigation, route}: Props) => {
                 source={iconPath.LINK_BRUNCH}
                 style={{marginLeft: 16}}
               />
-            </View>
-          </View>
+            </RowView>
+          </RowView>
           <SectionHeader title="채용 중" style={{marginTop: 20}} />
           <RecruitCard
             style={{marginTop: 8}}
@@ -107,6 +118,46 @@ const ProfileScreen = ({navigation, route}: Props) => {
             style={{marginTop: 8}}
             onPress={() => setExpanded(!expanded)}
           />
+          <SectionHeader title="포트폴리오" style={{marginTop: 16}} />
+          <RowView style={{flexWrap: 'wrap', marginTop: 8}}>
+            {DUMMY_IMAGES.map((item, index) => (
+              <Pressable
+                key={index}
+                style={{
+                  flexDirection: 'row',
+                  width: (SCREEN_WIDTH - 38) / 3,
+                  height: (SCREEN_WIDTH - 38) / 3,
+                  margin: 1,
+                }}>
+                <Image source={item} style={{width: '100%', height: '100%'}} />
+              </Pressable>
+            ))}
+          </RowView>
+          <SectionHeader
+            title="강사 후기"
+            style={{marginTop: 20}}
+            onPress={() => {}}
+          />
+          <View style={{marginTop: 8}}>
+            <ReviewListItem
+              nickname="닉네임"
+              role="강사"
+              timestamp="2022.12.12"
+              content="후기 내용입니다. 후기 내용입니다. 후기 내용입니다. 후기 내용입니다."
+            />
+            <ReviewListItem
+              nickname="닉네임"
+              role="강사"
+              timestamp="2022.12.12"
+              content="후기 내용입니다. 후기 내용입니다. 후기 내용입니다. 후기 내용입니다."
+            />
+            <ReviewListItem
+              nickname="닉네임"
+              role="강사"
+              timestamp="2022.12.12"
+              content="후기 내용입니다. 후기 내용입니다. 후기 내용입니다. 후기 내용입니다."
+            />
+          </View>
         </ScrollView>
       )}
     </SafeAreaView>
