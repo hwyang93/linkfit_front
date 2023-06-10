@@ -83,4 +83,6 @@ export const iconPath = {
   CANCEL: require('@images/icon/cancel.png'),
   TIME: require('@images/icon/time.png'),
   SEARCH: require('@images/icon/search.png'),
+  CHEVRON_UP: require('@images/icon/chevron_up.png'),
+  CHEVRON_DOWN: require('@images/icon/chevron_down.png'),
 };
