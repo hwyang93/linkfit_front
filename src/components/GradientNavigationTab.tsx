@@ -17,7 +17,7 @@ const GradientNaivgationTab: React.FC = () => {
       colors={['#62C1E9', THEME.PRIMARY]}>
       <Pressable
         style={styles.tabItem}
-        onPress={() => navigation.navigate('RecruitMap')}>
+        onPress={() => navigation.navigate('RecruitList')}>
         <Text style={[common.text_m, common.fwb, {color: WHITE}]}>구인</Text>
       </Pressable>
       <Pressable

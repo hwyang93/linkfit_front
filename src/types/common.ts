@@ -16,3 +16,8 @@ export interface AxiosResponseWithPagingInfo<T> extends AxiosResponse<T> {
     perPage: string;
   };
 }
+
+export type Coordinate = {
+  x: number;
+  y: number;
+};

@@ -2,6 +2,7 @@ import Avatar from '@/components/Common/Avatar';
 import BottomSheet from '@/components/Common/BottomSheet';
 import DotPagination from '@/components/Common/DotPagination';
 import FilterChip from '@/components/Common/FilterChip';
+import FilterChipContainer from '@/components/Common/FilterChipContainer';
 import FloatingActionButton from '@/components/Common/FloatingActionButton';
 import Icon from '@/components/Common/Icon';
 import IconButton from '@/components/Common/IconButton';
@@ -255,15 +256,11 @@ const RecruitMapScreen = ({navigation}: Props) => {
 
   return (
     <SafeAreaView edges={['left', 'right']} style={{flex: 1}}>
-      <View>
-        <ScrollView
-          horizontal
-          style={{paddingHorizontal: 16, paddingVertical: 8}}>
-          <FilterChip label="포지션" style={common.mr8} rightIcon />
-          <FilterChip label="채용형태" style={common.mr8} rightIcon />
-          <FilterChip label="수업시간" rightIcon />
-        </ScrollView>
-      </View>
+      <FilterChipContainer>
+        <FilterChip label="포지션" style={common.mr8} rightIcon />
+        <FilterChip label="채용형태" style={common.mr8} rightIcon />
+        <FilterChip label="수업시간" rightIcon />
+      </FilterChipContainer>
       {position ? (
         <MapView
           style={{flex: 1}}
@@ -314,22 +311,18 @@ const RecruitMapScreen = ({navigation}: Props) => {
           onPress={() => navigation.navigate('RecruitList')}
         />
       </View>
-      <BottomSheet
-        visible={modalVisible}
-        onDismiss={closeModal}
-        content={
-          <View style={{alignItems: 'center'}}>
-            {/* TODO: width와 height를 지정하지 않으면 UI가 깨지는 버그 수정 */}
-            <View style={{width: SCREEN_WIDTH, height: 550}}>
-              <Tab.Navigator screenOptions={materialTopTabNavigationOptions}>
-                <Tab.Screen name="센터" component={CenterTab} />
-                <Tab.Screen name="강사" component={InstructorTab} />
-              </Tab.Navigator>
-            </View>
-            <DotPagination currentPage={1} totalPages={2} />
+      <BottomSheet visible={modalVisible} onDismiss={closeModal}>
+        <View style={{alignItems: 'center'}}>
+          {/* TODO: width와 height를 지정하지 않으면 UI가 깨지는 버그 수정 */}
+          <View style={{width: SCREEN_WIDTH, height: 550}}>
+            <Tab.Navigator screenOptions={materialTopTabNavigationOptions}>
+              <Tab.Screen name="센터" component={CenterTab} />
+              <Tab.Screen name="강사" component={InstructorTab} />
+            </Tab.Navigator>
           </View>
-        }
-      />
+          <DotPagination currentPage={1} totalPages={2} />
+        </View>
+      </BottomSheet>
     </SafeAreaView>
   );
 };

@@ -1,12 +1,14 @@
 import {LoggedInParamList} from '@/../AppInner';
 import {fetchBookmarkCommunities} from '@/api/community';
 import {fetchBookmarkRecruits} from '@/api/recruit';
+import RecruitListItem from '@/components/Compound/RecruitListItem';
 import toast from '@/hooks/toast';
 import common from '@/styles/common';
+import {FetchBookmarkCommunitiesResponse} from '@/types/api/community';
+import {FetchBookmarkRecruitsResponse} from '@/types/api/recruit';
 import {iconPath} from '@/utils/iconPath';
 import {materialTopTabNavigationOptions} from '@/utils/options/tab';
 import {formatDate} from '@/utils/util';
-import RecruitCarouselItem from '@components/RecruitCarouselItem';
 import {createMaterialTopTabNavigator} from '@react-navigation/material-top-tabs';
 import {NavigationProp, useNavigation} from '@react-navigation/native';
 import {GRAY, WHITE} from '@styles/colors';
@@ -98,11 +100,12 @@ const BookmarkCommunityListItem: React.FC<BookmarkCommunityListItemProps> = ({
 const Tab = createMaterialTopTabNavigator();
 
 const JobOfferTab: React.FC = () => {
-  const [bookmarkedRecruits, setBookmarkedRecruits] = useState<any[]>();
+  const [bookmarkedRecruits, setBookmarkedRecruits] =
+    useState<FetchBookmarkRecruitsResponse>();
 
   const getBookmarkRecruits = useCallback(() => {
     fetchBookmarkRecruits()
-      .then(({data}: any) => {
+      .then(({data}) => {
         setBookmarkedRecruits(data);
       })
       .catch(error => {
@@ -114,16 +117,22 @@ const JobOfferTab: React.FC = () => {
     getBookmarkRecruits();
   }, [getBookmarkRecruits]);
 
-  const renderItem = ({item}: any) => {
-    return <RecruitCarouselItem item={item} />;
-  };
-
   return (
     <View style={[styles.container]}>
       <FlatList
         contentContainerStyle={{marginTop: 16}}
         data={bookmarkedRecruits}
-        renderItem={renderItem}
+        renderItem={({item}) => (
+          <RecruitListItem
+            seq={item.seq}
+            position={item.recruit.position}
+            title={item.recruit.title}
+            companyName={item.recruit.companyName}
+            address={item.recruit.address}
+            bookmarkChecked={item.recruit.isBookmark === 'Y'}
+            imageSrc={item.recruit.writer?.profileImage?.originFileUrl}
+          />
+        )}
         numColumns={2}
         keyExtractor={item => 'bookmarkedRecruit' + item.seq}
         ItemSeparatorComponent={() => <View style={{marginBottom: 16}} />}
@@ -133,13 +142,14 @@ const JobOfferTab: React.FC = () => {
 };
 
 const CommunityTab: React.FC = () => {
-  const [bookmarks, setBookmarks] = useState<any[]>([]);
+  const [bookmarks, setBookmarks] =
+    useState<FetchBookmarkCommunitiesResponse>();
 
   const navigation = useNavigation<NavigationProp<LoggedInParamList>>();
 
   const getBookmarkCommunities = useCallback(() => {
     fetchBookmarkCommunities()
-      .then(({data}: any) => {
+      .then(({data}) => {
         setBookmarks(data);
       })
       .catch(error => {
@@ -151,10 +161,12 @@ const CommunityTab: React.FC = () => {
     getBookmarkCommunities();
   }, [getBookmarkCommunities]);
 
+  console.log('@', bookmarks);
+
   return (
     <View style={styles.container}>
       <ScrollView showsVerticalScrollIndicator={false}>
-        {bookmarks.map((bookmark, index) => (
+        {bookmarks?.map((bookmark, index) => (
           <BookmarkCommunityListItem
             key={index}
             title={bookmark.community.title}

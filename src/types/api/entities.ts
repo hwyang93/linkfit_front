@@ -50,7 +50,7 @@ export interface MemberEntity extends BaseEntity {
   status?: string;
   profileFileSeq?: number;
   isVerification?: YesNoFlag;
-  profileImage: CommonFileEntity;
+  profileImage?: CommonFileEntity;
   company?: CompanyEntity;
   links: MemberLinkEntity[];
   regionAuth: RegionAuthEntity;
@@ -130,6 +130,7 @@ export interface ResumeEntity extends BaseEntity {
   educations: EducationEntity[];
   licence: MemberLicenceEntity;
   writer: MemberEntity;
+  isSelected: boolean;
 }
 
 export interface CareerEntity extends BaseEntity {
@@ -189,10 +190,14 @@ export interface CommunityEntity extends BaseEntity {
   category: string;
   title: string;
   contents: string;
+  writer: MemberEntity;
   viewCount: number;
   writerSeq: number;
+  writerType: string;
+  writerCompanyName: string;
+  writerName: string;
   comments: CommunityCommentEntity[];
-  writer: MemberEntity;
+  commentsLength: number;
   bookmarks: CommunityFavoriteEntity[];
   isBookmark: YesNoFlag;
   bookmarkCount: number;
@@ -241,6 +246,8 @@ export interface RecruitDateEntity extends BaseEntity {
   seq: number;
   day: string;
   time: string;
+  isSelected: boolean;
+  isApplied: boolean;
   recruitSeq: number;
   recruit: RecruitEntity;
 }
@@ -272,9 +279,11 @@ export interface RecruitEntity extends BaseEntity {
   lon: number;
   lat: number;
   writerSeq: number;
-  writer: MemberEntity;
+  writer?: MemberEntity;
   dates: RecruitDateEntity[];
   bookmarks: RecruitFavoriteEntity[];
+  isBookmark: YesNoFlag;
+  applyInfo?: RecruitApplyEntity[];
 }
 
 export interface RecruitApplyEntity extends BaseEntity {

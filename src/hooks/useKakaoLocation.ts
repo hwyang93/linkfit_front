@@ -1,6 +1,6 @@
-import axios, {isAxiosError} from 'axios';
+import {getKakaoLocation} from '@/api/kakao';
+import {isAxiosError} from 'axios';
 import {useState} from 'react';
-import Config from 'react-native-config';
 import toast from './toast';
 
 type Location = {
@@ -20,14 +20,7 @@ const useKakaoLocation = ({
 
   const getLocation = async () => {
     try {
-      const response = await axios.get(
-        `https://dapi.kakao.com/v2/local/geo/coord2regioncode.json?input_coord=WGS84&x=${longitude}&y=${latitude}`,
-        {
-          headers: {
-            Authorization: `KakaoAK ${Config.KAKAO_API_REST_KEY}`,
-          },
-        },
-      );
+      const response = await getKakaoLocation(latitude, longitude);
 
       const regionInfo = response.data.documents.find((item: any) => {
         return item.region_type === 'B';

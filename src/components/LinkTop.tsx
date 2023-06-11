@@ -1,6 +1,6 @@
 import {LoggedInParamList} from '@/../AppInner';
+import RecruitListItem from '@/components/Compound/RecruitListItem';
 import {fetchRecommendedRecruits} from '@api/recruit';
-import RecruitCarouselItem from '@components/RecruitCarouselItem';
 import toast from '@hooks/toast';
 import {NavigationProp, useNavigation} from '@react-navigation/native';
 import common from '@styles/common';
@@ -28,7 +28,7 @@ const LinkTop: React.FC = () => {
 
   const renderItem = ({item}: any) => {
     return (
-      <RecruitCarouselItem
+      <RecruitListItem
         seq={item.seq}
         title={item.title}
         position={item.position}

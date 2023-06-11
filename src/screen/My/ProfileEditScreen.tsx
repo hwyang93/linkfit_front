@@ -1,26 +1,26 @@
+import BoxButton from '@/components/Common/BoxButton';
+import CTAButton from '@/components/Common/CTAButton';
+import TextField from '@/components/Common/TextField';
+import MESSAGE from '@/utils/constants/message';
 import {iconPath} from '@/utils/iconPath';
 import {fetchCheckNickname, updateProfile} from '@api/member';
 import DismissKeyboardView from '@components/DismissKeyboardView';
-import Input, {KeyboardTypes} from '@components/Input';
 import toast from '@hooks/toast';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import {WHITE} from '@styles/colors';
 import common from '@styles/common';
 import {useCallback, useEffect, useState} from 'react';
-import {
-  ActivityIndicator,
-  Alert,
-  Image,
-  Pressable,
-  StyleSheet,
-  Text,
-  View,
-} from 'react-native';
+import {Image, Pressable, StyleSheet, Text, View} from 'react-native';
 import {Asset, MediaType, launchImageLibrary} from 'react-native-image-picker';
-import LinearGradient from 'react-native-linear-gradient';
 import {LoggedInParamList} from '../../../AppInner';
 
 const LOADING = false;
+
+const LINKS = {
+  seq: null,
+  type: '',
+  url: '',
+};
 
 type Props = NativeStackScreenProps<LoggedInParamList, 'ProfileEdit'>;
 
@@ -29,13 +29,6 @@ const ProfileEditScreen = ({navigation, route}: Props) => {
   const [intro, setIntro] = useState('');
   const [field, setField] = useState('');
   const [licences, setLicences] = useState<any[]>([]);
-  const [links, setLinks] = useState<any[]>([
-    {
-      seq: null,
-      type: '',
-      url: '',
-    },
-  ]);
   const [imageUri, setImageUri] = useState<any>({});
   const [imageObj, setImageObj] = useState<{
     name: string | undefined;
@@ -59,7 +52,7 @@ const ProfileEditScreen = ({navigation, route}: Props) => {
     formData.append('nickname', nickname);
     formData.append('intro', intro);
     formData.append('field', field);
-    formData.append('links', links);
+    formData.append('links', LINKS);
     if (imageObj.uri) {
       formData.append('file', imageObj);
     }
@@ -69,22 +62,22 @@ const ProfileEditScreen = ({navigation, route}: Props) => {
         toast.success({message: '프로필이 수정되었습니다.'});
         navigation.goBack();
       })
-      .catch((e: any) => {
-        toast.error({message: e.message});
+      .catch(error => {
+        toast.error({message: error.message});
       });
-  }, [nickname, intro, field, links, imageObj, navigation]);
+  }, [nickname, intro, field, imageObj, navigation]);
 
   const onCheckNickname = useCallback(async () => {
     await fetchCheckNickname(nickname)
-      .then(({data}: any) => {
+      .then(({data}) => {
         if (!data.duplication) {
-          toast.info({message: '사용 가능한 닉네임입니다.'});
+          toast.info({message: MESSAGE.NICKNAME_AVAILABLE});
         } else {
-          toast.warn({message: '이미 사용 중인 닉네임입니다.'});
+          toast.warn({message: MESSAGE.NICKNAME_DUPLICATED});
         }
       })
-      .catch((e: any) => {
-        console.log(e);
+      .catch(error => {
+        console.log(error);
       });
   }, [nickname]);
 
@@ -136,104 +129,66 @@ const ProfileEditScreen = ({navigation, route}: Props) => {
 
         <View style={[common.mv16, common.rowCenter]}>
           <View style={[common.mr8, {flex: 3}]}>
-            <Input
-              label={'닉네임'}
-              onChangeText={(text: string) => setNickname(text.trim())}
+            <TextField
+              label="닉네임"
+              onChangeText={text => setNickname(text.trim())}
               value={nickname}
-              placeholder={'김링크'}
-              keyboardType={KeyboardTypes.DEFAULT}
+              placeholder="김링크"
+              keyboardType="default"
             />
           </View>
-          <Pressable style={[{flex: 1}]} onPress={onCheckNickname}>
-            <LinearGradient
-              style={[common.button, {height: 40}]}
-              start={{x: 0.1, y: 0.5}}
-              end={{x: 0.6, y: 1}}
-              colors={
-                canGoNext ? ['#74ebe4', '#3962f3'] : ['#dcdcdc', '#dcdcdc']
-              }>
-              {LOADING ? (
-                <ActivityIndicator color="white" />
-              ) : (
-                <Text style={[common.text_s, styles.confirm]}>확인</Text>
-              )}
-            </LinearGradient>
-          </Pressable>
-        </View>
-
-        <View style={common.mb16}>
-          <Input
-            label={'소개글'}
-            onChangeText={(text: string) => setIntro(text)}
-            value={intro}
-            placeholder={'소개글을 작성해주세요.'}
-            keyboardType={KeyboardTypes.DEFAULT}
-            editable={true}
-            multiline={true}
+          <BoxButton
+            label="확인"
+            onPress={onCheckNickname}
+            loading={LOADING}
+            disabled={!canGoNext}
           />
         </View>
-
-        {/*<Pressable*/}
-        {/*  style={common.rowCenter}*/}
-        {/*  onPress={() => navigation.navigate('LinkAdd')}>*/}
-        {/*  <Image source={iconPath.LINK_URL} style={common.size24} />*/}
-        {/*  <Text style={[common.ml8, common.text_m, {color: GRAY.DEFAULT}]}>*/}
-        {/*    링크 추가하기*/}
-        {/*  </Text>*/}
-        {/*</Pressable>*/}
-        {licences.map((licence, index) => {
-          return (
-            <Pressable
-              key={licence + '' + index}
-              onPress={() => {
-                console.log(licence.field);
-                setField(licence.field);
-              }}>
-              <View>
-                <View
-                  style={[
-                    common.basicBox,
-                    common.rowCenterBetween,
-                    common.mb8,
-                  ]}>
-                  <View style={common.rowCenter}>
-                    <Image
-                      source={iconPath.MY_LICENSE}
-                      style={[common.size24, common.mr8]}
-                    />
-                    <Text style={common.text_m}>{licence.field}</Text>
-                  </View>
-                  {field === licence.field ? (
-                    <Image
-                      source={iconPath.CHECK_BLACK}
-                      style={common.size24}
-                    />
-                  ) : (
-                    ''
-                  )}
+        <View style={common.mb16}>
+          <TextField
+            height={343}
+            label="소개글"
+            onChangeText={text => setIntro(text)}
+            placeholder="소개글을 작성해주세요."
+            value={intro}
+            keyboardType="default"
+            editable
+            multiline
+          />
+        </View>
+        {licences.map((licence, index) => (
+          <Pressable
+            key={licence + '' + index}
+            onPress={() => {
+              console.log(licence.field);
+              setField(licence.field);
+            }}>
+            <View>
+              <View
+                style={[common.basicBox, common.rowCenterBetween, common.mb8]}>
+                <View style={common.rowCenter}>
+                  <Image
+                    source={iconPath.MY_LICENSE}
+                    style={[common.size24, common.mr8]}
+                  />
+                  <Text style={common.text_m}>{licence.field}</Text>
                 </View>
+                {field === licence.field ? (
+                  <Image source={iconPath.CHECK_BLACK} style={common.size24} />
+                ) : (
+                  ''
+                )}
               </View>
-            </Pressable>
-          );
-        })}
-
-        {/* 완료 버튼 */}
-        <View style={common.mt40}>
-          <Pressable disabled={!canGoNext} onPress={onUpdateProfile}>
-            <LinearGradient
-              style={common.button}
-              start={{x: 0.1, y: 0.5}}
-              end={{x: 0.6, y: 1}}
-              colors={
-                canGoNext ? ['#74ebe4', '#3962f3'] : ['#dcdcdc', '#dcdcdc']
-              }>
-              {LOADING ? (
-                <ActivityIndicator color="white" />
-              ) : (
-                <Text style={common.buttonText}>완료</Text>
-              )}
-            </LinearGradient>
+            </View>
           </Pressable>
+        ))}
+        <View style={common.mt40}>
+          <CTAButton
+            label="완료"
+            loading={LOADING}
+            disabled={!canGoNext}
+            onPress={onUpdateProfile}
+          />
         </View>
       </View>
     </DismissKeyboardView>

@@ -10,12 +10,11 @@ export type FetchCommunityPostsResponse = CommunityEntity[];
 
 export type FetchCommunityPostResponse = CommunityEntity;
 
-export interface FetchBookmarkCommunitiesResponse {
+export type FetchBookmarkCommunitiesResponse = {
   createdAt: string;
   updatedAt: string;
   seq: number;
   memberSeq: number;
   favoriteSeq: number;
   community: CommunityEntity;
-}
-[];
+}[];

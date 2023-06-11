@@ -2,9 +2,16 @@ import {iconPath} from '@/utils/iconPath';
 import {GRAY, INPUT} from '@styles/colors';
 import common from '@styles/common';
 import {useState} from 'react';
-import {Image, StyleSheet, Text, TextInput, View} from 'react-native';
+import {
+  Image,
+  KeyboardTypeOptions,
+  StyleSheet,
+  Text,
+  TextInput,
+  View,
+} from 'react-native';
 
-export const KeyboardTypes = {
+export const KeyboardTypes: Record<string, KeyboardTypeOptions> = {
   DEFAULT: 'default',
   EMAIL: 'email-address',
   PHONE: 'phone-pad',

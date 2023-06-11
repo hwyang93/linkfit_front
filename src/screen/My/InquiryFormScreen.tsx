@@ -1,4 +1,5 @@
 import {LoggedInParamList} from '@/../AppInner';
+import CTAButton from '@/components/Common/CTAButton';
 import DismissKeyboardView from '@components/DismissKeyboardView';
 import Input, {KeyboardTypes} from '@components/Input';
 import SelectBox from '@components/SelectBox';
@@ -6,14 +7,7 @@ import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import {WHITE} from '@styles/colors';
 import common from '@styles/common';
 import {useState} from 'react';
-import {
-  ActivityIndicator,
-  Pressable,
-  StyleSheet,
-  Text,
-  View,
-} from 'react-native';
-import LinearGradient from 'react-native-linear-gradient';
+import {StyleSheet, View} from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
 
 type Props = NativeStackScreenProps<LoggedInParamList, 'InquiryForm'>;
@@ -61,24 +55,12 @@ const InquiryFormScreen = ({}: Props) => {
             multiline={true}
           />
         </View>
-
-        {/* 문의 내용 등록 버튼 */}
         <View style={common.mt40}>
-          <Pressable onPress={() => {}}>
-            <LinearGradient
-              style={common.button}
-              start={{x: 0.1, y: 0.5}}
-              end={{x: 0.6, y: 1}}
-              colors={
-                canGoNext ? ['#74ebe4', '#3962f3'] : ['#dcdcdc', '#dcdcdc']
-              }>
-              {loading ? (
-                <ActivityIndicator color="white" />
-              ) : (
-                <Text style={common.buttonText}>1:1 문의 하기</Text>
-              )}
-            </LinearGradient>
-          </Pressable>
+          <CTAButton
+            label="1:1 문의 하기"
+            loading={loading}
+            disabled={!canGoNext}
+          />
         </View>
       </DismissKeyboardView>
     </SafeAreaView>

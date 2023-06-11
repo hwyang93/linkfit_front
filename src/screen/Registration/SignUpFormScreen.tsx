@@ -1,3 +1,4 @@
+import CTAButton from '@/components/Common/CTAButton';
 import {createMember} from '@api/member';
 import BirthdayPicker from '@components/BirthdayPicker';
 import DismissKeyboardView from '@components/DismissKeyboardView';
@@ -8,8 +9,7 @@ import toast from '@hooks/toast';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import common from '@styles/common';
 import {useCallback, useState} from 'react';
-import {ActivityIndicator, Pressable, Text, View} from 'react-native';
-import LinearGradient from 'react-native-linear-gradient';
+import {View} from 'react-native';
 import {LoggedInParamList} from '../../../AppInner';
 
 const GENDER_DATA = [{value: '남자'}, {value: '여자'}];
@@ -131,23 +131,13 @@ const SignUpFormScreen = ({navigation, route}: Props) => {
               secureTextEntry
             />
           </View>
-
           <View style={common.mt20}>
-            <Pressable disabled={!canGoNext} onPress={signIn}>
-              <LinearGradient
-                style={common.button}
-                start={{x: 0.1, y: 0.5}}
-                end={{x: 0.6, y: 1}}
-                colors={
-                  canGoNext ? ['#74ebe4', '#3962f3'] : ['#dcdcdc', '#dcdcdc']
-                }>
-                {loading ? (
-                  <ActivityIndicator color="white" />
-                ) : (
-                  <Text style={common.buttonText}>회원가입</Text>
-                )}
-              </LinearGradient>
-            </Pressable>
+            <CTAButton
+              label="회원가입"
+              loading={loading}
+              disabled={!canGoNext}
+              onPress={signIn}
+            />
           </View>
         </View>
       </View>

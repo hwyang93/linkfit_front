@@ -1,3 +1,4 @@
+import ResumeCard from '@/components/Compound/ResumeCard';
 import {iconPath} from '@/utils/iconPath';
 import {formatDate} from '@/utils/util';
 import {deleteResume, fetchResumes, updateResumeMaster} from '@api/resume';
@@ -5,7 +6,7 @@ import Modal from '@components/ModalSheet';
 import toast from '@hooks/toast';
 import {useIsFocused} from '@react-navigation/native';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
-import {BLUE, GRAY, WHITE} from '@styles/colors';
+import {BLUE, WHITE} from '@styles/colors';
 import common from '@styles/common';
 import {useCallback, useEffect, useState} from 'react';
 import {
@@ -130,53 +131,27 @@ const ResumeManageScreen = ({navigation}: Props) => {
 
   return (
     <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
-      {resumes.map(resume => {
-        return (
-          <Pressable
-            key={'resume_' + resume.seq}
-            onPress={() =>
-              navigation.navigate('ResumePreview', {
-                resumeSeq: resume.seq,
-                applySeq: null,
-                recruitSeq: null,
-              })
-            }>
-            <View style={[common.basicBox, common.mb8]}>
-              <View style={common.rowCenter}>
-                {resume.isMaster === 'Y' && (
-                  <View style={common.resumeBadge}>
-                    <Text
-                      style={[
-                        common.text,
-                        common.fs10,
-                        {color: BLUE.DEFAULT, textAlign: 'center'},
-                      ]}>
-                      대표
-                    </Text>
-                  </View>
-                )}
-              </View>
-
-              <Text style={[common.title, common.mb12]} numberOfLines={1}>
-                {resume.title}
-              </Text>
-              <Text style={[common.text_s, {color: GRAY.DARK}]}>
-                {formatDate(resume.updatedAt)}
-              </Text>
-              <Pressable
-                style={styles.kebabIcon}
-                hitSlop={10}
-                onPress={() => {
-                  setSelectedResume(resume);
-                  openModal();
-                }}>
-                <Image source={iconPath.KEBAB} style={[common.size24]} />
-              </Pressable>
-            </View>
-          </Pressable>
-        );
-      })}
-
+      {resumes.map(resume => (
+        <ResumeCard
+          style={{marginBottom: 8}}
+          key={resume.seq}
+          isMaster={resume.isMaster}
+          title={resume.title}
+          timestamp={formatDate(resume.updatedAt)}
+          kebabIconShown
+          onPress={() =>
+            navigation.navigate('ResumePreview', {
+              resumeSeq: resume.seq,
+              applySeq: null,
+              recruitSeq: null,
+            })
+          }
+          onKebabIconPress={() => {
+            setSelectedResume(resume);
+            openModal();
+          }}
+        />
+      ))}
       <Modal
         modalVisible={modalVisible}
         setModalVisible={setModalVisible}

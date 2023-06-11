@@ -37,3 +37,18 @@ export const requestPermission = async () => {
     console.log(e);
   }
 };
+
+export const getFilterChipLabel = (
+  filterList: string[],
+  defaultLabel: string,
+) => {
+  if (filterList.length === 1) {
+    return filterList[0];
+  }
+
+  if (filterList.length > 1) {
+    return `${filterList[0]} 외 ${filterList.length - 1}개`;
+  }
+
+  return defaultLabel;
+};

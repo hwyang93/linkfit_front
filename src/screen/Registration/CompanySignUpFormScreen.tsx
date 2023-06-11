@@ -1,3 +1,5 @@
+import BoxButton from '@/components/Common/BoxButton';
+import CTAButton from '@/components/Common/CTAButton';
 import {AuthStackParamList} from '@/navigations/AuthStack';
 import BirthdayPicker from '@components/BirthdayPicker';
 import DismissKeyboardView from '@components/DismissKeyboardView';
@@ -8,14 +10,7 @@ import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import {WHITE} from '@styles/colors';
 import common from '@styles/common';
 import {useState} from 'react';
-import {
-  ActivityIndicator,
-  Pressable,
-  StyleSheet,
-  Text,
-  View,
-} from 'react-native';
-import LinearGradient from 'react-native-linear-gradient';
+import {StyleSheet, View} from 'react-native';
 
 type Props = NativeStackScreenProps<AuthStackParamList, 'CompanySignUpForm'>;
 
@@ -54,21 +49,7 @@ const CompanySignUpFormScreen = ({}: Props) => {
               keyboardType={KeyboardTypes.PHONE}
             />
           </View>
-          <Pressable style={[{flex: 1}]}>
-            <LinearGradient
-              style={[common.button, {height: 40}]}
-              start={{x: 0.1, y: 0.5}}
-              end={{x: 0.6, y: 1}}
-              colors={
-                canGoNext ? ['#74ebe4', '#3962f3'] : ['#dcdcdc', '#dcdcdc']
-              }>
-              {loading ? (
-                <ActivityIndicator color="white" />
-              ) : (
-                <Text style={[common.text_s, styles.confirm]}>확인</Text>
-              )}
-            </LinearGradient>
-          </Pressable>
+          <BoxButton label="확인" loading={loading} disabled={!canGoNext} />
         </View>
         {/* 사업자 등록번호 입력 란 끝 */}
         <View style={common.mb16}>
@@ -180,24 +161,13 @@ const CompanySignUpFormScreen = ({}: Props) => {
             secureTextEntry
           />
         </View>
-
-        {/* 본인인증 버튼 */}
         <View style={common.mt20}>
-          <Pressable onPress={() => console.log(category)}>
-            <LinearGradient
-              style={common.button}
-              start={{x: 0.1, y: 0.5}}
-              end={{x: 0.6, y: 1}}
-              colors={
-                canGoNext ? ['#74ebe4', '#3962f3'] : ['#dcdcdc', '#dcdcdc']
-              }>
-              {loading ? (
-                <ActivityIndicator color="white" />
-              ) : (
-                <Text style={common.buttonText}>본인인증</Text>
-              )}
-            </LinearGradient>
-          </Pressable>
+          <CTAButton
+            label="본인인증"
+            loading={loading}
+            disabled={!canGoNext}
+            onPress={() => console.log(category)}
+          />
         </View>
       </View>
     </DismissKeyboardView>

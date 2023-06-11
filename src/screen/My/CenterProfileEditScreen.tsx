@@ -1,19 +1,12 @@
+import CTAButton from '@/components/Common/CTAButton';
 import DismissKeyboardView from '@components/DismissKeyboardView';
 import Input, {KeyboardTypes} from '@components/Input';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import {WHITE} from '@styles/colors';
 import common from '@styles/common';
 import {useState} from 'react';
-import {
-  ActivityIndicator,
-  Image,
-  Pressable,
-  StyleSheet,
-  Text,
-  View,
-} from 'react-native';
+import {Image, Pressable, StyleSheet, View} from 'react-native';
 import {Asset, MediaType, launchImageLibrary} from 'react-native-image-picker';
-import LinearGradient from 'react-native-linear-gradient';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {LoggedInParamList} from '../../../AppInner';
 
@@ -109,24 +102,8 @@ const CenterProfileEditScreen = ({}: Props) => {
             multiline={true}
           />
         </View>
-
-        {/* 완료 버튼 */}
         <View style={common.mb16}>
-          <Pressable disabled={!canGoNext} onPress={() => {}}>
-            <LinearGradient
-              style={common.button}
-              start={{x: 0.1, y: 0.5}}
-              end={{x: 0.6, y: 1}}
-              colors={
-                canGoNext ? ['#74ebe4', '#3962f3'] : ['#dcdcdc', '#dcdcdc']
-              }>
-              {loading ? (
-                <ActivityIndicator color="white" />
-              ) : (
-                <Text style={common.buttonText}>완료</Text>
-              )}
-            </LinearGradient>
-          </Pressable>
+          <CTAButton label="완료" loading={loading} disabled={!canGoNext} />
         </View>
       </DismissKeyboardView>
     </SafeAreaView>

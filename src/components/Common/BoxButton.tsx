@@ -39,6 +39,7 @@ const BoxButton: React.FC<BoxButtonProps> = ({
                 paddingVertical: 10,
                 paddingHorizontal: 24,
                 borderRadius: 20,
+                height: 40,
               }}
               start={{x: 0.1, y: 0.5}}
               end={{x: 0.6, y: 1}}

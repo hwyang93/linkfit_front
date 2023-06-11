@@ -1,14 +1,8 @@
 import common from '@/styles/common';
+import {iconPath} from '@/utils/iconPath';
 import React from 'react';
-import {
-  Pressable,
-  StyleProp,
-  Text,
-  TextProps,
-  View,
-  ViewStyle,
-} from 'react-native';
-import FontAwesome from 'react-native-vector-icons/FontAwesome';
+import {Pressable, StyleProp, Text, TextProps, ViewStyle} from 'react-native';
+import Icon from './Icon';
 
 interface SectionHeaderProps extends TextProps {
   title: string;
@@ -18,21 +12,24 @@ interface SectionHeaderProps extends TextProps {
 
 const SectionHeader: React.FC<SectionHeaderProps> = ({
   title,
-  onPress,
   style,
+  onPress,
   ...props
 }) => {
   return (
     <Pressable
-      style={[common.rowCenterBetween, style]}
+      style={[common.rowCenterBetween, {height: 24}, style]}
       onPress={onPress}
       {...props}>
-      <Text style={common.title_s}>{title}</Text>
-      {onPress && (
-        <View>
-          <FontAwesome name="chevron-right" color="black" />
-        </View>
-      )}
+      <Text
+        style={{
+          fontSize: 16,
+          fontWeight: '700',
+          lineHeight: 16,
+        }}>
+        {title}
+      </Text>
+      {onPress && <Icon source={iconPath.CHEVRON_RIGHT} />}
     </Pressable>
   );
 };

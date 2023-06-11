@@ -1,6 +1,7 @@
+import FABContainer from '@/components/Common/FABContainer';
+import FloatingActionButton from '@/components/Common/FloatingActionButton';
 import {iconPath} from '@/utils/iconPath';
 import EmptySet from '@components/EmptySet';
-import FloatingLinkButton from '@components/FloatingLinkButton';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import {BLUE, GRAY, WHITE} from '@styles/colors';
 import common from '@styles/common';
@@ -87,14 +88,13 @@ const InquiryScreen = ({navigation}: Props) => {
       ) : (
         <EmptySet text={'등록된 문의 내역이 없어요.'} />
       )}
-
-      <FloatingLinkButton
-        title={'문의하기'}
-        type={'gradient'}
-        bottom={16}
-        right={16}
-        job={toInquiry}
-      />
+      <FABContainer>
+        <FloatingActionButton
+          iconSource={iconPath.LIST}
+          label="문의하기"
+          onPress={toInquiry}
+        />
+      </FABContainer>
     </SafeAreaView>
   );
 };

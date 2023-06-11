@@ -78,21 +78,16 @@ const CommunityMyPost: React.FC = () => {
           );
         }}
       />
-      <BottomSheet
-        visible={modalVisible}
-        onDismiss={closeModal}
-        title="더보기"
-        content={
-          <ScrollView
-            style={{width: '100%'}}
-            showsVerticalScrollIndicator={false}>
-            <View style={{paddingHorizontal: 16}}>
-              <Text style={{padding: 16, fontSize: 18}}>수정하기</Text>
-              <Text style={[{padding: 16, fontSize: 18}]}>삭제하기</Text>
-            </View>
-          </ScrollView>
-        }
-      />
+      <BottomSheet visible={modalVisible} onDismiss={closeModal} title="더보기">
+        <ScrollView
+          style={{width: '100%'}}
+          showsVerticalScrollIndicator={false}>
+          <View style={{paddingHorizontal: 16}}>
+            <Text style={{padding: 16, fontSize: 18}}>수정하기</Text>
+            <Text style={[{padding: 16, fontSize: 18}]}>삭제하기</Text>
+          </View>
+        </ScrollView>
+      </BottomSheet>
     </View>
   );
 };

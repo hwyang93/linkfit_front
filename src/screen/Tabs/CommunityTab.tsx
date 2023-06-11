@@ -1,6 +1,7 @@
 import EmptyState from '@/components/Common/EmptyState';
-import FabContainer from '@/components/Common/FabContainer';
+import FABContainer from '@/components/Common/FABContainer';
 import FilterChip from '@/components/Common/FilterChip';
+import FilterChipContainer from '@/components/Common/FilterChipContainer';
 import FloatingActionButton from '@/components/Common/FloatingActionButton';
 import {FetchCommunityPostsResponse} from '@/types/api/community';
 import {CommunityEntity} from '@/types/api/entities';
@@ -14,7 +15,7 @@ import {WHITE} from '@styles/colors';
 import common from '@styles/common';
 import {isAxiosError} from 'axios';
 import {useCallback, useEffect, useState} from 'react';
-import {FlatList, ScrollView, StyleSheet, Text, View} from 'react-native';
+import {FlatList, StyleSheet, Text, View} from 'react-native';
 import {LoggedInParamList} from '../../../AppInner';
 
 type Props = NativeStackScreenProps<LoggedInParamList, 'Community'>;
@@ -52,19 +53,12 @@ const CommunityTab = ({navigation}: Props) => {
 
   return (
     <View style={styles.container}>
-      <View>
-        <ScrollView
-          horizontal
-          style={{
-            paddingHorizontal: 16,
-            paddingVertical: 8,
-          }}>
-          <FilterChip label="필라테스" style={{marginRight: 8}} />
-          <FilterChip label="요가" style={{marginRight: 8}} />
-          <FilterChip label="강사" style={{marginRight: 8}} />
-          <FilterChip label="센터" />
-        </ScrollView>
-      </View>
+      <FilterChipContainer>
+        <FilterChip label="필라테스" style={{marginRight: 8}} />
+        <FilterChip label="요가" style={{marginRight: 8}} />
+        <FilterChip label="강사" style={{marginRight: 8}} />
+        <FilterChip label="센터" />
+      </FilterChipContainer>
       <Text style={[common.title, {margin: 16}]}>최근 게시글</Text>
       {posts?.length !== 0 && (
         <FlatList
@@ -81,12 +75,12 @@ const CommunityTab = ({navigation}: Props) => {
         />
       )}
       {posts?.length === 0 && <EmptyState />}
-      <FabContainer style={{bottom: 16}}>
+      <FABContainer style={{bottom: 16}}>
         <FloatingActionButton
           iconSource={iconPath.PENCIL_W}
           onPress={onPressFAB}
         />
-      </FabContainer>
+      </FABContainer>
     </View>
   );
 };

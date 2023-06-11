@@ -23,15 +23,14 @@ export interface FetchRecruitApplicationsResponse {
 
 export type FetchRecruitResponse = RecruitEntity;
 
-export interface FetchBookmarkRecruitsResponse {
+export type FetchBookmarkRecruitsResponse = {
   createdAt: string;
   updatedAt: string;
-  seq: number;
-  memberSeq: number;
   favoriteSeq: number;
+  memberSeq: number;
+  seq: number;
   recruit: RecruitEntity;
-}
-[];
+}[];
 
 export interface FetchRecruitApplicationsMyParams {
   period?: string;

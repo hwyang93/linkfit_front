@@ -1,50 +1,167 @@
-import {Pressable, SafeAreaView, StyleSheet, Text} from 'react-native';
-
+import {fetchInstructor} from '@/api/instructor';
+import ExpandButton from '@/components/Common/ExpandButton';
+import IconButton from '@/components/Common/IconButton';
+import RowView from '@/components/Common/RowView';
+import SectionHeader from '@/components/Common/SectionHeader';
+import InstructorProfile from '@/components/Compound/InstructorProfile';
+import RecruitCard from '@/components/Compound/RecruitCard';
+import ReviewListItem from '@/components/Compound/ReviewListItem';
+import {useAppSelector} from '@/store';
+import {MemberReputationEntity} from '@/types/api/entities';
+import {FetchInstructorResponse} from '@/types/api/instructor';
+import {SCREEN_WIDTH} from '@/utils/constants/common';
+import {iconPath} from '@/utils/iconPath';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
-import ProfileScreenTabView from '@screen/ProfileScreenTabView';
-import {WHITE} from '@styles/colors';
-import common from '@styles/common';
-import {useState} from 'react';
-import LinearGradient from 'react-native-linear-gradient';
+import {useEffect, useState} from 'react';
+import {Image, Pressable, ScrollView, Text, View} from 'react-native';
+import {SafeAreaView} from 'react-native-safe-area-context';
 import {LoggedInParamList} from '../../AppInner';
+
+const DUMMY_IMAGES = [
+  require('@images/center_01.png'),
+  require('@images/center_02.png'),
+  require('@images/center_03.png'),
+  require('@images/center_04.png'),
+  require('@images/center_05.png'),
+];
 
 type Props = NativeStackScreenProps<LoggedInParamList, 'Profile'>;
 
 const ProfileScreen = ({navigation, route}: Props) => {
-  const [memberSeq] = useState(route.params.memberSeq);
+  const [expanded, setExpanded] = useState(false);
+  const [instructor, setInstructor] = useState<FetchInstructorResponse>();
+  const [reputation, setReputation] = useState<MemberReputationEntity[]>();
+
+  const memberInfo = useAppSelector(state => state.user);
+
+  const memberSeq = route.params.memberSeq;
+
+  useEffect(() => {
+    const loadData = async () => {
+      await fetchInstructor(route.params.memberSeq)
+        .then(({data}) => {
+          setInstructor(data);
+          setReputation(data.reputations);
+        })
+        .catch(error => {
+          console.log(error);
+        });
+    };
+    loadData();
+  }, [route.params.memberSeq]);
 
   return (
-    <SafeAreaView style={{flex: 1}}>
-      {/* 탭뷰 컴포넌트 */}
-      <ProfileScreenTabView />
-      {/* 제안하기 버튼 */}
-      <Pressable
-        style={styles.suggestion}
-        onPress={() =>
-          navigation.navigate('Suggestion', {targetMemberSeq: memberSeq})
-        }>
-        <LinearGradient
-          style={[common.button, {height: 40}]}
-          start={{x: 0.1, y: 0.5}}
-          end={{x: 0.6, y: 1}}
-          colors={['#74ebe4', '#3962f3']}>
-          <Text style={[common.text_s, common.fwb, {color: WHITE}]}>
-            제안하기
+    <SafeAreaView edges={['left', 'right']} style={{flex: 1}}>
+      {instructor && (
+        <ScrollView contentContainerStyle={{padding: 16, paddingBottom: 32}}>
+          <InstructorProfile
+            nickname={instructor.nickname}
+            field="필라테스"
+            career={instructor.career}
+            address={instructor.address}
+            followerCount={instructor.follower}
+            isCertificated
+          />
+          <SectionHeader style={{marginTop: 16}} title="소개글" />
+          <Text style={{fontSize: 16, lineHeight: 24, marginTop: 8}}>
+            강남구 역삼동에 위치해있는 필라테스 센터입니다.
           </Text>
-        </LinearGradient>
-      </Pressable>
+          <RowView
+            style={{
+              marginTop: 20,
+              justifyContent: 'space-between',
+            }}>
+            <SectionHeader title="링크" />
+            <RowView>
+              <IconButton source={iconPath.LINK_URL} />
+              <IconButton
+                source={iconPath.LINK_BLOG}
+                style={{marginLeft: 16}}
+              />
+              <IconButton
+                source={iconPath.LINK_BRUNCH}
+                style={{marginLeft: 16}}
+              />
+            </RowView>
+          </RowView>
+          <SectionHeader title="채용 중" style={{marginTop: 20}} />
+          <RecruitCard
+            style={{marginTop: 8}}
+            title="필라테스 강사님 모십니다."
+            recruitType="파트"
+            date="월,수,금"
+            time="시간협의"
+            bookmarked
+          />
+          {expanded && (
+            <>
+              <RecruitCard
+                style={{marginTop: 8}}
+                title="필라테스 강사님 모십니다."
+                recruitType="파트"
+                date="월,수,금"
+                time="시간협의"
+                bookmarked
+              />
+              <RecruitCard
+                style={{marginTop: 8}}
+                title="필라테스 강사님 모십니다."
+                recruitType="파트"
+                date="월,수,금"
+                time="시간협의"
+                bookmarked
+              />
+            </>
+          )}
+          <ExpandButton
+            expanded={expanded}
+            style={{marginTop: 8}}
+            onPress={() => setExpanded(!expanded)}
+          />
+          <SectionHeader title="포트폴리오" style={{marginTop: 16}} />
+          <RowView style={{flexWrap: 'wrap', marginTop: 8}}>
+            {DUMMY_IMAGES.map((item, index) => (
+              <Pressable
+                key={index}
+                style={{
+                  flexDirection: 'row',
+                  width: (SCREEN_WIDTH - 38) / 3,
+                  height: (SCREEN_WIDTH - 38) / 3,
+                  margin: 1,
+                }}>
+                <Image source={item} style={{width: '100%', height: '100%'}} />
+              </Pressable>
+            ))}
+          </RowView>
+          <SectionHeader
+            title="강사 후기"
+            style={{marginTop: 20}}
+            onPress={() => {}}
+          />
+          <View style={{marginTop: 8}}>
+            <ReviewListItem
+              nickname="닉네임"
+              role="강사"
+              timestamp="2022.12.12"
+              content="후기 내용입니다. 후기 내용입니다. 후기 내용입니다. 후기 내용입니다."
+            />
+            <ReviewListItem
+              nickname="닉네임"
+              role="강사"
+              timestamp="2022.12.12"
+              content="후기 내용입니다. 후기 내용입니다. 후기 내용입니다. 후기 내용입니다."
+            />
+            <ReviewListItem
+              nickname="닉네임"
+              role="강사"
+              timestamp="2022.12.12"
+              content="후기 내용입니다. 후기 내용입니다. 후기 내용입니다. 후기 내용입니다."
+            />
+          </View>
+        </ScrollView>
+      )}
     </SafeAreaView>
   );
 };
-
-const styles = StyleSheet.create({
-  suggestion: {
-    position: 'absolute',
-    right: 16,
-    bottom: 16,
-    width: 104,
-    height: 40,
-  },
-});
 
 export default ProfileScreen;

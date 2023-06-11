@@ -1,97 +1,55 @@
+import {getKakaoCoordinate} from '@/api/kakao';
+import {Coordinate} from '@/types/common';
 import {iconPath} from '@/utils/iconPath';
-import {GRAY, INPUT} from '@styles/colors';
+import {OnCompleteParams} from '@actbase/react-daum-postcode/lib/types';
+import BottomSheet from '@components/Common/BottomSheet';
+import SearchAddress from '@components/Common/SearchAddress';
+import toast from '@hooks/toast';
+import useModal from '@hooks/useModal';
 import common from '@styles/common';
-import {useCallback, useEffect, useState} from 'react';
+import {isAxiosError} from 'axios';
+import {useEffect, useState} from 'react';
 import {
-  Image,
   Pressable,
   StyleSheet,
   Text,
   TextInput,
+  TextInputProps,
   View,
 } from 'react-native';
+import Icon from './Icon';
 
-import SearchAddress from '@components/Common/SearchAddress';
-import BottomSheet from '@components/Common/BottomSheet';
-import useModal from '@hooks/useModal';
-import axios, {isAxiosError} from 'axios';
-import Config from 'react-native-config';
-import toast from '@hooks/toast';
-
-export const KeyboardTypes = {
-  DEFAULT: 'default',
-  EMAIL: 'email-address',
-  PHONE: 'phone-pad',
-  NUMBER: 'number-pad',
-};
-
-export const ReturnKeyTypes = {
-  DONE: 'done',
-  NEXT: 'next',
-};
-
-interface InputProps {
-  pointerEvents?: any;
-  label?: string;
-  value?: any;
-  onChangeText?: any;
-  keyboardType?: any;
-  secureTextEntry?: boolean;
-  propStyles?: {
-    inputWrapper?: object;
-  };
-  onSubmitEditing?: any;
-  blurOnSubmit?: boolean;
-  numberOfLines?: number;
-  maxLength?: number;
+interface SearchAddressInputProps extends TextInputProps {
+  label: string;
   comment?: boolean;
   icon?: string;
-  textAlign?: any;
+  onChangeAddress: ({
+    address,
+    coordinate,
+  }: {
+    address: string;
+    coordinate: Coordinate | null;
+  }) => void;
 }
 
-const SearchAddressInput = ({
+const SearchAddressInput: React.FC<SearchAddressInputProps> = ({
   label,
-  value,
-  propStyles,
-  pointerEvents,
   comment,
   icon,
-  textAlign,
-  onChangeText,
+  onChangeAddress,
   ...props
-}: InputProps) => {
-  // const [isFocused, setIsFocused] = useState(false);
+}) => {
   const {modalVisible, openModal, closeModal} = useModal();
   const [address, setAddress] = useState('');
-  const [coordinate, setCoordinate] = useState<{
-    x: number | null;
-    y: number | null;
-  }>({x: null, y: null});
+  const [coordinate, setCoordinate] = useState<Coordinate | null>(null);
 
-  // const onBlur = () => {
-  //   setIsFocused(false);
-  // };
-  //
-  // const onFocus = () => {
-  //   setIsFocused(true);
-  // };
-  const searchCoord = (address: string) => {
+  const searchCoord = async (address: string) => {
     try {
-      axios
-        .get(
-          `https://dapi.kakao.com/v2/local/search/address.json?analyze_type=exact&query=${address}`,
-          {
-            headers: {
-              Authorization: `KakaoAK ${Config.KAKAO_API_REST_KEY}`,
-            },
-          },
-        )
-        .then(response => {
-          setCoordinate({
-            x: response.data.documents[0]?.address.x,
-            y: response.data.documents[0]?.address.y,
-          });
-        });
+      const response = await getKakaoCoordinate(address);
+      setCoordinate({
+        x: response.data.documents[0]?.address.x,
+        y: response.data.documents[0]?.address.y,
+      });
     } catch (error) {
       if (isAxiosError(error)) {
         toast.error({message: error.message});
@@ -99,32 +57,25 @@ const SearchAddressInput = ({
     }
   };
 
-  const selectAddress = useCallback(
-    (data: any) => {
-      setAddress(data.address);
-      searchCoord(data.address);
-      closeModal();
-    },
-    [closeModal],
-  );
+  const selectAddress = (data: OnCompleteParams) => {
+    setAddress(data.address);
+    searchCoord(data.address);
+    closeModal();
+  };
 
   useEffect(() => {
-    onChangeText({address, coordinate});
-  }, [address, coordinate, onChangeText]);
+    onChangeAddress({address, coordinate});
+  }, [address, coordinate, onChangeAddress]);
 
   return (
     <View>
-      <Pressable onPress={() => openModal()}>
-        <View style={[common.inputWrapper, propStyles?.inputWrapper]}>
+      <Pressable onPress={openModal}>
+        <View style={common.inputWrapper}>
           <Text style={[common.label]}>{label}</Text>
-
           <TextInput
-            {...props}
             style={[
               common.textInput,
-              {
-                paddingLeft: icon && 50,
-              },
+              {paddingLeft: icon && 50},
               comment && styles.comment,
             ]}
             value={address}
@@ -133,33 +84,27 @@ const SearchAddressInput = ({
             clearButtonMode="while-editing"
             autoCapitalize="none"
             blurOnSubmit={false}
-            placeholder={'주소를 검색하세요.'}
-            textContentType={'none'}
-            pointerEvents={pointerEvents}
+            placeholder="주소를 검색하세요."
+            textContentType="none"
             editable={false}
             multiline={false}
             numberOfLines={1}
-            textAlign={textAlign}
+            returnKeyType="done"
+            {...props}
           />
           <View style={{position: 'absolute', right: 16, top: 16}}>
-            <Image source={iconPath.SEARCH} style={[common.size24]} />
+            <Icon source={iconPath.SEARCH} />
           </View>
         </View>
       </Pressable>
       <BottomSheet
         visible={modalVisible}
         onDismiss={closeModal}
-        useScroll={false}
-        content={
-          <SearchAddress onSelectAddress={(data: any) => selectAddress(data)} />
-        }
-      />
+        useScroll={false}>
+        <SearchAddress onSelectAddress={selectAddress} />
+      </BottomSheet>
     </View>
   );
-};
-
-SearchAddressInput.defaultProps = {
-  returnKeyType: ReturnKeyTypes.DONE,
 };
 
 const styles = StyleSheet.create({

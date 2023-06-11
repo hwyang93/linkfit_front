@@ -1,3 +1,4 @@
+import CTAButton from '@/components/Common/CTAButton';
 import {createInstructorSuggest} from '@api/instructor';
 import DismissKeyboardView from '@components/DismissKeyboardView';
 import Input, {KeyboardTypes} from '@components/Input';
@@ -6,14 +7,7 @@ import toast from '@hooks/toast';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import common from '@styles/common';
 import {useCallback, useState} from 'react';
-import {
-  ActivityIndicator,
-  Pressable,
-  StyleSheet,
-  Text,
-  View,
-} from 'react-native';
-import LinearGradient from 'react-native-linear-gradient';
+import {StyleSheet, View} from 'react-native';
 import {LoggedInParamList} from '../../AppInner';
 
 const SUGGESTION = [
@@ -111,24 +105,13 @@ const SuggestionScreen = ({navigation, route}: Props) => {
             defaultButtonText={'마감 기간을 선택하세요.'}
           />
         </View>
-
-        {/* 제안하기 버튼 */}
         <View style={common.mt20}>
-          <Pressable disabled={!canGoNext} onPress={onSuggest}>
-            <LinearGradient
-              style={common.button}
-              start={{x: 0.1, y: 0.5}}
-              end={{x: 0.6, y: 1}}
-              colors={
-                canGoNext ? ['#74ebe4', '#3962f3'] : ['#dcdcdc', '#dcdcdc']
-              }>
-              {loading ? (
-                <ActivityIndicator color="white" />
-              ) : (
-                <Text style={common.buttonText}>포지션 제안하기</Text>
-              )}
-            </LinearGradient>
-          </Pressable>
+          <CTAButton
+            label="포지션 제안하기"
+            loading={loading}
+            disabled={!canGoNext}
+            onPress={onSuggest}
+          />
         </View>
       </View>
     </DismissKeyboardView>

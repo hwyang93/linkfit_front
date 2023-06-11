@@ -1,3 +1,4 @@
+import CTAButton from '@/components/Common/CTAButton';
 import {useAppSelector} from '@/store';
 import {iconPath} from '@/utils/iconPath';
 import {createMemberLicence} from '@api/member';
@@ -9,17 +10,8 @@ import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import {WHITE} from '@styles/colors';
 import common from '@styles/common';
 import {useCallback, useState} from 'react';
-import {
-  ActivityIndicator,
-  Image,
-  Pressable,
-  ScrollView,
-  StyleSheet,
-  Text,
-  View,
-} from 'react-native';
+import {Image, Pressable, ScrollView, StyleSheet, View} from 'react-native';
 import {Asset, MediaType, launchImageLibrary} from 'react-native-image-picker';
-import LinearGradient from 'react-native-linear-gradient';
 import {LoggedInParamList} from '../../../AppInner';
 
 const FIELD = ['필라테스', '요가'];
@@ -160,23 +152,13 @@ const CertifyInstructorFormScreen = ({navigation}: Props) => {
             </View>
           </Pressable>
         </View>
-
         <View style={common.mt40}>
-          <Pressable onPress={onRegisterLicence}>
-            <LinearGradient
-              style={common.button}
-              start={{x: 0.1, y: 0.5}}
-              end={{x: 0.6, y: 1}}
-              colors={
-                canGoNext ? ['#74ebe4', '#3962f3'] : ['#dcdcdc', '#dcdcdc']
-              }>
-              {loading ? (
-                <ActivityIndicator color="white" />
-              ) : (
-                <Text style={common.buttonText}>인증 신청하기</Text>
-              )}
-            </LinearGradient>
-          </Pressable>
+          <CTAButton
+            label="인증 신청하기"
+            loading={loading}
+            disabled={!canGoNext}
+            onPress={onRegisterLicence}
+          />
         </View>
       </View>
     </ScrollView>
