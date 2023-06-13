@@ -1,7 +1,7 @@
 import BottomSheet from '@/components/Common/BottomSheet';
 import BottomSheetOption from '@/components/Common/BottomSheetOption';
 import CTAButton from '@/components/Common/CTAButton';
-import FABContainer from '@/components/Common/FABContainer';
+import FABContainer from '@components/Common/FABContainer';
 import FilterChip from '@/components/Common/FilterChip';
 import FilterChipContainer from '@/components/Common/FilterChipContainer';
 import FloatingActionButton from '@/components/Common/FloatingActionButton';
@@ -206,19 +206,19 @@ const RecruitListScreen = ({navigation}: Props) => {
       <PositionFilterModal
         visible={positionModalVisible}
         onDismiss={closePositionModal}
-        iniitalOptions={positionFilterValueList}
+        initialOptions={positionFilterValueList}
         onApply={handlePositionFilterApply}
       />
       <RecruitTypeFilterModal
         visible={recruitTypeModalVisible}
         onDismiss={closeRecruitTypeModal}
-        iniitalOptions={recruitTypeFilterValueList}
+        initialOptions={recruitTypeFilterValueList}
         onApply={handleRecruitTypeFilterApply}
       />
       <TimeFilterModal
         visible={timeModalVisible}
         onDismiss={closeTimeModal}
-        iniitalOptions={timeFilterValueList}
+        initialOptions={timeFilterValueList}
         onApply={handleTimeFilterApply}
       />
       <BottomSheet

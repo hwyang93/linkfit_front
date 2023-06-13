@@ -16,19 +16,13 @@ const SectionHeader: React.FC<SectionHeaderProps> = ({
   onPress,
   ...props
 }) => {
+  console.log(title);
   return (
     <Pressable
       style={[common.rowCenterBetween, {height: 24}, style]}
       onPress={onPress}
       {...props}>
-      <Text
-        style={{
-          fontSize: 16,
-          fontWeight: '700',
-          lineHeight: 16,
-        }}>
-        {title}
-      </Text>
+      <Text style={common.title_s}>{title}</Text>
       {onPress && <Icon source={iconPath.CHEVRON_RIGHT} />}
     </Pressable>
   );

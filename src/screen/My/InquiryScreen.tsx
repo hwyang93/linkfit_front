@@ -1,4 +1,4 @@
-import FABContainer from '@/components/Common/FABContainer';
+import FABContainer from '@components/Common/FABContainer';
 import FloatingActionButton from '@/components/Common/FloatingActionButton';
 import {iconPath} from '@/utils/iconPath';
 import EmptySet from '@components/EmptySet';

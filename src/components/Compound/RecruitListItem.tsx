@@ -59,7 +59,7 @@ const RecruitListItem: React.FC<RecruitListItemProps> = ({
     <Pressable style={styles.slideBox} onPress={onPress}>
       <View>
         <Image
-          source={imageSrc ? {url: imageSrc} : iconPath.CENTER_DEFAULT}
+          source={imageSrc ? {uri: imageSrc} : iconPath.CENTER_DEFAULT}
           style={styles.imgBox}
           resizeMode={'cover'}
         />
