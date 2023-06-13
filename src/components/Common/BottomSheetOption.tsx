@@ -34,7 +34,8 @@ const BottomSheetOption: React.FC<Props> = ({
           style={[
             {fontSize: 18, marginLeft: leftIcon ? 10 : 0},
             {fontWeight: selected ? '700' : '400'},
-            selected && {color: THEME.PRIMARY},
+            // selected && {color: THEME.PRIMARY},
+            {color: selected ? THEME.PRIMARY : THEME.BLACK},
           ]}>
           {label}
         </Text>

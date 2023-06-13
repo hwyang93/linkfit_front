@@ -1,5 +1,5 @@
 import EmptyState from '@/components/Common/EmptyState';
-import FABContainer from '@/components/Common/FABContainer';
+import FABContainer from '@components/Common/FABContainer';
 import FilterChip from '@/components/Common/FilterChip';
 import FilterChipContainer from '@/components/Common/FilterChipContainer';
 import FloatingActionButton from '@/components/Common/FloatingActionButton';

@@ -1,7 +1,7 @@
 import BottomSheet from '@/components/Common/BottomSheet';
 import BoxButton from '@/components/Common/BoxButton';
 import CTAButton from '@/components/Common/CTAButton';
-import FABContainer from '@/components/Common/FABContainer';
+import FABContainer from '@components/Common/FABContainer';
 import useModal from '@/hooks/useModal';
 import {RecruitDateEntity} from '@/types/api/entities';
 import {FetchRecruitResponse} from '@/types/api/recruit';
@@ -218,14 +218,14 @@ const JobPostScreen = ({route}: Props) => {
   }, []);
 
   const onApplyButtonPress = () => {
-    if (!recruitInfo || !firstSelectedResumeSeq) {
+    if (!recruitInfo || !selectedResumeSeq) {
       return;
     }
 
     const data = {
       recruitDateSeq: selectedDatesSeqList,
       recruitSeq: recruitInfo.seq,
-      resumeSeq: firstSelectedResumeSeq,
+      resumeSeq: selectedResumeSeq,
     };
 
     createRecruitApply(recruitInfo.seq, data)

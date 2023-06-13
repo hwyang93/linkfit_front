@@ -6,18 +6,18 @@ import CTAButton from '../Common/CTAButton';
 
 interface RecruitTypeFilterModalProps {
   visible: boolean;
-  iniitalOptions: string[];
+  initialOptions: string[];
   onApply: (options: string[]) => void;
   onDismiss: () => void;
 }
 
 const RecruitTypeFilterModal: React.FC<RecruitTypeFilterModalProps> = ({
   visible,
-  iniitalOptions,
+  initialOptions,
   onDismiss,
   onApply,
 }) => {
-  const [selectedOptions, setSelectedOptions] = useState(iniitalOptions);
+  const [selectedOptions, setSelectedOptions] = useState(initialOptions);
 
   const handleOptionPress = (option: string) => {
     if (selectedOptions.includes(option)) {
