@@ -27,7 +27,7 @@ const PAY_TYPE = ['시급', '주급', '월급', '연봉'];
 // 채용포지션이 필라테스 요가의 경우
 const RECRUIT_TYPE = ['전임', '파트', '대강'];
 
-const columns7 = (SCREEN_WIDTH - 32) / 7;
+const columns7 = (SCREEN_WIDTH - 80) / 7;
 
 type Props = NativeStackScreenProps<LoggedInParamList, 'JobOfferForm'>;
 
@@ -249,7 +249,12 @@ const JobOfferFormScreen = ({navigation}: Props) => {
                     editable={false}
                   />
                 </View>
-                <View style={[common.mb16, common.row]}>
+                <View
+                  style={[
+                    common.mb16,
+                    common.row,
+                    {justifyContent: 'space-between'},
+                  ]}>
                   {DAY.map((item, index) => (
                     <Pressable
                       key={index}
