@@ -1,5 +1,4 @@
 import EmptyState from '@/components/Common/EmptyState';
-import FABContainer from '@components/Common/FABContainer';
 import FilterChip from '@/components/Common/FilterChip';
 import FilterChipContainer from '@/components/Common/FilterChipContainer';
 import FloatingActionButton from '@/components/Common/FloatingActionButton';
@@ -7,6 +6,7 @@ import {FetchCommunityPostsResponse} from '@/types/api/community';
 import {CommunityEntity} from '@/types/api/entities';
 import {iconPath} from '@/utils/iconPath';
 import {fetchCommunityPosts} from '@api/community';
+import FABContainer from '@components/Common/FABContainer';
 import RecommendedPostItem from '@components/RecommendedPostItem';
 import toast from '@hooks/toast';
 import {useIsFocused} from '@react-navigation/native';
@@ -22,6 +22,7 @@ type Props = NativeStackScreenProps<LoggedInParamList, 'Community'>;
 
 const CommunityTab = ({navigation}: Props) => {
   const [posts, setPosts] = useState<FetchCommunityPostsResponse>();
+  const [filterList, setFilterList] = useState<string[]>([]);
 
   const isFocused = useIsFocused();
 
@@ -31,6 +32,14 @@ const CommunityTab = ({navigation}: Props) => {
 
   const onPressFAB = () => {
     navigation.navigate('CommunityPostForm');
+  };
+
+  const handleFilterChipPress = (label: string) => {
+    if (filterList.includes(label)) {
+      setFilterList(filterList.filter(item => item !== label));
+    } else {
+      setFilterList([...filterList, label]);
+    }
   };
 
   const getPosts = useCallback(() => {
@@ -54,10 +63,29 @@ const CommunityTab = ({navigation}: Props) => {
   return (
     <View style={styles.container}>
       <FilterChipContainer>
-        <FilterChip label="필라테스" style={{marginRight: 8}} />
-        <FilterChip label="요가" style={{marginRight: 8}} />
-        <FilterChip label="강사" style={{marginRight: 8}} />
-        <FilterChip label="센터" />
+        <FilterChip
+          label="필라테스"
+          active={filterList.includes('필라테스')}
+          onPress={() => handleFilterChipPress('필라테스')}
+        />
+        <FilterChip
+          label="요가"
+          style={{marginLeft: 8}}
+          active={filterList.includes('요가')}
+          onPress={() => handleFilterChipPress('요가')}
+        />
+        <FilterChip
+          label="강사"
+          style={{marginLeft: 8}}
+          active={filterList.includes('강사')}
+          onPress={() => handleFilterChipPress('강사')}
+        />
+        <FilterChip
+          label="센터"
+          style={{marginLeft: 8}}
+          active={filterList.includes('센터')}
+          onPress={() => handleFilterChipPress('센터')}
+        />
       </FilterChipContainer>
       <Text style={[common.title, {margin: 16}]}>최근 게시글</Text>
       {posts?.length !== 0 && (
