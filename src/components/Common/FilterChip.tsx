@@ -112,13 +112,14 @@ const styles = StyleSheet.create({
   shadow: {
     ...Platform.select({
       ios: {
+        backgroundColor: THEME.WHITE,
         shadowColor: 'rgba(0, 0, 0, 0.2)',
         shadowOffset: {
-          width: 10,
-          height: 10,
+          width: 1,
+          height: 1,
         },
-        shadowOpacity: 0.2,
-        shadowRadius: 8,
+        shadowOpacity: 1,
+        shadowRadius: 4,
       },
       android: {
         elevation: 8,

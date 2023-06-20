@@ -1,7 +1,6 @@
 import BottomSheet from '@/components/Common/BottomSheet';
 import BottomSheetOption from '@/components/Common/BottomSheetOption';
 import CTAButton from '@/components/Common/CTAButton';
-import FABContainer from '@components/Common/FABContainer';
 import FilterChip from '@/components/Common/FilterChip';
 import FilterChipContainer from '@/components/Common/FilterChipContainer';
 import FloatingActionButton from '@/components/Common/FloatingActionButton';
@@ -15,6 +14,7 @@ import {FetchRecruitsResponse} from '@/types/api/recruit';
 import {iconPath} from '@/utils/iconPath';
 import {getFilterChipLabel} from '@/utils/util';
 import {fetchRecruits} from '@api/recruit';
+import FABContainer from '@components/Common/FABContainer';
 import toast from '@hooks/toast';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import common from '@styles/common';
