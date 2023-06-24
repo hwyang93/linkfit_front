@@ -6,8 +6,6 @@ import SectionHeader from '@/components/Common/SectionHeader';
 import InstructorProfile from '@/components/Compound/InstructorProfile';
 import RecruitCard from '@/components/Compound/RecruitCard';
 import ReviewListItem from '@/components/Compound/ReviewListItem';
-import {useAppSelector} from '@/store';
-import {MemberReputationEntity} from '@/types/api/entities';
 import {FetchInstructorResponse} from '@/types/api/instructor';
 import {SCREEN_WIDTH} from '@/utils/constants/common';
 import {iconPath} from '@/utils/iconPath';
@@ -27,21 +25,21 @@ const DUMMY_IMAGES = [
 
 type Props = NativeStackScreenProps<LoggedInParamList, 'Profile'>;
 
-const ProfileScreen = ({navigation, route}: Props) => {
+const ProfileScreen = ({route}: Props) => {
   const [expanded, setExpanded] = useState(false);
   const [instructor, setInstructor] = useState<FetchInstructorResponse>();
-  const [reputation, setReputation] = useState<MemberReputationEntity[]>();
+  // const [reputation, setReputation] = useState<MemberReputationEntity[]>();
 
-  const memberInfo = useAppSelector(state => state.user);
+  // const memberInfo = useAppSelector(state => state.user);
 
-  const memberSeq = route.params.memberSeq;
+  // const memberSeq = route.params.memberSeq;
 
   useEffect(() => {
     const loadData = async () => {
       await fetchInstructor(route.params.memberSeq)
         .then(({data}) => {
           setInstructor(data);
-          setReputation(data.reputations);
+          // setReputation(data.reputations);
         })
         .catch(error => {
           console.log(error);

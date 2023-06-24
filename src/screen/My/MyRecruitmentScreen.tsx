@@ -130,6 +130,7 @@ const MyRecruitmentScreen = ({navigation}: Props) => {
         <FilterChip label={periodFilter || '기간'} onPress={openPeriodModal} />
         <FilterChip
           label={progressionFilter || '진행 상태'}
+          style={{marginLeft: 8}}
           onPress={openProgressionModal}
         />
       </FilterChipContainer>

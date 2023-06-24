@@ -5,7 +5,7 @@ import {Pressable, StyleProp, StyleSheet, Text, ViewStyle} from 'react-native';
 import Icon from './Icon';
 
 interface MoreButtonProps {
-  style: StyleProp<ViewStyle>;
+  style?: StyleProp<ViewStyle>;
   expanded: boolean;
   onPress: () => void;
 }

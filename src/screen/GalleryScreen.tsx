@@ -32,17 +32,15 @@ const GalleryScreen = ({}: Props) => {
         prevButton={
           <Image source={iconPath.PREV_BUTTON} style={common.size32} />
         }>
-        {TAB1_DATA.map((item, index) => {
-          return (
-            <View key={index} style={styles.frame}>
-              <Image
-                source={item.src}
-                resizeMode={'cover'}
-                style={styles.photo}
-              />
-            </View>
-          );
-        })}
+        {TAB1_DATA.map((item, index) => (
+          <View key={index} style={styles.frame}>
+            <Image
+              source={item.src}
+              resizeMode={'cover'}
+              style={styles.photo}
+            />
+          </View>
+        ))}
       </Swiper>
     </SafeAreaView>
   );
