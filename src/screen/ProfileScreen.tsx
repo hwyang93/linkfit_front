@@ -1,6 +1,5 @@
 import {fetchInstructor} from '@/api/instructor';
 import ExpandButton from '@/components/Common/ExpandButton';
-import IconButton from '@/components/Common/IconButton';
 import RowView from '@/components/Common/RowView';
 import SectionHeader from '@/components/Common/SectionHeader';
 import InstructorProfile from '@/components/Compound/InstructorProfile';
@@ -8,7 +7,6 @@ import RecruitCard from '@/components/Compound/RecruitCard';
 import ReviewListItem from '@/components/Compound/ReviewListItem';
 import {FetchInstructorResponse} from '@/types/api/instructor';
 import {SCREEN_WIDTH} from '@/utils/constants/common';
-import {iconPath} from '@/utils/iconPath';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import {useEffect, useState} from 'react';
 import {Image, Pressable, ScrollView, Text, View} from 'react-native';
@@ -64,7 +62,8 @@ const ProfileScreen = ({route}: Props) => {
           <Text style={{fontSize: 16, lineHeight: 24, marginTop: 8}}>
             강남구 역삼동에 위치해있는 필라테스 센터입니다.
           </Text>
-          <RowView
+          {/* 링크 섹션 임시 비활성화 */}
+          {/* <RowView
             style={{
               marginTop: 20,
               justifyContent: 'space-between',
@@ -81,7 +80,7 @@ const ProfileScreen = ({route}: Props) => {
                 style={{marginLeft: 16}}
               />
             </RowView>
-          </RowView>
+          </RowView> */}
           <SectionHeader title="채용 중" style={{marginTop: 20}} />
           <RecruitCard
             style={{marginTop: 8}}
