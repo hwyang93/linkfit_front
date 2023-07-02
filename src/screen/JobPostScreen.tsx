@@ -2,6 +2,7 @@ import BottomSheet from '@/components/Common/BottomSheet';
 import BoxButton from '@/components/Common/BoxButton';
 import CTAButton from '@/components/Common/CTAButton';
 import useModal from '@/hooks/useModal';
+import THEME from '@/styles/theme';
 import {RecruitDateEntity} from '@/types/api/entities';
 import {FetchRecruitResponse} from '@/types/api/recruit';
 import {FetchResumesResponse} from '@/types/api/resume';
@@ -71,38 +72,47 @@ const ResumeListItem: React.FC<ResumeListItemProps> = ({
     <Pressable onPress={onPress}>
       <View
         style={[
-          common.basicBox,
           common.mv4,
-          selected && {
-            borderColor: BLUE.DEFAULT,
-            borderWidth: 2,
+          {
+            borderRadius: 8,
+            borderWidth: 1,
+            borderColor: selected ? BLUE.DEFAULT : THEME.WHITE,
           },
         ]}>
-        {isMaster && (
-          <View style={[common.resumeBadge]}>
-            <Text
+        <View
+          style={[
+            common.basicBox,
+            selected && {
+              borderColor: BLUE.DEFAULT,
+              borderWidth: 1,
+            },
+          ]}>
+          {isMaster && (
+            <View style={[common.resumeBadge]}>
+              <Text
+                style={[
+                  common.text,
+                  common.fs10,
+                  {color: BLUE.DEFAULT, textAlign: 'center'},
+                ]}>
+                대표
+              </Text>
+            </View>
+          )}
+          <Text numberOfLines={1} style={common.title}>
+            {title}
+          </Text>
+          <Text style={[common.text_s, common.fcg]}>{updatedAt}</Text>
+          {selected && (
+            <Image
               style={[
-                common.text,
-                common.fs10,
-                {color: BLUE.DEFAULT, textAlign: 'center'},
-              ]}>
-              대표
-            </Text>
-          </View>
-        )}
-        <Text numberOfLines={1} style={common.title}>
-          {title}
-        </Text>
-        <Text style={[common.text_s, common.fcg]}>{updatedAt}</Text>
-        {selected && (
-          <Image
-            style={[
-              common.size24,
-              {position: 'absolute', right: 16, top: '50%'},
-            ]}
-            source={iconPath.CHECK}
-          />
-        )}
+                common.size24,
+                {position: 'absolute', right: 16, top: '50%'},
+              ]}
+              source={iconPath.CHECK}
+            />
+          )}
+        </View>
       </View>
     </Pressable>
   );
@@ -259,6 +269,13 @@ const JobPostScreen = ({route}: Props) => {
     selectedRecruitDates.includes(seq)
       ? setSelectedRecruitDates(prev => prev.filter(item => item !== seq))
       : setSelectedRecruitDates(prev => [...prev, seq]);
+  };
+
+  console.log('selectedRecruitDates', selectedRecruitDates);
+
+  const handleCancelModalClose = () => {
+    cancelModal.close();
+    setSelectedRecruitDates([]);
   };
 
   const handleApplyModalClose = () => {
@@ -427,33 +444,31 @@ const JobPostScreen = ({route}: Props) => {
               <BoxButton label="지원하기" onPress={applyModal.open} />
             </FABContainer>
           )}
-          {cancelModal.visible && (
-            <BottomSheet
-              visible={cancelModal.visible}
-              onDismiss={cancelModal.close}
-              title="지원 취소할 날짜 및 시간을 선택하세요.">
-              <View style={{paddingHorizontal: 16}}>
-                {recruitDates.map((item, index) => (
-                  <ResumeDateListItem
-                    key={index}
-                    selected={item.isSelected}
-                    disabled={!item.isApplied}
-                    onPress={() => handleResumeDateListItemPress(item.seq)}
-                    day={item.day}
-                    time={item.time}
-                  />
-                ))}
-                <View style={common.mt40}>
-                  <CTAButton
-                    label="지원 취소하기"
-                    variant="stroked"
-                    disabled={selectedRecruitDates.length === 0}
-                    onPress={handleCancelButtonPress}
-                  />
-                </View>
+          <BottomSheet
+            visible={cancelModal.visible}
+            onDismiss={handleCancelModalClose}
+            title="지원 취소할 날짜 및 시간을 선택하세요.">
+            <View style={{paddingHorizontal: 16}}>
+              {recruitDates.map((item, index) => (
+                <ResumeDateListItem
+                  key={index}
+                  selected={selectedRecruitDates.includes(item.seq)}
+                  disabled={!item.isApplied}
+                  onPress={() => handleResumeDateListItemPress(item.seq)}
+                  day={item.day}
+                  time={item.time}
+                />
+              ))}
+              <View style={common.mt40}>
+                <CTAButton
+                  label="지원 취소하기"
+                  variant="stroked"
+                  disabled={selectedRecruitDates.length === 0}
+                  onPress={handleCancelButtonPress}
+                />
               </View>
-            </BottomSheet>
-          )}
+            </View>
+          </BottomSheet>
           <BottomSheet
             visible={applyModal.visible}
             onDismiss={handleApplyModalClose}
