@@ -37,7 +37,6 @@ const SignInScreen = ({navigation}: Props) => {
     await EncryptedStorage.clear();
     try {
       const response = await fetchMemberInfoByEmail(email.value);
-      console.log(response);
       if (response.data.seq) {
         toast.success({message: '환영합니다. 회원님'});
         navigation.navigate('LogIn', {email: email.value});
