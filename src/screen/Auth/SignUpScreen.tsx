@@ -19,7 +19,10 @@ const SignUpScreen = ({navigation, route}: Props) => {
         <CTAButton
           label="일반 회원"
           onPress={() =>
-            navigation.navigate('Terms', {email: route.params.email})
+            navigation.navigate('Terms', {
+              email: route.params.email,
+              isCompany: false,
+            })
           }
         />
       </View>
@@ -28,8 +31,9 @@ const SignUpScreen = ({navigation, route}: Props) => {
           label="사업자 회원"
           variant="stroked"
           onPress={() =>
-            navigation.navigate('CompanySignUpForm', {
+            navigation.navigate('Terms', {
               email: route.params.email,
+              isCompany: true,
             })
           }
         />
