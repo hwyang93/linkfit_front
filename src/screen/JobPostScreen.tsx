@@ -1,7 +1,6 @@
 import BottomSheet from '@/components/Common/BottomSheet';
 import BoxButton from '@/components/Common/BoxButton';
 import CTAButton from '@/components/Common/CTAButton';
-import FABContainer from '@components/Common/FABContainer';
 import useModal from '@/hooks/useModal';
 import {RecruitDateEntity} from '@/types/api/entities';
 import {FetchRecruitResponse} from '@/types/api/recruit';
@@ -15,6 +14,7 @@ import {
 } from '@api/recruit';
 import {fetchResumes} from '@api/resume';
 import CenterInfoComponent from '@components/CenterInfoComponent';
+import FABContainer from '@components/Common/FABContainer';
 import toast from '@hooks/toast';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import {BLUE, GRAY, WHITE} from '@styles/colors';
@@ -151,17 +151,8 @@ const ResumeDateListItem: React.FC<ResumeDateListItemProps> = ({
 type Props = NativeStackScreenProps<LoggedInParamList, 'JobPost'>;
 
 const JobPostScreen = ({route}: Props) => {
-  const {
-    modalVisible: applyModalVisible,
-    openModal: openApplyModal,
-    closeModal: closeApplyModal,
-  } = useModal();
-
-  const {
-    modalVisible: cancelModalVisible,
-    openModal: openCancelModal,
-    closeModal: closeCancelModal,
-  } = useModal();
+  const applyModal = useModal();
+  const cancelModal = useModal();
 
   const {recruitSeq} = route.params;
 
@@ -184,11 +175,9 @@ const JobPostScreen = ({route}: Props) => {
     setContentVerticalOffset(event.nativeEvent.contentOffset.y);
   };
 
-  const firstSelectedResume = resumes.find(
-    resume => resume.isSelected === true,
+  const shouldCancelButtonDisabled = !recruitInfo?.dates.some(
+    date => date.isApplied,
   );
-
-  const firstSelectedResumeSeq = firstSelectedResume?.seq;
 
   const selectedDatesSeqList = recruitDates
     .filter(date => {
@@ -231,7 +220,7 @@ const JobPostScreen = ({route}: Props) => {
     createRecruitApply(recruitInfo.seq, data)
       .then(() => {
         toast.success({message: '지원이 완료되었어요!'});
-        closeApplyModal();
+        applyModal.close();
         getRecruitInfo();
       })
       .catch(error => {
@@ -245,7 +234,7 @@ const JobPostScreen = ({route}: Props) => {
     updateRecruitApplyCancel(data)
       .then(() => {
         toast.success({message: '지원이 취소되었어요!'});
-        closeCancelModal();
+        cancelModal.close();
         getRecruitInfo();
       })
       .catch(error => {
@@ -273,7 +262,7 @@ const JobPostScreen = ({route}: Props) => {
   };
 
   const handleApplyModalClose = () => {
-    closeApplyModal();
+    applyModal.close();
     setSelectedRecruitDates([]);
     setSelectedResumeSeq(null);
   };
@@ -426,7 +415,8 @@ const JobPostScreen = ({route}: Props) => {
                   <CTAButton
                     label="지원 취소하기"
                     variant="stroked"
-                    onPress={openCancelModal}
+                    disabled={shouldCancelButtonDisabled}
+                    onPress={cancelModal.open}
                   />
                 )}
               </View>
@@ -434,36 +424,38 @@ const JobPostScreen = ({route}: Props) => {
           </SafeAreaView>
           {contentVerticalOffset <= 500 && (
             <FABContainer>
-              <BoxButton label="지원하기" onPress={openApplyModal} />
+              <BoxButton label="지원하기" onPress={applyModal.open} />
             </FABContainer>
           )}
-          <BottomSheet
-            visible={cancelModalVisible}
-            onDismiss={closeCancelModal}
-            title="지원 취소할 날짜 및 시간을 선택하세요.">
-            <View style={{paddingHorizontal: 16}}>
-              {recruitDates.map((item, index) => (
-                <ResumeDateListItem
-                  key={index}
-                  selected={item.isSelected}
-                  disabled={item.isApplied}
-                  onPress={() => handleResumeDateListItemPress(item.seq)}
-                  day={item.day}
-                  time={item.time}
-                />
-              ))}
-              <View style={common.mt40}>
-                <CTAButton
-                  label="지원 취소하기"
-                  variant="stroked"
-                  disabled={selectedRecruitDates.length === 0}
-                  onPress={handleCancelButtonPress}
-                />
+          {cancelModal.visible && (
+            <BottomSheet
+              visible={cancelModal.visible}
+              onDismiss={cancelModal.close}
+              title="지원 취소할 날짜 및 시간을 선택하세요.">
+              <View style={{paddingHorizontal: 16}}>
+                {recruitDates.map((item, index) => (
+                  <ResumeDateListItem
+                    key={index}
+                    selected={item.isSelected}
+                    disabled={!item.isApplied}
+                    onPress={() => handleResumeDateListItemPress(item.seq)}
+                    day={item.day}
+                    time={item.time}
+                  />
+                ))}
+                <View style={common.mt40}>
+                  <CTAButton
+                    label="지원 취소하기"
+                    variant="stroked"
+                    disabled={selectedRecruitDates.length === 0}
+                    onPress={handleCancelButtonPress}
+                  />
+                </View>
               </View>
-            </View>
-          </BottomSheet>
+            </BottomSheet>
+          )}
           <BottomSheet
-            visible={applyModalVisible}
+            visible={applyModal.visible}
             onDismiss={handleApplyModalClose}
             title="지원하기">
             <View style={{width: '100%', paddingHorizontal: 16}}>

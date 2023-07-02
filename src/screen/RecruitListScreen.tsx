@@ -37,28 +37,10 @@ const RecruitListScreen = ({navigation}: Props) => {
   >([]);
   const [timeFilterValueList, setTimeFilterValueList] = useState<string[]>([]);
 
-  const {
-    modalVisible: positionModalVisible,
-    openModal: openPositionModal,
-    closeModal: closePositionModal,
-  } = useModal();
-
-  const {
-    modalVisible: recruitTypeModalVisible,
-    openModal: openRecruitTypeModal,
-    closeModal: closeRecruitTypeModal,
-  } = useModal();
-
-  const {
-    modalVisible: timeModalVisible,
-    openModal: openTimeModal,
-    closeModal: closeTimeModal,
-  } = useModal();
-  const {
-    modalVisible: viewModalVisible,
-    openModal: openViewModal,
-    closeModal: closeViewModal,
-  } = useModal();
+  const positionModal = useModal();
+  const recruitTypeModal = useModal();
+  const timeModal = useModal();
+  const viewModal = useModal();
 
   const resetChipVisible =
     positionFilterValueList.length > 0 ||
@@ -73,21 +55,21 @@ const RecruitListScreen = ({navigation}: Props) => {
 
   const handlePositionFilterApply = (selectedOptions: string[]) => {
     setPositionFilterValueList(selectedOptions);
-    closePositionModal();
+    positionModal.close();
   };
 
   const handleRecruitTypeFilterApply = (selectedOptions: string[]) => {
     setRecruitTypeFilterValueList(selectedOptions);
-    closeRecruitTypeModal();
+    recruitTypeModal.close();
   };
 
   const handleTimeFilterApply = (selectedOptions: string[]) => {
     setTimeFilterValueList(selectedOptions);
-    closeTimeModal();
+    timeModal.close();
   };
 
   const handleViewFilterApply = () => {
-    closeViewModal();
+    viewModal.close();
   };
 
   const getRecruits = useCallback(() => {
@@ -131,28 +113,28 @@ const RecruitListScreen = ({navigation}: Props) => {
           active={positionFilterValueList.length > 0}
           label={getFilterChipLabel(positionFilterValueList, '포지션')}
           rightIcon
-          onPress={openPositionModal}
+          onPress={positionModal.open}
         />
         <FilterChip
           active={recruitTypeFilterValueList.length > 0}
           label={getFilterChipLabel(recruitTypeFilterValueList, '구인형태')}
           style={{marginLeft: 8}}
           rightIcon
-          onPress={openRecruitTypeModal}
+          onPress={recruitTypeModal.open}
         />
         <FilterChip
           active={timeFilterValueList.length > 0}
           label={getFilterChipLabel(timeFilterValueList, '수업시간')}
           style={{marginLeft: 8}}
           rightIcon
-          onPress={openTimeModal}
+          onPress={timeModal.open}
         />
         {/* TODO: 조회순 필터 기능 추가 */}
         <FilterChip
           label="조회순"
           style={{marginLeft: 8}}
           rightIcon
-          onPress={openViewModal}
+          onPress={viewModal.open}
         />
       </FilterChipContainer>
       <View style={{marginHorizontal: 16}}>
@@ -204,29 +186,29 @@ const RecruitListScreen = ({navigation}: Props) => {
         /> */}
       </FABContainer>
       <PositionFilterModal
-        visible={positionModalVisible}
-        onDismiss={closePositionModal}
+        visible={positionModal.visible}
+        onDismiss={positionModal.close}
         initialOptions={positionFilterValueList}
         onApply={handlePositionFilterApply}
       />
       <RecruitTypeFilterModal
-        visible={recruitTypeModalVisible}
-        onDismiss={closeRecruitTypeModal}
+        visible={recruitTypeModal.visible}
+        onDismiss={recruitTypeModal.close}
         initialOptions={recruitTypeFilterValueList}
         onApply={handleRecruitTypeFilterApply}
       />
       <TimeFilterModal
-        visible={timeModalVisible}
-        onDismiss={closeTimeModal}
+        visible={timeModal.visible}
+        onDismiss={timeModal.close}
         initialOptions={timeFilterValueList}
         onApply={handleTimeFilterApply}
       />
       <BottomSheet
-        visible={viewModalVisible}
-        onDismiss={closeViewModal}
+        visible={viewModal.visible}
+        onDismiss={viewModal.close}
         title="조회순">
-        <BottomSheetOption label="최신순" onPress={closeViewModal} />
-        <BottomSheetOption label="조회순" onPress={closeViewModal} />
+        <BottomSheetOption label="최신순" onPress={viewModal.close} />
+        <BottomSheetOption label="조회순" onPress={viewModal.close} />
         <CTAButton
           style={{marginHorizontal: 16, marginTop: 32}}
           label="필터 적용"

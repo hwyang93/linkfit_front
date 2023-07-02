@@ -247,11 +247,11 @@ const InstructorTab: React.FC = () => {
 type Props = NativeStackScreenProps<LoggedInParamList, 'RecruitMap'>;
 
 const RecruitMapScreen = ({navigation}: Props) => {
-  const {modalVisible, openModal, closeModal} = useModal();
+  const modal = useModal();
   const {position, getCurrentPosition} = useGeolocation();
 
   const onPressMarker = () => {
-    openModal();
+    modal.open();
   };
 
   return (
@@ -311,7 +311,7 @@ const RecruitMapScreen = ({navigation}: Props) => {
           onPress={() => navigation.navigate('RecruitList')}
         />
       </View>
-      <BottomSheet visible={modalVisible} onDismiss={closeModal}>
+      <BottomSheet visible={modal.visible} onDismiss={modal.close}>
         <View style={{alignItems: 'center'}}>
           {/* TODO: width와 height를 지정하지 않으면 UI가 깨지는 버그 수정 */}
           <View style={{width: SCREEN_WIDTH, height: 550}}>
