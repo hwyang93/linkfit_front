@@ -24,7 +24,7 @@ const CommunityMyPost: React.FC = () => {
 
   // const navigation = useNavigation<NavigationProp<LoggedInParamList>>();
 
-  const {modalVisible, openModal, closeModal} = useModal();
+  const modal = useModal();
 
   const getPosts = useCallback(() => {
     fetchCommunityPosts({isWriter: 'Y'})
@@ -71,14 +71,17 @@ const CommunityMyPost: React.FC = () => {
               <Pressable
                 style={styles.kebabIcon}
                 hitSlop={10}
-                onPress={openModal}>
+                onPress={modal.open}>
                 <Image source={iconPath.KEBAB} style={[common.size24]} />
               </Pressable>
             </View>
           );
         }}
       />
-      <BottomSheet visible={modalVisible} onDismiss={closeModal} title="더보기">
+      <BottomSheet
+        visible={modal.visible}
+        onDismiss={modal.close}
+        title="더보기">
         <ScrollView
           style={{width: '100%'}}
           showsVerticalScrollIndicator={false}>

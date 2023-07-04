@@ -39,7 +39,7 @@ const SearchAddressInput: React.FC<SearchAddressInputProps> = ({
   onChangeAddress,
   ...props
 }) => {
-  const {modalVisible, openModal, closeModal} = useModal();
+  const modal = useModal();
   const [address, setAddress] = useState('');
   const [coordinate, setCoordinate] = useState<Coordinate | null>(null);
 
@@ -60,7 +60,7 @@ const SearchAddressInput: React.FC<SearchAddressInputProps> = ({
   const selectAddress = (data: OnCompleteParams) => {
     setAddress(data.address);
     searchCoord(data.address);
-    closeModal();
+    modal.close();
   };
 
   useEffect(() => {
@@ -69,7 +69,7 @@ const SearchAddressInput: React.FC<SearchAddressInputProps> = ({
 
   return (
     <View>
-      <Pressable onPress={openModal}>
+      <Pressable onPress={modal.open}>
         <View style={common.inputWrapper}>
           <Text style={[common.label]}>{label}</Text>
           <TextInput
@@ -98,8 +98,8 @@ const SearchAddressInput: React.FC<SearchAddressInputProps> = ({
         </View>
       </Pressable>
       <BottomSheet
-        visible={modalVisible}
-        onDismiss={closeModal}
+        visible={modal.visible}
+        onDismiss={modal.close}
         useScroll={false}>
         <SearchAddress onSelectAddress={selectAddress} />
       </BottomSheet>

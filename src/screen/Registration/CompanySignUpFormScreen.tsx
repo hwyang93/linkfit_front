@@ -7,10 +7,9 @@ import Input, {KeyboardTypes} from '@components/Input';
 import SelectBox from '@components/SelectBox';
 import TabButton from '@components/TabButton';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
-import {WHITE} from '@styles/colors';
 import common from '@styles/common';
 import {useState} from 'react';
-import {StyleSheet, View} from 'react-native';
+import {View} from 'react-native';
 
 type Props = NativeStackScreenProps<AuthStackParamList, 'CompanySignUpForm'>;
 
@@ -173,10 +172,5 @@ const CompanySignUpFormScreen = ({}: Props) => {
     </DismissKeyboardView>
   );
 };
-const styles = StyleSheet.create({
-  confirm: {
-    fontWeight: '700',
-    color: WHITE,
-  },
-});
+
 export default CompanySignUpFormScreen;

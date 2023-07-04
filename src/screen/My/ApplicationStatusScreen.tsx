@@ -92,17 +92,8 @@ const ApplicationStatusScreen = ({navigation}: Props) => {
   const [periodFilter, setPeriodFilter] = useState<string | null>(null);
   const [statusFilter, setStatusFilter] = useState<string | null>(null);
 
-  const {
-    modalVisible: periodModalVisible,
-    openModal: openPeriodModal,
-    closeModal: closePeriodModal,
-  } = useModal();
-
-  const {
-    modalVisible: statusModalVisible,
-    openModal: openStatusModal,
-    closeModal: closeStatusModal,
-  } = useModal();
+  const periodModal = useModal();
+  const statusModal = useModal();
 
   const handleListItemPress = (seq: number) => {
     navigation.navigate('JobPost', {
@@ -112,12 +103,12 @@ const ApplicationStatusScreen = ({navigation}: Props) => {
 
   const handlePeriodOptionPress = (option: string) => {
     setPeriodFilter(option);
-    closePeriodModal();
+    periodModal.close();
   };
 
   const handleStatusOptionPress = (option: string) => {
     setStatusFilter(option);
-    closeStatusModal();
+    statusModal.close();
   };
 
   useEffect(() => {
@@ -137,12 +128,12 @@ const ApplicationStatusScreen = ({navigation}: Props) => {
           label={periodFilter || '기간'}
           style={{marginRight: 8}}
           rightIcon
-          onPress={openPeriodModal}
+          onPress={periodModal.open}
         />
         <FilterChip
           label={statusFilter || '지원 상태'}
           rightIcon
-          onPress={openStatusModal}
+          onPress={statusModal.open}
         />
       </FilterChipContainer>
       <ScrollView
@@ -170,8 +161,8 @@ const ApplicationStatusScreen = ({navigation}: Props) => {
           ))}
         </View>
         <BottomSheet
-          visible={periodModalVisible}
-          onDismiss={closePeriodModal}
+          visible={periodModal.visible}
+          onDismiss={periodModal.close}
           title="기간">
           <View>
             {FILTER.PERIOD.map((option, index) => (
@@ -185,8 +176,8 @@ const ApplicationStatusScreen = ({navigation}: Props) => {
           </View>
         </BottomSheet>
         <BottomSheet
-          visible={statusModalVisible}
-          onDismiss={closeStatusModal}
+          visible={statusModal.visible}
+          onDismiss={statusModal.close}
           title="지원 상태">
           <View>
             {FILTER.STATUS.map((option, index) => (

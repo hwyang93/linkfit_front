@@ -1,8 +1,8 @@
 import BottomSheet from '@/components/Common/BottomSheet';
 import BoxButton from '@/components/Common/BoxButton';
 import CTAButton from '@/components/Common/CTAButton';
-import FABContainer from '@components/Common/FABContainer';
 import useModal from '@/hooks/useModal';
+import THEME from '@/styles/theme';
 import {RecruitDateEntity} from '@/types/api/entities';
 import {FetchRecruitResponse} from '@/types/api/recruit';
 import {FetchResumesResponse} from '@/types/api/resume';
@@ -15,6 +15,7 @@ import {
 } from '@api/recruit';
 import {fetchResumes} from '@api/resume';
 import CenterInfoComponent from '@components/CenterInfoComponent';
+import FABContainer from '@components/Common/FABContainer';
 import toast from '@hooks/toast';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import {BLUE, GRAY, WHITE} from '@styles/colors';
@@ -71,38 +72,47 @@ const ResumeListItem: React.FC<ResumeListItemProps> = ({
     <Pressable onPress={onPress}>
       <View
         style={[
-          common.basicBox,
           common.mv4,
-          selected && {
-            borderColor: BLUE.DEFAULT,
-            borderWidth: 2,
+          {
+            borderRadius: 8,
+            borderWidth: 1,
+            borderColor: selected ? BLUE.DEFAULT : THEME.WHITE,
           },
         ]}>
-        {isMaster && (
-          <View style={[common.resumeBadge]}>
-            <Text
+        <View
+          style={[
+            common.basicBox,
+            selected && {
+              borderColor: BLUE.DEFAULT,
+              borderWidth: 1,
+            },
+          ]}>
+          {isMaster && (
+            <View style={[common.resumeBadge]}>
+              <Text
+                style={[
+                  common.text,
+                  common.fs10,
+                  {color: BLUE.DEFAULT, textAlign: 'center'},
+                ]}>
+                대표
+              </Text>
+            </View>
+          )}
+          <Text numberOfLines={1} style={common.title}>
+            {title}
+          </Text>
+          <Text style={[common.text_s, common.fcg]}>{updatedAt}</Text>
+          {selected && (
+            <Image
               style={[
-                common.text,
-                common.fs10,
-                {color: BLUE.DEFAULT, textAlign: 'center'},
-              ]}>
-              대표
-            </Text>
-          </View>
-        )}
-        <Text numberOfLines={1} style={common.title}>
-          {title}
-        </Text>
-        <Text style={[common.text_s, common.fcg]}>{updatedAt}</Text>
-        {selected && (
-          <Image
-            style={[
-              common.size24,
-              {position: 'absolute', right: 16, top: '50%'},
-            ]}
-            source={iconPath.CHECK}
-          />
-        )}
+                common.size24,
+                {position: 'absolute', right: 16, top: '50%'},
+              ]}
+              source={iconPath.CHECK}
+            />
+          )}
+        </View>
       </View>
     </Pressable>
   );
@@ -151,17 +161,8 @@ const ResumeDateListItem: React.FC<ResumeDateListItemProps> = ({
 type Props = NativeStackScreenProps<LoggedInParamList, 'JobPost'>;
 
 const JobPostScreen = ({route}: Props) => {
-  const {
-    modalVisible: applyModalVisible,
-    openModal: openApplyModal,
-    closeModal: closeApplyModal,
-  } = useModal();
-
-  const {
-    modalVisible: cancelModalVisible,
-    openModal: openCancelModal,
-    closeModal: closeCancelModal,
-  } = useModal();
+  const applyModal = useModal();
+  const cancelModal = useModal();
 
   const {recruitSeq} = route.params;
 
@@ -184,11 +185,9 @@ const JobPostScreen = ({route}: Props) => {
     setContentVerticalOffset(event.nativeEvent.contentOffset.y);
   };
 
-  const firstSelectedResume = resumes.find(
-    resume => resume.isSelected === true,
+  const shouldCancelButtonDisabled = !recruitInfo?.dates.some(
+    date => date.isApplied,
   );
-
-  const firstSelectedResumeSeq = firstSelectedResume?.seq;
 
   const selectedDatesSeqList = recruitDates
     .filter(date => {
@@ -231,7 +230,7 @@ const JobPostScreen = ({route}: Props) => {
     createRecruitApply(recruitInfo.seq, data)
       .then(() => {
         toast.success({message: '지원이 완료되었어요!'});
-        closeApplyModal();
+        applyModal.close();
         getRecruitInfo();
       })
       .catch(error => {
@@ -245,7 +244,7 @@ const JobPostScreen = ({route}: Props) => {
     updateRecruitApplyCancel(data)
       .then(() => {
         toast.success({message: '지원이 취소되었어요!'});
-        closeCancelModal();
+        cancelModal.close();
         getRecruitInfo();
       })
       .catch(error => {
@@ -272,8 +271,15 @@ const JobPostScreen = ({route}: Props) => {
       : setSelectedRecruitDates(prev => [...prev, seq]);
   };
 
+  console.log('selectedRecruitDates', selectedRecruitDates);
+
+  const handleCancelModalClose = () => {
+    cancelModal.close();
+    setSelectedRecruitDates([]);
+  };
+
   const handleApplyModalClose = () => {
-    closeApplyModal();
+    applyModal.close();
     setSelectedRecruitDates([]);
     setSelectedResumeSeq(null);
   };
@@ -426,7 +432,8 @@ const JobPostScreen = ({route}: Props) => {
                   <CTAButton
                     label="지원 취소하기"
                     variant="stroked"
-                    onPress={openCancelModal}
+                    disabled={shouldCancelButtonDisabled}
+                    onPress={cancelModal.open}
                   />
                 )}
               </View>
@@ -434,19 +441,19 @@ const JobPostScreen = ({route}: Props) => {
           </SafeAreaView>
           {contentVerticalOffset <= 500 && (
             <FABContainer>
-              <BoxButton label="지원하기" onPress={openApplyModal} />
+              <BoxButton label="지원하기" onPress={applyModal.open} />
             </FABContainer>
           )}
           <BottomSheet
-            visible={cancelModalVisible}
-            onDismiss={closeCancelModal}
+            visible={cancelModal.visible}
+            onDismiss={handleCancelModalClose}
             title="지원 취소할 날짜 및 시간을 선택하세요.">
             <View style={{paddingHorizontal: 16}}>
               {recruitDates.map((item, index) => (
                 <ResumeDateListItem
                   key={index}
-                  selected={item.isSelected}
-                  disabled={item.isApplied}
+                  selected={selectedRecruitDates.includes(item.seq)}
+                  disabled={!item.isApplied}
                   onPress={() => handleResumeDateListItemPress(item.seq)}
                   day={item.day}
                   time={item.time}
@@ -463,7 +470,7 @@ const JobPostScreen = ({route}: Props) => {
             </View>
           </BottomSheet>
           <BottomSheet
-            visible={applyModalVisible}
+            visible={applyModal.visible}
             onDismiss={handleApplyModalClose}
             title="지원하기">
             <View style={{width: '100%', paddingHorizontal: 16}}>

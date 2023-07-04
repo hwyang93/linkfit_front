@@ -2,6 +2,7 @@ import EmptyState from '@/components/Common/EmptyState';
 import FilterChip from '@/components/Common/FilterChip';
 import FilterChipContainer from '@/components/Common/FilterChipContainer';
 import FloatingActionButton from '@/components/Common/FloatingActionButton';
+import {useAppSelector} from '@/store';
 import {FetchCommunityPostsResponse} from '@/types/api/community';
 import {CommunityEntity} from '@/types/api/entities';
 import {iconPath} from '@/utils/iconPath';
@@ -25,6 +26,9 @@ const CommunityTab = ({navigation}: Props) => {
   const [filterList, setFilterList] = useState<string[]>([]);
 
   const isFocused = useIsFocused();
+
+  const userType = useAppSelector(state => state.user.type);
+  console.log(userType);
 
   const renderItem = ({item}: {item: CommunityEntity}) => {
     return <RecommendedPostItem item={item} />;
@@ -74,18 +78,22 @@ const CommunityTab = ({navigation}: Props) => {
           active={filterList.includes('요가')}
           onPress={() => handleFilterChipPress('요가')}
         />
-        <FilterChip
-          label="강사"
-          style={{marginLeft: 8}}
-          active={filterList.includes('강사')}
-          onPress={() => handleFilterChipPress('강사')}
-        />
-        <FilterChip
-          label="센터"
-          style={{marginLeft: 8}}
-          active={filterList.includes('센터')}
-          onPress={() => handleFilterChipPress('센터')}
-        />
+        {userType === 'INSTRUCTOR' && (
+          <FilterChip
+            label="강사"
+            style={{marginLeft: 8}}
+            active={filterList.includes('강사')}
+            onPress={() => handleFilterChipPress('강사')}
+          />
+        )}
+        {userType === 'CENTER' && (
+          <FilterChip
+            label="센터"
+            style={{marginLeft: 8}}
+            active={filterList.includes('센터')}
+            onPress={() => handleFilterChipPress('센터')}
+          />
+        )}
       </FilterChipContainer>
       <Text style={[common.title, {margin: 16}]}>최근 게시글</Text>
       {posts?.length !== 0 && (

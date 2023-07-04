@@ -67,7 +67,15 @@ const TermsScreen = ({navigation, route}: Props) => {
   };
 
   const handleContinueButtonPress = () => {
-    navigation.navigate('SignUpForm', {email: route.params.email});
+    if (route.params.isCompany) {
+      navigation.navigate('CompanySignUpForm', {
+        email: route.params.email,
+      });
+    } else {
+      navigation.navigate('SignUpForm', {
+        email: route.params.email,
+      });
+    }
   };
 
   return (
@@ -78,7 +86,6 @@ const TermsScreen = ({navigation, route}: Props) => {
           정책 및 약관을 확인해 주세요.
         </Text>
       </View>
-
       <View style={common.mt40}>
         <View>
           <TouchableOpacity
@@ -92,7 +99,6 @@ const TermsScreen = ({navigation, route}: Props) => {
           </TouchableOpacity>
         </View>
         <View style={styles.divideLine} />
-
         <View>
           {TERMS.map((item, index) => (
             <View key={index} style={styles.terms}>
@@ -109,7 +115,6 @@ const TermsScreen = ({navigation, route}: Props) => {
                 </Text>
                 <Text style={[common.text_m]}>{item.title}</Text>
               </TouchableOpacity>
-
               <Pressable style={styles.link}>
                 <Text style={[common.text, common.mr8]}>보기</Text>
                 <Image
@@ -121,12 +126,10 @@ const TermsScreen = ({navigation, route}: Props) => {
           ))}
         </View>
         <View style={styles.divideLine} />
-
         <View>
           <Text style={common.text_s}>
             선택항목은 동의하지 않으셔도 서비스를 이용할 수 있어요.
           </Text>
-
           <View style={common.mt40}>
             <CTAButton
               label="다음"

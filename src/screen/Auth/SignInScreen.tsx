@@ -40,6 +40,10 @@ const SignInScreen = ({navigation}: Props) => {
       if (response.data.seq) {
         toast.success({message: '환영합니다. 회원님'});
         navigation.navigate('LogIn', {email: email.value});
+      } else {
+        navigation.navigate('SignUp', {
+          email: email.value,
+        });
       }
     } catch (error) {
       if (isAxiosError(error)) {

@@ -75,23 +75,9 @@ const MyRecruitmentScreen = ({navigation}: Props) => {
     null,
   );
 
-  const {
-    modalVisible: periodModalVisible,
-    openModal: openPeriodModal,
-    closeModal: closePeriodModal,
-  } = useModal();
-
-  const {
-    modalVisible: progressionModalVisible,
-    openModal: openProgressionModal,
-    closeModal: closeProgressionModal,
-  } = useModal();
-
-  const {
-    modalVisible: kebabModalVisible,
-    openModal: openKebabModal,
-    closeModal: closeKebabModal,
-  } = useModal();
+  const periodModal = useModal();
+  const progressionModal = useModal();
+  const kebabModal = useModal();
 
   const getRecruits = useCallback(() => {
     const params = {isWriter: 'Y' as YesNoFlag};
@@ -106,12 +92,12 @@ const MyRecruitmentScreen = ({navigation}: Props) => {
 
   const handlePeriodOptionPress = (option: string) => {
     setPeriodFilter(option);
-    closePeriodModal();
+    periodModal.close();
   };
 
   const handleProgressionOptionPress = (option: string) => {
     setProgressionFilter(option);
-    closeProgressionModal();
+    progressionModal.close();
   };
 
   useEffect(() => {
@@ -127,11 +113,11 @@ const MyRecruitmentScreen = ({navigation}: Props) => {
   return (
     <SafeAreaView edges={['left', 'right']} style={styles.container}>
       <FilterChipContainer>
-        <FilterChip label={periodFilter || '기간'} onPress={openPeriodModal} />
+        <FilterChip label={periodFilter || '기간'} onPress={periodModal.open} />
         <FilterChip
           label={progressionFilter || '진행 상태'}
           style={{marginLeft: 8}}
-          onPress={openProgressionModal}
+          onPress={progressionModal.open}
         />
       </FilterChipContainer>
       <ScrollView
@@ -144,14 +130,14 @@ const MyRecruitmentScreen = ({navigation}: Props) => {
             position={recruit.position}
             status={recruit.status}
             createdAt={formatDate(recruit.createdAt)}
-            onKebabIconPress={openKebabModal}
+            onKebabIconPress={kebabModal.open}
             onPress={() => handleMyRecruitmentListItemPress(recruit.seq)}
           />
         ))}
       </ScrollView>
       <BottomSheet
-        visible={periodModalVisible}
-        onDismiss={closePeriodModal}
+        visible={periodModal.visible}
+        onDismiss={periodModal.close}
         title="기간">
         {FILTER.PERIOD.map((option, index) => (
           <BottomSheetOption
@@ -162,8 +148,8 @@ const MyRecruitmentScreen = ({navigation}: Props) => {
         ))}
       </BottomSheet>
       <BottomSheet
-        visible={progressionModalVisible}
-        onDismiss={closeProgressionModal}
+        visible={progressionModal.visible}
+        onDismiss={progressionModal.close}
         title="진행 상태">
         {FILTER.PROGRESSION.map((option, index) => (
           <BottomSheetOption
@@ -174,8 +160,8 @@ const MyRecruitmentScreen = ({navigation}: Props) => {
         ))}
       </BottomSheet>
       <BottomSheet
-        visible={kebabModalVisible}
-        onDismiss={closeKebabModal}
+        visible={kebabModal.visible}
+        onDismiss={kebabModal.close}
         title="더보기">
         <BottomSheetOption label="공고 수정하기" />
         <BottomSheetOption label="공고 복사하기" />
