@@ -3,6 +3,7 @@ import LogInScreen from '@/screen/Auth/LogInScreen';
 import SignInScreen from '@/screen/Auth/SignInScreen';
 import SignUpScreen from '@/screen/Auth/SignUpScreen';
 import PasswordResetScreen from '@/screen/Registration/PasswordResetScreen';
+import TermDetailScreen from '@/screen/Registration/TermDetailScreen';
 import HeaderLeft from '@components/HeaderLeft';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import CompanySignUpFormScreen from '@screen/Registration/CompanySignUpFormScreen';
@@ -15,6 +16,7 @@ export type AuthStackParamList = {
   SignIn: undefined;
   SignUp: {email: string};
   Terms: {email: string; isCompany: boolean};
+  TermDetail: undefined;
   SignUpForm: {email: string};
   CompanySignUpForm: {email: string};
   FindEmail: undefined;
@@ -34,48 +36,64 @@ const AuthStack = () => {
           fontWeight: '500',
         },
         contentStyle: {backgroundColor: WHITE},
-        headerLeft: HeaderLeft,
       }}>
-      <Stack.Screen
-        name="SignIn"
-        component={SignInScreen}
-        options={{headerShown: false}}
-      />
-      <Stack.Screen
-        name="LogIn"
-        component={LogInScreen}
-        options={{title: '로그인'}}
-      />
-      <Stack.Screen
-        name="Terms"
-        component={TermsScreen}
-        options={{title: '회원가입'}}
-      />
-      <Stack.Screen
-        name="SignUp"
-        component={SignUpScreen}
-        options={{title: '회원가입'}}
-      />
-      <Stack.Screen
-        name="SignUpForm"
-        component={SignUpFormScreen}
-        options={{title: '회원가입'}}
-      />
-      <Stack.Screen
-        name="CompanySignUpForm"
-        component={CompanySignUpFormScreen}
-        options={{title: '회원가입'}}
-      />
-      <Stack.Screen
-        name="FindEmail"
-        component={FindEmailScreen}
-        options={{title: '이메일 찾기'}}
-      />
-      <Stack.Screen
-        name="PasswordReset"
-        component={PasswordResetScreen}
-        options={{title: '비밀번호 재설정'}}
-      />
+      <Stack.Group
+        screenOptions={{
+          headerLeft: HeaderLeft,
+        }}>
+        <Stack.Screen
+          name="SignIn"
+          component={SignInScreen}
+          options={{headerShown: false}}
+        />
+        <Stack.Screen
+          name="LogIn"
+          component={LogInScreen}
+          options={{title: '로그인'}}
+        />
+        <Stack.Screen
+          name="Terms"
+          component={TermsScreen}
+          options={{title: '회원가입'}}
+        />
+
+        <Stack.Screen
+          name="SignUp"
+          component={SignUpScreen}
+          options={{title: '회원가입'}}
+        />
+        <Stack.Screen
+          name="SignUpForm"
+          component={SignUpFormScreen}
+          options={{title: '회원가입'}}
+        />
+        <Stack.Screen
+          name="CompanySignUpForm"
+          component={CompanySignUpFormScreen}
+          options={{title: '회원가입'}}
+        />
+        <Stack.Screen
+          name="FindEmail"
+          component={FindEmailScreen}
+          options={{title: '이메일 찾기'}}
+        />
+        <Stack.Screen
+          name="PasswordReset"
+          component={PasswordResetScreen}
+          options={{title: '비밀번호 재설정'}}
+        />
+      </Stack.Group>
+      <Stack.Group
+        screenOptions={{
+          headerShown: false,
+          presentation: 'fullScreenModal',
+        }}>
+        <Stack.Screen
+          name="TermDetail"
+          component={TermDetailScreen}
+          options={{title: '개인정보 수집 및 이용동의'}}
+        />
+      </Stack.Group>
     </Stack.Navigator>
   );
 };
