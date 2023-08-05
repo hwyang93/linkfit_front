@@ -1,5 +1,6 @@
 import {LoggedInParamList} from '@/../AppInner';
 import CTAButton from '@/components/Common/CTAButton';
+import toast from '@/hooks/toast';
 import useAuth from '@/hooks/useAuth';
 import useInput from '@/hooks/useInput';
 import Input, {KeyboardTypes, ReturnKeyTypes} from '@components/Input';
@@ -31,8 +32,12 @@ const LogInScreen = ({navigation, route}: Props) => {
       email: route.params.email,
       password: password.value,
     };
-
-    signIn(loginInfo);
+    try {
+      await signIn(loginInfo);
+      toast.success({message: '로그인이 완료되었어요!'});
+    } catch (error: any) {
+      toast.error({message: error.message});
+    }
   };
 
   return (
