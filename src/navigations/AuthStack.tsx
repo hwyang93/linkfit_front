@@ -1,3 +1,4 @@
+import FindEmailScreen from '@/screen/Auth/FindEmailScreen';
 import LogInScreen from '@/screen/Auth/LogInScreen';
 import SignInScreen from '@/screen/Auth/SignInScreen';
 import SignUpScreen from '@/screen/Auth/SignUpScreen';
@@ -16,6 +17,7 @@ export type AuthStackParamList = {
   Terms: {email: string; isCompany: boolean};
   SignUpForm: {email: string};
   CompanySignUpForm: {email: string};
+  FindEmail: undefined;
   PasswordReset: undefined;
 };
 
@@ -63,6 +65,11 @@ const AuthStack = () => {
         name="CompanySignUpForm"
         component={CompanySignUpFormScreen}
         options={{title: '회원가입'}}
+      />
+      <Stack.Screen
+        name="FindEmail"
+        component={FindEmailScreen}
+        options={{title: '이메일 찾기'}}
       />
       <Stack.Screen
         name="PasswordReset"

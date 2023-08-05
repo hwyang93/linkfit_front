@@ -3,6 +3,7 @@ import TextField from '@/components/Common/TextField';
 import toast from '@/hooks/toast';
 import useInput from '@/hooks/useInput';
 import {AuthStackParamList} from '@/navigations/AuthStack';
+import THEME from '@/styles/theme';
 import {removeWhitespace, validateEmail} from '@/utils/util';
 import {fetchMemberInfoByEmail} from '@api/member';
 import Logo from '@components/Logo';
@@ -11,7 +12,13 @@ import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import common from '@styles/common';
 import {isAxiosError} from 'axios';
 import {useState} from 'react';
-import {Keyboard, TouchableWithoutFeedback, View} from 'react-native';
+import {
+  Keyboard,
+  StyleSheet,
+  Text,
+  TouchableWithoutFeedback,
+  View,
+} from 'react-native';
 import EncryptedStorage from 'react-native-encrypted-storage';
 
 const EMAIL_INVALID_ERROR_MESSAGE = '이메일 형식에 맞게 입력해 주세요.';
@@ -54,6 +61,10 @@ const SignInScreen = ({navigation}: Props) => {
     }
   };
 
+  const onFindEmailPress = () => {
+    navigation.navigate('FindEmail');
+  };
+
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
       <View style={common.container}>
@@ -80,10 +91,26 @@ const SignInScreen = ({navigation}: Props) => {
             />
           </View>
           <SimpleLogin />
+          <View style={{alignItems: 'center'}}>
+            <Text style={styles.linkText}>로그인 없이 둘러보기</Text>
+            <Text
+              style={[styles.linkText, common.mt24]}
+              onPress={onFindEmailPress}>
+              가입한 이메일 찾기
+            </Text>
+          </View>
         </View>
       </View>
     </TouchableWithoutFeedback>
   );
 };
+
+const styles = StyleSheet.create({
+  linkText: {
+    color: THEME.PRIMARY,
+    fontSize: 16,
+    textDecorationLine: 'underline',
+  },
+});
 
 export default SignInScreen;
