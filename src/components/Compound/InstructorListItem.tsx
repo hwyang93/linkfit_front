@@ -1,33 +1,13 @@
+import useModal from '@/hooks/useModal';
 import {iconPath} from '@/utils/iconPath';
-import Modal from '@components/ModalSheet';
 import {BLUE} from '@styles/colors';
 import common from '@styles/common';
-import {useState} from 'react';
-import {
-  Alert,
-  Pressable,
-  StyleProp,
-  StyleSheet,
-  Text,
-  View,
-  ViewStyle,
-} from 'react-native';
+import {StyleProp, StyleSheet, Text, View, ViewStyle} from 'react-native';
 import Avatar from '../Common/Avatar';
+import BottomSheet from '../Common/BottomSheet';
+import BottomSheetOption from '../Common/BottomSheetOption';
 import Icon from '../Common/Icon';
 import IconButton from '../Common/IconButton';
-
-// TODO: 모달 로직 밖으로 분리 필요
-
-const MODAL = [
-  {
-    value: '차단하기',
-    job: () => {},
-  },
-  {
-    value: '신고하기',
-    job: () => {},
-  },
-];
 
 interface InstructorListItemProps {
   style?: StyleProp<ViewStyle>;
@@ -38,7 +18,11 @@ interface InstructorListItemProps {
   address: string;
   followerCount: number;
   isCertificated: boolean;
-  onAvatarPress?: () => void;
+  onBlock: () => void;
+  onReport: () => void;
+  onMessageIconPress: () => void;
+  onFavoriteIconPress: () => void;
+  onAvatarPress: () => void;
 }
 
 const InstructorListItem: React.FC<InstructorListItemProps> = ({
@@ -50,9 +34,13 @@ const InstructorListItem: React.FC<InstructorListItemProps> = ({
   address,
   followerCount,
   isCertificated,
+  onBlock,
+  onReport,
+  onMessageIconPress,
+  onFavoriteIconPress,
   onAvatarPress,
 }) => {
-  const [modalVisible, setModalVisible] = useState(false);
+  const modal = useModal();
 
   return (
     <View style={[styles.listBox, style]}>
@@ -87,39 +75,37 @@ const InstructorListItem: React.FC<InstructorListItemProps> = ({
       <IconButton
         source={iconPath.KEBAB}
         style={styles.kebabIcon}
-        onPress={() => setModalVisible(true)}
+        onPress={modal.open}
       />
       <View style={styles.rightBox}>
         <IconButton
           style={{marginRight: 8}}
           source={iconPath.MESSAGE}
-          onPress={() => Alert.alert('click', 'test')}
+          onPress={onMessageIconPress}
         />
         <IconButton
           style={{marginRight: 4}}
           source={iconPath.FAVORITE}
-          onPress={() => Alert.alert('click', 'test')}
+          onPress={onFavoriteIconPress}
         />
         <Text style={[common.text_m, common.fwb]}>{followerCount}</Text>
       </View>
-      <Modal
-        modalVisible={modalVisible}
-        setModalVisible={setModalVisible}
-        title="더보기"
-        content={
-          <View>
-            {MODAL.map((item, index) => (
-              <View key={index} style={common.modalItemBox}>
-                <Pressable
-                  onPress={item.job}
-                  style={[common.rowCenterBetween, {width: '100%'}]}>
-                  <Text style={[common.modalText]}>{item.value}</Text>
-                </Pressable>
-              </View>
-            ))}
-          </View>
-        }
-      />
+      <BottomSheet visible={modal.visible} onDismiss={modal.close}>
+        <BottomSheetOption
+          label="차단하기"
+          onPress={() => {
+            onBlock();
+            modal.close();
+          }}
+        />
+        <BottomSheetOption
+          label="신고하기"
+          onPress={() => {
+            onReport();
+            modal.close();
+          }}
+        />
+      </BottomSheet>
     </View>
   );
 };

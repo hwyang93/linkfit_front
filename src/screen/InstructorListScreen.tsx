@@ -1,6 +1,4 @@
 import {LoggedInParamList} from '@/../AppInner';
-import FilterChip from '@/components/Common/FilterChip';
-import FilterChipContainer from '@/components/Common/FilterChipContainer';
 import InstructorListItem from '@/components/Compound/InstructorListItem';
 import common from '@/styles/common';
 import {FetchInstructorsResponse, Instructor} from '@/types/api/instructor';
@@ -9,7 +7,7 @@ import toast from '@hooks/toast';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import {isAxiosError} from 'axios';
 import {useCallback, useEffect, useState} from 'react';
-import {FlatList, Text, View} from 'react-native';
+import {Alert, FlatList, Text, View} from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
 
 type Props = NativeStackScreenProps<LoggedInParamList, 'InstructorList'>;
@@ -36,11 +34,25 @@ const InstructorListScreen = ({navigation}: Props) => {
     getInstructorsData();
   }, [getInstructorsData]);
 
+  const blockInstructor = (instructorId: number) => {
+    console.log(instructorId);
+    // TODO: 강사 차단하기 기능 추가
+  };
+
+  const reportInstructor = (instructorId: number) => {
+    console.log(instructorId);
+    // TODO: 강사 신고하기 기능 추가
+  };
+
+  // TODO: 필터 기능 추가
+
+  // TODO: 좋아요 기능 추가
+
   return (
     <SafeAreaView edges={['bottom', 'left', 'right']} style={{flex: 1}}>
-      <FilterChipContainer>
+      {/* <FilterChipContainer>
         <FilterChip label="포지션" rightIcon />
-      </FilterChipContainer>
+      </FilterChipContainer> */}
       <FlatList
         contentContainerStyle={{margin: 16}}
         data={instructors}
@@ -62,6 +74,10 @@ const InstructorListScreen = ({navigation}: Props) => {
             address={item.address}
             followerCount={item.followerCount}
             isCertificated
+            onBlock={() => blockInstructor(item.seq)}
+            onReport={() => reportInstructor(item.seq)}
+            onMessageIconPress={() => Alert.alert('click', 'test')}
+            onFavoriteIconPress={() => Alert.alert('click', 'test')}
             onAvatarPress={() =>
               navigation.navigate('Profile', {
                 memberSeq: item.seq,
