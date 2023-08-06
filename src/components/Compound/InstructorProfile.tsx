@@ -2,6 +2,7 @@ import THEME from '@/styles/theme';
 import {iconPath} from '@/utils/iconPath';
 import {GRAY} from '@styles/colors';
 import common from '@styles/common';
+import {useState} from 'react';
 import {Image, Pressable, StyleSheet, Text, View} from 'react-native';
 import Icon from '../Common/Icon';
 import IconButton from '../Common/IconButton';
@@ -14,7 +15,8 @@ interface InstructorProfileProps {
   career: string;
   address: string;
   followerCount: string;
-  onFavorite?: () => void;
+  isFavorite: boolean;
+  onFavorite: () => void;
   onPress?: () => void;
 }
 
@@ -26,9 +28,17 @@ const InstructorProfile: React.FC<InstructorProfileProps> = ({
   career,
   address,
   followerCount,
+  isFavorite: initialIsFavorite,
   onFavorite,
   onPress,
 }) => {
+  const [isFavorite, setIsFavorite] = useState(initialIsFavorite);
+
+  const onFavoriteIconPress = () => {
+    onFavorite();
+    setIsFavorite(!isFavorite);
+  };
+
   return (
     <View>
       <Pressable style={styles.profileBox} onPress={onPress}>
@@ -66,8 +76,8 @@ const InstructorProfile: React.FC<InstructorProfileProps> = ({
           <View style={common.rowCenter}>
             <IconButton
               style={{marginRight: 8}}
-              source={iconPath.FAVORITE_FILL}
-              onPress={onFavorite}
+              source={isFavorite ? iconPath.FAVORITE_FILL : iconPath.FAVORITE}
+              onPress={onFavoriteIconPress}
             />
             <Text style={[common.text_m, common.fwb, common.mr8]}>
               {followerCount}

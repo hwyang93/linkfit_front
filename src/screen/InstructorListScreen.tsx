@@ -7,7 +7,7 @@ import toast from '@hooks/toast';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import {isAxiosError} from 'axios';
 import {useCallback, useEffect, useState} from 'react';
-import {Alert, FlatList, Text, View} from 'react-native';
+import {FlatList, Text, View} from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
 
 type Props = NativeStackScreenProps<LoggedInParamList, 'InstructorList'>;
@@ -33,16 +33,6 @@ const InstructorListScreen = ({navigation}: Props) => {
   useEffect(() => {
     getInstructorsData();
   }, [getInstructorsData]);
-
-  const blockInstructor = (instructorId: number) => {
-    console.log(instructorId);
-    // TODO: 강사 차단하기 기능 추가
-  };
-
-  const reportInstructor = (instructorId: number) => {
-    console.log(instructorId);
-    // TODO: 강사 신고하기 기능 추가
-  };
 
   // TODO: 필터 기능 추가
 
@@ -74,10 +64,6 @@ const InstructorListScreen = ({navigation}: Props) => {
             address={item.address}
             followerCount={item.followerCount}
             isCertificated
-            onBlock={() => blockInstructor(item.seq)}
-            onReport={() => reportInstructor(item.seq)}
-            onMessageIconPress={() => Alert.alert('click', 'test')}
-            onFavoriteIconPress={() => Alert.alert('click', 'test')}
             onAvatarPress={() =>
               navigation.navigate('Profile', {
                 memberSeq: item.seq,

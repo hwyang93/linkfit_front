@@ -45,6 +45,11 @@ const ProfileScreen = ({route}: Props) => {
     fetchData();
   }, [fetchData]);
 
+  const onFavorite = (instructorId: number) => {
+    console.log(instructorId);
+    // TOOD: 강사 즐겨찾기 API 호출
+  };
+
   return (
     <SafeAreaView edges={['left', 'right']} style={{flex: 1}}>
       {data && (
@@ -55,7 +60,9 @@ const ProfileScreen = ({route}: Props) => {
             career={data.career}
             address={data.address}
             followerCount={data.follower}
+            isFavorite={false}
             isCertificated
+            onFavorite={() => onFavorite(data.seq)}
           />
           <SectionHeader style={{marginTop: 16}} title="소개글" />
           <Text style={{fontSize: 16, lineHeight: 24, marginTop: 8}}>

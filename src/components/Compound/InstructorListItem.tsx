@@ -2,7 +2,14 @@ import useModal from '@/hooks/useModal';
 import {iconPath} from '@/utils/iconPath';
 import {BLUE} from '@styles/colors';
 import common from '@styles/common';
-import {StyleProp, StyleSheet, Text, View, ViewStyle} from 'react-native';
+import {
+  Alert,
+  StyleProp,
+  StyleSheet,
+  Text,
+  View,
+  ViewStyle,
+} from 'react-native';
 import Avatar from '../Common/Avatar';
 import BottomSheet from '../Common/BottomSheet';
 import BottomSheetOption from '../Common/BottomSheetOption';
@@ -18,10 +25,6 @@ interface InstructorListItemProps {
   address: string;
   followerCount: number;
   isCertificated: boolean;
-  onBlock: () => void;
-  onReport: () => void;
-  onMessageIconPress: () => void;
-  onFavoriteIconPress: () => void;
   onAvatarPress: () => void;
 }
 
@@ -34,13 +37,31 @@ const InstructorListItem: React.FC<InstructorListItemProps> = ({
   address,
   followerCount,
   isCertificated,
-  onBlock,
-  onReport,
-  onMessageIconPress,
-  onFavoriteIconPress,
   onAvatarPress,
 }) => {
   const modal = useModal();
+
+  const onMessageIconPress = () => {
+    // TODO: 기능 추가
+    Alert.alert('기능 준비 중입니다.');
+  };
+
+  const onFavoriteIconPress = () => {
+    // TODO: 즐겨찾기 API 연결
+    Alert.alert('기능 준비 중입니다.');
+  };
+
+  const onBlockPress = () => {
+    // TODO: 차단하기 API 연결
+    Alert.alert('기능 준비 중입니다.');
+    modal.close();
+  };
+
+  const onReportPress = () => {
+    // TODO: 신고하기 API 연결
+    Alert.alert('기능 준비 중입니다.');
+    modal.close();
+  };
 
   return (
     <View style={[styles.listBox, style]}>
@@ -91,20 +112,8 @@ const InstructorListItem: React.FC<InstructorListItemProps> = ({
         <Text style={[common.text_m, common.fwb]}>{followerCount}</Text>
       </View>
       <BottomSheet visible={modal.visible} onDismiss={modal.close}>
-        <BottomSheetOption
-          label="차단하기"
-          onPress={() => {
-            onBlock();
-            modal.close();
-          }}
-        />
-        <BottomSheetOption
-          label="신고하기"
-          onPress={() => {
-            onReport();
-            modal.close();
-          }}
-        />
+        <BottomSheetOption label="차단하기" onPress={onBlockPress} />
+        <BottomSheetOption label="신고하기" onPress={onReportPress} />
       </BottomSheet>
     </View>
   );
