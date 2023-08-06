@@ -1,4 +1,5 @@
 import {fetchInstructor} from '@/api/instructor';
+import EmptyState from '@/components/Common/EmptyState';
 import ExpandButton from '@/components/Common/ExpandButton';
 import RowView from '@/components/Common/RowView';
 import SectionHeader from '@/components/Common/SectionHeader';
@@ -7,12 +8,15 @@ import RecruitCard from '@/components/Compound/RecruitCard';
 import ReviewListItem from '@/components/Compound/ReviewListItem';
 import {FetchInstructorResponse} from '@/types/api/instructor';
 import {SCREEN_WIDTH} from '@/utils/constants/common';
+import MESSAGE from '@/utils/constants/message';
 import {formatDate} from '@/utils/util';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import {useCallback, useEffect, useState} from 'react';
 import {Image, Pressable, ScrollView, Text, View} from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {LoggedInParamList} from '../../AppInner';
+
+const DUMMY_IS_PORTFOLIO_EMPTY = false;
 
 const DUMMY_IMAGES = [
   require('@images/center_01.png'),
@@ -40,8 +44,6 @@ const ProfileScreen = ({route}: Props) => {
   useEffect(() => {
     fetchData();
   }, [fetchData]);
-
-  // TODO: api 연동 필요
 
   return (
     <SafeAreaView edges={['left', 'right']} style={{flex: 1}}>
@@ -114,6 +116,7 @@ const ProfileScreen = ({route}: Props) => {
           />
           <SectionHeader title="포트폴리오" style={{marginTop: 16}} />
           <RowView style={{flexWrap: 'wrap', marginTop: 8}}>
+            {/* TODO: 데이터 연동 */}
             {DUMMY_IMAGES.map((item, index) => (
               <Pressable
                 key={index}
@@ -126,7 +129,11 @@ const ProfileScreen = ({route}: Props) => {
                 <Image source={item} style={{width: '100%', height: '100%'}} />
               </Pressable>
             ))}
+            {DUMMY_IS_PORTFOLIO_EMPTY && (
+              <EmptyState message={MESSAGE.EMPTY_PORTFOLIO} />
+            )}
           </RowView>
+          {/* TODO: 클릭 시 페이지 이동 */}
           <SectionHeader
             title="강사 후기"
             style={{marginTop: 20}}
@@ -142,6 +149,7 @@ const ProfileScreen = ({route}: Props) => {
                 content={reputation.comment}
               />
             ))}
+            {!data.reputations && <EmptyState message={MESSAGE.EMPTY_REVIEW} />}
           </View>
         </ScrollView>
       )}
