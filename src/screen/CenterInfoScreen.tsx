@@ -50,6 +50,8 @@ const CenterInfoScreen = ({route}: Props) => {
     getCenterInfo();
   }, [getCenterInfo]);
 
+  // TODO: api 연동 필요
+
   return (
     <SafeAreaView edges={['left', 'right']} style={{flex: 1}}>
       <ScrollView>
