@@ -48,7 +48,7 @@ const CommunityTab = ({navigation}: Props) => {
   };
 
   const getPosts = useCallback(() => {
-    fetchCommunityPosts()
+    fetchCommunityPosts({category: filterList})
       .then(({data}) => {
         setPosts(data);
       })
@@ -57,7 +57,7 @@ const CommunityTab = ({navigation}: Props) => {
           toast.error({message: error.message});
         }
       });
-  }, []);
+  }, [filterList]);
 
   useEffect(() => {
     if (isFocused) {
