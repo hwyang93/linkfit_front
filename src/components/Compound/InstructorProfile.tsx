@@ -3,7 +3,6 @@ import {iconPath} from '@/utils/iconPath';
 import {GRAY} from '@styles/colors';
 import common from '@styles/common';
 import {Image, Pressable, StyleSheet, Text, View} from 'react-native';
-import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import Icon from '../Common/Icon';
 import IconButton from '../Common/IconButton';
 
@@ -74,9 +73,6 @@ const InstructorProfile: React.FC<InstructorProfileProps> = ({
               {followerCount}
             </Text>
           </View>
-        </View>
-        <View style={styles.nextArrow}>
-          <FontAwesome name={'chevron-right'} color="black" />
         </View>
       </Pressable>
     </View>
