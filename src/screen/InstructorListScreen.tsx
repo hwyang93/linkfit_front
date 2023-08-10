@@ -1,6 +1,4 @@
 import {LoggedInParamList} from '@/../AppInner';
-import FilterChip from '@/components/Common/FilterChip';
-import FilterChipContainer from '@/components/Common/FilterChipContainer';
 import InstructorListItem from '@/components/Compound/InstructorListItem';
 import common from '@/styles/common';
 import {FetchInstructorsResponse, Instructor} from '@/types/api/instructor';
@@ -36,11 +34,15 @@ const InstructorListScreen = ({navigation}: Props) => {
     getInstructorsData();
   }, [getInstructorsData]);
 
+  // TODO: 필터 기능 추가
+
+  // TODO: 좋아요 기능 추가
+
   return (
     <SafeAreaView edges={['bottom', 'left', 'right']} style={{flex: 1}}>
-      <FilterChipContainer>
+      {/* <FilterChipContainer>
         <FilterChip label="포지션" rightIcon />
-      </FilterChipContainer>
+      </FilterChipContainer> */}
       <FlatList
         contentContainerStyle={{margin: 16}}
         data={instructors}

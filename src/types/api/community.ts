@@ -2,7 +2,7 @@ import {YesNoFlag} from '../common';
 import {CommunityEntity} from './entities';
 
 export interface FetchCommunityPostsParams {
-  category?: string;
+  category?: string[];
   isWriter?: YesNoFlag;
 }
 

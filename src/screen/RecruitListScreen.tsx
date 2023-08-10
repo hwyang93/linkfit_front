@@ -185,24 +185,30 @@ const RecruitListScreen = ({navigation}: Props) => {
           onPress={() => navigation.navigate('RecruitMap')}
         /> */}
       </FABContainer>
-      <PositionFilterModal
-        visible={positionModal.visible}
-        onDismiss={positionModal.close}
-        initialOptions={positionFilterValueList}
-        onApply={handlePositionFilterApply}
-      />
-      <RecruitTypeFilterModal
-        visible={recruitTypeModal.visible}
-        onDismiss={recruitTypeModal.close}
-        initialOptions={recruitTypeFilterValueList}
-        onApply={handleRecruitTypeFilterApply}
-      />
-      <TimeFilterModal
-        visible={timeModal.visible}
-        onDismiss={timeModal.close}
-        initialOptions={timeFilterValueList}
-        onApply={handleTimeFilterApply}
-      />
+      {positionModal.visible && (
+        <PositionFilterModal
+          visible={positionModal.visible}
+          onDismiss={positionModal.close}
+          initialOptions={positionFilterValueList}
+          onApply={handlePositionFilterApply}
+        />
+      )}
+      {recruitTypeModal.visible && (
+        <RecruitTypeFilterModal
+          visible={recruitTypeModal.visible}
+          onDismiss={recruitTypeModal.close}
+          initialOptions={recruitTypeFilterValueList}
+          onApply={handleRecruitTypeFilterApply}
+        />
+      )}
+      {timeModal.visible && (
+        <TimeFilterModal
+          visible={timeModal.visible}
+          onDismiss={timeModal.close}
+          initialOptions={timeFilterValueList}
+          onApply={handleTimeFilterApply}
+        />
+      )}
       <BottomSheet
         visible={viewModal.visible}
         onDismiss={viewModal.close}

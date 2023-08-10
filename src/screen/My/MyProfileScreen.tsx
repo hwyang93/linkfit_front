@@ -237,6 +237,7 @@ const MyProfileScreen = ({navigation}: Props) => {
       review={item.review}
     />
   );
+  // TODO: api 연동 필요
 
   const MyIntroductionTab: React.FC = () => {
     return (
@@ -249,6 +250,8 @@ const MyProfileScreen = ({navigation}: Props) => {
       />
     );
   };
+
+  // TODO: api 연동 필요
 
   const ReviewTab: React.FC = () => {
     return (

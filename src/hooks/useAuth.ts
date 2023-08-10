@@ -3,11 +3,10 @@ import {fetchMemberInfo} from '@/api/member';
 import userSlice from '@/slices/user';
 import {useAppDispatch} from '@/store';
 import STORAGE_KEY from '@/utils/constants/storage';
-import axios, {isAxiosError} from 'axios';
+import axios from 'axios';
 import {useState} from 'react';
 import {Alert} from 'react-native';
 import EncryptedStorage from 'react-native-encrypted-storage';
-import toast from './toast';
 
 const useAuth = () => {
   const [isLoading, setIsLoading] = useState(false);
@@ -15,15 +14,9 @@ const useAuth = () => {
   const dispatch = useAppDispatch();
 
   const initiateUser = async () => {
-    try {
-      const response = await fetchMemberInfo();
-      dispatch(userSlice.actions.setUser(response.data));
-      dispatch(userSlice.actions.setIsLoggedIn(true));
-    } catch (error) {
-      if (isAxiosError(error)) {
-        toast.error({message: error.message});
-      }
-    }
+    const response = await fetchMemberInfo();
+    dispatch(userSlice.actions.setUser(response.data));
+    dispatch(userSlice.actions.setIsLoggedIn(true));
   };
 
   const signIn = async ({
@@ -47,12 +40,8 @@ const useAuth = () => {
       );
 
       await initiateUser();
-
-      toast.success({message: '로그인이 완료되었어요!'});
     } catch (error) {
-      if (isAxiosError(error)) {
-        toast.error({message: error.message});
-      }
+      throw error;
     } finally {
       setIsLoading(false);
     }

@@ -5,6 +5,7 @@ import FloatingActionButton from '@/components/Common/FloatingActionButton';
 import {useAppSelector} from '@/store';
 import {FetchCommunityPostsResponse} from '@/types/api/community';
 import {CommunityEntity} from '@/types/api/entities';
+import MESSAGE from '@/utils/constants/message';
 import {iconPath} from '@/utils/iconPath';
 import {fetchCommunityPosts} from '@api/community';
 import FABContainer from '@components/Common/FABContainer';
@@ -47,7 +48,7 @@ const CommunityTab = ({navigation}: Props) => {
   };
 
   const getPosts = useCallback(() => {
-    fetchCommunityPosts()
+    fetchCommunityPosts({category: filterList})
       .then(({data}) => {
         setPosts(data);
       })
@@ -56,7 +57,7 @@ const CommunityTab = ({navigation}: Props) => {
           toast.error({message: error.message});
         }
       });
-  }, []);
+  }, [filterList]);
 
   useEffect(() => {
     if (isFocused) {
@@ -110,7 +111,9 @@ const CommunityTab = ({navigation}: Props) => {
           )}
         />
       )}
-      {posts?.length === 0 && <EmptyState />}
+      {posts?.length === 0 && (
+        <EmptyState message={MESSAGE.EMPTY_POST} fullHeight />
+      )}
       <FABContainer style={{bottom: 16}}>
         <FloatingActionButton
           iconSource={iconPath.PENCIL_W}

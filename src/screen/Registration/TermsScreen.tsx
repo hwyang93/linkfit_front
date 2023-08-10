@@ -78,6 +78,10 @@ const TermsScreen = ({navigation, route}: Props) => {
     }
   };
 
+  const handleTermDetailButtonPress = () => {
+    navigation.navigate('TermDetail');
+  };
+
   return (
     <View style={styles.container}>
       <View>
@@ -115,7 +119,9 @@ const TermsScreen = ({navigation, route}: Props) => {
                 </Text>
                 <Text style={[common.text_m]}>{item.title}</Text>
               </TouchableOpacity>
-              <Pressable style={styles.link}>
+              <Pressable
+                style={[styles.link]}
+                onPress={handleTermDetailButtonPress}>
                 <Text style={[common.text, common.mr8]}>보기</Text>
                 <Image
                   source={iconPath.CIRCLE_ARROW_RIGHT}
