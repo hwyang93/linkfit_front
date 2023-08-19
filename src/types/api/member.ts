@@ -1,4 +1,4 @@
-import {YesNoFlag} from '../common';
+import {MemberType, YesNoFlag} from '../common';
 import {
   CompanyEntity,
   MemberEntity,
@@ -12,7 +12,7 @@ import {
 } from './entities';
 
 export interface FetchMemberFollowingsParams {
-  type: 'COMPANY' | 'INSTRUCTOR';
+  type: MemberType;
 }
 
 export type FetchMemberFollowingsResponse = {

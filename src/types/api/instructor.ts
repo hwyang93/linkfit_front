@@ -1,5 +1,10 @@
 import {YesNoFlag} from '../common';
-import {MemberLinkEntity, MemberReputationEntity} from './entities';
+import {
+  CommonFileEntity,
+  MemberLinkEntity,
+  MemberReputationEntity,
+  ResumeEntity,
+} from './entities';
 
 export interface FetchInstructorsParams {
   noPaging?: boolean;
@@ -17,9 +22,7 @@ export type Instructor = {
   career: string;
   followerCount: number;
   isFollow: YesNoFlag;
-  profileImage: {
-    originFileUrl: string;
-  };
+  profileImage: CommonFileEntity | null;
 };
 
 export type FetchInstructorsResponse = Instructor[];
@@ -35,3 +38,20 @@ export interface FetchInstructorResponse {
   follower: string;
   reputations: MemberReputationEntity[];
 }
+
+export type FetchRecommendedInstructorsResponse = {
+  seq: number;
+  name: string;
+  nickname: string;
+  regionAuth: {
+    region1depth: string;
+    region2depth: string;
+    region3depth: string;
+  };
+  profileImage: CommonFileEntity | null;
+  resumes: ResumeEntity[];
+  address: string;
+  career: string;
+  followerCount: number;
+  isFollow: YesNoFlag;
+}[];

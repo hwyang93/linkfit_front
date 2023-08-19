@@ -5,6 +5,8 @@ import {
 } from '@/types/api/dtos';
 import {
   FetchBookmarkRecruitsResponse,
+  FetchRecommendedRecruitsResponse,
+  FetchRecruitApplicationResponse,
   FetchRecruitApplicationsMyParams,
   FetchRecruitApplicationsMyResponse,
   FetchRecruitApplicationsResponse,
@@ -15,8 +17,8 @@ import {
 import {DeleteResponse, PostResponse} from '@/types/common';
 import request from './request';
 
-export const createRecruit = (data: CreateRecruitDto) => {
-  return request.post<PostResponse>('/recruit', data);
+export const createRecruit = (body: CreateRecruitDto) => {
+  return request.post<PostResponse>('/recruit', body);
 };
 
 export const fetchRecruit = (seq: number) => {
@@ -46,7 +48,6 @@ export const createRecruitApply = (
   return request.post<PostResponse>(`/recruit/${seq}/apply`, data);
 };
 
-// TODO: Response 타입 추가
 export const updateRecruitApplyCancel = (data: {seqs: number[]}) => {
   return request.patch('/recruit/apply', data);
 };
@@ -64,10 +65,9 @@ export const fetchRecruitApplications = (seq: number) => {
 };
 
 export const fetchRecruitApplication = (seq: number) => {
-  return request.get(`/recruit/apply/${seq}`);
+  return request.get<FetchRecruitApplicationResponse>(`/recruit/apply/${seq}`);
 };
 
-// TODO: Response 타입 추가
 export const updateRecruitApplyStatus = (
   seq: number,
   data: UpdateRecruitApplyDto,
@@ -75,7 +75,6 @@ export const updateRecruitApplyStatus = (
   return request.patch(`/recruit/${seq}/apply`, data);
 };
 
-// TODO: Response 타입 추가
 export const fetchRecommendedRecruits = () => {
-  return request.get('/recruit/recommended');
+  return request.get<FetchRecommendedRecruitsResponse>('/recruit/recommended');
 };

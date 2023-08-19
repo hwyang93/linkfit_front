@@ -1,5 +1,7 @@
 import {AxiosResponse} from 'axios';
 
+export type MemberType = 'PUBLIC' | 'INSTRUCTOR' | 'COMPANY';
+
 export type YesNoFlag = 'Y' | 'N';
 
 export type PostResponse = {

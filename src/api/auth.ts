@@ -1,12 +1,8 @@
-import {
-  LoginParams,
-  LoginResponse,
-  refreshTokenResponse,
-} from '@/types/api/auth';
+import {LoginBody, LoginResponse, refreshTokenResponse} from '@/types/api/auth';
 import request from './request';
 
-export const login = (params: LoginParams) => {
-  return request.post<LoginResponse>('/auth/login', params);
+export const login = (body: LoginBody) => {
+  return request.post<LoginResponse>('/auth/login', body);
 };
 
 export const refreshToken = () => {

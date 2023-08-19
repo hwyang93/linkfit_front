@@ -1,5 +1,6 @@
 import {LoggedInParamList} from '@/../AppInner';
 import RecruitListItem from '@/components/Compound/RecruitListItem';
+import {FetchRecommendedRecruitsResponse} from '@/types/api/recruit';
 import {fetchRecommendedRecruits} from '@api/recruit';
 import toast from '@hooks/toast';
 import {NavigationProp, useNavigation} from '@react-navigation/native';
@@ -10,7 +11,9 @@ import {FlatList, Text, View} from 'react-native';
 import GradientNaivgationTab from './GradientNavigationTab';
 
 const LinkTop: React.FC = () => {
-  const [recruits, setRecruits] = useState([]);
+  const [recruits, setRecruits] = useState<FetchRecommendedRecruitsResponse>(
+    [],
+  );
 
   const navigation = useNavigation<NavigationProp<LoggedInParamList>>();
 

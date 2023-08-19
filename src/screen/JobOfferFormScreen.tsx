@@ -121,6 +121,10 @@ const JobOfferFormScreen = ({navigation}: Props) => {
   };
 
   const onCreateRecruit = useCallback(() => {
+    if (!lon || !lat) {
+      return;
+    }
+
     // toast.error({message: e.message});
     const data = {
       title: offerTitle,

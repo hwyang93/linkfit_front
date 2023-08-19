@@ -1,6 +1,7 @@
 import FloatingActionButton from '@/components/Common/FloatingActionButton';
 import InstructorListItem from '@/components/Compound/InstructorListItem';
 import useExitAlert from '@/hooks/useExitAlert';
+import {FetchRecommendedInstructorsResponse} from '@/types/api/instructor';
 import {iconPath} from '@/utils/iconPath';
 import {fetchRecommendedInstructors} from '@api/instructor';
 import LinkTop from '@components/LinkTop';
@@ -16,7 +17,8 @@ import {LoggedInParamList} from '../../../AppInner';
 type Props = NativeStackScreenProps<LoggedInParamList, 'Link'>;
 
 const LinkScreen = ({navigation}: Props) => {
-  const [instructors, setInstructors] = useState<any[]>([]);
+  const [instructors, setInstructors] =
+    useState<FetchRecommendedInstructorsResponse>([]);
 
   useEffect(() => {
     fetchRecommendedInstructors()
@@ -38,7 +40,7 @@ const LinkScreen = ({navigation}: Props) => {
         <View style={styles.container}>
           <FlatList
             data={instructors}
-            keyExtractor={item => item.seq}
+            keyExtractor={item => String(item.seq)}
             renderItem={({item}: any) => (
               <InstructorListItem
                 style={{marginHorizontal: 16}}
