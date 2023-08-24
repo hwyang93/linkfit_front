@@ -1,4 +1,4 @@
-import {FetchResumesResponse} from '@/types/api/resume';
+import {FetchResumeResponse, FetchResumesResponse} from '@/types/api/resume';
 import request from '@api/request';
 
 export const createResume = (data: object) => {
@@ -10,7 +10,7 @@ export const fetchResumes = () => {
 };
 
 export const fetchResume = (seq: number) => {
-  return request.get(`/resume/${seq}`);
+  return request.get<FetchResumeResponse>(`/resume/${seq}`);
 };
 
 export const updateResumeMaster = (seq: number) => {

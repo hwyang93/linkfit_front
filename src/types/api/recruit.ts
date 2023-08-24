@@ -1,5 +1,10 @@
 import {YesNoFlag} from '../common';
-import {RecruitApplyEntity, RecruitEntity} from './entities';
+import {
+  CommonFileEntity,
+  CompanyEntity,
+  RecruitApplyEntity,
+  RecruitEntity,
+} from './entities';
 
 export interface FetchRecruitsParams {
   noPaging?: boolean;
@@ -7,6 +12,7 @@ export interface FetchRecruitsParams {
   perPage?: number;
   type?: 'list' | 'marker';
   fields?: string[];
+  time?: string[];
   recruitTypes?: string[];
   area?: string;
   isWriter?: YesNoFlag;
@@ -38,3 +44,33 @@ export interface FetchRecruitApplicationsMyParams {
 }
 
 export type FetchRecruitApplicationsMyResponse = RecruitApplyEntity[];
+
+export type FetchRecruitApplicationResponse = RecruitApplyEntity;
+
+export type FetchRecommendedRecruitsResponse = {
+  createdAt: string;
+  updatedAt: string;
+  seq: 1;
+  title: string;
+  companyName: string;
+  position: string;
+  address: string;
+  addressDetail: string;
+  district: string;
+  phone: string;
+  recruitType: string;
+  career: string;
+  payType: string;
+  pay: string;
+  classType: string;
+  content: string;
+  status: string;
+  lon: number;
+  lat: number;
+  writerSeq: number;
+  writer: {
+    name: string;
+    profileImage: CommonFileEntity | null;
+    company: CompanyEntity | null;
+  };
+}[];

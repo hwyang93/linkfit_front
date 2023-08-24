@@ -3,6 +3,7 @@ import {
   FetchInstructorResponse,
   FetchInstructorsParams,
   FetchInstructorsResponse,
+  FetchRecommendedInstructorsResponse,
 } from '@/types/api/instructor';
 import {AxiosResponseWithPagingInfo, PostResponse} from '@/types/common';
 import request from './request';
@@ -22,7 +23,8 @@ export const createInstructorSuggest = (data: CreateinstructorSuggestDto) => {
   return request.post<PostResponse>('/instructor/suggest', data);
 };
 
-// TODO: fetchRecommendedInstructors Response 타입 추가
 export const fetchRecommendedInstructors = () => {
-  return request.get('/instructor/recommended');
+  return request.get<FetchRecommendedInstructorsResponse>(
+    '/instructor/recommended',
+  );
 };
