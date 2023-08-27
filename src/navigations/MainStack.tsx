@@ -1,4 +1,5 @@
 import BottomTabs from '@/navigations/BottomTabs';
+import PasswordResetScreen from '@/screen/Registration/PasswordResetScreen';
 import {iconPath} from '@/utils/iconPath';
 import HeaderLeft from '@components/HeaderLeft';
 import HeaderRight from '@components/HeaderRight';
@@ -448,6 +449,11 @@ const MainStack = () => {
           options={{
             title: '채용 공고 등록',
           }}
+        />
+        <Stack.Screen
+          name="PasswordReset"
+          component={PasswordResetScreen}
+          options={{title: '비밀번호 재설정'}}
         />
       </Stack.Group>
     </Stack.Navigator>

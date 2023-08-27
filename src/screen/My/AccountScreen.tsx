@@ -6,13 +6,13 @@ import {Alert, Pressable, StyleSheet, Text, View} from 'react-native';
 
 type Props = NativeStackScreenProps<LoggedInParamList, 'Account'>;
 
-const AccountScreen = ({}: Props) => {
+const AccountScreen = ({navigation}: Props) => {
   return (
     <View style={styles.container}>
       <View>
         <Pressable
           style={common.mv20}
-          onPress={() => Alert.alert('테스트', '비밀번호 재설정 되지 않아용')}>
+          onPress={() => navigation.navigate('PasswordReset')}>
           <Text style={[common.text_m, styles.linkText]}>비밀번호 재설정</Text>
         </Pressable>
         <Pressable
