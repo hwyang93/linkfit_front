@@ -45,7 +45,6 @@ const SignInScreen = ({navigation}: Props) => {
     try {
       const response = await fetchMemberInfoByEmail(email.value);
       if (response.data.seq) {
-        toast.success({message: '환영합니다. 회원님'});
         navigation.navigate('LogIn', {email: email.value});
       } else {
         navigation.navigate('SignUp', {

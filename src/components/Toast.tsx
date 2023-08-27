@@ -1,5 +1,5 @@
 import {IS_ANDROID, IS_IOS} from '@/utils/constants/common';
-import SHOW_TOAST_MESSAGE from '@/utils/constants/toast';
+import {SHOW_TOAST_MESSAGE} from '@/utils/constants/toast';
 import {iconPath} from '@/utils/iconPath';
 import common from '@styles/common';
 import {useCallback, useEffect, useRef, useState} from 'react';

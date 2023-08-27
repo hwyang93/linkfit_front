@@ -3,6 +3,7 @@ import CTAButton from '@/components/Common/CTAButton';
 import toast from '@/hooks/toast';
 import useAuth from '@/hooks/useAuth';
 import useInput from '@/hooks/useInput';
+import TOAST from '@/utils/constants/toast';
 import Input, {KeyboardTypes, ReturnKeyTypes} from '@components/Input';
 import Logo from '@components/Logo';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
@@ -35,7 +36,7 @@ const LogInScreen = ({navigation, route}: Props) => {
 
     try {
       await signIn(loginInfo);
-      toast.success({message: '로그인이 완료되었어요!'});
+      toast.success({message: TOAST.LOGIN_SUCCESS});
     } catch (error: any) {
       toast.error({message: error.message});
     }
