@@ -1,3 +1,5 @@
+import {FetchBookmarkCommunitiesResponse} from '@/types/api/community';
+import {formatDate} from '@/utils/util';
 import {fetchBookmarkCommunities} from '@api/community';
 import BookmarkCounter from '@components/Counter/BookmarkCounter';
 import CommentCounter from '@components/Counter/CommentCounter';
@@ -10,13 +12,14 @@ import {Alert, FlatList, Pressable, StyleSheet, Text, View} from 'react-native';
 
 const CommunityMyPost: React.FC = () => {
   const [modalVisible, setModalVisible] = useState(false);
-  const [bookmarks, setBookmarks] = useState<any[]>([]);
+  const [bookmarks, setBookmarks] =
+    useState<FetchBookmarkCommunitiesResponse>();
 
   // const navigation = useNavigation<NavigationProp<LoggedInParamList>>();
 
   const getBookmarks = useCallback(() => {
     fetchBookmarkCommunities()
-      .then(({data}: any) => {
+      .then(({data}) => {
         setBookmarks(data);
       })
       .catch(error => {
@@ -65,7 +68,7 @@ const CommunityMyPost: React.FC = () => {
               <View style={[common.rowCenter, common.mb12]}>
                 {item.community.writer.type === 'COMPANY' ? (
                   <Text style={[common.text_m, common.fwb]}>
-                    {item.community.writer.company.companyName}
+                    {item.community.writer.company?.companyName}
                   </Text>
                 ) : (
                   <Text style={[common.text_m, common.fwb]}>
@@ -84,7 +87,7 @@ const CommunityMyPost: React.FC = () => {
                     : '일반인'}
                 </Text>
                 <Text style={[common.text, {alignSelf: 'flex-end'}]}>
-                  {item.community.updatedAt}
+                  {formatDate(item.community.updatedAt)}
                 </Text>
               </View>
 
