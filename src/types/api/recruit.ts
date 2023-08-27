@@ -6,6 +6,18 @@ import {
   RecruitEntity,
 } from './entities';
 
+export const RecruitStatus = {
+  Applied: 'APPLY',
+  Processing: 'PROCESS',
+  Approved: 'APPROVAL',
+  Canceled: 'CANCEL',
+  Waiting: 'WAITING',
+  Passed: 'PASS',
+} as const;
+
+export type RecruitStatusType =
+  typeof RecruitStatus[keyof typeof RecruitStatus];
+
 export interface FetchRecruitsParams {
   noPaging?: boolean;
   curPage?: number;

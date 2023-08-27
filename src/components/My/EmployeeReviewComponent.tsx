@@ -1,3 +1,4 @@
+import {Member} from '@/types/common';
 import {iconPath} from '@/utils/iconPath';
 import {formatDate} from '@/utils/util';
 import {deleteMemberReputation, fetchMemberReputations} from '@api/member';
@@ -82,8 +83,8 @@ const EmployeeReviewComponent: React.FC = () => {
 
   return (
     <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
-      {reputations.map(item => {
-        return item.targetMember.type === 'INSTRUCTOR' ? (
+      {reputations.map(item =>
+        item.targetMember.type === Member.Instructor ? (
           <View key={'review_' + item.seq} style={styles.reviewBox}>
             <View style={common.rowCenter}>
               <Image
@@ -153,9 +154,8 @@ const EmployeeReviewComponent: React.FC = () => {
               <Image source={iconPath.KEBAB} style={[common.size24]} />
             </Pressable>
           </View>
-        );
-      })}
-
+        ),
+      )}
       <Modal
         modalVisible={modalVisible}
         setModalVisible={setModalVisible}

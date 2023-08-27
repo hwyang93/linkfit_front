@@ -6,6 +6,7 @@ import THEME from '@/styles/theme';
 import {RecruitDateEntity} from '@/types/api/entities';
 import {FetchRecruitResponse} from '@/types/api/recruit';
 import {FetchResumesResponse} from '@/types/api/resume';
+import {Member} from '@/types/common';
 import {iconPath} from '@/utils/iconPath';
 import {formatDate} from '@/utils/util';
 import {
@@ -257,21 +258,10 @@ const JobPostScreen = ({route}: Props) => {
   };
 
   const handleResumeDateListItemPress = (seq: number) => {
-    setRecruitDates(() => {
-      return recruitDates.map(date => {
-        if (date.seq === seq) {
-          date.isSelected = !date.isSelected;
-        }
-        return date;
-      });
-    });
-
     selectedRecruitDates.includes(seq)
       ? setSelectedRecruitDates(prev => prev.filter(item => item !== seq))
       : setSelectedRecruitDates(prev => [...prev, seq]);
   };
-
-  console.log('selectedRecruitDates', selectedRecruitDates);
 
   const handleCancelModalClose = () => {
     cancelModal.close();
@@ -295,8 +285,11 @@ const JobPostScreen = ({route}: Props) => {
     <>
       {recruitInfo && (
         <>
-          <SafeAreaView edges={['left', 'right']} style={styles.container}>
+          <SafeAreaView
+            edges={['left', 'right', 'top']}
+            style={styles.container}>
             <ScrollView
+              style={{paddingHorizontal: 16}}
               contentContainerStyle={{paddingBottom: 40}}
               showsVerticalScrollIndicator={false}
               scrollEventThrottle={0}
@@ -419,7 +412,7 @@ const JobPostScreen = ({route}: Props) => {
                   />
                 </MapView>
               </View>
-              {recruitInfo.writer?.type === 'COMPANY' && (
+              {recruitInfo.writer?.type === Member.Company && (
                 <View>
                   <Text style={[common.mb8, common.text_m, common.fwb]}>
                     센터 정보
@@ -495,7 +488,7 @@ const JobPostScreen = ({route}: Props) => {
                   {recruitDates.map((item, index) => (
                     <ResumeDateListItem
                       key={index}
-                      selected={item.isSelected}
+                      selected={selectedRecruitDates.includes(item.seq)}
                       disabled={item.isApplied}
                       onPress={() => handleResumeDateListItemPress(item.seq)}
                       day={item.day}
@@ -524,7 +517,6 @@ const JobPostScreen = ({route}: Props) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    paddingHorizontal: 16,
     backgroundColor: WHITE,
   },
   imgBox: {

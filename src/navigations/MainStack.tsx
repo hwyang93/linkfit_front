@@ -1,7 +1,8 @@
+import IconButton from '@/components/Common/IconButton';
 import BottomTabs from '@/navigations/BottomTabs';
+import PasswordResetScreen from '@/screen/Registration/PasswordResetScreen';
 import {iconPath} from '@/utils/iconPath';
 import HeaderLeft from '@components/HeaderLeft';
-import HeaderRight from '@components/HeaderRight';
 import Modal from '@components/ModalSheet';
 import {NavigationProp, useNavigation} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
@@ -218,17 +219,7 @@ const MainStack = () => {
         <Stack.Screen
           name="Profile"
           component={ProfileScreen}
-          options={{
-            title: '강사 프로필',
-            headerRight: () => (
-              <Pressable
-                onPress={() => {}}
-                hitSlop={10}
-                style={[common.mh4, common.size24]}>
-                <Image source={iconPath.MESSAGE} style={common.size24} />
-              </Pressable>
-            ),
-          }}
+          options={{title: '강사 프로필'}}
         />
         {/* 나의 프로필 화면 */}
         <Stack.Screen
@@ -439,7 +430,9 @@ const MainStack = () => {
           component={JobPostScreen}
           options={{
             title: '구인 공고',
-            headerRight: HeaderRight,
+            headerRight: () => (
+              <IconButton source={iconPath.BOOKMARK} hitSlop={10} />
+            ),
           }}
         />
         <Stack.Screen
@@ -448,6 +441,11 @@ const MainStack = () => {
           options={{
             title: '채용 공고 등록',
           }}
+        />
+        <Stack.Screen
+          name="PasswordReset"
+          component={PasswordResetScreen}
+          options={{title: '비밀번호 재설정'}}
         />
       </Stack.Group>
     </Stack.Navigator>

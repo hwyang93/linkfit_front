@@ -1,3 +1,4 @@
+import {sendEmailVerificationCode} from '@/api/auth';
 import BoxButton from '@/components/Common/BoxButton';
 import CTAButton from '@/components/Common/CTAButton';
 import RowView from '@/components/Common/RowView';
@@ -5,14 +6,25 @@ import TextField from '@/components/Common/TextField';
 import DismissKeyboardView from '@/components/DismissKeyboardView';
 import useInput from '@/hooks/useInput';
 import common from '@/styles/common';
+import {validateEmail} from '@/utils/util';
 import {StyleSheet, Text, View} from 'react-native';
 
 const FindEmailScreen = () => {
   const emailInput = useInput();
   const verificationCodeInput = useInput();
 
-  const isEmailInputValid = emailInput.value.length > 0;
+  const isEmailInputValid = validateEmail(emailInput.value);
   const isVerificationCodeInputValid = verificationCodeInput.value.length > 0;
+
+  const onSendButtonPress = async () => {
+    try {
+      await sendEmailVerificationCode({
+        email: emailInput.value,
+      });
+    } catch (error) {
+      console.log();
+    }
+  };
 
   return (
     <DismissKeyboardView>
@@ -29,7 +41,11 @@ const FindEmailScreen = () => {
             value={emailInput.value}
             onChangeText={emailInput.onChange}
           />
-          <BoxButton label="전송" disabled={!isEmailInputValid} />
+          <BoxButton
+            label="전송"
+            disabled={!isEmailInputValid}
+            onPress={onSendButtonPress}
+          />
         </RowView>
         <TextField
           style={common.mt16}

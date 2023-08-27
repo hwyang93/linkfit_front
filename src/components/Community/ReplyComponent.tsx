@@ -1,3 +1,5 @@
+import THEME from '@/styles/theme';
+import {formatDate} from '@/utils/util';
 import common from '@styles/common';
 import {useState} from 'react';
 import {Pressable, Text, View} from 'react-native';
@@ -14,7 +16,9 @@ const ReplyComponent: React.FC<any> = ({commentInfo}) => {
   return (
     <View>
       <View style={common.mt8}>
-        <Text style={common.text_s}>{commentInfo.updatedAt}</Text>
+        <Text style={{fontSize: 12, color: THEME.GREY02}}>
+          {formatDate(commentInfo.updatedAt)}
+        </Text>
       </View>
       <View style={common.mt8}>
         <Pressable onPress={textExpansion}>

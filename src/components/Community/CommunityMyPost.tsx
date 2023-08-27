@@ -7,16 +7,10 @@ import toast from '@hooks/toast';
 import {GRAY, WHITE} from '@styles/colors';
 import common from '@styles/common';
 import {useCallback, useEffect, useState} from 'react';
-import {
-  FlatList,
-  Image,
-  Pressable,
-  ScrollView,
-  StyleSheet,
-  Text,
-  View,
-} from 'react-native';
+import {FlatList, Image, Pressable, StyleSheet, Text, View} from 'react-native';
 import BottomSheet from '../Common/BottomSheet';
+import BottomSheetOption from '../Common/BottomSheetOption';
+import EmptySet from '../EmptySet';
 
 const CommunityMyPost: React.FC = () => {
   const [posts, setPosts] = useState<FetchCommunityPostsResponse>([]);
@@ -50,10 +44,11 @@ const CommunityMyPost: React.FC = () => {
 
   return (
     <View style={styles.container}>
-      <FlatList
-        data={posts}
-        renderItem={({item}) => {
-          return (
+      {posts.length !== 0 && (
+        <FlatList
+          data={posts}
+          contentContainerStyle={{paddingBottom: 32}}
+          renderItem={({item}) => (
             <View style={styles.postBox}>
               <View style={[common.row, common.mb12]}>
                 <Text style={[common.text_m, common.fwb, common.mr4]}>
@@ -75,27 +70,26 @@ const CommunityMyPost: React.FC = () => {
                 <Image source={iconPath.KEBAB} style={[common.size24]} />
               </Pressable>
             </View>
-          );
-        }}
-      />
+          )}
+        />
+      )}
+      {posts.length === 0 && <EmptySet text="작성한 내역이 없어요." />}
       <BottomSheet
         visible={modal.visible}
         onDismiss={modal.close}
         title="더보기">
-        <ScrollView
-          style={{width: '100%'}}
-          showsVerticalScrollIndicator={false}>
-          <View style={{paddingHorizontal: 16}}>
-            <Text style={{padding: 16, fontSize: 18}}>수정하기</Text>
-            <Text style={[{padding: 16, fontSize: 18}]}>삭제하기</Text>
-          </View>
-        </ScrollView>
+        <BottomSheetOption label="수정하기" onPress={modal.close} />
+        <BottomSheetOption label="삭제하기" onPress={modal.close} />
       </BottomSheet>
     </View>
   );
 };
 const styles = StyleSheet.create({
-  container: {flex: 1, paddingHorizontal: 16, backgroundColor: WHITE},
+  container: {
+    flex: 1,
+    paddingHorizontal: 16,
+    backgroundColor: WHITE,
+  },
   postBox: {
     paddingVertical: 16,
     borderBottomWidth: 1,

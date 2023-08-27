@@ -45,7 +45,6 @@ const SignInScreen = ({navigation}: Props) => {
     try {
       const response = await fetchMemberInfoByEmail(email.value);
       if (response.data.seq) {
-        toast.success({message: '환영합니다. 회원님'});
         navigation.navigate('LogIn', {email: email.value});
       } else {
         navigation.navigate('SignUp', {
@@ -53,6 +52,7 @@ const SignInScreen = ({navigation}: Props) => {
         });
       }
     } catch (error) {
+      console.log(error);
       if (isAxiosError(error)) {
         toast.error({message: error.message});
       }
@@ -92,7 +92,6 @@ const SignInScreen = ({navigation}: Props) => {
           </View>
           <SimpleLogin />
           <View style={{alignItems: 'center'}}>
-            <Text style={styles.linkText}>로그인 없이 둘러보기</Text>
             <Text
               style={[styles.linkText, common.mt24]}
               onPress={onFindEmailPress}>

@@ -1,6 +1,6 @@
 import CTAButton from '@/components/Common/CTAButton';
 import {useAppSelector} from '@/store';
-import {Coordinate} from '@/types/common';
+import {Coordinate, Member} from '@/types/common';
 import {SCREEN_WIDTH} from '@/utils/constants/common';
 import {iconPath} from '@/utils/iconPath';
 import {createRecruit} from '@api/recruit';
@@ -57,6 +57,35 @@ const JobOfferFormScreen = ({navigation}: Props) => {
     {value: '토', selected: false},
     {value: '일', selected: false},
   ]);
+
+  const isOfferTitleValid = offerTitle.length > 0;
+  const isPositionValid = position.length > 0;
+  const isEducationValid = education.length > 0;
+  const isCareerValid = career.length > 0;
+  const isPayTypeValid = payType.length > 0;
+  const isPayValid = pay.length > 0;
+  const isContentValid = content.length > 0;
+  const isRecruitTypeValid = recruitType.length > 0;
+  const isDayValid = day.length > 0;
+  const isDateFormValid = dateForm.length > 0;
+  const isCompanyNameValid = companyName.length > 0;
+  const isAddressValid = address.length > 0;
+  const isAddressDetailValid = addressDetail.length > 0;
+
+  const isFormValid =
+    isOfferTitleValid &&
+    isPositionValid &&
+    isEducationValid &&
+    isCareerValid &&
+    isPayTypeValid &&
+    isPayValid &&
+    isContentValid &&
+    isRecruitTypeValid &&
+    isDayValid &&
+    isDateFormValid &&
+    isCompanyNameValid &&
+    isAddressValid &&
+    isAddressDetailValid;
 
   // const openPicker = async () => {
   //   try {
@@ -336,7 +365,7 @@ const JobOfferFormScreen = ({navigation}: Props) => {
           />
         </View>
 
-        {memberInfo.type !== 'COMPANY' && (
+        {memberInfo.type !== Member.Company && (
           <View>
             <View style={common.mb16}>
               <Input
@@ -378,7 +407,11 @@ const JobOfferFormScreen = ({navigation}: Props) => {
             multiline={true}
           />
         </View>
-        <CTAButton label="채용 공고 등록" onPress={onCreateRecruit} />
+        <CTAButton
+          label="채용 공고 등록"
+          onPress={onCreateRecruit}
+          disabled={!isFormValid}
+        />
       </View>
     </DismissKeyboardView>
   );

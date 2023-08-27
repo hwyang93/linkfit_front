@@ -1,4 +1,5 @@
 import {MemberEntity} from '@/types/api/entities';
+import {Member} from '@/types/common';
 import {iconPath} from '@/utils/iconPath';
 import {NavigationProp, useNavigation} from '@react-navigation/native';
 import {BLUE, GRAY} from '@styles/colors';
@@ -34,7 +35,7 @@ const ProfileBox: React.FC<ProfileBoxProps> = ({memberInfo}) => {
             <Text style={[common.text_l, common.fwb, common.mr8]}>
               {!memberInfo.nickname ? memberInfo.name : memberInfo.nickname}
             </Text>
-            {memberInfo.type === 'INSTRUCTOR' && (
+            {memberInfo.type === Member.Instructor && (
               <View style={common.rowCenter}>
                 <Text style={[common.text_s, {color: BLUE.DEFAULT}]}>
                   인증강사

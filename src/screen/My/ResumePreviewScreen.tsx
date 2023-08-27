@@ -1,6 +1,8 @@
 import CTAButton from '@/components/Common/CTAButton';
 import Chip from '@/components/Common/Chip';
 import {useAppSelector} from '@/store';
+import {RecruitStatus} from '@/types/api/recruit';
+import {Member} from '@/types/common';
 import {iconPath} from '@/utils/iconPath';
 import {fetchRecruitApplication, updateRecruitApplyStatus} from '@api/recruit';
 import {fetchResume} from '@api/resume';
@@ -39,10 +41,10 @@ const ResumePreviewScreen = ({route, navigation}: Props) => {
       fetchRecruitApplication(route.params.applySeq)
         .then(({data}: any) => {
           setApplication(data);
-          if (data.status === 'APPLY') {
+          if (data.status === RecruitStatus.Applied) {
             setApplyResult(data.status);
           }
-          if (data.status === 'PASS') {
+          if (data.status === RecruitStatus.Passed) {
             setApplyResult(data.status);
           }
         })
@@ -132,7 +134,7 @@ const ResumePreviewScreen = ({route, navigation}: Props) => {
         <View style={common.mb24}>
           <View style={[common.rowCenter, common.mb8]}>
             <Text style={[common.title, common.mr8]}>{resume.name}</Text>
-            {resume.writer?.type === 'INSTRUCTOR' && (
+            {resume.writer?.type === Member.Instructor && (
               <View style={common.rowCenter}>
                 <Text style={[common.text_s, {color: BLUE.DEFAULT}]}>
                   인증강사

@@ -1,6 +1,7 @@
 import {LoggedInParamList} from '@/../AppInner';
 import CTAButton from '@/components/Common/CTAButton';
 import {FetchMemberInfoResponse} from '@/types/api/member';
+import {Member} from '@/types/common';
 import {iconPath} from '@/utils/iconPath';
 import {fetchMemberInfo} from '@api/member';
 import toast from '@hooks/toast';
@@ -50,7 +51,7 @@ const CommunityMyScreen = ({}: Props) => {
                     : memberInfo?.name}
                 </Text>
                 <View>
-                  {memberInfo?.type === 'INSTRUCTOR' ? (
+                  {memberInfo?.type === Member.Instructor ? (
                     <View style={common.rowCenter}>
                       <Text style={[common.text_s, {color: BLUE.DEFAULT}]}>
                         인증강사
@@ -63,7 +64,9 @@ const CommunityMyScreen = ({}: Props) => {
                   ) : (
                     <View style={common.rowCenter}>
                       <Text style={[common.text_s, {color: BLUE.DEFAULT}]}>
-                        {memberInfo?.type === 'COMPANY' ? '센터' : '일반인'}
+                        {memberInfo?.type === Member.Company
+                          ? '센터'
+                          : '일반인'}
                       </Text>
                     </View>
                   )}
@@ -71,7 +74,7 @@ const CommunityMyScreen = ({}: Props) => {
               </View>
               <View style={common.row}>
                 <Text style={[common.text_m, common.fwb, common.mr4]}>
-                  {memberInfo?.type === 'COMPANY'
+                  {memberInfo?.type === Member.Company
                     ? memberInfo?.company.field
                     : memberInfo?.field}
                 </Text>

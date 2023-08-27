@@ -1,54 +1,54 @@
 import {iconPath} from '@/utils/iconPath';
 import {NavigationProp, useNavigation} from '@react-navigation/native';
 import common from '@styles/common';
-import {useEffect, useState} from 'react';
 import {Image, Pressable, Text, View} from 'react-native';
 import {LoggedInParamList} from '../../../AppInner';
 
-const ApplicantListItem: React.FC<any> = ({list}) => {
-  const [applications, setApplications] = useState<any[]>([]);
+interface ApplicantListItemProps {
+  applySeq: number;
+  resumeSeq: number;
+  recruitSeq: number;
+  createdAt: string;
+  status: string;
+  resumeTitle?: string;
+}
 
+const ApplicantListItem: React.FC<ApplicantListItemProps> = ({
+  applySeq,
+  resumeSeq,
+  recruitSeq,
+  createdAt,
+  status,
+  resumeTitle,
+}) => {
   const navigation = useNavigation<NavigationProp<LoggedInParamList>>();
-
-  useEffect(() => {
-    setApplications(list);
-  }, [list]);
 
   return (
     <View>
-      {applications?.map((application: any, index: number) => {
-        return (
-          <Pressable
-            key={index}
-            style={[common.basicBox, common.mb8]}
-            onPress={() => {
-              navigation.navigate('ResumePreview', {
-                resumeSeq: application.resumeSeq,
-                applySeq: application.seq,
-                recruitSeq: application.recruitSeq,
-              });
-            }}>
-            <View style={[common.rowCenter, common.mb8]}>
-              <Text style={[common.text_s, common.fcg]}>
-                {application.createdAt}
-              </Text>
-              <Text style={[common.text_s, common.fcg, common.mh8]}>|</Text>
-              <Text style={[common.text_s, common.fcb]}>
-                {application.status}
-              </Text>
-            </View>
-            <View style={common.rowCenter}>
-              <Image
-                source={iconPath.THUMBNAIL}
-                style={[common.thumbnail, common.mr12]}
-              />
-              <Text style={common.title} numberOfLines={1}>
-                {application.resume.title}
-              </Text>
-            </View>
-          </Pressable>
-        );
-      })}
+      <Pressable
+        style={[common.basicBox, common.mb8]}
+        onPress={() => {
+          navigation.navigate('ResumePreview', {
+            resumeSeq: resumeSeq,
+            applySeq: applySeq,
+            recruitSeq: recruitSeq,
+          });
+        }}>
+        <View style={[common.rowCenter, common.mb8]}>
+          <Text style={[common.text_s, common.fcg]}>{createdAt}</Text>
+          <Text style={[common.text_s, common.fcg, common.mh8]}>|</Text>
+          <Text style={[common.text_s, common.fcb]}>{status}</Text>
+        </View>
+        <View style={common.rowCenter}>
+          <Image
+            source={iconPath.THUMBNAIL}
+            style={[common.thumbnail, common.mr12]}
+          />
+          <Text style={common.title} numberOfLines={1}>
+            {resumeTitle}
+          </Text>
+        </View>
+      </Pressable>
     </View>
   );
 };
