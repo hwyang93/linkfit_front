@@ -2,6 +2,7 @@ import {LoggedInParamList} from '@/../AppInner';
 import {fetchBookmarkCommunities} from '@/api/community';
 import {fetchBookmarkRecruits} from '@/api/recruit';
 import RecruitListItem from '@/components/Compound/RecruitListItem';
+import EmptySet from '@/components/EmptySet';
 import toast from '@/hooks/toast';
 import common from '@/styles/common';
 import {FetchBookmarkCommunitiesResponse} from '@/types/api/community';
@@ -104,6 +105,8 @@ const JobOfferTab: React.FC = () => {
   const [bookmarkedRecruits, setBookmarkedRecruits] =
     useState<FetchBookmarkRecruitsResponse>();
 
+  const navigation = useNavigation<NavigationProp<LoggedInParamList>>();
+
   const getBookmarkRecruits = useCallback(() => {
     fetchBookmarkRecruits()
       .then(({data}) => {
@@ -120,24 +123,32 @@ const JobOfferTab: React.FC = () => {
 
   return (
     <View style={[styles.container]}>
-      <FlatList
-        contentContainerStyle={{marginTop: 16}}
-        data={bookmarkedRecruits}
-        renderItem={({item}) => (
-          <RecruitListItem
-            seq={item.seq}
-            position={item.recruit.position}
-            title={item.recruit.title}
-            companyName={item.recruit.companyName}
-            address={item.recruit.address}
-            bookmarkChecked={item.recruit.isBookmark === 'Y'}
-            imageSrc={item.recruit.writer?.profileImage?.originFileUrl}
-          />
-        )}
-        numColumns={2}
-        keyExtractor={item => 'bookmarkedRecruit' + item.seq}
-        ItemSeparatorComponent={() => <View style={{marginBottom: 16}} />}
-      />
+      {bookmarkedRecruits && bookmarkedRecruits.length > 0 && (
+        <FlatList
+          contentContainerStyle={{marginTop: 16, paddingBottom: 48}}
+          data={bookmarkedRecruits}
+          renderItem={({item}) => (
+            <RecruitListItem
+              seq={item.seq}
+              position={item.recruit.position}
+              title={item.recruit.title}
+              companyName={item.recruit.companyName}
+              address={item.recruit.address}
+              bookmarkChecked={item.recruit.isBookmark === 'Y'}
+              imageSrc={item.recruit.writer?.profileImage?.originFileUrl}
+              onPress={() =>
+                navigation.navigate('JobPost', {recruitSeq: item.seq})
+              }
+            />
+          )}
+          numColumns={2}
+          keyExtractor={item => 'bookmarkedRecruit' + item.seq}
+          ItemSeparatorComponent={() => <View style={{marginBottom: 16}} />}
+        />
+      )}
+      {bookmarkedRecruits && bookmarkedRecruits.length === 0 && (
+        <EmptySet text="북마크한 구인 공고가 없어요." />
+      )}
     </View>
   );
 };
