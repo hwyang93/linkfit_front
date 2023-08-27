@@ -32,6 +32,7 @@ const LogInScreen = ({navigation, route}: Props) => {
       email: route.params.email,
       password: password.value,
     };
+
     try {
       await signIn(loginInfo);
       toast.success({message: '로그인이 완료되었어요!'});

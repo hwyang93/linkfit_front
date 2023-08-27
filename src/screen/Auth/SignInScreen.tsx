@@ -93,7 +93,6 @@ const SignInScreen = ({navigation}: Props) => {
           </View>
           <SimpleLogin />
           <View style={{alignItems: 'center'}}>
-            <Text style={styles.linkText}>로그인 없이 둘러보기</Text>
             <Text
               style={[styles.linkText, common.mt24]}
               onPress={onFindEmailPress}>
