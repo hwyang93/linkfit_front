@@ -58,6 +58,35 @@ const JobOfferFormScreen = ({navigation}: Props) => {
     {value: '일', selected: false},
   ]);
 
+  const isOfferTitleValid = offerTitle.length > 0;
+  const isPositionValid = position.length > 0;
+  const isEducationValid = education.length > 0;
+  const isCareerValid = career.length > 0;
+  const isPayTypeValid = payType.length > 0;
+  const isPayValid = pay.length > 0;
+  const isContentValid = content.length > 0;
+  const isRecruitTypeValid = recruitType.length > 0;
+  const isDayValid = day.length > 0;
+  const isDateFormValid = dateForm.length > 0;
+  const isCompanyNameValid = companyName.length > 0;
+  const isAddressValid = address.length > 0;
+  const isAddressDetailValid = addressDetail.length > 0;
+
+  const isFormValid =
+    isOfferTitleValid &&
+    isPositionValid &&
+    isEducationValid &&
+    isCareerValid &&
+    isPayTypeValid &&
+    isPayValid &&
+    isContentValid &&
+    isRecruitTypeValid &&
+    isDayValid &&
+    isDateFormValid &&
+    isCompanyNameValid &&
+    isAddressValid &&
+    isAddressDetailValid;
+
   // const openPicker = async () => {
   //   try {
   //     const response = await MultipleImagePicker.openPicker({
@@ -378,7 +407,11 @@ const JobOfferFormScreen = ({navigation}: Props) => {
             multiline={true}
           />
         </View>
-        <CTAButton label="채용 공고 등록" onPress={onCreateRecruit} />
+        <CTAButton
+          label="채용 공고 등록"
+          onPress={onCreateRecruit}
+          disabled={!isFormValid}
+        />
       </View>
     </DismissKeyboardView>
   );
