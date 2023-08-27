@@ -219,17 +219,7 @@ const MainStack = () => {
         <Stack.Screen
           name="Profile"
           component={ProfileScreen}
-          options={{
-            title: '강사 프로필',
-            headerRight: () => (
-              <Pressable
-                onPress={() => {}}
-                hitSlop={10}
-                style={[common.mh4, common.size24]}>
-                <Image source={iconPath.MESSAGE} style={common.size24} />
-              </Pressable>
-            ),
-          }}
+          options={{title: '강사 프로필'}}
         />
         {/* 나의 프로필 화면 */}
         <Stack.Screen
