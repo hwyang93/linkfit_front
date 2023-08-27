@@ -8,6 +8,10 @@ export interface LoginResponse {
   refreshToken: string;
 }
 
-export interface refreshTokenResponse {
+export interface RefreshTokenResponse {
   accessToken: string;
+}
+
+export interface SendEmailVerificationCodeBody {
+  email: string;
 }

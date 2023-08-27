@@ -1,4 +1,9 @@
-import {LoginBody, LoginResponse, refreshTokenResponse} from '@/types/api/auth';
+import {
+  LoginBody,
+  LoginResponse,
+  RefreshTokenResponse,
+  SendEmailVerificationCodeBody,
+} from '@/types/api/auth';
 import request from './request';
 
 export const login = (body: LoginBody) => {
@@ -6,5 +11,11 @@ export const login = (body: LoginBody) => {
 };
 
 export const refreshToken = () => {
-  return request.post<refreshTokenResponse>('/auth/refresh');
+  return request.post<RefreshTokenResponse>('/auth/refresh');
+};
+
+export const sendEmailVerificationCode = (
+  body: SendEmailVerificationCodeBody,
+) => {
+  return request.post('/auth/email', body);
 };

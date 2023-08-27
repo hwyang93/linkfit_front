@@ -1,3 +1,4 @@
+import {sendEmailVerificationCode} from '@/api/auth';
 import BoxButton from '@/components/Common/BoxButton';
 import CTAButton from '@/components/Common/CTAButton';
 import RowView from '@/components/Common/RowView';
@@ -15,6 +16,16 @@ const FindEmailScreen = () => {
   const isEmailInputValid = validateEmail(emailInput.value);
   const isVerificationCodeInputValid = verificationCodeInput.value.length > 0;
 
+  const onSendButtonPress = async () => {
+    try {
+      await sendEmailVerificationCode({
+        email: emailInput.value,
+      });
+    } catch (error) {
+      console.log();
+    }
+  };
+
   return (
     <DismissKeyboardView>
       <View style={common.container}>
@@ -30,7 +41,11 @@ const FindEmailScreen = () => {
             value={emailInput.value}
             onChangeText={emailInput.onChange}
           />
-          <BoxButton label="전송" disabled={!isEmailInputValid} />
+          <BoxButton
+            label="전송"
+            disabled={!isEmailInputValid}
+            onPress={onSendButtonPress}
+          />
         </RowView>
         <TextField
           style={common.mt16}
