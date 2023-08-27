@@ -22,9 +22,13 @@ import BoxButton from '../Common/BoxButton';
 
 interface CommunityPostTopProps {
   postInfo: CommunityEntity;
+  onCommentCreate: () => void;
 }
 
-const CommunityPostTop: React.FC<CommunityPostTopProps> = ({postInfo}) => {
+const CommunityPostTop: React.FC<CommunityPostTopProps> = ({
+  postInfo,
+  onCommentCreate,
+}) => {
   const [loading, setLoading] = useState(false);
   const [isBookmark, setIsBookmark] = useState(postInfo.isBookmark);
   const [bookmarkCount, setBookmarkCount] = useState(postInfo.bookmarkCount);
@@ -73,9 +77,10 @@ const CommunityPostTop: React.FC<CommunityPostTopProps> = ({postInfo}) => {
 
     try {
       setLoading(true);
-      createCommunityComment(postInfo.seq, data);
+      await createCommunityComment(postInfo.seq, data);
       toast.success({message: '댓글이 작성 되었습니다!'});
       setComment('');
+      onCommentCreate();
     } catch (error) {
       if (isAxiosError(error)) {
         toast.error({message: error.message});
@@ -83,7 +88,7 @@ const CommunityPostTop: React.FC<CommunityPostTopProps> = ({postInfo}) => {
     } finally {
       setLoading(false);
     }
-  }, [postInfo.seq, comment]);
+  }, [postInfo.seq, comment, onCommentCreate]);
 
   return (
     <View>
