@@ -1,10 +1,11 @@
+import useModal from '@/hooks/useModal';
+import {RecruitApplyEntity} from '@/types/api/entities';
 import {iconPath} from '@/utils/iconPath';
-import Modal from '@components/ModalSheet';
 import ApplicantListItem from '@components/My/ApplicantListItem';
 import TopFilter from '@components/TopFilter';
 import {BLUE, WHITE} from '@styles/colors';
 import common from '@styles/common';
-import {useCallback, useEffect, useState} from 'react';
+import {useCallback, useState} from 'react';
 import {
   Image,
   Pressable,
@@ -13,19 +14,23 @@ import {
   Text,
   View,
 } from 'react-native';
+import BottomSheet from '../Common/BottomSheet';
 
-const ApplicantWaitingComponent: React.FC<any> = ({list}) => {
-  const [modalVisible, setModalVisible] = useState(false);
+interface ApplicantWaitingComponentProps {
+  list: RecruitApplyEntity[];
+}
+
+const ApplicantWaitingComponent: React.FC<ApplicantWaitingComponentProps> = ({
+  list,
+}) => {
+  const modal = useModal();
+
   const [modalTitle, setModalTitle] = useState('');
   const [modalData, setModalData] = useState<any[]>([]);
-  const [applications, setApplications] = useState<any[]>([]);
   const [selectedFilter, setSelectedFilter] = useState('');
 
   // const navigation = useNavigation<NavigationProp<LoggedInParamList>>();
 
-  useEffect(() => {
-    setApplications(list);
-  }, [list]);
   const [FILTER, setFILTER] = useState([
     {
       key: 'period',
@@ -34,7 +39,7 @@ const ApplicantWaitingComponent: React.FC<any> = ({list}) => {
         setSelectedFilter('period');
         setModalTitle('기간');
         setModalData(MODAL);
-        openModal();
+        modal.open();
       },
     },
   ]);
@@ -57,10 +62,6 @@ const ApplicantWaitingComponent: React.FC<any> = ({list}) => {
       selected: false,
     },
   ]);
-
-  const openModal = () => {
-    setModalVisible(true);
-  };
 
   const onSelectFilter = useCallback(
     (selectItem: any) => {
@@ -87,9 +88,9 @@ const ApplicantWaitingComponent: React.FC<any> = ({list}) => {
           });
         });
       }
-      setModalVisible(false);
+      modal.close();
     },
-    [FILTER, MODAL, modalData, selectedFilter],
+    [FILTER, MODAL, modalData, modal, selectedFilter],
   );
   return (
     <>
@@ -103,41 +104,44 @@ const ApplicantWaitingComponent: React.FC<any> = ({list}) => {
         <TopFilter data={FILTER} />
       </View>
       <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
-        <ApplicantListItem list={applications} />
+        {list.map((item, index) => (
+          <ApplicantListItem
+            key={index}
+            applySeq={item.seq}
+            createdAt={item.createdAt}
+            recruitSeq={item.recruitSeq}
+            resumeSeq={item.resumeSeq}
+            resumeTitle={item.resume?.title}
+            status={item.status}
+          />
+        ))}
         <View style={{paddingBottom: 24}} />
       </ScrollView>
-
-      {/* 모달 */}
-      <Modal
-        modalVisible={modalVisible}
-        setModalVisible={setModalVisible}
-        title={modalTitle}
-        modalData={modalData}
-        content={
-          <View>
-            {modalData.map((item, index) => {
-              return (
-                <View key={index} style={common.modalItemBox}>
-                  <Pressable
-                    onPress={() => onSelectFilter(item)}
-                    style={[common.rowCenterBetween, {width: '100%'}]}>
-                    <Text
-                      style={[
-                        common.modalText,
-                        item.selected && {color: BLUE.DEFAULT},
-                      ]}>
-                      {item.value}
-                    </Text>
-                    {item.selected && (
-                      <Image source={iconPath.CHECK} style={common.size24} />
-                    )}
-                  </Pressable>
-                </View>
-              );
-            })}
-          </View>
-        }
-      />
+      <BottomSheet
+        visible={modal.visible}
+        onDismiss={modal.close}
+        title={modalTitle}>
+        <View>
+          {modalData.map((item, index) => (
+            <View key={index} style={common.modalItemBox}>
+              <Pressable
+                onPress={() => onSelectFilter(item)}
+                style={[common.rowCenterBetween, {width: '100%'}]}>
+                <Text
+                  style={[
+                    common.modalText,
+                    item.selected && {color: BLUE.DEFAULT},
+                  ]}>
+                  {item.value}
+                </Text>
+                {item.selected && (
+                  <Image source={iconPath.CHECK} style={common.size24} />
+                )}
+              </Pressable>
+            </View>
+          ))}
+        </View>
+      </BottomSheet>
     </>
   );
 };

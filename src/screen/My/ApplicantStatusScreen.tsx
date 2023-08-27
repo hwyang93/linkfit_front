@@ -1,9 +1,13 @@
-import {RecruitApplyEntity, RecruitEntity} from '@/types/api/entities';
-import {RecruitStatus} from '@/types/api/recruit';
+import BottomSheet from '@/components/Common/BottomSheet';
+import BottomSheetOption from '@/components/Common/BottomSheetOption';
+import useModal from '@/hooks/useModal';
+import {
+  FetchRecruitApplicationsResponse,
+  RecruitStatus,
+} from '@/types/api/recruit';
 import {iconPath} from '@/utils/iconPath';
 import {materialTopTabNavigationOptions} from '@/utils/options/tab';
 import {fetchRecruitApplications} from '@api/recruit';
-import Modal from '@components/ModalSheet';
 import ApplicantFinishComponent from '@components/My/ApplicantFinishComponent';
 import ApplicantWaitingComponent from '@components/My/ApplicantWaitingComponent';
 import toast from '@hooks/toast';
@@ -21,58 +25,42 @@ const Tab = createMaterialTopTabNavigator();
 
 type Props = NativeStackScreenProps<LoggedInParamList, 'ApplicantStatus'>;
 
-type TabProps = {
-  waitingApplications?: RecruitApplyEntity[];
-  finishApplications?: RecruitApplyEntity[];
-  initList: object;
-};
-
 const ApplicantStatusScreen = ({route}: Props) => {
+  const [recruitApplications, setRecruitApplications] =
+    useState<FetchRecruitApplicationsResponse>();
+
   const isFocused = useIsFocused();
-  const [recruitInfo, setRecruitInfo] = useState<RecruitEntity>();
-  const [waitingApplications, setWaitingApplications] =
-    useState<RecruitApplyEntity[]>();
-  const [finishApplications, setFinishApplications] =
-    useState<RecruitApplyEntity[]>();
-  const [modalVisible, setModalVisible] = useState(false);
 
-  const getRecruitApplications = useCallback(() => {
-    fetchRecruitApplications(route.params.recruitSeq)
-      .then(({data}) => {
-        const waitingList = data.recruitApply.filter(item => {
-          return item.status === RecruitStatus.Applied;
-        });
+  const waitingApplications = recruitApplications?.recruitApply.filter(item => {
+    return item.status === RecruitStatus.Applied;
+  });
 
-        const finishList = data.recruitApply.filter(item => {
-          return item.status !== RecruitStatus.Applied;
-        });
-        setRecruitInfo(data.recruit);
-        setWaitingApplications(waitingList);
-        setFinishApplications(finishList);
-      })
-      .catch(error => {
-        if (isAxiosError(error)) {
-          toast.error({message: error.message});
-        }
-      });
+  const finishedApplications = recruitApplications?.recruitApply.filter(
+    item => {
+      return item.status !== RecruitStatus.Applied;
+    },
+  );
+
+  const recruitInfo = recruitApplications?.recruit;
+
+  const modal = useModal();
+
+  const getRecruitApplications = useCallback(async () => {
+    try {
+      const response = await fetchRecruitApplications(route.params.recruitSeq);
+      setRecruitApplications(response.data);
+    } catch (error) {
+      if (isAxiosError(error)) {
+        toast.error({message: error.message});
+      }
+    }
   }, [route.params.recruitSeq]);
 
   useEffect(() => {
     if (isFocused) {
       getRecruitApplications();
     }
-  }, [isFocused, route.params.recruitSeq, getRecruitApplications]);
-
-  const MODAL = [
-    {
-      value: '공고 수정하기',
-      job: () => {},
-    },
-    {
-      value: '공고 복사하기',
-      job: () => {},
-    },
-  ];
+  }, [isFocused, getRecruitApplications]);
 
   return (
     <>
@@ -97,63 +85,36 @@ const ApplicantStatusScreen = ({route}: Props) => {
             <Pressable
               style={styles.kebabIcon}
               hitSlop={10}
-              onPress={() => setModalVisible(true)}>
+              onPress={modal.open}>
               <Image source={iconPath.KEBAB} style={[common.size24]} />
             </Pressable>
           </View>
         </View>
-        <Modal
-          modalVisible={modalVisible}
-          setModalVisible={setModalVisible}
-          title={'타이틀'}
-          content={
-            <View>
-              {MODAL.map((item, index) => (
-                <View key={index} style={common.modalItemBox}>
-                  <Pressable style={[common.rowCenterBetween, {width: '100%'}]}>
-                    <Text style={[common.modalText]}>{item.value}</Text>
-                  </Pressable>
-                </View>
-              ))}
-            </View>
-          }
-        />
+        <BottomSheet
+          visible={modal.visible}
+          onDismiss={modal.close}
+          title="타이틀">
+          <BottomSheetOption label="공고 수정하기" />
+          <BottomSheetOption label="공고 복사하기" />
+        </BottomSheet>
       </View>
-      <Tabs
-        waitingApplications={waitingApplications}
-        finishApplications={finishApplications}
-        initList={getRecruitApplications}
-      />
+      {waitingApplications && finishedApplications && (
+        <Tab.Navigator screenOptions={materialTopTabNavigationOptions}>
+          <Tab.Screen
+            name="대기중"
+            children={() => (
+              <ApplicantWaitingComponent list={waitingApplications} />
+            )}
+          />
+          <Tab.Screen
+            name="완료"
+            children={() => (
+              <ApplicantFinishComponent list={finishedApplications} />
+            )}
+          />
+        </Tab.Navigator>
+      )}
     </>
-  );
-};
-
-export const Tabs = ({
-  waitingApplications,
-  finishApplications,
-  initList,
-}: TabProps) => {
-  return (
-    <Tab.Navigator screenOptions={materialTopTabNavigationOptions}>
-      <Tab.Screen
-        name="대기중"
-        children={() => (
-          <ApplicantWaitingComponent
-            list={waitingApplications}
-            initList={initList}
-          />
-        )}
-      />
-      <Tab.Screen
-        name="완료"
-        children={() => (
-          <ApplicantFinishComponent
-            list={finishApplications}
-            initList={initList}
-          />
-        )}
-      />
-    </Tab.Navigator>
   );
 };
 

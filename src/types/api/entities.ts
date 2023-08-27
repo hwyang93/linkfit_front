@@ -293,7 +293,7 @@ export interface RecruitApplyEntity extends BaseEntity {
   recruitSeq: number;
   recruitDateSeq: number;
   status: string;
-  resume: ResumeEntity;
+  resume?: ResumeEntity;
   recruit: RecruitEntity;
   recruitDate: RecruitDateEntity;
 }
