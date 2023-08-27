@@ -1,4 +1,5 @@
 import CTAButton from '@/components/Common/CTAButton';
+import useInput from '@/hooks/useInput';
 import {useAppSelector} from '@/store';
 import {iconPath} from '@/utils/iconPath';
 import {createMemberLicence} from '@api/member';
@@ -9,7 +10,8 @@ import toast from '@hooks/toast';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import {WHITE} from '@styles/colors';
 import common from '@styles/common';
-import {useCallback, useState} from 'react';
+import {isAxiosError} from 'axios';
+import {useState} from 'react';
 import {Image, Pressable, ScrollView, StyleSheet, View} from 'react-native';
 import {Asset, MediaType, launchImageLibrary} from 'react-native-image-picker';
 import {LoggedInParamList} from '../../../AppInner';
@@ -19,47 +21,73 @@ const FIELD = ['필라테스', '요가'];
 type Props = NativeStackScreenProps<LoggedInParamList, 'CertifyInstructorForm'>;
 
 const CertifyInstructorFormScreen = ({navigation}: Props) => {
+  const [isLoading, setIsLoading] = useState(false);
+
   const memberInfo = useAppSelector(state => state.user);
 
-  const [loading, setLoading] = useState(false);
-  const [name, setName] = useState(memberInfo.name);
-  const [birth, setBirth] = useState(memberInfo.birth);
-  const [field, setField] = useState('');
-  const [issuer, setIssuer] = useState('');
-  const [licenceNumber, setLicenceNumber] = useState('');
+  const nameInput = useInput(memberInfo.name);
+  const birthInput = useInput(memberInfo.birth);
+  const fieldInput = useInput('');
+  const issuerInput = useInput('');
+  const licenceNumberInput = useInput('');
+
   const [licenceImageObj, setLicenceImageObj] = useState<{
     name: string | undefined;
     type: string | undefined;
     uri: string | undefined;
-  }>({name: undefined, type: undefined, uri: undefined}); // file 주소
+  }>({name: undefined, type: undefined, uri: undefined});
+
   const [licenceFileName, setLicenceFileName] = useState<string | undefined>(
     '',
-  ); // file 이름
+  );
 
-  const onRegisterLicence = useCallback(() => {
+  const isNameInputValid = nameInput.value.length > 0;
+  const isBirthInputValid = birthInput.value.length > 0;
+  const isFieldInputValid = fieldInput.value.length > 0;
+  const isIssuerInputValid = issuerInput.value.length > 0;
+  const isLicenceNumberInputValid = licenceNumberInput.value.length > 0;
+  const isLicenceImageObjValid =
+    licenceImageObj.name !== undefined &&
+    licenceImageObj.type !== undefined &&
+    licenceImageObj.uri !== undefined;
+
+  const canGoNext =
+    isNameInputValid &&
+    isBirthInputValid &&
+    isFieldInputValid &&
+    isIssuerInputValid &&
+    isLicenceNumberInputValid &&
+    isLicenceImageObjValid;
+
+  const onRegisterLicence = async () => {
     const formData = new FormData();
 
-    formData.append('field', field);
-    formData.append('licenceNumber', licenceNumber);
-    formData.append('issuer', issuer);
+    formData.append('field', fieldInput.value);
+    formData.append('licenceNumber', licenceNumberInput.value);
+    formData.append('issuer', issuerInput.value);
     formData.append('file', licenceImageObj);
 
-    createMemberLicence(formData)
-      .then(() => {
-        toast.success('강사 인증이 신청되었어요!');
-        navigation.goBack();
-      })
-      .catch((e: {message: any}) => {
-        console.log(e);
-        toast.error({message: e.message});
-      });
-  }, [field, issuer, licenceNumber, licenceImageObj, navigation]);
+    setIsLoading(true);
+
+    try {
+      await createMemberLicence(formData);
+      toast.success('강사 인증이 신청되었어요!');
+      navigation.goBack();
+    } catch (error) {
+      if (isAxiosError(error)) {
+        toast.error({message: error.message});
+      }
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
   const uploadImage = async () => {
     const options = {
       mediaType: 'photo' as MediaType,
       includeBase64: true,
     };
+
     await launchImageLibrary(options, response => {
       if (response.didCancel) {
         console.log('User cancelled image picker');
@@ -67,7 +95,7 @@ const CertifyInstructorFormScreen = ({navigation}: Props) => {
         console.log('ImagePicker Error: ', response.errorCode);
         console.log('ImagePicker Message: ', response.errorMessage);
       } else {
-        let assets: Asset[] | undefined = response.assets;
+        const assets: Asset[] | undefined = response.assets;
         // let source;
         if (assets) {
           // source = {
@@ -84,15 +112,14 @@ const CertifyInstructorFormScreen = ({navigation}: Props) => {
     });
   };
 
-  const canGoNext = true;
   return (
     <ScrollView showsVerticalScrollIndicator={false}>
       <View style={styles.container}>
         <View style={common.mb16}>
           <Input
             label={'이름'}
-            onChangeText={(text: string) => setName(text.trim())}
-            value={name}
+            onChangeText={nameInput.onChange}
+            value={nameInput.value}
             placeholder={'김링크'}
             keyboardType={KeyboardTypes.DEFAULT}
           />
@@ -101,8 +128,8 @@ const CertifyInstructorFormScreen = ({navigation}: Props) => {
         <View style={common.mb16}>
           <BirthdayPicker
             label={'생년월일'}
-            onSelect={(value: any) => setBirth(value)}
-            value={birth}
+            onSelect={birthInput.onChange}
+            value={birthInput.value}
             placeholder={'생년월일을 선택하세요.'}
           />
         </View>
@@ -111,7 +138,7 @@ const CertifyInstructorFormScreen = ({navigation}: Props) => {
           <SelectBox
             label={'자격명'}
             data={FIELD}
-            onSelect={(value: any) => setField(value)}
+            onSelect={fieldInput.onChange}
             defaultButtonText={'자격 인증 분야를 선택하세요.'}
           />
         </View>
@@ -119,8 +146,8 @@ const CertifyInstructorFormScreen = ({navigation}: Props) => {
         <View style={common.mb16}>
           <Input
             label={'자격증 번호'}
-            onChangeText={(text: string) => setLicenceNumber(text.trim())}
-            value={licenceNumber}
+            onChangeText={licenceNumberInput.onChange}
+            value={licenceNumberInput.value}
             placeholder={'자격증 번호를 입력하세요.'}
             keyboardType={KeyboardTypes.DEFAULT}
           />
@@ -129,8 +156,8 @@ const CertifyInstructorFormScreen = ({navigation}: Props) => {
         <View style={common.mb16}>
           <Input
             label={'자격증 발급기관'}
-            onChangeText={(text: string) => setIssuer(text.trim())}
-            value={issuer}
+            onChangeText={issuerInput.onChange}
+            value={issuerInput.value}
             placeholder={'자격증 발급기관을 입력하세요.'}
             keyboardType={KeyboardTypes.DEFAULT}
           />
@@ -155,7 +182,7 @@ const CertifyInstructorFormScreen = ({navigation}: Props) => {
         <View style={common.mt40}>
           <CTAButton
             label="인증 신청하기"
-            loading={loading}
+            loading={isLoading}
             disabled={!canGoNext}
             onPress={onRegisterLicence}
           />
