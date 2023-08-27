@@ -17,6 +17,7 @@ import {
   View,
 } from 'react-native';
 import BottomSheet from '../Common/BottomSheet';
+import EmptySet from '../EmptySet';
 
 const CommunityMyPost: React.FC = () => {
   const [posts, setPosts] = useState<FetchCommunityPostsResponse>([]);
@@ -50,33 +51,36 @@ const CommunityMyPost: React.FC = () => {
 
   return (
     <View style={styles.container}>
-      <FlatList
-        data={posts}
-        contentContainerStyle={{paddingBottom: 32}}
-        renderItem={({item}) => (
-          <View style={styles.postBox}>
-            <View style={[common.row, common.mb12]}>
-              <Text style={[common.text_m, common.fwb, common.mr4]}>
-                {item.title}
-              </Text>
-              <Text style={[common.text, {alignSelf: 'flex-end'}]}>
-                {formatDate(item.updatedAt)}
-              </Text>
+      {posts.length !== 0 && (
+        <FlatList
+          data={posts}
+          contentContainerStyle={{paddingBottom: 32}}
+          renderItem={({item}) => (
+            <View style={styles.postBox}>
+              <View style={[common.row, common.mb12]}>
+                <Text style={[common.text_m, common.fwb, common.mr4]}>
+                  {item.title}
+                </Text>
+                <Text style={[common.text, {alignSelf: 'flex-end'}]}>
+                  {formatDate(item.updatedAt)}
+                </Text>
+              </View>
+              <Pressable onPress={textExpansion}>
+                <Text style={common.text_m} numberOfLines={textLine}>
+                  {item.contents}
+                </Text>
+              </Pressable>
+              <Pressable
+                style={styles.kebabIcon}
+                hitSlop={10}
+                onPress={modal.open}>
+                <Image source={iconPath.KEBAB} style={[common.size24]} />
+              </Pressable>
             </View>
-            <Pressable onPress={textExpansion}>
-              <Text style={common.text_m} numberOfLines={textLine}>
-                {item.contents}
-              </Text>
-            </Pressable>
-            <Pressable
-              style={styles.kebabIcon}
-              hitSlop={10}
-              onPress={modal.open}>
-              <Image source={iconPath.KEBAB} style={[common.size24]} />
-            </Pressable>
-          </View>
-        )}
-      />
+          )}
+        />
+      )}
+      {posts.length === 0 && <EmptySet text="작성한 내역이 없어요." />}
       <BottomSheet
         visible={modal.visible}
         onDismiss={modal.close}
