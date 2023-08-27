@@ -55,62 +55,59 @@ const CommunityMyPost: React.FC = () => {
     <View style={styles.container}>
       <FlatList
         data={bookmarks}
-        renderItem={({item}) => {
-          return (
-            <View style={styles.postBox}>
-              <View>
-                <Text style={[common.title, common.fs18, common.mb8]}>
-                  {item.community.title}
+        contentContainerStyle={{paddingBottom: 32}}
+        renderItem={({item}) => (
+          <View style={styles.postBox}>
+            <View>
+              <Text style={[common.title, common.fs18, common.mb8]}>
+                {item.community.title}
+              </Text>
+              <View style={[common.rowCenter, common.mb12]}>
+                {item.community.writer.type === 'COMPANY' ? (
+                  <Text style={[common.text_m, common.fwb]}>
+                    {item.community.writer.company.companyName}
+                  </Text>
+                ) : (
+                  <Text style={[common.text_m, common.fwb]}>
+                    {item.community.writer.nickname
+                      ? item.community.writer.nickname
+                      : item.community.writer.name}
+                  </Text>
+                )}
+
+                <Text
+                  style={[common.text, common.mh4, {alignSelf: 'flex-end'}]}>
+                  {item.community.writer.type === 'COMPANY'
+                    ? '센터'
+                    : item.community.writer.type === 'INSTRUCTOR'
+                    ? '강사'
+                    : '일반인'}
                 </Text>
-                <View style={[common.rowCenter, common.mb12]}>
-                  {item.community.writer.type === 'COMPANY' ? (
-                    <Text style={[common.text_m, common.fwb]}>
-                      {item.community.writer.company.companyName}
-                    </Text>
-                  ) : (
-                    <Text style={[common.text_m, common.fwb]}>
-                      {item.community.writer.nickname
-                        ? item.community.writer.nickname
-                        : item.community.writer.name}
-                    </Text>
-                  )}
+                <Text style={[common.text, {alignSelf: 'flex-end'}]}>
+                  {item.community.updatedAt}
+                </Text>
+              </View>
 
-                  <Text
-                    style={[common.text, common.mh4, {alignSelf: 'flex-end'}]}>
-                    {item.community.writer.type === 'COMPANY'
-                      ? '센터'
-                      : item.community.writer.type === 'INSTRUCTOR'
-                      ? '강사'
-                      : '일반인'}
-                  </Text>
-                  <Text style={[common.text, {alignSelf: 'flex-end'}]}>
-                    {item.community.updatedAt}
-                  </Text>
+              <Pressable style={common.mb10} onPress={textExpansion}>
+                <Text style={common.text_m} numberOfLines={textLine}>
+                  {item.community.contents}
+                </Text>
+              </Pressable>
+
+              <View style={common.rowCenterBetween}>
+                <View style={common.rowCenter}>
+                  <BookmarkCounter counter={item.community.bookmarks.length} />
+                  <CommentCounter counter={item.community.comments.length} />
                 </View>
-
-                <Pressable style={common.mb10} onPress={textExpansion}>
-                  <Text style={common.text_m} numberOfLines={textLine}>
-                    {item.community.contents}
+                <View style={common.channelBox}>
+                  <Text style={common.channelText}>
+                    {item.community.category}
                   </Text>
-                </Pressable>
-
-                <View style={common.rowCenterBetween}>
-                  <View style={common.rowCenter}>
-                    <BookmarkCounter
-                      counter={item.community.bookmarks.length}
-                    />
-                    <CommentCounter counter={item.community.comments.length} />
-                  </View>
-                  <View style={common.channelBox}>
-                    <Text style={common.channelText}>
-                      {item.community.category}
-                    </Text>
-                  </View>
                 </View>
               </View>
             </View>
-          );
-        }}
+          </View>
+        )}
       />
       <Modal
         modalVisible={modalVisible}
@@ -123,7 +120,7 @@ const CommunityMyPost: React.FC = () => {
 };
 
 const styles = StyleSheet.create({
-  container: {flex: 1, padding: 16, backgroundColor: WHITE},
+  container: {flex: 1, paddingHorizontal: 16, backgroundColor: WHITE},
   postBox: {
     paddingVertical: 16,
     borderBottomWidth: 1,

@@ -52,31 +52,30 @@ const CommunityMyPost: React.FC = () => {
     <View style={styles.container}>
       <FlatList
         data={posts}
-        renderItem={({item}) => {
-          return (
-            <View style={styles.postBox}>
-              <View style={[common.row, common.mb12]}>
-                <Text style={[common.text_m, common.fwb, common.mr4]}>
-                  {item.title}
-                </Text>
-                <Text style={[common.text, {alignSelf: 'flex-end'}]}>
-                  {formatDate(item.updatedAt)}
-                </Text>
-              </View>
-              <Pressable onPress={textExpansion}>
-                <Text style={common.text_m} numberOfLines={textLine}>
-                  {item.contents}
-                </Text>
-              </Pressable>
-              <Pressable
-                style={styles.kebabIcon}
-                hitSlop={10}
-                onPress={modal.open}>
-                <Image source={iconPath.KEBAB} style={[common.size24]} />
-              </Pressable>
+        contentContainerStyle={{paddingBottom: 32}}
+        renderItem={({item}) => (
+          <View style={styles.postBox}>
+            <View style={[common.row, common.mb12]}>
+              <Text style={[common.text_m, common.fwb, common.mr4]}>
+                {item.title}
+              </Text>
+              <Text style={[common.text, {alignSelf: 'flex-end'}]}>
+                {formatDate(item.updatedAt)}
+              </Text>
             </View>
-          );
-        }}
+            <Pressable onPress={textExpansion}>
+              <Text style={common.text_m} numberOfLines={textLine}>
+                {item.contents}
+              </Text>
+            </Pressable>
+            <Pressable
+              style={styles.kebabIcon}
+              hitSlop={10}
+              onPress={modal.open}>
+              <Image source={iconPath.KEBAB} style={[common.size24]} />
+            </Pressable>
+          </View>
+        )}
       />
       <BottomSheet
         visible={modal.visible}
@@ -95,7 +94,11 @@ const CommunityMyPost: React.FC = () => {
   );
 };
 const styles = StyleSheet.create({
-  container: {flex: 1, paddingHorizontal: 16, backgroundColor: WHITE},
+  container: {
+    flex: 1,
+    paddingHorizontal: 16,
+    backgroundColor: WHITE,
+  },
   postBox: {
     paddingVertical: 16,
     borderBottomWidth: 1,
