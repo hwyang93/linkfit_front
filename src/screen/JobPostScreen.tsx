@@ -285,8 +285,11 @@ const JobPostScreen = ({route}: Props) => {
     <>
       {recruitInfo && (
         <>
-          <SafeAreaView edges={['left', 'right']} style={styles.container}>
+          <SafeAreaView
+            edges={['left', 'right', 'top']}
+            style={styles.container}>
             <ScrollView
+              style={{paddingHorizontal: 16}}
               contentContainerStyle={{paddingBottom: 40}}
               showsVerticalScrollIndicator={false}
               scrollEventThrottle={0}
@@ -514,7 +517,6 @@ const JobPostScreen = ({route}: Props) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    paddingHorizontal: 16,
     backgroundColor: WHITE,
   },
   imgBox: {

@@ -1,8 +1,8 @@
+import IconButton from '@/components/Common/IconButton';
 import BottomTabs from '@/navigations/BottomTabs';
 import PasswordResetScreen from '@/screen/Registration/PasswordResetScreen';
 import {iconPath} from '@/utils/iconPath';
 import HeaderLeft from '@components/HeaderLeft';
-import HeaderRight from '@components/HeaderRight';
 import Modal from '@components/ModalSheet';
 import {NavigationProp, useNavigation} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
@@ -430,7 +430,9 @@ const MainStack = () => {
           component={JobPostScreen}
           options={{
             title: '구인 공고',
-            headerRight: HeaderRight,
+            headerRight: () => (
+              <IconButton source={iconPath.BOOKMARK} hitSlop={10} />
+            ),
           }}
         />
         <Stack.Screen
