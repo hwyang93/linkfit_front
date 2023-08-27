@@ -26,13 +26,13 @@ import {
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {LoggedInParamList} from '../../../AppInner';
 
-const statusMap: any = {
+const statusMap = {
   APPLY: '지원 완료',
   CANCEL: '지원 취소',
   OPEN: '열람',
   PASS: '합격',
   FAIL: '불합격',
-};
+} as const;
 
 const columns2 = (SCREEN_WIDTH - 48) / 2;
 
@@ -63,7 +63,9 @@ const MyApplicationListItem: React.FC<MyApplicationItemProps> = ({
           source={require('assets/images/sample_02.png')}
         />
         <View style={[styles.statusBox]}>
-          <Text style={[styles.statusText]}>{statusMap[status]}</Text>
+          <Text style={[styles.statusText]}>
+            {statusMap[status as keyof typeof statusMap]}
+          </Text>
         </View>
       </View>
       <View>
@@ -87,10 +89,9 @@ type Props = NativeStackScreenProps<LoggedInParamList, 'ApplicationStatus'>;
 
 const ApplicationStatusScreen = ({navigation}: Props) => {
   const [applications, setApplications] =
-    useState<FetchRecruitApplicationsMyResponse>([]);
-
-  const [periodFilter, setPeriodFilter] = useState<string | null>(null);
-  const [statusFilter, setStatusFilter] = useState<string | null>(null);
+    useState<FetchRecruitApplicationsMyResponse>();
+  const [periodFilter, setPeriodFilter] = useState<string>();
+  const [statusFilter, setStatusFilter] = useState<string>();
 
   const periodModal = useModal();
   const statusModal = useModal();
@@ -112,14 +113,18 @@ const ApplicationStatusScreen = ({navigation}: Props) => {
   };
 
   useEffect(() => {
-    fetchRecruitApplicationsMy()
+    console.log('fetching!', periodFilter, statusFilter);
+    fetchRecruitApplicationsMy({
+      period: periodFilter,
+      status: statusFilter,
+    })
       .then(({data}) => {
         setApplications(data);
       })
       .catch(error => {
         toast.error({message: error.message});
       });
-  }, []);
+  }, [periodFilter, statusFilter]);
 
   return (
     <SafeAreaView edges={['left', 'right']} style={styles.container}>
@@ -137,11 +142,11 @@ const ApplicationStatusScreen = ({navigation}: Props) => {
         />
       </FilterChipContainer>
       <ScrollView
-        contentContainerStyle={{margin: 16}}
+        contentContainerStyle={{paddingHorizontal: 16, paddingBottom: 16}}
         showsVerticalScrollIndicator={false}>
         <View
           style={{flexWrap: 'wrap', flexDirection: 'row', paddingVertical: 8}}>
-          {applications.map((item, index) => (
+          {applications?.map((item, index) => (
             <MyApplicationListItem
               key={index}
               status={item.status}
