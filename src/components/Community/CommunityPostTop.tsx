@@ -1,3 +1,4 @@
+import useModal from '@/hooks/useModal';
 import {CommunityEntity} from '@/types/api/entities';
 import {iconPath} from '@/utils/iconPath';
 import {formatDate} from '@/utils/util';
@@ -15,6 +16,8 @@ import common from '@styles/common';
 import {isAxiosError} from 'axios';
 import {useCallback, useState} from 'react';
 import {Alert, Image, Pressable, Text, View} from 'react-native';
+import BottomSheet from '../Common/BottomSheet';
+import BottomSheetOption from '../Common/BottomSheetOption';
 import BoxButton from '../Common/BoxButton';
 
 interface CommunityPostTopProps {
@@ -27,7 +30,17 @@ const CommunityPostTop: React.FC<CommunityPostTopProps> = ({postInfo}) => {
   const [bookmarkCount, setBookmarkCount] = useState(postInfo.bookmarkCount);
   const [comment, setComment] = useState('');
 
+  const modal = useModal();
+
   const canGoNext = comment !== '';
+
+  const blockUser = () => {
+    Alert.alert('기능 준비중입니다.');
+  };
+
+  const reportUser = () => {
+    Alert.alert('기능 준비중입니다.');
+  };
 
   const onClickBookmark = useCallback(() => {
     if (isBookmark === 'N') {
@@ -128,6 +141,14 @@ const CommunityPostTop: React.FC<CommunityPostTopProps> = ({postInfo}) => {
           onPress={createComment}
         />
       </View>
+      {/* TODO: 기능 추가 */}
+      <BottomSheet
+        title="더보기"
+        visible={modal.visible}
+        onDismiss={modal.close}>
+        <BottomSheetOption label="차단하기" onPress={blockUser} />
+        <BottomSheetOption label="신고하기" onPress={reportUser} />
+      </BottomSheet>
     </View>
   );
 };

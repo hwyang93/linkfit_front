@@ -53,6 +53,7 @@ const SignInScreen = ({navigation}: Props) => {
         });
       }
     } catch (error) {
+      console.log(error);
       if (isAxiosError(error)) {
         toast.error({message: error.message});
       }

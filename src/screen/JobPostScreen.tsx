@@ -257,21 +257,10 @@ const JobPostScreen = ({route}: Props) => {
   };
 
   const handleResumeDateListItemPress = (seq: number) => {
-    setRecruitDates(() => {
-      return recruitDates.map(date => {
-        if (date.seq === seq) {
-          date.isSelected = !date.isSelected;
-        }
-        return date;
-      });
-    });
-
     selectedRecruitDates.includes(seq)
       ? setSelectedRecruitDates(prev => prev.filter(item => item !== seq))
       : setSelectedRecruitDates(prev => [...prev, seq]);
   };
-
-  console.log('selectedRecruitDates', selectedRecruitDates);
 
   const handleCancelModalClose = () => {
     cancelModal.close();
@@ -495,7 +484,7 @@ const JobPostScreen = ({route}: Props) => {
                   {recruitDates.map((item, index) => (
                     <ResumeDateListItem
                       key={index}
-                      selected={item.isSelected}
+                      selected={selectedRecruitDates.includes(item.seq)}
                       disabled={item.isApplied}
                       onPress={() => handleResumeDateListItemPress(item.seq)}
                       day={item.day}

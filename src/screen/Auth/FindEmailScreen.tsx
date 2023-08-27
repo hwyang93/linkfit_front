@@ -5,13 +5,14 @@ import TextField from '@/components/Common/TextField';
 import DismissKeyboardView from '@/components/DismissKeyboardView';
 import useInput from '@/hooks/useInput';
 import common from '@/styles/common';
+import {validateEmail} from '@/utils/util';
 import {StyleSheet, Text, View} from 'react-native';
 
 const FindEmailScreen = () => {
   const emailInput = useInput();
   const verificationCodeInput = useInput();
 
-  const isEmailInputValid = emailInput.value.length > 0;
+  const isEmailInputValid = validateEmail(emailInput.value);
   const isVerificationCodeInputValid = verificationCodeInput.value.length > 0;
 
   return (
