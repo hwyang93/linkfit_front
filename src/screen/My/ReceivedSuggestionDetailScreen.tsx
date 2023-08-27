@@ -1,5 +1,6 @@
 import CTAButton from '@/components/Common/CTAButton';
 import {FetchPositionSuggestResponse} from '@/types/api/member';
+import {RecruitStatus} from '@/types/api/recruit';
 import {Member} from '@/types/common';
 import {fetchPositionSuggest, updatePositionSuggestStatus} from '@api/member';
 import InstructorInfoComponent from '@components/InstructorInfoComponent';
@@ -131,7 +132,7 @@ const ReceivedSuggestionDetailScreen = ({route, navigation}: Props) => {
               </View>
             </View>
           )}
-          {suggestInfo?.status === 'WAITING' && (
+          {suggestInfo?.status === RecruitStatus.Waiting && (
             <View>
               <View style={common.mb16}>
                 <CTAButton

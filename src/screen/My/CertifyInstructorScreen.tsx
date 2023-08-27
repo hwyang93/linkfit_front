@@ -1,6 +1,7 @@
 import {LoggedInParamList} from '@/../AppInner';
 import IconButton from '@/components/Common/IconButton';
 import {FetchMemberLicencesResponse} from '@/types/api/member';
+import {RecruitStatus} from '@/types/api/recruit';
 import {iconPath} from '@/utils/iconPath';
 import {formatDate} from '@/utils/util';
 import {cancelMemberLicence, fetchMemberLicences} from '@api/member';
@@ -82,15 +83,15 @@ const CertifyInstructorScreen = ({}: Props) => {
             <Text style={[common.title_s, common.mb8]}>{item.issuer}</Text>
             <Text style={common.text_s}>
               {formatDate(item.updatedAt)} |{' '}
-              {item.status === 'PROCESS'
+              {item.status === RecruitStatus.Processing
                 ? '인증 대기중'
-                : item.status === 'APPROVAL'
+                : item.status === RecruitStatus.Approved
                 ? '인증 승인'
-                : item.status === 'CANCEL'
+                : item.status === RecruitStatus.Canceled
                 ? '인증 취소'
                 : '인증 거부'}
             </Text>
-            {item.status === 'PROCESS' && (
+            {item.status === RecruitStatus.Processing && (
               <IconButton
                 style={styles.kebabIcon}
                 source={iconPath.KEBAB}

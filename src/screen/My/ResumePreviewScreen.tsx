@@ -1,6 +1,7 @@
 import CTAButton from '@/components/Common/CTAButton';
 import Chip from '@/components/Common/Chip';
 import {useAppSelector} from '@/store';
+import {RecruitStatus} from '@/types/api/recruit';
 import {Member} from '@/types/common';
 import {iconPath} from '@/utils/iconPath';
 import {fetchRecruitApplication, updateRecruitApplyStatus} from '@api/recruit';
@@ -40,10 +41,10 @@ const ResumePreviewScreen = ({route, navigation}: Props) => {
       fetchRecruitApplication(route.params.applySeq)
         .then(({data}: any) => {
           setApplication(data);
-          if (data.status === 'APPLY') {
+          if (data.status === RecruitStatus.Applied) {
             setApplyResult(data.status);
           }
-          if (data.status === 'PASS') {
+          if (data.status === RecruitStatus.Passed) {
             setApplyResult(data.status);
           }
         })

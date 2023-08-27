@@ -1,4 +1,5 @@
 import {RecruitApplyEntity, RecruitEntity} from '@/types/api/entities';
+import {RecruitStatus} from '@/types/api/recruit';
 import {iconPath} from '@/utils/iconPath';
 import {materialTopTabNavigationOptions} from '@/utils/options/tab';
 import {fetchRecruitApplications} from '@api/recruit';
@@ -39,11 +40,11 @@ const ApplicantStatusScreen = ({route}: Props) => {
     fetchRecruitApplications(route.params.recruitSeq)
       .then(({data}) => {
         const waitingList = data.recruitApply.filter(item => {
-          return item.status === 'APPLY';
+          return item.status === RecruitStatus.Applied;
         });
 
         const finishList = data.recruitApply.filter(item => {
-          return item.status !== 'APPLY';
+          return item.status !== RecruitStatus.Applied;
         });
         setRecruitInfo(data.recruit);
         setWaitingApplications(waitingList);
