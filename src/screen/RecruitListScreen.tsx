@@ -1,6 +1,3 @@
-import BottomSheet from '@/components/Common/BottomSheet';
-import BottomSheetOption from '@/components/Common/BottomSheetOption';
-import CTAButton from '@/components/Common/CTAButton';
 import FilterChip from '@/components/Common/FilterChip';
 import FilterChipContainer from '@/components/Common/FilterChipContainer';
 import FloatingActionButton from '@/components/Common/FloatingActionButton';
@@ -8,6 +5,7 @@ import RecruitListItem from '@/components/Compound/RecruitListItem';
 import PositionFilterModal from '@/components/Modal/PositionFilterModal';
 import RecruitTypeFilterModal from '@/components/Modal/RecruitTypeFilterModal';
 import TimeFilterModal from '@/components/Modal/TimeFilterModal';
+import ViewFilterModal from '@/components/Modal/ViewFilterModal';
 import useModal from '@/hooks/useModal';
 import THEME from '@/styles/theme';
 import {FetchRecruitsResponse} from '@/types/api/recruit';
@@ -36,6 +34,7 @@ const RecruitListScreen = ({navigation}: Props) => {
     string[]
   >([]);
   const [timeFilterValueList, setTimeFilterValueList] = useState<string[]>([]);
+  const [viewFilterValueList, setViewFilterValueList] = useState<string[]>([]);
 
   const positionModal = useModal();
   const recruitTypeModal = useModal();
@@ -51,6 +50,7 @@ const RecruitListScreen = ({navigation}: Props) => {
     setPositionFilterValueList([]);
     setRecruitTypeFilterValueList([]);
     setTimeFilterValueList([]);
+    setViewFilterValueList([]);
   };
 
   const handlePositionFilterApply = (selectedOptions: string[]) => {
@@ -68,7 +68,8 @@ const RecruitListScreen = ({navigation}: Props) => {
     timeModal.close();
   };
 
-  const handleViewFilterApply = () => {
+  const handleViewFilterApply = (selectedOptions: string[]) => {
+    setViewFilterValueList(selectedOptions);
     viewModal.close();
   };
 
@@ -77,6 +78,7 @@ const RecruitListScreen = ({navigation}: Props) => {
       fields: positionFilterValueList,
       time: timeFilterValueList,
       recruitType: recruitTypeFilterValueList,
+      view: viewFilterValueList,
     };
 
     fetchRecruits(params)
@@ -92,6 +94,7 @@ const RecruitListScreen = ({navigation}: Props) => {
     positionFilterValueList,
     recruitTypeFilterValueList,
     timeFilterValueList,
+    viewFilterValueList,
   ]);
 
   useEffect(() => {
@@ -129,7 +132,6 @@ const RecruitListScreen = ({navigation}: Props) => {
           rightIcon
           onPress={timeModal.open}
         />
-        {/* TODO: 조회순 필터 기능 추가 */}
         <FilterChip
           label="조회순"
           style={{marginLeft: 8}}
@@ -209,18 +211,14 @@ const RecruitListScreen = ({navigation}: Props) => {
           onApply={handleTimeFilterApply}
         />
       )}
-      <BottomSheet
-        visible={viewModal.visible}
-        onDismiss={viewModal.close}
-        title="조회순">
-        <BottomSheetOption label="최신순" onPress={viewModal.close} />
-        <BottomSheetOption label="조회순" onPress={viewModal.close} />
-        <CTAButton
-          style={{marginHorizontal: 16, marginTop: 32}}
-          label="필터 적용"
-          onPress={handleViewFilterApply}
+      {viewModal.visible && (
+        <ViewFilterModal
+          visible={viewModal.visible}
+          onDismiss={viewModal.close}
+          initialOptions={viewFilterValueList}
+          onApply={handleViewFilterApply}
         />
-      </BottomSheet>
+      )}
     </SafeAreaView>
   );
 };
