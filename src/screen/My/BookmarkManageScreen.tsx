@@ -177,27 +177,32 @@ const CommunityTab: React.FC = () => {
 
   return (
     <View style={styles.container}>
-      <ScrollView showsVerticalScrollIndicator={false}>
-        {bookmarks?.map((bookmark, index) => (
-          <BookmarkCommunityListItem
-            key={index}
-            title={bookmark.community.title}
-            writerType={bookmark.community.writerType}
-            writerCompanyName={bookmark.community.writerCompanyName}
-            writerName={bookmark.community.writerName}
-            updatedAt={formatDate(bookmark.community.updatedAt)}
-            contents={bookmark.community.contents}
-            bookmarkCount={bookmark.community.bookmarkCount}
-            commentsLength={bookmark.community.commentsLength}
-            category={bookmark.community.category}
-            onPress={() =>
-              navigation.navigate('CommunityPost', {
-                postSeq: bookmark.community.seq,
-              })
-            }
-          />
-        ))}
-      </ScrollView>
+      {bookmarks && bookmarks.length > 0 && (
+        <ScrollView showsVerticalScrollIndicator={false}>
+          {bookmarks.map((bookmark, index) => (
+            <BookmarkCommunityListItem
+              key={index}
+              title={bookmark.community.title}
+              writerType={bookmark.community.writerType}
+              writerCompanyName={bookmark.community.writerCompanyName}
+              writerName={bookmark.community.writerName}
+              updatedAt={formatDate(bookmark.community.updatedAt)}
+              contents={bookmark.community.contents}
+              bookmarkCount={bookmark.community.bookmarkCount}
+              commentsLength={bookmark.community.commentsLength}
+              category={bookmark.community.category}
+              onPress={() =>
+                navigation.navigate('CommunityPost', {
+                  postSeq: bookmark.community.seq,
+                })
+              }
+            />
+          ))}
+        </ScrollView>
+      )}
+      {bookmarks && bookmarks.length === 0 && (
+        <EmptySet text="북마크한 커뮤니티 글이 없어요." />
+      )}
     </View>
   );
 };
