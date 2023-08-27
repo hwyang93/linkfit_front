@@ -1,7 +1,10 @@
+import BottomSheet from '@/components/Common/BottomSheet';
+import BottomSheetOption from '@/components/Common/BottomSheetOption';
+import CommunityUserProfile from '@/components/Community/CommunityUserProfile';
+import useModal from '@/hooks/useModal';
 import {FetchCommunityPostResponse} from '@/types/api/community';
 import {fetchCommunityPost} from '@api/community';
 import CommunityPostTop from '@components/Community/CommunityPostTop';
-import CommunityUserComponent from '@components/Community/CommunityUserComponent';
 import ReplyComponent from '@components/Community/ReplyComponent';
 import toast from '@hooks/toast';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
@@ -16,6 +19,8 @@ type Props = NativeStackScreenProps<LoggedInParamList, 'CommunityPost'>;
 
 const CommunityPostScreen = ({route}: Props) => {
   const [post, setPost] = useState<FetchCommunityPostResponse>();
+
+  const modal = useModal();
 
   const getPost = useCallback(() => {
     fetchCommunityPost(route.params.postSeq)
@@ -40,7 +45,14 @@ const CommunityPostScreen = ({route}: Props) => {
         keyExtractor={(_, index) => index.toString()}
         renderItem={({item}) => (
           <View>
-            <CommunityUserComponent writerInfo={item.writer} />
+            <CommunityUserProfile
+              career={item.writer.career}
+              field={item.writer.field}
+              name={item.writer.name}
+              writerType={item.writer.type}
+              profileImage={item.writer.profileImage?.originFileUrl}
+              onKebabPress={modal.open}
+            />
             <ReplyComponent commentInfo={item} />
           </View>
         )}
@@ -50,6 +62,11 @@ const CommunityPostScreen = ({route}: Props) => {
           <View style={[common.separator, common.mv16]} />
         )}
       />
+      <BottomSheet visible={modal.visible} onDismiss={modal.close}>
+        <BottomSheetOption label="신고하기" />
+        <BottomSheetOption label="수정하기" />
+        <BottomSheetOption label="삭제하기" />
+      </BottomSheet>
     </View>
   );
 };

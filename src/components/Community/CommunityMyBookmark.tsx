@@ -1,4 +1,5 @@
 import {FetchBookmarkCommunitiesResponse} from '@/types/api/community';
+import {Member} from '@/types/common';
 import {formatDate} from '@/utils/util';
 import {fetchBookmarkCommunities} from '@api/community';
 import BookmarkCounter from '@components/Counter/BookmarkCounter';
@@ -66,7 +67,7 @@ const CommunityMyPost: React.FC = () => {
                 {item.community.title}
               </Text>
               <View style={[common.rowCenter, common.mb12]}>
-                {item.community.writer.type === 'COMPANY' ? (
+                {item.community.writer.type === Member.Company ? (
                   <Text style={[common.text_m, common.fwb]}>
                     {item.community.writer.company?.companyName}
                   </Text>
@@ -80,9 +81,9 @@ const CommunityMyPost: React.FC = () => {
 
                 <Text
                   style={[common.text, common.mh4, {alignSelf: 'flex-end'}]}>
-                  {item.community.writer.type === 'COMPANY'
+                  {item.community.writer.type === Member.Company
                     ? '센터'
-                    : item.community.writer.type === 'INSTRUCTOR'
+                    : item.community.writer.type === Member.Instructor
                     ? '강사'
                     : '일반인'}
                 </Text>

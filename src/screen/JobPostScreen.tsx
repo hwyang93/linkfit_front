@@ -6,6 +6,7 @@ import THEME from '@/styles/theme';
 import {RecruitDateEntity} from '@/types/api/entities';
 import {FetchRecruitResponse} from '@/types/api/recruit';
 import {FetchResumesResponse} from '@/types/api/resume';
+import {Member} from '@/types/common';
 import {iconPath} from '@/utils/iconPath';
 import {formatDate} from '@/utils/util';
 import {
@@ -408,7 +409,7 @@ const JobPostScreen = ({route}: Props) => {
                   />
                 </MapView>
               </View>
-              {recruitInfo.writer?.type === 'COMPANY' && (
+              {recruitInfo.writer?.type === Member.Company && (
                 <View>
                   <Text style={[common.mb8, common.text_m, common.fwb]}>
                     센터 정보

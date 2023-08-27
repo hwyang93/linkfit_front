@@ -1,4 +1,5 @@
 import {FetchMemberFollowingsResponse} from '@/types/api/member';
+import {Member} from '@/types/common';
 import {iconPath} from '@/utils/iconPath';
 import {fetchMemberFollowings} from '@api/member';
 import toast from '@hooks/toast';
@@ -26,7 +27,7 @@ const FollowingCenterComponent: React.FC = () => {
   const navigation = useNavigation<NavigationProp<LoggedInParamList>>();
 
   const getMemberFollowingList = useCallback(() => {
-    fetchMemberFollowings({type: 'COMPANY'})
+    fetchMemberFollowings({type: Member.Company})
       .then(({data}) => {
         setFollowings(data);
       })

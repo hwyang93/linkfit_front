@@ -1,6 +1,6 @@
 import CTAButton from '@/components/Common/CTAButton';
 import {useAppSelector} from '@/store';
-import {Coordinate} from '@/types/common';
+import {Coordinate, Member} from '@/types/common';
 import {SCREEN_WIDTH} from '@/utils/constants/common';
 import {iconPath} from '@/utils/iconPath';
 import {createRecruit} from '@api/recruit';
@@ -336,7 +336,7 @@ const JobOfferFormScreen = ({navigation}: Props) => {
           />
         </View>
 
-        {memberInfo.type !== 'COMPANY' && (
+        {memberInfo.type !== Member.Company && (
           <View>
             <View style={common.mb16}>
               <Input

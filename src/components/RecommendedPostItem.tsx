@@ -1,4 +1,5 @@
 import {CommunityEntity} from '@/types/api/entities';
+import {Member} from '@/types/common';
 import {formatDate} from '@/utils/util';
 import {createCommunityBookmark, deleteCommunityBookmark} from '@api/community';
 import BookmarkCounter from '@components/Counter/BookmarkCounter';
@@ -61,7 +62,7 @@ const RecommendedPostItem: React.FC<RecommendedPostItemProps> = ({item}) => {
       <View>
         <Text style={[common.title, common.fs18]}>{postInfo.title}</Text>
         <View style={[common.rowEnd, common.mb8]}>
-          {postInfo.writer.type === 'COMPANY' ? (
+          {postInfo.writer.type === Member.Company ? (
             <Text style={[common.text_m, common.fwb]}>
               {postInfo.writer.company?.companyName}
             </Text>
@@ -73,9 +74,9 @@ const RecommendedPostItem: React.FC<RecommendedPostItemProps> = ({item}) => {
             </Text>
           )}
           <Text style={[common.text, common.mh4]}>
-            {postInfo.writer.type === 'INSTRUCTOR'
+            {postInfo.writer.type === Member.Instructor
               ? '강사'
-              : postInfo.writer.type === 'COMPANY'
+              : postInfo.writer.type === Member.Company
               ? '센터'
               : '일반'}
           </Text>

@@ -1,6 +1,7 @@
 import FilterChip from '@/components/Common/FilterChip';
 import FilterChipContainer from '@/components/Common/FilterChipContainer';
 import {FetchReceivePositionSuggestsResponse} from '@/types/api/member';
+import {Member} from '@/types/common';
 import {formatDate} from '@/utils/util';
 import {fetchReceivePositionSuggests} from '@api/member';
 import toast from '@hooks/toast';
@@ -41,7 +42,7 @@ const ReceivedSuggestionCard: React.FC<ReceivedSuggestionCardProps> = ({
         {title}
       </Text>
       <Text style={[common.text_m, common.fwb, common.mb12]}>
-        {type === 'COMPANY' ? companyName : writerName}
+        {type === Member.Company ? companyName : writerName}
       </Text>
       <Text style={[common.text_s, common.fcg]}>
         {closingDate ? closingDate : '채용시 마감'} | {status}
@@ -139,7 +140,7 @@ const ReceivedSuggestionScreen = ({navigation}: Props) => {
           //     {suggest.title}
           //   </Text>
           //   <Text style={[common.text_m, common.fwb, common.mb12]}>
-          //     {suggest.writer.type === 'COMPANY'
+          //     {suggest.writer.type === Member.Company
           //       ? suggest.writer.company.companyName
           //       : suggest.writer.name}
           //   </Text>

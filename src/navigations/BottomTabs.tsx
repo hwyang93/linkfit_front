@@ -3,6 +3,7 @@ import LinkTab from '@/screen/Tabs/LinkTab';
 import MessageTab from '@/screen/Tabs/MessageTab';
 import MyTab from '@/screen/Tabs/MyTab';
 import {useAppSelector} from '@/store';
+import {Member} from '@/types/common';
 import {IS_ANDROID, SCREEN_WIDTH} from '@/utils/constants/common';
 import {iconPath} from '@/utils/iconPath';
 import {bottomTabNavigationOptions} from '@/utils/options/tab';
@@ -102,7 +103,7 @@ const ContentTab = () => {
             },
           })}
         />
-        {memberInfo.type !== 'COMPANY' ? (
+        {memberInfo.type !== Member.Company ? (
           <Tab.Screen
             name="My"
             component={MyTab}

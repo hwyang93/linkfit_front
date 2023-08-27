@@ -1,6 +1,13 @@
 import {AxiosResponse} from 'axios';
 
-export type MemberType = 'PUBLIC' | 'INSTRUCTOR' | 'COMPANY';
+export const Member = {
+  Public: 'PUBLIC',
+  Instructor: 'INSTRUCTOR',
+  Company: 'COMPANY',
+  Center: 'CENTER',
+} as const;
+
+export type MemberType = typeof Member[keyof typeof Member];
 
 export type YesNoFlag = 'Y' | 'N';
 

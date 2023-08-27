@@ -5,6 +5,7 @@ import FloatingActionButton from '@/components/Common/FloatingActionButton';
 import {useAppSelector} from '@/store';
 import {FetchCommunityPostsResponse} from '@/types/api/community';
 import {CommunityEntity} from '@/types/api/entities';
+import {Member} from '@/types/common';
 import MESSAGE from '@/utils/constants/message';
 import {iconPath} from '@/utils/iconPath';
 import {fetchCommunityPosts} from '@api/community';
@@ -79,7 +80,7 @@ const CommunityTab = ({navigation}: Props) => {
           active={filterList.includes('요가')}
           onPress={() => handleFilterChipPress('요가')}
         />
-        {userType === 'INSTRUCTOR' && (
+        {userType === Member.Instructor && (
           <FilterChip
             label="강사"
             style={{marginLeft: 8}}
@@ -87,7 +88,7 @@ const CommunityTab = ({navigation}: Props) => {
             onPress={() => handleFilterChipPress('강사')}
           />
         )}
-        {userType === 'CENTER' && (
+        {userType === Member.Center && (
           <FilterChip
             label="센터"
             style={{marginLeft: 8}}

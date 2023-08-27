@@ -1,4 +1,4 @@
-import {YesNoFlag} from '../common';
+import {MemberType, YesNoFlag} from '../common';
 
 export interface BaseEntity {
   createdAt: string;
@@ -39,7 +39,7 @@ export interface MemberEntity extends BaseEntity {
   birth: string;
   gender: string;
   phone: string;
-  type?: string;
+  type?: MemberType;
   nickname?: string;
   intro?: string;
   address?: string;

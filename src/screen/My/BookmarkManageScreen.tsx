@@ -6,6 +6,7 @@ import toast from '@/hooks/toast';
 import common from '@/styles/common';
 import {FetchBookmarkCommunitiesResponse} from '@/types/api/community';
 import {FetchBookmarkRecruitsResponse} from '@/types/api/recruit';
+import {Member} from '@/types/common';
 import {iconPath} from '@/utils/iconPath';
 import {materialTopTabNavigationOptions} from '@/utils/options/tab';
 import {formatDate} from '@/utils/util';
@@ -52,7 +53,7 @@ const BookmarkCommunityListItem: React.FC<BookmarkCommunityListItemProps> = ({
     <Pressable onPress={onPress}>
       <View style={styles.listBox}>
         <Text style={[common.title, common.fs18, common.mb8]}>{title}</Text>
-        {writerType === 'COMPANY' ? (
+        {writerType === Member.Company ? (
           <View style={common.row}>
             <Text style={[common.text_m, common.fwb]}>{writerCompanyName}</Text>
             <Text style={[common.text, common.mh4, {alignSelf: 'flex-end'}]}>
@@ -66,7 +67,7 @@ const BookmarkCommunityListItem: React.FC<BookmarkCommunityListItemProps> = ({
           <View style={common.row}>
             <Text style={[common.text_m, common.fwb]}>{writerName}</Text>
             <Text style={[common.text, common.mh4, {alignSelf: 'flex-end'}]}>
-              {writerType === 'INSTRUCTOR' ? '강사' : '일반인'}
+              {writerType === Member.Instructor ? '강사' : '일반인'}
             </Text>
             <Text style={[common.text, {alignSelf: 'flex-end'}]}>
               {updatedAt}

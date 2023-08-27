@@ -1,5 +1,6 @@
 import CTAButton from '@/components/Common/CTAButton';
 import {FetchPositionSuggestResponse} from '@/types/api/member';
+import {Member} from '@/types/common';
 import {fetchPositionSuggest, updatePositionSuggestStatus} from '@api/member';
 import InstructorInfoComponent from '@components/InstructorInfoComponent';
 import toast from '@hooks/toast';
@@ -105,7 +106,7 @@ const ReceivedSuggestionDetailScreen = ({route, navigation}: Props) => {
               : `~${suggestInfo.closingDate} 마감`}
           </Text>
 
-          {suggestInfo?.writer.type === 'COMPANY' && (
+          {suggestInfo?.writer.type === Member.Company && (
             <View style={common.mb24}>
               <Pressable
                 onPress={() =>
@@ -120,7 +121,7 @@ const ReceivedSuggestionDetailScreen = ({route, navigation}: Props) => {
               </Pressable>
             </View>
           )}
-          {suggestInfo?.writer.type === 'INSTRUCTOR' && (
+          {suggestInfo?.writer.type === Member.Instructor && (
             <View style={common.mb24}>
               <Text style={[common.text_m, common.fwb, common.mb8]}>
                 제안한 강사 정보

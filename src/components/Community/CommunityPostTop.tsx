@@ -1,3 +1,4 @@
+import CommunityUserProfile from '@/components/Community/CommunityUserProfile';
 import useModal from '@/hooks/useModal';
 import {CommunityEntity} from '@/types/api/entities';
 import {iconPath} from '@/utils/iconPath';
@@ -7,7 +8,6 @@ import {
   createCommunityComment,
   deleteCommunityBookmark,
 } from '@api/community';
-import CommunityUserComponent from '@components/Community/CommunityUserComponent';
 import BookmarkCounter from '@components/Counter/BookmarkCounter';
 import CommentCounter from '@components/Counter/CommentCounter';
 import Input, {KeyboardTypes} from '@components/Input';
@@ -106,7 +106,14 @@ const CommunityPostTop: React.FC<CommunityPostTopProps> = ({postInfo}) => {
         </View>
       </View>
       <View>
-        <CommunityUserComponent writerInfo={postInfo.writer} />
+        <CommunityUserProfile
+          name={postInfo.writer.nickname || postInfo.writer.name}
+          career={postInfo.writer.career}
+          field={postInfo.writer.field}
+          profileImage={postInfo.writer.profileImage?.originFileUrl}
+          writerType={postInfo.writer.type}
+          onKebabPress={modal.open}
+        />
       </View>
       <View style={common.mv16}>
         <Text style={common.text_m}>{postInfo.contents}</Text>
