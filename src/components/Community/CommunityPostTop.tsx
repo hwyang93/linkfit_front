@@ -15,7 +15,7 @@ import toast from '@hooks/toast';
 import common from '@styles/common';
 import {isAxiosError} from 'axios';
 import {useCallback, useState} from 'react';
-import {Alert, Image, Pressable, Text, View} from 'react-native';
+import {Alert, Image, Text, View} from 'react-native';
 import BottomSheet from '../Common/BottomSheet';
 import BottomSheetOption from '../Common/BottomSheetOption';
 import BoxButton from '../Common/BoxButton';
@@ -90,10 +90,11 @@ const CommunityPostTop: React.FC<CommunityPostTopProps> = ({postInfo}) => {
       <View>
         <View style={[common.rowCenterBetween, common.mb8]}>
           <Text style={common.title_l}>{postInfo.title}</Text>
-          <Pressable
+          {/* 임시 비활성화 (추후 개발) */}
+          {/* <Pressable
             onPress={() => Alert.alert('공유', '공유 버튼을 누르셨어요.')}>
             <Image source={iconPath.SHARE} style={common.size24} />
-          </Pressable>
+          </Pressable> */}
         </View>
         <Text style={[common.text_s, common.fcg]}>
           {formatDate(postInfo.updatedAt)}
