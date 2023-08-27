@@ -27,11 +27,11 @@ const columns3 = (SCREEN_WIDTH - 32) / 3;
 const columns4 = (SCREEN_WIDTH - 32) / 4;
 
 const MENU = [
-  {
-    icon: iconPath.MY_PLACE,
-    title: '지역 인증',
-    link: 'CertifyLocation',
-  },
+  // {
+  //   icon: iconPath.MY_PLACE,
+  //   title: '지역 인증',
+  //   link: 'CertifyLocation',
+  // },
   {
     icon: iconPath.MY_LICENSE,
     title: '강사 인증',
