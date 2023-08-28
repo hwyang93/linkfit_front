@@ -15,6 +15,12 @@ import {
 } from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {LoggedInParamList} from '../../../AppInner';
+import {useCallback, useEffect, useState} from 'react';
+import {fetchInquiries} from '@api/inquiry';
+import {isAxiosError} from 'axios';
+import toast from '@hooks/toast';
+import {FetchInquriyResponse} from '@/types/api/inquiry';
+import {formatDate} from '@util/util';
 
 const DATA = [
   {
@@ -32,15 +38,32 @@ const DATA = [
 type Props = NativeStackScreenProps<LoggedInParamList, 'Inquiry'>;
 
 const InquiryScreen = ({navigation}: Props) => {
+  const [inquiries, setInquiries] = useState<FetchInquriyResponse>([]);
   const toInquiry = () => {
     navigation.navigate('InquiryForm');
   };
 
+  const getInquiries = useCallback(() => {
+    fetchInquiries()
+      .then(({data}) => {
+        setInquiries(data);
+      })
+      .catch(error => {
+        if (isAxiosError(error)) {
+          toast.error({message: error.message});
+        }
+      });
+  }, []);
+
+  useEffect(() => {
+    getInquiries();
+  }, [getInquiries]);
+
   return (
     <SafeAreaView edges={['bottom', 'left', 'right']} style={styles.container}>
-      {DATA.length > 0 ? (
+      {inquiries.length > 0 ? (
         <ScrollView>
-          {DATA.map((item, index) => {
+          {inquiries.map((item, index) => {
             return (
               <Pressable key={index} style={common.mv16}>
                 <View style={common.rowCenterBetween}>
@@ -57,30 +80,23 @@ const InquiryScreen = ({navigation}: Props) => {
                   <View
                     style={[
                       styles.statusBox,
-                      item.finished && {borderColor: BLUE.DEFAULT},
+                      item.status === 'COMPLETE' && {borderColor: BLUE.DEFAULT},
                     ]}>
-                    {item.finished ? (
+                    {item.status === 'COMPLETE' ? (
                       <Text
                         style={[
                           common.text,
                           common.fs10,
-                          item.finished && {color: BLUE.DEFAULT},
+                          {color: BLUE.DEFAULT},
                         ]}>
                         답변완료
                       </Text>
                     ) : (
-                      <Text
-                        style={[
-                          common.text,
-                          common.fs10,
-                          item.finished && {color: BLUE.DEFAULT},
-                        ]}>
-                        답변대기
-                      </Text>
+                      <Text style={[common.text, common.fs10]}>답변대기</Text>
                     )}
                   </View>
                 </View>
-                <Text style={common.text_m}>{item.date}</Text>
+                <Text style={common.text_m}>{formatDate(item.createdAt)}</Text>
               </Pressable>
             );
           })}

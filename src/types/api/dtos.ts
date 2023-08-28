@@ -174,3 +174,8 @@ export interface CreateCommunityCommentDto {
 }
 
 export interface UpdateCommunityDto {}
+
+export interface CreateInquiryDto {
+  title: string;
+  contents: string;
+}
