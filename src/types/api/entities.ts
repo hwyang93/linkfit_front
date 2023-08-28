@@ -320,3 +320,11 @@ export interface SeekFavoriteEntity extends BaseEntity {
   seq: number;
   memberSeq: number;
 }
+
+export interface InquiryEntity extends BaseEntity {
+  seq: number;
+  writerSeq: number;
+  title: string;
+  contents: string;
+  status: string;
+}

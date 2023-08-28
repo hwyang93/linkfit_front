@@ -6,34 +6,53 @@ import SelectBox from '@components/SelectBox';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import {WHITE} from '@styles/colors';
 import common from '@styles/common';
-import {useState} from 'react';
+import {useCallback, useState} from 'react';
 import {StyleSheet, View} from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
+import {createInquiry} from '@api/inquiry';
+import toast from '@hooks/toast';
+import {NavigationProp, useNavigation} from '@react-navigation/native';
 
 type Props = NativeStackScreenProps<LoggedInParamList, 'InquiryForm'>;
 
-const InquiryFormScreen = ({}: Props) => {
+const InquiryFormScreen = ({navigation}: Props) => {
   const [loading, setLoading] = useState(false);
-  const [select, setSelect] = useState('');
+  // const [select, setSelect] = useState('');
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
-  const DATA = [''];
 
-  const canGoNext = select && title && content;
+  const canGoNext = title && content;
+
+  const onCreateInquiry = useCallback(() => {
+    const data = {title: title, contents: content};
+    setLoading(true);
+
+    createInquiry(data)
+      .then(() => {
+        toast.success({message: '1:1 문의를 등록했어요!'});
+        navigation.pop();
+      })
+      .catch(error => {
+        toast.error({message: error.message});
+      })
+      .finally(() => {
+        setLoading(false);
+      });
+  }, [content, title]);
 
   return (
     <SafeAreaView edges={['bottom', 'left', 'right']} style={styles.container}>
       <DismissKeyboardView>
-        <View style={common.mv16}>
-          <SelectBox
-            label={'문의'}
-            data={DATA}
-            onSelect={(value: any) => setSelect(value)}
-            defaultButtonText={'문의할 항목을 선택하세요'}
-          />
-        </View>
+        {/*<View style={common.mv16}>*/}
+        {/*  <SelectBox*/}
+        {/*    label={'문의'}*/}
+        {/*    data={DATA}*/}
+        {/*    onSelect={(value: any) => setSelect(value)}*/}
+        {/*    defaultButtonText={'문의할 항목을 선택하세요'}*/}
+        {/*  />*/}
+        {/*</View>*/}
         {/* 제목 */}
-        <View style={common.mb16}>
+        <View style={common.mv16}>
           <Input
             label={'제목'}
             onChangeText={(text: string) => setTitle(text)}
@@ -60,6 +79,7 @@ const InquiryFormScreen = ({}: Props) => {
             label="1:1 문의 하기"
             loading={loading}
             disabled={!canGoNext}
+            onPress={onCreateInquiry}
           />
         </View>
       </DismissKeyboardView>
