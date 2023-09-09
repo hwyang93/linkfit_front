@@ -277,9 +277,7 @@ const MyProfileScreen = ({navigation}: Props) => {
         career={memberInfo?.career}
         address={memberInfo?.address}
         followerCount={memberInfo?.followerCount}
-        onPencilIconPress={() =>
-          navigation.navigate('ProfileEdit', {memberInfo})
-        }
+        onPencilIconPress={() => navigation.navigate('ProfileEdit')}
       />
       <Tab.Navigator screenOptions={materialTopTabNavigationOptions}>
         <Tab.Screen name="내 소개" component={MyIntroductionTab} />

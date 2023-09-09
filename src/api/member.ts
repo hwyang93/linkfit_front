@@ -158,4 +158,18 @@ export const memberApi = {
     );
     return response.data;
   },
+  getMemberInfo: async () => {
+    const response = await request.get<FetchMemberInfoBySeqResponse>(ENDPOINT);
+    return response.data;
+  },
+  checkNickname: async (nickname: string) => {
+    const response = await request.get<FetchCheckNicknameResponse>(
+      `${ENDPOINT}/check/nickname/${nickname}`,
+    );
+    return response.data;
+  },
+  updateProfile: async (body: FormData) => {
+    const response = await request.patch(`${ENDPOINT}/profile`, body);
+    return response.data;
+  },
 };

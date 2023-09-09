@@ -33,7 +33,7 @@ export type LoggedInParamList = {
   SendSuggestionDetail: undefined;
 
   MyProfile: undefined;
-  ProfileEdit: {memberInfo: any};
+  ProfileEdit: undefined;
   CertifyLocation: undefined;
   CertifyInstructor: undefined;
   CertifyInstructorForm: undefined;
