@@ -1,6 +1,6 @@
 import {LoggedInParamList} from '@/../AppInner';
+import {createInquiry} from '@/api/customer-service';
 import CTAButton from '@/components/Common/CTAButton';
-import {createInquiry} from '@api/inquiry';
 import DismissKeyboardView from '@components/DismissKeyboardView';
 import Input, {KeyboardTypes} from '@components/Input';
 import toast from '@hooks/toast';
