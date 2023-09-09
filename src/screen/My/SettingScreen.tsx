@@ -17,11 +17,11 @@ import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import {LoggedInParamList} from '../../../AppInner';
 
 const DATA = [
-  {
-    icon: iconPath.NOTIFICATION,
-    title: '알림 설정',
-    link: 'NotificationSetting',
-  },
+  // {
+  //   icon: iconPath.NOTIFICATION,
+  //   title: '알림 설정',
+  //   link: 'NotificationSetting',
+  // },
   {
     icon: iconPath.ACCOUNT,
     title: '계정 관리',
