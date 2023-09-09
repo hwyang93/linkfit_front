@@ -2,18 +2,15 @@ import BottomSheet from '@/components/Common/BottomSheet';
 import BottomSheetOption from '@/components/Common/BottomSheetOption';
 import FilterChip from '@/components/Common/FilterChip';
 import FilterChipContainer from '@/components/Common/FilterChipContainer';
+import {useRecruitListQuery} from '@/hooks/recruit/useRecruitListQuery';
+import useFilter from '@/hooks/useFilter';
 import useModal from '@/hooks/useModal';
-import {FetchRecruitsResponse} from '@/types/api/recruit';
-import {YesNoFlag} from '@/types/common';
 import FILTER from '@/utils/constants/filter';
 import {iconPath} from '@/utils/iconPath';
 import {formatDate} from '@/utils/util';
-import {fetchRecruits} from '@api/recruit';
-import toast from '@hooks/toast';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import {WHITE} from '@styles/colors';
 import common from '@styles/common';
-import {useCallback, useEffect, useState} from 'react';
 import {
   Image,
   Pressable,
@@ -26,12 +23,12 @@ import {SafeAreaView} from 'react-native-safe-area-context';
 import {LoggedInParamList} from '../../../AppInner';
 
 interface MyRecruitmentListItemProps {
+  recruitId: number;
   status: string;
   title: string;
   createdAt: string;
   position: string;
   onPress: () => void;
-  onKebabIconPress: () => void;
 }
 
 const MyRecruitmentListItem: React.FC<MyRecruitmentListItemProps> = ({
@@ -40,8 +37,9 @@ const MyRecruitmentListItem: React.FC<MyRecruitmentListItemProps> = ({
   createdAt,
   position,
   onPress,
-  onKebabIconPress,
 }) => {
+  const kebabModal = useModal();
+
   return (
     <Pressable style={[common.basicBox, common.mv8]} onPress={onPress}>
       <View style={common.rowCenter}>
@@ -58,9 +56,17 @@ const MyRecruitmentListItem: React.FC<MyRecruitmentListItemProps> = ({
       <Pressable
         style={styles.kebabIcon}
         hitSlop={10}
-        onPress={onKebabIconPress}>
+        onPress={kebabModal.open}>
         <Image source={iconPath.KEBAB} style={[common.size24]} />
       </Pressable>
+      <BottomSheet
+        visible={kebabModal.visible}
+        onDismiss={kebabModal.close}
+        title="더보기">
+        <BottomSheetOption label="지원자 현황보기" />
+        <BottomSheetOption label="공고 수정하기" />
+        <BottomSheetOption label="공고 복사하기" />
+      </BottomSheet>
     </Pressable>
   );
 };
@@ -68,41 +74,28 @@ const MyRecruitmentListItem: React.FC<MyRecruitmentListItemProps> = ({
 type Props = NativeStackScreenProps<LoggedInParamList, 'MyPost'>;
 
 const MyRecruitmentScreen = ({navigation}: Props) => {
-  const [recruits, setRecruits] = useState<FetchRecruitsResponse>([]);
-
-  const [periodFilter, setPeriodFilter] = useState<string | null>(null);
-  const [progressionFilter, setProgressionFilter] = useState<string | null>(
-    null,
-  );
+  const periodFilter = useFilter();
+  const progressionFilter = useFilter();
 
   const periodModal = useModal();
   const progressionModal = useModal();
-  const kebabModal = useModal();
 
-  const getRecruits = useCallback(() => {
-    const params = {isWriter: 'Y' as YesNoFlag};
-    fetchRecruits(params)
-      .then(({data}) => {
-        setRecruits(data);
-      })
-      .catch(error => {
-        toast.error({message: error.message});
-      });
-  }, []);
+  const recruitListQuery = useRecruitListQuery({
+    isWriter: 'Y',
+    period: periodFilter.value,
+    status: progressionFilter.value,
+  });
+  const recruits = recruitListQuery.data;
 
   const handlePeriodOptionPress = (option: string) => {
-    setPeriodFilter(option);
+    periodFilter.setValue(option);
     periodModal.close();
   };
 
   const handleProgressionOptionPress = (option: string) => {
-    setProgressionFilter(option);
+    progressionFilter.setValue(option);
     progressionModal.close();
   };
-
-  useEffect(() => {
-    getRecruits();
-  }, [getRecruits]);
 
   const handleMyRecruitmentListItemPress = (recruitSeq: number) => {
     navigation.navigate('ApplicantStatus', {
@@ -113,24 +106,31 @@ const MyRecruitmentScreen = ({navigation}: Props) => {
   return (
     <SafeAreaView edges={['left', 'right']} style={styles.container}>
       <FilterChipContainer>
-        <FilterChip label={periodFilter || '기간'} onPress={periodModal.open} />
         <FilterChip
-          label={progressionFilter || '진행 상태'}
+          label={periodFilter.value || '기간'}
+          onPress={periodModal.open}
+          active={!!periodFilter.value}
+          rightIcon
+        />
+        <FilterChip
+          label={progressionFilter.value || '진행 여부'}
           style={{marginLeft: 8}}
           onPress={progressionModal.open}
+          active={!!progressionFilter.value}
+          rightIcon
         />
       </FilterChipContainer>
       <ScrollView
         contentContainerStyle={{marginHorizontal: 16, paddingBottom: 24}}
         showsVerticalScrollIndicator={false}>
-        {recruits.map((recruit, index) => (
+        {recruits?.map((recruit, index) => (
           <MyRecruitmentListItem
             key={index}
+            recruitId={recruit.seq}
             title={recruit.title}
             position={recruit.position}
             status={recruit.status}
             createdAt={formatDate(recruit.createdAt)}
-            onKebabIconPress={kebabModal.open}
             onPress={() => handleMyRecruitmentListItemPress(recruit.seq)}
           />
         ))}
@@ -143,6 +143,7 @@ const MyRecruitmentScreen = ({navigation}: Props) => {
           <BottomSheetOption
             key={index}
             label={option}
+            selected={option === periodFilter.value}
             onPress={() => handlePeriodOptionPress(option)}
           />
         ))}
@@ -150,21 +151,15 @@ const MyRecruitmentScreen = ({navigation}: Props) => {
       <BottomSheet
         visible={progressionModal.visible}
         onDismiss={progressionModal.close}
-        title="진행 상태">
+        title="진행 여부">
         {FILTER.PROGRESSION.map((option, index) => (
           <BottomSheetOption
             key={index}
             label={option}
+            selected={option === progressionFilter.value}
             onPress={() => handleProgressionOptionPress(option)}
           />
         ))}
-      </BottomSheet>
-      <BottomSheet
-        visible={kebabModal.visible}
-        onDismiss={kebabModal.close}
-        title="더보기">
-        <BottomSheetOption label="공고 수정하기" />
-        <BottomSheetOption label="공고 복사하기" />
       </BottomSheet>
     </SafeAreaView>
   );
