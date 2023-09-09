@@ -1,17 +1,15 @@
 import {LoggedInParamList} from '@/../AppInner';
 import CTAButton from '@/components/Common/CTAButton';
+import {createInquiry} from '@api/inquiry';
 import DismissKeyboardView from '@components/DismissKeyboardView';
 import Input, {KeyboardTypes} from '@components/Input';
-import SelectBox from '@components/SelectBox';
+import toast from '@hooks/toast';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import {WHITE} from '@styles/colors';
 import common from '@styles/common';
 import {useCallback, useState} from 'react';
 import {StyleSheet, View} from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
-import {createInquiry} from '@api/inquiry';
-import toast from '@hooks/toast';
-import {NavigationProp, useNavigation} from '@react-navigation/native';
 
 type Props = NativeStackScreenProps<LoggedInParamList, 'InquiryForm'>;
 
@@ -38,7 +36,7 @@ const InquiryFormScreen = ({navigation}: Props) => {
       .finally(() => {
         setLoading(false);
       });
-  }, [content, title]);
+  }, [content, title, navigation]);
 
   return (
     <SafeAreaView edges={['bottom', 'left', 'right']} style={styles.container}>

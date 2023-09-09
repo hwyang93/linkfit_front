@@ -2,42 +2,40 @@ import EmptyState from '@/components/Common/EmptyState';
 import FilterChip from '@/components/Common/FilterChip';
 import FilterChipContainer from '@/components/Common/FilterChipContainer';
 import FloatingActionButton from '@/components/Common/FloatingActionButton';
+import {useCommunityPostListQuery} from '@/hooks/community/useCommunityPostListQuery';
+import {ROUTE} from '@/navigations/routes';
 import {useAppSelector} from '@/store';
-import {FetchCommunityPostsResponse} from '@/types/api/community';
 import {CommunityEntity} from '@/types/api/entities';
 import {Member} from '@/types/common';
 import MESSAGE from '@/utils/constants/message';
 import {iconPath} from '@/utils/iconPath';
-import {fetchCommunityPosts} from '@api/community';
 import FABContainer from '@components/Common/FABContainer';
 import RecommendedPostItem from '@components/RecommendedPostItem';
-import toast from '@hooks/toast';
-import {useIsFocused} from '@react-navigation/native';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import {WHITE} from '@styles/colors';
 import common from '@styles/common';
-import {isAxiosError} from 'axios';
-import {useCallback, useEffect, useState} from 'react';
+import {useState} from 'react';
 import {FlatList, StyleSheet, Text, View} from 'react-native';
 import {LoggedInParamList} from '../../../AppInner';
 
 type Props = NativeStackScreenProps<LoggedInParamList, 'Community'>;
 
 const CommunityTab = ({navigation}: Props) => {
-  const [posts, setPosts] = useState<FetchCommunityPostsResponse>();
   const [filterList, setFilterList] = useState<string[]>([]);
 
-  const isFocused = useIsFocused();
+  const communityPostListQuery = useCommunityPostListQuery({
+    category: filterList,
+  });
+  const posts = communityPostListQuery.data;
 
   const userType = useAppSelector(state => state.user.type);
-  console.log(userType);
 
   const renderItem = ({item}: {item: CommunityEntity}) => {
     return <RecommendedPostItem item={item} />;
   };
 
   const onPressFAB = () => {
-    navigation.navigate('CommunityPostForm');
+    navigation.navigate(ROUTE.COMMUNITY.POST_CREATE);
   };
 
   const handleFilterChipPress = (label: string) => {
@@ -47,24 +45,6 @@ const CommunityTab = ({navigation}: Props) => {
       setFilterList([...filterList, label]);
     }
   };
-
-  const getPosts = useCallback(() => {
-    fetchCommunityPosts({category: filterList})
-      .then(({data}) => {
-        setPosts(data);
-      })
-      .catch(error => {
-        if (isAxiosError(error)) {
-          toast.error({message: error.message});
-        }
-      });
-  }, [filterList]);
-
-  useEffect(() => {
-    if (isFocused) {
-      getPosts();
-    }
-  }, [getPosts, isFocused]);
 
   return (
     <View style={styles.container}>

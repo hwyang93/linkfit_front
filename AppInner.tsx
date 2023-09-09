@@ -76,6 +76,8 @@ export type LoggedInParamList = {
   SignUpForm: {email: string};
   CompanySignUpForm: {email: string};
   PasswordReset: undefined;
+  CommunityCommentEdit: {postId: number};
+  CommunityPostEdit: {postId: number};
 };
 
 const AppInner = () => {
