@@ -28,3 +28,29 @@ export const fetchRecommendedInstructors = () => {
     '/instructor/recommended',
   );
 };
+
+const ENDPOINT = '/instructor';
+
+export const instructorApi = {
+  getInstructorList: async (params?: FetchInstructorsParams) => {
+    const response = await request.get<FetchInstructorsResponse>(
+      `${ENDPOINT}`,
+      {
+        params,
+      },
+    );
+    return response.data;
+  },
+  followInstructor: async (instructorId: number) => {
+    const response = await request.post<PostResponse>(
+      `${ENDPOINT}/follow/${instructorId}`,
+    );
+    return response.data;
+  },
+  unfollowInstructor: async (instructorId: number) => {
+    const response = await request.delete<PostResponse>(
+      `${ENDPOINT}/follow/${instructorId}`,
+    );
+    return response.data;
+  },
+};
