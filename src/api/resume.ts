@@ -20,3 +20,11 @@ export const updateResumeMaster = (seq: number) => {
 export const deleteResume = (seq: number) => {
   return request.delete(`/resume/${seq}`);
 };
+
+const ENDPOINT = '/resume';
+
+export const resumeApi = {
+  createResume: (data: object) => {
+    return request.post(`${ENDPOINT}`, data);
+  },
+};

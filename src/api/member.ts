@@ -162,6 +162,12 @@ export const memberApi = {
     const response = await request.get<FetchMemberInfoBySeqResponse>(ENDPOINT);
     return response.data;
   },
+  getMemberLicenceList: async () => {
+    const response = await request.get<FetchMemberLicencesResponse>(
+      `${ENDPOINT}/licence`,
+    );
+    return response.data;
+  },
   checkNickname: async (nickname: string) => {
     const response = await request.get<FetchCheckNicknameResponse>(
       `${ENDPOINT}/check/nickname/${nickname}`,
