@@ -1,53 +1,35 @@
-import {FetchMemberFollowingsResponse} from '@/types/api/member';
+import {useMemberFollowingListQuery} from '@/hooks/member/useMemberFollowingListQuery';
+import THEME from '@/styles/theme';
 import {Member} from '@/types/common';
 import {iconPath} from '@/utils/iconPath';
-import {fetchMemberFollowings} from '@api/member';
-import toast from '@hooks/toast';
 import {NavigationProp, useNavigation} from '@react-navigation/native';
-import {BLUE, GRAY, WHITE} from '@styles/colors';
+import {BLUE, GRAY} from '@styles/colors';
 import common from '@styles/common';
-import {isAxiosError} from 'axios';
-import {useCallback, useEffect, useState} from 'react';
-import {
-  Image,
-  Pressable,
-  ScrollView,
-  StyleSheet,
-  Text,
-  View,
-} from 'react-native';
+import {Image, Pressable, StyleSheet, Text, View} from 'react-native';
+import {SafeAreaView} from 'react-native-safe-area-context';
+import AppScrollView from '../\bLayout/AppScrollView';
 import {LoggedInParamList} from '../../../AppInner';
+import EmptySet from '../EmptySet';
 
-const FollowingInstructorComponent: React.FC = () => {
-  const [followings, setFollowings] = useState<FetchMemberFollowingsResponse>();
-
+const FollowingInstructorTab: React.FC = () => {
   const navigation = useNavigation<NavigationProp<LoggedInParamList>>();
 
-  const getMemberFollowingList = useCallback(() => {
-    fetchMemberFollowings({type: Member.Instructor})
-      .then(({data}) => {
-        setFollowings(data);
-      })
-      .catch(error => {
-        if (isAxiosError(error)) {
-          toast.error({message: error.message});
-        }
-      });
-  }, []);
-
-  useEffect(() => {
-    getMemberFollowingList();
-  }, [getMemberFollowingList]);
+  const {data} = useMemberFollowingListQuery({type: Member.Instructor});
+  const followings = data;
 
   return (
-    <ScrollView showsVerticalScrollIndicator={false}>
-      {/*<View>*/}
-      {followings?.map(following => {
-        return (
+    <SafeAreaView edges={['bottom', 'left', 'right']} style={styles.container}>
+      <AppScrollView>
+        {followings?.length === 0 && (
+          <EmptySet text="팔로우 중인 강사가 없어요." />
+        )}
+        {followings?.map(following => (
           <Pressable
             key={`${following.seq} ${following.memberSeq} ${following.favoriteSeq}`}
             onPress={() =>
-              navigation.navigate('Profile', {memberSeq: following.favoriteSeq})
+              navigation.navigate('Profile', {
+                memberSeq: following.favoriteSeq,
+              })
             }>
             <View style={styles.reviewBox}>
               <View style={common.rowCenter}>
@@ -112,14 +94,19 @@ const FollowingInstructorComponent: React.FC = () => {
               {/*</Pressable>*/}
             </View>
           </Pressable>
-        );
-      })}
-      {/*</View>*/}
-    </ScrollView>
+        ))}
+      </AppScrollView>
+    </SafeAreaView>
   );
 };
 const styles = StyleSheet.create({
-  container: {flex: 1, padding: 16, backgroundColor: WHITE},
+  container: {
+    flex: 1,
+    paddingHorizontal: 16,
+    paddingBottom: 16,
+    backgroundColor: THEME.WHITE,
+    height: '100%',
+  },
   reviewBox: {
     paddingVertical: 16,
     borderBottomWidth: 1,
@@ -129,4 +116,4 @@ const styles = StyleSheet.create({
   kebabIcon: {position: 'absolute', top: 16, right: 0},
 });
 
-export default FollowingInstructorComponent;
+export default FollowingInstructorTab;

@@ -148,3 +148,14 @@ export const fetchMemberInfoBySeq = (seq: number) => {
 export const fetchRecruitByMember = (seq: number) => {
   return request.get<FetchRecruitByMemberResponse>(`/member/${seq}/recruit`);
 };
+
+const ENDPOINT = '/member';
+
+export const memberApi = {
+  getFollowingList: async (params: FetchMemberFollowingsParams) => {
+    const response = await request.get<FetchMemberFollowingsResponse>(
+      `${ENDPOINT}/following/${params.type}`,
+    );
+    return response.data;
+  },
+};

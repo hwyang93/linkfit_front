@@ -1,15 +1,11 @@
-import {FetchMemberFollowingsResponse} from '@/types/api/member';
+import {useMemberFollowingListQuery} from '@/hooks/member/useMemberFollowingListQuery';
+import THEME from '@/styles/theme';
 import {Member} from '@/types/common';
 import {iconPath} from '@/utils/iconPath';
-import {fetchMemberFollowings} from '@api/member';
-import toast from '@hooks/toast';
 import {NavigationProp, useNavigation} from '@react-navigation/native';
 import {GRAY} from '@styles/colors';
 import common from '@styles/common';
-import {isAxiosError} from 'axios';
-import {useCallback, useEffect, useState} from 'react';
 import {
-  Alert,
   Image,
   Pressable,
   ScrollView,
@@ -17,35 +13,30 @@ import {
   Text,
   View,
 } from 'react-native';
+import {SafeAreaView} from 'react-native-safe-area-context';
 import {LoggedInParamList} from '../../../AppInner';
+import IconButton from '../Common/IconButton';
+import EmptySet from '../EmptySet';
 
 import hairlineWidth = StyleSheet.hairlineWidth;
 
-const FollowingCenterComponent: React.FC = () => {
-  const [followings, setFollowings] = useState<FetchMemberFollowingsResponse>();
+const FollowingCenterTab: React.FC = () => {
+  const {data} = useMemberFollowingListQuery({type: Member.Company});
+  const followings = data;
 
   const navigation = useNavigation<NavigationProp<LoggedInParamList>>();
 
-  const getMemberFollowingList = useCallback(() => {
-    fetchMemberFollowings({type: Member.Company})
-      .then(({data}) => {
-        setFollowings(data);
-      })
-      .catch(error => {
-        if (isAxiosError(error)) {
-          toast.error({message: error.message});
-        }
-      });
-  }, []);
-
-  useEffect(() => {
-    getMemberFollowingList();
-  }, [getMemberFollowingList]);
+  const toggleFavorite = () => {};
 
   return (
-    <ScrollView showsVerticalScrollIndicator={false}>
-      {followings?.map(following => {
-        return (
+    <SafeAreaView edges={['bottom', 'left', 'right']} style={styles.container}>
+      <ScrollView
+        showsVerticalScrollIndicator={false}
+        contentContainerStyle={{flex: 1}}>
+        {followings?.length === 0 && (
+          <EmptySet text="팔로우 중인 센터가 없어요" />
+        )}
+        {followings?.map(following => (
           <View
             key={`${following.seq} ${following.memberSeq} ${following.favoriteSeq}`}
             style={styles.listBox}>
@@ -56,6 +47,7 @@ const FollowingCenterComponent: React.FC = () => {
                 })
               }>
               <View style={common.mb16}>
+                {/* TODO: 하드코딩 제거 */}
                 <Image
                   source={require('@images/center_01.png')}
                   resizeMode={'cover'}
@@ -70,40 +62,44 @@ const FollowingCenterComponent: React.FC = () => {
                   {following.followingMember.company?.field} | 서울 · 송파구
                 </Text>
                 <View style={common.rowCenterBetween}>
-                  <Pressable
+                  {/* <Pressable
                     style={common.mh4}
                     onPress={() => Alert.alert('전화', '전화를 걸어주세용')}>
                     <Image source={iconPath.PHONE} style={common.size24} />
-                  </Pressable>
-                  <Pressable
+                  </Pressable> */}
+                  {/* <Pressable
                     style={common.mh4}
                     onPress={() => Alert.alert('쪽지', '쪽지를 보내주세용')}>
                     <Image source={iconPath.MESSAGE} style={common.size24} />
-                  </Pressable>
-                  <Pressable
-                    style={common.mh4}
-                    onPress={() => Alert.alert('하트', '하트를 눌러주세용')}>
-                    <Image
-                      source={iconPath.FAVORITE_ON}
-                      style={common.size24}
-                    />
-                  </Pressable>
+                  </Pressable> */}
+                  <IconButton
+                    source={iconPath.FAVORITE_ON}
+                    onPress={toggleFavorite}
+                  />
                 </View>
               </View>
             </Pressable>
           </View>
-        );
-      })}
+        ))}
 
-      {/*<View style={styles.followingBox}>*/}
-      {/*  <View>*/}
-      {/*    <CenterInfoComponent />*/}
-      {/*  </View>*/}
-      {/*</View>*/}
-    </ScrollView>
+        {/*<View style={styles.followingBox}>*/}
+        {/*  <View>*/}
+        {/*    <CenterInfoComponent />*/}
+        {/*  </View>*/}
+        {/*</View>*/}
+      </ScrollView>
+    </SafeAreaView>
   );
 };
+
 const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    paddingHorizontal: 16,
+    paddingBottom: 16,
+    backgroundColor: THEME.WHITE,
+    height: '100%',
+  },
   listBox: {
     paddingVertical: 16,
     borderBottomWidth: hairlineWidth,
@@ -113,4 +109,4 @@ const styles = StyleSheet.create({
   kebabIcon: {position: 'absolute', top: 16, right: 0},
 });
 
-export default FollowingCenterComponent;
+export default FollowingCenterTab;
