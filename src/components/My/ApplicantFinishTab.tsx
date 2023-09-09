@@ -1,5 +1,6 @@
+import {useRecruitApplicationListQuery} from '@/hooks/recruit/useRecruitApplicationListQuery';
 import useModal from '@/hooks/useModal';
-import {RecruitApplyEntity} from '@/types/api/entities';
+import {RecruitStatus} from '@/types/api/recruit';
 import {iconPath} from '@/utils/iconPath';
 import ApplicantListItem from '@components/My/ApplicantListItem';
 import TopFilter from '@components/TopFilter';
@@ -16,16 +17,20 @@ import {
 } from 'react-native';
 import BottomSheet from '../Common/BottomSheet';
 
-interface ApplicantFinishComponentProps {
-  list: RecruitApplyEntity[];
+interface ApplicantFinishTabProps {
+  recruitId: number;
 }
 
-const ApplicantFinishComponent: React.FC<ApplicantFinishComponentProps> = ({
-  list,
-}) => {
+const ApplicantFinishTab: React.FC<ApplicantFinishTabProps> = ({recruitId}) => {
   const [modalTitle, setModalTitle] = useState('');
   const [modalData, setModalData] = useState<any[]>([]);
   const [selectedFilter, setSelectedFilter] = useState('');
+
+  const {data} = useRecruitApplicationListQuery(recruitId);
+
+  const finishedApplications = data?.recruitApply.filter(item => {
+    return item.status !== RecruitStatus.Applied;
+  });
 
   const modal = useModal();
 
@@ -103,7 +108,7 @@ const ApplicantFinishComponent: React.FC<ApplicantFinishComponentProps> = ({
         <TopFilter data={FILTER} />
       </View>
       <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
-        {list.map((item, index) => (
+        {finishedApplications?.map((item, index) => (
           <ApplicantListItem
             key={index}
             applySeq={item.seq}
@@ -157,4 +162,4 @@ const styles = StyleSheet.create({
   kebabIcon: {position: 'absolute', top: 16, right: 16},
 });
 
-export default ApplicantFinishComponent;
+export default ApplicantFinishTab;
