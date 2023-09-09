@@ -17,6 +17,6 @@ const THEME = {
   SUCCESS: '#27C249',
   WARNING: '#FFCA0F',
   ERROR: '#E20823',
-};
+} as const;
 
 export default THEME;

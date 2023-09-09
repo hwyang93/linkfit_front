@@ -1,89 +1,110 @@
+import {useCommunityPostDeleteMutation} from '@/hooks/community/useCommunityPostDeleteMutation';
+import {useCommunityPostListQuery} from '@/hooks/community/useCommunityPostListQuery';
 import useModal from '@/hooks/useModal';
-import {FetchCommunityPostsResponse} from '@/types/api/community';
+import {ROUTE} from '@/navigations/routes';
+import common from '@/styles/common';
 import {iconPath} from '@/utils/iconPath';
 import {formatDate} from '@/utils/util';
-import {fetchCommunityPosts} from '@api/community';
-import toast from '@hooks/toast';
+import {NavigationProp, useNavigation} from '@react-navigation/native';
 import {GRAY, WHITE} from '@styles/colors';
-import common from '@styles/common';
-import {useCallback, useEffect, useState} from 'react';
+import {useState} from 'react';
 import {FlatList, Image, Pressable, StyleSheet, Text, View} from 'react-native';
+import {LoggedInParamList} from '../../../AppInner';
 import BottomSheet from '../Common/BottomSheet';
 import BottomSheetOption from '../Common/BottomSheetOption';
 import EmptySet from '../EmptySet';
 
-const CommunityMyPost: React.FC = () => {
-  const [posts, setPosts] = useState<FetchCommunityPostsResponse>([]);
+interface PostListItemProps {
+  postId: number;
+  title: string;
+  contents: string;
+  updatedAt: string;
+}
+
+const PostListItem: React.FC<PostListItemProps> = ({
+  postId,
+  title,
+  contents,
+  updatedAt,
+}) => {
   const [textLine, setTextLine] = useState(2);
-
-  // const navigation = useNavigation<NavigationProp<LoggedInParamList>>();
-
   const modal = useModal();
 
-  const getPosts = useCallback(() => {
-    fetchCommunityPosts({isWriter: 'Y'})
-      .then(({data}) => {
-        setPosts(data);
-      })
-      .catch(error => {
-        toast.error({message: error.message});
-      });
-  }, []);
+  const navigation = useNavigation<NavigationProp<LoggedInParamList>>();
 
-  useEffect(() => {
-    getPosts();
-  }, [getPosts]);
+  const communityPostDeleteMutation = useCommunityPostDeleteMutation();
 
-  const textExpansion = () => {
-    if (textLine === 2) {
-      setTextLine(0);
-    } else {
-      setTextLine(2);
-    }
+  const toggleTextExpansion = () => {
+    textLine === 2 ? setTextLine(0) : setTextLine(2);
+  };
+
+  const onEdit = () => {
+    navigation.navigate(ROUTE.COMMUNITY.POST_EDIT, {
+      postId: postId,
+    });
+    modal.close();
+  };
+
+  const onDelete = () => {
+    communityPostDeleteMutation.mutate(postId, {
+      onSuccess: modal.close,
+    });
   };
 
   return (
-    <View style={styles.container}>
-      {posts.length !== 0 && (
-        <FlatList
-          data={posts}
-          contentContainerStyle={{paddingBottom: 32}}
-          renderItem={({item}) => (
-            <View style={styles.postBox}>
-              <View style={[common.row, common.mb12]}>
-                <Text style={[common.text_m, common.fwb, common.mr4]}>
-                  {item.title}
-                </Text>
-                <Text style={[common.text, {alignSelf: 'flex-end'}]}>
-                  {formatDate(item.updatedAt)}
-                </Text>
-              </View>
-              <Pressable onPress={textExpansion}>
-                <Text style={common.text_m} numberOfLines={textLine}>
-                  {item.contents}
-                </Text>
-              </Pressable>
-              <Pressable
-                style={styles.kebabIcon}
-                hitSlop={10}
-                onPress={modal.open}>
-                <Image source={iconPath.KEBAB} style={[common.size24]} />
-              </Pressable>
-            </View>
-          )}
-        />
-      )}
-      {posts.length === 0 && <EmptySet text="작성한 내역이 없어요." />}
+    <View style={styles.postBox}>
+      <View style={[common.row, common.mb12]}>
+        <Text style={[common.text_m, common.fwb, common.mr4]}>{title}</Text>
+        <Text style={[common.text, {alignSelf: 'flex-end'}]}>
+          {formatDate(updatedAt)}
+        </Text>
+      </View>
+      <Pressable onPress={toggleTextExpansion}>
+        <Text style={common.text_m} numberOfLines={textLine}>
+          {contents}
+        </Text>
+      </Pressable>
+      <Pressable style={styles.kebabIcon} hitSlop={10} onPress={modal.open}>
+        <Image source={iconPath.KEBAB} style={[common.size24]} />
+      </Pressable>
       <BottomSheet
         visible={modal.visible}
         onDismiss={modal.close}
         title="더보기">
-        <BottomSheetOption label="수정하기" onPress={modal.close} />
-        <BottomSheetOption label="삭제하기" onPress={modal.close} />
+        <BottomSheetOption label="수정하기" onPress={onEdit} />
+        <BottomSheetOption label="삭제하기" onPress={onDelete} />
       </BottomSheet>
     </View>
   );
 };
+
+const CommunityMyPost: React.FC = () => {
+  const communityPostsQuery = useCommunityPostListQuery({
+    isWriter: 'Y',
+  });
+  const myPosts = communityPostsQuery.data;
+
+  return (
+    <View style={styles.container}>
+      {myPosts?.length !== 0 && (
+        <FlatList
+          data={myPosts}
+          contentContainerStyle={{paddingBottom: 32}}
+          renderItem={({item}) => (
+            <PostListItem
+              postId={item.seq}
+              title={item.title}
+              contents={item.contents}
+              updatedAt={item.updatedAt}
+            />
+          )}
+        />
+      )}
+      {myPosts?.length === 0 && <EmptySet text="작성한 내역이 없어요." />}
+    </View>
+  );
+};
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,

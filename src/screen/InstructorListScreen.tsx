@@ -57,6 +57,8 @@ const InstructorListScreen = ({navigation}: Props) => {
         }
         renderItem={({item}: {item: Instructor}) => (
           <InstructorListItem
+            instructorId={item.seq}
+            following={item.isFollow === 'Y'}
             avatarImageSrc={item.profileImage?.originFileUrl}
             field={item.field}
             career={item.career}

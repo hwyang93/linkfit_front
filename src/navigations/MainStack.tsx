@@ -1,5 +1,7 @@
 import IconButton from '@/components/Common/IconButton';
 import BottomTabs from '@/navigations/BottomTabs';
+import CommunityCommentEditScreen from '@/screen/Community/CommunityCommentEditScreen';
+import CommunityPostEditScreen from '@/screen/Community/CommunityPostEditScreen';
 import PasswordResetScreen from '@/screen/Registration/PasswordResetScreen';
 import {iconPath} from '@/utils/iconPath';
 import HeaderLeft from '@components/HeaderLeft';
@@ -446,6 +448,16 @@ const MainStack = () => {
           name="PasswordReset"
           component={PasswordResetScreen}
           options={{title: '비밀번호 재설정'}}
+        />
+        <Stack.Screen
+          name="CommunityCommentEdit"
+          component={CommunityCommentEditScreen}
+          options={{title: '댓글 수정'}}
+        />
+        <Stack.Screen
+          name="CommunityPostEdit"
+          component={CommunityPostEditScreen}
+          options={{title: '게시글 수정'}}
         />
       </Stack.Group>
     </Stack.Navigator>

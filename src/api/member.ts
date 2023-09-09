@@ -148,3 +148,34 @@ export const fetchMemberInfoBySeq = (seq: number) => {
 export const fetchRecruitByMember = (seq: number) => {
   return request.get<FetchRecruitByMemberResponse>(`/member/${seq}/recruit`);
 };
+
+const ENDPOINT = '/member';
+
+export const memberApi = {
+  getFollowingList: async (params: FetchMemberFollowingsParams) => {
+    const response = await request.get<FetchMemberFollowingsResponse>(
+      `${ENDPOINT}/following/${params.type}`,
+    );
+    return response.data;
+  },
+  getMemberInfo: async () => {
+    const response = await request.get<FetchMemberInfoBySeqResponse>(ENDPOINT);
+    return response.data;
+  },
+  getMemberLicenceList: async () => {
+    const response = await request.get<FetchMemberLicencesResponse>(
+      `${ENDPOINT}/licence`,
+    );
+    return response.data;
+  },
+  checkNickname: async (nickname: string) => {
+    const response = await request.get<FetchCheckNicknameResponse>(
+      `${ENDPOINT}/check/nickname/${nickname}`,
+    );
+    return response.data;
+  },
+  updateProfile: async (body: FormData) => {
+    const response = await request.patch(`${ENDPOINT}/profile`, body);
+    return response.data;
+  },
+};

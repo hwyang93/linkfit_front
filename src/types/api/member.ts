@@ -116,3 +116,10 @@ export type FetchPositionSuggestResponse = PositionSuggestEntity;
 export type FetchMemberInfoBySeqResponse = MemberEntity;
 
 export type FetchRecruitByMemberResponse = RecruitEntity[];
+
+export type UpdateProfileBody = {
+  nickname: string;
+  intro: string;
+  field: string;
+  imageObj?: {uri?: string; name?: string; type?: string};
+};

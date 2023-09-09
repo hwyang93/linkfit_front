@@ -33,7 +33,7 @@ export type LoggedInParamList = {
   SendSuggestionDetail: undefined;
 
   MyProfile: undefined;
-  ProfileEdit: {memberInfo: any};
+  ProfileEdit: undefined;
   CertifyLocation: undefined;
   CertifyInstructor: undefined;
   CertifyInstructorForm: undefined;
@@ -76,6 +76,8 @@ export type LoggedInParamList = {
   SignUpForm: {email: string};
   CompanySignUpForm: {email: string};
   PasswordReset: undefined;
+  CommunityCommentEdit: {postId: number};
+  CommunityPostEdit: {postId: number};
 };
 
 const AppInner = () => {

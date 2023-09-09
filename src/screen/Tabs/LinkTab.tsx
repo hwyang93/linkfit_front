@@ -1,54 +1,39 @@
 import FloatingActionButton from '@/components/Common/FloatingActionButton';
 import InstructorListItem from '@/components/Compound/InstructorListItem';
+import {useInstructorListQuery} from '@/hooks/instructor/useInstructorListQuery';
 import useExitAlert from '@/hooks/useExitAlert';
-import {FetchRecommendedInstructorsResponse} from '@/types/api/instructor';
 import {iconPath} from '@/utils/iconPath';
-import {fetchRecommendedInstructors} from '@api/instructor';
 import LinkTop from '@components/LinkTop';
-import toast from '@hooks/toast';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import {WHITE} from '@styles/colors';
 import common from '@styles/common';
-import {isAxiosError} from 'axios';
-import {useEffect, useState} from 'react';
 import {FlatList, StyleSheet, View} from 'react-native';
 import {LoggedInParamList} from '../../../AppInner';
 
 type Props = NativeStackScreenProps<LoggedInParamList, 'Link'>;
 
 const LinkScreen = ({navigation}: Props) => {
-  const [instructors, setInstructors] =
-    useState<FetchRecommendedInstructorsResponse>([]);
-
-  useEffect(() => {
-    fetchRecommendedInstructors()
-      .then(({data}) => {
-        setInstructors(data);
-      })
-      .catch(error => {
-        if (isAxiosError(error)) {
-          toast.error({message: error.message});
-        }
-      });
-  }, []);
-
   useExitAlert();
+
+  const {data} = useInstructorListQuery();
 
   return (
     <>
-      {instructors && (
+      {data && (
         <View style={styles.container}>
           <FlatList
-            data={instructors}
+            data={data}
             keyExtractor={item => String(item.seq)}
-            renderItem={({item}: any) => (
+            renderItem={({item}) => (
               <InstructorListItem
                 style={{marginHorizontal: 16}}
+                instructorId={item.seq}
                 avatarImageSrc={item.profileImage?.originFileUrl}
                 field={item.field}
                 career={item.career}
                 nickname={item.nickname}
                 address={item.address}
+                following={item.isFollow === 'Y'}
                 followerCount={item.followerCount}
                 isCertificated
                 onAvatarPress={() =>

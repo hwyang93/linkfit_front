@@ -20,7 +20,7 @@ interface FloatingActionButtonProps extends PressableProps {
   variant?: 'primary' | 'secondary';
   style?: StyleProp<ViewStyle>;
   label?: string;
-  iconSource: ImageSourcePropType;
+  iconSource?: ImageSourcePropType;
   onPress?: () => void;
 }
 
@@ -43,15 +43,17 @@ const FloatingActionButton: React.FC<FloatingActionButtonProps> = ({
           start={{x: 0, y: 0}}
           end={{x: 1, y: 0}}
           colors={['#62C1E9', '#3962f3']}>
-          <Image
-            source={iconSource}
-            style={[
-              label ? common.size20 : common.size24,
-              {
-                marginRight: label ? 4 : 0,
-              },
-            ]}
-          />
+          {iconSource && (
+            <Image
+              source={iconSource}
+              style={[
+                label ? common.size20 : common.size24,
+                {
+                  marginRight: label ? 4 : 0,
+                },
+              ]}
+            />
+          )}
           {label && (
             <Text style={[styles.text, {color: THEME.WHITE}]}>{label}</Text>
           )}
@@ -65,15 +67,17 @@ const FloatingActionButton: React.FC<FloatingActionButtonProps> = ({
             label ? styles.styleWithLabel : styles.styleWithoutLabel,
             styles.secondary,
           ]}>
-          <Image
-            source={iconSource}
-            style={[
-              label ? common.size20 : common.size24,
-              {
-                marginRight: label ? 4 : 0,
-              },
-            ]}
-          />
+          {iconSource && (
+            <Image
+              source={iconSource}
+              style={[
+                label ? common.size20 : common.size24,
+                {
+                  marginRight: label ? 4 : 0,
+                },
+              ]}
+            />
+          )}
           {label && (
             <Text
               style={[

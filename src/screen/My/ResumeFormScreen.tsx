@@ -1,9 +1,9 @@
 import CTAButton from '@/components/Common/CTAButton';
+import {useMemberLicenceListQuery} from '@/hooks/member/useMemberLicenceListQuery';
+import {useCreateResumeMutation} from '@/hooks/resume/useCreateResumeMutation';
+import useInput from '@/hooks/useInput';
 import {useAppSelector} from '@/store';
-import {FetchMemberLicencesResponse} from '@/types/api/member';
 import {iconPath} from '@/utils/iconPath';
-import {fetchMemberLicences} from '@api/member';
-import {createResume} from '@api/resume';
 import DismissKeyboardView from '@components/DismissKeyboardView';
 import Input, {KeyboardTypes} from '@components/Input';
 import CareerComponent from '@components/Resume/CareerComponent';
@@ -14,7 +14,8 @@ import toast from '@hooks/toast';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import {WHITE} from '@styles/colors';
 import common from '@styles/common';
-import {useCallback, useEffect, useState} from 'react';
+import {isAxiosError} from 'axios';
+import {useState} from 'react';
 import {Image, Pressable, StyleSheet, View} from 'react-native';
 import {LoggedInParamList} from '../../../AppInner';
 
@@ -23,31 +24,24 @@ const GENDER_DATA = [{value: '남자'}, {value: '여자'}];
 type Props = NativeStackScreenProps<LoggedInParamList, 'ResumeForm'>;
 
 const ResumeFormScreen = ({navigation}: Props) => {
-  const [loading, setLoading] = useState(false);
-  const [title, setTitle] = useState('');
-  const [gender, setGender] = useState('');
-  const [address, setAddress] = useState('');
   const [licenseSeq, setLicenseSeq] = useState(0);
-  const [introduce, setIntroduce] = useState('');
-  const [licenses, setLicenses] = useState<FetchMemberLicencesResponse>([]);
   const [careers, setCareers] = useState<any>([{}]);
   const [educations, setEducations] = useState<any>([{}]);
 
   const memberInfo = useAppSelector(state => state.user);
 
-  const [name, setName] = useState(memberInfo.name);
-  const [birth, setBirth] = useState(memberInfo.birth);
-  const [phoneNumber, setPhoneNumber] = useState(memberInfo.phone);
+  const introduceInput = useInput();
+  const genderInput = useInput();
+  const addressInput = useInput();
+  const titleInput = useInput();
+  const nameInput = useInput(memberInfo.name);
+  const birthInput = useInput(memberInfo.birth);
+  const phoneNumberInput = useInput(memberInfo.phone);
 
-  useEffect(() => {
-    fetchMemberLicences()
-      .then(({data}) => {
-        setLicenses(data);
-      })
-      .catch(error => {
-        toast.error({message: error.message});
-      });
-  }, []);
+  const memberLicenceListQuery = useMemberLicenceListQuery();
+  const licences = memberLicenceListQuery.data;
+
+  const createResumeMutation = useCreateResumeMutation();
 
   const addCareerForm = () => {
     setCareers([...careers, {}]);
@@ -82,19 +76,20 @@ const ResumeFormScreen = ({navigation}: Props) => {
   };
 
   const selectLicence = (index: number) => {
-    if (index !== undefined) {
-      setLicenseSeq(licenses[index]?.seq);
+    if (licences && index !== undefined) {
+      setLicenseSeq(licences[index]?.seq);
     }
   };
 
-  const onCreateResume = useCallback(() => {
+  // TODO: API 연동
+  const onCreateResume = () => {
     const data = {
-      title: title,
-      name: name,
-      birth: birth,
-      address: address,
-      addressDetail: address,
-      intro: introduce,
+      title: titleInput.value,
+      name: nameInput.value,
+      birth: birthInput.value,
+      address: addressInput.value,
+      addressDetail: addressInput.value,
+      intro: introduceInput.value,
       hopePay: 'string',
       hopeArea: 'string',
       hopeTime: 'string',
@@ -105,55 +100,53 @@ const ResumeFormScreen = ({navigation}: Props) => {
       educations: educations,
       licenceSeq: licenseSeq,
     };
-    createResume(data)
-      .then(() => {
+
+    createResumeMutation.mutate(data, {
+      onSuccess: () => {
         toast.success({message: '이력서 등록이 완료되었어요!'});
         navigation.goBack();
-      })
-      .catch(error => {
-        toast.error({message: error.message});
-      });
-  }, [
-    address,
-    birth,
-    careers,
-    educations,
-    introduce,
-    licenseSeq,
-    name,
-    navigation,
-    title,
-  ]);
+      },
+      onError: error => {
+        if (isAxiosError(error)) {
+          toast.error({message: error.message});
+        }
+      },
+    });
+  };
 
-  const canGoNext = true;
+  const formValid =
+    titleInput.value &&
+    nameInput.value &&
+    birthInput.value &&
+    addressInput.value &&
+    phoneNumberInput.value &&
+    introduceInput.value &&
+    genderInput.value;
 
   return (
     <DismissKeyboardView>
       <View style={styles.container}>
-        {/* 제목  */}
         <View style={common.mb16}>
           <Input
             label={'제목'}
-            onChangeText={(text: string) => setTitle(text)}
-            value={title}
+            onChangeText={titleInput.onChange}
+            value={titleInput.value}
             placeholder={'이력서 제목을 입력하세요.'}
             keyboardType={KeyboardTypes.DEFAULT}
           />
         </View>
 
-        {/* 이름 */}
         <View style={common.mb16}>
           <Input
             label={'이름'}
-            onChangeText={(text: string) => setName(text.trim())}
-            value={name}
+            onChangeText={nameInput.onChange}
+            value={nameInput.value}
             placeholder={'자동입력'}
             keyboardType={KeyboardTypes.DEFAULT}
             editable={false}
           />
         </View>
 
-        {/* 생년월일 */}
         <View style={common.mb16}>
           {/*<BirthdayPicker*/}
           {/*  label={'생년월일'}*/}
@@ -164,156 +157,143 @@ const ResumeFormScreen = ({navigation}: Props) => {
           {/*/>*/}
           <Input
             label={'생년월일'}
-            value={birth}
+            value={birthInput.value}
             placeholder={'자동입력'}
             keyboardType={KeyboardTypes.DEFAULT}
             editable={false}
           />
         </View>
 
-        {/* 주소 */}
         <View style={common.mb16}>
           <Input
             label={'주소'}
-            onChangeText={(text: string) => setAddress(text)}
-            value={address}
+            onChangeText={addressInput.onChange}
+            value={addressInput.value}
             placeholder={'자동입력'}
             keyboardType={KeyboardTypes.DEFAULT}
             editable={false}
           />
         </View>
 
-        {/* 연락처 */}
         <View style={common.mb20}>
           <Input
             label={'연락처'}
-            onChangeText={(text: string) => setPhoneNumber(text.trim())}
-            value={phoneNumber}
+            onChangeText={phoneNumberInput.onChange}
+            value={phoneNumberInput.value}
             placeholder={'자동입력'}
             keyboardType={KeyboardTypes.DEFAULT}
             editable={false}
           />
         </View>
 
-        {/* 성별 */}
         <View style={[common.mb16]}>
           <TabButton
             genderData={GENDER_DATA}
-            onSelect={(value: any) => setGender(value)}
-            value={gender}
+            onSelect={genderInput.onChange}
+            value={genderInput.value}
           />
         </View>
 
-        {/* 경력 */}
-        {careers.map((_: any, index: number) => {
-          return (
-            <View key={index} style={[common.mv20]}>
-              {index !== 0 && (
-                <Pressable
-                  onPress={removeCareerForm}
-                  style={styles.removeButton}>
-                  <Image source={iconPath.CANCEL} style={[common.size24]} />
-                </Pressable>
-              )}
+        {careers.map((_: any, index: number) => (
+          <View key={index} style={[common.mv20]}>
+            {index !== 0 && (
+              <Pressable onPress={removeCareerForm} style={styles.removeButton}>
+                <Image source={iconPath.CANCEL} style={[common.size24]} />
+              </Pressable>
+            )}
 
-              <View>
-                <CareerComponent
-                  onSelectPosition={(value: string) =>
-                    handleCareers(value, 'field', index)
-                  }
-                  onSelectWorkType={(value: string) =>
-                    handleCareers(value, 'workType', index)
-                  }
-                  onSelectStartDate={(value: string) =>
-                    handleCareers(value, 'startDate', index)
-                  }
-                  onSelectEndDate={(value: string) =>
-                    handleCareers(value, 'endDate', index)
-                  }
-                />
-              </View>
+            <View>
+              <CareerComponent
+                onSelectPosition={(value: string) =>
+                  handleCareers(value, 'field', index)
+                }
+                onSelectWorkType={(value: string) =>
+                  handleCareers(value, 'workType', index)
+                }
+                onSelectStartDate={(value: string) =>
+                  handleCareers(value, 'startDate', index)
+                }
+                onSelectEndDate={(value: string) =>
+                  handleCareers(value, 'endDate', index)
+                }
+              />
             </View>
-          );
-        })}
-        {/* 경력 추가 버튼*/}
+          </View>
+        ))}
+
         <View style={common.mb16}>
           <Pressable onPress={addCareerForm} style={{alignSelf: 'center'}}>
             <Image source={iconPath.ADD_BUTTON} style={common.size40} />
           </Pressable>
         </View>
 
-        {/* 학력 */}
-        {educations.map((_: any, index: number) => {
-          return (
-            <View key={index} style={common.mv20}>
-              {index !== 0 && (
-                <Pressable
-                  onPress={removeEducationForm}
-                  style={styles.removeButton}>
-                  <Image source={iconPath.CANCEL} style={[common.size24]} />
-                </Pressable>
-              )}
+        {educations.map((_: any, index: number) => (
+          <View key={index} style={common.mv20}>
+            {index !== 0 && (
+              <Pressable
+                onPress={removeEducationForm}
+                style={styles.removeButton}>
+                <Image source={iconPath.CANCEL} style={[common.size24]} />
+              </Pressable>
+            )}
 
-              <View>
-                <EducationComponent
-                  onSelectSchool={(value: string) =>
-                    handleEducations(value, 'school', index)
-                  }
-                  onSelectMajor={(value: string) =>
-                    handleEducations(value, 'major', index)
-                  }
-                  onSelectStartDate={(value: string) =>
-                    handleEducations(value, 'startDate', index)
-                  }
-                  onSelectEndDate={(value: string) =>
-                    handleEducations(value, 'endDate', index)
-                  }
-                  onSelectStatus={(value: string) =>
-                    handleEducations(value, 'status', index)
-                  }
-                />
-              </View>
+            <View>
+              <EducationComponent
+                onSelectSchool={(value: string) =>
+                  handleEducations(value, 'school', index)
+                }
+                onSelectMajor={(value: string) =>
+                  handleEducations(value, 'major', index)
+                }
+                onSelectStartDate={(value: string) =>
+                  handleEducations(value, 'startDate', index)
+                }
+                onSelectEndDate={(value: string) =>
+                  handleEducations(value, 'endDate', index)
+                }
+                onSelectStatus={(value: string) =>
+                  handleEducations(value, 'status', index)
+                }
+              />
             </View>
-          );
-        })}
+          </View>
+        ))}
 
-        {/* 학력 추가 버튼 */}
         <View style={common.mb16}>
           <Pressable onPress={addEducationForm} style={{alignSelf: 'center'}}>
             <Image source={iconPath.ADD_BUTTON} style={common.size40} />
           </Pressable>
         </View>
 
-        {/* 자격증 */}
         <View style={common.mb16}>
           <SelectBox
             label={'자격증'}
-            data={licenses.map(licence => {
-              return licence.issuer + '_' + licence.field;
-            })}
+            data={licences?.map(
+              licence => licence.issuer + '_' + licence.field,
+            )}
             onSelect={(_: any, index: number) => selectLicence(index)}
             defaultButtonText={'자격증을 선택하세요.'}
             selectKey={'index'}
           />
         </View>
 
-        {/* 소개글 */}
         <View style={common.mb16}>
           <Input
             label={'소개글'}
-            onChangeText={(text: string) => setIntroduce(text)}
-            value={introduce}
+            onChangeText={introduceInput.onChange}
+            value={introduceInput.value}
             placeholder={'소개글을 작성해 주세요.'}
             keyboardType={KeyboardTypes.DEFAULT}
             editable={true}
             multiline={true}
           />
         </View>
+
         <View style={common.mt20}>
           <CTAButton
             label="작성 완료"
-            loading={loading}
-            disabled={!canGoNext}
+            loading={createResumeMutation.isLoading}
+            disabled={!formValid}
             onPress={onCreateResume}
           />
         </View>

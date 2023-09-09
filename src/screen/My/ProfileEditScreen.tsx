@@ -1,85 +1,85 @@
 import BoxButton from '@/components/Common/BoxButton';
 import CTAButton from '@/components/Common/CTAButton';
 import TextField from '@/components/Common/TextField';
+import {useCheckNicknameQuery} from '@/hooks/member/useCheckNicknameQuery';
+import {useMemberInfoQuery} from '@/hooks/member/useMemberInfoQuery';
+import {useUpdateProfileMutation} from '@/hooks/member/useUpdateProfileMutation';
+import useInput from '@/hooks/useInput';
 import MESSAGE from '@/utils/constants/message';
 import {iconPath} from '@/utils/iconPath';
-import {fetchCheckNickname, updateProfile} from '@api/member';
 import DismissKeyboardView from '@components/DismissKeyboardView';
 import toast from '@hooks/toast';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import {WHITE} from '@styles/colors';
 import common from '@styles/common';
-import {useCallback, useEffect, useState} from 'react';
+import {isAxiosError} from 'axios';
+import {useEffect, useState} from 'react';
 import {Image, Pressable, StyleSheet, Text, View} from 'react-native';
 import {Asset, MediaType, launchImageLibrary} from 'react-native-image-picker';
 import {LoggedInParamList} from '../../../AppInner';
 
-const LOADING = false;
-
-const LINKS = {
-  seq: null,
-  type: '',
-  url: '',
-};
-
 type Props = NativeStackScreenProps<LoggedInParamList, 'ProfileEdit'>;
 
-const ProfileEditScreen = ({navigation, route}: Props) => {
-  const [nickname, setNickname] = useState('');
-  const [intro, setIntro] = useState('');
+const ProfileEditScreen = ({navigation}: Props) => {
+  const nicknameInput = useInput();
+  const introInput = useInput();
+
   const [field, setField] = useState('');
-  const [licences, setLicences] = useState<any[]>([]);
-  const [imageUri, setImageUri] = useState<any>({});
   const [imageObj, setImageObj] = useState<{
     name: string | undefined;
     type: string | undefined;
     uri: string | undefined;
   }>({name: undefined, type: undefined, uri: undefined});
+  const [imageUri, setImageUri] = useState<{uri?: string}>();
+
+  const memberInfoQuery = useMemberInfoQuery();
+  const user = memberInfoQuery.data;
+
+  const checkNicknameQuery = useCheckNicknameQuery(nicknameInput.value);
+  const updateProfileMutation = useUpdateProfileMutation();
 
   useEffect(() => {
-    const memberInfo = route.params.memberInfo;
-    setNickname(memberInfo.nickname);
-    setIntro(memberInfo.intro);
-    setField(memberInfo.field);
-    setLicences(memberInfo.licences);
-    if (memberInfo.profileImage) {
-      setImageUri({uri: memberInfo.profileImage.originFileUrl});
+    if (user) {
+      user.nickname && nicknameInput.setValue(user.nickname);
+      user.intro && introInput.setValue(user.intro);
+      user.field && setField(user.field);
+      user.profileImage && setImageUri({uri: user.profileImage.originFileUrl});
     }
-  }, [route.params.memberInfo]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [user]);
 
-  const onUpdateProfile = useCallback(async () => {
-    const formData = new FormData();
-    formData.append('nickname', nickname);
-    formData.append('intro', intro);
-    formData.append('field', field);
-    formData.append('links', LINKS);
-    if (imageObj.uri) {
-      formData.append('file', imageObj);
+  const onUpdateProfile = async () => {
+    if (!user) {
+      return;
     }
 
-    await updateProfile(formData)
-      .then(() => {
+    const body = {
+      nickname: nicknameInput.value,
+      intro: introInput.value,
+      field: field,
+      imageObj: imageObj,
+    };
+
+    updateProfileMutation.mutate(body, {
+      onSuccess: () => {
         toast.success({message: '프로필이 수정되었습니다.'});
         navigation.goBack();
-      })
-      .catch(error => {
-        toast.error({message: error.message});
-      });
-  }, [nickname, intro, field, imageObj, navigation]);
+      },
+      onError: error =>
+        isAxiosError(error) && toast.error({message: error.message}),
+    });
+  };
 
-  const onCheckNickname = useCallback(async () => {
-    await fetchCheckNickname(nickname)
-      .then(({data}) => {
-        if (!data.duplication) {
-          toast.info({message: MESSAGE.NICKNAME_AVAILABLE});
-        } else {
-          toast.warn({message: MESSAGE.NICKNAME_DUPLICATED});
-        }
-      })
-      .catch(error => {
-        console.log(error);
-      });
-  }, [nickname]);
+  const onCheckNickname = async () => {
+    const response = await checkNicknameQuery.refetch();
+    if (response.data?.duplication) {
+      toast.warn({message: MESSAGE.NICKNAME_DUPLICATED});
+    }
+
+    if (response.data?.duplication === false) {
+      toast.info({message: MESSAGE.NICKNAME_AVAILABLE});
+    }
+  };
 
   const openCamera = async () => {
     const options = {
@@ -110,7 +110,7 @@ const ProfileEditScreen = ({navigation, route}: Props) => {
     });
   };
 
-  const canGoNext = nickname && intro;
+  const canGoNext = nicknameInput.value && introInput.value;
 
   return (
     <DismissKeyboardView>
@@ -126,13 +126,12 @@ const ProfileEditScreen = ({navigation, route}: Props) => {
             <Text style={[common.text, styles.textPosition]}>편집</Text>
           )}
         </Pressable>
-
         <View style={[common.mv16, common.rowCenter]}>
           <View style={[common.mr8, {flex: 3}]}>
             <TextField
               label="닉네임"
-              onChangeText={text => setNickname(text.trim())}
-              value={nickname}
+              onChangeText={nicknameInput.onChange}
+              value={nicknameInput.value}
               placeholder="김링크"
               keyboardType="default"
             />
@@ -140,7 +139,7 @@ const ProfileEditScreen = ({navigation, route}: Props) => {
           <BoxButton
             label="확인"
             onPress={onCheckNickname}
-            loading={LOADING}
+            loading={checkNicknameQuery.isFetching}
             disabled={!canGoNext}
           />
         </View>
@@ -148,15 +147,15 @@ const ProfileEditScreen = ({navigation, route}: Props) => {
           <TextField
             height={343}
             label="소개글"
-            onChangeText={text => setIntro(text)}
+            onChangeText={introInput.onChange}
             placeholder="소개글을 작성해주세요."
-            value={intro}
+            value={introInput.value}
             keyboardType="default"
             editable
             multiline
           />
         </View>
-        {licences.map((licence, index) => (
+        {user?.licences.map((licence, index) => (
           <Pressable
             key={licence + '' + index}
             onPress={() => {
@@ -185,7 +184,7 @@ const ProfileEditScreen = ({navigation, route}: Props) => {
         <View style={common.mt40}>
           <CTAButton
             label="완료"
-            loading={LOADING}
+            loading={updateProfileMutation.isLoading}
             disabled={!canGoNext}
             onPress={onUpdateProfile}
           />

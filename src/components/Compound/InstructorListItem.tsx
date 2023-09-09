@@ -1,28 +1,22 @@
-import useModal from '@/hooks/useModal';
+import {useInstructorFollowMutation} from '@/hooks/instructor/useInstructorFollowMutation';
+import {useInstructorUnfollowMutation} from '@/hooks/instructor/useInstuctorUnfollowMutation';
 import {iconPath} from '@/utils/iconPath';
 import {BLUE} from '@styles/colors';
 import common from '@styles/common';
-import {
-  Alert,
-  StyleProp,
-  StyleSheet,
-  Text,
-  View,
-  ViewStyle,
-} from 'react-native';
+import {StyleProp, StyleSheet, Text, View, ViewStyle} from 'react-native';
 import Avatar from '../Common/Avatar';
-import BottomSheet from '../Common/BottomSheet';
-import BottomSheetOption from '../Common/BottomSheetOption';
 import Icon from '../Common/Icon';
 import IconButton from '../Common/IconButton';
 
 interface InstructorListItemProps {
   style?: StyleProp<ViewStyle>;
+  instructorId: number;
   avatarImageSrc?: string;
   field: string;
   career: string;
   nickname: string;
   address: string;
+  following: boolean;
   followerCount: number;
   isCertificated: boolean;
   onAvatarPress: () => void;
@@ -30,38 +24,48 @@ interface InstructorListItemProps {
 
 const InstructorListItem: React.FC<InstructorListItemProps> = ({
   style,
+  instructorId,
   avatarImageSrc,
   field,
   career,
   nickname,
   address,
+  following,
   followerCount,
   isCertificated,
   onAvatarPress,
 }) => {
-  const modal = useModal();
+  // const modal = useModal();
 
-  const onMessageIconPress = () => {
-    // TODO: 기능 추가
-    Alert.alert('기능 준비 중입니다.');
-  };
+  // const onMessageIconPress = () => {
+  //   // TODO: 기능 추가
+  //   Alert.alert('기능 준비 중입니다.');
+  // };
+
+  const instructorFollowMutation = useInstructorFollowMutation();
+  const instructorUnfollowMutation = useInstructorUnfollowMutation();
 
   const onFavoriteIconPress = () => {
-    // TODO: 즐겨찾기 API 연결
-    Alert.alert('기능 준비 중입니다.');
+    if (following) {
+      instructorUnfollowMutation.mutate(instructorId);
+    }
+
+    if (!following) {
+      instructorFollowMutation.mutate(instructorId);
+    }
   };
 
-  const onBlockPress = () => {
-    // TODO: 차단하기 API 연결
-    Alert.alert('기능 준비 중입니다.');
-    modal.close();
-  };
+  // const onBlockPress = () => {
+  //   // TODO: 차단하기 API 연결
+  //   Alert.alert('기능 준비 중입니다.');
+  //   modal.close();
+  // };
 
-  const onReportPress = () => {
-    // TODO: 신고하기 API 연결
-    Alert.alert('기능 준비 중입니다.');
-    modal.close();
-  };
+  // const onReportPress = () => {
+  //   // TODO: 신고하기 API 연결
+  //   Alert.alert('기능 준비 중입니다.');
+  //   modal.close();
+  // };
 
   return (
     <View style={[styles.listBox, style]}>
@@ -93,28 +97,28 @@ const InstructorListItem: React.FC<InstructorListItemProps> = ({
         </View>
         <Text style={[common.text_s, common.fcg]}>{address}</Text>
       </View>
-      <IconButton
+      {/* <IconButton
         source={iconPath.KEBAB}
         style={styles.kebabIcon}
         onPress={modal.open}
-      />
+      /> */}
       <View style={styles.rightBox}>
-        <IconButton
+        {/* <IconButton
           style={{marginRight: 8}}
           source={iconPath.MESSAGE}
           onPress={onMessageIconPress}
-        />
+        /> */}
         <IconButton
           style={{marginRight: 4}}
-          source={iconPath.FAVORITE}
+          source={following ? iconPath.FAVORITE_ON : iconPath.FAVORITE}
           onPress={onFavoriteIconPress}
         />
         <Text style={[common.text_m, common.fwb]}>{followerCount}</Text>
       </View>
-      <BottomSheet visible={modal.visible} onDismiss={modal.close}>
+      {/* <BottomSheet visible={modal.visible} onDismiss={modal.close}>
         <BottomSheetOption label="차단하기" onPress={onBlockPress} />
         <BottomSheetOption label="신고하기" onPress={onReportPress} />
-      </BottomSheet>
+      </BottomSheet> */}
     </View>
   );
 };

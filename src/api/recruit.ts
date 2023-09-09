@@ -78,3 +78,20 @@ export const updateRecruitApplyStatus = (
 export const fetchRecommendedRecruits = () => {
   return request.get<FetchRecommendedRecruitsResponse>('/recruit/recommended');
 };
+
+const ENDPOINT = '/recruit';
+
+export const recruitApi = {
+  getRecruitList: async (params?: FetchRecruitsParams) => {
+    const response = await request.get<FetchRecruitsResponse>(ENDPOINT, {
+      params,
+    });
+    return response.data;
+  },
+  getApplicationList: async (recruitId: number) => {
+    const response = await request.get<FetchRecruitApplicationsResponse>(
+      `${ENDPOINT}/${recruitId}/apply`,
+    );
+    return response.data;
+  },
+};

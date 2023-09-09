@@ -1,6 +1,7 @@
 import usePermissions from '@/utils/usePermissions';
 import Toast from '@components/Toast';
 import {NavigationContainer} from '@react-navigation/native';
+import {QueryClient, QueryClientProvider} from '@tanstack/react-query';
 import {useEffect} from 'react';
 import SplashScreen from 'react-native-splash-screen';
 import {Provider} from 'react-redux';
@@ -13,12 +14,24 @@ const App = () => {
     SplashScreen.hide();
   }, []);
 
+  const client = new QueryClient({
+    defaultOptions: {
+      queries: {
+        refetchOnWindowFocus: false,
+        refetchOnReconnect: false,
+        retry: false,
+      },
+    },
+  });
+
   return (
     <Provider store={store}>
-      <Toast />
-      <NavigationContainer>
-        <AppInner />
-      </NavigationContainer>
+      <QueryClientProvider client={client}>
+        <Toast />
+        <NavigationContainer>
+          <AppInner />
+        </NavigationContainer>
+      </QueryClientProvider>
     </Provider>
   );
 };

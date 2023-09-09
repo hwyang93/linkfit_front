@@ -16,3 +16,11 @@ export const ContentRoutes = {
   RECRUIT_MAP: 'recruitMap',
   RECRUIT_LIST: 'RecruitList',
 };
+
+export const ROUTE = {
+  COMMUNITY: {
+    POST_CREATE: 'CommunityPostForm',
+    COMMENT_EDIT: 'CommunityCommentEdit',
+    POST_EDIT: 'CommunityPostEdit',
+  },
+} as const;

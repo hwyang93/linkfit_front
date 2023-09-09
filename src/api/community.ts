@@ -4,20 +4,16 @@ import {
   FetchCommunityPostsParams,
   FetchCommunityPostsResponse,
 } from '@/types/api/community';
-import {CreateCommunityCommentDto, CreateCommunityDto} from '@/types/api/dtos';
+import {
+  CreateCommunityCommentDto,
+  CreateCommunityDto,
+  UpdateCommunityDto,
+} from '@/types/api/dtos';
 import {DeleteResponse, PostResponse} from '@/types/common';
 import request from './request';
 
 export const createCommunityPost = (data: CreateCommunityDto) => {
   return request.post<PostResponse>('/community', data);
-};
-
-export const fetchCommunityPosts = (params?: FetchCommunityPostsParams) => {
-  return request.get<FetchCommunityPostsResponse>('/community', {params});
-};
-
-export const fetchCommunityPost = (seq: number) => {
-  return request.get<FetchCommunityPostResponse>(`/community/${seq}`);
 };
 
 export const fetchBookmarkCommunities = () => {
@@ -37,4 +33,32 @@ export const createCommunityBookmark = (seq: number) => {
 
 export const deleteCommunityBookmark = (seq: number) => {
   return request.delete<DeleteResponse>(`/community/${seq}/bookmark`);
+};
+
+const ENDPOINT = '/community';
+
+export const communityApi = {
+  getPostById: async (postId: number) => {
+    const response = await request.get<FetchCommunityPostResponse>(
+      `${ENDPOINT}/${postId}`,
+    );
+    return response.data;
+  },
+  getPostList: async (params?: FetchCommunityPostsParams) => {
+    const response = await request.get<FetchCommunityPostsResponse>(ENDPOINT, {
+      params,
+    });
+    return response.data;
+  },
+  updatePostById: async (postId: number, body: UpdateCommunityDto) => {
+    const response = await request.put<PostResponse>(
+      `${ENDPOINT}/${postId}`,
+      body,
+    );
+    return response.data;
+  },
+  deletePostById: async (postId: number) => {
+    const response = await request.delete(`${ENDPOINT}/${postId}`);
+    return response.data;
+  },
 };
