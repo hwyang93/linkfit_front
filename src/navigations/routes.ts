@@ -18,6 +18,11 @@ export const ContentRoutes = {
 };
 
 export const ROUTE = {
+  MY: {
+    INQUIRY_LIST: 'Inquiry',
+    INQUIRY_DETAIL: 'InquiryDetail',
+    INQUIRY_FORM: 'InquiryForm',
+  },
   COMMUNITY: {
     POST_CREATE: 'CommunityPostForm',
     COMMENT_EDIT: 'CommunityCommentEdit',

@@ -78,6 +78,7 @@ export type LoggedInParamList = {
   PasswordReset: undefined;
   CommunityCommentEdit: {postId: number};
   CommunityPostEdit: {postId: number};
+  InquiryDetail: {inquiryId: number};
 };
 
 const AppInner = () => {

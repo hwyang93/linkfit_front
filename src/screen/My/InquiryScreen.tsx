@@ -1,6 +1,7 @@
 import FloatingActionButton from '@/components/Common/FloatingActionButton';
 import EmptySet from '@/components/EmptySet';
 import {useCsInquiryListQuery} from '@/hooks/customer-service/useCsInquiryListQuery';
+import {ROUTE} from '@/navigations/routes';
 import THEME from '@/styles/theme';
 import {iconPath} from '@/utils/iconPath';
 import FABContainer from '@components/Common/FABContainer';
@@ -26,7 +27,11 @@ const InquiryScreen = ({navigation}: Props) => {
   const inquiries = data;
 
   const toInquiry = () => {
-    navigation.navigate('InquiryForm');
+    navigation.navigate(ROUTE.MY.INQUIRY_FORM);
+  };
+
+  const toInquiryDetail = (inquiryId: number) => {
+    navigation.navigate(ROUTE.MY.INQUIRY_DETAIL, {inquiryId});
   };
 
   return (
@@ -36,7 +41,10 @@ const InquiryScreen = ({navigation}: Props) => {
           <EmptySet text="등록된 문의 내역이 없어요." />
         )}
         {inquiries?.map((item, index) => (
-          <Pressable key={index} style={common.mv16}>
+          <Pressable
+            key={index}
+            style={common.mv16}
+            onPress={() => toInquiryDetail(item.seq)}>
             <View style={common.rowCenterBetween}>
               <View style={[common.rowCenter, {width: '70%'}]}>
                 <Image
