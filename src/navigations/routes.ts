@@ -24,6 +24,8 @@ export const ROUTE = {
     INQUIRY_LIST: 'Inquiry',
     INQUIRY_DETAIL: 'InquiryDetail',
     INQUIRY_FORM: 'InquiryForm',
+    RECEIVED_POSITION_SUGGESTION_LIST: 'ReceivedSuggestion',
+    RECEIVED_POSITION_SUGGESTION_DETAIL: 'ReceivedSuggestionDetail',
   },
   COMMUNITY: {
     POST_CREATE: 'CommunityPostForm',
