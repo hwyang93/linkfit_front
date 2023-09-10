@@ -107,8 +107,8 @@ const ReceivedSuggestionScreen = ({navigation}: Props) => {
   return (
     <SafeAreaView edges={['left', 'right']} style={styles.container}>
       <FilterChipContainer>
-        <FilterChip label="기간" style={{marginRight: 8}} />
-        <FilterChip label="답변 여부" />
+        <FilterChip label="기간" style={{marginRight: 8}} rightIcon />
+        <FilterChip label="답변 여부" rightIcon />
       </FilterChipContainer>
       <ScrollView
         contentContainerStyle={{marginHorizontal: 16, marginBottom: 24}}
