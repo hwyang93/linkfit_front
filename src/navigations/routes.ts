@@ -18,6 +18,8 @@ export const ContentRoutes = {
 };
 
 export const ROUTE = {
+  NOTICE_LIST: 'Notice',
+  NOTICE_DETAIL: 'NoticeDetail',
   MY: {
     INQUIRY_LIST: 'Inquiry',
     INQUIRY_DETAIL: 'InquiryDetail',

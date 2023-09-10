@@ -79,6 +79,7 @@ export type LoggedInParamList = {
   CommunityCommentEdit: {postId: number};
   CommunityPostEdit: {postId: number};
   InquiryDetail: {inquiryId: number};
+  NoticeDetail: {noticeId: number};
 };
 
 const AppInner = () => {
