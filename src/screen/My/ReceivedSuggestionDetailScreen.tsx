@@ -1,58 +1,46 @@
 import CTAButton from '@/components/Common/CTAButton';
-import {FetchPositionSuggestResponse} from '@/types/api/member';
+import {useReceivedPositionSuggestionQuery} from '@/hooks/member/useReceivedPositionSuggestionQuery';
+import {useUpdatePositionSuggestionMutation} from '@/hooks/member/useUpdatePositionSuggestionMutation';
+import {ROUTE} from '@/navigations/routes';
 import {RecruitStatus} from '@/types/api/recruit';
 import {Member} from '@/types/common';
-import {fetchPositionSuggest, updatePositionSuggestStatus} from '@api/member';
 import InstructorInfoComponent from '@components/InstructorInfoComponent';
 import toast from '@hooks/toast';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import {WHITE} from '@styles/colors';
 import common from '@styles/common';
-import {useCallback, useEffect, useState} from 'react';
+import {isAxiosError} from 'axios';
 import {Pressable, ScrollView, StyleSheet, Text, View} from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {LoggedInParamList} from '../../../AppInner';
 
-const LOADING = false;
-
 type Props = NativeStackScreenProps<
   LoggedInParamList,
-  'ReceivedSuggestionDetail'
+  typeof ROUTE.MY.RECEIVED_POSITION_SUGGESTION_DETAIL
 >;
 
 const ReceivedSuggestionDetailScreen = ({route, navigation}: Props) => {
-  const [suggestInfo, setSuggestInfo] =
-    useState<FetchPositionSuggestResponse>();
+  const {data} = useReceivedPositionSuggestionQuery(route.params.suggestSeq);
+  const suggestInfo = data;
 
-  const getSuggestInfo = useCallback(() => {
-    fetchPositionSuggest(route.params.suggestSeq)
-      .then(({data}) => {
-        setSuggestInfo(data);
-      })
-      .catch(error => {
-        toast.alert(error.message);
-        navigation.goBack();
-      });
-  }, [route.params.suggestSeq, navigation]);
+  const updatePositionSuggestionMutation =
+    useUpdatePositionSuggestionMutation();
 
-  const onUpdateSuggestStatus = useCallback(
-    (status: string) => {
-      const data = {status: status};
-      updatePositionSuggestStatus(route.params.suggestSeq, data)
-        .then(() => {
-          toast.success({message: '제안 답변이 완료되었습니다!'});
-          getSuggestInfo();
-        })
-        .catch(error => {
-          toast.error({message: error.message});
-        });
-    },
-    [getSuggestInfo, route.params.suggestSeq],
-  );
-
-  useEffect(() => {
-    getSuggestInfo();
-  }, [getSuggestInfo]);
+  const onUpdateSuggestStatus = (status: string) => {
+    const data = {status: status};
+    updatePositionSuggestionMutation.mutate(
+      {
+        suggestionId: route.params.suggestSeq,
+        body: data,
+      },
+      {
+        onSuccess: () =>
+          toast.success({message: '제안 답변이 완료되었습니다!'}),
+        onError: error =>
+          isAxiosError(error) && toast.error({message: error.message}),
+      },
+    );
+  };
 
   const toOffer = () => {
     // navigation.navigate('JobPost');
@@ -137,14 +125,14 @@ const ReceivedSuggestionDetailScreen = ({route, navigation}: Props) => {
               <View style={common.mb16}>
                 <CTAButton
                   label="수락하기"
-                  loading={LOADING}
+                  loading={updatePositionSuggestionMutation.isLoading}
                   onPress={() => onUpdateSuggestStatus('ACCEPT')}
                 />
               </View>
               <View>
                 <CTAButton
                   label="거절하기"
-                  loading={LOADING}
+                  loading={updatePositionSuggestionMutation.isLoading}
                   onPress={() => onUpdateSuggestStatus('REJECT')}
                 />
               </View>

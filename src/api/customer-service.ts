@@ -1,5 +1,8 @@
 import {CreateInquiryDto} from '@/types/api/dtos';
-import {FetchInquiryListResponse} from '@/types/api/inquiry';
+import {
+  FetchInquiryListResponse,
+  FetchInquiryResponse,
+} from '@/types/api/inquiry';
 import {PostResponse} from '@/types/common';
 import request from '@api/request';
 
@@ -9,6 +12,12 @@ export const customerServiceApi = {
   getInquiryList: async () => {
     const response = await request.get<FetchInquiryListResponse>(
       `${ENDPOINT}/inquiry`,
+    );
+    return response.data;
+  },
+  getInquiryById: async (inquiryId: number) => {
+    const response = await request.get<FetchInquiryResponse>(
+      `${ENDPOINT}/inquiry/${inquiryId}`,
     );
     return response.data;
   },

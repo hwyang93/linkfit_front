@@ -178,4 +178,29 @@ export const memberApi = {
     const response = await request.patch(`${ENDPOINT}/profile`, body);
     return response.data;
   },
+  getReceivedPositionSuggestionList: async (
+    params: FetchReceivePositionSuggestsParams,
+  ) => {
+    const response = await request.get<FetchReceivePositionSuggestsResponse>(
+      `${ENDPOINT}/suggest/to`,
+      {params},
+    );
+    return response.data;
+  },
+  getReceivedPositionSuggestion: async (suggestionId: number) => {
+    const response = await request.get<FetchPositionSuggestResponse>(
+      `${ENDPOINT}/suggest/${suggestionId}`,
+    );
+    return response.data;
+  },
+  updatePositionSuggestion: async (
+    suggestionId: number,
+    body: UpdatePositionSuggestDto,
+  ) => {
+    const response = await request.patch(
+      `${ENDPOINT}/suggest/${suggestionId}`,
+      body,
+    );
+    return response.data;
+  },
 };

@@ -2,6 +2,8 @@ import IconButton from '@/components/Common/IconButton';
 import BottomTabs from '@/navigations/BottomTabs';
 import CommunityCommentEditScreen from '@/screen/Community/CommunityCommentEditScreen';
 import CommunityPostEditScreen from '@/screen/Community/CommunityPostEditScreen';
+import InquiryDetailScreen from '@/screen/My/InquiryDetailScreen';
+import NoticeDetailScreen from '@/screen/My/NoticeDetailScreen';
 import PasswordResetScreen from '@/screen/Registration/PasswordResetScreen';
 import {iconPath} from '@/utils/iconPath';
 import HeaderLeft from '@components/HeaderLeft';
@@ -60,6 +62,7 @@ import common from '@styles/common';
 import {useState} from 'react';
 import {Alert, Image, Pressable} from 'react-native';
 import {LoggedInParamList} from '../../AppInner';
+import {ROUTE} from './routes';
 
 const Stack = createNativeStackNavigator<LoggedInParamList>();
 
@@ -378,7 +381,7 @@ const MainStack = () => {
           options={{title: '차단 사용자 관리'}}
         />
         <Stack.Screen
-          name="Notice"
+          name={ROUTE.NOTICE_LIST}
           component={NoticeScreen}
           options={{title: '공지사항'}}
         />
@@ -460,6 +463,16 @@ const MainStack = () => {
           options={{title: '게시글 수정'}}
         />
       </Stack.Group>
+      <Stack.Screen
+        name={ROUTE.MY.INQUIRY_DETAIL}
+        component={InquiryDetailScreen}
+        options={{title: '1:1 문의'}}
+      />
+      <Stack.Screen
+        name={ROUTE.NOTICE_DETAIL}
+        component={NoticeDetailScreen}
+        options={{title: '공지사항'}}
+      />
     </Stack.Navigator>
   );
 };

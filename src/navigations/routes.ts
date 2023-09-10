@@ -18,6 +18,15 @@ export const ContentRoutes = {
 };
 
 export const ROUTE = {
+  NOTICE_LIST: 'Notice',
+  NOTICE_DETAIL: 'NoticeDetail',
+  MY: {
+    INQUIRY_LIST: 'Inquiry',
+    INQUIRY_DETAIL: 'InquiryDetail',
+    INQUIRY_FORM: 'InquiryForm',
+    RECEIVED_POSITION_SUGGESTION_LIST: 'ReceivedSuggestion',
+    RECEIVED_POSITION_SUGGESTION_DETAIL: 'ReceivedSuggestionDetail',
+  },
   COMMUNITY: {
     POST_CREATE: 'CommunityPostForm',
     COMMENT_EDIT: 'CommunityCommentEdit',

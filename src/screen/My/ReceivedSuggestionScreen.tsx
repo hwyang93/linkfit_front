@@ -1,15 +1,12 @@
 import FilterChip from '@/components/Common/FilterChip';
 import FilterChipContainer from '@/components/Common/FilterChipContainer';
-import {FetchReceivePositionSuggestsResponse} from '@/types/api/member';
+import {useReceivedPositionSuggestionListQuery} from '@/hooks/member/useReceivedPositionSuggestionListQuery';
+import {ROUTE} from '@/navigations/routes';
 import {Member} from '@/types/common';
 import {formatDate} from '@/utils/util';
-import {fetchReceivePositionSuggests} from '@api/member';
-import toast from '@hooks/toast';
-import {useIsFocused} from '@react-navigation/native';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import {WHITE} from '@styles/colors';
 import common from '@styles/common';
-import {useCallback, useEffect, useState} from 'react';
 import {Pressable, ScrollView, StyleSheet, Text} from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {LoggedInParamList} from '../../../AppInner';
@@ -51,35 +48,20 @@ const ReceivedSuggestionCard: React.FC<ReceivedSuggestionCardProps> = ({
   );
 };
 
-type Props = NativeStackScreenProps<LoggedInParamList, 'ReceivedSuggestion'>;
+type Props = NativeStackScreenProps<
+  LoggedInParamList,
+  typeof ROUTE.MY.RECEIVED_POSITION_SUGGESTION_LIST
+>;
 
 const ReceivedSuggestionScreen = ({navigation}: Props) => {
-  const [suggests, setSuggests] =
-    useState<FetchReceivePositionSuggestsResponse>();
-
-  const isFocused = useIsFocused();
-
-  const getPositionSuggests = useCallback(() => {
-    fetchReceivePositionSuggests()
-      .then(({data}) => {
-        setSuggests(data);
-      })
-      .catch(error => {
-        toast.error({message: error.message});
-      });
-  }, []);
+  const {data} = useReceivedPositionSuggestionListQuery();
+  const suggests = data;
 
   const handleSuggestionCardPress = (seq: number) => {
-    navigation.navigate('ReceivedSuggestionDetail', {
+    navigation.navigate(ROUTE.MY.RECEIVED_POSITION_SUGGESTION_DETAIL, {
       suggestSeq: seq,
     });
   };
-
-  useEffect(() => {
-    if (isFocused) {
-      getPositionSuggests();
-    }
-  }, [isFocused, getPositionSuggests]);
 
   // <View>
   //   {modalData.map((item, index) => {
@@ -107,8 +89,8 @@ const ReceivedSuggestionScreen = ({navigation}: Props) => {
   return (
     <SafeAreaView edges={['left', 'right']} style={styles.container}>
       <FilterChipContainer>
-        <FilterChip label="기간" style={{marginRight: 8}} />
-        <FilterChip label="답변 여부" />
+        <FilterChip label="기간" style={{marginRight: 8}} rightIcon />
+        <FilterChip label="답변 여부" rightIcon />
       </FilterChipContainer>
       <ScrollView
         contentContainerStyle={{marginHorizontal: 16, marginBottom: 24}}

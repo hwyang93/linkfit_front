@@ -216,7 +216,7 @@ export interface InquiryEntity extends BaseEntity {
   writerSeq: number;
   title: string;
   contents: string;
-  answers: InquiryAnswerEntity[];
+  answers?: InquiryAnswerEntity[];
   writer: MemberEntity;
 }
 
