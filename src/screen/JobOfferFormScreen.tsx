@@ -1,4 +1,6 @@
 import CTAButton from '@/components/Common/CTAButton';
+import useInput from '@/hooks/useInput';
+import {useSelect} from '@/hooks/useSelect';
 import {useAppSelector} from '@/store';
 import {Coordinate, Member} from '@/types/common';
 import {SCREEN_WIDTH} from '@/utils/constants/common';
@@ -13,7 +15,7 @@ import toast from '@hooks/toast';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import {GRAY} from '@styles/colors';
 import common from '@styles/common';
-import {useCallback, useState} from 'react';
+import {useState} from 'react';
 import {Image, Pressable, StyleSheet, Text, View} from 'react-native';
 import {LoggedInParamList} from '../../AppInner';
 
@@ -33,19 +35,22 @@ type Props = NativeStackScreenProps<LoggedInParamList, 'JobOfferForm'>;
 
 const JobOfferFormScreen = ({navigation}: Props) => {
   const memberInfo = useAppSelector(state => state.user);
-  const [offerTitle, setOfferTitle] = useState('');
-  const [position, setPosition] = useState('');
-  const [education, setEducation] = useState('');
-  const [career, setCareer] = useState('');
-  const [payType, setPayType] = useState('');
-  const [pay, setPay] = useState('');
-  const [content, setContent] = useState('');
-  const [recruitType, setRecruitType] = useState('');
+
+  const offerTitleInput = useInput();
+  const payInput = useInput();
+  const companyNameInput = useInput();
+  const addressDetailInput = useInput();
+  const contentInput = useInput();
+
+  const positionSelect = useSelect();
+  const educationSelect = useSelect();
+  const careerSelect = useSelect();
+  const payTypeSelect = useSelect();
+  const recruitTypeSelect = useSelect();
+
   const [day, setDay] = useState('');
   const [dateForm, setDateForm] = useState<any[]>([{}]);
-  const [companyName, setCompanyName] = useState('');
   const [address, setAddress] = useState('');
-  const [addressDetail, setAddressDetail] = useState('');
   const [lon, setLon] = useState<number | null>(null);
   const [lat, setLat] = useState<number | null>(null);
   const [DAY, setDAY] = useState([
@@ -58,34 +63,20 @@ const JobOfferFormScreen = ({navigation}: Props) => {
     {value: '일', selected: false},
   ]);
 
-  const isOfferTitleValid = offerTitle.length > 0;
-  const isPositionValid = position.length > 0;
-  const isEducationValid = education.length > 0;
-  const isCareerValid = career.length > 0;
-  const isPayTypeValid = payType.length > 0;
-  const isPayValid = pay.length > 0;
-  const isContentValid = content.length > 0;
-  const isRecruitTypeValid = recruitType.length > 0;
-  const isDayValid = day.length > 0;
-  const isDateFormValid = dateForm.length > 0;
-  const isCompanyNameValid = companyName.length > 0;
-  const isAddressValid = address.length > 0;
-  const isAddressDetailValid = addressDetail.length > 0;
-
   const isFormValid =
-    isOfferTitleValid &&
-    isPositionValid &&
-    isEducationValid &&
-    isCareerValid &&
-    isPayTypeValid &&
-    isPayValid &&
-    isContentValid &&
-    isRecruitTypeValid &&
-    isDayValid &&
-    isDateFormValid &&
-    isCompanyNameValid &&
-    isAddressValid &&
-    isAddressDetailValid;
+    !!offerTitleInput.value &&
+    !!positionSelect.value &&
+    !!educationSelect.value &&
+    !!careerSelect.value &&
+    !!payTypeSelect.value &&
+    !!payInput.value &&
+    !!contentInput.value &&
+    !!recruitTypeSelect.value &&
+    !!day &&
+    !!dateForm &&
+    !!companyNameInput.value &&
+    !!address &&
+    !!addressDetailInput.value;
 
   // const openPicker = async () => {
   //   try {
@@ -149,27 +140,26 @@ const JobOfferFormScreen = ({navigation}: Props) => {
     }
   };
 
-  const onCreateRecruit = useCallback(() => {
+  const onCreateRecruit = () => {
     if (!lon || !lat) {
       return;
     }
 
-    // toast.error({message: e.message});
     const data = {
-      title: offerTitle,
-      companyName: companyName,
-      position: position,
+      title: offerTitleInput.value,
+      companyName: companyNameInput.value,
+      position: positionSelect.value,
       address: address,
-      addressDetail: addressDetail,
+      addressDetail: addressDetailInput.value,
       district: 'string',
       phone: memberInfo.phone,
-      recruitType: recruitType,
-      career: career,
-      education: education,
-      payType: payType,
-      pay: pay,
+      recruitType: recruitTypeSelect.value,
+      career: careerSelect.value,
+      education: educationSelect.value,
+      payType: payTypeSelect.value,
+      pay: payInput.value,
       classType: 'string',
-      content: content,
+      content: contentInput.value,
       lon: lon,
       lat: lat,
       dates: dateForm,
@@ -183,24 +173,7 @@ const JobOfferFormScreen = ({navigation}: Props) => {
       .catch(error => {
         toast.error({message: error.message});
       });
-  }, [
-    address,
-    addressDetail,
-    career,
-    companyName,
-    content,
-    dateForm,
-    education,
-    lat,
-    lon,
-    memberInfo.phone,
-    navigation,
-    offerTitle,
-    pay,
-    payType,
-    position,
-    recruitType,
-  ]);
+  };
 
   return (
     <DismissKeyboardView>
@@ -212,73 +185,74 @@ const JobOfferFormScreen = ({navigation}: Props) => {
         {/*</Pressable>*/}
         <View style={common.mb16}>
           <Input
-            label={'글 제목'}
-            onChangeText={(text: string) => setOfferTitle(text)}
-            value={offerTitle}
-            placeholder={'공고 제목을 입력하세요.'}
+            label="글 제목"
+            onChangeText={offerTitleInput.onChange}
+            value={offerTitleInput.value}
+            placeholder="공고 제목을 입력하세요."
             keyboardType={KeyboardTypes.DEFAULT}
-            editable={true}
+            editable
           />
         </View>
         <View style={common.mb16}>
           <SelectBox
-            label={'채용 포지션'}
+            label="채용 포지션"
             data={POSITION}
-            onSelect={(value: any) => setPosition(value)}
-            defaultButtonText={'채용 포지션'}
+            onSelect={positionSelect.onChange}
+            defaultButtonText="채용 포지션"
           />
         </View>
         {/* 요가, 필라테스의 경우 표시 */}
-        {position === '실장' || position === '' ? null : (
+        {positionSelect.value === '실장' ||
+        positionSelect.value === '' ? null : (
           <View style={common.mb16}>
             <SelectBox
-              label={'채용 형태'}
+              label="채용 형태"
               data={RECRUIT_TYPE}
-              onSelect={(value: any) => setRecruitType(value)}
-              defaultButtonText={'채용 형태'}
+              onSelect={recruitTypeSelect.onChange}
+              defaultButtonText="채용 형태"
             />
           </View>
         )}
         <View style={common.mb16}>
           <SelectBox
-            label={'학력'}
+            label="학력"
             data={EDUCATION}
-            onSelect={(value: any) => setEducation(value)}
-            defaultButtonText={'학력을 선택하세요.'}
+            onSelect={educationSelect.onChange}
+            defaultButtonText="학력을 선택하세요."
           />
         </View>
         <View style={common.mb16}>
           <SelectBox
-            label={'경력'}
+            label="경력"
             data={CAREER}
-            onSelect={(value: any) => setCareer(value)}
-            defaultButtonText={'경력을 선택하세요.'}
+            onSelect={careerSelect.onChange}
+            defaultButtonText="경력을 선택하세요."
           />
         </View>
         {/* 날짜 선택 조건 */}
         {/* 포지션이 실장일 경우 */}
-        {position === '' || position === '실장' ? (
+        {positionSelect.value === '' || positionSelect.value === '실장' ? (
           <View style={common.mb16}>
             <SelectBox
-              label={'시간'}
+              label="시간"
               data={TIME}
               onSelect={(value: any) => setDateForm([{day: '', time: value}])}
-              defaultButtonText={'시간을 선택하세요.'}
+              defaultButtonText="시간을 선택하세요."
             />
           </View>
         ) : (
           <>
-            {recruitType !== '대강' ? (
+            {recruitTypeSelect.value !== '대강' ? (
               <>
                 <View style={common.mb16}>
                   <Input
-                    label={'요일'}
+                    label="요일"
                     onChangeText={(item: any) => setDay(item)}
                     value={day}
-                    icon={'day'}
-                    placeholder={'요일을 선택하세요.'}
+                    icon="day"
+                    placeholder="요일을 선택하세요."
                     keyboardType={KeyboardTypes.DEFAULT}
-                    textAlign={'right'}
+                    textAlign="right"
                     editable={false}
                   />
                 </View>
@@ -343,25 +317,22 @@ const JobOfferFormScreen = ({navigation}: Props) => {
             )}
           </>
         )}
-
-        {/* 급여 형태 */}
         <View style={common.mb16}>
           <SelectBox
-            label={'급여 형태'}
+            label="급여 형태"
             data={PAY_TYPE}
-            onSelect={(value: any) => setPayType(value)}
-            defaultButtonText={'급여 형태를 선택하세요.'}
+            onSelect={payTypeSelect.onChange}
+            defaultButtonText="급여 형태를 선택하세요."
           />
         </View>
-        {/* 급여 */}
         <View style={common.mb16}>
           <Input
-            label={'급여'}
-            onChangeText={(text: string) => setPay(text)}
-            value={pay}
-            placeholder={'급여를 입력하세요.'}
+            label="급여"
+            onChangeText={payInput.onChange}
+            value={payInput.value}
+            placeholder="급여를 입력하세요."
             keyboardType={KeyboardTypes.DEFAULT}
-            editable={true}
+            editable
           />
         </View>
 
@@ -369,12 +340,12 @@ const JobOfferFormScreen = ({navigation}: Props) => {
           <View>
             <View style={common.mb16}>
               <Input
-                label={'업체명'}
-                onChangeText={(text: string) => setCompanyName(text)}
-                value={companyName}
-                placeholder={'업체명을 입력하세요.'}
+                label="업체명"
+                onChangeText={companyNameInput.onChange}
+                value={companyNameInput.value}
+                placeholder="업체명을 입력하세요."
                 keyboardType={KeyboardTypes.DEFAULT}
-                editable={true}
+                editable
               />
             </View>
             <View style={common.mb8}>
@@ -387,24 +358,24 @@ const JobOfferFormScreen = ({navigation}: Props) => {
             </View>
             <View style={common.mb16}>
               <Input
-                onChangeText={(text: string) => setAddressDetail(text)}
-                value={addressDetail}
-                placeholder={'상세 주소를 입력하세요.'}
+                onChangeText={addressDetailInput.onChange}
+                value={addressDetailInput.value}
+                placeholder="상세 주소를 입력하세요."
                 keyboardType={KeyboardTypes.DEFAULT}
-                editable={true}
+                editable
               />
             </View>
           </View>
         )}
         <View style={common.mb16}>
           <Input
-            label={'상세 정보'}
-            onChangeText={(text: string) => setContent(text)}
-            value={content}
-            placeholder={'상세 정보를 작성해주세요.'}
+            label="상세 정보"
+            onChangeText={contentInput.onChange}
+            value={contentInput.value}
+            placeholder="상세 정보를 작성해주세요."
             keyboardType={KeyboardTypes.DEFAULT}
-            editable={true}
-            multiline={true}
+            editable
+            multiline
           />
         </View>
         <CTAButton
@@ -430,10 +401,10 @@ const styles = StyleSheet.create({
   dateItem: {
     width: columns7,
     height: columns7,
-    // backgroundColor: '#d7e0fd',
     justifyContent: 'center',
     alignItems: 'center',
     borderRadius: 200,
   },
 });
+
 export default JobOfferFormScreen;
