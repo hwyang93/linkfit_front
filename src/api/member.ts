@@ -85,10 +85,6 @@ export const cancelMemberLicence = (seq: number) => {
   return request.patch(`/member/licence/${seq}`);
 };
 
-export const fetchMemberReputations = () => {
-  return request.get<FetchMemberReputationsResponse>('/member/reputation');
-};
-
 export const createReview = (data: CreateMemberReputationDto) => {
   return request.post<PostResponse>('/member/reputation', data);
 };
@@ -99,10 +95,6 @@ export const updateMemberReputation = (
   data: UpdateMemberReputationDto,
 ) => {
   return request.patch(`/member/reputation/${seq}`, data);
-};
-
-export const deleteMemberReputation = (seq: number) => {
-  return request.delete<DeleteResponse>(`/member/reputation/${seq}`);
 };
 
 export const fetchReceivePositionSuggests = (
@@ -200,6 +192,18 @@ export const memberApi = {
     const response = await request.patch(
       `${ENDPOINT}/suggest/${suggestionId}`,
       body,
+    );
+    return response.data;
+  },
+  getReputationList: async () => {
+    const response = await request.get<FetchMemberReputationsResponse>(
+      `${ENDPOINT}/reputation`,
+    );
+    return response.data;
+  },
+  deleteReputation: async (reputationId: number) => {
+    const response = await request.delete<DeleteResponse>(
+      `${ENDPOINT}/reputation/${reputationId}`,
     );
     return response.data;
   },

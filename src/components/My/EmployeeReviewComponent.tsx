@@ -1,17 +1,15 @@
+import {useDeleteMemberReputationMutation} from '@/hooks/member/useDeleteMemberReputationMutation';
+import {useMemberReputationListQuery} from '@/hooks/member/useMemberReputationListQuery';
+import useModal from '@/hooks/useModal';
 import {Member} from '@/types/common';
 import {iconPath} from '@/utils/iconPath';
 import {formatDate} from '@/utils/util';
-import {deleteMemberReputation, fetchMemberReputations} from '@api/member';
-import Modal from '@components/ModalSheet';
 import toast from '@hooks/toast';
-import {
-  NavigationProp,
-  useIsFocused,
-  useNavigation,
-} from '@react-navigation/native';
+import {NavigationProp, useNavigation} from '@react-navigation/native';
 import {BLUE, GRAY, WHITE} from '@styles/colors';
 import common from '@styles/common';
-import {useCallback, useEffect, useState} from 'react';
+import {isAxiosError} from 'axios';
+import {useState} from 'react';
 import {
   Image,
   Pressable,
@@ -21,69 +19,53 @@ import {
   View,
 } from 'react-native';
 import {LoggedInParamList} from '../../../AppInner';
+import BottomSheet from '../Common/BottomSheet';
+import BottomSheetOption from '../Common/BottomSheetOption';
 
 const EmployeeReviewComponent: React.FC = () => {
-  const [modalVisible, setModalVisible] = useState(false);
-  const [reputations, setReputations] = useState<any[]>([]);
-  const [selectedReputation, setSelectedReputation] = useState({
-    seq: 0,
-  });
+  const [selectedReputationId, setSelectedReputationId] = useState<
+    number | null
+  >(null);
 
-  const isFocused = useIsFocused();
   const navigation = useNavigation<NavigationProp<LoggedInParamList>>();
 
-  const openModal = () => {
-    setModalVisible(true);
+  const memberReputationListQuery = useMemberReputationListQuery();
+  const reputations = memberReputationListQuery.data;
+
+  const deleteMemberReputationMutation = useDeleteMemberReputationMutation();
+
+  const modal = useModal();
+
+  const deleteReputation = () => {
+    if (!selectedReputationId) return;
+
+    deleteMemberReputationMutation.mutate(selectedReputationId, {
+      onSuccess: () => {
+        toast.success({message: '후기 삭제가 완료되었어요!'});
+        modal.close();
+      },
+      onError: error => {
+        if (isAxiosError(error)) {
+          toast.error({message: error.message});
+        }
+      },
+    });
   };
 
-  const getReputations = useCallback(() => {
-    fetchMemberReputations()
-      .then(({data}: any) => {
-        setReputations(data);
-      })
-      .catch(error => {
-        toast.error({message: error.message});
-      });
-  }, []);
+  const onEditPress = () => {
+    modal.close();
+    navigation.navigate('ReviewForm', {
+      reputationInfo: selectedReputationId,
+    });
+  };
 
-  useEffect(() => {
-    if (isFocused) {
-      getReputations();
-    }
-  }, [isFocused, getReputations]);
-
-  const onDeleteReputation = useCallback(() => {
-    deleteMemberReputation(selectedReputation.seq)
-      .then(() => {
-        toast.success({message: '후기 삭제가 완료되었어요!'});
-        setModalVisible(false);
-        getReputations();
-      })
-      .catch((e: any) => {
-        toast.error({message: e.message});
-      });
-  }, [selectedReputation.seq, getReputations]);
-
-  // props 로 모달에 보낼 값
-  const DATA = [
-    {
-      value: '후기 수정하기',
-      job: () => {
-        setModalVisible(false);
-        navigation.navigate('ReviewForm', {reputationInfo: selectedReputation});
-      },
-    },
-    {
-      value: '후기 삭제하기',
-      job: () => {
-        onDeleteReputation();
-      },
-    },
-  ];
+  const onDeletePress = () => {
+    deleteReputation();
+  };
 
   return (
     <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
-      {reputations.map(item =>
+      {reputations?.map(item =>
         item.targetMember.type === Member.Instructor ? (
           <View key={'review_' + item.seq} style={styles.reviewBox}>
             <View style={common.rowCenter}>
@@ -126,8 +108,8 @@ const EmployeeReviewComponent: React.FC = () => {
               style={styles.kebabIcon}
               hitSlop={10}
               onPress={() => {
-                setSelectedReputation(item);
-                openModal();
+                setSelectedReputationId(item.seq);
+                modal.open();
               }}>
               <Image source={iconPath.KEBAB} style={[common.size24]} />
             </Pressable>
@@ -136,9 +118,11 @@ const EmployeeReviewComponent: React.FC = () => {
           <View key={'review_' + item.seq} style={styles.reviewBox}>
             <View style={common.rowCenter}>
               <Text style={[common.text_m, common.fwb, common.mr8]}>
-                {item.targetMember.company.companyName}
+                {item.targetMember.company?.companyName}
               </Text>
-              <Text style={common.text}>{item.targetMember.company.field}</Text>
+              <Text style={common.text}>
+                {item.targetMember.company?.field}
+              </Text>
             </View>
             <Text style={[common.mt8, common.text]}>
               {formatDate(item.updatedAt)}
@@ -148,23 +132,25 @@ const EmployeeReviewComponent: React.FC = () => {
               style={styles.kebabIcon}
               hitSlop={10}
               onPress={() => {
-                setSelectedReputation(item);
-                openModal();
+                setSelectedReputationId(item.seq);
+                modal.open();
               }}>
               <Image source={iconPath.KEBAB} style={[common.size24]} />
             </Pressable>
           </View>
         ),
       )}
-      <Modal
-        modalVisible={modalVisible}
-        setModalVisible={setModalVisible}
-        title={'더보기'}
-        modalData={DATA}
-      />
+      <BottomSheet
+        visible={modal.visible}
+        onDismiss={modal.close}
+        title="더보기">
+        <BottomSheetOption label="후기 수정하기" onPress={onEditPress} />
+        <BottomSheetOption label="후기 삭제하기" onPress={onDeletePress} />
+      </BottomSheet>
     </ScrollView>
   );
 };
+
 const styles = StyleSheet.create({
   container: {flex: 1, padding: 16, backgroundColor: WHITE},
   reviewBox: {
