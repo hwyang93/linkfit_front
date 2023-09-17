@@ -10,17 +10,12 @@ import {BLUE, GRAY, WHITE} from '@styles/colors';
 import common from '@styles/common';
 import {isAxiosError} from 'axios';
 import {useState} from 'react';
-import {
-  Image,
-  Pressable,
-  ScrollView,
-  StyleSheet,
-  Text,
-  View,
-} from 'react-native';
+import {Image, Pressable, StyleSheet, Text, View} from 'react-native';
+import AppScrollView from '../\bLayout/AppScrollView';
 import {LoggedInParamList} from '../../../AppInner';
 import BottomSheet from '../Common/BottomSheet';
 import BottomSheetOption from '../Common/BottomSheetOption';
+import EmptySet from '../EmptySet';
 
 const EmployeeReviewTab: React.FC = () => {
   const [selectedReputationId, setSelectedReputationId] = useState<
@@ -64,7 +59,10 @@ const EmployeeReviewTab: React.FC = () => {
   };
 
   return (
-    <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
+    <AppScrollView
+      style={styles.container}
+      showsVerticalScrollIndicator={false}>
+      {reputations?.length === 0 && <EmptySet text="작성한 후기가 없어요" />}
       {reputations?.map(item =>
         item.targetMember.type === Member.Instructor ? (
           <View key={'review_' + item.seq} style={styles.reviewBox}>
@@ -147,7 +145,7 @@ const EmployeeReviewTab: React.FC = () => {
         <BottomSheetOption label="후기 수정하기" onPress={onEditPress} />
         <BottomSheetOption label="후기 삭제하기" onPress={onDeletePress} />
       </BottomSheet>
-    </ScrollView>
+    </AppScrollView>
   );
 };
 
