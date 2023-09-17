@@ -158,7 +158,11 @@ const ReceivedSuggestionScreen = ({navigation}: Props) => {
             companyName={item.writer.company?.companyName || ''}
             writerName={item.writer.name}
             closingDate={item.closingDate || ''}
-            status={item.status}
+            status={
+              FILTER.REPLY_OR_NOT[
+                item.status as keyof typeof FILTER.REPLY_OR_NOT
+              ]
+            }
             onPress={() => handleSuggestionCardPress(item.seq)}
           />
           // <Pressable
