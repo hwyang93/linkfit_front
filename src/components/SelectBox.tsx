@@ -11,10 +11,10 @@ interface SelectBoxProps {
   onSelect: Function;
   defaultButtonText: string;
   label?: string;
-  onChangeSearchInputText?: () => void;
   textAlign?: string;
   icon?: string;
   selectKey?: string;
+  onChangeSearchInputText?: () => void;
 }
 
 const SelectBox: React.FC<SelectBoxProps> = ({
@@ -97,7 +97,7 @@ const SelectBox: React.FC<SelectBoxProps> = ({
         rowTextStyle={styles.dropText}
         onFocus={() => setFocus(true)}
         onBlur={() => setFocus(false)}
-        onChangeSearchInputText={onChangeSearchInputText}
+        onChangeSearchInputText={onChangeSearchInputText || (() => {})}
       />
       {label && (
         <Text style={[common.label, {color: focus ? INPUT.FOCUS : GRAY.LIGHT}]}>

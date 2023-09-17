@@ -121,6 +121,12 @@ const ApplicationStatusScreen = ({navigation}: Props) => {
     statusModal.close();
   };
 
+  console.log('@value', periodFilter.value);
+  console.log(
+    '@label',
+    FILTER.PERIOD[periodFilter.value as keyof typeof FILTER.PERIOD],
+  );
+
   return (
     <SafeAreaView edges={['left', 'right']} style={styles.container}>
       <FilterChipContainer>
@@ -133,14 +139,22 @@ const ApplicationStatusScreen = ({navigation}: Props) => {
           />
         )}
         <FilterChip
-          label={periodFilter.value || '기간'}
+          label={
+            periodFilter.value
+              ? FILTER.PERIOD[periodFilter.value as keyof typeof FILTER.PERIOD]
+              : '기간'
+          }
           active={!!periodFilter.value}
           style={{marginRight: 8}}
           rightIcon
           onPress={periodModal.open}
         />
         <FilterChip
-          label={statusFilter.value || '지원 상태'}
+          label={
+            statusFilter.value
+              ? FILTER.STATUS[statusFilter.value as keyof typeof FILTER.STATUS]
+              : '지원 상태'
+          }
           active={!!statusFilter.value}
           rightIcon
           onPress={statusModal.open}
@@ -175,12 +189,12 @@ const ApplicationStatusScreen = ({navigation}: Props) => {
           onDismiss={periodModal.close}
           title="기간">
           <View>
-            {FILTER.PERIOD.map((option, index) => (
+            {Object.entries(FILTER.PERIOD).map(([value, label], index) => (
               <BottomSheetOption
                 key={index}
-                label={option}
-                selected={periodFilter.value === option}
-                onPress={() => handlePeriodOptionPress(option)}
+                label={label}
+                selected={periodFilter.value === value}
+                onPress={() => handlePeriodOptionPress(value)}
               />
             ))}
           </View>
@@ -190,12 +204,12 @@ const ApplicationStatusScreen = ({navigation}: Props) => {
           onDismiss={statusModal.close}
           title="지원 상태">
           <View>
-            {FILTER.STATUS.map((option, index) => (
+            {Object.entries(FILTER.STATUS).map(([value, label], index) => (
               <BottomSheetOption
                 key={index}
-                label={option}
-                selected={statusFilter.value === option}
-                onPress={() => handleStatusOptionPress(option)}
+                label={label}
+                selected={statusFilter.value === value}
+                onPress={() => handleStatusOptionPress(value)}
               />
             ))}
           </View>
