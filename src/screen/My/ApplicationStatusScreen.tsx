@@ -1,12 +1,11 @@
-import {fetchRecruitApplicationsMy} from '@/api/recruit';
 import BottomSheet from '@/components/Common/BottomSheet';
 import BottomSheetOption from '@/components/Common/BottomSheetOption';
 import FilterChip from '@/components/Common/FilterChip';
 import FilterChipContainer from '@/components/Common/FilterChipContainer';
 import IconButton from '@/components/Common/IconButton';
-import toast from '@/hooks/toast';
+import {useMyRecruitApplicationListQuery} from '@/hooks/recruit/useMyRecruitApplicationListQuery';
+import useFilter from '@/hooks/useFilter';
 import useModal from '@/hooks/useModal';
-import {FetchRecruitApplicationsMyResponse} from '@/types/api/recruit';
 import {SCREEN_WIDTH} from '@/utils/constants/common';
 import FILTER from '@/utils/constants/filter';
 import {iconPath} from '@/utils/iconPath';
@@ -14,7 +13,6 @@ import {formatDate} from '@/utils/util';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import {BLUE, WHITE} from '@styles/colors';
 import common, {width} from '@styles/common';
-import {useEffect, useState} from 'react';
 import {
   Image,
   Pressable,
@@ -88,13 +86,24 @@ const MyApplicationListItem: React.FC<MyApplicationItemProps> = ({
 type Props = NativeStackScreenProps<LoggedInParamList, 'ApplicationStatus'>;
 
 const ApplicationStatusScreen = ({navigation}: Props) => {
-  const [applications, setApplications] =
-    useState<FetchRecruitApplicationsMyResponse>();
-  const [periodFilter, setPeriodFilter] = useState<string>();
-  const [statusFilter, setStatusFilter] = useState<string>();
+  const periodFilter = useFilter();
+  const statusFilter = useFilter();
 
   const periodModal = useModal();
   const statusModal = useModal();
+
+  const filterActive = !!periodFilter.value || !!statusFilter.value;
+
+  const resetFilter = () => {
+    periodFilter.reset();
+    statusFilter.reset();
+  };
+
+  const myRecruitApplicationListQuery = useMyRecruitApplicationListQuery({
+    period: periodFilter.value,
+    status: statusFilter.value,
+  });
+  const applications = myRecruitApplicationListQuery.data;
 
   const handleListItemPress = (seq: number) => {
     navigation.navigate('JobPost', {
@@ -103,40 +112,36 @@ const ApplicationStatusScreen = ({navigation}: Props) => {
   };
 
   const handlePeriodOptionPress = (option: string) => {
-    setPeriodFilter(option);
+    periodFilter.setValue(option);
     periodModal.close();
   };
 
   const handleStatusOptionPress = (option: string) => {
-    setStatusFilter(option);
+    statusFilter.setValue(option);
     statusModal.close();
   };
-
-  useEffect(() => {
-    console.log('fetching!', periodFilter, statusFilter);
-    fetchRecruitApplicationsMy({
-      period: periodFilter,
-      status: statusFilter,
-    })
-      .then(({data}) => {
-        setApplications(data);
-      })
-      .catch(error => {
-        toast.error({message: error.message});
-      });
-  }, [periodFilter, statusFilter]);
 
   return (
     <SafeAreaView edges={['left', 'right']} style={styles.container}>
       <FilterChipContainer>
+        {filterActive && (
+          <FilterChip
+            label="초기화"
+            variant="reset"
+            style={{marginRight: 8}}
+            onPress={resetFilter}
+          />
+        )}
         <FilterChip
-          label={periodFilter || '기간'}
+          label={periodFilter.value || '기간'}
+          active={!!periodFilter.value}
           style={{marginRight: 8}}
           rightIcon
           onPress={periodModal.open}
         />
         <FilterChip
-          label={statusFilter || '지원 상태'}
+          label={statusFilter.value || '지원 상태'}
+          active={!!statusFilter.value}
           rightIcon
           onPress={statusModal.open}
         />
@@ -174,7 +179,7 @@ const ApplicationStatusScreen = ({navigation}: Props) => {
               <BottomSheetOption
                 key={index}
                 label={option}
-                selected={periodFilter === option}
+                selected={periodFilter.value === option}
                 onPress={() => handlePeriodOptionPress(option)}
               />
             ))}
@@ -189,7 +194,7 @@ const ApplicationStatusScreen = ({navigation}: Props) => {
               <BottomSheetOption
                 key={index}
                 label={option}
-                selected={statusFilter === option}
+                selected={statusFilter.value === option}
                 onPress={() => handleStatusOptionPress(option)}
               />
             ))}

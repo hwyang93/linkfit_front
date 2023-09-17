@@ -52,14 +52,6 @@ export const updateRecruitApplyCancel = (data: {seqs: number[]}) => {
   return request.patch('/recruit/apply', data);
 };
 
-export const fetchRecruitApplicationsMy = (
-  params?: FetchRecruitApplicationsMyParams,
-) => {
-  return request.get<FetchRecruitApplicationsMyResponse>('/recruit/apply', {
-    params,
-  });
-};
-
 export const fetchRecruitApplications = (seq: number) => {
   return request.get<FetchRecruitApplicationsResponse>(`/recruit/${seq}/apply`);
 };
@@ -91,6 +83,13 @@ export const recruitApi = {
   getApplicationList: async (recruitId: number) => {
     const response = await request.get<FetchRecruitApplicationsResponse>(
       `${ENDPOINT}/${recruitId}/apply`,
+    );
+    return response.data;
+  },
+  getMyApplicationList: async (params?: FetchRecruitApplicationsMyParams) => {
+    const response = await request.get<FetchRecruitApplicationsMyResponse>(
+      `${ENDPOINT}/apply`,
+      {params},
     );
     return response.data;
   },
