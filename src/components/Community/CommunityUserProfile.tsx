@@ -5,6 +5,7 @@ import common from '@styles/common';
 import {Image, Pressable, StyleSheet, Text, View} from 'react-native';
 
 interface CommunityUserProfileProps {
+  isMine?: boolean;
   profileImage?: string;
   name: string;
   writerType?: MemberType;
@@ -14,6 +15,7 @@ interface CommunityUserProfileProps {
 }
 
 const CommunityUserProfile: React.FC<CommunityUserProfileProps> = ({
+  isMine,
   profileImage,
   name,
   writerType,
@@ -57,9 +59,11 @@ const CommunityUserProfile: React.FC<CommunityUserProfileProps> = ({
           <Text style={[common.text, {alignSelf: 'flex-end'}]}>{career}</Text>
         </View>
       </View>
-      <Pressable style={styles.kebabIcon} hitSlop={10} onPress={onKebabPress}>
-        <Image source={iconPath.KEBAB} style={[common.size24]} />
-      </Pressable>
+      {isMine && (
+        <Pressable style={styles.kebabIcon} hitSlop={10} onPress={onKebabPress}>
+          <Image source={iconPath.KEBAB} style={[common.size24]} />
+        </Pressable>
+      )}
     </View>
   );
 };

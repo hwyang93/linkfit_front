@@ -1,5 +1,9 @@
 import CommunityUserProfile from '@/components/Community/CommunityUserProfile';
+import {useCommunityPostDeleteMutation} from '@/hooks/community/useCommunityPostDeleteMutation';
+import {useAppNavigation} from '@/hooks/useAppNavigation';
+import useAuth from '@/hooks/useAuth';
 import useModal from '@/hooks/useModal';
+import {ROUTE} from '@/navigations/routes';
 import {CommunityEntity} from '@/types/api/entities';
 import {iconPath} from '@/utils/iconPath';
 import {formatDate} from '@/utils/util';
@@ -15,7 +19,7 @@ import toast from '@hooks/toast';
 import common from '@styles/common';
 import {isAxiosError} from 'axios';
 import {useCallback, useState} from 'react';
-import {Alert, Image, Text, View} from 'react-native';
+import {Image, Text, View} from 'react-native';
 import BottomSheet from '../Common/BottomSheet';
 import BottomSheetOption from '../Common/BottomSheetOption';
 import BoxButton from '../Common/BoxButton';
@@ -34,16 +38,30 @@ const CommunityPostTop: React.FC<CommunityPostTopProps> = ({
   const [bookmarkCount, setBookmarkCount] = useState(postInfo.bookmarkCount);
   const [comment, setComment] = useState('');
 
+  const navigation = useAppNavigation();
+
+  const communityPostDeleteMutation = useCommunityPostDeleteMutation();
+
   const modal = useModal();
+
+  const {user} = useAuth();
 
   const canGoNext = comment !== '';
 
-  const blockUser = () => {
-    Alert.alert('기능 준비중입니다.');
+  const onEdit = () => {
+    navigation.navigate(ROUTE.COMMUNITY.POST_EDIT, {
+      postId: postInfo.seq,
+    });
+    modal.close();
   };
 
-  const reportUser = () => {
-    Alert.alert('기능 준비중입니다.');
+  const onDelete = () => {
+    communityPostDeleteMutation.mutate(postInfo.seq, {
+      onSuccess: () => {
+        navigation.navigate(ROUTE.TAB.COMMUNITY);
+      },
+    });
+    modal.close();
   };
 
   const onClickBookmark = useCallback(() => {
@@ -118,6 +136,7 @@ const CommunityPostTop: React.FC<CommunityPostTopProps> = ({
           profileImage={postInfo.writer.profileImage?.originFileUrl}
           writerType={postInfo.writer.type}
           onKebabPress={modal.open}
+          isMine={postInfo.writerSeq === user.seq}
         />
       </View>
       <View style={common.mv16}>
@@ -159,8 +178,8 @@ const CommunityPostTop: React.FC<CommunityPostTopProps> = ({
         title="더보기"
         visible={modal.visible}
         onDismiss={modal.close}>
-        <BottomSheetOption label="차단하기" onPress={blockUser} />
-        <BottomSheetOption label="신고하기" onPress={reportUser} />
+        <BottomSheetOption label="수정하기" onPress={onEdit} />
+        <BottomSheetOption label="삭제하기" onPress={onDelete} />
       </BottomSheet>
     </View>
   );

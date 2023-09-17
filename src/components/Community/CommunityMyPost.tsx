@@ -44,6 +44,7 @@ const PostListItem: React.FC<PostListItemProps> = ({
 
   const onEdit = () => {
     if (isPost) {
+      console.log(postId);
       navigation.navigate(ROUTE.COMMUNITY.POST_EDIT, {
         postId: postId,
       });

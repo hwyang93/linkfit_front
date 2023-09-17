@@ -24,6 +24,11 @@ const CommunityMyPost: React.FC = () => {
     }
   };
 
+  // TODO: 북마크 토글 기능 추가
+  const onBookmarkPress = (id: number) => {
+    console.log('북마크 업데이트', id);
+  };
+
   return (
     <View style={styles.container}>
       {bookmarks?.length === 0 && <EmptySet text="북마크한 글이 없어요." />}
@@ -73,6 +78,7 @@ const CommunityMyPost: React.FC = () => {
                   <View style={common.rowCenter}>
                     <BookmarkCounter
                       counter={item.community.bookmarks.length}
+                      onPress={() => onBookmarkPress(item.seq)}
                     />
                     <CommentCounter counter={item.community.comments.length} />
                   </View>

@@ -18,6 +18,9 @@ export const ContentRoutes = {
 };
 
 export const ROUTE = {
+  TAB: {
+    COMMUNITY: 'Community',
+  },
   NOTICE_LIST: 'Notice',
   NOTICE_DETAIL: 'NoticeDetail',
   MY: {
