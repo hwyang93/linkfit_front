@@ -76,7 +76,7 @@ export type LoggedInParamList = {
   SignUpForm: {email: string};
   CompanySignUpForm: {email: string};
   PasswordReset: undefined;
-  CommunityCommentEdit: {postId: number};
+  CommunityCommentEdit: {commentId: number};
   CommunityPostEdit: {postId: number};
   InquiryDetail: {inquiryId: number};
   NoticeDetail: {noticeId: number};

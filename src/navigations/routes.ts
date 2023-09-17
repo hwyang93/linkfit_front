@@ -31,5 +31,6 @@ export const ROUTE = {
     POST_CREATE: 'CommunityPostForm',
     COMMENT_EDIT: 'CommunityCommentEdit',
     POST_EDIT: 'CommunityPostEdit',
+    POST_DETAIL: 'CommunityPost',
   },
 } as const;
