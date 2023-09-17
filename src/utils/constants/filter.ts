@@ -1,5 +1,4 @@
 const FILTER = {
-  REPLY_OR_NOT: ['답변 대기중', '답변 수락', '답변 거절', '제안 마감'],
   PERIOD: {
     'ONE-WEEK': '일주일',
     'ONE-MONTH': '1개월',
@@ -17,6 +16,12 @@ const FILTER = {
   PROGRESSION: {
     ING: '진행중',
     CLOSE: '마감',
+  },
+  REPLY_OR_NOT: {
+    WAITING: '답변 대기중',
+    ACCEPT: '답변 수락',
+    REJECT: '답변 거절',
+    CLOSED: '제안 마감',
   },
   POSITION: ['필라테스', '요가'],
   RECRUIT_TYPE: ['전임', '파트타임', '대강', '실장'],
