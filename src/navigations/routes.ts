@@ -18,6 +18,9 @@ export const ContentRoutes = {
 };
 
 export const ROUTE = {
+  TAB: {
+    COMMUNITY: 'Community',
+  },
   NOTICE_LIST: 'Notice',
   NOTICE_DETAIL: 'NoticeDetail',
   MY: {
@@ -31,5 +34,6 @@ export const ROUTE = {
     POST_CREATE: 'CommunityPostForm',
     COMMENT_EDIT: 'CommunityCommentEdit',
     POST_EDIT: 'CommunityPostEdit',
+    POST_DETAIL: 'CommunityPost',
   },
 } as const;

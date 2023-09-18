@@ -5,10 +5,8 @@ import {useQuery} from '@tanstack/react-query';
 export const useCommunityPostListQuery = (
   params?: FetchCommunityPostsParams,
 ) => {
-  const {category, isWriter} = params || {};
-
   return useQuery({
-    queryKey: ['community', 'post', 'list', category, isWriter],
-    queryFn: () => communityApi.getPostList({category, isWriter}),
+    queryKey: ['community', 'post', 'list', params],
+    queryFn: () => communityApi.getPostList(params),
   });
 };

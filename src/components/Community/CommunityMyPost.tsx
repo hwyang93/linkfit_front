@@ -3,6 +3,7 @@ import {useCommunityPostListQuery} from '@/hooks/community/useCommunityPostListQ
 import useModal from '@/hooks/useModal';
 import {ROUTE} from '@/navigations/routes';
 import common from '@/styles/common';
+import THEME from '@/styles/theme';
 import {iconPath} from '@/utils/iconPath';
 import {formatDate} from '@/utils/util';
 import {NavigationProp, useNavigation} from '@react-navigation/native';
@@ -34,14 +35,27 @@ const PostListItem: React.FC<PostListItemProps> = ({
 
   const communityPostDeleteMutation = useCommunityPostDeleteMutation();
 
+  const isPost = title ? true : false;
+  const isComment = !isPost;
+
   const toggleTextExpansion = () => {
     textLine === 2 ? setTextLine(0) : setTextLine(2);
   };
 
   const onEdit = () => {
-    navigation.navigate(ROUTE.COMMUNITY.POST_EDIT, {
-      postId: postId,
-    });
+    if (isPost) {
+      console.log(postId);
+      navigation.navigate(ROUTE.COMMUNITY.POST_EDIT, {
+        postId: postId,
+      });
+    }
+
+    if (isComment) {
+      navigation.navigate(ROUTE.COMMUNITY.COMMENT_EDIT, {
+        commentId: postId,
+      });
+    }
+
     modal.close();
   };
 
@@ -51,12 +65,28 @@ const PostListItem: React.FC<PostListItemProps> = ({
     });
   };
 
+  const onPress = () => {
+    if (isPost)
+      navigation.navigate(ROUTE.COMMUNITY.POST_DETAIL, {
+        postSeq: postId,
+      });
+
+    // TODO: 댓글 클릭 시 이동 기능 추가
+  };
+
   return (
-    <View style={styles.postBox}>
-      <View style={[common.row, common.mb12]}>
-        <Text style={[common.text_m, common.fwb, common.mr4]}>{title}</Text>
-        <Text style={[common.text, {alignSelf: 'flex-end'}]}>
+    <Pressable style={styles.postBox} onPress={onPress}>
+      <View style={[common.row, common.mb12, {alignItems: 'flex-end'}]}>
+        <Text style={[common.text_m, common.fwb]}>{title}</Text>
+        <Text style={[common.text, {marginLeft: 4}]}>
           {formatDate(updatedAt)}
+        </Text>
+        <Text
+          style={[
+            common.text,
+            {fontSize: 12, color: THEME.PRIMARY, marginLeft: 4},
+          ]}>
+          {title ? '게시글' : '댓글'}
         </Text>
       </View>
       <Pressable onPress={toggleTextExpansion}>
@@ -74,7 +104,7 @@ const PostListItem: React.FC<PostListItemProps> = ({
         <BottomSheetOption label="수정하기" onPress={onEdit} />
         <BottomSheetOption label="삭제하기" onPress={onDelete} />
       </BottomSheet>
-    </View>
+    </Pressable>
   );
 };
 

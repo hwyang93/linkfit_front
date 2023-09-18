@@ -11,10 +11,10 @@ interface SelectBoxProps {
   onSelect: Function;
   defaultButtonText: string;
   label?: string;
-  onChangeSearchInputText?: () => void;
   textAlign?: string;
   icon?: string;
   selectKey?: string;
+  onChangeSearchInputText?: () => void;
 }
 
 const SelectBox: React.FC<SelectBoxProps> = ({
@@ -22,10 +22,10 @@ const SelectBox: React.FC<SelectBoxProps> = ({
   onSelect,
   defaultButtonText,
   label,
-  onChangeSearchInputText,
   textAlign,
   icon,
   selectKey,
+  onChangeSearchInputText,
 }) => {
   const [focus, setFocus] = useState(false);
   const [, setSelectItem] = useState('');
@@ -45,12 +45,8 @@ const SelectBox: React.FC<SelectBoxProps> = ({
         onSelect={(selectedItem, index) => {
           selectHandler(selectedItem, index);
         }}
-        buttonTextAfterSelection={selectedItem => {
-          return selectedItem;
-        }}
-        rowTextForSelection={item => {
-          return item;
-        }}
+        buttonTextAfterSelection={selectedItem => selectedItem}
+        rowTextForSelection={item => item}
         defaultButtonText={defaultButtonText}
         // buttonStyle={{width: '100%', backgroundColor: WHITE}}
         buttonStyle={focus ? styles.selectBoxFocus : styles.selectBox}
@@ -86,18 +82,18 @@ const SelectBox: React.FC<SelectBoxProps> = ({
           return (
             <FontAwesome
               name={isOpened ? 'chevron-up' : 'chevron-down'}
-              color={'#acacac'}
+              color="#acacac"
               size={16}
             />
           );
         }}
-        dropdownIconPosition={'right'}
+        dropdownIconPosition="right"
         dropdownStyle={styles.dropBox}
         rowStyle={styles.dropItem}
         rowTextStyle={styles.dropText}
         onFocus={() => setFocus(true)}
         onBlur={() => setFocus(false)}
-        onChangeSearchInputText={onChangeSearchInputText}
+        onChangeSearchInputText={onChangeSearchInputText || (() => {})}
       />
       {label && (
         <Text style={[common.label, {color: focus ? INPUT.FOCUS : GRAY.LIGHT}]}>

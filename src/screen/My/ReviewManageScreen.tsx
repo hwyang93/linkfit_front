@@ -1,6 +1,6 @@
+import EmployeeReviewTab from '@/components/My/EmployeeReviewTab';
+import EmployerReviewTab from '@/components/My/EmployerReviewTab';
 import {materialTopTabNavigationOptions} from '@/utils/options/tab';
-import EmployeeReviewComponent from '@components/My/EmployeeReviewComponent';
-import EmployerReviewComponent from '@components/My/EmployerReviewComponent';
 import {createMaterialTopTabNavigator} from '@react-navigation/material-top-tabs';
 
 const Tab = createMaterialTopTabNavigator();
@@ -8,8 +8,8 @@ const Tab = createMaterialTopTabNavigator();
 const ReviewManageScreen = () => {
   return (
     <Tab.Navigator screenOptions={materialTopTabNavigationOptions}>
-      <Tab.Screen name="구직" component={EmployeeReviewComponent} />
-      <Tab.Screen name="구인" component={EmployerReviewComponent} />
+      <Tab.Screen name="구직" component={EmployeeReviewTab} />
+      <Tab.Screen name="구인" component={EmployerReviewTab} />
     </Tab.Navigator>
   );
 };

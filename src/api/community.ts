@@ -61,4 +61,10 @@ export const communityApi = {
     const response = await request.delete(`${ENDPOINT}/${postId}`);
     return response.data;
   },
+  getBookmarkList: async () => {
+    const response = await request.get<FetchBookmarkCommunitiesResponse>(
+      `${ENDPOINT}/bookmark`,
+    );
+    return response.data;
+  },
 };

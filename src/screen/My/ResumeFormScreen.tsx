@@ -81,7 +81,6 @@ const ResumeFormScreen = ({navigation}: Props) => {
     }
   };
 
-  // TODO: API 연동
   const onCreateResume = () => {
     const data = {
       title: titleInput.value,
@@ -128,25 +127,23 @@ const ResumeFormScreen = ({navigation}: Props) => {
       <View style={styles.container}>
         <View style={common.mb16}>
           <Input
-            label={'제목'}
+            label="제목"
             onChangeText={titleInput.onChange}
             value={titleInput.value}
-            placeholder={'이력서 제목을 입력하세요.'}
+            placeholder="이력서 제목을 입력하세요."
             keyboardType={KeyboardTypes.DEFAULT}
           />
         </View>
-
         <View style={common.mb16}>
           <Input
-            label={'이름'}
+            label="이름"
             onChangeText={nameInput.onChange}
             value={nameInput.value}
-            placeholder={'자동입력'}
+            placeholder="자동입력"
             keyboardType={KeyboardTypes.DEFAULT}
             editable={false}
           />
         </View>
-
         <View style={common.mb16}>
           {/*<BirthdayPicker*/}
           {/*  label={'생년월일'}*/}
@@ -156,20 +153,19 @@ const ResumeFormScreen = ({navigation}: Props) => {
           {/*  disabled={true}*/}
           {/*/>*/}
           <Input
-            label={'생년월일'}
+            label="생년월일"
             value={birthInput.value}
-            placeholder={'자동입력'}
+            placeholder="자동입력"
             keyboardType={KeyboardTypes.DEFAULT}
             editable={false}
           />
         </View>
-
         <View style={common.mb16}>
           <Input
-            label={'주소'}
+            label="주소"
             onChangeText={addressInput.onChange}
             value={addressInput.value}
-            placeholder={'자동입력'}
+            placeholder="자동입력"
             keyboardType={KeyboardTypes.DEFAULT}
             editable={false}
           />
@@ -185,7 +181,6 @@ const ResumeFormScreen = ({navigation}: Props) => {
             editable={false}
           />
         </View>
-
         <View style={[common.mb16]}>
           <TabButton
             genderData={GENDER_DATA}
@@ -193,7 +188,6 @@ const ResumeFormScreen = ({navigation}: Props) => {
             value={genderInput.value}
           />
         </View>
-
         {careers.map((_: any, index: number) => (
           <View key={index} style={[common.mv20]}>
             {index !== 0 && (
@@ -201,7 +195,6 @@ const ResumeFormScreen = ({navigation}: Props) => {
                 <Image source={iconPath.CANCEL} style={[common.size24]} />
               </Pressable>
             )}
-
             <View>
               <CareerComponent
                 onSelectPosition={(value: string) =>
@@ -220,13 +213,11 @@ const ResumeFormScreen = ({navigation}: Props) => {
             </View>
           </View>
         ))}
-
         <View style={common.mb16}>
           <Pressable onPress={addCareerForm} style={{alignSelf: 'center'}}>
             <Image source={iconPath.ADD_BUTTON} style={common.size40} />
           </Pressable>
         </View>
-
         {educations.map((_: any, index: number) => (
           <View key={index} style={common.mv20}>
             {index !== 0 && (
@@ -236,7 +227,6 @@ const ResumeFormScreen = ({navigation}: Props) => {
                 <Image source={iconPath.CANCEL} style={[common.size24]} />
               </Pressable>
             )}
-
             <View>
               <EducationComponent
                 onSelectSchool={(value: string) =>
@@ -258,37 +248,33 @@ const ResumeFormScreen = ({navigation}: Props) => {
             </View>
           </View>
         ))}
-
         <View style={common.mb16}>
           <Pressable onPress={addEducationForm} style={{alignSelf: 'center'}}>
             <Image source={iconPath.ADD_BUTTON} style={common.size40} />
           </Pressable>
         </View>
-
         <View style={common.mb16}>
           <SelectBox
-            label={'자격증'}
+            label="자격증"
             data={licences?.map(
               licence => licence.issuer + '_' + licence.field,
             )}
             onSelect={(_: any, index: number) => selectLicence(index)}
-            defaultButtonText={'자격증을 선택하세요.'}
-            selectKey={'index'}
+            defaultButtonText="자격증을 선택하세요."
+            selectKey="index"
           />
         </View>
-
         <View style={common.mb16}>
           <Input
-            label={'소개글'}
+            label="소개글"
             onChangeText={introduceInput.onChange}
             value={introduceInput.value}
-            placeholder={'소개글을 작성해 주세요.'}
+            placeholder="소개글을 작성해 주세요."
             keyboardType={KeyboardTypes.DEFAULT}
-            editable={true}
-            multiline={true}
+            editable
+            multiline
           />
         </View>
-
         <View style={common.mt20}>
           <CTAButton
             label="작성 완료"

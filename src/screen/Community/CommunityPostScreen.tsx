@@ -2,6 +2,7 @@ import BottomSheet from '@/components/Common/BottomSheet';
 import BottomSheetOption from '@/components/Common/BottomSheetOption';
 import CommunityUserProfile from '@/components/Community/CommunityUserProfile';
 import {useCommunityPostQuery} from '@/hooks/community/useCommunityPostQuery';
+import useAuth from '@/hooks/useAuth';
 import useModal from '@/hooks/useModal';
 import CommunityPostTop from '@components/Community/CommunityPostTop';
 import ReplyComponent from '@components/Community/ReplyComponent';
@@ -19,6 +20,10 @@ const CommunityPostScreen = ({route}: Props) => {
   const communityPostQuery = useCommunityPostQuery(route.params.postSeq);
   const post = communityPostQuery.data;
 
+  const {user} = useAuth();
+
+  const isMyPost = post?.writerSeq === user.seq;
+
   return (
     <View style={styles.container}>
       <FlatList
@@ -32,6 +37,7 @@ const CommunityPostScreen = ({route}: Props) => {
               name={item.writer.name}
               writerType={item.writer.type}
               profileImage={item.writer.profileImage?.originFileUrl}
+              isMine={item.writerSeq === user.seq}
               onKebabPress={modal.open}
             />
             <ReplyComponent commentInfo={item} />
@@ -50,11 +56,12 @@ const CommunityPostScreen = ({route}: Props) => {
           <View style={[common.separator, common.mv16]} />
         )}
       />
-      <BottomSheet visible={modal.visible} onDismiss={modal.close}>
-        <BottomSheetOption label="신고하기" />
-        <BottomSheetOption label="수정하기" />
-        <BottomSheetOption label="삭제하기" />
-      </BottomSheet>
+      {isMyPost && (
+        <BottomSheet visible={modal.visible} onDismiss={modal.close}>
+          <BottomSheetOption label="수정하기" />
+          <BottomSheetOption label="삭제하기" />
+        </BottomSheet>
+      )}
     </View>
   );
 };

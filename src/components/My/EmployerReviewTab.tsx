@@ -22,7 +22,7 @@ const DATA = [
   },
 ];
 
-const EmployerReviewComponent: React.FC = () => {
+const EmployerReviewTab: React.FC = () => {
   const [modalVisible, setModalVisible] = useState(false);
 
   const openModal = () => {
@@ -102,4 +102,4 @@ const styles = StyleSheet.create({
   kebabIcon: {position: 'absolute', top: 16, right: 0},
 });
 
-export default EmployerReviewComponent;
+export default EmployerReviewTab;

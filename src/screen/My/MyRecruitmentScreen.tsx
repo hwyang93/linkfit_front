@@ -75,6 +75,7 @@ type Props = NativeStackScreenProps<LoggedInParamList, 'MyPost'>;
 
 const MyRecruitmentScreen = ({navigation}: Props) => {
   const periodFilter = useFilter();
+
   const progressionFilter = useFilter();
 
   const periodModal = useModal();
@@ -86,6 +87,13 @@ const MyRecruitmentScreen = ({navigation}: Props) => {
     status: progressionFilter.value,
   });
   const recruits = recruitListQuery.data;
+
+  const filterActive = !!periodFilter.value || !!progressionFilter.value;
+
+  const resetFilter = () => {
+    periodFilter.reset();
+    progressionFilter.reset();
+  };
 
   const handlePeriodOptionPress = (option: string) => {
     periodFilter.setValue(option);
@@ -103,17 +111,35 @@ const MyRecruitmentScreen = ({navigation}: Props) => {
     });
   };
 
+  const periodFilterChipLabel = periodFilter.value
+    ? FILTER.PERIOD[periodFilter.value as keyof typeof FILTER.PERIOD]
+    : '기간';
+
+  const progressionFilterChipLabel = progressionFilter.value
+    ? FILTER.PROGRESSION[
+        progressionFilter.value as keyof typeof FILTER.PROGRESSION
+      ]
+    : '진행 여부';
+
   return (
     <SafeAreaView edges={['left', 'right']} style={styles.container}>
       <FilterChipContainer>
+        {filterActive && (
+          <FilterChip
+            label="초기화"
+            variant="reset"
+            style={{marginRight: 8}}
+            onPress={resetFilter}
+          />
+        )}
         <FilterChip
-          label={periodFilter.value || '기간'}
+          label={periodFilterChipLabel}
           onPress={periodModal.open}
           active={!!periodFilter.value}
           rightIcon
         />
         <FilterChip
-          label={progressionFilter.value || '진행 여부'}
+          label={progressionFilterChipLabel}
           style={{marginLeft: 8}}
           onPress={progressionModal.open}
           active={!!progressionFilter.value}
@@ -139,12 +165,12 @@ const MyRecruitmentScreen = ({navigation}: Props) => {
         visible={periodModal.visible}
         onDismiss={periodModal.close}
         title="기간">
-        {FILTER.PERIOD.map((option, index) => (
+        {Object.entries(FILTER.PERIOD).map(([value, label], index) => (
           <BottomSheetOption
             key={index}
-            label={option}
-            selected={option === periodFilter.value}
-            onPress={() => handlePeriodOptionPress(option)}
+            label={label}
+            selected={value === periodFilter.value}
+            onPress={() => handlePeriodOptionPress(value)}
           />
         ))}
       </BottomSheet>
@@ -152,12 +178,12 @@ const MyRecruitmentScreen = ({navigation}: Props) => {
         visible={progressionModal.visible}
         onDismiss={progressionModal.close}
         title="진행 여부">
-        {FILTER.PROGRESSION.map((option, index) => (
+        {Object.entries(FILTER.PROGRESSION).map(([value, label], index) => (
           <BottomSheetOption
             key={index}
-            label={option}
-            selected={option === progressionFilter.value}
-            onPress={() => handleProgressionOptionPress(option)}
+            label={label}
+            selected={value === progressionFilter.value}
+            onPress={() => handleProgressionOptionPress(value)}
           />
         ))}
       </BottomSheet>

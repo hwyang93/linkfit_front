@@ -12,6 +12,7 @@ import {LoggedInParamList} from '../../../AppInner';
 
 type Props = NativeStackScreenProps<LoggedInParamList, 'CommunityPostEdit'>;
 
+// TODO: 유저 유형에 따라 채널 선택지를 다르게 보여주도록 수정
 const CommunityPostEditScreen = ({navigation, route}: Props) => {
   const [channelSelectValue, setChannelSelectValue] = useState('');
 
