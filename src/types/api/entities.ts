@@ -95,6 +95,7 @@ export interface MemberLicenceEntity extends BaseEntity {
   field: string;
   licenceNumber: string;
   issuer: string;
+  issuerDate: string;
   status: string;
   licenceFileSeq?: number;
   licenceFile?: CommonFileEntity;

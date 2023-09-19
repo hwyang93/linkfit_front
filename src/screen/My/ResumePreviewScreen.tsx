@@ -222,7 +222,7 @@ const ResumePreviewScreen = ({route, navigation}: Props) => {
                 {resume.licence.licenceNumber}
               </Text>
               <Text style={[common.text_m, common.mv2, common.fcg]}>
-                2022.01.30 취득
+                {resume.licence.issuerDate}
               </Text>
             </View>
           )}
