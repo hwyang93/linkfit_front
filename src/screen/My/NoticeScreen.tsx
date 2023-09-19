@@ -15,25 +15,33 @@ import {
   View,
 } from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
-
-const DATA = [
-  {
-    id: 1,
-    title: '공지사항 제목입니다.',
-    date: '2023.01.30',
-  },
-  {
-    id: 2,
-    title: '공지사항 클릭하면 어떻게 됨?',
-    date: '2023.01.30',
-  },
-];
+import {useCallback, useEffect, useState} from 'react';
+import {FetchCsResponse} from '@/types/api/cs';
+import {fetchCs} from '@api/cs';
+import {isAxiosError} from 'axios';
+import toast from '@hooks/toast';
+import {formatDate} from '@util/util';
 
 type Props = NativeStackScreenProps<LoggedInParamList, 'Notice'>;
 
 const NoticeScreen = ({navigation}: Props) => {
-  const {data} = useNoticeListQuery();
-  console.log('notice list', data);
+  const [cs, setCs] = useState<FetchCsResponse>([]);
+
+  const getCs = useCallback(() => {
+    fetchCs({type: 'NOTICE'})
+      .then(({data}) => {
+        setCs(data);
+      })
+      .catch(error => {
+        if (isAxiosError(error)) {
+          toast.error({message: error.message});
+        }
+      });
+  }, []);
+
+  useEffect(() => {
+    getCs();
+  }, [getCs]);
 
   const toNoticeDetail = (noticeId: number) => {
     navigation.navigate(ROUTE.NOTICE_DETAIL, {
@@ -43,16 +51,14 @@ const NoticeScreen = ({navigation}: Props) => {
 
   return (
     <SafeAreaView edges={['bottom', 'left', 'right']} style={styles.container}>
-      {DATA && DATA.length === 0 && (
-        <EmptySet text={'등록된 공지사항이 없어요.'} />
-      )}
-      {DATA && (
+      {cs && cs.length === 0 && <EmptySet text={'등록된 공지사항이 없어요.'} />}
+      {cs && (
         <ScrollView>
-          {DATA.map((item, index) => (
+          {cs.map((item, index) => (
             <Pressable
               key={index}
               style={common.mv16}
-              onPress={() => toNoticeDetail(item.id)}>
+              onPress={() => toNoticeDetail(item.seq)}>
               <View style={common.rowCenter}>
                 <Image
                   source={iconPath.NOTICE}
@@ -62,7 +68,7 @@ const NoticeScreen = ({navigation}: Props) => {
                   {item.title}
                 </Text>
               </View>
-              <Text style={common.text_m}>{item.date}</Text>
+              <Text style={common.text_m}>{formatDate(item.updatedAt)}</Text>
             </Pressable>
           ))}
         </ScrollView>

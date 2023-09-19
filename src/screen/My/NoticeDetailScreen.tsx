@@ -19,7 +19,7 @@ const NoticeDetailScreen = ({route}: Props) => {
 
   return (
     <>
-      {true && (
+      {
         <AppScrollView>
           <View style={{paddingHorizontal: 16}}>
             <View>
@@ -46,7 +46,7 @@ const NoticeDetailScreen = ({route}: Props) => {
             </Text>
           </View>
         </AppScrollView>
-      )}
+      }
     </>
   );
 };

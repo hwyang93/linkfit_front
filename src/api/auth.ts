@@ -1,4 +1,5 @@
 import {
+  checkVerificationCodeBody,
   LoginBody,
   LoginResponse,
   RefreshTokenResponse,
@@ -18,4 +19,8 @@ export const sendEmailVerificationCode = (
   body: SendEmailVerificationCodeBody,
 ) => {
   return request.post('/auth/email', body);
+};
+
+export const checkVerificationCode = (body: checkVerificationCodeBody) => {
+  return request.post('/auth/check/email', body);
 };
