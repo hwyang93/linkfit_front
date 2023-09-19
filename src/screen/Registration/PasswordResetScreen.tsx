@@ -10,10 +10,14 @@ import common from '@styles/common';
 import {useState} from 'react';
 import {Text, View} from 'react-native';
 import {LoggedInParamList} from '../../../AppInner';
+import {checkVerificationCode, sendEmailVerificationCode} from '@api/auth';
+import {isAxiosError} from 'axios';
+import toast from '@hooks/toast';
+import {updateMemberPassword} from '@api/member';
 
 type Props = NativeStackScreenProps<LoggedInParamList, 'PasswordReset'>;
 
-const PasswordResetScreen = ({}: Props) => {
+const PasswordResetScreen = ({navigation}: Props) => {
   const [step, setStep] = useState(1);
   const [verificationCodeSent, setVerificationCodeSent] = useState(false);
 
@@ -30,21 +34,69 @@ const PasswordResetScreen = ({}: Props) => {
   const isPasswordConfirmInputValid =
     passwordConfirmInput.value === passwordInput.value;
 
-  const onSendButtonPress = () => {
-    try {
-      setVerificationCodeSent(true);
-    } catch (error) {
-      console.log(error);
-    }
+  // const sendEmailVerificationCode = () => {
+  //   sendEmailVerificationCode({
+  //     email: emailInput.value,
+  //   });
+  // };
+  const sendVerificationCode = () => {
+    sendEmailVerificationCode({
+      email: emailInput.value,
+    })
+      .then(() => {
+        toast.success({message: '인증번호가 전송되었어요.'});
+        setVerificationCodeSent(true);
+      })
+      .catch(error => {
+        if (isAxiosError(error)) {
+          toast.error({message: error.message});
+        }
+      });
   };
 
-  const onResendButtonPress = () => {};
+  const onSendButtonPress = () => {
+    sendVerificationCode();
+  };
+
+  const onResendButtonPress = () => {
+    sendVerificationCode();
+  };
 
   const onVerifyButtonPress = () => {
-    setStep(2);
+    checkVerificationCode({
+      email: emailInput.value,
+      authNumber: verificationCodeInput.value,
+    })
+      .then(() => {
+        setStep(2);
+      })
+      .catch(error => {
+        if (isAxiosError(error)) {
+          toast.error({message: error.message});
+        }
+      });
   };
 
-  const onResetButtonPress = () => {};
+  const onResetButtonPress = () => {
+    if (passwordInput.value !== passwordConfirmInput.value) {
+      toast.warn({message: '비밀번호가 일치하지 않습니다.'});
+    }
+
+    const data = {
+      email: emailInput.value,
+      newPassword: passwordInput.value,
+      isCheckAuthCode: 'Y',
+    };
+
+    updateMemberPassword(data)
+      .then(() => {
+        toast.success({message: '비밀번호 재설정이 완료되었습니다.'});
+        navigation.navigate('SignIn');
+      })
+      .catch(error => {
+        toast.error({message: error.message});
+      });
+  };
 
   return (
     <DismissKeyboardView>

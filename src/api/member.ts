@@ -2,6 +2,7 @@ import {
   CreateMemberDto,
   CreateMemberReputationDto,
   CreateRegionAuthDto,
+  UpdateMemberPasswordDto,
   UpdateMemberReputationDto,
   UpdatePositionSuggestDto,
 } from '@/types/api/dtos';
@@ -139,6 +140,10 @@ export const fetchMemberInfoBySeq = (seq: number) => {
 
 export const fetchRecruitByMember = (seq: number) => {
   return request.get<FetchRecruitByMemberResponse>(`/member/${seq}/recruit`);
+};
+
+export const updateMemberPassword = (body: UpdateMemberPasswordDto) => {
+  return request.patch('member/password', body);
 };
 
 const ENDPOINT = '/member';

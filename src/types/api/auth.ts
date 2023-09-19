@@ -15,3 +15,8 @@ export interface RefreshTokenResponse {
 export interface SendEmailVerificationCodeBody {
   email: string;
 }
+
+export interface checkVerificationCodeBody {
+  email: string;
+  authNumber: string;
+}
