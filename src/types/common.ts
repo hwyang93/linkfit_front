@@ -1,4 +1,4 @@
-import {AxiosResponse} from 'axios';
+import { AxiosResponse } from 'axios';
 
 export const Member = {
   Public: 'PUBLIC',
@@ -7,7 +7,7 @@ export const Member = {
   Center: 'CENTER',
 } as const;
 
-export type MemberType = typeof Member[keyof typeof Member];
+export type MemberType = (typeof Member)[keyof typeof Member];
 
 export type YesNoFlag = 'Y' | 'N';
 

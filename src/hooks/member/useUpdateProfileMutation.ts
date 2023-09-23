@@ -1,6 +1,6 @@
-import {memberApi} from '@/api/member';
-import {UpdateProfileBody} from '@/types/api/member';
-import {useMutation} from '@tanstack/react-query';
+import { memberApi } from '@/api/member';
+import { UpdateProfileBody } from '@/types/api/member';
+import { useMutation } from '@tanstack/react-query';
 
 const LINKS = {
   seq: null,

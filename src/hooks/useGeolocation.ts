@@ -1,5 +1,5 @@
 import Geolocation from '@react-native-community/geolocation';
-import {useEffect, useState} from 'react';
+import { useEffect, useState } from 'react';
 
 interface Position {
   latitude: number;
@@ -11,33 +11,33 @@ const useGeolocation = () => {
 
   const getCurrentPosition = () => {
     Geolocation.getCurrentPosition(
-      position => {
-        const {latitude, longitude} = position.coords;
+      (position) => {
+        const { latitude, longitude } = position.coords;
         setPosition({
           latitude,
           longitude,
         });
       },
-      error => console.log(error.code, error.message),
-      {enableHighAccuracy: true, timeout: 15000, maximumAge: 10000},
+      (error) => console.log(error.code, error.message),
+      { enableHighAccuracy: true, timeout: 15000, maximumAge: 10000 },
     );
   };
 
   useEffect(() => {
     Geolocation.watchPosition(
-      position => {
-        const {latitude, longitude} = position.coords;
+      (position) => {
+        const { latitude, longitude } = position.coords;
         setPosition({
           latitude,
           longitude,
         });
       },
-      error => console.log(error.code, error.message),
-      {enableHighAccuracy: true, distanceFilter: 10},
+      (error) => console.log(error.code, error.message),
+      { enableHighAccuracy: true, distanceFilter: 10 },
     );
   });
 
-  return {position, getCurrentPosition};
+  return { position, getCurrentPosition };
 };
 
 export default useGeolocation;

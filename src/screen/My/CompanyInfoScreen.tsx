@@ -1,8 +1,8 @@
-import {LoggedInParamList} from '@/../AppInner';
-import {NativeStackScreenProps} from '@react-navigation/native-stack';
-import {WHITE} from '@styles/colors';
+import { LoggedInParamList } from '@/../AppInner';
+import { NativeStackScreenProps } from '@react-navigation/native-stack';
+import { WHITE } from '@styles/colors';
 import common from '@styles/common';
-import {StyleSheet, Text, View} from 'react-native';
+import { StyleSheet, Text, View } from 'react-native';
 
 type Props = NativeStackScreenProps<LoggedInParamList, 'CompanyInfo'>;
 

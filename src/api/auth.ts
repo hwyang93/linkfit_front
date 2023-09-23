@@ -16,8 +16,6 @@ export const refreshToken = () => {
   return request.post<RefreshTokenResponse>(`${ENDPOINT}/refresh`);
 };
 
-export const sendEmailVerificationCode = (
-  body: SendEmailVerificationCodeBody,
-) => {
+export const sendEmailVerificationCode = (body: SendEmailVerificationCodeBody) => {
   return request.post(`${ENDPOINT}/email`, body);
 };

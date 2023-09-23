@@ -1,14 +1,14 @@
-import {iconPath} from '@/utils/iconPath';
-import {NavigationProp, useNavigation} from '@react-navigation/native';
+import { iconPath } from '@/utils/iconPath';
+import { NavigationProp, useNavigation } from '@react-navigation/native';
 import common from '@styles/common';
-import {Image, Pressable, View} from 'react-native';
-import {LoggedInParamList} from '../../../AppInner';
+import { Image, Pressable, View } from 'react-native';
+import { LoggedInParamList } from '../../../AppInner';
 
 type HeaderProps = {
   link?: any;
 };
 
-const MyHeader = ({link}: HeaderProps) => {
+const MyHeader = ({ link }: HeaderProps) => {
   const navigation = useNavigation<NavigationProp<LoggedInParamList>>();
   return (
     <View
@@ -19,8 +19,8 @@ const MyHeader = ({link}: HeaderProps) => {
         flexDirection: 'row',
         justifyContent: 'space-between',
       }}>
-      <View style={{flex: 0}}>
-        <Image source={iconPath.LOGO} style={{width: 116, height: 32}} />
+      <View style={{ flex: 0 }}>
+        <Image source={iconPath.LOGO} style={{ width: 116, height: 32 }} />
       </View>
       <View
         style={{

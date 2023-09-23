@@ -1,10 +1,5 @@
-import {YesNoFlag} from '../common';
-import {
-  CommonFileEntity,
-  CompanyEntity,
-  RecruitApplyEntity,
-  RecruitEntity,
-} from './entities';
+import { YesNoFlag } from '../common';
+import { CommonFileEntity, CompanyEntity, RecruitApplyEntity, RecruitEntity } from './entities';
 
 export const RecruitStatus = {
   Applied: 'APPLY',
@@ -15,8 +10,7 @@ export const RecruitStatus = {
   Passed: 'PASS',
 } as const;
 
-export type RecruitStatusType =
-  typeof RecruitStatus[keyof typeof RecruitStatus];
+export type RecruitStatusType = (typeof RecruitStatus)[keyof typeof RecruitStatus];
 
 export interface FetchRecruitsParams {
   noPaging?: boolean;

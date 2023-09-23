@@ -2,30 +2,24 @@ import CTAButton from '@/components/Common/CTAButton';
 import TextField from '@/components/Common/TextField';
 import toast from '@/hooks/toast';
 import useInput from '@/hooks/useInput';
-import {AuthStackParamList} from '@/navigations/AuthStack';
+import { AuthStackParamList } from '@/navigations/AuthStack';
 import THEME from '@/styles/theme';
-import {removeWhitespace, validateEmail} from '@/utils/util';
-import {fetchMemberInfoByEmail} from '@api/member';
+import { removeWhitespace, validateEmail } from '@/utils/util';
+import { fetchMemberInfoByEmail } from '@api/member';
 import Logo from '@components/Logo';
 import SimpleLogin from '@components/SimpleLogin';
-import {NativeStackScreenProps} from '@react-navigation/native-stack';
+import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import common from '@styles/common';
-import {isAxiosError} from 'axios';
-import {useState} from 'react';
-import {
-  Keyboard,
-  StyleSheet,
-  Text,
-  TouchableWithoutFeedback,
-  View,
-} from 'react-native';
+import { isAxiosError } from 'axios';
+import { useState } from 'react';
+import { Keyboard, StyleSheet, Text, TouchableWithoutFeedback, View } from 'react-native';
 import EncryptedStorage from 'react-native-encrypted-storage';
 
 const EMAIL_INVALID_ERROR_MESSAGE = '이메일 형식에 맞게 입력해 주세요.';
 
 type Props = NativeStackScreenProps<AuthStackParamList, 'SignIn'>;
 
-const SignInScreen = ({navigation}: Props) => {
+const SignInScreen = ({ navigation }: Props) => {
   const [isEmailValid, setIsEmailValid] = useState(true);
   const [loading, setLoading] = useState(false);
 
@@ -45,7 +39,7 @@ const SignInScreen = ({navigation}: Props) => {
     try {
       const response = await fetchMemberInfoByEmail(email.value);
       if (response.data.seq) {
-        navigation.navigate('LogIn', {email: email.value});
+        navigation.navigate('LogIn', { email: email.value });
       } else {
         navigation.navigate('SignUp', {
           email: email.value,
@@ -54,7 +48,7 @@ const SignInScreen = ({navigation}: Props) => {
     } catch (error) {
       console.log(error);
       if (isAxiosError(error)) {
-        toast.error({message: error.message});
+        toast.error({ message: error.message });
       }
     } finally {
       setLoading(false);
@@ -91,10 +85,8 @@ const SignInScreen = ({navigation}: Props) => {
             />
           </View>
           <SimpleLogin />
-          <View style={{alignItems: 'center'}}>
-            <Text
-              style={[styles.linkText, common.mt24]}
-              onPress={onFindEmailPress}>
+          <View style={{ alignItems: 'center' }}>
+            <Text style={[styles.linkText, common.mt24]} onPress={onFindEmailPress}>
               가입한 이메일 찾기
             </Text>
           </View>

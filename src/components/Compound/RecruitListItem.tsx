@@ -1,10 +1,10 @@
-import {createRecruitBookmark, deleteRecruitBookmark} from '@/api/recruit';
+import { createRecruitBookmark, deleteRecruitBookmark } from '@/api/recruit';
 import toast from '@/hooks/toast';
-import {SCREEN_WIDTH} from '@/utils/constants/common';
-import {iconPath} from '@/utils/iconPath';
+import { SCREEN_WIDTH } from '@/utils/constants/common';
+import { iconPath } from '@/utils/iconPath';
 import common from '@styles/common';
-import {useState} from 'react';
-import {Image, Pressable, StyleSheet, Text, View} from 'react-native';
+import { useState } from 'react';
+import { Image, Pressable, StyleSheet, Text, View } from 'react-native';
 
 const imageSize = (SCREEN_WIDTH - 40) / 2;
 
@@ -38,19 +38,19 @@ const RecruitListItem: React.FC<RecruitListItemProps> = ({
       setIsBookmarkChecked(true);
       createRecruitBookmark(seq)
         .then(() => {
-          toast.success({message: '북마크 등록이 완료되었어요!'});
+          toast.success({ message: '북마크 등록이 완료되었어요!' });
         })
-        .catch(error => {
-          toast.error({message: error.message});
+        .catch((error) => {
+          toast.error({ message: error.message });
         });
     } else {
       setIsBookmarkChecked(false);
       deleteRecruitBookmark(seq)
         .then(() => {
-          toast.success({message: '북마크가 삭제되었어요!'});
+          toast.success({ message: '북마크가 삭제되었어요!' });
         })
-        .catch(error => {
-          toast.error({message: error.message});
+        .catch((error) => {
+          toast.error({ message: error.message });
         });
     }
   };
@@ -59,7 +59,7 @@ const RecruitListItem: React.FC<RecruitListItemProps> = ({
     <Pressable style={styles.slideBox} onPress={onPress}>
       <View>
         <Image
-          source={imageSrc ? {uri: imageSrc} : iconPath.CENTER_DEFAULT}
+          source={imageSrc ? { uri: imageSrc } : iconPath.CENTER_DEFAULT}
           style={styles.imgBox}
           resizeMode={'cover'}
         />
@@ -91,8 +91,8 @@ const styles = StyleSheet.create({
     height: 104,
     borderRadius: 8,
   },
-  infoBox: {position: 'relative'},
-  bookmark: {position: 'absolute', top: 0, right: 0},
+  infoBox: { position: 'relative' },
+  bookmark: { position: 'absolute', top: 0, right: 0 },
 });
 
 export default RecruitListItem;

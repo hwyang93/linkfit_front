@@ -1,17 +1,17 @@
 import CTAButton from '@/components/Common/CTAButton';
-import {createReview, updateMemberReputation} from '@api/member';
-import Input, {KeyboardTypes} from '@components/Input';
+import { createReview, updateMemberReputation } from '@api/member';
+import Input, { KeyboardTypes } from '@components/Input';
 import toast from '@hooks/toast';
-import {NativeStackScreenProps} from '@react-navigation/native-stack';
-import {WHITE} from '@styles/colors';
+import { NativeStackScreenProps } from '@react-navigation/native-stack';
+import { WHITE } from '@styles/colors';
 import common from '@styles/common';
-import {useCallback, useEffect, useState} from 'react';
-import {StyleSheet, View} from 'react-native';
-import {LoggedInParamList} from '../../../AppInner';
+import { useCallback, useEffect, useState } from 'react';
+import { StyleSheet, View } from 'react-native';
+import { LoggedInParamList } from '../../../AppInner';
 
 type Props = NativeStackScreenProps<LoggedInParamList, 'ReviewForm'>;
 
-const ReviewFormScreen = ({navigation, route}: Props) => {
+const ReviewFormScreen = ({ navigation, route }: Props) => {
   const [loading, setLoading] = useState(false);
   const [reputationInfo] = useState<any>(route.params.reputationInfo);
   const [comment, setComment] = useState(reputationInfo?.comment);
@@ -27,13 +27,13 @@ const ReviewFormScreen = ({navigation, route}: Props) => {
     createReview(data)
       .then(() => {
         setLoading(true);
-        toast.success({message: '후기 작성이 완료되었어요!'});
+        toast.success({ message: '후기 작성이 완료되었어요!' });
         navigation.goBack();
         setLoading(false);
       })
-      .catch(error => {
+      .catch((error) => {
         setLoading(false);
-        toast.error({message: error.message});
+        toast.error({ message: error.message });
       });
   }, [
     comment,
@@ -44,17 +44,17 @@ const ReviewFormScreen = ({navigation, route}: Props) => {
   ]);
 
   const onUpdateReputation = useCallback(() => {
-    const data = {comment: comment};
+    const data = { comment: comment };
     updateMemberReputation(reputationInfo.seq, data)
       .then(() => {
         setLoading(true);
-        toast.success({message: '후기 수정이 완료되었어요!'});
+        toast.success({ message: '후기 수정이 완료되었어요!' });
         navigation.goBack();
         setLoading(false);
       })
-      .catch(error => {
+      .catch((error) => {
         setLoading(false);
-        toast.error({message: error.message});
+        toast.error({ message: error.message });
       });
   }, [comment, reputationInfo?.seq, navigation]);
 
@@ -100,7 +100,7 @@ const ReviewFormScreen = ({navigation, route}: Props) => {
   );
 };
 const styles = StyleSheet.create({
-  container: {flex: 1, padding: 16, backgroundColor: WHITE},
+  container: { flex: 1, padding: 16, backgroundColor: WHITE },
 });
 
 export default ReviewFormScreen;

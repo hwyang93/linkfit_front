@@ -2,19 +2,19 @@ import BottomSheet from '@/components/Common/BottomSheet';
 import BottomSheetOption from '@/components/Common/BottomSheetOption';
 import FilterChip from '@/components/Common/FilterChip';
 import FilterChipContainer from '@/components/Common/FilterChipContainer';
-import {useReceivedPositionSuggestionListQuery} from '@/hooks/member/useReceivedPositionSuggestionListQuery';
+import { useReceivedPositionSuggestionListQuery } from '@/hooks/member/useReceivedPositionSuggestionListQuery';
 import useFilter from '@/hooks/useFilter';
 import useModal from '@/hooks/useModal';
-import {ROUTE} from '@/navigations/routes';
-import {Member} from '@/types/common';
+import { ROUTE } from '@/navigations/routes';
+import { Member } from '@/types/common';
 import FILTER from '@/utils/constants/filter';
-import {formatDate} from '@/utils/util';
-import {NativeStackScreenProps} from '@react-navigation/native-stack';
-import {WHITE} from '@styles/colors';
+import { formatDate } from '@/utils/util';
+import { NativeStackScreenProps } from '@react-navigation/native-stack';
+import { WHITE } from '@styles/colors';
 import common from '@styles/common';
-import {Pressable, ScrollView, StyleSheet, Text} from 'react-native';
-import {SafeAreaView} from 'react-native-safe-area-context';
-import {LoggedInParamList} from '../../../AppInner';
+import { Pressable, ScrollView, StyleSheet, Text } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
+import { LoggedInParamList } from '../../../AppInner';
 
 interface ReceivedSuggestionCardProps {
   type: string;
@@ -58,7 +58,7 @@ type Props = NativeStackScreenProps<
   typeof ROUTE.MY.RECEIVED_POSITION_SUGGESTION_LIST
 >;
 
-const ReceivedSuggestionScreen = ({navigation}: Props) => {
+const ReceivedSuggestionScreen = ({ navigation }: Props) => {
   const periodFilter = useFilter();
   const replyOrNotFilter = useFilter();
 
@@ -72,7 +72,7 @@ const ReceivedSuggestionScreen = ({navigation}: Props) => {
     replyOrNotFilter.reset();
   };
 
-  const {data} = useReceivedPositionSuggestionListQuery();
+  const { data } = useReceivedPositionSuggestionListQuery();
   const suggests = data;
 
   const handlePeriodOptionPress = (option: string) => {
@@ -117,9 +117,7 @@ const ReceivedSuggestionScreen = ({navigation}: Props) => {
   const periodFilterLabel =
     FILTER.PERIOD[periodFilter.value as keyof typeof FILTER.PERIOD] || '기간';
   const replyOrNotFilterLabel =
-    FILTER.REPLY_OR_NOT[
-      replyOrNotFilter.value as keyof typeof FILTER.REPLY_OR_NOT
-    ] || '답변 여부';
+    FILTER.REPLY_OR_NOT[replyOrNotFilter.value as keyof typeof FILTER.REPLY_OR_NOT] || '답변 여부';
 
   return (
     <SafeAreaView edges={['left', 'right']} style={styles.container}>
@@ -127,7 +125,7 @@ const ReceivedSuggestionScreen = ({navigation}: Props) => {
         {filterActive && (
           <FilterChip
             label="초기화"
-            style={{marginRight: 8}}
+            style={{ marginRight: 8 }}
             variant="reset"
             onPress={resetFilter}
           />
@@ -135,7 +133,7 @@ const ReceivedSuggestionScreen = ({navigation}: Props) => {
         <FilterChip
           label={periodFilterLabel}
           active={!!periodFilter.value}
-          style={{marginRight: 8}}
+          style={{ marginRight: 8 }}
           rightIcon
           onPress={periodModal.open}
         />
@@ -147,7 +145,7 @@ const ReceivedSuggestionScreen = ({navigation}: Props) => {
         />
       </FilterChipContainer>
       <ScrollView
-        contentContainerStyle={{marginHorizontal: 16, marginBottom: 24}}
+        contentContainerStyle={{ marginHorizontal: 16, marginBottom: 24 }}
         showsVerticalScrollIndicator={false}>
         {suggests?.map((item, index) => (
           <ReceivedSuggestionCard
@@ -158,11 +156,7 @@ const ReceivedSuggestionScreen = ({navigation}: Props) => {
             companyName={item.writer.company?.companyName || ''}
             writerName={item.writer.name}
             closingDate={item.closingDate || ''}
-            status={
-              FILTER.REPLY_OR_NOT[
-                item.status as keyof typeof FILTER.REPLY_OR_NOT
-              ]
-            }
+            status={FILTER.REPLY_OR_NOT[item.status as keyof typeof FILTER.REPLY_OR_NOT]}
             onPress={() => handleSuggestionCardPress(item.seq)}
           />
           // <Pressable
@@ -191,10 +185,7 @@ const ReceivedSuggestionScreen = ({navigation}: Props) => {
           // </Pressable>
         ))}
       </ScrollView>
-      <BottomSheet
-        visible={periodModal.visible}
-        onDismiss={periodModal.close}
-        title="기간">
+      <BottomSheet visible={periodModal.visible} onDismiss={periodModal.close} title="기간">
         {Object.entries(FILTER.PERIOD).map(([value, label], index) => (
           <BottomSheetOption
             key={index}

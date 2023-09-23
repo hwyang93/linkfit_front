@@ -1,26 +1,26 @@
 import BottomSheet from '@/components/Common/BottomSheet';
 import BottomSheetOption from '@/components/Common/BottomSheetOption';
 import CommunityUserProfile from '@/components/Community/CommunityUserProfile';
-import {useCommunityPostQuery} from '@/hooks/community/useCommunityPostQuery';
+import { useCommunityPostQuery } from '@/hooks/community/useCommunityPostQuery';
 import useAuth from '@/hooks/useAuth';
 import useModal from '@/hooks/useModal';
 import CommunityPostTop from '@components/Community/CommunityPostTop';
 import ReplyComponent from '@components/Community/ReplyComponent';
-import {NativeStackScreenProps} from '@react-navigation/native-stack';
-import {WHITE} from '@styles/colors';
+import { NativeStackScreenProps } from '@react-navigation/native-stack';
+import { WHITE } from '@styles/colors';
 import common from '@styles/common';
-import {FlatList, StyleSheet, View} from 'react-native';
-import {LoggedInParamList} from '../../../AppInner';
+import { FlatList, StyleSheet, View } from 'react-native';
+import { LoggedInParamList } from '../../../AppInner';
 
 type Props = NativeStackScreenProps<LoggedInParamList, 'CommunityPost'>;
 
-const CommunityPostScreen = ({route}: Props) => {
+const CommunityPostScreen = ({ route }: Props) => {
   const modal = useModal();
 
   const communityPostQuery = useCommunityPostQuery(route.params.postSeq);
   const post = communityPostQuery.data;
 
-  const {user} = useAuth();
+  const { user } = useAuth();
 
   const isMyPost = post?.writerSeq === user.seq;
 
@@ -29,7 +29,7 @@ const CommunityPostScreen = ({route}: Props) => {
       <FlatList
         data={post?.comments}
         keyExtractor={(_, index) => index.toString()}
-        renderItem={({item}) => (
+        renderItem={({ item }) => (
           <View>
             <CommunityUserProfile
               career={item.writer.career}
@@ -44,17 +44,10 @@ const CommunityPostScreen = ({route}: Props) => {
           </View>
         )}
         ListHeaderComponent={
-          post && (
-            <CommunityPostTop
-              postInfo={post}
-              onCommentCreate={communityPostQuery.refetch}
-            />
-          )
+          post && <CommunityPostTop postInfo={post} onCommentCreate={communityPostQuery.refetch} />
         }
         showsVerticalScrollIndicator={false}
-        ItemSeparatorComponent={() => (
-          <View style={[common.separator, common.mv16]} />
-        )}
+        ItemSeparatorComponent={() => <View style={[common.separator, common.mv16]} />}
       />
       {isMyPost && (
         <BottomSheet visible={modal.visible} onDismiss={modal.close}>
@@ -72,7 +65,7 @@ const styles = StyleSheet.create({
     padding: 16,
     backgroundColor: WHITE,
   },
-  kebabIcon: {position: 'absolute', top: 16, right: 0},
+  kebabIcon: { position: 'absolute', top: 16, right: 0 },
 });
 
 export default CommunityPostScreen;

@@ -1,22 +1,20 @@
-import {LoggedInParamList} from '@/../AppInner';
-import BottomSheet, {
-  BottomSheetCTAContainer,
-} from '@/components/Common/BottomSheet';
+import { LoggedInParamList } from '@/../AppInner';
+import BottomSheet, { BottomSheetCTAContainer } from '@/components/Common/BottomSheet';
 import CTAButton from '@/components/Common/CTAButton';
-import {useUnregisterMutation} from '@/hooks/member/useUnRegisterMutation';
+import { useUnregisterMutation } from '@/hooks/member/useUnregisterMutation';
 import useAuth from '@/hooks/useAuth';
 import useModal from '@/hooks/useModal';
-import {NativeStackScreenProps} from '@react-navigation/native-stack';
-import {BLUE, WHITE} from '@styles/colors';
+import { NativeStackScreenProps } from '@react-navigation/native-stack';
+import { BLUE, WHITE } from '@styles/colors';
 import common from '@styles/common';
-import {Pressable, StyleSheet, Text, View} from 'react-native';
+import { Pressable, StyleSheet, Text, View } from 'react-native';
 
 type Props = NativeStackScreenProps<LoggedInParamList, 'Account'>;
 
-const AccountScreen = ({navigation}: Props) => {
-  const unRegisterModal = useModal();
+const AccountScreen = ({ navigation }: Props) => {
+  const unregisterModal = useModal();
 
-  const {user, signOut} = useAuth();
+  const { user, signOut } = useAuth();
 
   const unregisterMutation = useUnregisterMutation();
 
@@ -29,26 +27,24 @@ const AccountScreen = ({navigation}: Props) => {
   return (
     <View style={styles.container}>
       <View>
-        <Pressable
-          style={common.mv20}
-          onPress={() => navigation.navigate('PasswordReset')}>
+        <Pressable style={common.mv20} onPress={() => navigation.navigate('PasswordReset')}>
           <Text style={[common.text_m, styles.linkText]}>비밀번호 재설정</Text>
         </Pressable>
-        <Pressable style={common.mv20} onPress={unRegisterModal.open}>
+        <Pressable style={common.mv20} onPress={unregisterModal.open}>
           <Text style={[common.text_m, styles.linkText]}>회원 탈퇴</Text>
         </Pressable>
       </View>
       <BottomSheet
         title="회원 탈퇴 하시겠습니까?"
-        visible={unRegisterModal.visible}
-        onDismiss={unRegisterModal.close}>
+        visible={unregisterModal.visible}
+        onDismiss={unregisterModal.close}>
         <BottomSheetCTAContainer>
           <CTAButton label="탈퇴하기" onPress={onUnregisterButtonClick} />
           <CTAButton
-            style={{marginTop: 16}}
+            style={{ marginTop: 16 }}
             variant="stroked"
             label="취소"
-            onPress={unRegisterModal.close}
+            onPress={unregisterModal.close}
           />
         </BottomSheetCTAContainer>
       </BottomSheet>
@@ -57,7 +53,7 @@ const AccountScreen = ({navigation}: Props) => {
 };
 
 const styles = StyleSheet.create({
-  container: {flex: 1, padding: 16, backgroundColor: WHITE},
+  container: { flex: 1, padding: 16, backgroundColor: WHITE },
   linkText: {
     color: BLUE.DEFAULT,
     textDecorationLine: 'underline',

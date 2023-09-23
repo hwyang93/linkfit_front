@@ -1,14 +1,14 @@
 import CTAButton from '@/components/Common/CTAButton';
-import {createInstructorSuggest} from '@api/instructor';
+import { createInstructorSuggest } from '@api/instructor';
 import DismissKeyboardView from '@components/DismissKeyboardView';
-import Input, {KeyboardTypes} from '@components/Input';
+import Input, { KeyboardTypes } from '@components/Input';
 import SelectBox from '@components/SelectBox';
 import toast from '@hooks/toast';
-import {NativeStackScreenProps} from '@react-navigation/native-stack';
+import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import common from '@styles/common';
-import {useCallback, useState} from 'react';
-import {StyleSheet, View} from 'react-native';
-import {LoggedInParamList} from '../../AppInner';
+import { useCallback, useState } from 'react';
+import { StyleSheet, View } from 'react-native';
+import { LoggedInParamList } from '../../AppInner';
 
 const SUGGESTION = [
   '필라테스 강사님 구합니다.',
@@ -16,18 +16,11 @@ const SUGGESTION = [
   '필라테스 파트타임 강사님구해요.',
 ];
 
-const DEADLINE = [
-  '채용시 마감',
-  '1일 후',
-  '3일 후',
-  '1주 후',
-  '2주 후',
-  '한달 후',
-];
+const DEADLINE = ['채용시 마감', '1일 후', '3일 후', '1주 후', '2주 후', '한달 후'];
 
 type Props = NativeStackScreenProps<LoggedInParamList, 'Suggestion'>;
 
-const SuggestionScreen = ({navigation, route}: Props) => {
+const SuggestionScreen = ({ navigation, route }: Props) => {
   const [loading, setLoading] = useState(false);
   console.log(setLoading);
   const [title, setTitle] = useState('');
@@ -47,20 +40,13 @@ const SuggestionScreen = ({navigation, route}: Props) => {
     };
     await createInstructorSuggest(data)
       .then(() => {
-        toast.success('포지션 제안이 완료되었어요!');
+        toast.success({ message: '포지션 제안이 완료되었어요!' });
         navigation.pop();
       })
-      .catch(error => {
-        toast.error({message: error.message});
+      .catch((error) => {
+        toast.error({ message: error.message });
       });
-  }, [
-    closingDate,
-    content,
-    navigation,
-    recruitSeq,
-    route.params.targetMemberSeq,
-    title,
-  ]);
+  }, [closingDate, content, navigation, recruitSeq, route.params.targetMemberSeq, title]);
   return (
     <DismissKeyboardView>
       <View style={styles.container}>

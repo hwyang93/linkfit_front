@@ -1,4 +1,4 @@
-import {CompanyEntity, MemberReputationEntity, RecruitEntity} from './entities';
+import { CompanyEntity, MemberReputationEntity, RecruitEntity } from './entities';
 
 export interface FetchCompanyResponse {
   companyInfo?: CompanyEntity;

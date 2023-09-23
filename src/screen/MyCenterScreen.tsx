@@ -1,23 +1,16 @@
-import {SCREEN_WIDTH} from '@/utils/constants/common';
-import {iconPath} from '@/utils/iconPath';
-import {fetchMemberMyInfo} from '@api/member';
+import { SCREEN_WIDTH } from '@/utils/constants/common';
+import { iconPath } from '@/utils/iconPath';
+import { fetchMemberMyInfo } from '@api/member';
 import CenterProfileBox from '@components/CenterProfileBox';
 import MyTitle from '@components/My/MyTitle';
-import {useIsFocused} from '@react-navigation/native';
-import {NativeStackScreenProps} from '@react-navigation/native-stack';
-import {GRAY, WHITE} from '@styles/colors';
+import { useIsFocused } from '@react-navigation/native';
+import { NativeStackScreenProps } from '@react-navigation/native-stack';
+import { GRAY, WHITE } from '@styles/colors';
 import common from '@styles/common';
-import {useEffect, useState} from 'react';
-import {
-  Image,
-  Pressable,
-  ScrollView,
-  StyleSheet,
-  Text,
-  View,
-} from 'react-native';
-import {SafeAreaView} from 'react-native-safe-area-context';
-import {LoggedInParamList} from '../../AppInner';
+import { useEffect, useState } from 'react';
+import { Image, Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
+import { LoggedInParamList } from '../../AppInner';
 
 const columns2 = (SCREEN_WIDTH - 32) / 2;
 const columns3 = (SCREEN_WIDTH - 32) / 3;
@@ -52,7 +45,7 @@ const MENU = [
 
 type Props = NativeStackScreenProps<LoggedInParamList, 'MyCenter'>;
 
-const MyCenterScreen = ({navigation}: Props) => {
+const MyCenterScreen = ({ navigation }: Props) => {
   const [myInfo, setMyInfo] = useState<any>({});
 
   const isFocused = useIsFocused();
@@ -60,7 +53,7 @@ const MyCenterScreen = ({navigation}: Props) => {
   useEffect(() => {
     if (isFocused) {
       fetchMemberMyInfo()
-        .then(({data}: any) => {
+        .then(({ data }: any) => {
           setMyInfo(data);
         })
         .catch((message: any) => {
@@ -78,13 +71,13 @@ const MyCenterScreen = ({navigation}: Props) => {
 
         <View style={common.mb8}>
           <Text style={[common.title_s]}>프로필 메뉴</Text>
-          <View style={[common.rowCenter, {flexWrap: 'wrap'}]}>
+          <View style={[common.rowCenter, { flexWrap: 'wrap' }]}>
             {MENU.map((item: any, index) => {
               return (
                 <Pressable
                   onPress={() => navigation.navigate(item.link)}
                   key={index}
-                  style={[styles.menuItem, {width: columns3, height: 80}]}>
+                  style={[styles.menuItem, { width: columns3, height: 80 }]}>
                   <Image source={item.icon} style={common.size32} />
                   <Text style={common.text_s}>{item.title}</Text>
                 </Pressable>
@@ -98,7 +91,7 @@ const MyCenterScreen = ({navigation}: Props) => {
         </View>
 
         <View style={common.mb24}>
-          <View style={[common.rowCenter, {flexWrap: 'wrap'}]}>
+          <View style={[common.rowCenter, { flexWrap: 'wrap' }]}>
             <View
               style={[
                 styles.menuItem,
@@ -110,9 +103,7 @@ const MyCenterScreen = ({navigation}: Props) => {
                 },
               ]}>
               <Text style={common.text_s}>진행중</Text>
-              <Text style={common.title_s}>
-                {myInfo.recruitCountInfo?.ingRecruitCount}
-              </Text>
+              <Text style={common.title_s}>{myInfo.recruitCountInfo?.ingRecruitCount}</Text>
             </View>
 
             <View
@@ -124,23 +115,17 @@ const MyCenterScreen = ({navigation}: Props) => {
                 },
               ]}>
               <Text style={common.text_s}>마감</Text>
-              <Text style={common.title_s}>
-                {myInfo?.recruitCountInfo?.closedRecruitCount}
-              </Text>
+              <Text style={common.title_s}>{myInfo?.recruitCountInfo?.closedRecruitCount}</Text>
             </View>
           </View>
         </View>
 
         <View style={[common.mb8]}>
-          <MyTitle
-            title={'포지션 제안'}
-            button={true}
-            link={'SendSuggestion'}
-          />
+          <MyTitle title={'포지션 제안'} button={true} link={'SendSuggestion'} />
         </View>
 
         <View style={common.mb24}>
-          <View style={[common.rowCenter, {flexWrap: 'wrap'}]}>
+          <View style={[common.rowCenter, { flexWrap: 'wrap' }]}>
             <View
               style={[
                 styles.menuItem,
@@ -152,9 +137,7 @@ const MyCenterScreen = ({navigation}: Props) => {
                 },
               ]}>
               <Text style={common.text_s}>대기중</Text>
-              <Text style={common.title_s}>
-                {myInfo.suggestCountInfo?.waitingSuggestCount}
-              </Text>
+              <Text style={common.title_s}>{myInfo.suggestCountInfo?.waitingSuggestCount}</Text>
             </View>
 
             <View
@@ -168,9 +151,7 @@ const MyCenterScreen = ({navigation}: Props) => {
                 },
               ]}>
               <Text style={common.text_s}>완료</Text>
-              <Text style={common.title_s}>
-                {myInfo.suggestCountInfo?.completedSuggestCount}
-              </Text>
+              <Text style={common.title_s}>{myInfo.suggestCountInfo?.completedSuggestCount}</Text>
             </View>
             <View
               style={[
@@ -181,9 +162,7 @@ const MyCenterScreen = ({navigation}: Props) => {
                 },
               ]}>
               <Text style={common.text_s}>마감</Text>
-              <Text style={common.title_s}>
-                {myInfo.suggestCountInfo?.closedSuggestCount}
-              </Text>
+              <Text style={common.title_s}>{myInfo.suggestCountInfo?.closedSuggestCount}</Text>
             </View>
           </View>
         </View>

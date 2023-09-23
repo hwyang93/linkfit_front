@@ -1,5 +1,5 @@
 import THEME from '@/styles/theme';
-import {iconPath} from '@/utils/iconPath';
+import { iconPath } from '@/utils/iconPath';
 import React from 'react';
 import {
   Image,
@@ -36,11 +36,7 @@ const FilterChip: React.FC<FilterChipProps> = ({
     <>
       {variant === 'default' && (
         <Pressable
-          style={[
-            styles.container,
-            active ? styles.active : styles.default,
-            style,
-          ]}
+          style={[styles.container, active ? styles.active : styles.default, style]}
           onPress={onPress}
           {...props}>
           <Text
@@ -54,20 +50,14 @@ const FilterChip: React.FC<FilterChipProps> = ({
             {label}
           </Text>
           {rightIcon && (
-            <View style={{marginLeft: 8}}>
-              <Image
-                style={{width: 10, height: 6}}
-                source={iconPath.MORE_ARROW_DOWN}
-              />
+            <View style={{ marginLeft: 8 }}>
+              <Image style={{ width: 10, height: 6 }} source={iconPath.MORE_ARROW_DOWN} />
             </View>
           )}
         </Pressable>
       )}
       {variant === 'reset' && (
-        <Pressable
-          style={[styles.container, styles.shadow, style]}
-          onPress={onPress}
-          {...props}>
+        <Pressable style={[styles.container, styles.shadow, style]} onPress={onPress} {...props}>
           <Text style={styles.resetText}>{label}</Text>
         </Pressable>
       )}

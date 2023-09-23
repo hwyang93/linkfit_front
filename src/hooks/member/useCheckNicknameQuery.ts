@@ -1,5 +1,5 @@
-import {memberApi} from '@/api/member';
-import {useQuery} from '@tanstack/react-query';
+import { memberApi } from '@/api/member';
+import { useQuery } from '@tanstack/react-query';
 
 export const useCheckNicknameQuery = (nickname: string) => {
   return useQuery({

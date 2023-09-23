@@ -1,8 +1,8 @@
 // email 형식 확인
 import moment from 'moment/moment';
-import {PermissionsAndroid} from 'react-native';
+import { PermissionsAndroid } from 'react-native';
 import Geolocation from 'react-native-geolocation-service';
-import {IS_ANDROID, IS_IOS} from './constants/common';
+import { IS_ANDROID, IS_IOS } from './constants/common';
 import REGEXP from './constants/regexp';
 
 export const validateEmail = (email: string) => {
@@ -29,19 +29,14 @@ export const requestPermission = async () => {
     }
 
     if (IS_ANDROID) {
-      return await PermissionsAndroid.request(
-        PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
-      );
+      return await PermissionsAndroid.request(PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION);
     }
   } catch (e) {
     console.log(e);
   }
 };
 
-export const getFilterChipLabel = (
-  filterList: string[],
-  defaultLabel: string,
-) => {
+export const getFilterChipLabel = (filterList: string[], defaultLabel: string) => {
   if (filterList.length === 1) {
     return filterList[0];
   }

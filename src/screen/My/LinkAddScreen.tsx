@@ -1,11 +1,11 @@
-import {LoggedInParamList} from '@/../AppInner';
+import { LoggedInParamList } from '@/../AppInner';
 import CTAButton from '@/components/Common/CTAButton';
-import Input, {KeyboardTypes} from '@components/Input';
-import {NativeStackScreenProps} from '@react-navigation/native-stack';
-import {WHITE} from '@styles/colors';
+import Input, { KeyboardTypes } from '@components/Input';
+import { NativeStackScreenProps } from '@react-navigation/native-stack';
+import { WHITE } from '@styles/colors';
 import common from '@styles/common';
-import {useState} from 'react';
-import {StyleSheet, View} from 'react-native';
+import { useState } from 'react';
+import { StyleSheet, View } from 'react-native';
 
 type Props = NativeStackScreenProps<LoggedInParamList, 'LinkAdd'>;
 

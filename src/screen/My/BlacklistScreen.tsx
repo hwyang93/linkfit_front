@@ -1,10 +1,10 @@
-import {materialTopTabNavigationOptions} from '@/utils/options/tab';
+import { materialTopTabNavigationOptions } from '@/utils/options/tab';
 import BlockCenterComponent from '@components/My/BlockCenterComponent';
 import BlockInstructorComponent from '@components/My/BlockInstructorComponent';
-import {createMaterialTopTabNavigator} from '@react-navigation/material-top-tabs';
-import {WHITE} from '@styles/colors';
-import {StyleSheet} from 'react-native';
-import {SafeAreaView} from 'react-native-safe-area-context';
+import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
+import { WHITE } from '@styles/colors';
+import { StyleSheet } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 const Tab = createMaterialTopTabNavigator();
 

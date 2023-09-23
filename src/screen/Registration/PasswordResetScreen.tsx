@@ -4,12 +4,12 @@ import RowView from '@/components/Common/RowView';
 import TextField from '@/components/Common/TextField';
 import useInput from '@/hooks/useInput';
 import DismissKeyboardView from '@components/DismissKeyboardView';
-import {KeyboardTypes} from '@components/Input';
-import {NativeStackScreenProps} from '@react-navigation/native-stack';
+import { KeyboardTypes } from '@components/Input';
+import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import common from '@styles/common';
-import {useState} from 'react';
-import {Text, View} from 'react-native';
-import {LoggedInParamList} from '../../../AppInner';
+import { useState } from 'react';
+import { Text, View } from 'react-native';
+import { LoggedInParamList } from '../../../AppInner';
 
 type Props = NativeStackScreenProps<LoggedInParamList, 'PasswordReset'>;
 
@@ -27,8 +27,7 @@ const PasswordResetScreen = ({}: Props) => {
   const isVerificationCodeInputValid = verificationCodeInput.value.length > 0;
 
   const isPasswordInputValid = passwordInput.value.length > 0;
-  const isPasswordConfirmInputValid =
-    passwordConfirmInput.value === passwordInput.value;
+  const isPasswordConfirmInputValid = passwordConfirmInput.value === passwordInput.value;
 
   const onSendButtonPress = () => {
     try {
@@ -52,16 +51,16 @@ const PasswordResetScreen = ({}: Props) => {
         {step === 1 && (
           <>
             <View>
-              <Text style={{fontSize: 24, fontWeight: '700'}}>STEP 1</Text>
+              <Text style={{ fontSize: 24, fontWeight: '700' }}>STEP 1</Text>
               <Text style={[common.text_m, common.tal, common.mt16]}>
                 인증번호 재설정을 위해서{'\n'}가입한 이메일을 입력해 주세요.
               </Text>
             </View>
             <View style={common.mt40}>
               <View style={common.mb16}>
-                <RowView style={{alignItems: 'center'}}>
+                <RowView style={{ alignItems: 'center' }}>
                   <TextField
-                    style={[common.mr8, {flex: 1}]}
+                    style={[common.mr8, { flex: 1 }]}
                     label="이메일"
                     onChangeText={emailInput.onChange}
                     value={emailInput.value}
@@ -90,8 +89,7 @@ const PasswordResetScreen = ({}: Props) => {
                     value={verificationCodeInput.value}
                     onChangeText={verificationCodeInput.onChange}
                     error={
-                      verificationCodeInput.value.length !== 0 &&
-                      !isVerificationCodeInputValid
+                      verificationCodeInput.value.length !== 0 && !isVerificationCodeInputValid
                     }
                     errorMessage="인증번호 자릿수를 확인하세요."
                   />
@@ -110,7 +108,7 @@ const PasswordResetScreen = ({}: Props) => {
         {step === 2 && (
           <>
             <View>
-              <Text style={{fontSize: 24, fontWeight: '700'}}>STEP 2</Text>
+              <Text style={{ fontSize: 24, fontWeight: '700' }}>STEP 2</Text>
               <Text style={[common.text_m, common.tal, common.mt16]}>
                 새로운 비밀번호를 입력해 주세요.
               </Text>

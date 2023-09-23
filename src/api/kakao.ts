@@ -14,7 +14,5 @@ export const getKakaoCoordinate = (address: string) => {
 };
 
 export const getKakaoLocation = (latitude: number, longitude: number) => {
-  return kakao.get(
-    `/geo/coord2regioncode.json?input_coord=WGS84&x=${longitude}&y=${latitude}`,
-  );
+  return kakao.get(`/geo/coord2regioncode.json?input_coord=WGS84&x=${longitude}&y=${latitude}`);
 };

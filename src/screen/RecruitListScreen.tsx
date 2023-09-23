@@ -8,31 +8,27 @@ import TimeFilterModal from '@/components/Modal/TimeFilterModal';
 import ViewFilterModal from '@/components/Modal/ViewFilterModal';
 import useModal from '@/hooks/useModal';
 import THEME from '@/styles/theme';
-import {FetchRecruitsResponse} from '@/types/api/recruit';
-import {iconPath} from '@/utils/iconPath';
-import {getFilterChipLabel} from '@/utils/util';
-import {fetchRecruits} from '@api/recruit';
+import { FetchRecruitsResponse } from '@/types/api/recruit';
+import { iconPath } from '@/utils/iconPath';
+import { getFilterChipLabel } from '@/utils/util';
+import { fetchRecruits } from '@api/recruit';
 import FABContainer from '@components/Common/FABContainer';
 import toast from '@hooks/toast';
-import {NativeStackScreenProps} from '@react-navigation/native-stack';
+import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import common from '@styles/common';
-import {isAxiosError} from 'axios';
-import {useCallback, useEffect, useState} from 'react';
-import {FlatList, StyleSheet, Text, View} from 'react-native';
-import {SafeAreaView} from 'react-native-safe-area-context';
-import {LoggedInParamList} from '../../AppInner';
+import { isAxiosError } from 'axios';
+import { useCallback, useEffect, useState } from 'react';
+import { FlatList, StyleSheet, Text, View } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
+import { LoggedInParamList } from '../../AppInner';
 
 type Props = NativeStackScreenProps<LoggedInParamList, 'RecruitList'>;
 
-const RecruitListScreen = ({navigation}: Props) => {
+const RecruitListScreen = ({ navigation }: Props) => {
   const [recruits, setRecruits] = useState<FetchRecruitsResponse>();
 
-  const [positionFilterValueList, setPositionFilterValueList] = useState<
-    string[]
-  >([]);
-  const [recruitTypeFilterValueList, setRecruitTypeFilterValueList] = useState<
-    string[]
-  >([]);
+  const [positionFilterValueList, setPositionFilterValueList] = useState<string[]>([]);
+  const [recruitTypeFilterValueList, setRecruitTypeFilterValueList] = useState<string[]>([]);
   const [timeFilterValueList, setTimeFilterValueList] = useState<string[]>([]);
   const [viewFilterValueList, setViewFilterValueList] = useState<string[]>([]);
 
@@ -82,12 +78,12 @@ const RecruitListScreen = ({navigation}: Props) => {
     };
 
     fetchRecruits(params)
-      .then(({data}) => {
+      .then(({ data }) => {
         setRecruits(data);
       })
-      .catch(error => {
+      .catch((error) => {
         if (isAxiosError(error)) {
-          toast.error({message: error.message});
+          toast.error({ message: error.message });
         }
       });
   }, [
@@ -108,7 +104,7 @@ const RecruitListScreen = ({navigation}: Props) => {
           <FilterChip
             variant="reset"
             label="초기화"
-            style={{marginRight: 8}}
+            style={{ marginRight: 8 }}
             onPress={resetFilter}
           />
         )}
@@ -121,30 +117,25 @@ const RecruitListScreen = ({navigation}: Props) => {
         <FilterChip
           active={recruitTypeFilterValueList.length > 0}
           label={getFilterChipLabel(recruitTypeFilterValueList, '구인형태')}
-          style={{marginLeft: 8}}
+          style={{ marginLeft: 8 }}
           rightIcon
           onPress={recruitTypeModal.open}
         />
         <FilterChip
           active={timeFilterValueList.length > 0}
           label={getFilterChipLabel(timeFilterValueList, '수업시간')}
-          style={{marginLeft: 8}}
+          style={{ marginLeft: 8 }}
           rightIcon
           onPress={timeModal.open}
         />
-        <FilterChip
-          label="조회순"
-          style={{marginLeft: 8}}
-          rightIcon
-          onPress={viewModal.open}
-        />
+        <FilterChip label="조회순" style={{ marginLeft: 8 }} rightIcon onPress={viewModal.open} />
       </FilterChipContainer>
-      <View style={{marginHorizontal: 16}}>
+      <View style={{ marginHorizontal: 16 }}>
         <FlatList
           data={recruits}
           decelerationRate="fast"
-          renderItem={({item}) => (
-            <View style={{marginBottom: 16}}>
+          renderItem={({ item }) => (
+            <View style={{ marginBottom: 16 }}>
               <RecruitListItem
                 seq={item.seq}
                 position={item.position}
@@ -153,21 +144,17 @@ const RecruitListScreen = ({navigation}: Props) => {
                 address={item.companyName}
                 bookmarkChecked={item.isBookmark === 'Y'}
                 imageSrc={item.writer?.profileImage?.originFileUrl}
-                onPress={() =>
-                  navigation.navigate('JobPost', {recruitSeq: item.seq})
-                }
+                onPress={() => navigation.navigate('JobPost', { recruitSeq: item.seq })}
               />
             </View>
           )}
           snapToAlignment="start"
           numColumns={2}
-          contentContainerStyle={{paddingBottom: 32}}
+          contentContainerStyle={{ paddingBottom: 32 }}
           ListHeaderComponent={
-            <View style={{paddingVertical: 16}}>
+            <View style={{ paddingVertical: 16 }}>
               <Text style={[common.title]}>구인 공고</Text>
-              <Text style={common.text_m}>
-                내 주변의 구인 공고를 만나보세요!
-              </Text>
+              <Text style={common.text_m}>내 주변의 구인 공고를 만나보세요!</Text>
             </View>
           }
           showsVerticalScrollIndicator={false}

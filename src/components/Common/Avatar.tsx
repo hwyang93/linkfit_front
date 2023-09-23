@@ -15,17 +15,11 @@ interface AvatarProps extends ImageProps {
   onPress?: () => void;
 }
 
-const Avatar: React.FC<AvatarProps> = ({
-  source,
-  size = 40,
-  style,
-  onPress,
-  ...props
-}) => {
+const Avatar: React.FC<AvatarProps> = ({ source, size = 40, style, onPress, ...props }) => {
   return (
     <Pressable onPress={onPress}>
       <Image
-        style={[{borderRadius: size / 2, width: size, height: size}, style]}
+        style={[{ borderRadius: size / 2, width: size, height: size }, style]}
         source={source}
         {...props}
       />

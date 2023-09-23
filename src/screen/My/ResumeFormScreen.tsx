@@ -1,34 +1,34 @@
 import CTAButton from '@/components/Common/CTAButton';
-import {useMemberLicenceListQuery} from '@/hooks/member/useMemberLicenceListQuery';
-import {useCreateResumeMutation} from '@/hooks/resume/useCreateResumeMutation';
+import { useMemberLicenceListQuery } from '@/hooks/member/useMemberLicenceListQuery';
+import { useCreateResumeMutation } from '@/hooks/resume/useCreateResumeMutation';
 import useInput from '@/hooks/useInput';
-import {useAppSelector} from '@/store';
-import {iconPath} from '@/utils/iconPath';
+import { useAppSelector } from '@/store';
+import { iconPath } from '@/utils/iconPath';
 import DismissKeyboardView from '@components/DismissKeyboardView';
-import Input, {KeyboardTypes} from '@components/Input';
+import Input, { KeyboardTypes } from '@components/Input';
 import CareerComponent from '@components/Resume/CareerComponent';
 import EducationComponent from '@components/Resume/EducationComponent';
 import SelectBox from '@components/SelectBox';
 import TabButton from '@components/TabButton';
 import toast from '@hooks/toast';
-import {NativeStackScreenProps} from '@react-navigation/native-stack';
-import {WHITE} from '@styles/colors';
+import { NativeStackScreenProps } from '@react-navigation/native-stack';
+import { WHITE } from '@styles/colors';
 import common from '@styles/common';
-import {isAxiosError} from 'axios';
-import {useState} from 'react';
-import {Image, Pressable, StyleSheet, View} from 'react-native';
-import {LoggedInParamList} from '../../../AppInner';
+import { isAxiosError } from 'axios';
+import { useState } from 'react';
+import { Image, Pressable, StyleSheet, View } from 'react-native';
+import { LoggedInParamList } from '../../../AppInner';
 
-const GENDER_DATA = [{value: '남자'}, {value: '여자'}];
+const GENDER_DATA = [{ value: '남자' }, { value: '여자' }];
 
 type Props = NativeStackScreenProps<LoggedInParamList, 'ResumeForm'>;
 
-const ResumeFormScreen = ({navigation}: Props) => {
+const ResumeFormScreen = ({ navigation }: Props) => {
   const [licenseSeq, setLicenseSeq] = useState(0);
   const [careers, setCareers] = useState<any>([{}]);
   const [educations, setEducations] = useState<any>([{}]);
 
-  const memberInfo = useAppSelector(state => state.user);
+  const memberInfo = useAppSelector((state) => state.user);
 
   const introduceInput = useInput();
   const genderInput = useInput();
@@ -102,12 +102,12 @@ const ResumeFormScreen = ({navigation}: Props) => {
 
     createResumeMutation.mutate(data, {
       onSuccess: () => {
-        toast.success({message: '이력서 등록이 완료되었어요!'});
+        toast.success({ message: '이력서 등록이 완료되었어요!' });
         navigation.goBack();
       },
-      onError: error => {
+      onError: (error) => {
         if (isAxiosError(error)) {
-          toast.error({message: error.message});
+          toast.error({ message: error.message });
         }
       },
     });
@@ -197,68 +197,46 @@ const ResumeFormScreen = ({navigation}: Props) => {
             )}
             <View>
               <CareerComponent
-                onSelectPosition={(value: string) =>
-                  handleCareers(value, 'field', index)
-                }
-                onSelectWorkType={(value: string) =>
-                  handleCareers(value, 'workType', index)
-                }
-                onSelectStartDate={(value: string) =>
-                  handleCareers(value, 'startDate', index)
-                }
-                onSelectEndDate={(value: string) =>
-                  handleCareers(value, 'endDate', index)
-                }
+                onSelectPosition={(value: string) => handleCareers(value, 'field', index)}
+                onSelectWorkType={(value: string) => handleCareers(value, 'workType', index)}
+                onSelectStartDate={(value: string) => handleCareers(value, 'startDate', index)}
+                onSelectEndDate={(value: string) => handleCareers(value, 'endDate', index)}
               />
             </View>
           </View>
         ))}
         <View style={common.mb16}>
-          <Pressable onPress={addCareerForm} style={{alignSelf: 'center'}}>
+          <Pressable onPress={addCareerForm} style={{ alignSelf: 'center' }}>
             <Image source={iconPath.ADD_BUTTON} style={common.size40} />
           </Pressable>
         </View>
         {educations.map((_: any, index: number) => (
           <View key={index} style={common.mv20}>
             {index !== 0 && (
-              <Pressable
-                onPress={removeEducationForm}
-                style={styles.removeButton}>
+              <Pressable onPress={removeEducationForm} style={styles.removeButton}>
                 <Image source={iconPath.CANCEL} style={[common.size24]} />
               </Pressable>
             )}
             <View>
               <EducationComponent
-                onSelectSchool={(value: string) =>
-                  handleEducations(value, 'school', index)
-                }
-                onSelectMajor={(value: string) =>
-                  handleEducations(value, 'major', index)
-                }
-                onSelectStartDate={(value: string) =>
-                  handleEducations(value, 'startDate', index)
-                }
-                onSelectEndDate={(value: string) =>
-                  handleEducations(value, 'endDate', index)
-                }
-                onSelectStatus={(value: string) =>
-                  handleEducations(value, 'status', index)
-                }
+                onSelectSchool={(value: string) => handleEducations(value, 'school', index)}
+                onSelectMajor={(value: string) => handleEducations(value, 'major', index)}
+                onSelectStartDate={(value: string) => handleEducations(value, 'startDate', index)}
+                onSelectEndDate={(value: string) => handleEducations(value, 'endDate', index)}
+                onSelectStatus={(value: string) => handleEducations(value, 'status', index)}
               />
             </View>
           </View>
         ))}
         <View style={common.mb16}>
-          <Pressable onPress={addEducationForm} style={{alignSelf: 'center'}}>
+          <Pressable onPress={addEducationForm} style={{ alignSelf: 'center' }}>
             <Image source={iconPath.ADD_BUTTON} style={common.size40} />
           </Pressable>
         </View>
         <View style={common.mb16}>
           <SelectBox
             label="자격증"
-            data={licences?.map(
-              licence => licence.issuer + '_' + licence.field,
-            )}
+            data={licences?.map((licence) => licence.issuer + '_' + licence.field)}
             onSelect={(_: any, index: number) => selectLicence(index)}
             defaultButtonText="자격증을 선택하세요."
             selectKey="index"
@@ -294,7 +272,7 @@ const styles = StyleSheet.create({
     padding: 16,
     backgroundColor: WHITE,
   },
-  removeButton: {marginBottom: 8, alignItems: 'flex-end'},
+  removeButton: { marginBottom: 8, alignItems: 'flex-end' },
 });
 
 export default ResumeFormScreen;

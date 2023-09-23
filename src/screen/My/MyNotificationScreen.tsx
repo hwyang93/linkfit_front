@@ -1,10 +1,10 @@
-import {LoggedInParamList} from '@/../AppInner';
-import {iconPath} from '@/utils/iconPath';
+import { LoggedInParamList } from '@/../AppInner';
+import { iconPath } from '@/utils/iconPath';
 import EmptySet from '@components/EmptySet';
-import {NativeStackScreenProps} from '@react-navigation/native-stack';
+import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import common from '@styles/common';
-import {Image, ScrollView, StyleSheet, Text, View} from 'react-native';
-import {SafeAreaView} from 'react-native-safe-area-context';
+import { Image, ScrollView, StyleSheet, Text, View } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 const DATA = [
   {
@@ -38,11 +38,8 @@ const MyNotificationScreen = ({}: Props) => {
             return (
               <View key={index} style={common.mv16}>
                 <View style={[common.rowCenter]}>
-                  <Image
-                    source={item.icon}
-                    style={[common.size24, common.mr8]}
-                  />
-                  <Text style={[common.text_m, {flex: 1}]} numberOfLines={1}>
+                  <Image source={item.icon} style={[common.size24, common.mr8]} />
+                  <Text style={[common.text_m, { flex: 1 }]} numberOfLines={1}>
                     {item.value}
                   </Text>
                 </View>

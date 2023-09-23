@@ -1,6 +1,6 @@
-import {recruitApi} from '@/api/recruit';
-import {FetchRecruitsParams} from '@/types/api/recruit';
-import {useQuery} from '@tanstack/react-query';
+import { recruitApi } from '@/api/recruit';
+import { FetchRecruitsParams } from '@/types/api/recruit';
+import { useQuery } from '@tanstack/react-query';
 
 export const useRecruitListQuery = (params?: FetchRecruitsParams) => {
   return useQuery({

@@ -1,4 +1,4 @@
-import {MemberType, YesNoFlag} from '../common';
+import { MemberType, YesNoFlag } from '../common';
 import {
   CompanyEntity,
   MemberEntity,
@@ -121,5 +121,5 @@ export type UpdateProfileBody = {
   nickname: string;
   intro: string;
   field: string;
-  imageObj?: {uri?: string; name?: string; type?: string};
+  imageObj?: { uri?: string; name?: string; type?: string };
 };

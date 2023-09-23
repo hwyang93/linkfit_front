@@ -1,4 +1,4 @@
-import {YesNoFlag} from '../common';
+import { YesNoFlag } from '../common';
 
 export interface CreateRecruitDateDto {
   day: string;

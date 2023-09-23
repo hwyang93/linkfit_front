@@ -1,15 +1,15 @@
 import BoxButton from '@/components/Common/BoxButton';
 import CTAButton from '@/components/Common/CTAButton';
-import {AuthStackParamList} from '@/navigations/AuthStack';
+import { AuthStackParamList } from '@/navigations/AuthStack';
 import BirthdayPicker from '@components/BirthdayPicker';
 import DismissKeyboardView from '@components/DismissKeyboardView';
-import Input, {KeyboardTypes} from '@components/Input';
+import Input, { KeyboardTypes } from '@components/Input';
 import SelectBox from '@components/SelectBox';
 import TabButton from '@components/TabButton';
-import {NativeStackScreenProps} from '@react-navigation/native-stack';
+import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import common from '@styles/common';
-import {useState} from 'react';
-import {View} from 'react-native';
+import { useState } from 'react';
+import { View } from 'react-native';
 
 type Props = NativeStackScreenProps<AuthStackParamList, 'CompanySignUpForm'>;
 
@@ -29,7 +29,7 @@ const CompanySignUpFormScreen = ({}: Props) => {
   const [loading, setLoading] = useState(false);
 
   const categoryData = ['필라테스', '요가'];
-  const genderData = [{value: '남자'}, {value: '여자'}];
+  const genderData = [{ value: '남자' }, { value: '여자' }];
   const agencyData = ['SKT', 'KT', 'LG U+', '알뜰폰'];
 
   const canGoNext = false;
@@ -39,7 +39,7 @@ const CompanySignUpFormScreen = ({}: Props) => {
       <View style={common.container}>
         {/* 사업자 등록번호 입력 란 */}
         <View style={[common.mb16, common.rowCenter]}>
-          <View style={[common.mr8, {flex: 3}]}>
+          <View style={[common.mr8, { flex: 3 }]}>
             <Input
               label={'사업자 등록번호'}
               onChangeText={(text: any) => setBusinessNumber(text)}
@@ -119,14 +119,14 @@ const CompanySignUpFormScreen = ({}: Props) => {
         </View>
         {/* 통신사 */}
         <View style={[common.mb16, common.row]}>
-          <View style={{flex: 1, marginRight: 8}}>
+          <View style={{ flex: 1, marginRight: 8 }}>
             <SelectBox
               data={agencyData}
               onSelect={(value: any) => setAgency(value)}
               defaultButtonText={'통신사'}
             />
           </View>
-          <View style={{flex: 2}}>
+          <View style={{ flex: 2 }}>
             <Input
               label={'휴대폰 번호'}
               onChangeText={(text: any) => setPhoneNumber(text)}

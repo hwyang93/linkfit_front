@@ -1,7 +1,7 @@
 import THEME from '@/styles/theme';
-import {iconPath} from '@/utils/iconPath';
+import { iconPath } from '@/utils/iconPath';
 import React from 'react';
-import {Text, View} from 'react-native';
+import { Text, View } from 'react-native';
 import IconButton from '../Common/IconButton';
 import RowView from '../Common/RowView';
 
@@ -24,17 +24,17 @@ const CenterProfile: React.FC<CenterProfileProps> = ({
 }) => {
   return (
     <View>
-      <RowView style={{alignItems: 'center'}}>
-        <Text style={{fontSize: 20, fontWeight: '700'}}>{name}</Text>
+      <RowView style={{ alignItems: 'center' }}>
+        <Text style={{ fontSize: 20, fontWeight: '700' }}>{name}</Text>
         <IconButton
-          style={{marginLeft: 8}}
+          style={{ marginLeft: 8 }}
           source={isFavorite ? iconPath.FAVORITE_ON : iconPath.FAVORITE}
           onPress={onFavorite}
         />
-        <Text style={{fontSize: 16, fontWeight: '700'}}>{favoriteCount}</Text>
+        <Text style={{ fontSize: 16, fontWeight: '700' }}>{favoriteCount}</Text>
       </RowView>
-      <RowView style={{alignItems: 'center', marginTop: 8}}>
-        <Text style={{fontSize: 16, fontWeight: '600'}}>{field}</Text>
+      <RowView style={{ alignItems: 'center', marginTop: 8 }}>
+        <Text style={{ fontSize: 16, fontWeight: '600' }}>{field}</Text>
         <Text
           style={{
             fontSize: 14,

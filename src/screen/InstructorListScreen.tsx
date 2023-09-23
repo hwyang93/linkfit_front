@@ -1,18 +1,18 @@
-import {LoggedInParamList} from '@/../AppInner';
+import { LoggedInParamList } from '@/../AppInner';
 import InstructorListItem from '@/components/Compound/InstructorListItem';
 import common from '@/styles/common';
-import {FetchInstructorsResponse, Instructor} from '@/types/api/instructor';
-import {fetchInstructors} from '@api/instructor';
+import { FetchInstructorsResponse, Instructor } from '@/types/api/instructor';
+import { fetchInstructors } from '@api/instructor';
 import toast from '@hooks/toast';
-import {NativeStackScreenProps} from '@react-navigation/native-stack';
-import {isAxiosError} from 'axios';
-import {useCallback, useEffect, useState} from 'react';
-import {FlatList, Text, View} from 'react-native';
-import {SafeAreaView} from 'react-native-safe-area-context';
+import { NativeStackScreenProps } from '@react-navigation/native-stack';
+import { isAxiosError } from 'axios';
+import { useCallback, useEffect, useState } from 'react';
+import { FlatList, Text, View } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 type Props = NativeStackScreenProps<LoggedInParamList, 'InstructorList'>;
 
-const InstructorListScreen = ({navigation}: Props) => {
+const InstructorListScreen = ({ navigation }: Props) => {
   const [instructors, setInstructors] = useState<FetchInstructorsResponse>();
 
   const getInstructorsData = useCallback(async () => {
@@ -25,7 +25,7 @@ const InstructorListScreen = ({navigation}: Props) => {
       setInstructors(response.data);
     } catch (error) {
       if (isAxiosError(error)) {
-        toast.error({message: error.message});
+        toast.error({ message: error.message });
       }
     }
   }, []);
@@ -39,12 +39,12 @@ const InstructorListScreen = ({navigation}: Props) => {
   // TODO: 좋아요 기능 추가
 
   return (
-    <SafeAreaView edges={['bottom', 'left', 'right']} style={{flex: 1}}>
+    <SafeAreaView edges={['bottom', 'left', 'right']} style={{ flex: 1 }}>
       {/* <FilterChipContainer>
         <FilterChip label="포지션" rightIcon />
       </FilterChipContainer> */}
       <FlatList
-        contentContainerStyle={{margin: 16}}
+        contentContainerStyle={{ margin: 16 }}
         data={instructors}
         keyExtractor={(_, index) => index.toString()}
         decelerationRate="fast"
@@ -55,7 +55,7 @@ const InstructorListScreen = ({navigation}: Props) => {
             <Text style={common.text_m}>링크핏의 우수 강사를 확인하세요.</Text>
           </View>
         }
-        renderItem={({item}: {item: Instructor}) => (
+        renderItem={({ item }: { item: Instructor }) => (
           <InstructorListItem
             instructorId={item.seq}
             following={item.isFollow === 'Y'}

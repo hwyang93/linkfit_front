@@ -1,4 +1,4 @@
-import {useState} from 'react';
+import { useState } from 'react';
 
 const useFilter = (initialValue?: string) => {
   const [value, setValue] = useState(initialValue);
@@ -11,7 +11,7 @@ const useFilter = (initialValue?: string) => {
     setValue(initialValue || '');
   };
 
-  return {value, onChange, reset, setValue};
+  return { value, onChange, reset, setValue };
 };
 
 export default useFilter;

@@ -1,8 +1,8 @@
-import {NavigationProp, useNavigation} from '@react-navigation/native';
+import { NavigationProp, useNavigation } from '@react-navigation/native';
 import common from '@styles/common';
-import {Pressable, Text, View} from 'react-native';
+import { Pressable, Text, View } from 'react-native';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
-import {LoggedInParamList} from '../../../AppInner';
+import { LoggedInParamList } from '../../../AppInner';
 
 interface MyTitleProps {
   title: string;
@@ -10,13 +10,11 @@ interface MyTitleProps {
   button?: boolean;
 }
 
-const MyTitle: React.FC<MyTitleProps> = ({title, button, link}) => {
+const MyTitle: React.FC<MyTitleProps> = ({ title, button, link }) => {
   const navigation = useNavigation<NavigationProp<LoggedInParamList>>();
 
   return (
-    <Pressable
-      style={[common.rowCenterBetween]}
-      onPress={() => navigation.navigate(link)}>
+    <Pressable style={[common.rowCenterBetween]} onPress={() => navigation.navigate(link)}>
       <Text style={common.title_s}>{title}</Text>
       {button && (
         <View>

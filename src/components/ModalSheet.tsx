@@ -1,7 +1,7 @@
-import {SCREEN_HEIGHT, SCREEN_WIDTH} from '@/utils/constants/common';
-import {BLACK, GRAY} from '@styles/colors';
-import common, {width} from '@styles/common';
-import {useEffect, useRef} from 'react';
+import { SCREEN_HEIGHT, SCREEN_WIDTH } from '@/utils/constants/common';
+import { BLACK, GRAY } from '@styles/colors';
+import common, { width } from '@styles/common';
+import { useEffect, useRef } from 'react';
 import {
   Animated,
   Modal,
@@ -28,8 +28,8 @@ interface ModalSheetProps {
   content?: any;
 }
 
-const ModalSheet: React.FC<ModalSheetProps> = props => {
-  const {modalVisible, setModalVisible} = props;
+const ModalSheet: React.FC<ModalSheetProps> = (props) => {
+  const { modalVisible, setModalVisible } = props;
 
   const panY = useRef(new Animated.Value(SCREEN_HEIGHT)).current;
 
@@ -81,11 +81,7 @@ const ModalSheet: React.FC<ModalSheetProps> = props => {
   };
 
   return (
-    <Modal
-      visible={modalVisible}
-      animationType={'fade'}
-      transparent
-      statusBarTranslucent>
+    <Modal visible={modalVisible} animationType={'fade'} transparent statusBarTranslucent>
       <View style={styles.overlay}>
         <TouchableWithoutFeedback onPress={closeModal}>
           <View style={styles.background} />
@@ -95,7 +91,7 @@ const ModalSheet: React.FC<ModalSheetProps> = props => {
           style={[
             {
               ...styles.bottomSheetContainer,
-              transform: [{translateY: translateY}],
+              transform: [{ translateY: translateY }],
               height: props.modalHeight,
               paddingBottom: 32,
               maxHeight: '93%',
@@ -116,16 +112,14 @@ const ModalSheet: React.FC<ModalSheetProps> = props => {
             <Text
               style={[
                 styles.modalTitle,
-                props.type === 'button' && {marginBottom: 16},
-                props.type === 'select' && {marginBottom: 16},
-                props.type === 'tab' && {marginBottom: 16},
+                props.type === 'button' && { marginBottom: 16 },
+                props.type === 'select' && { marginBottom: 16 },
+                props.type === 'tab' && { marginBottom: 16 },
               ]}>
               {props.title}
             </Text>
           </View>
-          <ScrollView showsVerticalScrollIndicator={false}>
-            {props.content}
-          </ScrollView>
+          <ScrollView showsVerticalScrollIndicator={false}>{props.content}</ScrollView>
         </Animated.View>
       </View>
     </Modal>
@@ -138,7 +132,7 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-end',
     backgroundColor: 'rgba(0, 0, 0, 0.4)',
   },
-  background: {flex: 1},
+  background: { flex: 1 },
   bottomSheetContainer: {
     width: '100%',
     alignItems: 'center',

@@ -1,13 +1,13 @@
 import THEME from '@/styles/theme';
 import React from 'react';
-import {StyleProp, Text, View, ViewProps, ViewStyle} from 'react-native';
+import { StyleProp, Text, View, ViewProps, ViewStyle } from 'react-native';
 
 interface ChipProps extends ViewProps {
   style?: StyleProp<ViewStyle>;
   label: string;
 }
 
-const Chip: React.FC<ChipProps> = ({label, style, ...props}) => {
+const Chip: React.FC<ChipProps> = ({ label, style, ...props }) => {
   return (
     <View
       style={[

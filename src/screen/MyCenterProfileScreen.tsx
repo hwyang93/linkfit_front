@@ -1,19 +1,15 @@
-import {SCREEN_WIDTH} from '@/utils/constants/common';
-import {fetchCompany} from '@api/company';
+import { SCREEN_WIDTH } from '@/utils/constants/common';
+import { fetchCompany } from '@api/company';
 import CenterInfoTop from '@components/CenterInfoTop';
 import EmptySet from '@components/EmptySet';
 import toast from '@hooks/toast';
-import {NativeStackScreenProps} from '@react-navigation/native-stack';
-import {BLUE, GRAY, WHITE} from '@styles/colors';
+import { NativeStackScreenProps } from '@react-navigation/native-stack';
+import { BLUE, GRAY, WHITE } from '@styles/colors';
 import common from '@styles/common';
-import {useCallback, useEffect, useState} from 'react';
-import {Image, Pressable, StyleSheet, Text, View} from 'react-native';
-import {
-  MaterialTabBar,
-  TabBarProps,
-  Tabs,
-} from 'react-native-collapsible-tab-view';
-import {LoggedInParamList} from '../../AppInner';
+import { useCallback, useEffect, useState } from 'react';
+import { Image, Pressable, StyleSheet, Text, View } from 'react-native';
+import { MaterialTabBar, TabBarProps, Tabs } from 'react-native-collapsible-tab-view';
+import { LoggedInParamList } from '../../AppInner';
 
 // const HEADER_HEIGHT = 250;
 
@@ -26,30 +22,28 @@ type HeaderProps = {
   recruits: any[];
 };
 // 센터 프로필 상단 영역 시작
-const Header: React.FC<HeaderProps> = ({centerInfo, recruits}) => {
-  return (
-    <CenterInfoTop centerInfo={centerInfo} recruits={recruits} fromMy={true} />
-  );
+const Header: React.FC<HeaderProps> = ({ centerInfo, recruits }) => {
+  return <CenterInfoTop centerInfo={centerInfo} recruits={recruits} fromMy={true} />;
 };
 // 센터 프로필 상단 영역 끝
 
 // TODO: 스크린 이름 매칭 필요 (CenterProfile -> MyCenterProfile)
 type Props = NativeStackScreenProps<LoggedInParamList, 'CenterProfile'>;
 
-const MyCenterProfileScreen = ({navigation, route}: Props) => {
+const MyCenterProfileScreen = ({ navigation, route }: Props) => {
   const [centerInfo, setCenterInfo] = useState<any>({});
   const [recruits, setRecruits] = useState<any[]>([]);
   const [reputations, setReputations] = useState<any[]>([]);
 
   const getCenterInfo = useCallback(() => {
     fetchCompany(route.params.memberSeq)
-      .then(({data}: any) => {
+      .then(({ data }: any) => {
         setCenterInfo(data.companyInfo);
         setRecruits(data.recruits);
         setReputations(data.reputations);
       })
-      .catch(error => {
-        toast.error({message: error.message});
+      .catch((error) => {
+        toast.error({ message: error.message });
       });
   }, [route.params.memberSeq]);
 
@@ -84,19 +78,17 @@ const MyCenterProfileScreen = ({navigation, route}: Props) => {
     return (
       <View style={common.mt16}>
         <Text style={[common.text_m, common.fwb]}>센터 주소</Text>
-        <Text style={common.text_m}>
-          {`${centerInfo.address} ${centerInfo.addressDetail}`}
-        </Text>
+        <Text style={common.text_m}>{`${centerInfo.address} ${centerInfo.addressDetail}`}</Text>
       </View>
     );
   };
 
   const TAB1_DATA = [
-    {src: require('@images/center_01.png')},
-    {src: require('@images/center_02.png')},
-    {src: require('@images/center_03.png')},
-    {src: require('@images/center_04.png')},
-    {src: require('@images/center_05.png')},
+    { src: require('@images/center_01.png') },
+    { src: require('@images/center_02.png') },
+    { src: require('@images/center_03.png') },
+    { src: require('@images/center_04.png') },
+    { src: require('@images/center_05.png') },
   ];
 
   type ImageProps = {
@@ -104,7 +96,7 @@ const MyCenterProfileScreen = ({navigation, route}: Props) => {
   };
 
   const IntroduceTab = useCallback(
-    ({item}: ImageProps) => {
+    ({ item }: ImageProps) => {
       return (
         <>
           <Pressable onPress={() => navigation.navigate('Gallery')}>
@@ -127,7 +119,7 @@ const MyCenterProfileScreen = ({navigation, route}: Props) => {
   const [textLine, setTextLine] = useState(2);
 
   const ReviewTab = useCallback(
-    ({item}: any) => {
+    ({ item }: any) => {
       const textExpansion = () => {
         if (textLine === 2) {
           setTextLine(0);
@@ -138,7 +130,7 @@ const MyCenterProfileScreen = ({navigation, route}: Props) => {
       return (
         <>
           {reputations.length < 1 ? (
-            <View style={{flex: 1}}>
+            <View style={{ flex: 1 }}>
               <EmptySet text={'등록된 후기가 없어요.'} />
             </View>
           ) : (
@@ -153,16 +145,10 @@ const MyCenterProfileScreen = ({navigation, route}: Props) => {
                     ? item.evaluationMember?.nickname
                     : item.evaluationMember?.name}
                 </Text>
-                <Text
-                  style={[
-                    common.text,
-                    {alignSelf: 'flex-end', marginHorizontal: 4},
-                  ]}>
+                <Text style={[common.text, { alignSelf: 'flex-end', marginHorizontal: 4 }]}>
                   {item.evaluationMember?.field}
                 </Text>
-                <Text style={[common.text, {alignSelf: 'flex-end'}]}>
-                  {item.updatedAt}
-                </Text>
+                <Text style={[common.text, { alignSelf: 'flex-end' }]}>{item.updatedAt}</Text>
               </View>
               <Pressable onPress={textExpansion}>
                 <Text style={common.text_m} numberOfLines={textLine}>
@@ -179,9 +165,7 @@ const MyCenterProfileScreen = ({navigation, route}: Props) => {
 
   return (
     <Tabs.Container
-      renderHeader={() => (
-        <Header centerInfo={centerInfo} recruits={recruits} />
-      )}
+      renderHeader={() => <Header centerInfo={centerInfo} recruits={recruits} />}
       allowHeaderOverscroll
       revealHeaderOnScroll
       headerContainerStyle={{
@@ -193,7 +177,7 @@ const MyCenterProfileScreen = ({navigation, route}: Props) => {
       // headerHeight={HEADER_HEIGHT}
       renderTabBar={tabBar}>
       <Tabs.Tab name="센터 소개">
-        <View style={{padding: 16}}>
+        <View style={{ padding: 16 }}>
           <Tabs.FlatList
             data={TAB1_DATA}
             ListHeaderComponent={() => <IntroduceTabHeader />}
@@ -205,14 +189,12 @@ const MyCenterProfileScreen = ({navigation, route}: Props) => {
         </View>
       </Tabs.Tab>
       <Tabs.Tab name="후기 관리">
-        <View style={{padding: 16}}>
+        <View style={{ padding: 16 }}>
           <Tabs.FlatList
             data={reputations}
-            ListHeaderComponent={<View style={{paddingBottom: 16}} />}
+            ListHeaderComponent={<View style={{ paddingBottom: 16 }} />}
             ItemSeparatorComponent={() => {
-              return (
-                <View style={[common.separator, common.mv16, {width: width}]} />
-              );
+              return <View style={[common.separator, common.mv16, { width: width }]} />;
             }}
             renderItem={ReviewTab}
             keyExtractor={(item: any) => item.seq}
@@ -224,7 +206,7 @@ const MyCenterProfileScreen = ({navigation, route}: Props) => {
 };
 
 const styles = StyleSheet.create({
-  pencil: {position: 'absolute', top: 0, right: 0},
+  pencil: { position: 'absolute', top: 0, right: 0 },
   tab: {
     backgroundColor: WHITE,
     borderBottomWidth: 1,

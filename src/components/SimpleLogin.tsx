@@ -1,6 +1,6 @@
-import {iconPath} from '@/utils/iconPath';
-import {Alert, Image, Pressable, StyleSheet, Text, View} from 'react-native';
-import common, {width} from '../styles/common';
+import { iconPath } from '@/utils/iconPath';
+import { Alert, Image, Pressable, StyleSheet, Text, View } from 'react-native';
+import common, { width } from '../styles/common';
 
 const SimpleLogin: React.FC = () => {
   const testClick = () => {
@@ -14,20 +14,12 @@ const SimpleLogin: React.FC = () => {
         <View style={styles.iconBox}>
           <View style={styles.easyIcon}>
             <Pressable onPress={testClick}>
-              <Image
-                source={iconPath.KAKAO}
-                style={styles.icon}
-                resizeMode={'cover'}
-              />
+              <Image source={iconPath.KAKAO} style={styles.icon} resizeMode={'cover'} />
             </Pressable>
           </View>
           <View style={styles.easyIcon}>
             <Pressable onPress={testClick}>
-              <Image
-                source={iconPath.NAVER}
-                style={styles.icon}
-                resizeMode={'cover'}
-              />
+              <Image source={iconPath.NAVER} style={styles.icon} resizeMode={'cover'} />
             </Pressable>
           </View>
           {/*<View style={styles.easyIcon}>*/}

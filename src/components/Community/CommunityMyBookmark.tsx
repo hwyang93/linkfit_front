@@ -1,17 +1,15 @@
-import {useCommunityBookmarkListQuery} from '@/hooks/community/useCommunityBookmarkListQuery';
-import {Member} from '@/types/common';
-import {formatDate} from '@/utils/util';
+import { useCommunityBookmarkListQuery } from '@/hooks/community/useCommunityBookmarkListQuery';
+import { Member } from '@/types/common';
+import { formatDate } from '@/utils/util';
 import BookmarkCounter from '@components/Counter/BookmarkCounter';
 import CommentCounter from '@components/Counter/CommentCounter';
-import {GRAY, WHITE} from '@styles/colors';
+import { GRAY, WHITE } from '@styles/colors';
 import common from '@styles/common';
-import {useState} from 'react';
-import {FlatList, Pressable, StyleSheet, Text, View} from 'react-native';
+import { useState } from 'react';
+import { FlatList, Pressable, StyleSheet, Text, View } from 'react-native';
 import EmptySet from '../EmptySet';
 
 const CommunityMyPost: React.FC = () => {
-  // const navigation = useNavigation<NavigationProp<LoggedInParamList>>();
-
   const CommunityBookmarkListQuery = useCommunityBookmarkListQuery();
   const bookmarks = CommunityBookmarkListQuery.data;
 
@@ -24,24 +22,17 @@ const CommunityMyPost: React.FC = () => {
     }
   };
 
-  // TODO: 북마크 토글 기능 추가
-  const onBookmarkPress = (id: number) => {
-    console.log('북마크 업데이트', id);
-  };
-
   return (
     <View style={styles.container}>
       {bookmarks?.length === 0 && <EmptySet text="북마크한 글이 없어요." />}
       {bookmarks?.length !== 0 && (
         <FlatList
           data={bookmarks}
-          contentContainerStyle={{paddingBottom: 32}}
-          renderItem={({item}) => (
-            <View style={styles.postBox}>
+          contentContainerStyle={{ paddingBottom: 32 }}
+          renderItem={({ item }) => (
+            <Pressable style={styles.postBox}>
               <View>
-                <Text style={[common.title, common.fs18, common.mb8]}>
-                  {item.community.title}
-                </Text>
+                <Text style={[common.title, common.fs18, common.mb8]}>{item.community.title}</Text>
                 <View style={[common.rowCenter, common.mb12]}>
                   {item.community.writer.type === Member.Company ? (
                     <Text style={[common.text_m, common.fwb]}>
@@ -55,15 +46,14 @@ const CommunityMyPost: React.FC = () => {
                     </Text>
                   )}
 
-                  <Text
-                    style={[common.text, common.mh4, {alignSelf: 'flex-end'}]}>
+                  <Text style={[common.text, common.mh4, { alignSelf: 'flex-end' }]}>
                     {item.community.writer.type === Member.Company
                       ? '센터'
                       : item.community.writer.type === Member.Instructor
                       ? '강사'
                       : '일반인'}
                   </Text>
-                  <Text style={[common.text, {alignSelf: 'flex-end'}]}>
+                  <Text style={[common.text, { alignSelf: 'flex-end' }]}>
                     {formatDate(item.community.updatedAt)}
                   </Text>
                 </View>
@@ -77,19 +67,18 @@ const CommunityMyPost: React.FC = () => {
                 <View style={common.rowCenterBetween}>
                   <View style={common.rowCenter}>
                     <BookmarkCounter
+                      isBookmark={item.community.isBookmark}
+                      postId={item.community.seq}
                       counter={item.community.bookmarks.length}
-                      onPress={() => onBookmarkPress(item.seq)}
                     />
                     <CommentCounter counter={item.community.comments.length} />
                   </View>
                   <View style={common.channelBox}>
-                    <Text style={common.channelText}>
-                      {item.community.category}
-                    </Text>
+                    <Text style={common.channelText}>{item.community.category}</Text>
                   </View>
                 </View>
               </View>
-            </View>
+            </Pressable>
           )}
         />
       )}
@@ -98,13 +87,13 @@ const CommunityMyPost: React.FC = () => {
 };
 
 const styles = StyleSheet.create({
-  container: {flex: 1, paddingHorizontal: 16, backgroundColor: WHITE},
+  container: { flex: 1, paddingHorizontal: 16, backgroundColor: WHITE },
   postBox: {
     paddingVertical: 16,
     borderBottomWidth: 1,
     borderColor: GRAY.DEFAULT,
   },
-  kebabIcon: {position: 'absolute', top: 16, right: 0},
+  kebabIcon: { position: 'absolute', top: 16, right: 0 },
 });
 
 export default CommunityMyPost;

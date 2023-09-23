@@ -1,12 +1,12 @@
-import {iconPath} from '@/utils/iconPath';
+import { iconPath } from '@/utils/iconPath';
 import Modal from '@components/ModalSheet';
 import toast from '@hooks/toast';
-import {NativeStackScreenProps} from '@react-navigation/native-stack';
-import {BLUE, WHITE} from '@styles/colors';
+import { NativeStackScreenProps } from '@react-navigation/native-stack';
+import { BLUE, WHITE } from '@styles/colors';
 import common from '@styles/common';
-import {useState} from 'react';
-import {Button, Image, Pressable, StyleSheet, Text, View} from 'react-native';
-import {LoggedInParamList} from '../../../AppInner';
+import { useState } from 'react';
+import { Button, Image, Pressable, StyleSheet, Text, View } from 'react-native';
+import { LoggedInParamList } from '../../../AppInner';
 
 const MODAL_DATA = [
   {
@@ -29,25 +29,19 @@ const MODAL_DATA = [
 
 type Props = NativeStackScreenProps<LoggedInParamList, 'Message'>;
 
-const MessageTab = ({navigation}: Props) => {
+const MessageTab = ({ navigation }: Props) => {
   const [modalVisible, setModalVisible] = useState(false);
 
   const toastTest = () => {
-    toast.success({message: 'test'});
+    toast.success({ message: 'test' });
   };
 
   return (
     <View style={styles.container}>
       <Text style={common.text_m}>쪽지 화면</Text>
-      <Button
-        title={'로그인화면'}
-        onPress={() => navigation.navigate('SignIn')}
-      />
+      <Button title={'로그인화면'} onPress={() => navigation.navigate('SignIn')} />
 
-      <Button
-        title={'My 센터'}
-        onPress={() => navigation.navigate('MyCenter')}
-      />
+      <Button title={'My 센터'} onPress={() => navigation.navigate('MyCenter')} />
       <Button title={'모달 샘플'} onPress={() => setModalVisible(true)} />
       <Button title={'토스트 샘플'} onPress={toastTest} />
       <Modal
@@ -61,17 +55,11 @@ const MessageTab = ({navigation}: Props) => {
                 <View key={index} style={common.modalItemBox}>
                   <Pressable
                     // onPress={() => onClickItem(item)}
-                    style={[common.rowCenterBetween, {width: '100%'}]}>
-                    <Text
-                      style={[
-                        common.modalText,
-                        item.selected && {color: BLUE.DEFAULT},
-                      ]}>
+                    style={[common.rowCenterBetween, { width: '100%' }]}>
+                    <Text style={[common.modalText, item.selected && { color: BLUE.DEFAULT }]}>
                       {item.value}
                     </Text>
-                    {item.selected && (
-                      <Image source={iconPath.CHECK} style={common.size24} />
-                    )}
+                    {item.selected && <Image source={iconPath.CHECK} style={common.size24} />}
                   </Pressable>
                   <Button title={'토스트 샘플'} onPress={toastTest} />
                 </View>

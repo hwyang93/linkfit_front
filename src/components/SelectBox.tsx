@@ -1,8 +1,8 @@
-import {iconPath} from '@/utils/iconPath';
-import {GRAY, INPUT} from '@styles/colors';
+import { iconPath } from '@/utils/iconPath';
+import { GRAY, INPUT } from '@styles/colors';
 import common from '@styles/common';
-import {useState} from 'react';
-import {Image, StyleSheet, Text, View} from 'react-native';
+import { useState } from 'react';
+import { Image, StyleSheet, Text, View } from 'react-native';
 import SelectDropdown from 'react-native-select-dropdown';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 
@@ -45,15 +45,15 @@ const SelectBox: React.FC<SelectBoxProps> = ({
         onSelect={(selectedItem, index) => {
           selectHandler(selectedItem, index);
         }}
-        buttonTextAfterSelection={selectedItem => selectedItem}
-        rowTextForSelection={item => item}
+        buttonTextAfterSelection={(selectedItem) => selectedItem}
+        rowTextForSelection={(item) => item}
         defaultButtonText={defaultButtonText}
         // buttonStyle={{width: '100%', backgroundColor: WHITE}}
         buttonStyle={focus ? styles.selectBoxFocus : styles.selectBox}
         // buttonTextStyle={focus ? styles.selectTextFocus : styles.selectText}
-        renderCustomizedButtonChild={selectedItem => {
+        renderCustomizedButtonChild={(selectedItem) => {
           return (
-            <View style={[common.rowCenter, {height: 56, width: '100%'}]}>
+            <View style={[common.rowCenter, { height: 56, width: '100%' }]}>
               {icon === 'time' && (
                 <View
                   style={{
@@ -78,7 +78,7 @@ const SelectBox: React.FC<SelectBoxProps> = ({
             </View>
           );
         }}
-        renderDropdownIcon={isOpened => {
+        renderDropdownIcon={(isOpened) => {
           return (
             <FontAwesome
               name={isOpened ? 'chevron-up' : 'chevron-down'}
@@ -96,9 +96,7 @@ const SelectBox: React.FC<SelectBoxProps> = ({
         onChangeSearchInputText={onChangeSearchInputText || (() => {})}
       />
       {label && (
-        <Text style={[common.label, {color: focus ? INPUT.FOCUS : GRAY.LIGHT}]}>
-          {label}
-        </Text>
+        <Text style={[common.label, { color: focus ? INPUT.FOCUS : GRAY.LIGHT }]}>{label}</Text>
       )}
     </View>
   );

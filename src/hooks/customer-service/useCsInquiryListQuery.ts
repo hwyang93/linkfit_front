@@ -1,5 +1,5 @@
-import {customerServiceApi} from '@/api/customer-service';
-import {useQuery} from '@tanstack/react-query';
+import { customerServiceApi } from '@/api/customer-service';
+import { useQuery } from '@tanstack/react-query';
 
 export const useCsInquiryListQuery = () => {
   return useQuery({

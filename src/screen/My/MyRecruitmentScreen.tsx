@@ -2,25 +2,18 @@ import BottomSheet from '@/components/Common/BottomSheet';
 import BottomSheetOption from '@/components/Common/BottomSheetOption';
 import FilterChip from '@/components/Common/FilterChip';
 import FilterChipContainer from '@/components/Common/FilterChipContainer';
-import {useRecruitListQuery} from '@/hooks/recruit/useRecruitListQuery';
+import { useRecruitListQuery } from '@/hooks/recruit/useRecruitListQuery';
 import useFilter from '@/hooks/useFilter';
 import useModal from '@/hooks/useModal';
 import FILTER from '@/utils/constants/filter';
-import {iconPath} from '@/utils/iconPath';
-import {formatDate} from '@/utils/util';
-import {NativeStackScreenProps} from '@react-navigation/native-stack';
-import {WHITE} from '@styles/colors';
+import { iconPath } from '@/utils/iconPath';
+import { formatDate } from '@/utils/util';
+import { NativeStackScreenProps } from '@react-navigation/native-stack';
+import { WHITE } from '@styles/colors';
 import common from '@styles/common';
-import {
-  Image,
-  Pressable,
-  ScrollView,
-  StyleSheet,
-  Text,
-  View,
-} from 'react-native';
-import {SafeAreaView} from 'react-native-safe-area-context';
-import {LoggedInParamList} from '../../../AppInner';
+import { Image, Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
+import { LoggedInParamList } from '../../../AppInner';
 
 interface MyRecruitmentListItemProps {
   recruitId: number;
@@ -45,24 +38,16 @@ const MyRecruitmentListItem: React.FC<MyRecruitmentListItemProps> = ({
       <View style={common.rowCenter}>
         <Text style={[common.text_s, common.fcg]}>{createdAt}</Text>
         <Text style={[common.mh8, common.fcg]}>|</Text>
-        <Text style={[common.text_s, common.fcg]}>
-          {status === 'ING' ? '진행중' : '마감'}
-        </Text>
+        <Text style={[common.text_s, common.fcg]}>{status === 'ING' ? '진행중' : '마감'}</Text>
       </View>
       <Text style={[common.title, common.mv8]} numberOfLines={1}>
         {title}
       </Text>
       <Text style={[common.text_m, common.fwb]}>{position}</Text>
-      <Pressable
-        style={styles.kebabIcon}
-        hitSlop={10}
-        onPress={kebabModal.open}>
+      <Pressable style={styles.kebabIcon} hitSlop={10} onPress={kebabModal.open}>
         <Image source={iconPath.KEBAB} style={[common.size24]} />
       </Pressable>
-      <BottomSheet
-        visible={kebabModal.visible}
-        onDismiss={kebabModal.close}
-        title="더보기">
+      <BottomSheet visible={kebabModal.visible} onDismiss={kebabModal.close} title="더보기">
         <BottomSheetOption label="지원자 현황보기" />
         <BottomSheetOption label="공고 수정하기" />
         <BottomSheetOption label="공고 복사하기" />
@@ -73,7 +58,7 @@ const MyRecruitmentListItem: React.FC<MyRecruitmentListItemProps> = ({
 
 type Props = NativeStackScreenProps<LoggedInParamList, 'MyPost'>;
 
-const MyRecruitmentScreen = ({navigation}: Props) => {
+const MyRecruitmentScreen = ({ navigation }: Props) => {
   const periodFilter = useFilter();
 
   const progressionFilter = useFilter();
@@ -116,9 +101,7 @@ const MyRecruitmentScreen = ({navigation}: Props) => {
     : '기간';
 
   const progressionFilterChipLabel = progressionFilter.value
-    ? FILTER.PROGRESSION[
-        progressionFilter.value as keyof typeof FILTER.PROGRESSION
-      ]
+    ? FILTER.PROGRESSION[progressionFilter.value as keyof typeof FILTER.PROGRESSION]
     : '진행 여부';
 
   return (
@@ -128,7 +111,7 @@ const MyRecruitmentScreen = ({navigation}: Props) => {
           <FilterChip
             label="초기화"
             variant="reset"
-            style={{marginRight: 8}}
+            style={{ marginRight: 8 }}
             onPress={resetFilter}
           />
         )}
@@ -140,14 +123,14 @@ const MyRecruitmentScreen = ({navigation}: Props) => {
         />
         <FilterChip
           label={progressionFilterChipLabel}
-          style={{marginLeft: 8}}
+          style={{ marginLeft: 8 }}
           onPress={progressionModal.open}
           active={!!progressionFilter.value}
           rightIcon
         />
       </FilterChipContainer>
       <ScrollView
-        contentContainerStyle={{marginHorizontal: 16, paddingBottom: 24}}
+        contentContainerStyle={{ marginHorizontal: 16, paddingBottom: 24 }}
         showsVerticalScrollIndicator={false}>
         {recruits?.map((recruit, index) => (
           <MyRecruitmentListItem
@@ -161,10 +144,7 @@ const MyRecruitmentScreen = ({navigation}: Props) => {
           />
         ))}
       </ScrollView>
-      <BottomSheet
-        visible={periodModal.visible}
-        onDismiss={periodModal.close}
-        title="기간">
+      <BottomSheet visible={periodModal.visible} onDismiss={periodModal.close} title="기간">
         {Object.entries(FILTER.PERIOD).map(([value, label], index) => (
           <BottomSheetOption
             key={index}
@@ -196,7 +176,7 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: WHITE,
   },
-  kebabIcon: {position: 'absolute', top: 16, right: 16},
+  kebabIcon: { position: 'absolute', top: 16, right: 16 },
 });
 
 export default MyRecruitmentScreen;

@@ -3,26 +3,19 @@ import BottomSheetOption from '@/components/Common/BottomSheetOption';
 import FilterChip from '@/components/Common/FilterChip';
 import FilterChipContainer from '@/components/Common/FilterChipContainer';
 import IconButton from '@/components/Common/IconButton';
-import {useMyRecruitApplicationListQuery} from '@/hooks/recruit/useMyRecruitApplicationListQuery';
+import { useMyRecruitApplicationListQuery } from '@/hooks/recruit/useMyRecruitApplicationListQuery';
 import useFilter from '@/hooks/useFilter';
 import useModal from '@/hooks/useModal';
-import {SCREEN_WIDTH} from '@/utils/constants/common';
+import { SCREEN_WIDTH } from '@/utils/constants/common';
 import FILTER from '@/utils/constants/filter';
-import {iconPath} from '@/utils/iconPath';
-import {formatDate} from '@/utils/util';
-import {NativeStackScreenProps} from '@react-navigation/native-stack';
-import {BLUE, WHITE} from '@styles/colors';
-import common, {width} from '@styles/common';
-import {
-  Image,
-  Pressable,
-  ScrollView,
-  StyleSheet,
-  Text,
-  View,
-} from 'react-native';
-import {SafeAreaView} from 'react-native-safe-area-context';
-import {LoggedInParamList} from '../../../AppInner';
+import { iconPath } from '@/utils/iconPath';
+import { formatDate } from '@/utils/util';
+import { NativeStackScreenProps } from '@react-navigation/native-stack';
+import { BLUE, WHITE } from '@styles/colors';
+import common, { width } from '@styles/common';
+import { Image, Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
+import { LoggedInParamList } from '../../../AppInner';
 
 const statusMap = {
   APPLY: '지원 완료',
@@ -56,14 +49,9 @@ const MyApplicationListItem: React.FC<MyApplicationItemProps> = ({
   return (
     <Pressable style={styles.itemBox} onPress={onPress}>
       <View style={styles.imgBox}>
-        <Image
-          style={styles.img}
-          source={require('assets/images/sample_02.png')}
-        />
+        <Image style={styles.img} source={require('assets/images/sample_02.png')} />
         <View style={[styles.statusBox]}>
-          <Text style={[styles.statusText]}>
-            {statusMap[status as keyof typeof statusMap]}
-          </Text>
+          <Text style={[styles.statusText]}>{statusMap[status as keyof typeof statusMap]}</Text>
         </View>
       </View>
       <View>
@@ -73,11 +61,7 @@ const MyApplicationListItem: React.FC<MyApplicationItemProps> = ({
         </Text>
         <Text style={[common.text_s, common.fwb]}>{companyName}</Text>
         <Text style={common.text}>{timestamp} 지원</Text>
-        <IconButton
-          style={styles.resume}
-          source={iconPath.RESUME}
-          onPress={onResumeIconPress}
-        />
+        <IconButton style={styles.resume} source={iconPath.RESUME} onPress={onResumeIconPress} />
       </View>
     </Pressable>
   );
@@ -85,7 +69,7 @@ const MyApplicationListItem: React.FC<MyApplicationItemProps> = ({
 
 type Props = NativeStackScreenProps<LoggedInParamList, 'ApplicationStatus'>;
 
-const ApplicationStatusScreen = ({navigation}: Props) => {
+const ApplicationStatusScreen = ({ navigation }: Props) => {
   const periodFilter = useFilter();
   const statusFilter = useFilter();
 
@@ -122,10 +106,7 @@ const ApplicationStatusScreen = ({navigation}: Props) => {
   };
 
   console.log('@value', periodFilter.value);
-  console.log(
-    '@label',
-    FILTER.PERIOD[periodFilter.value as keyof typeof FILTER.PERIOD],
-  );
+  console.log('@label', FILTER.PERIOD[periodFilter.value as keyof typeof FILTER.PERIOD]);
 
   return (
     <SafeAreaView edges={['left', 'right']} style={styles.container}>
@@ -134,7 +115,7 @@ const ApplicationStatusScreen = ({navigation}: Props) => {
           <FilterChip
             label="초기화"
             variant="reset"
-            style={{marginRight: 8}}
+            style={{ marginRight: 8 }}
             onPress={resetFilter}
           />
         )}
@@ -145,7 +126,7 @@ const ApplicationStatusScreen = ({navigation}: Props) => {
               : '기간'
           }
           active={!!periodFilter.value}
-          style={{marginRight: 8}}
+          style={{ marginRight: 8 }}
           rightIcon
           onPress={periodModal.open}
         />
@@ -161,10 +142,9 @@ const ApplicationStatusScreen = ({navigation}: Props) => {
         />
       </FilterChipContainer>
       <ScrollView
-        contentContainerStyle={{paddingHorizontal: 16, paddingBottom: 16}}
+        contentContainerStyle={{ paddingHorizontal: 16, paddingBottom: 16 }}
         showsVerticalScrollIndicator={false}>
-        <View
-          style={{flexWrap: 'wrap', flexDirection: 'row', paddingVertical: 8}}>
+        <View style={{ flexWrap: 'wrap', flexDirection: 'row', paddingVertical: 8 }}>
           {applications?.map((item, index) => (
             <MyApplicationListItem
               key={index}
@@ -184,10 +164,7 @@ const ApplicationStatusScreen = ({navigation}: Props) => {
             />
           ))}
         </View>
-        <BottomSheet
-          visible={periodModal.visible}
-          onDismiss={periodModal.close}
-          title="기간">
+        <BottomSheet visible={periodModal.visible} onDismiss={periodModal.close} title="기간">
           <View>
             {Object.entries(FILTER.PERIOD).map(([value, label], index) => (
               <BottomSheetOption
@@ -199,10 +176,7 @@ const ApplicationStatusScreen = ({navigation}: Props) => {
             ))}
           </View>
         </BottomSheet>
-        <BottomSheet
-          visible={statusModal.visible}
-          onDismiss={statusModal.close}
-          title="지원 상태">
+        <BottomSheet visible={statusModal.visible} onDismiss={statusModal.close} title="지원 상태">
           <View>
             {Object.entries(FILTER.STATUS).map(([value, label], index) => (
               <BottomSheetOption
@@ -224,13 +198,13 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: WHITE,
   },
-  itemBox: {width: columns2, marginBottom: 16, marginHorizontal: 4},
+  itemBox: { width: columns2, marginBottom: 16, marginHorizontal: 4 },
   imgBox: {
     marginBottom: 8,
     height: 104,
     borderRadius: 8,
   },
-  img: {width: '100%', height: 104, borderRadius: 8},
+  img: { width: '100%', height: 104, borderRadius: 8 },
   statusBox: {
     zIndex: 10,
     position: 'absolute',
@@ -245,7 +219,7 @@ const styles = StyleSheet.create({
     fontSize: +width * 10,
     color: BLUE.DEFAULT,
   },
-  resume: {position: 'absolute', top: 3, right: 0},
+  resume: { position: 'absolute', top: 3, right: 0 },
 });
 
 export default ApplicationStatusScreen;

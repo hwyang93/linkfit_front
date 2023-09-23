@@ -1,8 +1,8 @@
-import {LoggedInParamList} from '@/../AppInner';
-import {NativeStackScreenProps} from '@react-navigation/native-stack';
-import {WHITE} from '@styles/colors';
+import { LoggedInParamList } from '@/../AppInner';
+import { NativeStackScreenProps } from '@react-navigation/native-stack';
+import { WHITE } from '@styles/colors';
 import common from '@styles/common';
-import {StyleSheet, Text, View} from 'react-native';
+import { StyleSheet, Text, View } from 'react-native';
 
 // TODO: 스크린 이름 매치 필요 (Rule -> Rules)
 type Props = NativeStackScreenProps<LoggedInParamList, 'Rule'>;
@@ -16,7 +16,7 @@ const RulesScreen = ({}: Props) => {
 };
 
 const styles = StyleSheet.create({
-  container: {flex: 1, padding: 16, backgroundColor: WHITE},
+  container: { flex: 1, padding: 16, backgroundColor: WHITE },
 });
 
 export default RulesScreen;

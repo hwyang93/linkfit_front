@@ -1,8 +1,8 @@
-import {Member, MemberType} from '@/types/common';
-import {iconPath} from '@/utils/iconPath';
-import {BLUE} from '@styles/colors';
+import { Member, MemberType } from '@/types/common';
+import { iconPath } from '@/utils/iconPath';
+import { BLUE } from '@styles/colors';
 import common from '@styles/common';
-import {Image, Pressable, StyleSheet, Text, View} from 'react-native';
+import { Image, Pressable, StyleSheet, Text, View } from 'react-native';
 
 interface CommunityUserProfileProps {
   isMine?: boolean;
@@ -26,7 +26,7 @@ const CommunityUserProfile: React.FC<CommunityUserProfileProps> = ({
   return (
     <View style={common.row}>
       <Image
-        source={profileImage ? {uri: profileImage} : iconPath.THUMBNAIL}
+        source={profileImage ? { uri: profileImage } : iconPath.THUMBNAIL}
         style={[common.thumbnail, common.mr8]}
       />
       <View>
@@ -35,11 +35,9 @@ const CommunityUserProfile: React.FC<CommunityUserProfileProps> = ({
           {writerType === Member.Instructor ? (
             <View>
               <View style={common.rowCenter}>
-                <Text style={[common.text_s, {color: BLUE.DEFAULT}]}>
-                  인증강사
-                </Text>
+                <Text style={[common.text_s, { color: BLUE.DEFAULT }]}>인증강사</Text>
                 <Image
-                  style={{marginLeft: 2, width: 14, height: 14}}
+                  style={{ marginLeft: 2, width: 14, height: 14 }}
                   source={iconPath.CERTIFICATION}
                 />
               </View>
@@ -56,7 +54,7 @@ const CommunityUserProfile: React.FC<CommunityUserProfileProps> = ({
           <Text style={[common.text_m, common.fwb, common.mr4]}>
             {writerType === Member.Company && field}
           </Text>
-          <Text style={[common.text, {alignSelf: 'flex-end'}]}>{career}</Text>
+          <Text style={[common.text, { alignSelf: 'flex-end' }]}>{career}</Text>
         </View>
       </View>
       {isMine && (
@@ -69,7 +67,7 @@ const CommunityUserProfile: React.FC<CommunityUserProfileProps> = ({
 };
 
 const styles = StyleSheet.create({
-  kebabIcon: {position: 'absolute', top: 16, right: 0},
+  kebabIcon: { position: 'absolute', top: 16, right: 0 },
 });
 
 export default CommunityUserProfile;

@@ -1,10 +1,10 @@
-import {SCREEN_WIDTH} from '@/utils/constants/common';
+import { SCREEN_WIDTH } from '@/utils/constants/common';
 import DatePicker from '@components/DatePicker';
-import Input, {KeyboardTypes} from '@components/Input';
+import Input, { KeyboardTypes } from '@components/Input';
 import SelectBox from '@components/SelectBox';
 import common from '@styles/common';
-import {useState} from 'react';
-import {View} from 'react-native';
+import { useState } from 'react';
+import { View } from 'react-native';
 
 const columns2 = (SCREEN_WIDTH - 40) / 2;
 
@@ -54,20 +54,12 @@ const EducationComponent: React.FC<EducationComponentProps> = ({
       {/* 입학 일 졸업 일 */}
       <View style={common.mb16}>
         <View style={common.row}>
-          <View style={[common.mr8, {width: columns2}]}>
-            <DatePicker
-              label={'입학'}
-              placeholder={'입학 년월'}
-              onSelectDate={onSelectStartDate}
-            />
+          <View style={[common.mr8, { width: columns2 }]}>
+            <DatePicker label={'입학'} placeholder={'입학 년월'} onSelectDate={onSelectStartDate} />
           </View>
 
-          <View style={{width: columns2}}>
-            <DatePicker
-              label={'졸업'}
-              placeholder={'졸업 년월'}
-              onSelectDate={onSelectEndDate}
-            />
+          <View style={{ width: columns2 }}>
+            <DatePicker label={'졸업'} placeholder={'졸업 년월'} onSelectDate={onSelectEndDate} />
           </View>
         </View>
       </View>

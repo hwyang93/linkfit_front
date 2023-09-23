@@ -1,6 +1,6 @@
-import {GRAY} from '@styles/colors';
-import {useState} from 'react';
-import {Pressable, StyleSheet, Text, View} from 'react-native';
+import { GRAY } from '@styles/colors';
+import { useState } from 'react';
+import { Pressable, StyleSheet, Text, View } from 'react-native';
 
 interface TabButtonProps {
   genderData: Array<any>;
@@ -8,7 +8,7 @@ interface TabButtonProps {
   onSelect: Function;
 }
 
-const TabButton: React.FC<TabButtonProps> = ({genderData, onSelect}) => {
+const TabButton: React.FC<TabButtonProps> = ({ genderData, onSelect }) => {
   const [userOption, setUserOption] = useState('');
 
   const selectHandler = (value: any) => {
@@ -22,16 +22,9 @@ const TabButton: React.FC<TabButtonProps> = ({genderData, onSelect}) => {
         return (
           <Pressable
             key={index}
-            style={[
-              styles.tabBox,
-              item.value === userOption ? styles.selected : styles.unSelected,
-            ]}
+            style={[styles.tabBox, item.value === userOption ? styles.selected : styles.unSelected]}
             onPress={() => selectHandler(item.value)}>
-            <Text
-              style={[
-                styles.option,
-                item.value === userOption && {color: '#fff'},
-              ]}>
+            <Text style={[styles.option, item.value === userOption && { color: '#fff' }]}>
               {item.value}
             </Text>
           </Pressable>

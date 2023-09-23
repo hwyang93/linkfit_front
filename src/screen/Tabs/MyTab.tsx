@@ -1,27 +1,20 @@
 import SectionHeader from '@/components/Common/SectionHeader';
 import ResumeCard from '@/components/Compound/ResumeCard';
-import {FetchMemberMyInfoResponse} from '@/types/api/member';
-import {SCREEN_WIDTH} from '@/utils/constants/common';
-import {iconPath} from '@/utils/iconPath';
-import {formatDate} from '@/utils/util';
-import {fetchMemberMyInfo} from '@api/member';
+import { FetchMemberMyInfoResponse } from '@/types/api/member';
+import { SCREEN_WIDTH } from '@/utils/constants/common';
+import { iconPath } from '@/utils/iconPath';
+import { formatDate } from '@/utils/util';
+import { fetchMemberMyInfo } from '@api/member';
 import ProfileBox from '@components/ProfileBox';
 import toast from '@hooks/toast';
-import {useIsFocused} from '@react-navigation/native';
-import {NativeStackScreenProps} from '@react-navigation/native-stack';
-import {GRAY, WHITE} from '@styles/colors';
+import { useIsFocused } from '@react-navigation/native';
+import { NativeStackScreenProps } from '@react-navigation/native-stack';
+import { GRAY, WHITE } from '@styles/colors';
 import common from '@styles/common';
-import {useEffect, useState} from 'react';
-import {
-  Image,
-  Pressable,
-  ScrollView,
-  StyleSheet,
-  Text,
-  View,
-} from 'react-native';
-import {SafeAreaView} from 'react-native-safe-area-context';
-import {LoggedInParamList} from '../../../AppInner';
+import { useEffect, useState } from 'react';
+import { Image, Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
+import { LoggedInParamList } from '../../../AppInner';
 
 const columns3 = (SCREEN_WIDTH - 32) / 3;
 const columns4 = (SCREEN_WIDTH - 32) / 4;
@@ -61,7 +54,7 @@ const MENU = [
 
 type Props = NativeStackScreenProps<LoggedInParamList, 'My'>;
 
-const MyTab = ({navigation}: Props) => {
+const MyTab = ({ navigation }: Props) => {
   const [myInfo, setMyInfo] = useState<FetchMemberMyInfoResponse>();
 
   const isFocused = useIsFocused();
@@ -77,11 +70,11 @@ const MyTab = ({navigation}: Props) => {
   useEffect(() => {
     if (isFocused) {
       fetchMemberMyInfo()
-        .then(({data}) => {
+        .then(({ data }) => {
           setMyInfo(data);
         })
-        .catch(error => {
-          toast.error({message: error.message});
+        .catch((error) => {
+          toast.error({ message: error.message });
         });
     }
   }, [isFocused]);
@@ -96,12 +89,12 @@ const MyTab = ({navigation}: Props) => {
             </View>
             <View style={common.mb8}>
               <SectionHeader title="프로필 메뉴" />
-              <View style={[common.rowCenter, {flexWrap: 'wrap'}]}>
+              <View style={[common.rowCenter, { flexWrap: 'wrap' }]}>
                 {/* TODO: 타입 정의 */}
                 {MENU.map((item, index) => (
                   <Pressable
                     key={index}
-                    style={[styles.menuItem, {width: columns3, height: 80}]}
+                    style={[styles.menuItem, { width: columns3, height: 80 }]}
                     onPress={() => navigation.navigate(item.link as any)}>
                     <Image source={item.icon} style={common.size32} />
                     <Text style={common.text_s}>{item.title}</Text>
@@ -110,7 +103,7 @@ const MyTab = ({navigation}: Props) => {
               </View>
             </View>
             <SectionHeader
-              style={{marginBottom: 8}}
+              style={{ marginBottom: 8 }}
               title="이력서"
               onPress={() => navigation.navigate('ResumeManage')}
             />
@@ -120,19 +113,19 @@ const MyTab = ({navigation}: Props) => {
                 isMaster
                 title={myInfo.masterResume.title}
                 timestamp={formatDate(myInfo.masterResume.updatedAt)}
-                style={{marginBottom: 16}}
+                style={{ marginBottom: 16 }}
                 onPress={() => handleResumeCardPress(myInfo.masterResume.seq)}
               />
             ) : (
-              <View style={{marginBottom: 16}} />
+              <View style={{ marginBottom: 16 }} />
             )}
             <SectionHeader
-              style={{marginBottom: 8}}
+              style={{ marginBottom: 8 }}
               title="지원 현황"
               onPress={() => navigation.navigate('ApplicationStatus')}
             />
             <View style={common.mb24}>
-              <View style={[common.rowCenter, {flexWrap: 'wrap'}]}>
+              <View style={[common.rowCenter, { flexWrap: 'wrap' }]}>
                 <View
                   style={[
                     styles.menuItem,
@@ -144,9 +137,7 @@ const MyTab = ({navigation}: Props) => {
                     },
                   ]}>
                   <Text style={common.text_s}>지원 완료</Text>
-                  <Text style={common.title_s}>
-                    {myInfo?.applyCountInfo.totalApplyCount}
-                  </Text>
+                  <Text style={common.title_s}>{myInfo?.applyCountInfo.totalApplyCount}</Text>
                 </View>
                 <View
                   style={[
@@ -159,9 +150,7 @@ const MyTab = ({navigation}: Props) => {
                     },
                   ]}>
                   <Text style={common.text_s}>합격</Text>
-                  <Text style={common.title_s}>
-                    {myInfo?.applyCountInfo.passApplyCount}
-                  </Text>
+                  <Text style={common.title_s}>{myInfo?.applyCountInfo.passApplyCount}</Text>
                 </View>
                 <View
                   style={[
@@ -174,9 +163,7 @@ const MyTab = ({navigation}: Props) => {
                     },
                   ]}>
                   <Text style={common.text_s}>불합격</Text>
-                  <Text style={common.title_s}>
-                    {myInfo?.applyCountInfo.failApplyCount}
-                  </Text>
+                  <Text style={common.title_s}>{myInfo?.applyCountInfo.failApplyCount}</Text>
                 </View>
                 <View
                   style={[
@@ -187,9 +174,7 @@ const MyTab = ({navigation}: Props) => {
                     },
                   ]}>
                   <Text style={common.text_s}>지원 취소</Text>
-                  <Text style={common.title_s}>
-                    {myInfo?.applyCountInfo.cancelApplyCount}
-                  </Text>
+                  <Text style={common.title_s}>{myInfo?.applyCountInfo.cancelApplyCount}</Text>
                 </View>
               </View>
             </View>
@@ -200,7 +185,7 @@ const MyTab = ({navigation}: Props) => {
               />
             </View>
             <View style={common.mb24}>
-              <View style={[common.rowCenter, {flexWrap: 'wrap'}]}>
+              <View style={[common.rowCenter, { flexWrap: 'wrap' }]}>
                 <View
                   style={[
                     styles.menuItem,
@@ -212,9 +197,7 @@ const MyTab = ({navigation}: Props) => {
                     },
                   ]}>
                   <Text style={common.text_s}>전체</Text>
-                  <Text style={common.title_s}>
-                    {myInfo?.suggestCountInfo.totalSuggestCount}
-                  </Text>
+                  <Text style={common.title_s}>{myInfo?.suggestCountInfo.totalSuggestCount}</Text>
                 </View>
                 <View
                   style={[
@@ -227,9 +210,7 @@ const MyTab = ({navigation}: Props) => {
                     },
                   ]}>
                   <Text style={common.text_s}>답변 대기중</Text>
-                  <Text style={common.title_s}>
-                    {myInfo?.suggestCountInfo.waitingSuggestCount}
-                  </Text>
+                  <Text style={common.title_s}>{myInfo?.suggestCountInfo.waitingSuggestCount}</Text>
                 </View>
                 <View
                   style={[
@@ -255,20 +236,15 @@ const MyTab = ({navigation}: Props) => {
                     },
                   ]}>
                   <Text style={common.text_s}>마감</Text>
-                  <Text style={common.title_s}>
-                    {myInfo?.suggestCountInfo.closedSuggestCount}
-                  </Text>
+                  <Text style={common.title_s}>{myInfo?.suggestCountInfo.closedSuggestCount}</Text>
                 </View>
               </View>
             </View>
             <View style={[common.mb8]}>
-              <SectionHeader
-                title="내 공고"
-                onPress={() => navigation.navigate('MyPost')}
-              />
+              <SectionHeader title="내 공고" onPress={() => navigation.navigate('MyPost')} />
             </View>
             <View style={common.mb16}>
-              <View style={[common.rowCenter, {flexWrap: 'wrap'}]}>
+              <View style={[common.rowCenter, { flexWrap: 'wrap' }]}>
                 <View
                   style={[
                     styles.menuItem,
@@ -280,9 +256,7 @@ const MyTab = ({navigation}: Props) => {
                     },
                   ]}>
                   <Text style={common.text_s}>등록 완료</Text>
-                  <Text style={common.title_s}>
-                    {myInfo?.noticeCountInfo.totalNoticeCount}
-                  </Text>
+                  <Text style={common.title_s}>{myInfo?.noticeCountInfo.totalNoticeCount}</Text>
                 </View>
                 <View
                   style={[
@@ -295,9 +269,7 @@ const MyTab = ({navigation}: Props) => {
                     },
                   ]}>
                   <Text style={common.text_s}>구인 공고</Text>
-                  <Text style={common.title_s}>
-                    {myInfo?.noticeCountInfo.recruitCount}
-                  </Text>
+                  <Text style={common.title_s}>{myInfo?.noticeCountInfo.recruitCount}</Text>
                 </View>
                 <View
                   style={[
@@ -308,9 +280,7 @@ const MyTab = ({navigation}: Props) => {
                     },
                   ]}>
                   <Text style={common.text_s}>구직 공고</Text>
-                  <Text style={[common.title_s]}>
-                    {myInfo?.noticeCountInfo.seekCount}
-                  </Text>
+                  <Text style={[common.title_s]}>{myInfo?.noticeCountInfo.seekCount}</Text>
                 </View>
               </View>
             </View>

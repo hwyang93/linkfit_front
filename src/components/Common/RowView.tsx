@@ -1,9 +1,9 @@
 import React from 'react';
-import {View, ViewProps} from 'react-native';
+import { View, ViewProps } from 'react-native';
 
-const RowView: React.FC<ViewProps> = ({children, style, ...props}) => {
+const RowView: React.FC<ViewProps> = ({ children, style, ...props }) => {
   return (
-    <View style={[{flexDirection: 'row'}, style]} {...props}>
+    <View style={[{ flexDirection: 'row' }, style]} {...props}>
       {children}
     </View>
   );

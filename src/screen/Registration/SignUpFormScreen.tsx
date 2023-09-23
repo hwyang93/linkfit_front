@@ -1,23 +1,23 @@
 import CTAButton from '@/components/Common/CTAButton';
-import {createMember} from '@api/member';
+import { createMember } from '@api/member';
 import BirthdayPicker from '@components/BirthdayPicker';
 import DismissKeyboardView from '@components/DismissKeyboardView';
-import Input, {KeyboardTypes} from '@components/Input';
+import Input, { KeyboardTypes } from '@components/Input';
 import SelectBox from '@components/SelectBox';
 import TabButton from '@components/TabButton';
 import toast from '@hooks/toast';
-import {NativeStackScreenProps} from '@react-navigation/native-stack';
+import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import common from '@styles/common';
-import {useCallback, useState} from 'react';
-import {View} from 'react-native';
-import {LoggedInParamList} from '../../../AppInner';
+import { useCallback, useState } from 'react';
+import { View } from 'react-native';
+import { LoggedInParamList } from '../../../AppInner';
 
-const GENDER_DATA = [{value: '남자'}, {value: '여자'}];
+const GENDER_DATA = [{ value: '남자' }, { value: '여자' }];
 const AGENCY_DATA = ['SKT', 'KT', 'LG U+', '알뜰폰'];
 
 type Props = NativeStackScreenProps<LoggedInParamList, 'SignUpForm'>;
 
-const SignUpFormScreen = ({navigation, route}: Props) => {
+const SignUpFormScreen = ({ navigation, route }: Props) => {
   const [loading, setLoading] = useState(false);
   const [email] = useState(route.params.email);
   const [userName, setUserName] = useState('');
@@ -40,17 +40,16 @@ const SignUpFormScreen = ({navigation, route}: Props) => {
     await createMember(data)
       .then(() => {
         setLoading(true);
-        toast.success({message: '회원가입이 완료되었어요!'});
+        toast.success({ message: '회원가입이 완료되었어요!' });
         navigation.navigate('SignIn');
         setLoading(false);
       })
-      .catch(error => {
-        toast.error({message: error.message});
+      .catch((error) => {
+        toast.error({ message: error.message });
       });
   }, [email, birth, gender, navigation, password, phoneNumber, userName]);
 
-  const canGoNext =
-    userName && gender && birth && phoneNumber && password && passwordConfirm;
+  const canGoNext = userName && gender && birth && phoneNumber && password && passwordConfirm;
 
   return (
     <DismissKeyboardView>
@@ -90,14 +89,14 @@ const SignUpFormScreen = ({navigation, route}: Props) => {
                 justifyContent: 'space-between',
               },
             ]}>
-            <View style={{flex: 1, marginRight: 8}}>
+            <View style={{ flex: 1, marginRight: 8 }}>
               <SelectBox
                 data={AGENCY_DATA}
                 onSelect={(value: any) => setAgency(value)}
                 defaultButtonText={'통신사'}
               />
             </View>
-            <View style={{flex: 2}}>
+            <View style={{ flex: 2 }}>
               <Input
                 label={'휴대폰 번호'}
                 onChangeText={(text: any) => setPhoneNumber(text)}
@@ -132,12 +131,7 @@ const SignUpFormScreen = ({navigation, route}: Props) => {
             />
           </View>
           <View style={common.mt20}>
-            <CTAButton
-              label="회원가입"
-              loading={loading}
-              disabled={!canGoNext}
-              onPress={signIn}
-            />
+            <CTAButton label="회원가입" loading={loading} disabled={!canGoNext} onPress={signIn} />
           </View>
         </View>
       </View>

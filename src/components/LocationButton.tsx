@@ -1,7 +1,7 @@
-import {iconPath} from '@/utils/iconPath';
-import {WHITE} from '@styles/colors';
+import { iconPath } from '@/utils/iconPath';
+import { WHITE } from '@styles/colors';
 import common from '@styles/common';
-import {Image, Platform, Pressable, StyleSheet} from 'react-native';
+import { Image, Platform, Pressable, StyleSheet } from 'react-native';
 
 // TODO : 프롭스로 bottom 스타일 값 받아와서 적용하기
 
@@ -10,9 +10,9 @@ interface LocationButtonProps {
   job?: () => void;
 }
 
-const LocationButton: React.FC<LocationButtonProps> = ({job, bottom}) => {
+const LocationButton: React.FC<LocationButtonProps> = ({ job, bottom }) => {
   return (
-    <Pressable style={[styles.locationButton, {bottom: bottom}]} onPress={job}>
+    <Pressable style={[styles.locationButton, { bottom: bottom }]} onPress={job}>
       <Image style={common.size24} source={iconPath.LOCATION} />
     </Pressable>
   );
@@ -38,7 +38,7 @@ const styles = StyleSheet.create({
           width: 0,
         },
       },
-      android: {elevation: 3},
+      android: { elevation: 3 },
     }),
   },
 });

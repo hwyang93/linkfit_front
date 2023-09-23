@@ -1,8 +1,4 @@
-import {
-  CreateRecruitApplyDto,
-  CreateRecruitDto,
-  UpdateRecruitApplyDto,
-} from '@/types/api/dtos';
+import { CreateRecruitApplyDto, CreateRecruitDto, UpdateRecruitApplyDto } from '@/types/api/dtos';
 import {
   FetchBookmarkRecruitsResponse,
   FetchRecommendedRecruitsResponse,
@@ -14,7 +10,7 @@ import {
   FetchRecruitsParams,
   FetchRecruitsResponse,
 } from '@/types/api/recruit';
-import {DeleteResponse, PostResponse} from '@/types/common';
+import { DeleteResponse, PostResponse } from '@/types/common';
 import request from './request';
 
 export const createRecruit = (body: CreateRecruitDto) => {
@@ -26,7 +22,7 @@ export const fetchRecruit = (seq: number) => {
 };
 
 export const fetchRecruits = (params?: FetchRecruitsParams) => {
-  return request.get<FetchRecruitsResponse>('/recruit', {params});
+  return request.get<FetchRecruitsResponse>('/recruit', { params });
 };
 
 export const fetchBookmarkRecruits = () => {
@@ -41,14 +37,11 @@ export const deleteRecruitBookmark = (seq: number) => {
   return request.delete<DeleteResponse>(`/recruit/${seq}/bookmark`);
 };
 
-export const createRecruitApply = (
-  seq: number,
-  data: CreateRecruitApplyDto,
-) => {
+export const createRecruitApply = (seq: number, data: CreateRecruitApplyDto) => {
   return request.post<PostResponse>(`/recruit/${seq}/apply`, data);
 };
 
-export const updateRecruitApplyCancel = (data: {seqs: number[]}) => {
+export const updateRecruitApplyCancel = (data: { seqs: number[] }) => {
   return request.patch('/recruit/apply', data);
 };
 
@@ -60,10 +53,7 @@ export const fetchRecruitApplication = (seq: number) => {
   return request.get<FetchRecruitApplicationResponse>(`/recruit/apply/${seq}`);
 };
 
-export const updateRecruitApplyStatus = (
-  seq: number,
-  data: UpdateRecruitApplyDto,
-) => {
+export const updateRecruitApplyStatus = (seq: number, data: UpdateRecruitApplyDto) => {
   return request.patch(`/recruit/${seq}/apply`, data);
 };
 
@@ -87,10 +77,9 @@ export const recruitApi = {
     return response.data;
   },
   getMyApplicationList: async (params?: FetchRecruitApplicationsMyParams) => {
-    const response = await request.get<FetchRecruitApplicationsMyResponse>(
-      `${ENDPOINT}/apply`,
-      {params},
-    );
+    const response = await request.get<FetchRecruitApplicationsMyResponse>(`${ENDPOINT}/apply`, {
+      params,
+    });
     return response.data;
   },
 };

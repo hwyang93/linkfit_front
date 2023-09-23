@@ -6,16 +6,16 @@ import CenterProfile from '@/components/Compound/CenterProfile';
 import RecruitCard from '@/components/Compound/RecruitCard';
 import ReviewListItem from '@/components/Compound/ReviewListItem';
 import SRC from '@/utils/constants/assets';
-import {SCREEN_WIDTH} from '@/utils/constants/common';
-import {iconPath} from '@/utils/iconPath';
-import {fetchCompany} from '@api/company';
+import { SCREEN_WIDTH } from '@/utils/constants/common';
+import { iconPath } from '@/utils/iconPath';
+import { fetchCompany } from '@api/company';
 import toast from '@hooks/toast';
-import {NativeStackScreenProps} from '@react-navigation/native-stack';
-import {isAxiosError} from 'axios';
-import {useCallback, useEffect} from 'react';
-import {Image, Pressable, ScrollView, Text, View} from 'react-native';
-import {SafeAreaView} from 'react-native-safe-area-context';
-import {LoggedInParamList} from '../../AppInner';
+import { NativeStackScreenProps } from '@react-navigation/native-stack';
+import { isAxiosError } from 'axios';
+import { useCallback, useEffect } from 'react';
+import { Image, Pressable, ScrollView, Text, View } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
+import { LoggedInParamList } from '../../AppInner';
 
 const DUMMY_IMAGES = [
   require('@images/center_01.png'),
@@ -27,7 +27,7 @@ const DUMMY_IMAGES = [
 
 type Props = NativeStackScreenProps<LoggedInParamList, 'CenterInfo'>;
 
-const CenterInfoScreen = ({route}: Props) => {
+const CenterInfoScreen = ({ route }: Props) => {
   // const [centerInfo, setCenterInfo] = useState<CompanyEntity>();
   // const [recruits, setRecruits] = useState<RecruitEntity[]>();
   // const [reputations, setReputations] = useState<MemberReputationEntity[]>();
@@ -39,9 +39,9 @@ const CenterInfoScreen = ({route}: Props) => {
         // setRecruits(data.recruits);
         // setReputations(data.reputations);
       })
-      .catch(error => {
+      .catch((error) => {
         if (isAxiosError(error)) {
-          toast.error({message: error.message});
+          toast.error({ message: error.message });
         }
       });
   }, [route.params.memberSeq]);
@@ -53,14 +53,14 @@ const CenterInfoScreen = ({route}: Props) => {
   // TODO: api 연동 필요
 
   return (
-    <SafeAreaView edges={['left', 'right']} style={{flex: 1}}>
+    <SafeAreaView edges={['left', 'right']} style={{ flex: 1 }}>
       <ScrollView>
-        <View style={{margin: 16}}>
+        <View style={{ margin: 16 }}>
           <Image
-            style={{width: '100%', height: 160, borderRadius: 8}}
+            style={{ width: '100%', height: 160, borderRadius: 8 }}
             source={SRC.IMAGES.CENTER01}
           />
-          <View style={{marginTop: 16}}>
+          <View style={{ marginTop: 16 }}>
             <CenterProfile
               name="링크 필라테스"
               isFavorite={false}
@@ -69,27 +69,21 @@ const CenterInfoScreen = ({route}: Props) => {
               address="서울 송파구"
             />
           </View>
-          <SectionHeader title="소개글" style={{marginTop: 16}} />
-          <Text style={{fontSize: 16, marginTop: 8}}>
+          <SectionHeader title="소개글" style={{ marginTop: 16 }} />
+          <Text style={{ fontSize: 16, marginTop: 8 }}>
             강남구 역삼동에 위치해있는 필라테스 센터입니다.
           </Text>
-          <RowView style={{marginTop: 24, justifyContent: 'space-between'}}>
+          <RowView style={{ marginTop: 24, justifyContent: 'space-between' }}>
             <SectionHeader title="링크" />
             <RowView>
               <IconButton source={iconPath.LINK_URL} />
-              <IconButton
-                source={iconPath.LINK_BLOG}
-                style={{marginLeft: 16}}
-              />
-              <IconButton
-                source={iconPath.LINK_BRUNCH}
-                style={{marginLeft: 16}}
-              />
+              <IconButton source={iconPath.LINK_BLOG} style={{ marginLeft: 16 }} />
+              <IconButton source={iconPath.LINK_BRUNCH} style={{ marginLeft: 16 }} />
             </RowView>
           </RowView>
-          <SectionHeader title="채용 중" style={{marginTop: 24}} />
+          <SectionHeader title="채용 중" style={{ marginTop: 24 }} />
           <RecruitCard
-            style={{marginTop: 8}}
+            style={{ marginTop: 8 }}
             title="필라테스 강사님 모십니다."
             recruitType="파트"
             date="월,수,금"
@@ -97,20 +91,16 @@ const CenterInfoScreen = ({route}: Props) => {
             bookmarked
           />
           <RecruitCard
-            style={{marginTop: 8}}
+            style={{ marginTop: 8 }}
             title="필라테스 강사님 모십니다."
             recruitType="파트"
             date="월,수,금"
             time="시간협의"
             bookmarked
           />
-          <ExpandButton
-            style={{marginTop: 8}}
-            expanded={false}
-            onPress={() => {}}
-          />
-          <SectionHeader title="센터 사진" style={{marginTop: 24}} />
-          <RowView style={{flexWrap: 'wrap', marginTop: 8}}>
+          <ExpandButton style={{ marginTop: 8 }} expanded={false} onPress={() => {}} />
+          <SectionHeader title="센터 사진" style={{ marginTop: 24 }} />
+          <RowView style={{ flexWrap: 'wrap', marginTop: 8 }}>
             {DUMMY_IMAGES.map((item, index) => (
               <Pressable
                 key={index}
@@ -120,15 +110,11 @@ const CenterInfoScreen = ({route}: Props) => {
                   height: (SCREEN_WIDTH - 38) / 3,
                   margin: 1,
                 }}>
-                <Image source={item} style={{width: '100%', height: '100%'}} />
+                <Image source={item} style={{ width: '100%', height: '100%' }} />
               </Pressable>
             ))}
           </RowView>
-          <SectionHeader
-            style={{marginTop: 24}}
-            title="센터 후기"
-            onPress={() => {}}
-          />
+          <SectionHeader style={{ marginTop: 24 }} title="센터 후기" onPress={() => {}} />
           <ReviewListItem
             nickname="닉네임"
             role="강사"

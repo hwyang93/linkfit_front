@@ -1,16 +1,16 @@
-import {FetchMemberInfoResponse} from '@/types/api/member';
-import {SCREEN_WIDTH} from '@/utils/constants/common';
-import {iconPath} from '@/utils/iconPath';
-import {materialTopTabNavigationOptions} from '@/utils/options/tab';
-import {fetchMemberInfo} from '@api/member';
+import { FetchMemberInfoResponse } from '@/types/api/member';
+import { SCREEN_WIDTH } from '@/utils/constants/common';
+import { iconPath } from '@/utils/iconPath';
+import { materialTopTabNavigationOptions } from '@/utils/options/tab';
+import { fetchMemberInfo } from '@api/member';
 import toast from '@hooks/toast';
-import {createMaterialTopTabNavigator} from '@react-navigation/material-top-tabs';
-import {useIsFocused} from '@react-navigation/native';
-import {NativeStackScreenProps} from '@react-navigation/native-stack';
-import {BLUE, GRAY} from '@styles/colors';
+import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
+import { useIsFocused } from '@react-navigation/native';
+import { NativeStackScreenProps } from '@react-navigation/native-stack';
+import { BLUE, GRAY } from '@styles/colors';
 import common from '@styles/common';
-import {isAxiosError} from 'axios';
-import React, {useEffect, useState} from 'react';
+import { isAxiosError } from 'axios';
+import React, { useEffect, useState } from 'react';
 import {
   Alert,
   FlatList,
@@ -21,14 +21,14 @@ import {
   Text,
   View,
 } from 'react-native';
-import {LoggedInParamList} from '../../../AppInner';
+import { LoggedInParamList } from '../../../AppInner';
 
 const DUMMY_MY_INTRODUCTION_DATA = [
-  {src: require('@images/instructor_01.png')},
-  {src: require('@images/instructor_02.png')},
-  {src: require('@images/instructor_03.png')},
-  {src: require('@images/instructor_04.png')},
-  {src: require('@images/instructor_05.png')},
+  { src: require('@images/instructor_01.png') },
+  { src: require('@images/instructor_02.png') },
+  { src: require('@images/instructor_03.png') },
+  { src: require('@images/instructor_04.png') },
+  { src: require('@images/instructor_05.png') },
 ];
 
 const DUMMY_REVIEW_DATA = [
@@ -81,22 +81,18 @@ const Header: React.FC<HeaderProps> = ({
       <View style={[styles.thumbnailBox, common.mr16]}>
         <Image
           source={
-            profileImageOriginFileUrl
-              ? {uri: profileImageOriginFileUrl}
-              : iconPath.THUMBNAIL
+            profileImageOriginFileUrl ? { uri: profileImageOriginFileUrl } : iconPath.THUMBNAIL
           }
           style={common.thumbnail_l}
         />
       </View>
       <View>
         <View style={common.rowCenter}>
-          <Text style={[common.text_l, common.fwb, common.mr8]}>
-            {nickname ? nickname : name}
-          </Text>
+          <Text style={[common.text_l, common.fwb, common.mr8]}>{nickname ? nickname : name}</Text>
           <View style={common.rowCenter}>
-            <Text style={[common.text_s, {color: BLUE.DEFAULT}]}>인증강사</Text>
+            <Text style={[common.text_s, { color: BLUE.DEFAULT }]}>인증강사</Text>
             <Image
-              style={{marginLeft: 2, width: 14, height: 14}}
+              style={{ marginLeft: 2, width: 14, height: 14 }}
               source={iconPath.CERTIFICATION}
             />
           </View>
@@ -111,14 +107,9 @@ const Header: React.FC<HeaderProps> = ({
 
         <View style={common.rowCenter}>
           <Pressable onPress={() => Alert.alert('click', 'test')}>
-            <Image
-              source={iconPath.FAVORITE_FILL}
-              style={[common.size24, common.mr8]}
-            />
+            <Image source={iconPath.FAVORITE_FILL} style={[common.size24, common.mr8]} />
           </Pressable>
-          <Text style={[common.text_m, common.fwb, common.mr8]}>
-            {followerCount}
-          </Text>
+          <Text style={[common.text_m, common.fwb, common.mr8]}>{followerCount}</Text>
         </View>
       </View>
 
@@ -144,12 +135,7 @@ type ReviewTabItemProps = {
   review: string;
 };
 
-const ReviewTabItem: React.FC<ReviewTabItemProps> = ({
-  nickname,
-  type,
-  date,
-  review,
-}) => {
+const ReviewTabItem: React.FC<ReviewTabItemProps> = ({ nickname, type, date, review }) => {
   const [textLine, setTextLine] = useState(2);
 
   const expandText = () => setTextLine(textLine === 2 ? 0 : 2);
@@ -158,11 +144,8 @@ const ReviewTabItem: React.FC<ReviewTabItemProps> = ({
     <>
       <View style={[common.row, common.mb8]}>
         <Text style={[common.text_m, common.fwb, common.fs18]}>{nickname}</Text>
-        <Text
-          style={[common.text, {alignSelf: 'flex-end', marginHorizontal: 4}]}>
-          {type}
-        </Text>
-        <Text style={[common.text, {alignSelf: 'flex-end'}]}>{date}</Text>
+        <Text style={[common.text, { alignSelf: 'flex-end', marginHorizontal: 4 }]}>{type}</Text>
+        <Text style={[common.text, { alignSelf: 'flex-end' }]}>{date}</Text>
       </View>
       <Pressable onPress={expandText}>
         <Text style={common.text_m} numberOfLines={textLine}>
@@ -178,10 +161,7 @@ interface MyIntroductionTabItemProps {
   onPress?: () => void;
 }
 
-const MyIntroductionTabItem: React.FC<MyIntroductionTabItemProps> = ({
-  src,
-  onPress,
-}) => {
+const MyIntroductionTabItem: React.FC<MyIntroductionTabItemProps> = ({ src, onPress }) => {
   return (
     <Pressable onPress={onPress}>
       <Image
@@ -199,7 +179,7 @@ const MyIntroductionTabItem: React.FC<MyIntroductionTabItemProps> = ({
 
 type Props = NativeStackScreenProps<LoggedInParamList, 'MyProfile'>;
 
-const MyProfileScreen = ({navigation}: Props) => {
+const MyProfileScreen = ({ navigation }: Props) => {
   const [memberInfo, setMemberInfo] = useState<FetchMemberInfoResponse>();
 
   const isFocused = useIsFocused();
@@ -207,29 +187,22 @@ const MyProfileScreen = ({navigation}: Props) => {
   useEffect(() => {
     if (isFocused) {
       fetchMemberInfo()
-        .then(({data}) => {
+        .then(({ data }) => {
           setMemberInfo(data);
         })
-        .catch(error => {
+        .catch((error) => {
           if (isAxiosError(error)) {
-            toast.error({message: error.message});
+            toast.error({ message: error.message });
           }
         });
     }
   }, [isFocused]);
 
-  const renderMyIntroductionTabItem = ({
-    item,
-  }: {
-    item: MyIntroductionTabItemProps;
-  }) => (
-    <MyIntroductionTabItem
-      src={item.src}
-      onPress={() => navigation.navigate('Gallery')}
-    />
+  const renderMyIntroductionTabItem = ({ item }: { item: MyIntroductionTabItemProps }) => (
+    <MyIntroductionTabItem src={item.src} onPress={() => navigation.navigate('Gallery')} />
   );
 
-  const renderReviewTabItem = ({item}: {item: ReviewTabItemProps}) => (
+  const renderReviewTabItem = ({ item }: { item: ReviewTabItemProps }) => (
     <ReviewTabItem
       nickname={item.nickname}
       type={item.type}
@@ -246,7 +219,7 @@ const MyProfileScreen = ({navigation}: Props) => {
         renderItem={renderMyIntroductionTabItem}
         numColumns={3}
         ListHeaderComponent={<MyIntroductionTabHeader />}
-        style={{padding: 16, backgroundColor: 'white'}}
+        style={{ padding: 16, backgroundColor: 'white' }}
       />
     );
   };
@@ -258,10 +231,10 @@ const MyProfileScreen = ({navigation}: Props) => {
       <FlatList
         data={DUMMY_REVIEW_DATA}
         renderItem={renderReviewTabItem}
-        keyExtractor={item => String(item.id)}
-        style={{padding: 16, backgroundColor: 'white'}}
+        keyExtractor={(item) => String(item.id)}
+        style={{ padding: 16, backgroundColor: 'white' }}
         ItemSeparatorComponent={() => (
-          <View style={[common.separator, common.mv16, {width: width}]} />
+          <View style={[common.separator, common.mv16, { width: width }]} />
         )}
       />
     );
@@ -288,7 +261,7 @@ const MyProfileScreen = ({navigation}: Props) => {
 };
 
 const styles = StyleSheet.create({
-  pencil: {position: 'absolute', top: 16, right: 16},
+  pencil: { position: 'absolute', top: 16, right: 16 },
   indicator: {
     backgroundColor: BLUE.DEFAULT,
   },

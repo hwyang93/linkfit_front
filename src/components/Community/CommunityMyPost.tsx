@@ -1,16 +1,16 @@
-import {useCommunityPostDeleteMutation} from '@/hooks/community/useCommunityPostDeleteMutation';
-import {useCommunityPostListQuery} from '@/hooks/community/useCommunityPostListQuery';
+import { useCommunityPostDeleteMutation } from '@/hooks/community/useCommunityPostDeleteMutation';
+import { useCommunityPostListQuery } from '@/hooks/community/useCommunityPostListQuery';
 import useModal from '@/hooks/useModal';
-import {ROUTE} from '@/navigations/routes';
+import { ROUTE } from '@/navigations/routes';
 import common from '@/styles/common';
 import THEME from '@/styles/theme';
-import {iconPath} from '@/utils/iconPath';
-import {formatDate} from '@/utils/util';
-import {NavigationProp, useNavigation} from '@react-navigation/native';
-import {GRAY, WHITE} from '@styles/colors';
-import {useState} from 'react';
-import {FlatList, Image, Pressable, StyleSheet, Text, View} from 'react-native';
-import {LoggedInParamList} from '../../../AppInner';
+import { iconPath } from '@/utils/iconPath';
+import { formatDate } from '@/utils/util';
+import { NavigationProp, useNavigation } from '@react-navigation/native';
+import { GRAY, WHITE } from '@styles/colors';
+import { useState } from 'react';
+import { FlatList, Image, Pressable, StyleSheet, Text, View } from 'react-native';
+import { LoggedInParamList } from '../../../AppInner';
 import BottomSheet from '../Common/BottomSheet';
 import BottomSheetOption from '../Common/BottomSheetOption';
 import EmptySet from '../EmptySet';
@@ -22,12 +22,7 @@ interface PostListItemProps {
   updatedAt: string;
 }
 
-const PostListItem: React.FC<PostListItemProps> = ({
-  postId,
-  title,
-  contents,
-  updatedAt,
-}) => {
+const PostListItem: React.FC<PostListItemProps> = ({ postId, title, contents, updatedAt }) => {
   const [textLine, setTextLine] = useState(2);
   const modal = useModal();
 
@@ -76,16 +71,10 @@ const PostListItem: React.FC<PostListItemProps> = ({
 
   return (
     <Pressable style={styles.postBox} onPress={onPress}>
-      <View style={[common.row, common.mb12, {alignItems: 'flex-end'}]}>
+      <View style={[common.row, common.mb12, { alignItems: 'flex-end' }]}>
         <Text style={[common.text_m, common.fwb]}>{title}</Text>
-        <Text style={[common.text, {marginLeft: 4}]}>
-          {formatDate(updatedAt)}
-        </Text>
-        <Text
-          style={[
-            common.text,
-            {fontSize: 12, color: THEME.PRIMARY, marginLeft: 4},
-          ]}>
+        <Text style={[common.text, { marginLeft: 4 }]}>{formatDate(updatedAt)}</Text>
+        <Text style={[common.text, { fontSize: 12, color: THEME.PRIMARY, marginLeft: 4 }]}>
           {title ? '게시글' : '댓글'}
         </Text>
       </View>
@@ -97,10 +86,7 @@ const PostListItem: React.FC<PostListItemProps> = ({
       <Pressable style={styles.kebabIcon} hitSlop={10} onPress={modal.open}>
         <Image source={iconPath.KEBAB} style={[common.size24]} />
       </Pressable>
-      <BottomSheet
-        visible={modal.visible}
-        onDismiss={modal.close}
-        title="더보기">
+      <BottomSheet visible={modal.visible} onDismiss={modal.close} title="더보기">
         <BottomSheetOption label="수정하기" onPress={onEdit} />
         <BottomSheetOption label="삭제하기" onPress={onDelete} />
       </BottomSheet>
@@ -119,8 +105,8 @@ const CommunityMyPost: React.FC = () => {
       {myPosts?.length !== 0 && (
         <FlatList
           data={myPosts}
-          contentContainerStyle={{paddingBottom: 32}}
-          renderItem={({item}) => (
+          contentContainerStyle={{ paddingBottom: 32 }}
+          renderItem={({ item }) => (
             <PostListItem
               postId={item.seq}
               title={item.title}
@@ -146,7 +132,7 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1,
     borderColor: GRAY.DEFAULT,
   },
-  kebabIcon: {position: 'absolute', top: 16, right: 0},
+  kebabIcon: { position: 'absolute', top: 16, right: 0 },
 });
 
 export default CommunityMyPost;

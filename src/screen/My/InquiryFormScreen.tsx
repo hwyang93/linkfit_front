@@ -1,20 +1,20 @@
-import {LoggedInParamList} from '@/../AppInner';
+import { LoggedInParamList } from '@/../AppInner';
 import CTAButton from '@/components/Common/CTAButton';
-import {useCreateCsInquiryMutation} from '@/hooks/customer-service/useCreateCsInquiryMutation';
+import { useCreateCsInquiryMutation } from '@/hooks/customer-service/useCreateCsInquiryMutation';
 import DismissKeyboardView from '@components/DismissKeyboardView';
-import Input, {KeyboardTypes} from '@components/Input';
+import Input, { KeyboardTypes } from '@components/Input';
 import toast from '@hooks/toast';
-import {NativeStackScreenProps} from '@react-navigation/native-stack';
-import {WHITE} from '@styles/colors';
+import { NativeStackScreenProps } from '@react-navigation/native-stack';
+import { WHITE } from '@styles/colors';
 import common from '@styles/common';
-import {isAxiosError} from 'axios';
-import {useState} from 'react';
-import {StyleSheet, View} from 'react-native';
-import {SafeAreaView} from 'react-native-safe-area-context';
+import { isAxiosError } from 'axios';
+import { useState } from 'react';
+import { StyleSheet, View } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 type Props = NativeStackScreenProps<LoggedInParamList, 'InquiryForm'>;
 
-const InquiryFormScreen = ({navigation}: Props) => {
+const InquiryFormScreen = ({ navigation }: Props) => {
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
 
@@ -22,16 +22,16 @@ const InquiryFormScreen = ({navigation}: Props) => {
 
   const createCsInquiryMutation = useCreateCsInquiryMutation();
 
-  const data = {title: title, contents: content};
+  const data = { title: title, contents: content };
 
   const onCreateInquiry = () => {
     createCsInquiryMutation.mutate(data, {
       onSuccess: () => {
-        toast.success({message: '1:1 문의를 등록했어요!'});
+        toast.success({ message: '1:1 문의를 등록했어요!' });
         navigation.pop();
       },
-      onError: error => {
-        isAxiosError(error) && toast.error({message: error.message});
+      onError: (error) => {
+        isAxiosError(error) && toast.error({ message: error.message });
       },
     });
   };

@@ -1,25 +1,25 @@
 import CTAButton from '@/components/Common/CTAButton';
 import useInput from '@/hooks/useInput';
 import TOAST from '@/utils/constants/toast';
-import {createCommunityPost} from '@api/community';
+import { createCommunityPost } from '@api/community';
 import DismissKeyboardView from '@components/DismissKeyboardView';
-import Input, {KeyboardTypes} from '@components/Input';
+import Input, { KeyboardTypes } from '@components/Input';
 import SelectBox from '@components/SelectBox';
 import toast from '@hooks/toast';
-import {NativeStackScreenProps} from '@react-navigation/native-stack';
-import {WHITE} from '@styles/colors';
+import { NativeStackScreenProps } from '@react-navigation/native-stack';
+import { WHITE } from '@styles/colors';
 import common from '@styles/common';
-import {isAxiosError} from 'axios';
-import {useCallback} from 'react';
-import {StyleSheet, View} from 'react-native';
-import {LoggedInParamList} from '../../../AppInner';
+import { isAxiosError } from 'axios';
+import { useCallback } from 'react';
+import { StyleSheet, View } from 'react-native';
+import { LoggedInParamList } from '../../../AppInner';
 
 const LOADING = false;
 const CHANNEL = ['필라테스', '요가', '릴리리맘보'];
 
 type Props = NativeStackScreenProps<LoggedInParamList, 'CommunityPostForm'>;
 
-const CommunityPostFormScreen = ({navigation}: Props) => {
+const CommunityPostFormScreen = ({ navigation }: Props) => {
   const titleInput = useInput();
   const categoryInput = useInput();
   const contentsInput = useInput();
@@ -38,12 +38,12 @@ const CommunityPostFormScreen = ({navigation}: Props) => {
 
     createCommunityPost(data)
       .then(() => {
-        toast.success({message: TOAST.COMMUNITY_POST_SUCCESS});
+        toast.success({ message: TOAST.COMMUNITY_POST_SUCCESS });
         navigation.navigate('Community');
       })
-      .catch(error => {
+      .catch((error) => {
         if (isAxiosError(error)) {
-          toast.error({message: error.message});
+          toast.error({ message: error.message });
         }
       });
   }, [categoryInput.value, contentsInput.value, navigation, titleInput.value]);

@@ -1,7 +1,7 @@
 import EmployeeReviewTab from '@/components/My/EmployeeReviewTab';
 import EmployerReviewTab from '@/components/My/EmployerReviewTab';
-import {materialTopTabNavigationOptions} from '@/utils/options/tab';
-import {createMaterialTopTabNavigator} from '@react-navigation/material-top-tabs';
+import { materialTopTabNavigationOptions } from '@/utils/options/tab';
+import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 
 const Tab = createMaterialTopTabNavigator();
 

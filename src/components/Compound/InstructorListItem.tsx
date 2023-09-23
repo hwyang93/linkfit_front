@@ -1,9 +1,9 @@
-import {useInstructorFollowMutation} from '@/hooks/instructor/useInstructorFollowMutation';
-import {useInstructorUnfollowMutation} from '@/hooks/instructor/useInstuctorUnfollowMutation';
-import {iconPath} from '@/utils/iconPath';
-import {BLUE} from '@styles/colors';
+import { useInstructorFollowMutation } from '@/hooks/instructor/useInstructorFollowMutation';
+import { useInstructorUnfollowMutation } from '@/hooks/instructor/useInstuctorUnfollowMutation';
+import { iconPath } from '@/utils/iconPath';
+import { BLUE } from '@styles/colors';
 import common from '@styles/common';
-import {StyleProp, StyleSheet, Text, View, ViewStyle} from 'react-native';
+import { StyleProp, StyleSheet, Text, View, ViewStyle } from 'react-native';
 import Avatar from '../Common/Avatar';
 import Icon from '../Common/Icon';
 import IconButton from '../Common/IconButton';
@@ -72,7 +72,7 @@ const InstructorListItem: React.FC<InstructorListItemProps> = ({
       <Avatar
         style={common.mr16}
         size={80}
-        source={avatarImageSrc ? {uri: avatarImageSrc} : iconPath.THUMBNAIL}
+        source={avatarImageSrc ? { uri: avatarImageSrc } : iconPath.THUMBNAIL}
         onPress={onAvatarPress}
       />
       <View>
@@ -84,14 +84,8 @@ const InstructorListItem: React.FC<InstructorListItemProps> = ({
           <Text style={[common.title, common.mr8]}>{nickname}</Text>
           {isCertificated && (
             <View style={common.rowCenter}>
-              <Text style={[common.text_s, {color: BLUE.DEFAULT}]}>
-                인증강사
-              </Text>
-              <Icon
-                size={14}
-                style={{marginLeft: 2}}
-                source={iconPath.CERTIFICATION}
-              />
+              <Text style={[common.text_s, { color: BLUE.DEFAULT }]}>인증강사</Text>
+              <Icon size={14} style={{ marginLeft: 2 }} source={iconPath.CERTIFICATION} />
             </View>
           )}
         </View>
@@ -109,7 +103,7 @@ const InstructorListItem: React.FC<InstructorListItemProps> = ({
           onPress={onMessageIconPress}
         /> */}
         <IconButton
-          style={{marginRight: 4}}
+          style={{ marginRight: 4 }}
           source={following ? iconPath.FAVORITE_ON : iconPath.FAVORITE}
           onPress={onFavoriteIconPress}
         />
@@ -138,7 +132,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
   },
-  kebabIcon: {position: 'absolute', top: 16, right: 0},
+  kebabIcon: { position: 'absolute', top: 16, right: 0 },
 });
 
 export default InstructorListItem;

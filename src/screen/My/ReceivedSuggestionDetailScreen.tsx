@@ -1,43 +1,40 @@
 import CTAButton from '@/components/Common/CTAButton';
-import {useReceivedPositionSuggestionQuery} from '@/hooks/member/useReceivedPositionSuggestionQuery';
-import {useUpdatePositionSuggestionMutation} from '@/hooks/member/useUpdatePositionSuggestionMutation';
-import {ROUTE} from '@/navigations/routes';
-import {RecruitStatus} from '@/types/api/recruit';
-import {Member} from '@/types/common';
+import { useReceivedPositionSuggestionQuery } from '@/hooks/member/useReceivedPositionSuggestionQuery';
+import { useUpdatePositionSuggestionMutation } from '@/hooks/member/useUpdatePositionSuggestionMutation';
+import { ROUTE } from '@/navigations/routes';
+import { RecruitStatus } from '@/types/api/recruit';
+import { Member } from '@/types/common';
 import InstructorInfoComponent from '@components/InstructorInfoComponent';
 import toast from '@hooks/toast';
-import {NativeStackScreenProps} from '@react-navigation/native-stack';
-import {WHITE} from '@styles/colors';
+import { NativeStackScreenProps } from '@react-navigation/native-stack';
+import { WHITE } from '@styles/colors';
 import common from '@styles/common';
-import {isAxiosError} from 'axios';
-import {Pressable, ScrollView, StyleSheet, Text, View} from 'react-native';
-import {SafeAreaView} from 'react-native-safe-area-context';
-import {LoggedInParamList} from '../../../AppInner';
+import { isAxiosError } from 'axios';
+import { Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
+import { LoggedInParamList } from '../../../AppInner';
 
 type Props = NativeStackScreenProps<
   LoggedInParamList,
   typeof ROUTE.MY.RECEIVED_POSITION_SUGGESTION_DETAIL
 >;
 
-const ReceivedSuggestionDetailScreen = ({route, navigation}: Props) => {
-  const {data} = useReceivedPositionSuggestionQuery(route.params.suggestSeq);
+const ReceivedSuggestionDetailScreen = ({ route, navigation }: Props) => {
+  const { data } = useReceivedPositionSuggestionQuery(route.params.suggestSeq);
   const suggestInfo = data;
 
-  const updatePositionSuggestionMutation =
-    useUpdatePositionSuggestionMutation();
+  const updatePositionSuggestionMutation = useUpdatePositionSuggestionMutation();
 
   const onUpdateSuggestStatus = (status: string) => {
-    const data = {status: status};
+    const data = { status: status };
     updatePositionSuggestionMutation.mutate(
       {
         suggestionId: route.params.suggestSeq,
         body: data,
       },
       {
-        onSuccess: () =>
-          toast.success({message: '제안 답변이 완료되었습니다!'}),
-        onError: error =>
-          isAxiosError(error) && toast.error({message: error.message}),
+        onSuccess: () => toast.success({ message: '제안 답변이 완료되었습니다!' }),
+        onError: (error) => isAxiosError(error) && toast.error({ message: error.message }),
       },
     );
   };
@@ -49,29 +46,19 @@ const ReceivedSuggestionDetailScreen = ({route, navigation}: Props) => {
     <SafeAreaView edges={['bottom', 'left', 'right']} style={styles.container}>
       <ScrollView showsVerticalScrollIndicator={false}>
         <View>
-          <Text style={[common.title_l, common.mt16, common.mb16]}>
-            {suggestInfo?.title}
-          </Text>
+          <Text style={[common.title_l, common.mt16, common.mb16]}>{suggestInfo?.title}</Text>
           <View style={[common.row, common.mb24]}>
             <Text style={[common.text_s, common.fcg]}>
-              {!suggestInfo?.closingDate
-                ? '채용시 마감'
-                : `~${suggestInfo.closingDate} 마감`}
+              {!suggestInfo?.closingDate ? '채용시 마감' : `~${suggestInfo.closingDate} 마감`}
             </Text>
             <Text style={[common.text_s, common.fcg, common.mh8]}>|</Text>
-            <Text style={[common.text_s, common.fcg]}>
-              {suggestInfo?.status}
-            </Text>
+            <Text style={[common.text_s, common.fcg]}>{suggestInfo?.status}</Text>
           </View>
           <Text style={[common.text_m, common.fwb, common.mb8]}>제안 내용</Text>
-          <Text style={[common.text_m, common.mb24]}>
-            {suggestInfo?.contents}
-          </Text>
+          <Text style={[common.text_m, common.mb24]}>{suggestInfo?.contents}</Text>
           {suggestInfo?.recruit && (
             <View>
-              <Text style={[common.text_m, common.fwb, common.mb8]}>
-                구인 공고
-              </Text>
+              <Text style={[common.text_m, common.fwb, common.mb8]}>구인 공고</Text>
 
               {/* 구인공고 영역 */}
               <View style={common.mb24}>
@@ -79,9 +66,7 @@ const ReceivedSuggestionDetailScreen = ({route, navigation}: Props) => {
                   <Text style={[common.title, common.mb12]} numberOfLines={1}>
                     {suggestInfo.recruit.title}
                   </Text>
-                  <Text style={[common.text_s, common.fcg]}>
-                    {suggestInfo.recruit.recruitType}
-                  </Text>
+                  <Text style={[common.text_s, common.fcg]}>{suggestInfo.recruit.recruitType}</Text>
                 </Pressable>
               </View>
             </View>
@@ -90,9 +75,7 @@ const ReceivedSuggestionDetailScreen = ({route, navigation}: Props) => {
           {/* 채용 기간 */}
           <Text style={[common.text_m, common.fwb, common.mb8]}>마감 기간</Text>
           <Text style={[common.text_m, common.mb24]}>
-            {!suggestInfo?.closingDate
-              ? '채용시 마감'
-              : `~${suggestInfo.closingDate} 마감`}
+            {!suggestInfo?.closingDate ? '채용시 마감' : `~${suggestInfo.closingDate} 마감`}
           </Text>
 
           {suggestInfo?.writer.type === Member.Company && (
@@ -103,18 +86,14 @@ const ReceivedSuggestionDetailScreen = ({route, navigation}: Props) => {
                     memberSeq: suggestInfo.writer.memberSeq,
                   })
                 }>
-                <Text style={[common.text_m, common.fwb, common.mb8]}>
-                  제안한 센터 정보
-                </Text>
+                <Text style={[common.text_m, common.fwb, common.mb8]}>제안한 센터 정보</Text>
                 <View>{/* <CenterInfoComponent centerInfo={}/> */}</View>
               </Pressable>
             </View>
           )}
           {suggestInfo?.writer.type === Member.Instructor && (
             <View style={common.mb24}>
-              <Text style={[common.text_m, common.fwb, common.mb8]}>
-                제안한 강사 정보
-              </Text>
+              <Text style={[common.text_m, common.fwb, common.mb8]}>제안한 강사 정보</Text>
               <View>
                 <InstructorInfoComponent />
               </View>

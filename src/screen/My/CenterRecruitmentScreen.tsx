@@ -1,20 +1,13 @@
-import {LoggedInParamList} from '@/../AppInner';
-import {iconPath} from '@/utils/iconPath';
+import { LoggedInParamList } from '@/../AppInner';
+import { iconPath } from '@/utils/iconPath';
 import Modal from '@components/ModalSheet';
 import TopFilter from '@components/TopFilter';
-import {NativeStackScreenProps} from '@react-navigation/native-stack';
-import {WHITE} from '@styles/colors';
+import { NativeStackScreenProps } from '@react-navigation/native-stack';
+import { WHITE } from '@styles/colors';
 import common from '@styles/common';
-import {useState} from 'react';
-import {
-  Image,
-  Pressable,
-  ScrollView,
-  StyleSheet,
-  Text,
-  View,
-} from 'react-native';
-import {SafeAreaView} from 'react-native-safe-area-context';
+import { useState } from 'react';
+import { Image, Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 type Props = NativeStackScreenProps<LoggedInParamList, 'CenterRecruitment'>;
 
@@ -148,10 +141,7 @@ const CenterRecruitmentScreen = ({}: Props) => {
         <View style={common.mb24}>
           {DATA.map((item, index) => {
             return (
-              <Pressable
-                key={index}
-                style={[common.basicBox, common.mv8]}
-                onPress={item.job}>
+              <Pressable key={index} style={[common.basicBox, common.mv8]} onPress={item.job}>
                 <View style={common.rowCenter}>
                   <Text style={[common.text_s, common.fcg]}>{item.date}</Text>
                   <Text style={[common.mh8, common.fcg]}>|</Text>
@@ -161,10 +151,7 @@ const CenterRecruitmentScreen = ({}: Props) => {
                   {item.title}
                 </Text>
                 <Text style={[common.text_m, common.fwb]}>{item.field}</Text>
-                <Pressable
-                  style={styles.kebabIcon}
-                  hitSlop={10}
-                  onPress={item.kebab}>
+                <Pressable style={styles.kebabIcon} hitSlop={10} onPress={item.kebab}>
                   <Image source={iconPath.KEBAB} style={[common.size24]} />
                 </Pressable>
               </Pressable>
@@ -191,7 +178,7 @@ const styles = StyleSheet.create({
     padding: 16,
     backgroundColor: WHITE,
   },
-  kebabIcon: {position: 'absolute', top: 16, right: 16},
+  kebabIcon: { position: 'absolute', top: 16, right: 16 },
 });
 
 export default CenterRecruitmentScreen;

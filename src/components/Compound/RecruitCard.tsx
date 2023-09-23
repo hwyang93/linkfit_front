@@ -1,14 +1,7 @@
 import THEME from '@/styles/theme';
-import {iconPath} from '@/utils/iconPath';
+import { iconPath } from '@/utils/iconPath';
 import React from 'react';
-import {
-  Pressable,
-  StyleProp,
-  StyleSheet,
-  Text,
-  View,
-  ViewStyle,
-} from 'react-native';
+import { Pressable, StyleProp, StyleSheet, Text, View, ViewStyle } from 'react-native';
 import IconButton from '../Common/IconButton';
 
 interface RecruitCardProps {
@@ -32,8 +25,8 @@ const RecruitCard: React.FC<RecruitCardProps> = ({
 }) => {
   return (
     <Pressable style={[styles.container, style]} onPress={onPress}>
-      <View style={{flex: 1}}>
-        <Text style={{fontSize: 20, fontWeight: '700'}}>{title}</Text>
+      <View style={{ flex: 1 }}>
+        <Text style={{ fontSize: 20, fontWeight: '700' }}>{title}</Text>
         <Text
           style={{
             fontSize: 14,
@@ -41,9 +34,7 @@ const RecruitCard: React.FC<RecruitCardProps> = ({
             color: THEME.GREY02,
           }}>{`${recruitType} · ${date} · ${time}`}</Text>
       </View>
-      <IconButton
-        source={bookmarked ? iconPath.BOOKMARK_ON : iconPath.BOOKMARK}
-      />
+      <IconButton source={bookmarked ? iconPath.BOOKMARK_ON : iconPath.BOOKMARK} />
     </Pressable>
   );
 };

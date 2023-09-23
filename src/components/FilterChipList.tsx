@@ -1,4 +1,4 @@
-import {FlatList, StyleSheet, View} from 'react-native';
+import { FlatList, StyleSheet, View } from 'react-native';
 import FilterChip from './Common/FilterChip';
 
 interface FilterChipListProps {
@@ -9,20 +9,17 @@ interface FilterChipListProps {
   onChipPress: (label: string) => void;
 }
 
-const FilterChipList: React.FC<FilterChipListProps> = ({
-  chipData,
-  onChipPress,
-}) => {
+const FilterChipList: React.FC<FilterChipListProps> = ({ chipData, onChipPress }) => {
   return (
     <View style={styles.filterBox}>
       <FlatList
-        contentContainerStyle={{paddingHorizontal: 16}}
+        contentContainerStyle={{ paddingHorizontal: 16 }}
         data={chipData}
         keyExtractor={(_, index) => index.toString()}
         horizontal={true}
-        renderItem={({item}) => (
+        renderItem={({ item }) => (
           <FilterChip
-            style={{marginRight: 8}}
+            style={{ marginRight: 8 }}
             label={item.label}
             onPress={() => onChipPress(item.value)}
             rightIcon

@@ -1,23 +1,23 @@
 import CTAButton from '@/components/Common/CTAButton';
 import useInput from '@/hooks/useInput';
-import {useSelect} from '@/hooks/useSelect';
-import {useAppSelector} from '@/store';
-import {Coordinate, Member} from '@/types/common';
-import {SCREEN_WIDTH} from '@/utils/constants/common';
-import {iconPath} from '@/utils/iconPath';
-import {createRecruit} from '@api/recruit';
+import { useSelect } from '@/hooks/useSelect';
+import { useAppSelector } from '@/store';
+import { Coordinate, Member } from '@/types/common';
+import { SCREEN_WIDTH } from '@/utils/constants/common';
+import { iconPath } from '@/utils/iconPath';
+import { createRecruit } from '@api/recruit';
 import SearchAddressInput from '@components/Common/SearchAddressInput';
 import DismissKeyboardView from '@components/DismissKeyboardView';
-import Input, {KeyboardTypes} from '@components/Input';
+import Input, { KeyboardTypes } from '@components/Input';
 import TimeComponent from '@components/Offer/TimeComponent';
 import SelectBox from '@components/SelectBox';
 import toast from '@hooks/toast';
-import {NativeStackScreenProps} from '@react-navigation/native-stack';
-import {GRAY} from '@styles/colors';
+import { NativeStackScreenProps } from '@react-navigation/native-stack';
+import { GRAY } from '@styles/colors';
 import common from '@styles/common';
-import {useState} from 'react';
-import {Image, Pressable, StyleSheet, Text, View} from 'react-native';
-import {LoggedInParamList} from '../../AppInner';
+import { useState } from 'react';
+import { Image, Pressable, StyleSheet, Text, View } from 'react-native';
+import { LoggedInParamList } from '../../AppInner';
 
 const POSITION = ['실장', '필라테스', '요가'];
 const EDUCATION = ['학력 무관', '고졸 이상', '대졸 이상'];
@@ -33,8 +33,8 @@ const columns7 = (SCREEN_WIDTH - 80) / 7;
 
 type Props = NativeStackScreenProps<LoggedInParamList, 'JobOfferForm'>;
 
-const JobOfferFormScreen = ({navigation}: Props) => {
-  const memberInfo = useAppSelector(state => state.user);
+const JobOfferFormScreen = ({ navigation }: Props) => {
+  const memberInfo = useAppSelector((state) => state.user);
 
   const offerTitleInput = useInput();
   const payInput = useInput();
@@ -54,13 +54,13 @@ const JobOfferFormScreen = ({navigation}: Props) => {
   const [lon, setLon] = useState<number | null>(null);
   const [lat, setLat] = useState<number | null>(null);
   const [DAY, setDAY] = useState([
-    {value: '월', selected: false},
-    {value: '화', selected: false},
-    {value: '수', selected: false},
-    {value: '목', selected: false},
-    {value: '금', selected: false},
-    {value: '토', selected: false},
-    {value: '일', selected: false},
+    { value: '월', selected: false },
+    { value: '화', selected: false },
+    { value: '수', selected: false },
+    { value: '목', selected: false },
+    { value: '금', selected: false },
+    { value: '토', selected: false },
+    { value: '일', selected: false },
   ]);
 
   const isFormValid =
@@ -104,7 +104,7 @@ const JobOfferFormScreen = ({navigation}: Props) => {
 
     let dayList: string = '';
 
-    updatedDay.map(item => {
+    updatedDay.map((item) => {
       if (item.selected) {
         return (dayList += item.value + ', ');
       }
@@ -128,10 +128,7 @@ const JobOfferFormScreen = ({navigation}: Props) => {
     setDateForm(newDates);
   };
 
-  const setCompanyAddressInfo = (data: {
-    address: string;
-    coordinate: Coordinate | null;
-  }) => {
+  const setCompanyAddressInfo = (data: { address: string; coordinate: Coordinate | null }) => {
     setAddress(data.address);
 
     if (data.coordinate) {
@@ -167,17 +164,17 @@ const JobOfferFormScreen = ({navigation}: Props) => {
 
     createRecruit(data)
       .then(() => {
-        toast.success({message: '채용 공고 등록이 완료되었어요!'});
+        toast.success({ message: '채용 공고 등록이 완료되었어요!' });
         navigation.pop();
       })
-      .catch(error => {
-        toast.error({message: error.message});
+      .catch((error) => {
+        toast.error({ message: error.message });
       });
   };
 
   return (
     <DismissKeyboardView>
-      <View style={{margin: 16, marginBottom: 32}}>
+      <View style={{ margin: 16, marginBottom: 32 }}>
         {/*이미지 올리기 임시 주석처리*/}
         {/*<Pressable style={[styles.photoBox, common.mb16]} onPress={openPicker}>*/}
         {/*  <Image source={iconPath.PHOTO} style={[common.size24]} />*/}
@@ -202,8 +199,7 @@ const JobOfferFormScreen = ({navigation}: Props) => {
           />
         </View>
         {/* 요가, 필라테스의 경우 표시 */}
-        {positionSelect.value === '실장' ||
-        positionSelect.value === '' ? null : (
+        {positionSelect.value === '실장' || positionSelect.value === '' ? null : (
           <View style={common.mb16}>
             <SelectBox
               label="채용 형태"
@@ -236,7 +232,7 @@ const JobOfferFormScreen = ({navigation}: Props) => {
             <SelectBox
               label="시간"
               data={TIME}
-              onSelect={(value: any) => setDateForm([{day: '', time: value}])}
+              onSelect={(value: any) => setDateForm([{ day: '', time: value }])}
               defaultButtonText="시간을 선택하세요."
             />
           </View>
@@ -256,23 +252,13 @@ const JobOfferFormScreen = ({navigation}: Props) => {
                     editable={false}
                   />
                 </View>
-                <View
-                  style={[
-                    common.mb16,
-                    common.row,
-                    {justifyContent: 'space-between'},
-                  ]}>
+                <View style={[common.mb16, common.row, { justifyContent: 'space-between' }]}>
                   {DAY.map((item, index) => (
                     <Pressable
                       key={index}
                       onPress={() => handleDaySelection(index)}
-                      style={[
-                        styles.dateItem,
-                        item.selected && {backgroundColor: '#d7e0fd'},
-                      ]}>
-                      <Text style={[common.text_m, {color: '#292929'}]}>
-                        {item.value}
-                      </Text>
+                      style={[styles.dateItem, item.selected && { backgroundColor: '#d7e0fd' }]}>
+                      <Text style={[common.text_m, { color: '#292929' }]}>{item.value}</Text>
                     </Pressable>
                   ))}
                 </View>
@@ -290,12 +276,8 @@ const JobOfferFormScreen = ({navigation}: Props) => {
                 {dateForm.map((_, index: number) => (
                   <View key={'dateFrom' + index}>
                     <TimeComponent
-                      onSelectDay={(value: string) =>
-                        handleAddDates(value, 'day', index)
-                      }
-                      onSelectTime={(value: string) =>
-                        handleAddDates(value, 'time', index)
-                      }
+                      onSelectDay={(value: string) => handleAddDates(value, 'day', index)}
+                      onSelectTime={(value: string) => handleAddDates(value, 'time', index)}
                     />
                   </View>
                 ))}
@@ -303,13 +285,8 @@ const JobOfferFormScreen = ({navigation}: Props) => {
                 {/* 추가 버튼 */}
                 {dateForm.length < 3 ? (
                   <View style={common.mb16}>
-                    <Pressable
-                      style={{alignSelf: 'center'}}
-                      onPress={addTimetable}>
-                      <Image
-                        source={iconPath.ADD_BUTTON}
-                        style={common.size40}
-                      />
+                    <Pressable style={{ alignSelf: 'center' }} onPress={addTimetable}>
+                      <Image source={iconPath.ADD_BUTTON} style={common.size40} />
                     </Pressable>
                   </View>
                 ) : null}
@@ -378,11 +355,7 @@ const JobOfferFormScreen = ({navigation}: Props) => {
             multiline
           />
         </View>
-        <CTAButton
-          label="채용 공고 등록"
-          onPress={onCreateRecruit}
-          disabled={!isFormValid}
-        />
+        <CTAButton label="채용 공고 등록" onPress={onCreateRecruit} disabled={!isFormValid} />
       </View>
     </DismissKeyboardView>
   );

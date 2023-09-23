@@ -1,10 +1,10 @@
 import DismissKeyboardView from '@/components/DismissKeyboardView';
 import useAuth from '@/hooks/useAuth';
-import {AuthStackParamList} from '@/navigations/AuthStack';
-import {IS_ANDROID} from '@/utils/constants/common';
-import {NativeStackScreenProps} from '@react-navigation/native-stack';
-import {AxiosError} from 'axios';
-import {useCallback, useRef, useState} from 'react';
+import { AuthStackParamList } from '@/navigations/AuthStack';
+import { IS_ANDROID } from '@/utils/constants/common';
+import { NativeStackScreenProps } from '@react-navigation/native-stack';
+import { AxiosError } from 'axios';
+import { useCallback, useRef, useState } from 'react';
 import {
   ActivityIndicator,
   Alert,
@@ -17,7 +17,7 @@ import {
 
 type Props = NativeStackScreenProps<AuthStackParamList, 'SignUp'>;
 
-const SignUp = ({navigation}: Props) => {
+const SignUp = ({ navigation }: Props) => {
   const [email, setEmail] = useState('');
   const [name, setName] = useState('');
   const [password, setPassword] = useState('');
@@ -26,7 +26,7 @@ const SignUp = ({navigation}: Props) => {
   const nameRef = useRef<TextInput | null>(null);
   const passwordRef = useRef<TextInput | null>(null);
 
-  const {signUp, isLoading} = useAuth();
+  const { signUp, isLoading } = useAuth();
 
   const onChangeEmail = useCallback((text: string) => {
     setEmail(text.trim());
@@ -69,10 +69,10 @@ const SignUp = ({navigation}: Props) => {
     }
 
     try {
-      await signUp({email, name, password});
+      await signUp({ email, name, password });
       navigation.navigate('SignIn');
     } catch (error) {
-      const errorResponse = (error as AxiosError<{message: string}>).response;
+      const errorResponse = (error as AxiosError<{ message: string }>).response;
       console.error((error as AxiosError).response);
       if (errorResponse) {
         Alert.alert('알림', errorResponse.data?.message);

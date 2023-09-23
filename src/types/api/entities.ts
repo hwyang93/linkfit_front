@@ -1,4 +1,4 @@
-import {MemberType, YesNoFlag} from '../common';
+import { MemberType, YesNoFlag } from '../common';
 
 export interface BaseEntity {
   createdAt: string;

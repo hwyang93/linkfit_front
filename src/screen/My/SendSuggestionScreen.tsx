@@ -1,24 +1,17 @@
-import {iconPath} from '@/utils/iconPath';
+import { iconPath } from '@/utils/iconPath';
 import Modal from '@components/ModalSheet';
 import TopFilter from '@components/TopFilter';
-import {NativeStackScreenProps} from '@react-navigation/native-stack';
-import {BLUE, GRAY, WHITE} from '@styles/colors';
+import { NativeStackScreenProps } from '@react-navigation/native-stack';
+import { BLUE, GRAY, WHITE } from '@styles/colors';
 import common from '@styles/common';
-import {useCallback, useState} from 'react';
-import {
-  Image,
-  Pressable,
-  ScrollView,
-  StyleSheet,
-  Text,
-  View,
-} from 'react-native';
-import {SafeAreaView} from 'react-native-safe-area-context';
-import {LoggedInParamList} from '../../../AppInner';
+import { useCallback, useState } from 'react';
+import { Image, Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
+import { LoggedInParamList } from '../../../AppInner';
 
 type Props = NativeStackScreenProps<LoggedInParamList, 'SendSuggestion'>;
 
-const SendSuggestionScreen = ({navigation}: Props) => {
+const SendSuggestionScreen = ({ navigation }: Props) => {
   const [modalVisible, setModalVisible] = useState(false);
   const [modalTitle, setModalTitle] = useState('');
   const [modalData, setModalData] = useState<any[]>([]);
@@ -158,7 +151,7 @@ const SendSuggestionScreen = ({navigation}: Props) => {
     (selectItem: any) => {
       if (selectedFilter === 'period') {
         setMODAL(() => {
-          return MODAL.map(item => {
+          return MODAL.map((item) => {
             if (item.value === selectItem.value) {
               item.selected = !item.selected;
             } else {
@@ -168,7 +161,7 @@ const SendSuggestionScreen = ({navigation}: Props) => {
           });
         });
         setFILTER(() => {
-          return FILTER.map(filter => {
+          return FILTER.map((filter) => {
             if (filter.key === 'period') {
               const value = modalData.find((item: any) => {
                 return item.selected;
@@ -180,7 +173,7 @@ const SendSuggestionScreen = ({navigation}: Props) => {
         });
       } else if (selectedFilter === 'status') {
         setMODAL2(() => {
-          return MODAL2.map(item => {
+          return MODAL2.map((item) => {
             if (item.value === selectItem.value) {
               item.selected = !item.selected;
             } else {
@@ -190,7 +183,7 @@ const SendSuggestionScreen = ({navigation}: Props) => {
           });
         });
         setFILTER(() => {
-          return FILTER.map(filter => {
+          return FILTER.map((filter) => {
             if (filter.key === 'status') {
               const value = modalData.find((item: any) => {
                 return item.selected;
@@ -229,46 +222,29 @@ const SendSuggestionScreen = ({navigation}: Props) => {
               key={index}
               style={[common.basicBox, common.mv8]}
               onPress={() => navigation.navigate('SendSuggestionDetail')}>
-              <Text style={[common.text_s, common.fcg, common.mb12]}>
-                {item.registrationDate}
-              </Text>
+              <Text style={[common.text_s, common.fcg, common.mb12]}>{item.registrationDate}</Text>
               <Text style={[common.title, common.mb12]} numberOfLines={1}>
                 {item.title}
               </Text>
 
               <View style={[common.row, common.mb12]}>
-                <Image
-                  source={item.image}
-                  style={[common.thumbnail, common.mr16]}
-                />
+                <Image source={item.image} style={[common.thumbnail, common.mr16]} />
                 <View>
                   <View style={common.rowCenter}>
-                    <Text style={[common.text_l, common.fwb, common.mr8]}>
-                      {item.nickname}
-                    </Text>
-                    <View style={[common.rowCenter, {alignSelf: 'flex-start'}]}>
-                      <Text style={[common.text_s, {color: BLUE.DEFAULT}]}>
-                        인증강사
-                      </Text>
+                    <Text style={[common.text_l, common.fwb, common.mr8]}>{item.nickname}</Text>
+                    <View style={[common.rowCenter, { alignSelf: 'flex-start' }]}>
+                      <Text style={[common.text_s, { color: BLUE.DEFAULT }]}>인증강사</Text>
                       <Image
-                        style={{marginLeft: 2, width: 14, height: 14}}
+                        style={{ marginLeft: 2, width: 14, height: 14 }}
                         source={iconPath.CERTIFICATION}
                       />
                     </View>
                   </View>
                   <View style={common.rowCenter}>
-                    <Text style={[common.text_m, common.fwb, common.mr4]}>
-                      {item.field}
-                    </Text>
-                    <Text style={[common.text, {alignSelf: 'flex-end'}]}>
-                      {item.career}
-                    </Text>
-                    <Text style={[common.text_s, common.fcg, common.mh8]}>
-                      |
-                    </Text>
-                    <Text style={[common.text_s, {color: GRAY.DARK}]}>
-                      {item.location}
-                    </Text>
+                    <Text style={[common.text_m, common.fwb, common.mr4]}>{item.field}</Text>
+                    <Text style={[common.text, { alignSelf: 'flex-end' }]}>{item.career}</Text>
+                    <Text style={[common.text_s, common.fcg, common.mh8]}>|</Text>
+                    <Text style={[common.text_s, { color: GRAY.DARK }]}>{item.location}</Text>
                   </View>
                 </View>
               </View>
@@ -278,20 +254,13 @@ const SendSuggestionScreen = ({navigation}: Props) => {
                 <Text style={[common.text_s, common.fcg]}>{item.status}</Text>
                 {item.answer && (
                   <>
-                    <Text style={[common.text_s, common.fcg, common.mh8]}>
-                      |
-                    </Text>
-                    <Text style={[common.text_s, common.fcb]}>
-                      {item.answer}
-                    </Text>
+                    <Text style={[common.text_s, common.fcg, common.mh8]}>|</Text>
+                    <Text style={[common.text_s, common.fcb]}>{item.answer}</Text>
                   </>
                 )}
               </View>
 
-              <Pressable
-                style={styles.kebabIcon}
-                hitSlop={10}
-                onPress={item.job}>
+              <Pressable style={styles.kebabIcon} hitSlop={10} onPress={item.job}>
                 <Image source={iconPath.KEBAB} style={[common.size24]} />
               </Pressable>
             </Pressable>
@@ -313,17 +282,11 @@ const SendSuggestionScreen = ({navigation}: Props) => {
                   <View key={index} style={common.modalItemBox}>
                     <Pressable
                       onPress={() => onSelectFilter(item)}
-                      style={[common.rowCenterBetween, {width: '100%'}]}>
-                      <Text
-                        style={[
-                          common.modalText,
-                          item.selected && {color: BLUE.DEFAULT},
-                        ]}>
+                      style={[common.rowCenterBetween, { width: '100%' }]}>
+                      <Text style={[common.modalText, item.selected && { color: BLUE.DEFAULT }]}>
                         {item.value}
                       </Text>
-                      {item.selected && (
-                        <Image source={iconPath.CHECK} style={common.size24} />
-                      )}
+                      {item.selected && <Image source={iconPath.CHECK} style={common.size24} />}
                     </Pressable>
                   </View>
                 );
@@ -342,7 +305,7 @@ const styles = StyleSheet.create({
     padding: 16,
     backgroundColor: WHITE,
   },
-  kebabIcon: {position: 'absolute', top: 16, right: 16},
+  kebabIcon: { position: 'absolute', top: 16, right: 16 },
 });
 
 export default SendSuggestionScreen;

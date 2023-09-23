@@ -1,8 +1,8 @@
-import {iconPath} from '@/utils/iconPath';
+import { iconPath } from '@/utils/iconPath';
 import common from '@styles/common';
-import {Image, Text, View} from 'react-native';
+import { Image, Text, View } from 'react-native';
 
-const CommentCounter: React.FC<any> = ({counter}) => {
+const CommentCounter: React.FC<any> = ({ counter }) => {
   return (
     <View style={common.rowCenter}>
       <Image source={iconPath.COMMENT} style={[common.size24, common.mr4]} />

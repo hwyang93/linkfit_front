@@ -1,18 +1,15 @@
 import THEME from '@/styles/theme';
 import React from 'react';
-import {View} from 'react-native';
+import { View } from 'react-native';
 
 interface DotPaginationProps {
   totalPages: number;
   currentPage: number;
 }
 
-const DotPagination: React.FC<DotPaginationProps> = ({
-  totalPages,
-  currentPage,
-}) => {
+const DotPagination: React.FC<DotPaginationProps> = ({ totalPages, currentPage }) => {
   return (
-    <View style={{flexDirection: 'row', marginVertical: 8}}>
+    <View style={{ flexDirection: 'row', marginVertical: 8 }}>
       {new Array(totalPages).fill(0).map((_, index) => (
         <View
           key={index}
@@ -20,8 +17,7 @@ const DotPagination: React.FC<DotPaginationProps> = ({
             width: 8,
             height: 8,
             borderRadius: 4,
-            backgroundColor:
-              currentPage === index + 1 ? THEME.PRIMARY : THEME.GREY04,
+            backgroundColor: currentPage === index + 1 ? THEME.PRIMARY : THEME.GREY04,
             marginRight: index === totalPages - 1 ? 0 : 4,
           }}
         />

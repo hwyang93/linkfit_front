@@ -1,13 +1,13 @@
-import {LoggedInParamList} from '@/../AppInner';
+import { LoggedInParamList } from '@/../AppInner';
 import CTAButton from '@/components/Common/CTAButton';
 import toast from '@/hooks/toast';
 import useAuth from '@/hooks/useAuth';
 import useInput from '@/hooks/useInput';
 import TOAST from '@/utils/constants/toast';
-import Input, {KeyboardTypes, ReturnKeyTypes} from '@components/Input';
+import Input, { KeyboardTypes, ReturnKeyTypes } from '@components/Input';
 import Logo from '@components/Logo';
-import {NativeStackScreenProps} from '@react-navigation/native-stack';
-import {BLACK} from '@styles/colors';
+import { NativeStackScreenProps } from '@react-navigation/native-stack';
+import { BLACK } from '@styles/colors';
 import common from '@styles/common';
 import {
   Keyboard,
@@ -17,14 +17,14 @@ import {
   TouchableWithoutFeedback,
   View,
 } from 'react-native';
-import {SafeAreaView} from 'react-native-safe-area-context';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 type Props = NativeStackScreenProps<LoggedInParamList, 'LogIn'>;
 
-const LogInScreen = ({navigation, route}: Props) => {
+const LogInScreen = ({ navigation, route }: Props) => {
   const password = useInput();
 
-  const {signIn, isLoading} = useAuth();
+  const { signIn, isLoading } = useAuth();
 
   const canGoNext = password.value.length > 0;
 
@@ -36,14 +36,14 @@ const LogInScreen = ({navigation, route}: Props) => {
 
     try {
       await signIn(loginInfo);
-      toast.success({message: TOAST.LOGIN_SUCCESS});
+      toast.success({ message: TOAST.LOGIN_SUCCESS });
     } catch (error: any) {
-      toast.error({message: error.message});
+      toast.error({ message: error.message });
     }
   };
 
   return (
-    <SafeAreaView edges={['bottom', 'left', 'right']} style={{flex: 1}}>
+    <SafeAreaView edges={['bottom', 'left', 'right']} style={{ flex: 1 }}>
       <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
         <View style={common.container}>
           <Logo />

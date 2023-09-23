@@ -1,5 +1,5 @@
-import {useNavigation} from '@react-navigation/native';
-import {Pressable, Text} from 'react-native';
+import { useNavigation } from '@react-navigation/native';
+import { Pressable, Text } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 
 interface HeaderLeftProps {
@@ -7,7 +7,7 @@ interface HeaderLeftProps {
   tintColor?: string;
 }
 
-const HeaderLeft: React.FC<HeaderLeftProps> = ({canGoBack, tintColor}) => {
+const HeaderLeft: React.FC<HeaderLeftProps> = ({ canGoBack, tintColor }) => {
   const navigation = useNavigation();
 
   if (!canGoBack) {

@@ -2,25 +2,25 @@ import BottomSheet from '@/components/Common/BottomSheet';
 import BottomSheetOption from '@/components/Common/BottomSheetOption';
 import Card from '@/components/Common/Card';
 import ApplicantWaitingTab from '@/components/My/ApplicantWaitingTab';
-import {useRecruitApplicationListQuery} from '@/hooks/recruit/useRecruitApplicationListQuery';
+import { useRecruitApplicationListQuery } from '@/hooks/recruit/useRecruitApplicationListQuery';
 import useModal from '@/hooks/useModal';
-import {iconPath} from '@/utils/iconPath';
-import {materialTopTabNavigationOptions} from '@/utils/options/tab';
-import {formatDate} from '@/utils/util';
+import { iconPath } from '@/utils/iconPath';
+import { materialTopTabNavigationOptions } from '@/utils/options/tab';
+import { formatDate } from '@/utils/util';
 import ApplicantFinishTab from '@components/My/ApplicantFinishTab';
-import {createMaterialTopTabNavigator} from '@react-navigation/material-top-tabs';
-import {NativeStackScreenProps} from '@react-navigation/native-stack';
-import {WHITE} from '@styles/colors';
+import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
+import { NativeStackScreenProps } from '@react-navigation/native-stack';
+import { WHITE } from '@styles/colors';
 import common from '@styles/common';
-import {Image, Pressable, StyleSheet, Text, View} from 'react-native';
-import {LoggedInParamList} from '../../../AppInner';
+import { Image, Pressable, StyleSheet, Text, View } from 'react-native';
+import { LoggedInParamList } from '../../../AppInner';
 
 const Tab = createMaterialTopTabNavigator();
 
 type Props = NativeStackScreenProps<LoggedInParamList, 'ApplicantStatus'>;
 
-const ApplicantStatusScreen = ({route}: Props) => {
-  const {data} = useRecruitApplicationListQuery(route.params.recruitSeq);
+const ApplicantStatusScreen = ({ route }: Props) => {
+  const { data } = useRecruitApplicationListQuery(route.params.recruitSeq);
 
   const recruitInfo = data?.recruit;
 
@@ -41,39 +41,29 @@ const ApplicantStatusScreen = ({route}: Props) => {
                   {recruitInfo.status === 'ING' ? '진행중' : '마감'}
                 </Text>
               </View>
-              <Text style={[common.title, {marginTop: 8}]} numberOfLines={1}>
+              <Text style={[common.title, { marginTop: 8 }]} numberOfLines={1}>
                 {recruitInfo.title}
               </Text>
-              <Text style={[common.text_m, common.fwb, {marginTop: 8}]}>
+              <Text style={[common.text_m, common.fwb, { marginTop: 8 }]}>
                 {recruitInfo.position}
               </Text>
-              <Pressable
-                style={styles.kebabIcon}
-                hitSlop={10}
-                onPress={modal.open}>
+              <Pressable style={styles.kebabIcon} hitSlop={10} onPress={modal.open}>
                 <Image source={iconPath.KEBAB} style={[common.size24]} />
               </Pressable>
             </Card>
           </View>
-          <BottomSheet
-            visible={modal.visible}
-            onDismiss={modal.close}
-            title="타이틀">
+          <BottomSheet visible={modal.visible} onDismiss={modal.close} title="타이틀">
             <BottomSheetOption label="공고 수정하기" />
             <BottomSheetOption label="공고 복사하기" />
           </BottomSheet>
           <Tab.Navigator screenOptions={materialTopTabNavigationOptions}>
             <Tab.Screen
               name="대기중"
-              children={() => (
-                <ApplicantWaitingTab recruitId={route.params.recruitSeq} />
-              )}
+              children={() => <ApplicantWaitingTab recruitId={route.params.recruitSeq} />}
             />
             <Tab.Screen
               name="완료"
-              children={() => (
-                <ApplicantFinishTab recruitId={route.params.recruitSeq} />
-              )}
+              children={() => <ApplicantFinishTab recruitId={route.params.recruitSeq} />}
             />
           </Tab.Navigator>
         </>
@@ -87,7 +77,7 @@ const styles = StyleSheet.create({
     padding: 16,
     backgroundColor: WHITE,
   },
-  kebabIcon: {position: 'absolute', top: 16, right: 16},
+  kebabIcon: { position: 'absolute', top: 16, right: 16 },
 });
 
 export default ApplicantStatusScreen;

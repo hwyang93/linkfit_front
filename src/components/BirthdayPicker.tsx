@@ -1,9 +1,9 @@
-import {iconPath} from '@/utils/iconPath';
-import {GRAY, INPUT} from '@styles/colors';
+import { iconPath } from '@/utils/iconPath';
+import { GRAY, INPUT } from '@styles/colors';
 import common from '@styles/common';
 import moment from 'moment';
-import {useState} from 'react';
-import {Image, Pressable, StyleSheet, Text, View} from 'react-native';
+import { useState } from 'react';
+import { Image, Pressable, StyleSheet, Text, View } from 'react-native';
 import DateTimePickerModal from 'react-native-modal-datetime-picker';
 
 interface BirthdayPickerProps {
@@ -48,17 +48,14 @@ const BirthdayPicker: React.FC<BirthdayPickerProps> = ({
     <View>
       <View style={[common.inputWrapper]}>
         {label ? (
-          <Text
-            style={[common.label, {color: focus ? INPUT.FOCUS : GRAY.LIGHT}]}>
-            {label}
-          </Text>
+          <Text style={[common.label, { color: focus ? INPUT.FOCUS : GRAY.LIGHT }]}>{label}</Text>
         ) : null}
         <Pressable
-          style={[common.textInput, focus && {borderColor: INPUT.FOCUS}]}
+          style={[common.textInput, focus && { borderColor: INPUT.FOCUS }]}
           onPress={showDatePicker}
           disabled={disabled}>
           {icon !== 'day' ? null : (
-            <View style={{position: 'absolute', left: 16, top: 16}}>
+            <View style={{ position: 'absolute', left: 16, top: 16 }}>
               <Image source={iconPath.DAY} style={[common.size24]} />
             </View>
           )}
@@ -66,17 +63,13 @@ const BirthdayPicker: React.FC<BirthdayPickerProps> = ({
             <Text
               style={[
                 styles.text,
-                {color: '#292929'},
-                textAlign === 'right' && {textAlign: 'right'},
+                { color: '#292929' },
+                textAlign === 'right' && { textAlign: 'right' },
               ]}>
               {birth}
             </Text>
           ) : (
-            <Text
-              style={[
-                styles.text,
-                textAlign === 'right' && {textAlign: 'right'},
-              ]}>
+            <Text style={[styles.text, textAlign === 'right' && { textAlign: 'right' }]}>
               {placeholder}
             </Text>
           )}

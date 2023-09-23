@@ -1,4 +1,4 @@
-import {PayloadAction, createSlice} from '@reduxjs/toolkit';
+import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 
 // action : state 바꾸는 행위/동작
 // dispatch: 그 액션을 실제로 행하는 함수
@@ -38,10 +38,7 @@ const userSlice = createSlice({
     setUser(
       state,
       action: PayloadAction<
-        Pick<
-          MemberState,
-          'seq' | 'email' | 'name' | 'nickname' | 'birth' | 'phone' | 'type'
-        >
+        Pick<MemberState, 'seq' | 'email' | 'name' | 'nickname' | 'birth' | 'phone' | 'type'>
       >,
     ) {
       state.seq = action.payload.seq;
@@ -55,11 +52,11 @@ const userSlice = createSlice({
     setAccessToken(state, action: PayloadAction<string>) {
       state.accessToken = action.payload;
     },
-    setLocation(state, action: PayloadAction<{lon: number; lat: number}>) {
+    setLocation(state, action: PayloadAction<{ lon: number; lat: number }>) {
       state.lon = action.payload.lon;
       state.lat = action.payload.lat;
     },
-    setEmail(state, action: PayloadAction<{email: string}>) {
+    setEmail(state, action: PayloadAction<{ email: string }>) {
       state.email = action.payload.email;
     },
     setIsLoggedIn(state, action: PayloadAction<boolean>) {

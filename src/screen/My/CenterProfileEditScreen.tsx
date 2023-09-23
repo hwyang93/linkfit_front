@@ -1,14 +1,14 @@
 import CTAButton from '@/components/Common/CTAButton';
 import DismissKeyboardView from '@components/DismissKeyboardView';
-import Input, {KeyboardTypes} from '@components/Input';
-import {NativeStackScreenProps} from '@react-navigation/native-stack';
-import {WHITE} from '@styles/colors';
+import Input, { KeyboardTypes } from '@components/Input';
+import { NativeStackScreenProps } from '@react-navigation/native-stack';
+import { WHITE } from '@styles/colors';
 import common from '@styles/common';
-import {useState} from 'react';
-import {Image, Pressable, StyleSheet, View} from 'react-native';
-import {Asset, MediaType, launchImageLibrary} from 'react-native-image-picker';
-import {SafeAreaView} from 'react-native-safe-area-context';
-import {LoggedInParamList} from '../../../AppInner';
+import { useState } from 'react';
+import { Image, Pressable, StyleSheet, View } from 'react-native';
+import { Asset, MediaType, launchImageLibrary } from 'react-native-image-picker';
+import { SafeAreaView } from 'react-native-safe-area-context';
+import { LoggedInParamList } from '../../../AppInner';
 
 type Props = NativeStackScreenProps<LoggedInParamList, 'CenterProfileEdit'>;
 
@@ -17,19 +17,19 @@ const CenterProfileEditScreen = ({}: Props) => {
   const [companyName, setCompanyName] = useState('');
   const [location, setLocation] = useState('');
   const [comment, setComment] = useState('');
-  const [imageUri, setImageUri] = useState<{uri: string}>();
+  const [imageUri, setImageUri] = useState<{ uri: string }>();
   const [imageObj, setImageObj] = useState<{
     name: string | undefined;
     type: string | undefined;
     uri: string | undefined;
-  }>({name: undefined, type: undefined, uri: undefined});
+  }>({ name: undefined, type: undefined, uri: undefined });
 
   const openCamera = async () => {
     const options = {
       mediaType: 'photo' as MediaType,
       includeBase64: true,
     };
-    await launchImageLibrary(options, response => {
+    await launchImageLibrary(options, (response) => {
       if (response.didCancel) {
         console.log('User cancelled image picker');
       } else if (response.errorCode) {
@@ -60,11 +60,7 @@ const CenterProfileEditScreen = ({}: Props) => {
         <Pressable style={styles.imageBox} onPress={openCamera}>
           <Image
             resizeMode={'cover'}
-            source={
-              imageUri
-                ? imageUri
-                : require('../../assets/images/center_profile_default.png')
-            }
+            source={imageUri ? imageUri : require('../../assets/images/center_profile_default.png')}
             style={styles.profileImage}
           />
         </Pressable>

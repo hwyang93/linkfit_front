@@ -1,7 +1,7 @@
 import THEME from '@/styles/theme';
-import {iconPath} from '@/utils/iconPath';
+import { iconPath } from '@/utils/iconPath';
 import React from 'react';
-import {Pressable, StyleProp, StyleSheet, Text, ViewStyle} from 'react-native';
+import { Pressable, StyleProp, StyleSheet, Text, ViewStyle } from 'react-native';
 import Icon from './Icon';
 
 interface MoreButtonProps {
@@ -10,14 +10,10 @@ interface MoreButtonProps {
   onPress: () => void;
 }
 
-const ExpandButton: React.FC<MoreButtonProps> = ({
-  style,
-  expanded,
-  onPress,
-}) => {
+const ExpandButton: React.FC<MoreButtonProps> = ({ style, expanded, onPress }) => {
   return (
     <Pressable style={[styles.container, style]} onPress={onPress}>
-      <Text style={{fontSize: 16}}>{expanded ? '접기' : '더보기'}</Text>
+      <Text style={{ fontSize: 16 }}>{expanded ? '접기' : '더보기'}</Text>
       <Icon source={expanded ? iconPath.CHEVRON_UP : iconPath.CHEVRON_DOWN} />
     </Pressable>
   );

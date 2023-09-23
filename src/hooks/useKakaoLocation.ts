@@ -1,6 +1,6 @@
-import {getKakaoLocation} from '@/api/kakao';
-import {isAxiosError} from 'axios';
-import {useState} from 'react';
+import { getKakaoLocation } from '@/api/kakao';
+import { isAxiosError } from 'axios';
+import { useState } from 'react';
 import toast from './toast';
 
 type Location = {
@@ -9,13 +9,7 @@ type Location = {
   region3depth: string;
 };
 
-const useKakaoLocation = ({
-  latitude,
-  longitude,
-}: {
-  latitude: number;
-  longitude: number;
-}) => {
+const useKakaoLocation = ({ latitude, longitude }: { latitude: number; longitude: number }) => {
   const [location, setLocation] = useState<Location | null>(null);
 
   const getLocation = async () => {
@@ -33,12 +27,12 @@ const useKakaoLocation = ({
       });
     } catch (error) {
       if (isAxiosError(error)) {
-        toast.error({message: error.message});
+        toast.error({ message: error.message });
       }
     }
   };
 
-  return {location, getLocation};
+  return { location, getLocation };
 };
 
 export default useKakaoLocation;

@@ -1,7 +1,7 @@
-import {iconPath} from '@/utils/iconPath';
-import {GRAY} from '@styles/colors';
+import { iconPath } from '@/utils/iconPath';
+import { GRAY } from '@styles/colors';
 import common from '@styles/common';
-import {Image, Pressable, StyleSheet, Text, View} from 'react-native';
+import { Image, Pressable, StyleSheet, Text, View } from 'react-native';
 
 interface FilterProps {
   title: string;
@@ -18,11 +18,7 @@ export const FilterTypes = {
   RESET: 'RESET',
 };
 
-const Filter: React.FC<FilterProps> = ({
-  title,
-  setModalVisible,
-  setSelected,
-}) => {
+const Filter: React.FC<FilterProps> = ({ title, setModalVisible, setSelected }) => {
   const pressButton = (item: any) => {
     setSelected(item);
     setModalVisible(true);
@@ -31,9 +27,7 @@ const Filter: React.FC<FilterProps> = ({
   return (
     <View style={styles.box}>
       <Pressable onPress={pressButton} style={styles.item}>
-        <Text style={[common.text_m, {color: GRAY.DARK, marginRight: 8}]}>
-          {title}
-        </Text>
+        <Text style={[common.text_m, { color: GRAY.DARK, marginRight: 8 }]}>{title}</Text>
         <Image style={styles.downArrow} source={iconPath.MORE_ARROW_DOWN} />
       </Pressable>
     </View>

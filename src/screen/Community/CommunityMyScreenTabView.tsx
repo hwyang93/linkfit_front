@@ -1,7 +1,7 @@
-import {materialTopTabNavigationOptions} from '@/utils/options/tab';
+import { materialTopTabNavigationOptions } from '@/utils/options/tab';
 import CommunityMyBookmark from '@components/Community/CommunityMyBookmark';
 import CommunityMyPost from '@components/Community/CommunityMyPost';
-import {createMaterialTopTabNavigator} from '@react-navigation/material-top-tabs';
+import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 
 const Tab = createMaterialTopTabNavigator();
 

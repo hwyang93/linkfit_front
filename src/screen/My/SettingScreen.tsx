@@ -1,20 +1,12 @@
 import useAuth from '@/hooks/useAuth';
-import {iconPath} from '@/utils/iconPath';
-import {NativeStackScreenProps} from '@react-navigation/native-stack';
-import {BLUE, GRAY, WHITE} from '@styles/colors';
+import { iconPath } from '@/utils/iconPath';
+import { NativeStackScreenProps } from '@react-navigation/native-stack';
+import { BLUE, GRAY, WHITE } from '@styles/colors';
 import common from '@styles/common';
-import {useCallback} from 'react';
-import {
-  Alert,
-  Image,
-  Pressable,
-  ScrollView,
-  StyleSheet,
-  Text,
-  View,
-} from 'react-native';
+import { useCallback } from 'react';
+import { Alert, Image, Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
-import {LoggedInParamList} from '../../../AppInner';
+import { LoggedInParamList } from '../../../AppInner';
 
 const DATA = [
   // {
@@ -56,8 +48,8 @@ const DATA = [
 
 type Props = NativeStackScreenProps<LoggedInParamList, 'Setting'>;
 
-const SettingScreen = ({navigation}: Props) => {
-  const {signOut} = useAuth();
+const SettingScreen = ({ navigation }: Props) => {
+  const { signOut } = useAuth();
 
   const onLogout = useCallback(async () => {
     signOut();
@@ -86,9 +78,7 @@ const SettingScreen = ({navigation}: Props) => {
         </Pressable>
         <Pressable
           style={common.mv20}
-          onPress={() =>
-            Alert.alert('테스트', '캐시데이터 삭제가 되지 않아용')
-          }>
+          onPress={() => Alert.alert('테스트', '캐시데이터 삭제가 되지 않아용')}>
           <Text style={[common.text_m, styles.linkText]}>캐시 데이터 삭제</Text>
         </Pressable>
       </View>

@@ -1,29 +1,29 @@
 import CTAButton from '@/components/Common/CTAButton';
 import useInput from '@/hooks/useInput';
-import {useAppSelector} from '@/store';
-import {iconPath} from '@/utils/iconPath';
-import {createMemberLicence} from '@api/member';
+import { useAppSelector } from '@/store';
+import { iconPath } from '@/utils/iconPath';
+import { createMemberLicence } from '@api/member';
 import BirthdayPicker from '@components/BirthdayPicker';
-import Input, {KeyboardTypes} from '@components/Input';
+import Input, { KeyboardTypes } from '@components/Input';
 import SelectBox from '@components/SelectBox';
 import toast from '@hooks/toast';
-import {NativeStackScreenProps} from '@react-navigation/native-stack';
-import {WHITE} from '@styles/colors';
+import { NativeStackScreenProps } from '@react-navigation/native-stack';
+import { WHITE } from '@styles/colors';
 import common from '@styles/common';
-import {isAxiosError} from 'axios';
-import {useState} from 'react';
-import {Image, Pressable, ScrollView, StyleSheet, View} from 'react-native';
-import {Asset, MediaType, launchImageLibrary} from 'react-native-image-picker';
-import {LoggedInParamList} from '../../../AppInner';
+import { isAxiosError } from 'axios';
+import { useState } from 'react';
+import { Image, Pressable, ScrollView, StyleSheet, View } from 'react-native';
+import { Asset, MediaType, launchImageLibrary } from 'react-native-image-picker';
+import { LoggedInParamList } from '../../../AppInner';
 
 const FIELD = ['필라테스', '요가'];
 
 type Props = NativeStackScreenProps<LoggedInParamList, 'CertifyInstructorForm'>;
 
-const CertifyInstructorFormScreen = ({navigation}: Props) => {
+const CertifyInstructorFormScreen = ({ navigation }: Props) => {
   const [isLoading, setIsLoading] = useState(false);
 
-  const memberInfo = useAppSelector(state => state.user);
+  const memberInfo = useAppSelector((state) => state.user);
 
   const nameInput = useInput(memberInfo.name);
   const birthInput = useInput(memberInfo.birth);
@@ -35,11 +35,9 @@ const CertifyInstructorFormScreen = ({navigation}: Props) => {
     name: string | undefined;
     type: string | undefined;
     uri: string | undefined;
-  }>({name: undefined, type: undefined, uri: undefined});
+  }>({ name: undefined, type: undefined, uri: undefined });
 
-  const [licenceFileName, setLicenceFileName] = useState<string | undefined>(
-    '',
-  );
+  const [licenceFileName, setLicenceFileName] = useState<string | undefined>('');
 
   const isNameInputValid = nameInput.value.length > 0;
   const isBirthInputValid = birthInput.value.length > 0;
@@ -71,11 +69,11 @@ const CertifyInstructorFormScreen = ({navigation}: Props) => {
 
     try {
       await createMemberLicence(formData);
-      toast.success('강사 인증이 신청되었어요!');
+      toast.success({ message: '강사 인증이 신청되었어요!' });
       navigation.goBack();
     } catch (error) {
       if (isAxiosError(error)) {
-        toast.error({message: error.message});
+        toast.error({ message: error.message });
       }
     } finally {
       setIsLoading(false);
@@ -88,7 +86,7 @@ const CertifyInstructorFormScreen = ({navigation}: Props) => {
       includeBase64: true,
     };
 
-    await launchImageLibrary(options, response => {
+    await launchImageLibrary(options, (response) => {
       if (response.didCancel) {
         console.log('User cancelled image picker');
       } else if (response.errorCode) {

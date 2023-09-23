@@ -1,5 +1,5 @@
-import {communityApi} from '@/api/community';
-import {useQuery} from '@tanstack/react-query';
+import { communityApi } from '@/api/community';
+import { useQuery } from '@tanstack/react-query';
 
 export const useCommunityPostQuery = (postId: number) => {
   return useQuery({

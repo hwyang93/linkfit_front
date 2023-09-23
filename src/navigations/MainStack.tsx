@@ -5,11 +5,11 @@ import CommunityPostEditScreen from '@/screen/Community/CommunityPostEditScreen'
 import InquiryDetailScreen from '@/screen/My/InquiryDetailScreen';
 import NoticeDetailScreen from '@/screen/My/NoticeDetailScreen';
 import PasswordResetScreen from '@/screen/Registration/PasswordResetScreen';
-import {iconPath} from '@/utils/iconPath';
+import { iconPath } from '@/utils/iconPath';
 import HeaderLeft from '@components/HeaderLeft';
 import Modal from '@components/ModalSheet';
-import {NavigationProp, useNavigation} from '@react-navigation/native';
-import {createNativeStackNavigator} from '@react-navigation/native-stack';
+import { NavigationProp, useNavigation } from '@react-navigation/native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import CenterInfoScreen from '@screen/CenterInfoScreen';
 import CommunityMyScreen from '@screen/Community/CommunityMyScreen';
 import CommunityPostFormScreen from '@screen/Community/CommunityPostFormScreen';
@@ -57,12 +57,12 @@ import ProfileScreen from '@screen/ProfileScreen';
 import RecruitListScreen from '@screen/RecruitListScreen';
 import RecruitMapScreen from '@screen/RecruitMapScreen';
 import SuggestionScreen from '@screen/SuggestionScreen';
-import {WHITE} from '@styles/colors';
+import { WHITE } from '@styles/colors';
 import common from '@styles/common';
-import {useState} from 'react';
-import {Alert, Image, Pressable} from 'react-native';
-import {LoggedInParamList} from '../../AppInner';
-import {ROUTE} from './routes';
+import { useState } from 'react';
+import { Alert, Image, Pressable } from 'react-native';
+import { LoggedInParamList } from '../../AppInner';
+import { ROUTE } from './routes';
 
 const Stack = createNativeStackNavigator<LoggedInParamList>();
 
@@ -81,7 +81,7 @@ const MainStack = () => {
           fontSize: 20,
           fontWeight: '400',
         },
-        contentStyle: {backgroundColor: WHITE},
+        contentStyle: { backgroundColor: WHITE },
         headerShadowVisible: false,
         headerLeft: HeaderLeft,
         gestureEnabled: false,
@@ -90,29 +90,25 @@ const MainStack = () => {
         <Stack.Screen
           name="ContentTab"
           component={BottomTabs}
-          options={{headerShown: false, gestureEnabled: false}}
+          options={{ headerShown: false, gestureEnabled: false }}
         />
-        <Stack.Screen
-          name="RecruitMap"
-          component={RecruitMapScreen}
-          options={{title: '구인'}}
-        />
+        <Stack.Screen name="RecruitMap" component={RecruitMapScreen} options={{ title: '구인' }} />
         <Stack.Screen
           name="RecruitList"
           component={RecruitListScreen}
-          options={{title: '구인'}}
+          options={{ title: '구인' }}
         />
         <Stack.Screen
           name="InstructorList"
           component={InstructorListScreen}
-          options={{title: '강사'}}
+          options={{ title: '강사' }}
         />
         <Stack.Screen
           name="Gallery"
           component={GalleryScreen}
           options={{
             title: '3/5',
-            headerStyle: {backgroundColor: '#000'},
+            headerStyle: { backgroundColor: '#000' },
             headerTintColor: '#fff',
           }}
         />
@@ -120,7 +116,7 @@ const MainStack = () => {
         <Stack.Screen
           name="CommunityPostForm"
           component={CommunityPostFormScreen}
-          options={{title: '게시글 작성'}}
+          options={{ title: '게시글 작성' }}
         />
         {/* 커뮤니티 게시글 화면 */}
         <Stack.Screen
@@ -142,24 +138,17 @@ const MainStack = () => {
         <Stack.Screen
           name="CommunityMy"
           component={CommunityMyScreen}
-          options={{title: 'MY 커뮤니티'}}
+          options={{ title: 'MY 커뮤니티' }}
         />
         {/* 임시 My 센터 */}
-        <Stack.Screen
-          name="MyCenter"
-          component={MyCenterScreen}
-          options={{title: 'MY 센터'}}
-        />
+        <Stack.Screen name="MyCenter" component={MyCenterScreen} options={{ title: 'MY 센터' }} />
         <Stack.Screen
           name="CenterProfile"
           component={MyCenterProfileScreen}
           options={{
             title: '프로필',
             headerRight: () => (
-              <Pressable
-                onPress={() => {}}
-                hitSlop={10}
-                style={[common.mh4, common.size24]}>
+              <Pressable onPress={() => {}} hitSlop={10} style={[common.mh4, common.size24]}>
                 <Image source={iconPath.ADD_BUTTON} style={common.size24} />
               </Pressable>
             ),
@@ -168,22 +157,22 @@ const MainStack = () => {
         <Stack.Screen
           name="CenterProfileEdit"
           component={CenterProfileEditScreen}
-          options={{title: '센터 프로필'}}
+          options={{ title: '센터 프로필' }}
         />
         <Stack.Screen
           name="CompanyInfo"
           component={CompanyInfoScreen}
-          options={{title: '사업자 정보'}}
+          options={{ title: '사업자 정보' }}
         />
         <Stack.Screen
           name="CenterRecruitment"
           component={CenterRecruitmentScreen}
-          options={{title: '채용 공고'}}
+          options={{ title: '채용 공고' }}
         />
         <Stack.Screen
           name="SendSuggestion"
           component={SendSuggestionScreen}
-          options={{title: '보낸 포지션 제안'}}
+          options={{ title: '보낸 포지션 제안' }}
         />
         <Stack.Screen
           name="SendSuggestionDetail"
@@ -221,11 +210,7 @@ const MainStack = () => {
           }}
         />
         {/* 강사 프로필 화면 */}
-        <Stack.Screen
-          name="Profile"
-          component={ProfileScreen}
-          options={{title: '강사 프로필'}}
-        />
+        <Stack.Screen name="Profile" component={ProfileScreen} options={{ title: '강사 프로필' }} />
         {/* 나의 프로필 화면 */}
         <Stack.Screen
           name="MyProfile"
@@ -233,10 +218,7 @@ const MainStack = () => {
           options={{
             title: '프로필',
             headerRight: () => (
-              <Pressable
-                onPress={() => {}}
-                hitSlop={10}
-                style={[common.mh4, common.size24]}>
+              <Pressable onPress={() => {}} hitSlop={10} style={[common.mh4, common.size24]}>
                 <Image source={iconPath.ADD_BUTTON} style={common.size24} />
               </Pressable>
             ),
@@ -245,12 +227,12 @@ const MainStack = () => {
         <Stack.Screen
           name="ProfileEdit"
           component={ProfileEditScreen}
-          options={{title: '프로필'}}
+          options={{ title: '프로필' }}
         />
         <Stack.Screen
           name="MyNotification"
           component={MyNotificationScreen}
-          options={{title: '알림'}}
+          options={{ title: '알림' }}
         />
         <Stack.Screen
           name="CertifyInstructor"
@@ -270,7 +252,7 @@ const MainStack = () => {
         <Stack.Screen
           name="CertifyInstructorForm"
           component={CertifyInstructorFormScreen}
-          options={{title: '강사 인증'}}
+          options={{ title: '강사 인증' }}
         />
         <Stack.Screen
           name="ResumeManage"
@@ -290,7 +272,7 @@ const MainStack = () => {
         <Stack.Screen
           name="ResumeForm"
           component={ResumeFormScreen}
-          options={{title: '이력서'}}
+          options={{ title: '이력서' }}
         />
         <Stack.Screen
           name="ResumePreview"
@@ -311,109 +293,89 @@ const MainStack = () => {
         <Stack.Screen
           name="ApplicationStatus"
           component={ApplicationStatusScreen}
-          options={{title: '지원 현황'}}
+          options={{ title: '지원 현황' }}
         />
         {/* 받은 포지션 제안 */}
         <Stack.Screen
           name="ReceivedSuggestion"
           component={ReceivedSuggestionScreen}
-          options={{title: '받은 포지션 제안'}}
+          options={{ title: '받은 포지션 제안' }}
         />
         <Stack.Screen
           name="ReceivedSuggestionDetail"
           component={ReceivedSuggestionDetailScreen}
-          options={{title: '받은 포지션 제안'}}
+          options={{ title: '받은 포지션 제안' }}
         />
         {/* 내 공고 */}
         <Stack.Screen
           name="MyPost"
           component={MyRecruitmentScreen}
-          options={{title: '공고 현황'}}
+          options={{ title: '공고 현황' }}
         />
         <Stack.Screen
           name="ApplicantStatus"
           component={ApplicantStatusScreen}
-          options={{title: '지원자 현황'}}
+          options={{ title: '지원자 현황' }}
         />
         <Stack.Screen
           name="ReviewManage"
           component={ReviewManageScreen}
-          options={{title: '작성 후기 관리'}}
+          options={{ title: '작성 후기 관리' }}
         />
         <Stack.Screen
           name="ReviewForm"
           component={ReviewFormScreen}
-          options={{title: '후기 작성'}}
+          options={{ title: '후기 작성' }}
         />
         <Stack.Screen
           name="FollowingManage"
           component={FollowingManageScreen}
-          options={{title: '팔로잉 관리'}}
+          options={{ title: '팔로잉 관리' }}
         />
         <Stack.Screen
           name="CertifyLocation"
           component={CertifyLocationScreen}
-          options={{title: '지역 인증'}}
+          options={{ title: '지역 인증' }}
         />
         <Stack.Screen
           name="BookmarkManage"
           component={BookmarkManageScreen}
-          options={{title: '북마크 관리'}}
+          options={{ title: '북마크 관리' }}
         />
-        <Stack.Screen
-          name="Setting"
-          component={SettingScreen}
-          options={{title: '설정'}}
-        />
+        <Stack.Screen name="Setting" component={SettingScreen} options={{ title: '설정' }} />
         <Stack.Screen
           name="NotificationSetting"
           component={NotificationSettingScreen}
-          options={{title: '알림 설정'}}
+          options={{ title: '알림 설정' }}
         />
-        <Stack.Screen
-          name="Account"
-          component={AccountScreen}
-          options={{title: '계정 관리'}}
-        />
+        <Stack.Screen name="Account" component={AccountScreen} options={{ title: '계정 관리' }} />
         <Stack.Screen
           name="Blacklist"
           component={BlacklistScreen}
-          options={{title: '차단 사용자 관리'}}
+          options={{ title: '차단 사용자 관리' }}
         />
         <Stack.Screen
           name={ROUTE.NOTICE_LIST}
           component={NoticeScreen}
-          options={{title: '공지사항'}}
+          options={{ title: '공지사항' }}
         />
         <Stack.Screen
           name="Inquiry"
           component={InquiryScreen}
-          options={{title: '1:1 문의 내역'}}
+          options={{ title: '1:1 문의 내역' }}
         />
         <Stack.Screen
           name="InquiryForm"
           component={InquiryFormScreen}
-          options={{title: '문의하기'}}
+          options={{ title: '문의하기' }}
         />
-        <Stack.Screen
-          name="Version"
-          component={VersionScreen}
-          options={{title: '버전 정보'}}
-        />
-        <Stack.Screen
-          name="Rule"
-          component={RulesScreen}
-          options={{title: '서비스 이용약관'}}
-        />
-        <Stack.Screen
-          name="LinkAdd"
-          component={LinkAddScreen}
-          options={{title: '링크 추가'}}
-        />
+        <Stack.Screen name="Version" component={VersionScreen} options={{ title: '버전 정보' }} />
+        <Stack.Screen name="Rule" component={RulesScreen} options={{ title: '서비스 이용약관' }} />
+        <Stack.Screen name="LinkAdd" component={LinkAddScreen} options={{ title: '링크 추가' }} />
         <Stack.Screen
           name="Suggestion"
           component={SuggestionScreen}
-          options={{title: '포지션 제안하기'}}
+          options={{ title: '포지션 제안하기' }}
         />
         <Stack.Screen
           name="CenterInfo"
@@ -435,9 +397,7 @@ const MainStack = () => {
           component={JobPostScreen}
           options={{
             title: '구인 공고',
-            headerRight: () => (
-              <IconButton source={iconPath.BOOKMARK} hitSlop={10} />
-            ),
+            headerRight: () => <IconButton source={iconPath.BOOKMARK} hitSlop={10} />,
           }}
         />
         <Stack.Screen
@@ -450,28 +410,28 @@ const MainStack = () => {
         <Stack.Screen
           name="PasswordReset"
           component={PasswordResetScreen}
-          options={{title: '비밀번호 재설정'}}
+          options={{ title: '비밀번호 재설정' }}
         />
         <Stack.Screen
           name="CommunityCommentEdit"
           component={CommunityCommentEditScreen}
-          options={{title: '댓글 수정'}}
+          options={{ title: '댓글 수정' }}
         />
         <Stack.Screen
           name="CommunityPostEdit"
           component={CommunityPostEditScreen}
-          options={{title: '게시글 수정'}}
+          options={{ title: '게시글 수정' }}
         />
       </Stack.Group>
       <Stack.Screen
         name={ROUTE.MY.INQUIRY_DETAIL}
         component={InquiryDetailScreen}
-        options={{title: '1:1 문의'}}
+        options={{ title: '1:1 문의' }}
       />
       <Stack.Screen
         name={ROUTE.NOTICE_DETAIL}
         component={NoticeDetailScreen}
-        options={{title: '공지사항'}}
+        options={{ title: '공지사항' }}
       />
     </Stack.Navigator>
   );

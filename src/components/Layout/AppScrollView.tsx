@@ -1,4 +1,4 @@
-import {ScrollView, ScrollViewProps} from 'react-native';
+import { ScrollView, ScrollViewProps } from 'react-native';
 
 interface AppScrollViewProps extends ScrollViewProps {}
 
@@ -10,7 +10,7 @@ const AppScrollView: React.FC<AppScrollViewProps> = ({
   return (
     <ScrollView
       showsVerticalScrollIndicator={false}
-      contentContainerStyle={{flex: 1, ...{contentContainerStyle}}}
+      contentContainerStyle={{ flex: 1, ...{ contentContainerStyle } }}
       {...props}>
       {children}
     </ScrollView>

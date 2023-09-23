@@ -1,4 +1,4 @@
-import {ResumeEntity} from './entities';
+import { ResumeEntity } from './entities';
 
 export type FetchResumesResponse = ResumeEntity[];
 

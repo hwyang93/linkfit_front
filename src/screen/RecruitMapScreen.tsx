@@ -12,11 +12,11 @@ import useModal from '@/hooks/useModal';
 import common from '@/styles/common';
 import THEME from '@/styles/theme';
 import SRC from '@/utils/constants/assets';
-import {SCREEN_WIDTH} from '@/utils/constants/common';
-import {iconPath} from '@/utils/iconPath';
-import {materialTopTabNavigationOptions} from '@/utils/options/tab';
-import {createMaterialTopTabNavigator} from '@react-navigation/material-top-tabs';
-import {NativeStackScreenProps} from '@react-navigation/native-stack';
+import { SCREEN_WIDTH } from '@/utils/constants/common';
+import { iconPath } from '@/utils/iconPath';
+import { materialTopTabNavigationOptions } from '@/utils/options/tab';
+import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
+import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import {
   Image,
   ScrollView,
@@ -27,9 +27,9 @@ import {
   ViewProps,
   ViewStyle,
 } from 'react-native';
-import MapView, {Marker, PROVIDER_GOOGLE} from 'react-native-maps';
-import {SafeAreaView} from 'react-native-safe-area-context';
-import {LoggedInParamList} from '../../AppInner';
+import MapView, { Marker, PROVIDER_GOOGLE } from 'react-native-maps';
+import { SafeAreaView } from 'react-native-safe-area-context';
+import { LoggedInParamList } from '../../AppInner';
 
 // TODO: 텍스트 스타일이 기존에 정의되어있는 스타일셋을 사용하도록 변경
 
@@ -65,7 +65,7 @@ interface CardProps extends ViewProps {
   style?: StyleProp<ViewStyle>;
 }
 
-const Card: React.FC<CardProps> = ({style}) => {
+const Card: React.FC<CardProps> = ({ style }) => {
   return (
     <View
       style={[
@@ -82,10 +82,10 @@ const Card: React.FC<CardProps> = ({style}) => {
         style,
       ]}>
       <View>
-        <Text style={{fontSize: 20, fontWeight: '700', color: THEME.BLACK}}>
+        <Text style={{ fontSize: 20, fontWeight: '700', color: THEME.BLACK }}>
           {'필라테스 강사님 모십니다.'}
         </Text>
-        <Text style={{fontSize: 14, color: THEME.GREY02, marginTop: 12}}>
+        <Text style={{ fontSize: 14, color: THEME.GREY02, marginTop: 12 }}>
           {'파트 월,수,금 시간협의'}
         </Text>
       </View>
@@ -100,19 +100,15 @@ interface InstructorProfileProps extends ViewProps {
   style?: StyleProp<ViewStyle>;
 }
 
-const InstructorProfile: React.FC<InstructorProfileProps> = ({style}) => {
+const InstructorProfile: React.FC<InstructorProfileProps> = ({ style }) => {
   return (
-    <View style={[{alignItems: 'center'}, style]}>
-      <View style={[common.mt16, {flexDirection: 'row'}]}>
-        <Avatar
-          source={SRC.IMAGES.INSTRUCTOR01}
-          size={64}
-          style={common.mr16}
-        />
+    <View style={[{ alignItems: 'center' }, style]}>
+      <View style={[common.mt16, { flexDirection: 'row' }]}>
+        <Avatar source={SRC.IMAGES.INSTRUCTOR01} size={64} style={common.mr16} />
         {<View />}
-        <View style={{flex: 1}}>
-          <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
-            <View style={{flexDirection: 'row', alignItems: 'center'}}>
+        <View style={{ flex: 1 }}>
+          <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
+            <View style={{ flexDirection: 'row', alignItems: 'center' }}>
               <Text
                 style={[
                   common.mr8,
@@ -124,8 +120,7 @@ const InstructorProfile: React.FC<InstructorProfileProps> = ({style}) => {
                 ]}>
                 {'닉네임'}
               </Text>
-              <Text
-                style={{fontSize: 14, fontWeight: '400', color: THEME.PRIMARY}}>
+              <Text style={{ fontSize: 14, fontWeight: '400', color: THEME.PRIMARY }}>
                 {'인증 강사'}
               </Text>
               {/* TODO: CHECK_CIRCLE 아이콘 추가하고 적용하기 */}
@@ -155,13 +150,13 @@ const InstructorProfile: React.FC<InstructorProfileProps> = ({style}) => {
                   }}>
                   {'필라테스'}
                 </Text>
-                <Text style={{fontSize: 12, color: THEME.GREY02}}>{'3년'}</Text>
+                <Text style={{ fontSize: 12, color: THEME.GREY02 }}>{'3년'}</Text>
               </View>
-              <Text style={{fontSize: 14, color: THEME.GREY02, marginTop: 4}}>
+              <Text style={{ fontSize: 14, color: THEME.GREY02, marginTop: 4 }}>
                 {'서울 송파구'}
               </Text>
             </View>
-            <View style={{flexDirection: 'row'}}>
+            <View style={{ flexDirection: 'row' }}>
               <IconButton source={iconPath.PHONE} style={common.mr8} />
               <IconButton source={iconPath.MESSAGE} style={common.mr8} />
               <IconButton source={iconPath.FAVORITE} />
@@ -176,16 +171,14 @@ const Tab = createMaterialTopTabNavigator();
 
 const CenterTab: React.FC = () => {
   return (
-    <ScrollView
-      showsVerticalScrollIndicator
-      style={{flex: 1, backgroundColor: THEME.WHITE}}>
+    <ScrollView showsVerticalScrollIndicator style={{ flex: 1, backgroundColor: THEME.WHITE }}>
       <View
         style={{
           alignItems: 'center',
           paddingHorizontal: 16,
         }}>
         <Image
-          style={[common.mt16, {width: '100%', height: 160, borderRadius: 8}]}
+          style={[common.mt16, { width: '100%', height: 160, borderRadius: 8 }]}
           source={SRC.IMAGES.CENTER01}
         />
         <View
@@ -198,7 +191,7 @@ const CenterTab: React.FC = () => {
             },
           ]}>
           <View>
-            <Text style={{fontSize: 20, fontWeight: '700', color: THEME.BLACK}}>
+            <Text style={{ fontSize: 20, fontWeight: '700', color: THEME.BLACK }}>
               {'링크 필라테스'}
             </Text>
             <Text
@@ -213,7 +206,7 @@ const CenterTab: React.FC = () => {
               {'필라테스 | 서울 송파구'}
             </Text>
           </View>
-          <View style={{flexDirection: 'row', alignItems: 'flex-end'}}>
+          <View style={{ flexDirection: 'row', alignItems: 'flex-end' }}>
             <IconButton source={iconPath.PHONE} style={common.mr12} />
             <IconButton source={iconPath.MESSAGE} style={common.mr12} />
             <IconButton source={iconPath.FAVORITE} />
@@ -228,9 +221,7 @@ const CenterTab: React.FC = () => {
 
 const InstructorTab: React.FC = () => {
   return (
-    <ScrollView
-      showsVerticalScrollIndicator
-      style={{flex: 1, backgroundColor: THEME.WHITE}}>
+    <ScrollView showsVerticalScrollIndicator style={{ flex: 1, backgroundColor: THEME.WHITE }}>
       <View
         style={{
           paddingHorizontal: 16,
@@ -246,16 +237,16 @@ const InstructorTab: React.FC = () => {
 
 type Props = NativeStackScreenProps<LoggedInParamList, 'RecruitMap'>;
 
-const RecruitMapScreen = ({navigation}: Props) => {
+const RecruitMapScreen = ({ navigation }: Props) => {
   const modal = useModal();
-  const {position, getCurrentPosition} = useGeolocation();
+  const { position, getCurrentPosition } = useGeolocation();
 
   const onPressMarker = () => {
     modal.open();
   };
 
   return (
-    <SafeAreaView edges={['left', 'right']} style={{flex: 1}}>
+    <SafeAreaView edges={['left', 'right']} style={{ flex: 1 }}>
       <FilterChipContainer>
         <FilterChip label="포지션" style={common.mr8} rightIcon />
         <FilterChip label="채용형태" style={common.mr8} rightIcon />
@@ -263,7 +254,7 @@ const RecruitMapScreen = ({navigation}: Props) => {
       </FilterChipContainer>
       {position ? (
         <MapView
-          style={{flex: 1}}
+          style={{ flex: 1 }}
           provider={PROVIDER_GOOGLE}
           showsUserLocation
           loadingEnabled
@@ -286,7 +277,7 @@ const RecruitMapScreen = ({navigation}: Props) => {
           ))}
         </MapView>
       ) : (
-        <SafeAreaView edges={['bottom']} style={{flex: 1}}>
+        <SafeAreaView edges={['bottom']} style={{ flex: 1 }}>
           <LoadingFallback />
         </SafeAreaView>
       )}
@@ -312,9 +303,9 @@ const RecruitMapScreen = ({navigation}: Props) => {
         />
       </View>
       <BottomSheet visible={modal.visible} onDismiss={modal.close}>
-        <View style={{alignItems: 'center'}}>
+        <View style={{ alignItems: 'center' }}>
           {/* TODO: width와 height를 지정하지 않으면 UI가 깨지는 버그 수정 */}
-          <View style={{width: SCREEN_WIDTH, height: 550}}>
+          <View style={{ width: SCREEN_WIDTH, height: 550 }}>
             <Tab.Navigator screenOptions={materialTopTabNavigationOptions}>
               <Tab.Screen name="센터" component={CenterTab} />
               <Tab.Screen name="강사" component={InstructorTab} />

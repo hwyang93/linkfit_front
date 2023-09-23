@@ -1,26 +1,26 @@
 import BoxButton from '@/components/Common/BoxButton';
 import CTAButton from '@/components/Common/CTAButton';
 import TextField from '@/components/Common/TextField';
-import {useCheckNicknameQuery} from '@/hooks/member/useCheckNicknameQuery';
-import {useMemberInfoQuery} from '@/hooks/member/useMemberInfoQuery';
-import {useUpdateProfileMutation} from '@/hooks/member/useUpdateProfileMutation';
+import { useCheckNicknameQuery } from '@/hooks/member/useCheckNicknameQuery';
+import { useMemberInfoQuery } from '@/hooks/member/useMemberInfoQuery';
+import { useUpdateProfileMutation } from '@/hooks/member/useUpdateProfileMutation';
 import useInput from '@/hooks/useInput';
 import MESSAGE from '@/utils/constants/message';
-import {iconPath} from '@/utils/iconPath';
+import { iconPath } from '@/utils/iconPath';
 import DismissKeyboardView from '@components/DismissKeyboardView';
 import toast from '@hooks/toast';
-import {NativeStackScreenProps} from '@react-navigation/native-stack';
-import {WHITE} from '@styles/colors';
+import { NativeStackScreenProps } from '@react-navigation/native-stack';
+import { WHITE } from '@styles/colors';
 import common from '@styles/common';
-import {isAxiosError} from 'axios';
-import {useEffect, useState} from 'react';
-import {Image, Pressable, StyleSheet, Text, View} from 'react-native';
-import {Asset, MediaType, launchImageLibrary} from 'react-native-image-picker';
-import {LoggedInParamList} from '../../../AppInner';
+import { isAxiosError } from 'axios';
+import { useEffect, useState } from 'react';
+import { Image, Pressable, StyleSheet, Text, View } from 'react-native';
+import { Asset, MediaType, launchImageLibrary } from 'react-native-image-picker';
+import { LoggedInParamList } from '../../../AppInner';
 
 type Props = NativeStackScreenProps<LoggedInParamList, 'ProfileEdit'>;
 
-const ProfileEditScreen = ({navigation}: Props) => {
+const ProfileEditScreen = ({ navigation }: Props) => {
   const nicknameInput = useInput();
   const introInput = useInput();
 
@@ -29,8 +29,8 @@ const ProfileEditScreen = ({navigation}: Props) => {
     name: string | undefined;
     type: string | undefined;
     uri: string | undefined;
-  }>({name: undefined, type: undefined, uri: undefined});
-  const [imageUri, setImageUri] = useState<{uri?: string}>();
+  }>({ name: undefined, type: undefined, uri: undefined });
+  const [imageUri, setImageUri] = useState<{ uri?: string }>();
 
   const memberInfoQuery = useMemberInfoQuery();
   const user = memberInfoQuery.data;
@@ -43,7 +43,7 @@ const ProfileEditScreen = ({navigation}: Props) => {
       user.nickname && nicknameInput.setValue(user.nickname);
       user.intro && introInput.setValue(user.intro);
       user.field && setField(user.field);
-      user.profileImage && setImageUri({uri: user.profileImage.originFileUrl});
+      user.profileImage && setImageUri({ uri: user.profileImage.originFileUrl });
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [user]);
@@ -62,22 +62,21 @@ const ProfileEditScreen = ({navigation}: Props) => {
 
     updateProfileMutation.mutate(body, {
       onSuccess: () => {
-        toast.success({message: '프로필이 수정되었습니다.'});
+        toast.success({ message: '프로필이 수정되었습니다.' });
         navigation.goBack();
       },
-      onError: error =>
-        isAxiosError(error) && toast.error({message: error.message}),
+      onError: (error) => isAxiosError(error) && toast.error({ message: error.message }),
     });
   };
 
   const onCheckNickname = async () => {
     const response = await checkNicknameQuery.refetch();
     if (response.data?.duplication) {
-      toast.warn({message: MESSAGE.NICKNAME_DUPLICATED});
+      toast.warn({ message: MESSAGE.NICKNAME_DUPLICATED });
     }
 
     if (response.data?.duplication === false) {
-      toast.info({message: MESSAGE.NICKNAME_AVAILABLE});
+      toast.info({ message: MESSAGE.NICKNAME_AVAILABLE });
     }
   };
 
@@ -86,7 +85,7 @@ const ProfileEditScreen = ({navigation}: Props) => {
       mediaType: 'photo' as MediaType,
       includeBase64: true,
     };
-    await launchImageLibrary(options, response => {
+    await launchImageLibrary(options, (response) => {
       if (response.didCancel) {
         console.log('User cancelled image picker');
       } else if (response.errorCode) {
@@ -117,17 +116,13 @@ const ProfileEditScreen = ({navigation}: Props) => {
       <View style={styles.container}>
         <Pressable style={styles.imageBox} onPress={openCamera}>
           <Image
-            source={
-              imageUri ? imageUri : require('../../assets/images/thumbnail.png')
-            }
+            source={imageUri ? imageUri : require('../../assets/images/thumbnail.png')}
             style={styles.profileImage}
           />
-          {!imageUri && (
-            <Text style={[common.text, styles.textPosition]}>편집</Text>
-          )}
+          {!imageUri && <Text style={[common.text, styles.textPosition]}>편집</Text>}
         </Pressable>
         <View style={[common.mv16, common.rowCenter]}>
-          <View style={[common.mr8, {flex: 3}]}>
+          <View style={[common.mr8, { flex: 3 }]}>
             <TextField
               label="닉네임"
               onChangeText={nicknameInput.onChange}
@@ -163,13 +158,9 @@ const ProfileEditScreen = ({navigation}: Props) => {
               setField(licence.field);
             }}>
             <View>
-              <View
-                style={[common.basicBox, common.rowCenterBetween, common.mb8]}>
+              <View style={[common.basicBox, common.rowCenterBetween, common.mb8]}>
                 <View style={common.rowCenter}>
-                  <Image
-                    source={iconPath.MY_LICENSE}
-                    style={[common.size24, common.mr8]}
-                  />
+                  <Image source={iconPath.MY_LICENSE} style={[common.size24, common.mr8]} />
                   <Text style={common.text_m}>{licence.field}</Text>
                 </View>
                 {field === licence.field ? (

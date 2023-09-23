@@ -1,4 +1,4 @@
-import {FlatList, StyleSheet, View} from 'react-native';
+import { FlatList, StyleSheet, View } from 'react-native';
 import FilterChip from './Common/FilterChip';
 
 interface TopFilterProps {
@@ -9,21 +9,16 @@ interface TopFilterProps {
   }[];
 }
 
-const TopFilter: React.FC<TopFilterProps> = ({data}) => {
+const TopFilter: React.FC<TopFilterProps> = ({ data }) => {
   return (
     <View style={styles.filterBox}>
       <FlatList
-        contentContainerStyle={{paddingHorizontal: 16}}
+        contentContainerStyle={{ paddingHorizontal: 16 }}
         data={data}
         keyExtractor={(_, index) => index.toString()}
         horizontal={true}
-        renderItem={({item}) => (
-          <FilterChip
-            style={{marginRight: 8}}
-            label={item.value}
-            onPress={item.job}
-            rightIcon
-          />
+        renderItem={({ item }) => (
+          <FilterChip style={{ marginRight: 8 }} label={item.value} onPress={item.job} rightIcon />
         )}
         showsHorizontalScrollIndicator={false}
       />

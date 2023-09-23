@@ -1,25 +1,21 @@
 import CommunityUserProfile from '@/components/Community/CommunityUserProfile';
-import {useCommunityPostDeleteMutation} from '@/hooks/community/useCommunityPostDeleteMutation';
-import {useAppNavigation} from '@/hooks/useAppNavigation';
+import { useCommunityPostDeleteMutation } from '@/hooks/community/useCommunityPostDeleteMutation';
+import { useAppNavigation } from '@/hooks/useAppNavigation';
 import useAuth from '@/hooks/useAuth';
 import useModal from '@/hooks/useModal';
-import {ROUTE} from '@/navigations/routes';
-import {CommunityEntity} from '@/types/api/entities';
-import {iconPath} from '@/utils/iconPath';
-import {formatDate} from '@/utils/util';
-import {
-  createCommunityBookmark,
-  createCommunityComment,
-  deleteCommunityBookmark,
-} from '@api/community';
+import { ROUTE } from '@/navigations/routes';
+import { CommunityEntity } from '@/types/api/entities';
+import { iconPath } from '@/utils/iconPath';
+import { formatDate } from '@/utils/util';
+import { createCommunityComment } from '@api/community';
 import BookmarkCounter from '@components/Counter/BookmarkCounter';
 import CommentCounter from '@components/Counter/CommentCounter';
-import Input, {KeyboardTypes} from '@components/Input';
+import Input, { KeyboardTypes } from '@components/Input';
 import toast from '@hooks/toast';
 import common from '@styles/common';
-import {isAxiosError} from 'axios';
-import {useCallback, useState} from 'react';
-import {Image, Text, View} from 'react-native';
+import { isAxiosError } from 'axios';
+import { useCallback, useState } from 'react';
+import { Image, Text, View } from 'react-native';
 import BottomSheet from '../Common/BottomSheet';
 import BottomSheetOption from '../Common/BottomSheetOption';
 import BoxButton from '../Common/BoxButton';
@@ -29,10 +25,7 @@ interface CommunityPostTopProps {
   onCommentCreate: () => void;
 }
 
-const CommunityPostTop: React.FC<CommunityPostTopProps> = ({
-  postInfo,
-  onCommentCreate,
-}) => {
+const CommunityPostTop: React.FC<CommunityPostTopProps> = ({ postInfo, onCommentCreate }) => {
   const [loading, setLoading] = useState(false);
   const [isBookmark, setIsBookmark] = useState(postInfo.isBookmark);
   const [bookmarkCount, setBookmarkCount] = useState(postInfo.bookmarkCount);
@@ -44,7 +37,7 @@ const CommunityPostTop: React.FC<CommunityPostTopProps> = ({
 
   const modal = useModal();
 
-  const {user} = useAuth();
+  const { user } = useAuth();
 
   const canGoNext = comment !== '';
 
@@ -64,30 +57,6 @@ const CommunityPostTop: React.FC<CommunityPostTopProps> = ({
     modal.close();
   };
 
-  const onClickBookmark = useCallback(() => {
-    if (isBookmark === 'N') {
-      createCommunityBookmark(postInfo.seq)
-        .then(() => {
-          toast.success({message: '북마크 등록이 완료되었어요!'});
-          setIsBookmark('Y');
-          setBookmarkCount(prev => prev + 1);
-        })
-        .catch(error => {
-          toast.error({message: error.message});
-        });
-    } else {
-      deleteCommunityBookmark(postInfo.seq)
-        .then(() => {
-          toast.success({message: '북마크가 삭제되었어요!'});
-          setIsBookmark('N');
-          setBookmarkCount(prev => prev - 1);
-        })
-        .catch(error => {
-          toast.error({message: error.message});
-        });
-    }
-  }, [isBookmark, postInfo.seq]);
-
   const createComment = useCallback(async () => {
     const data = {
       contents: comment,
@@ -96,12 +65,12 @@ const CommunityPostTop: React.FC<CommunityPostTopProps> = ({
     try {
       setLoading(true);
       await createCommunityComment(postInfo.seq, data);
-      toast.success({message: '댓글이 작성 되었습니다!'});
+      toast.success({ message: '댓글이 작성 되었습니다!' });
       setComment('');
       onCommentCreate();
     } catch (error) {
       if (isAxiosError(error)) {
-        toast.error({message: error.message});
+        toast.error({ message: error.message });
       }
     } finally {
       setLoading(false);
@@ -119,9 +88,7 @@ const CommunityPostTop: React.FC<CommunityPostTopProps> = ({
             <Image source={iconPath.SHARE} style={common.size24} />
           </Pressable> */}
         </View>
-        <Text style={[common.text_s, common.fcg]}>
-          {formatDate(postInfo.updatedAt)}
-        </Text>
+        <Text style={[common.text_s, common.fcg]}>{formatDate(postInfo.updatedAt)}</Text>
       </View>
       <View style={[common.mv16, common.row]}>
         <View style={common.channelBox}>
@@ -144,12 +111,7 @@ const CommunityPostTop: React.FC<CommunityPostTopProps> = ({
       </View>
       <View style={common.mb16}>
         <View style={common.rowCenter}>
-          <BookmarkCounter
-            seq={postInfo.seq}
-            isBookmark={isBookmark}
-            counter={bookmarkCount}
-            onClick={onClickBookmark}
-          />
+          <BookmarkCounter postId={postInfo.seq} isBookmark={isBookmark} counter={bookmarkCount} />
           <CommentCounter counter={postInfo.comments?.length} />
         </View>
       </View>
@@ -157,7 +119,7 @@ const CommunityPostTop: React.FC<CommunityPostTopProps> = ({
         <View>
           <Image source={iconPath.THUMBNAIL} style={common.size32} />
         </View>
-        <View style={[{flex: 1, marginHorizontal: 6}]}>
+        <View style={[{ flex: 1, marginHorizontal: 6 }]}>
           <Input
             onChangeText={(text: string) => setComment(text)}
             value={comment}
@@ -166,18 +128,10 @@ const CommunityPostTop: React.FC<CommunityPostTopProps> = ({
             keyboardType={KeyboardTypes.DEFAULT}
           />
         </View>
-        <BoxButton
-          label="작성"
-          loading={loading}
-          disabled={!canGoNext}
-          onPress={createComment}
-        />
+        <BoxButton label="작성" loading={loading} disabled={!canGoNext} onPress={createComment} />
       </View>
       {/* TODO: 기능 추가 */}
-      <BottomSheet
-        title="더보기"
-        visible={modal.visible}
-        onDismiss={modal.close}>
+      <BottomSheet title="더보기" visible={modal.visible} onDismiss={modal.close}>
         <BottomSheetOption label="수정하기" onPress={onEdit} />
         <BottomSheetOption label="삭제하기" onPress={onDelete} />
       </BottomSheet>

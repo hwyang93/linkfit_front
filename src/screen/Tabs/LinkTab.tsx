@@ -1,21 +1,21 @@
 import FloatingActionButton from '@/components/Common/FloatingActionButton';
 import InstructorListItem from '@/components/Compound/InstructorListItem';
-import {useInstructorListQuery} from '@/hooks/instructor/useInstructorListQuery';
+import { useInstructorListQuery } from '@/hooks/instructor/useInstructorListQuery';
 import useExitAlert from '@/hooks/useExitAlert';
-import {iconPath} from '@/utils/iconPath';
+import { iconPath } from '@/utils/iconPath';
 import LinkTop from '@components/LinkTop';
-import {NativeStackScreenProps} from '@react-navigation/native-stack';
-import {WHITE} from '@styles/colors';
+import { NativeStackScreenProps } from '@react-navigation/native-stack';
+import { WHITE } from '@styles/colors';
 import common from '@styles/common';
-import {FlatList, StyleSheet, View} from 'react-native';
-import {LoggedInParamList} from '../../../AppInner';
+import { FlatList, StyleSheet, View } from 'react-native';
+import { LoggedInParamList } from '../../../AppInner';
 
 type Props = NativeStackScreenProps<LoggedInParamList, 'Link'>;
 
-const LinkScreen = ({navigation}: Props) => {
+const LinkScreen = ({ navigation }: Props) => {
   useExitAlert();
 
-  const {data} = useInstructorListQuery();
+  const { data } = useInstructorListQuery();
 
   return (
     <>
@@ -23,10 +23,10 @@ const LinkScreen = ({navigation}: Props) => {
         <View style={styles.container}>
           <FlatList
             data={data}
-            keyExtractor={item => String(item.seq)}
-            renderItem={({item}) => (
+            keyExtractor={(item) => String(item.seq)}
+            renderItem={({ item }) => (
               <InstructorListItem
-                style={{marginHorizontal: 16}}
+                style={{ marginHorizontal: 16 }}
                 instructorId={item.seq}
                 avatarImageSrc={item.profileImage?.originFileUrl}
                 field={item.field}
@@ -36,9 +36,7 @@ const LinkScreen = ({navigation}: Props) => {
                 following={item.isFollow === 'Y'}
                 followerCount={item.followerCount}
                 isCertificated
-                onAvatarPress={() =>
-                  navigation.navigate('Profile', {memberSeq: item.seq})
-                }
+                onAvatarPress={() => navigation.navigate('Profile', { memberSeq: item.seq })}
               />
             )}
             ListHeaderComponent={<LinkTop />}

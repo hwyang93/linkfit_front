@@ -1,12 +1,12 @@
-import {useEffect} from 'react';
-import {Alert, Linking} from 'react-native';
-import {PERMISSIONS, RESULTS, check, request} from 'react-native-permissions';
-import {IS_ANDROID, IS_IOS} from './constants/common';
+import { useEffect } from 'react';
+import { Alert, Linking } from 'react-native';
+import { PERMISSIONS, RESULTS, check, request } from 'react-native-permissions';
+import { IS_ANDROID, IS_IOS } from './constants/common';
 
 const usePermissions = () => {
   const checkAndroidLocation = () => {
     check(PERMISSIONS.ANDROID.ACCESS_FINE_LOCATION)
-      .then(result => {
+      .then((result) => {
         console.log('check location :', result);
         if (result === RESULTS.BLOCKED || result === RESULTS.DENIED) {
           Alert.alert(
@@ -32,7 +32,7 @@ const usePermissions = () => {
 
   const checkIosLocation = () => {
     check(PERMISSIONS.IOS.LOCATION_WHEN_IN_USE)
-      .then(result => {
+      .then((result) => {
         if (result === RESULTS.BLOCKED || result === RESULTS.DENIED) {
           Alert.alert(
             '이 앱은 위치 권한 허용이 필요합니다.',
@@ -56,7 +56,7 @@ const usePermissions = () => {
 
   const checkAndroidCamera = () => {
     check(PERMISSIONS.ANDROID.CAMERA)
-      .then(result => {
+      .then((result) => {
         if (result === RESULTS.DENIED || result === RESULTS.GRANTED) {
           return request(PERMISSIONS.ANDROID.CAMERA);
         } else {
@@ -69,12 +69,8 @@ const usePermissions = () => {
 
   const checkIosCamera = () => {
     check(PERMISSIONS.IOS.CAMERA)
-      .then(result => {
-        if (
-          result === RESULTS.DENIED ||
-          result === RESULTS.LIMITED ||
-          result === RESULTS.GRANTED
-        ) {
+      .then((result) => {
+        if (result === RESULTS.DENIED || result === RESULTS.LIMITED || result === RESULTS.GRANTED) {
           return request(PERMISSIONS.IOS.CAMERA);
         } else {
           console.log(result);

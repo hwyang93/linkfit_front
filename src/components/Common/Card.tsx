@@ -1,6 +1,6 @@
-import {GRAY} from '@/styles/colors';
+import { GRAY } from '@/styles/colors';
 import React from 'react';
-import {Pressable, StyleProp, ViewStyle} from 'react-native';
+import { Pressable, StyleProp, ViewStyle } from 'react-native';
 
 interface Props {
   children: React.ReactNode;
@@ -8,7 +8,7 @@ interface Props {
   onPress?: () => void;
 }
 
-const Card: React.FC<Props> = ({children, style, onPress, ...props}) => {
+const Card: React.FC<Props> = ({ children, style, onPress, ...props }) => {
   return (
     <Pressable
       style={[

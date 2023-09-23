@@ -1,29 +1,21 @@
-import {LoggedInParamList} from '@/../AppInner';
-import {fetchBookmarkCommunities} from '@/api/community';
-import {fetchBookmarkRecruits} from '@/api/recruit';
+import { LoggedInParamList } from '@/../AppInner';
+import { fetchBookmarkCommunities } from '@/api/community';
+import { fetchBookmarkRecruits } from '@/api/recruit';
 import RecruitListItem from '@/components/Compound/RecruitListItem';
 import EmptySet from '@/components/EmptySet';
 import toast from '@/hooks/toast';
 import common from '@/styles/common';
-import {FetchBookmarkCommunitiesResponse} from '@/types/api/community';
-import {FetchBookmarkRecruitsResponse} from '@/types/api/recruit';
-import {Member} from '@/types/common';
-import {iconPath} from '@/utils/iconPath';
-import {materialTopTabNavigationOptions} from '@/utils/options/tab';
-import {formatDate} from '@/utils/util';
-import {createMaterialTopTabNavigator} from '@react-navigation/material-top-tabs';
-import {NavigationProp, useNavigation} from '@react-navigation/native';
-import {GRAY, WHITE} from '@styles/colors';
-import {useCallback, useEffect, useState} from 'react';
-import {
-  FlatList,
-  Image,
-  Pressable,
-  ScrollView,
-  StyleSheet,
-  Text,
-  View,
-} from 'react-native';
+import { FetchBookmarkCommunitiesResponse } from '@/types/api/community';
+import { FetchBookmarkRecruitsResponse } from '@/types/api/recruit';
+import { Member } from '@/types/common';
+import { iconPath } from '@/utils/iconPath';
+import { materialTopTabNavigationOptions } from '@/utils/options/tab';
+import { formatDate } from '@/utils/util';
+import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
+import { NavigationProp, useNavigation } from '@react-navigation/native';
+import { GRAY, WHITE } from '@styles/colors';
+import { useCallback, useEffect, useState } from 'react';
+import { FlatList, Image, Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
 
 interface BookmarkCommunityListItemProps {
   title: string;
@@ -57,22 +49,16 @@ const BookmarkCommunityListItem: React.FC<BookmarkCommunityListItemProps> = ({
         {writerType === Member.Company ? (
           <View style={common.row}>
             <Text style={[common.text_m, common.fwb]}>{writerCompanyName}</Text>
-            <Text style={[common.text, common.mh4, {alignSelf: 'flex-end'}]}>
-              센터
-            </Text>
-            <Text style={[common.text, {alignSelf: 'flex-end'}]}>
-              {updatedAt}
-            </Text>
+            <Text style={[common.text, common.mh4, { alignSelf: 'flex-end' }]}>센터</Text>
+            <Text style={[common.text, { alignSelf: 'flex-end' }]}>{updatedAt}</Text>
           </View>
         ) : (
           <View style={common.row}>
             <Text style={[common.text_m, common.fwb]}>{writerName}</Text>
-            <Text style={[common.text, common.mh4, {alignSelf: 'flex-end'}]}>
+            <Text style={[common.text, common.mh4, { alignSelf: 'flex-end' }]}>
               {writerType === Member.Instructor ? '강사' : '일반인'}
             </Text>
-            <Text style={[common.text, {alignSelf: 'flex-end'}]}>
-              {updatedAt}
-            </Text>
+            <Text style={[common.text, { alignSelf: 'flex-end' }]}>{updatedAt}</Text>
           </View>
         )}
 
@@ -102,18 +88,17 @@ const BookmarkCommunityListItem: React.FC<BookmarkCommunityListItemProps> = ({
 const Tab = createMaterialTopTabNavigator();
 
 const JobOfferTab: React.FC = () => {
-  const [bookmarkedRecruits, setBookmarkedRecruits] =
-    useState<FetchBookmarkRecruitsResponse>();
+  const [bookmarkedRecruits, setBookmarkedRecruits] = useState<FetchBookmarkRecruitsResponse>();
 
   const navigation = useNavigation<NavigationProp<LoggedInParamList>>();
 
   const getBookmarkRecruits = useCallback(() => {
     fetchBookmarkRecruits()
-      .then(({data}) => {
+      .then(({ data }) => {
         setBookmarkedRecruits(data);
       })
-      .catch(error => {
-        toast.error({message: error.message});
+      .catch((error) => {
+        toast.error({ message: error.message });
       });
   }, []);
 
@@ -125,9 +110,9 @@ const JobOfferTab: React.FC = () => {
     <View style={[styles.container]}>
       {bookmarkedRecruits && bookmarkedRecruits.length > 0 && (
         <FlatList
-          contentContainerStyle={{marginTop: 16, paddingBottom: 48}}
+          contentContainerStyle={{ marginTop: 16, paddingBottom: 48 }}
           data={bookmarkedRecruits}
-          renderItem={({item}) => (
+          renderItem={({ item }) => (
             <RecruitListItem
               seq={item.seq}
               position={item.recruit.position}
@@ -136,14 +121,12 @@ const JobOfferTab: React.FC = () => {
               address={item.recruit.address}
               bookmarkChecked={item.recruit.isBookmark === 'Y'}
               imageSrc={item.recruit.writer?.profileImage?.originFileUrl}
-              onPress={() =>
-                navigation.navigate('JobPost', {recruitSeq: item.seq})
-              }
+              onPress={() => navigation.navigate('JobPost', { recruitSeq: item.seq })}
             />
           )}
           numColumns={2}
-          keyExtractor={item => 'bookmarkedRecruit' + item.seq}
-          ItemSeparatorComponent={() => <View style={{marginBottom: 16}} />}
+          keyExtractor={(item) => 'bookmarkedRecruit' + item.seq}
+          ItemSeparatorComponent={() => <View style={{ marginBottom: 16 }} />}
         />
       )}
       {bookmarkedRecruits && bookmarkedRecruits.length === 0 && (
@@ -154,18 +137,17 @@ const JobOfferTab: React.FC = () => {
 };
 
 const CommunityTab: React.FC = () => {
-  const [bookmarks, setBookmarks] =
-    useState<FetchBookmarkCommunitiesResponse>();
+  const [bookmarks, setBookmarks] = useState<FetchBookmarkCommunitiesResponse>();
 
   const navigation = useNavigation<NavigationProp<LoggedInParamList>>();
 
   const getBookmarkCommunities = useCallback(() => {
     fetchBookmarkCommunities()
-      .then(({data}) => {
+      .then(({ data }) => {
         setBookmarks(data);
       })
-      .catch(error => {
-        toast.error({message: error.message});
+      .catch((error) => {
+        toast.error({ message: error.message });
       });
   }, []);
 
@@ -200,9 +182,7 @@ const CommunityTab: React.FC = () => {
           ))}
         </ScrollView>
       )}
-      {bookmarks && bookmarks.length === 0 && (
-        <EmptySet text="북마크한 커뮤니티 글이 없어요." />
-      )}
+      {bookmarks && bookmarks.length === 0 && <EmptySet text="북마크한 커뮤니티 글이 없어요." />}
     </View>
   );
 };

@@ -1,26 +1,24 @@
-import {useDeleteMemberReputationMutation} from '@/hooks/member/useDeleteMemberReputationMutation';
-import {useMemberReputationListQuery} from '@/hooks/member/useMemberReputationListQuery';
+import { useDeleteMemberReputationMutation } from '@/hooks/member/useDeleteMemberReputationMutation';
+import { useMemberReputationListQuery } from '@/hooks/member/useMemberReputationListQuery';
 import useModal from '@/hooks/useModal';
-import {Member} from '@/types/common';
-import {iconPath} from '@/utils/iconPath';
-import {formatDate} from '@/utils/util';
+import { Member } from '@/types/common';
+import { iconPath } from '@/utils/iconPath';
+import { formatDate } from '@/utils/util';
 import toast from '@hooks/toast';
-import {NavigationProp, useNavigation} from '@react-navigation/native';
-import {BLUE, GRAY, WHITE} from '@styles/colors';
+import { NavigationProp, useNavigation } from '@react-navigation/native';
+import { BLUE, GRAY, WHITE } from '@styles/colors';
 import common from '@styles/common';
-import {isAxiosError} from 'axios';
-import {useState} from 'react';
-import {Image, Pressable, StyleSheet, Text, View} from 'react-native';
+import { isAxiosError } from 'axios';
+import { useState } from 'react';
+import { Image, Pressable, StyleSheet, Text, View } from 'react-native';
 import AppScrollView from '../\bLayout/AppScrollView';
-import {LoggedInParamList} from '../../../AppInner';
+import { LoggedInParamList } from '../../../AppInner';
 import BottomSheet from '../Common/BottomSheet';
 import BottomSheetOption from '../Common/BottomSheetOption';
 import EmptySet from '../EmptySet';
 
 const EmployeeReviewTab: React.FC = () => {
-  const [selectedReputationId, setSelectedReputationId] = useState<
-    number | null
-  >(null);
+  const [selectedReputationId, setSelectedReputationId] = useState<number | null>(null);
 
   const navigation = useNavigation<NavigationProp<LoggedInParamList>>();
 
@@ -36,12 +34,12 @@ const EmployeeReviewTab: React.FC = () => {
 
     deleteMemberReputationMutation.mutate(selectedReputationId, {
       onSuccess: () => {
-        toast.success({message: '후기 삭제가 완료되었어요!'});
+        toast.success({ message: '후기 삭제가 완료되었어요!' });
         modal.close();
       },
-      onError: error => {
+      onError: (error) => {
         if (isAxiosError(error)) {
-          toast.error({message: error.message});
+          toast.error({ message: error.message });
         }
       },
     });
@@ -59,18 +57,16 @@ const EmployeeReviewTab: React.FC = () => {
   };
 
   return (
-    <AppScrollView
-      style={styles.container}
-      showsVerticalScrollIndicator={false}>
+    <AppScrollView style={styles.container} showsVerticalScrollIndicator={false}>
       {reputations?.length === 0 && <EmptySet text="작성한 후기가 없어요" />}
-      {reputations?.map(item =>
+      {reputations?.map((item) =>
         item.targetMember.type === Member.Instructor ? (
           <View key={'review_' + item.seq} style={styles.reviewBox}>
             <View style={common.rowCenter}>
               <Image
                 source={
                   item.targetMember.profileImage
-                    ? {uri: item.targetMember.profileImage.originFileUrl}
+                    ? { uri: item.targetMember.profileImage.originFileUrl }
                     : require('../../assets/images/thumbnail.png')
                 }
                 style={styles.thumbnail}
@@ -82,11 +78,9 @@ const EmployeeReviewTab: React.FC = () => {
                       ? item.targetMember.nickname
                       : item.targetMember.name}
                   </Text>
-                  <Text style={[common.text_s, {color: BLUE.DEFAULT}]}>
-                    인증강사
-                  </Text>
+                  <Text style={[common.text_s, { color: BLUE.DEFAULT }]}>인증강사</Text>
                   <Image
-                    style={{marginLeft: 2, width: 14, height: 14}}
+                    style={{ marginLeft: 2, width: 14, height: 14 }}
                     source={iconPath.CERTIFICATION}
                   />
                 </View>
@@ -98,9 +92,7 @@ const EmployeeReviewTab: React.FC = () => {
                 </View>
               </View>
             </View>
-            <Text style={[common.mt8, common.text]}>
-              {formatDate(item.updatedAt)}
-            </Text>
+            <Text style={[common.mt8, common.text]}>{formatDate(item.updatedAt)}</Text>
             <Text style={common.text_m}>{item.comment}</Text>
             <Pressable
               style={styles.kebabIcon}
@@ -118,13 +110,9 @@ const EmployeeReviewTab: React.FC = () => {
               <Text style={[common.text_m, common.fwb, common.mr8]}>
                 {item.targetMember.company?.companyName}
               </Text>
-              <Text style={common.text}>
-                {item.targetMember.company?.field}
-              </Text>
+              <Text style={common.text}>{item.targetMember.company?.field}</Text>
             </View>
-            <Text style={[common.mt8, common.text]}>
-              {formatDate(item.updatedAt)}
-            </Text>
+            <Text style={[common.mt8, common.text]}>{formatDate(item.updatedAt)}</Text>
             <Text style={common.text_m}>{item.comment}</Text>
             <Pressable
               style={styles.kebabIcon}
@@ -138,10 +126,7 @@ const EmployeeReviewTab: React.FC = () => {
           </View>
         ),
       )}
-      <BottomSheet
-        visible={modal.visible}
-        onDismiss={modal.close}
-        title="더보기">
+      <BottomSheet visible={modal.visible} onDismiss={modal.close} title="더보기">
         <BottomSheetOption label="후기 수정하기" onPress={onEditPress} />
         <BottomSheetOption label="후기 삭제하기" onPress={onDeletePress} />
       </BottomSheet>
@@ -150,14 +135,14 @@ const EmployeeReviewTab: React.FC = () => {
 };
 
 const styles = StyleSheet.create({
-  container: {flex: 1, padding: 16, backgroundColor: WHITE},
+  container: { flex: 1, padding: 16, backgroundColor: WHITE },
   reviewBox: {
     paddingVertical: 16,
     borderBottomWidth: 1,
     borderColor: GRAY.DEFAULT,
   },
-  thumbnail: {marginRight: 12, width: 48, height: 48},
-  kebabIcon: {position: 'absolute', top: 16, right: 0},
+  thumbnail: { marginRight: 12, width: 48, height: 48 },
+  kebabIcon: { position: 'absolute', top: 16, right: 0 },
 });
 
 export default EmployeeReviewTab;

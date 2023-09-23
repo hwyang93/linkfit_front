@@ -1,28 +1,21 @@
-import {LoggedInParamList} from '@/../AppInner';
+import { LoggedInParamList } from '@/../AppInner';
 import CTAButton from '@/components/Common/CTAButton';
 import useKakaoLocation from '@/hooks/useKakaoLocation';
-import {FetchRegionAuthResponse} from '@/types/api/member';
-import {iconPath} from '@/utils/iconPath';
-import {requestPermission} from '@/utils/util';
-import {createRegionAuth, deleteRegionAuth, fetchRegionAuth} from '@api/member';
+import { FetchRegionAuthResponse } from '@/types/api/member';
+import { iconPath } from '@/utils/iconPath';
+import { requestPermission } from '@/utils/util';
+import { createRegionAuth, deleteRegionAuth, fetchRegionAuth } from '@api/member';
 import LocationButton from '@components/LocationButton';
 import toast from '@hooks/toast';
-import {NativeStackScreenProps} from '@react-navigation/native-stack';
-import {GRAY, WHITE} from '@styles/colors';
+import { NativeStackScreenProps } from '@react-navigation/native-stack';
+import { GRAY, WHITE } from '@styles/colors';
 import common from '@styles/common';
-import {isAxiosError} from 'axios/index';
-import {useCallback, useEffect, useState} from 'react';
-import {
-  Image,
-  Pressable,
-  ScrollView,
-  StyleSheet,
-  Text,
-  View,
-} from 'react-native';
+import { isAxiosError } from 'axios/index';
+import { useCallback, useEffect, useState } from 'react';
+import { Image, Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
 import Geolocation from 'react-native-geolocation-service';
-import MapView, {Marker, PROVIDER_GOOGLE} from 'react-native-maps';
-import {SafeAreaView} from 'react-native-safe-area-context';
+import MapView, { Marker, PROVIDER_GOOGLE } from 'react-native-maps';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 type Props = NativeStackScreenProps<LoggedInParamList, 'CertifyLocation'>;
 
@@ -33,22 +26,22 @@ const CertifyLocationScreen = ({}: Props) => {
     longitude: number;
   } | null>(null);
   const [authInfo, setAuthInfo] = useState<FetchRegionAuthResponse>();
-  const [selectedRegion, setSelectedRegion] = useState({seq: 0});
+  const [selectedRegion, setSelectedRegion] = useState({ seq: 0 });
 
-  const P0 = {latitude: 37.503979, longitude: 127.036201};
+  const P0 = { latitude: 37.503979, longitude: 127.036201 };
 
-  const {location, getLocation} = useKakaoLocation({
+  const { location, getLocation } = useKakaoLocation({
     latitude: P0.latitude,
     longitude: P0.longitude,
   });
 
   const getAuthInfo = useCallback(async () => {
     await fetchRegionAuth()
-      .then(({data}) => {
+      .then(({ data }) => {
         setAuthInfo(data);
       })
-      .catch(error => {
-        toast.error({message: error.message});
+      .catch((error) => {
+        toast.error({ message: error.message });
       });
   }, []);
 
@@ -73,10 +66,10 @@ const CertifyLocationScreen = ({}: Props) => {
     try {
       await createRegionAuth(data);
       await getAuthInfo();
-      toast.success({message: '현재 위치로 인증되었어요!'});
+      toast.success({ message: '현재 위치로 인증되었어요!' });
     } catch (error) {
       if (isAxiosError(error)) {
-        toast.error({message: error.message});
+        toast.error({ message: error.message });
       }
     } finally {
       setLoading(false);
@@ -88,7 +81,7 @@ const CertifyLocationScreen = ({}: Props) => {
       deleteRegionAuth(selectedRegion.seq);
     } catch (error) {
       if (isAxiosError(error)) {
-        toast.error({message: error.message});
+        toast.error({ message: error.message });
       }
     }
   }, [selectedRegion.seq]);
@@ -98,16 +91,16 @@ const CertifyLocationScreen = ({}: Props) => {
   }, [getAuthInfo]);
 
   useEffect(() => {
-    requestPermission().then(result => {
+    requestPermission().then((result) => {
       if (result === 'granted') {
         Geolocation.getCurrentPosition(
-          pos => {
+          (pos) => {
             setMyLocation({
               latitude: pos.coords.latitude,
               longitude: pos.coords.longitude,
             });
           },
-          error => {
+          (error) => {
             console.log(error);
           },
           {
@@ -126,7 +119,7 @@ const CertifyLocationScreen = ({}: Props) => {
       <ScrollView>
         <View style={styles.map}>
           <MapView
-            style={{flex: 1, width: '100%', height: 320}}
+            style={{ flex: 1, width: '100%', height: 320 }}
             provider={PROVIDER_GOOGLE}
             initialRegion={{
               latitude: P0.latitude,
@@ -155,8 +148,7 @@ const CertifyLocationScreen = ({}: Props) => {
               <View style={common.rowCenter}>
                 <Image source={iconPath.MY_PLACE} style={common.size24} />
                 <Text style={[common.text_m, common.ml8]}>
-                  {authInfo.region1depth} {authInfo.region2depth}{' '}
-                  {authInfo.region3depth}
+                  {authInfo.region1depth} {authInfo.region2depth} {authInfo.region3depth}
                 </Text>
               </View>
               <Pressable onPress={handleDeleteRegionButtonPress} hitSlop={10}>
@@ -170,8 +162,7 @@ const CertifyLocationScreen = ({}: Props) => {
           <Text style={[common.text_m, common.mb8]}>현재 위치는</Text>
           <View style={common.row}>
             <Text style={[common.title, common.mr8]}>
-              {location?.region1depth} {location?.region2depth}{' '}
-              {location?.region3depth}
+              {location?.region1depth} {location?.region2depth} {location?.region3depth}
             </Text>
             <Text style={common.text_m}>입니다.</Text>
           </View>

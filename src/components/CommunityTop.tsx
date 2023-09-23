@@ -1,7 +1,7 @@
-import {SCREEN_WIDTH} from '@/utils/constants/common';
+import { SCREEN_WIDTH } from '@/utils/constants/common';
 import PostCarousel from '@components/PostCarousel';
 import common from '@styles/common';
-import {Text, View} from 'react-native';
+import { Text, View } from 'react-native';
 
 const POP = [
   {
@@ -42,12 +42,7 @@ const CommunityTop: React.FC = () => {
       </View>
 
       <View style={common.mb40}>
-        <PostCarousel
-          gap={12}
-          offset={0}
-          links={POP}
-          pageWidth={SCREEN_WIDTH - 220}
-        />
+        <PostCarousel gap={12} offset={0} links={POP} pageWidth={SCREEN_WIDTH - 220} />
       </View>
 
       <View style={common.mb16}>

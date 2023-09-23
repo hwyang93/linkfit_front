@@ -1,10 +1,10 @@
-import {useRecruitApplicationListQuery} from '@/hooks/recruit/useRecruitApplicationListQuery';
+import { useRecruitApplicationListQuery } from '@/hooks/recruit/useRecruitApplicationListQuery';
 import useModal from '@/hooks/useModal';
-import {RecruitStatus} from '@/types/api/recruit';
-import {formatDate} from '@/utils/util';
+import { RecruitStatus } from '@/types/api/recruit';
+import { formatDate } from '@/utils/util';
 import ApplicantListItem from '@components/My/ApplicantListItem';
-import {WHITE} from '@styles/colors';
-import {ScrollView, StyleSheet, View} from 'react-native';
+import { WHITE } from '@styles/colors';
+import { ScrollView, StyleSheet, View } from 'react-native';
 import BottomSheet from '../Common/BottomSheet';
 import BottomSheetOption from '../Common/BottomSheetOption';
 import FilterChip from '../Common/FilterChip';
@@ -15,12 +15,10 @@ interface ApplicantWaitingTabProps {
   recruitId: number;
 }
 
-const ApplicantWaitingTab: React.FC<ApplicantWaitingTabProps> = ({
-  recruitId,
-}) => {
-  const {data} = useRecruitApplicationListQuery(recruitId);
+const ApplicantWaitingTab: React.FC<ApplicantWaitingTabProps> = ({ recruitId }) => {
+  const { data } = useRecruitApplicationListQuery(recruitId);
 
-  const waitingApplications = data?.recruitApply.filter(item => {
+  const waitingApplications = data?.recruitApply.filter((item) => {
     return item.status === RecruitStatus.Applied;
   });
 
@@ -36,7 +34,7 @@ const ApplicantWaitingTab: React.FC<ApplicantWaitingTabProps> = ({
           paddingHorizontal: 16,
           backgroundColor: WHITE,
         }}>
-        <FilterChip label="기간" style={{marginTop: 8}} rightIcon />
+        <FilterChip label="기간" style={{ marginTop: 8 }} rightIcon />
       </View>
       <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
         {waitingApplications?.map((item, index) => (
@@ -50,7 +48,7 @@ const ApplicantWaitingTab: React.FC<ApplicantWaitingTabProps> = ({
             status={item.status}
           />
         ))}
-        <View style={{paddingBottom: 24}} />
+        <View style={{ paddingBottom: 24 }} />
       </ScrollView>
       <BottomSheet visible={modal.visible} onDismiss={modal.close} title="기간">
         {FILTER.map((option, index) => (
@@ -68,7 +66,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 16,
     backgroundColor: WHITE,
   },
-  kebabIcon: {position: 'absolute', top: 16, right: 16},
+  kebabIcon: { position: 'absolute', top: 16, right: 16 },
 });
 
 export default ApplicantWaitingTab;
