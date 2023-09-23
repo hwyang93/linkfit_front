@@ -1,66 +1,101 @@
-import BoxButton from '@/components/Common/BoxButton';
 import CTAButton from '@/components/Common/CTAButton';
+import Divider from '@/components/Common/Divider';
+import { LinkText } from '@/components/Common/LinkText';
 import RowView from '@/components/Common/RowView';
 import TextField from '@/components/Common/TextField';
 import DismissKeyboardView from '@/components/DismissKeyboardView';
-import { useSendEmailVerificationCode } from '@/hooks/auth/useSendEmailVerificationCode';
+import { useFindEmail } from '@/hooks/auth/useFindEmail';
 import toast from '@/hooks/toast';
 import useInput from '@/hooks/useInput';
+import { AuthStackParamList } from '@/navigations/AuthStack';
+import { ROUTE } from '@/navigations/routes';
 import common from '@/styles/common';
 import TOAST from '@/utils/constants/toast';
-import { validateEmail } from '@/utils/util';
+import { NativeStackScreenProps } from '@react-navigation/native-stack';
+import { useState } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 
-const FindEmailScreen = () => {
-  const emailInput = useInput();
-  const verificationCodeInput = useInput();
+type Props = NativeStackScreenProps<AuthStackParamList, typeof ROUTE.AUTH.FIND_EMAIL>;
 
-  const isEmailInputValid = validateEmail(emailInput.value);
-  const isVerificationCodeInputValid = verificationCodeInput.value.length > 0;
+const FindEmailScreen = ({ navigation }: Props) => {
+  const [step, setStep] = useState(2);
 
-  const sendEmailVerificationCode = useSendEmailVerificationCode();
+  const nameInput = useInput();
+  const phoneNumberInput = useInput();
 
-  const onSendButtonPress = async () => {
-    sendEmailVerificationCode.mutate(
-      { email: emailInput.value },
+  const isNameInputValid = nameInput.value.length > 0;
+  const isPhonNumberInputValid = phoneNumberInput.value.length > 0;
+
+  const findEmailMutation = useFindEmail();
+
+  const onFindButtonPress = async () => {
+    findEmailMutation.mutate(
+      { name: nameInput.value, phone: phoneNumberInput.value },
       {
         onSuccess: () => {
           toast.success({ message: TOAST.VERIFICATION_CODE_SENT });
+          setStep(2);
         },
       },
     );
   };
 
+  const navigateToLoginScreen = () => {
+    navigation.navigate(ROUTE.AUTH.SIGN_IN);
+  };
+
+  const navigateToPasswordResetScreen = () => {
+    navigation.navigate(ROUTE.AUTH.PASSWORD_RESET);
+  };
+
   return (
     <DismissKeyboardView>
-      <View style={common.container}>
-        <Text style={styles.title}>STEP 1</Text>
-        <Text style={[styles.subtitle, common.mt16]}>
-          인증번호 전송을 위해서{'\n'}가입한 이메일을 입력해 주세요.
-        </Text>
-        <RowView style={[common.mt40, { alignItems: 'center' }]}>
+      {step === 1 && (
+        <View style={common.container}>
+          <Text style={styles.title}>이메일 찾기</Text>
+          <Text style={[styles.subtitle, common.mt16]}>
+            가입한 이메일을 찾기 위해서 정보를 입력해주세요.
+          </Text>
           <TextField
-            style={[common.mr8, { flex: 1 }]}
-            label="이메일"
-            placeholder="name@email.com"
-            value={emailInput.value}
-            onChangeText={emailInput.onChange}
+            style={[common.mr8, common.mt40, { flex: 1 }]}
+            label="이름"
+            placeholder="이름을 입력하세요."
+            value={nameInput.value}
+            onChangeText={nameInput.onChange}
           />
-          <BoxButton label="전송" disabled={!isEmailInputValid} onPress={onSendButtonPress} />
-        </RowView>
-        <TextField
-          style={common.mt16}
-          label="인증번호"
-          placeholder="인증번호 6자리를 입력하세요."
-          value={verificationCodeInput.value}
-          onChangeText={verificationCodeInput.onChange}
-        />
-        <CTAButton
-          style={common.mt40}
-          label="확인"
-          disabled={!isEmailInputValid || !isVerificationCodeInputValid}
-        />
-      </View>
+          <TextField
+            style={common.mt16}
+            label="휴대폰 번호"
+            placeholder="휴대폰 번호를 입력하세요."
+            value={phoneNumberInput.value}
+            onChangeText={phoneNumberInput.onChange}
+          />
+          <CTAButton
+            style={common.mt40}
+            label="가입한 이메일 찾기"
+            disabled={!isNameInputValid || !isPhonNumberInputValid}
+            onPress={onFindButtonPress}
+          />
+        </View>
+      )}
+      {step === 2 && (
+        <View style={common.container}>
+          <Text style={styles.title}>이메일 찾기</Text>
+          <Text style={[styles.subtitle, common.mt16]}>가입한 이메일 찾기가 완료되었어요.</Text>
+          <Divider style={{ marginTop: 24 }} />
+          <Text style={{ marginTop: 24, fontSize: 20 }}>
+            이메일: <Text style={{ fontWeight: '700' }}>Linkfit@gmail.com</Text>
+          </Text>
+          <Text style={{ marginTop: 16, fontSize: 20 }}>가입일: 2023.09.11</Text>
+          <CTAButton style={common.mt40} label="로그인 하러가기" onPress={navigateToLoginScreen} />
+          <RowView style={{ justifyContent: 'space-between', marginTop: 40 }}>
+            <Text style={{ fontSize: 16 }}>비밀번호를 잊으셨나요?</Text>
+            <LinkText style={{ fontSize: 16 }} onPress={navigateToPasswordResetScreen}>
+              비밀번호 재설정
+            </LinkText>
+          </RowView>
+        </View>
+      )}
     </DismissKeyboardView>
   );
 };

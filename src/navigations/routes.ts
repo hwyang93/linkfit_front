@@ -36,4 +36,9 @@ export const ROUTE = {
     POST_EDIT: 'CommunityPostEdit',
     POST_DETAIL: 'CommunityPost',
   },
+  AUTH: {
+    FIND_EMAIL: 'FindEmail',
+    PASSWORD_RESET: 'PasswordReset',
+    SIGN_IN: 'SignIn',
+  },
 } as const;
