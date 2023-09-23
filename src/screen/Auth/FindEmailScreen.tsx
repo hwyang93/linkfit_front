@@ -1,11 +1,13 @@
-import { sendEmailVerificationCode } from '@/api/auth';
 import BoxButton from '@/components/Common/BoxButton';
 import CTAButton from '@/components/Common/CTAButton';
 import RowView from '@/components/Common/RowView';
 import TextField from '@/components/Common/TextField';
 import DismissKeyboardView from '@/components/DismissKeyboardView';
+import { useSendEmailVerificationCode } from '@/hooks/auth/useSendEmailVerificationCode';
+import toast from '@/hooks/toast';
 import useInput from '@/hooks/useInput';
 import common from '@/styles/common';
+import TOAST from '@/utils/constants/toast';
 import { validateEmail } from '@/utils/util';
 import { StyleSheet, Text, View } from 'react-native';
 
@@ -16,14 +18,17 @@ const FindEmailScreen = () => {
   const isEmailInputValid = validateEmail(emailInput.value);
   const isVerificationCodeInputValid = verificationCodeInput.value.length > 0;
 
+  const sendEmailVerificationCode = useSendEmailVerificationCode();
+
   const onSendButtonPress = async () => {
-    try {
-      await sendEmailVerificationCode({
-        email: emailInput.value,
-      });
-    } catch (error) {
-      console.log();
-    }
+    sendEmailVerificationCode.mutate(
+      { email: emailInput.value },
+      {
+        onSuccess: () => {
+          toast.success({ message: TOAST.VERIFICATION_CODE_SENT });
+        },
+      },
+    );
   };
 
   return (

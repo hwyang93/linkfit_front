@@ -1,4 +1,4 @@
-import { login } from '@/api/auth';
+import { authApi } from '@/api/auth';
 import { fetchMemberInfo } from '@/api/member';
 import userSlice from '@/slices/user';
 import { useAppDispatch, useAppSelector } from '@/store';
@@ -24,10 +24,10 @@ const useAuth = () => {
   const signIn = async ({ email, password }: { email: string; password: string }) => {
     try {
       setIsLoading(true);
-      const response = await login({ email, password });
-      dispatch(userSlice.actions.setAccessToken(response.data.accessToken));
-      await EncryptedStorage.setItem(STORAGE_KEY.ACCESS_TOKEN, response.data.accessToken);
-      await EncryptedStorage.setItem(STORAGE_KEY.REFRESH_TOKEN, response.data.refreshToken);
+      const data = await authApi.login({ email, password });
+      dispatch(userSlice.actions.setAccessToken(data.accessToken));
+      await EncryptedStorage.setItem(STORAGE_KEY.ACCESS_TOKEN, data.accessToken);
+      await EncryptedStorage.setItem(STORAGE_KEY.REFRESH_TOKEN, data.refreshToken);
 
       await initiateUser();
     } catch (error) {

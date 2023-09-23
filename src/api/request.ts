@@ -1,8 +1,8 @@
-import {IS_IOS} from '@/utils/constants/common';
+import { IS_IOS } from '@/utils/constants/common';
 import STORAGE_KEY from '@/utils/constants/storage';
-import {refreshToken} from '@api/auth';
+import { authApi } from '@api/auth';
 import toast from '@hooks/toast';
-import axios, {AxiosRequestConfig, isAxiosError} from 'axios';
+import axios, { AxiosRequestConfig, isAxiosError } from 'axios';
 import EncryptedStorage from 'react-native-encrypted-storage';
 
 interface CustomAxiosRequestConfig extends AxiosRequestConfig {
@@ -58,25 +58,23 @@ service.interceptors.request.use(
 
     return config;
   },
-  error => Promise.reject(error),
+  (error) => Promise.reject(error),
 );
 
 service.interceptors.response.use(
-  response => response.data,
-  async error => {
+  (response) => response.data,
+  async (error) => {
     if (error.response.data.message === 'expired') {
       const originalRequest = error.config;
-      await refreshToken()
-        .then(async ({data}) => {
-          await EncryptedStorage.setItem(
-            STORAGE_KEY.ACCESS_TOKEN,
-            data.accessToken,
-          );
+      await authApi
+        .refreshToken()
+        .then(async (data) => {
+          await EncryptedStorage.setItem(STORAGE_KEY.ACCESS_TOKEN, data.accessToken);
           service(originalRequest);
         })
-        .catch(error => {
+        .catch((error) => {
           if (isAxiosError(error)) {
-            toast.error({message: error.message});
+            toast.error({ message: error.message });
           }
         });
     }

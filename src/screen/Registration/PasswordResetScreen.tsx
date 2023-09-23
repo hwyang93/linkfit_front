@@ -2,7 +2,13 @@ import BoxButton from '@/components/Common/BoxButton';
 import CTAButton from '@/components/Common/CTAButton';
 import RowView from '@/components/Common/RowView';
 import TextField from '@/components/Common/TextField';
+import { useCheckEmailVerificationCode } from '@/hooks/auth/useCheckEmailVerificationCode';
+import { useResetPassword } from '@/hooks/auth/useResetPassword';
+import { useSendEmailVerificationCode } from '@/hooks/auth/useSendEmailVerificationCode';
+import toast from '@/hooks/toast';
 import useInput from '@/hooks/useInput';
+import { emailSchema, verificationCodeSchema } from '@/schema/form';
+import TOAST from '@/utils/constants/toast';
 import DismissKeyboardView from '@components/DismissKeyboardView';
 import { KeyboardTypes } from '@components/Input';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
@@ -13,7 +19,7 @@ import { LoggedInParamList } from '../../../AppInner';
 
 type Props = NativeStackScreenProps<LoggedInParamList, 'PasswordReset'>;
 
-const PasswordResetScreen = ({}: Props) => {
+const PasswordResetScreen = ({ navigation }: Props) => {
   const [step, setStep] = useState(1);
   const [verificationCodeSent, setVerificationCodeSent] = useState(false);
 
@@ -22,28 +28,89 @@ const PasswordResetScreen = ({}: Props) => {
   const passwordInput = useInput();
   const passwordConfirmInput = useInput();
 
-  // TODO: 검증 추가
-  const isEmailInputValid = emailInput.value.length > 0;
-  const isVerificationCodeInputValid = verificationCodeInput.value.length > 0;
+  const isEmailInputValid = emailSchema.safeParse(emailInput.value).success;
+  const isVerificationCodeInputValid = verificationCodeSchema.safeParse(
+    verificationCodeInput.value,
+  ).success;
 
   const isPasswordInputValid = passwordInput.value.length > 0;
   const isPasswordConfirmInputValid = passwordConfirmInput.value === passwordInput.value;
 
-  const onSendButtonPress = () => {
-    try {
-      setVerificationCodeSent(true);
-    } catch (error) {
-      console.log(error);
-    }
+  const sendEmailVerificationCode = useSendEmailVerificationCode();
+  const checkEmailVerificationCode = useCheckEmailVerificationCode();
+  const resetPassword = useResetPassword();
+
+  const onSendButtonPress = async () => {
+    if (sendEmailVerificationCode.isLoading) return;
+
+    sendEmailVerificationCode.mutate(
+      { email: emailInput.value },
+      {
+        onSuccess: () => {
+          toast.success({ message: TOAST.VERIFICATION_CODE_SENT });
+          setVerificationCodeSent(true);
+        },
+        onError: () => {
+          toast.warn({ message: TOAST.EMAIL_NOT_FOUND });
+        },
+      },
+    );
   };
 
-  const onResendButtonPress = () => {};
+  const onResendButtonPress = () => {
+    if (sendEmailVerificationCode.isLoading) return;
+
+    sendEmailVerificationCode.mutate(
+      { email: emailInput.value },
+      {
+        onSuccess: () => {
+          toast.success({ message: TOAST.VERIFICATION_CODE_RESENT });
+        },
+      },
+    );
+  };
 
   const onVerifyButtonPress = () => {
-    setStep(2);
+    if (checkEmailVerificationCode.isLoading) return;
+
+    checkEmailVerificationCode.mutate(
+      {
+        email: emailInput.value,
+        authNumber: verificationCodeInput.value,
+      },
+      {
+        onSuccess: () => {
+          setStep(2);
+        },
+        onError: (error) => {
+          if (error instanceof Error) toast.warn({ message: error.message });
+        },
+      },
+    );
   };
 
-  const onResetButtonPress = () => {};
+  const onResetButtonPress = () => {
+    if (resetPassword.isLoading) return;
+
+    // TODO: 비밀번호 재설정 기능 추가
+    resetPassword.mutate(
+      {
+        email: emailInput.value,
+        password: '기존 패스워드',
+        newPassword: passwordInput.value,
+        isCheckAuthCode: 'Y',
+      },
+      {
+        onSuccess: () => {
+          toast.success({ message: TOAST.PASSWORD_RESET_SUCCESS });
+          navigation.navigate('Account');
+        },
+        onError: (error) => {
+          if (error instanceof Error) toast.warn({ message: error.message });
+        },
+      },
+    );
+  };
 
   return (
     <DismissKeyboardView>
@@ -53,7 +120,7 @@ const PasswordResetScreen = ({}: Props) => {
             <View>
               <Text style={{ fontSize: 24, fontWeight: '700' }}>STEP 1</Text>
               <Text style={[common.text_m, common.tal, common.mt16]}>
-                인증번호 재설정을 위해서{'\n'}가입한 이메일을 입력해 주세요.
+                인증번호 전송을 위해서{'\n'}가입한 이메일을 입력해 주세요.
               </Text>
             </View>
             <View style={common.mt40}>
@@ -75,6 +142,7 @@ const PasswordResetScreen = ({}: Props) => {
                       label="전송"
                       onPress={onSendButtonPress}
                       disabled={!isEmailInputValid}
+                      loading={sendEmailVerificationCode.isLoading}
                     />
                   ) : (
                     <BoxButton label="재전송" onPress={onResendButtonPress} />
@@ -137,8 +205,8 @@ const PasswordResetScreen = ({}: Props) => {
             <View style={common.mt40}>
               <CTAButton
                 label="비밀번호 재설정"
-                onPress={onResetButtonPress}
                 disabled={!isPasswordInputValid || !isPasswordConfirmInputValid}
+                onPress={onResetButtonPress}
               />
             </View>
           </>

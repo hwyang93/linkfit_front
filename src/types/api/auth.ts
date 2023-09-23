@@ -15,3 +15,13 @@ export interface RefreshTokenResponse {
 export interface SendEmailVerificationCodeBody {
   email: string;
 }
+
+export interface CheckEmailVerificationCodeBody {
+  email: string;
+  authNumber: string;
+}
+
+export interface FindEmailParams {
+  name: string;
+  phone: string;
+}

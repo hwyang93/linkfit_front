@@ -179,3 +179,10 @@ export interface CreateInquiryDto {
   title: string;
   contents: string;
 }
+
+export interface ResetPasswordDto {
+  email: string;
+  password: string;
+  newPassword: string;
+  isCheckAuthCode: YesNoFlag;
+}

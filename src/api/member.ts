@@ -2,6 +2,7 @@ import {
   CreateMemberDto,
   CreateMemberReputationDto,
   CreateRegionAuthDto,
+  ResetPasswordDto,
   UpdateMemberReputationDto,
   UpdatePositionSuggestDto,
 } from '@/types/api/dtos';
@@ -173,6 +174,10 @@ export const memberApi = {
   },
   unregister: async (memberId: number) => {
     const response = await request.delete<DeleteResponse>(`${ENDPOINT}/${memberId}`);
+    return response.data;
+  },
+  resetPassword: async (body: ResetPasswordDto) => {
+    const response = await request.patch(`${ENDPOINT}/password`, body);
     return response.data;
   },
 };
