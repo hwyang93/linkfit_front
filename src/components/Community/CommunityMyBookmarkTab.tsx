@@ -1,4 +1,6 @@
 import { useCommunityBookmarkListQuery } from '@/hooks/community/useCommunityBookmarkListQuery';
+import { useAppNavigation } from '@/hooks/useAppNavigation';
+import { ROUTE } from '@/navigations/routes';
 import { Member } from '@/types/common';
 import { formatDate } from '@/utils/util';
 import BookmarkCounter from '@components/Counter/BookmarkCounter';
@@ -9,9 +11,16 @@ import { useState } from 'react';
 import { FlatList, Pressable, StyleSheet, Text, View } from 'react-native';
 import EmptySet from '../EmptySet';
 
-const CommunityMyPost: React.FC = () => {
+const CommunityMyBookmarkTab: React.FC = () => {
   const CommunityBookmarkListQuery = useCommunityBookmarkListQuery();
   const bookmarks = CommunityBookmarkListQuery.data;
+
+  const navigation = useAppNavigation();
+
+  const onPostItemPress = (postId: number) => {
+    console.log('clicked');
+    navigation.navigate(ROUTE.COMMUNITY.POST_DETAIL, { postId });
+  };
 
   const [textLine, setTextLine] = useState(2);
   const textExpansion = () => {
@@ -30,7 +39,7 @@ const CommunityMyPost: React.FC = () => {
           data={bookmarks}
           contentContainerStyle={{ paddingBottom: 32 }}
           renderItem={({ item }) => (
-            <Pressable style={styles.postBox}>
+            <Pressable style={styles.postBox} onPress={() => onPostItemPress(item.seq)}>
               <View>
                 <Text style={[common.title, common.fs18, common.mb8]}>{item.community.title}</Text>
                 <View style={[common.rowCenter, common.mb12]}>
@@ -96,4 +105,4 @@ const styles = StyleSheet.create({
   kebabIcon: { position: 'absolute', top: 16, right: 0 },
 });
 
-export default CommunityMyPost;
+export default CommunityMyBookmarkTab;

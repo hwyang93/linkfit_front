@@ -17,7 +17,7 @@ type Props = NativeStackScreenProps<LoggedInParamList, 'CommunityPost'>;
 const CommunityPostScreen = ({ route }: Props) => {
   const modal = useModal();
 
-  const communityPostQuery = useCommunityPostQuery(route.params.postSeq);
+  const communityPostQuery = useCommunityPostQuery(route.params.postId);
   const post = communityPostQuery.data;
 
   const { user } = useAuth();

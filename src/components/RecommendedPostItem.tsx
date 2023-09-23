@@ -1,3 +1,4 @@
+import { ROUTE } from '@/navigations/routes';
 import { CommunityEntity } from '@/types/api/entities';
 import { Member } from '@/types/common';
 import { formatDate } from '@/utils/util';
@@ -23,7 +24,8 @@ const RecommendedPostItem: React.FC<RecommendedPostItemProps> = ({ item }) => {
   }, [item]);
 
   return (
-    <Pressable onPress={() => navigation.navigate('CommunityPost', { postSeq: postInfo.seq })}>
+    <Pressable
+      onPress={() => navigation.navigate(ROUTE.COMMUNITY.POST_DETAIL, { postId: postInfo.seq })}>
       <View>
         <Text style={[common.title, common.fs18]}>{postInfo.title}</Text>
         <View style={[common.rowEnd, common.mb8]}>

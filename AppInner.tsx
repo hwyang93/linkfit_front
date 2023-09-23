@@ -1,13 +1,13 @@
-import {fetchMemberInfo} from '@/api/member';
+import { fetchMemberInfo } from '@/api/member';
 import AuthStack from '@/navigations/AuthStack';
-import {useAppDispatch, useAppSelector} from '@/store';
+import { useAppDispatch, useAppSelector } from '@/store';
 import STORAGE_KEY from '@/utils/constants/storage';
-import {requestPermission} from '@/utils/util';
+import { requestPermission } from '@/utils/util';
 import toast from '@hooks/toast';
 import MainStack from '@navigations/MainStack';
 import userSlice from '@slices/user';
-import {isAxiosError} from 'axios';
-import {useCallback, useEffect, useState} from 'react';
+import { isAxiosError } from 'axios';
+import { useCallback, useEffect, useState } from 'react';
 import EncryptedStorage from 'react-native-encrypted-storage';
 import Geolocation from 'react-native-geolocation-service';
 import SplashScreen from 'react-native-splash-screen';
@@ -19,13 +19,13 @@ export type LoggedInParamList = {
   Community: undefined;
   CommunityMy: undefined;
   CommunityPostForm: undefined;
-  CommunityPost: {postSeq: number};
+  CommunityPost: { postId: number };
   My: undefined;
   MyCenter: undefined;
   MyCenterInfo: undefined;
   MyNotification: undefined;
 
-  CenterProfile: {memberSeq: number};
+  CenterProfile: { memberSeq: number };
   CenterProfileEdit: undefined;
   CompanyInfo: undefined;
   CenterRecruitment: undefined;
@@ -39,13 +39,13 @@ export type LoggedInParamList = {
   CertifyInstructorForm: undefined;
   ResumeManage: undefined;
   ResumeForm: undefined;
-  ResumePreview: {resumeSeq: number; applySeq: any; recruitSeq: any};
+  ResumePreview: { resumeSeq: number; applySeq: any; recruitSeq: any };
   ReviewManage: undefined;
-  ReviewForm: {reputationInfo: any};
+  ReviewForm: { reputationInfo: any };
   ApplicationStatus: undefined;
-  ApplicantStatus: {recruitSeq: number};
+  ApplicantStatus: { recruitSeq: number };
   ReceivedSuggestion: undefined;
-  ReceivedSuggestionDetail: {suggestSeq: number};
+  ReceivedSuggestionDetail: { suggestSeq: number };
   MyPost: undefined;
   FollowingManage: undefined;
   BookmarkManage: undefined;
@@ -62,24 +62,24 @@ export type LoggedInParamList = {
   RecruitMap: undefined;
   RecruitList: undefined;
   InstructorList: undefined;
-  Profile: {memberSeq: number};
-  Suggestion: {targetMemberSeq: number};
-  CenterInfo: {memberSeq: number};
-  JobPost: {recruitSeq: number};
+  Profile: { memberSeq: number };
+  Suggestion: { targetMemberSeq: number };
+  CenterInfo: { memberSeq: number };
+  JobPost: { recruitSeq: number };
   Gallery: any;
   JobOfferForm: undefined;
-  LogIn: {email: string};
+  LogIn: { email: string };
   SignIn: undefined;
-  SignUp: {email: string};
-  Terms: {email: string; isCompany: boolean};
+  SignUp: { email: string };
+  Terms: { email: string; isCompany: boolean };
   TermDetail: undefined;
-  SignUpForm: {email: string};
-  CompanySignUpForm: {email: string};
+  SignUpForm: { email: string };
+  CompanySignUpForm: { email: string };
   PasswordReset: undefined;
-  CommunityCommentEdit: {commentId: number};
-  CommunityPostEdit: {postId: number};
-  InquiryDetail: {inquiryId: number};
-  NoticeDetail: {noticeId: number};
+  CommunityCommentEdit: { commentId: number };
+  CommunityPostEdit: { postId: number };
+  InquiryDetail: { inquiryId: number };
+  NoticeDetail: { noticeId: number };
 };
 
 const AppInner = () => {
@@ -87,7 +87,7 @@ const AppInner = () => {
   const dispatch = useAppDispatch();
 
   // const position = useAppSelector(state => state.user.lon);
-  const isLoggedIn = useAppSelector(state => state.user.isLoggedIn);
+  const isLoggedIn = useAppSelector((state) => state.user.isLoggedIn);
 
   const getRefreshToken = async () => {
     const token = await EncryptedStorage.getItem(STORAGE_KEY.REFRESH_TOKEN);
@@ -106,7 +106,7 @@ const AppInner = () => {
       dispatch(userSlice.actions.setIsLoggedIn(true));
     } catch (error) {
       if (isAxiosError(error)) {
-        toast.error({message: error.message});
+        toast.error({ message: error.message });
       }
     } finally {
       setInitialized(true);
@@ -119,10 +119,10 @@ const AppInner = () => {
 
   useEffect(() => {
     initialized && SplashScreen.hide();
-    requestPermission().then(result => {
+    requestPermission().then((result) => {
       if (result === 'granted') {
         Geolocation.getCurrentPosition(
-          pos => {
+          (pos) => {
             dispatch(
               userSlice.actions.setLocation({
                 lon: pos.coords.latitude,
@@ -137,7 +137,7 @@ const AppInner = () => {
             // });
             // console.log('로케이션 위치', myLocation);
           },
-          error => {
+          (error) => {
             console.log(error);
           },
           {

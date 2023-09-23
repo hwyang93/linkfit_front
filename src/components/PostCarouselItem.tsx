@@ -1,3 +1,4 @@
+import { ROUTE } from '@/navigations/routes';
 import { NavigationProp, useNavigation } from '@react-navigation/native';
 import common from '@styles/common';
 import { Pressable, StyleSheet, Text, View } from 'react-native';
@@ -19,11 +20,7 @@ const PostCarouselItem: React.FC<PostCarouselItemProps> = ({ item }) => {
   return (
     <Pressable
       style={styles.postBox}
-      onPress={() =>
-        navigation.navigate('CommunityPost', {
-          postSeq: item.id,
-        })
-      }>
+      onPress={() => navigation.navigate(ROUTE.COMMUNITY.POST_DETAIL, { postId: item.id })}>
       <Text numberOfLines={1} style={common.text_m}>
         {item.title}
       </Text>

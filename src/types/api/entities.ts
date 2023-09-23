@@ -187,6 +187,7 @@ export interface CommunityFavoriteEntity extends BaseEntity {
 
 export interface CommunityEntity extends BaseEntity {
   seq: number;
+  communitySeq?: number;
   category: string;
   title: string;
   contents: string;

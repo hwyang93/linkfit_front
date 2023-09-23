@@ -4,6 +4,7 @@ import { fetchBookmarkRecruits } from '@/api/recruit';
 import RecruitListItem from '@/components/Compound/RecruitListItem';
 import EmptySet from '@/components/EmptySet';
 import toast from '@/hooks/toast';
+import { ROUTE } from '@/navigations/routes';
 import common from '@/styles/common';
 import { FetchBookmarkCommunitiesResponse } from '@/types/api/community';
 import { FetchBookmarkRecruitsResponse } from '@/types/api/recruit';
@@ -174,8 +175,8 @@ const CommunityTab: React.FC = () => {
               commentsLength={bookmark.community.commentsLength}
               category={bookmark.community.category}
               onPress={() =>
-                navigation.navigate('CommunityPost', {
-                  postSeq: bookmark.community.seq,
+                navigation.navigate(ROUTE.COMMUNITY.POST_DETAIL, {
+                  postId: bookmark.community.seq,
                 })
               }
             />
