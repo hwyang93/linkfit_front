@@ -1,12 +1,31 @@
 import {LoggedInParamList} from '@/../AppInner';
+import BottomSheet, {
+  BottomSheetCTAContainer,
+} from '@/components/Common/BottomSheet';
+import CTAButton from '@/components/Common/CTAButton';
+import {useUnregisterMutation} from '@/hooks/member/useUnRegisterMutation';
+import useAuth from '@/hooks/useAuth';
+import useModal from '@/hooks/useModal';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import {BLUE, WHITE} from '@styles/colors';
 import common from '@styles/common';
-import {Alert, Pressable, StyleSheet, Text, View} from 'react-native';
+import {Pressable, StyleSheet, Text, View} from 'react-native';
 
 type Props = NativeStackScreenProps<LoggedInParamList, 'Account'>;
 
 const AccountScreen = ({navigation}: Props) => {
+  const unRegisterModal = useModal();
+
+  const {user, signOut} = useAuth();
+
+  const unregisterMutation = useUnregisterMutation();
+
+  const onUnregisterButtonClick = () => {
+    unregisterMutation.mutate(user.seq, {
+      onSuccess: () => signOut(),
+    });
+  };
+
   return (
     <View style={styles.container}>
       <View>
@@ -15,12 +34,24 @@ const AccountScreen = ({navigation}: Props) => {
           onPress={() => navigation.navigate('PasswordReset')}>
           <Text style={[common.text_m, styles.linkText]}>비밀번호 재설정</Text>
         </Pressable>
-        <Pressable
-          style={common.mv20}
-          onPress={() => Alert.alert('테스트', '회원 탈퇴가 되지 않아용')}>
+        <Pressable style={common.mv20} onPress={unRegisterModal.open}>
           <Text style={[common.text_m, styles.linkText]}>회원 탈퇴</Text>
         </Pressable>
       </View>
+      <BottomSheet
+        title="회원 탈퇴 하시겠습니까?"
+        visible={unRegisterModal.visible}
+        onDismiss={unRegisterModal.close}>
+        <BottomSheetCTAContainer>
+          <CTAButton label="탈퇴하기" onPress={onUnregisterButtonClick} />
+          <CTAButton
+            style={{marginTop: 16}}
+            variant="stroked"
+            label="취소"
+            onPress={unRegisterModal.close}
+          />
+        </BottomSheetCTAContainer>
+      </BottomSheet>
     </View>
   );
 };

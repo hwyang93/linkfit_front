@@ -207,4 +207,10 @@ export const memberApi = {
     );
     return response.data;
   },
+  unregister: async (memberId: number) => {
+    const response = await request.delete<DeleteResponse>(
+      `${ENDPOINT}/${memberId}`,
+    );
+    return response.data;
+  },
 };

@@ -170,3 +170,13 @@ const styles = StyleSheet.create({
 });
 
 export default BottomSheet;
+
+interface BottomSheetCTAContainerProps {
+  children: React.ReactNode;
+}
+
+export const BottomSheetCTAContainer: React.FC<
+  BottomSheetCTAContainerProps
+> = ({children}) => {
+  return <View style={{padding: 16, marginTop: 32}}>{children}</View>;
+};

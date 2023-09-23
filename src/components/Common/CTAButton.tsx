@@ -50,7 +50,7 @@ const CTAButton: React.FC<CTAButtonProps> = ({
         </Pressable>
       )}
       {variant === 'stroked' && (
-        <Pressable onPress={onPress} disabled={loading || disabled}>
+        <Pressable onPress={onPress} disabled={loading || disabled} {...props}>
           {({pressed}) => (
             <LinearGradient
               style={styles.gradientBorder}
