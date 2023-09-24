@@ -1,6 +1,7 @@
 import { fetchMemberInfo } from '@/api/member';
 import AuthStack from '@/navigations/AuthStack';
 import { useAppDispatch, useAppSelector } from '@/store';
+import { Term } from '@/types/common';
 import STORAGE_KEY from '@/utils/constants/storage';
 import { requestPermission } from '@/utils/util';
 import toast from '@hooks/toast';
@@ -74,7 +75,7 @@ export type LoggedInParamList = {
   SignInEmail: undefined;
   SignUp: { email: string };
   TermList: { email: string; isCompany: boolean };
-  TermDetail: undefined;
+  TermDetail: { type: Term };
   SignUpForm: { email: string };
   CompanySignUpForm: { email: string };
   PasswordReset: undefined;

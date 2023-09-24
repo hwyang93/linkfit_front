@@ -7,6 +7,7 @@ import { PasswordResetScreen } from '@/screen/registration/password-reset.screen
 import { SignUpFormScreen } from '@/screen/registration/sign-up-form.screen';
 import { TermDetailScreen } from '@/screen/registration/term-detail.screen';
 import { TermListScreen } from '@/screen/registration/term-list.screen';
+import { Term } from '@/types/common';
 import { ROUTE } from '@/utils/constants/route';
 import HeaderLeft from '@components/HeaderLeft';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
@@ -17,7 +18,7 @@ export type AuthStackParamList = {
   SignInPassword: { email: string };
   SignUp: { email: string };
   TermList: { email: string; isCompany: boolean };
-  TermDetail: undefined;
+  TermDetail: { type: Term };
   SignUpForm: { email: string };
   CompanySignUpForm: { email: string };
   FindEmail: undefined;

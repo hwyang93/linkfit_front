@@ -1,5 +1,7 @@
 import CTAButton from '@/components/Common/CTAButton';
 import Checkbox from '@/components/Common/Checkbox';
+import RowView from '@/components/Common/RowView';
+import { Term } from '@/types/common';
 import { ROUTE } from '@/utils/constants/route';
 import { iconPath } from '@/utils/iconPath';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
@@ -10,10 +12,9 @@ import { Image, Pressable, StyleSheet, Text, TouchableOpacity, View } from 'reac
 import { LoggedInParamList } from '../../../AppInner';
 
 const TERMS = [
-  { id: 1, title: '개인정보 수집 및 이용 동의', required: true },
-  { id: 2, title: '서비스 이용약관 동의', required: true },
-  { id: 3, title: '위치정보 이용약관', required: true },
-  { id: 4, title: '마케팅 수신 동의', required: false },
+  { id: 1, title: '14세 이상입니다.', required: true },
+  { id: 2, type: 'privacy', title: '개인정보 수집 및 이용 동의', required: true },
+  { id: 3, type: 'service', title: '서비스 이용약관 동의', required: true },
 ];
 
 type Props = NativeStackScreenProps<LoggedInParamList, typeof ROUTE.AUTH.TERM_LIST>;
@@ -67,8 +68,8 @@ export const TermListScreen = ({ navigation, route }: Props) => {
     }
   };
 
-  const handleTermDetailButtonPress = () => {
-    navigation.navigate('TermDetail');
+  const handleTermDetailButtonPress = (type: Term) => {
+    navigation.navigate(ROUTE.AUTH.TERM_DETAIL, { type });
   };
 
   return (
@@ -91,22 +92,30 @@ export const TermListScreen = ({ navigation, route }: Props) => {
         <View style={styles.divideLine} />
         <View>
           {TERMS.map((item, index) => (
-            <View key={index} style={styles.terms}>
-              <TouchableOpacity
-                style={styles.touchWrap}
-                onPress={() => handleAgreeButtonPress(item.id)}>
-                <Checkbox checked={checkedTermIds.includes(item.id)} pointerEvents="none" />
-                <Text style={[common.text_m, common.ml8, { color: BLUE.DEFAULT }]}>
-                  {item.required ? '(필수) ' : '(선택) '}
-                </Text>
-                <Text style={[common.text_m]}>{item.title}</Text>
-              </TouchableOpacity>
-              <Pressable style={[styles.link]} onPress={handleTermDetailButtonPress}>
-                <Text style={[common.text, common.mr8]}>보기</Text>
-                <Image source={iconPath.CIRCLE_ARROW_RIGHT} style={common.CIRCLE_ARROW_RIGHT} />
-              </Pressable>
-            </View>
+            <TermListItem
+              key={index}
+              checked={checkedTermIds.includes(item.id)}
+              required={item.required}
+              text={item.title}
+              type={item.type}
+              showDetailButton={!!item.type}
+              onPress={() => handleAgreeButtonPress(item.id)}
+              onDetailButtonPress={() => handleTermDetailButtonPress(item.type as Term)}
+            />
           ))}
+          <TermListItem
+            text="채용 소식, 컨텐츠, 이벤트 등 링크핏 맞춤 정보 받기"
+            checked={false}
+            onPress={() => {}}
+          />
+          <RowView style={{ justifyContent: 'flex-end', alignItems: 'center' }}>
+            <Checkbox style={{ marginRight: 8 }} />
+            <Text style={{ fontSize: 16, marginRight: 8 }}>이메일</Text>
+            <Checkbox style={{ marginRight: 8 }} />
+            <Text style={{ fontSize: 16, marginRight: 8 }}>문자 메시지</Text>
+            <Checkbox style={{ marginRight: 8 }} />
+            <Text style={{ fontSize: 16, marginRight: 8 }}>앱 푸시</Text>
+          </RowView>
         </View>
         <View style={styles.divideLine} />
         <View>
@@ -120,6 +129,43 @@ export const TermListScreen = ({ navigation, route }: Props) => {
           </View>
         </View>
       </View>
+    </View>
+  );
+};
+
+interface TermListItemProps {
+  text: string;
+  required?: boolean;
+  showDetailButton?: boolean;
+  checked: boolean;
+  type?: string;
+  onDetailButtonPress?: () => void;
+  onPress: () => void;
+}
+
+const TermListItem: React.FC<TermListItemProps> = ({
+  text,
+  required,
+  showDetailButton,
+  checked,
+  onDetailButtonPress,
+  onPress,
+}) => {
+  return (
+    <View style={styles.terms}>
+      <Pressable style={styles.touchWrap} onPress={onPress}>
+        <Checkbox checked={checked} pointerEvents="none" />
+        <Text style={[common.text_m, common.ml8, { color: BLUE.DEFAULT }]}>
+          {required && '(필수) '}
+        </Text>
+        <Text style={[common.text_m, { flex: showDetailButton ? undefined : 1 }]}>{text}</Text>
+      </Pressable>
+      {showDetailButton && (
+        <Pressable style={[styles.link]} onPress={onDetailButtonPress}>
+          <Text style={[common.text, common.mr8]}>보기</Text>
+          <Image source={iconPath.CIRCLE_ARROW_RIGHT} style={common.CIRCLE_ARROW_RIGHT} />
+        </Pressable>
+      )}
     </View>
   );
 };
