@@ -5,7 +5,7 @@ import {
   ResetPasswordDto,
   UpdateMemberReputationDto,
   UpdatePositionSuggestDto,
-} from '@/types/api/dtos';
+} from '@/types/api/dtos.type';
 import {
   FetchCheckNicknameResponse,
   FetchMemberFollowingsParams,
@@ -23,7 +23,7 @@ import {
   FetchRegionAuthResponse,
   FetchSendPositionSuggestsParams,
   FetchSendPositionSuggestsResponse,
-} from '@/types/api/member';
+} from '@/types/api/member.type';
 import { DeleteResponse, PostResponse } from '@/types/common';
 import request from './request';
 

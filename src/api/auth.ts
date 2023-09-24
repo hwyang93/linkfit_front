@@ -5,7 +5,7 @@ import {
   LoginResponse,
   RefreshTokenResponse,
   SendEmailVerificationCodeBody,
-} from '@/types/api/auth';
+} from '@/types/api/auth.type';
 import request from './request';
 
 const ENDPOINT = '/auth';

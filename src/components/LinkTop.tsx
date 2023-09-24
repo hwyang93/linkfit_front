@@ -1,6 +1,6 @@
 import { LoggedInParamList } from '@/../AppInner';
 import RecruitListItem from '@/components/Compound/RecruitListItem';
-import { FetchRecommendedRecruitsResponse } from '@/types/api/recruit';
+import { FetchRecommendedRecruitsResponse } from '@/types/api/recruit.type';
 import { fetchRecommendedRecruits } from '@api/recruit';
 import toast from '@hooks/toast';
 import { NavigationProp, useNavigation } from '@react-navigation/native';

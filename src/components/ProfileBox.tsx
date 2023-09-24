@@ -1,4 +1,4 @@
-import { MemberEntity } from '@/types/api/entities';
+import { MemberEntity } from '@/types/api/entities.type';
 import { Member } from '@/types/common';
 import { iconPath } from '@/utils/iconPath';
 import { NavigationProp, useNavigation } from '@react-navigation/native';

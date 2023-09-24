@@ -1,5 +1,5 @@
 import { communityApi } from '@/api/community';
-import { UpdateCommunityDto } from '@/types/api/dtos';
+import { UpdateCommunityDto } from '@/types/api/dtos.type';
 import { useMutation } from '@tanstack/react-query';
 
 export const useUpdateCommunityPost = () => {

@@ -1,6 +1,6 @@
 import { useRecruitApplicationList } from '@/hooks/recruit/use-recruit-application-list';
 import useModal from '@/hooks/use-modal';
-import { RecruitStatus } from '@/types/api/recruit';
+import { RecruitStatus } from '@/types/api/recruit.type';
 import { formatDate } from '@/utils/util';
 import ApplicantListItem from '@components/My/ApplicantListItem';
 import { WHITE } from '@styles/colors';

@@ -1,5 +1,5 @@
 import { customerServiceApi } from '@/api/customer-service';
-import { CreateInquiryDto } from '@/types/api/dtos';
+import { CreateInquiryDto } from '@/types/api/dtos.type';
 import { useMutation } from '@tanstack/react-query';
 
 export const useCreateCsInquiry = () => {

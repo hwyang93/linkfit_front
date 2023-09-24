@@ -1,7 +1,7 @@
 import { useCommunityBookmarkListQuery } from '@/hooks/community/use-community-bookmark-list-query';
 import { useAppNavigation } from '@/hooks/use-app-navigation';
-import { ROUTE } from '@/navigations/routes';
 import { Member } from '@/types/common';
+import { ROUTE } from '@/utils/constants/route';
 import { formatDate } from '@/utils/util';
 import BookmarkCounter from '@components/Counter/BookmarkCounter';
 import CommentCounter from '@components/Counter/CommentCounter';
@@ -18,7 +18,6 @@ const CommunityMyBookmarkTab: React.FC = () => {
   const navigation = useAppNavigation();
 
   const onPostItemPress = (postId: number) => {
-    console.log('clicked');
     navigation.navigate(ROUTE.COMMUNITY.POST_DETAIL, { postId });
   };
 

@@ -1,4 +1,4 @@
-import { FetchResumeResponse, FetchResumesResponse } from '@/types/api/resume';
+import { FetchResumeResponse, FetchResumesResponse } from '@/types/api/resume.type';
 import request from '@api/request';
 
 export const createResume = (data: object) => {

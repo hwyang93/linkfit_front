@@ -18,7 +18,7 @@ export type LoggedInParamList = {
   Message: undefined;
   Community: undefined;
   CommunityMy: undefined;
-  CommunityPostForm: undefined;
+  CommunityPostCreate: undefined;
   CommunityPost: { postId: number };
   My: undefined;
   MyCenter: undefined;
@@ -38,10 +38,10 @@ export type LoggedInParamList = {
   CertifyInstructor: undefined;
   CertifyInstructorForm: undefined;
   ResumeManage: undefined;
-  ResumeForm: undefined;
+  ResumeCreate: undefined;
   ResumePreview: { resumeSeq: number; applySeq: any; recruitSeq: any };
   ReviewManage: undefined;
-  ReviewForm: { reputationInfo: any };
+  ReviewCreate: { reputationInfo: any };
   ApplicationStatus: undefined;
   ApplicantStatus: { recruitSeq: number };
   ReceivedSuggestion: undefined;
@@ -57,7 +57,7 @@ export type LoggedInParamList = {
   Inquiry: undefined;
   InquiryForm: undefined;
   Version: undefined;
-  Rule: undefined;
+  Rules: undefined;
   LinkAdd: undefined;
   RecruitMap: undefined;
   RecruitList: undefined;
@@ -68,10 +68,10 @@ export type LoggedInParamList = {
   JobPost: { recruitSeq: number };
   Gallery: any;
   JobOfferForm: undefined;
-  LogIn: { email: string };
-  SignIn: undefined;
+  SignInPassword: { email: string };
+  SignInEmail: undefined;
   SignUp: { email: string };
-  Terms: { email: string; isCompany: boolean };
+  TermList: { email: string; isCompany: boolean };
   TermDetail: undefined;
   SignUpForm: { email: string };
   CompanySignUpForm: { email: string };
@@ -79,6 +79,7 @@ export type LoggedInParamList = {
   CommunityCommentEdit: { commentId: number };
   CommunityPostEdit: { postId: number };
   InquiryDetail: { inquiryId: number };
+  NoticeList: undefined;
   NoticeDetail: { noticeId: number };
 };
 

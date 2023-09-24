@@ -1,6 +1,6 @@
-import { ROUTE } from '@/navigations/routes';
-import { CommunityEntity } from '@/types/api/entities';
+import { CommunityEntity } from '@/types/api/entities.type';
 import { Member } from '@/types/common';
+import { ROUTE } from '@/utils/constants/route';
 import { formatDate } from '@/utils/util';
 import BookmarkCounter from '@components/Counter/BookmarkCounter';
 import CommentCounter from '@components/Counter/CommentCounter';

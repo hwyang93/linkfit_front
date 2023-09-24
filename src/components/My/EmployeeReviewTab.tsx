@@ -2,6 +2,7 @@ import { useDeleteMemberReputation } from '@/hooks/member/use-delete-member-repu
 import { useMemberReputationList } from '@/hooks/member/use-member-reputation-list';
 import useModal from '@/hooks/use-modal';
 import { Member } from '@/types/common';
+import { ROUTE } from '@/utils/constants/route';
 import { iconPath } from '@/utils/iconPath';
 import { formatDate } from '@/utils/util';
 import toast from '@hooks/toast';
@@ -47,7 +48,7 @@ const EmployeeReviewTab: React.FC = () => {
 
   const onEditPress = () => {
     modal.close();
-    navigation.navigate('ReviewForm', {
+    navigation.navigate(ROUTE.MY.REVIEW_CREATE, {
       reputationInfo: selectedReputationId,
     });
   };

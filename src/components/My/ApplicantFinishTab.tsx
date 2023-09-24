@@ -1,6 +1,6 @@
 import { useRecruitApplicationList } from '@/hooks/recruit/use-recruit-application-list';
 import useModal from '@/hooks/use-modal';
-import { RecruitStatus } from '@/types/api/recruit';
+import { RecruitStatus } from '@/types/api/recruit.type';
 import { iconPath } from '@/utils/iconPath';
 import ApplicantListItem from '@components/My/ApplicantListItem';
 import TopFilter from '@components/TopFilter';

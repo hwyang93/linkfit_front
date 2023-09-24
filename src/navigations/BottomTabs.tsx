@@ -1,16 +1,17 @@
-import CommunityTab from '@/screen/Tabs/CommunityTab';
-import LinkTab from '@/screen/Tabs/LinkTab';
-import MessageTab from '@/screen/Tabs/MessageTab';
-import MyTab from '@/screen/Tabs/MyTab';
+import { CommunityTab } from '@/screen/Tabs/community-tab.screen';
+import { LinkTab } from '@/screen/Tabs/link-tab.screen';
+import { MessageTab } from '@/screen/Tabs/message-tab.screen';
+import { MyTab } from '@/screen/Tabs/my-tab.screen';
+import { MyCenterScreen } from '@/screen/my-center.screen';
 import { useAppSelector } from '@/store';
 import { Member } from '@/types/common';
 import { IS_ANDROID, SCREEN_WIDTH } from '@/utils/constants/common';
+import { ROUTE } from '@/utils/constants/route';
 import { iconPath } from '@/utils/iconPath';
 import { bottomTabNavigationOptions } from '@/utils/options/tab';
 import LinkHeader from '@components/Header/LinkHeader';
 import MyHeader from '@components/Header/MyHeader';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import MyCenterScreen from '@screen/MyCenterScreen';
 import common from '@styles/common';
 import { useRef } from 'react';
 import { Animated, Image } from 'react-native';
@@ -27,9 +28,9 @@ const ContentTab = () => {
 
   return (
     <>
-      <Tab.Navigator initialRouteName="Link" screenOptions={bottomTabNavigationOptions}>
+      <Tab.Navigator initialRouteName={ROUTE.TAB.LINK} screenOptions={bottomTabNavigationOptions}>
         <Tab.Screen
-          name="Link"
+          name={ROUTE.TAB.LINK}
           component={LinkTab}
           options={{
             title: '채용',
@@ -52,7 +53,7 @@ const ContentTab = () => {
           })}
         />
         <Tab.Screen
-          name="Community"
+          name={ROUTE.TAB.COMMUNITY}
           component={CommunityTab}
           options={{
             title: '커뮤니티',
@@ -74,7 +75,7 @@ const ContentTab = () => {
           })}
         />
         <Tab.Screen
-          name="Message"
+          name={ROUTE.TAB.MESSAGE}
           component={MessageTab}
           options={{
             title: '쪽지',
@@ -97,7 +98,7 @@ const ContentTab = () => {
         />
         {memberInfo.type !== Member.Company ? (
           <Tab.Screen
-            name="My"
+            name={ROUTE.TAB.MY}
             component={MyTab}
             options={{
               title: 'MY',

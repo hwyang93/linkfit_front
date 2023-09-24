@@ -1,10 +1,10 @@
-import { CreateinstructorSuggestDto } from '@/types/api/dtos';
+import { CreateinstructorSuggestDto } from '@/types/api/dtos.type';
 import {
   FetchInstructorResponse,
   FetchInstructorsParams,
   FetchInstructorsResponse,
   FetchRecommendedInstructorsResponse,
-} from '@/types/api/instructor';
+} from '@/types/api/instructor.type';
 import { AxiosResponseWithPagingInfo, PostResponse } from '@/types/common';
 import request from './request';
 

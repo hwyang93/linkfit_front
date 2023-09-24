@@ -3,8 +3,8 @@ import { useCommunityPostDeleteMutation } from '@/hooks/community/use-community-
 import { useAppNavigation } from '@/hooks/use-app-navigation';
 import useAuth from '@/hooks/use-auth';
 import useModal from '@/hooks/use-modal';
-import { ROUTE } from '@/navigations/routes';
-import { CommunityEntity } from '@/types/api/entities';
+import { CommunityEntity } from '@/types/api/entities.type';
+import { ROUTE } from '@/utils/constants/route';
 import { iconPath } from '@/utils/iconPath';
 import { formatDate } from '@/utils/util';
 import { createCommunityComment } from '@api/community';

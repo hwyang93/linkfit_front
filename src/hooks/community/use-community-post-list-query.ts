@@ -1,5 +1,5 @@
 import { communityApi } from '@/api/community';
-import { FetchCommunityPostsParams } from '@/types/api/community';
+import { FetchCommunityPostsParams } from '@/types/api/community.type';
 import { useQuery } from '@tanstack/react-query';
 
 export const useCommunityPostListQuery = (params?: FetchCommunityPostsParams) => {

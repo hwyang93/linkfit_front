@@ -1,68 +1,68 @@
 import IconButton from '@/components/Common/IconButton';
 import BottomTabs from '@/navigations/BottomTabs';
-import CommunityCommentEditScreen from '@/screen/Community/CommunityCommentEditScreen';
-import CommunityPostEditScreen from '@/screen/Community/CommunityPostEditScreen';
-import InquiryDetailScreen from '@/screen/My/InquiryDetailScreen';
-import NoticeDetailScreen from '@/screen/My/NoticeDetailScreen';
-import PasswordResetScreen from '@/screen/Registration/PasswordResetScreen';
+import { CommunityCommentEditScreen } from '@/screen/Community/community-comment-edit.screen';
+import { CommunityMyScreen } from '@/screen/Community/community-my.screen';
+import CommunityPostFormScreen from '@/screen/Community/community-post-create';
+import { CommunityPostDetailScreen } from '@/screen/Community/community-post-detail.screen';
+import { CommunityPostEditScreen } from '@/screen/Community/community-post-edit.screen';
+import { AccountScreen } from '@/screen/My/account.screen';
+import { ApplicantStatusScreen } from '@/screen/My/applicant-status.screen';
+import { ApplicationStatusScreen } from '@/screen/My/application-status.screen';
+import { BlacklistScreen } from '@/screen/My/blacklist.screen';
+import { BookmarkManageScreen } from '@/screen/My/bookmark-manage.screen';
+import { CenterProfileEditScreen } from '@/screen/My/center-profile-edit.screen';
+import CenterRecruitmentScreen from '@/screen/My/center-recruitment.screen';
+import { CertifyInstructorFormScreen } from '@/screen/My/certify-instructor-form.screen';
+import { CertifyInstructorScreen } from '@/screen/My/certify-instructor.screen';
+import { CertifyLocationScreen } from '@/screen/My/certify-location.screen';
+import { CompanyInfoScreen } from '@/screen/My/company-info.screen';
+import { FollowingManageScreen } from '@/screen/My/following-manage.screen';
+import { InquiryDetailScreen } from '@/screen/My/inquiry-detail.screen';
+import InquiryFormScreen from '@/screen/My/inquiry-form.screen';
+import { InquiryListScreen } from '@/screen/My/inquiry-list.screen';
+import { LinkAddScreen } from '@/screen/My/link-add.screen';
+import { MyNotificationScreen } from '@/screen/My/my-notification.screen';
+import { MyProfileScreen } from '@/screen/My/my-profile.screen';
+import { MyRecruitmentScreen } from '@/screen/My/my-recruitment.screen';
+import { NoticeDetailScreen } from '@/screen/My/notice-detail.screen';
+import { NoticeListScreen } from '@/screen/My/notice-list.screen';
+import { NotificationSettingScreen } from '@/screen/My/notification-setting.screen';
+import { ProfileEditScreen } from '@/screen/My/profile-edit.screen';
+import { ReceivedPositionSuggestionDetailScreen } from '@/screen/My/received-position-suggestion-detail.screen';
+import { ReceivedPositionSuggestionListScreen } from '@/screen/My/received-position-suggestion-list.screen';
+import { ResumeCreateScreen } from '@/screen/My/resume-create.screen';
+import { ResumeManageScreen } from '@/screen/My/resume-manange.screen';
+import { ResumePreviewScreen } from '@/screen/My/resume-preview.screen';
+import { ReviewCreateScreen } from '@/screen/My/review-create.screen';
+import { ReviewManageScreen } from '@/screen/My/review-manage';
+import { RulesScreen } from '@/screen/My/rules.screen';
+import { SendSuggestionDetailScreen } from '@/screen/My/send-suggestion-detail.screen';
+import { SendSuggestionScreen } from '@/screen/My/send-suggestion.screen';
+import { SettingScreen } from '@/screen/My/setting.screen';
+import { VersionScreen } from '@/screen/My/version.screen';
+import { PasswordResetScreen } from '@/screen/Registration/password-reset.screen';
+import { CenterInfoScreen } from '@/screen/center-info.screen';
+import { GalleryScreen } from '@/screen/gallery.screen';
+import { InstructorListScreen } from '@/screen/instructor-list.screen';
+import { JobOfferFormScreen } from '@/screen/job-offer-form.screen';
+import { JobPostScreen } from '@/screen/job-post.screen';
+import { MyCenterProfileScreen } from '@/screen/my-center-profile.screen';
+import { MyCenterScreen } from '@/screen/my-center.screen';
+import { ProfileScreen } from '@/screen/profile.screen';
+import { RecruitListScreen } from '@/screen/recruit-list.screen';
+import { RecruitMapScreen } from '@/screen/recruit-map.screen';
+import { SuggestionScreen } from '@/screen/suggestion.screen';
+import { ROUTE } from '@/utils/constants/route';
 import { iconPath } from '@/utils/iconPath';
 import HeaderLeft from '@components/HeaderLeft';
 import Modal from '@components/ModalSheet';
 import { NavigationProp, useNavigation } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import CenterInfoScreen from '@screen/CenterInfoScreen';
-import CommunityMyScreen from '@screen/Community/CommunityMyScreen';
-import CommunityPostFormScreen from '@screen/Community/CommunityPostFormScreen';
-import CommunityPostScreen from '@screen/Community/CommunityPostScreen';
-import GalleryScreen from '@screen/GalleryScreen';
-import InstructorListScreen from '@screen/InstructorListScreen';
-import JobOfferFormScreen from '@screen/JobOfferFormScreen';
-import JobPostScreen from '@screen/JobPostScreen';
-import AccountScreen from '@screen/My/AccountScreen';
-import ApplicantStatusScreen from '@screen/My/ApplicantStatusScreen';
-import ApplicationStatusScreen from '@screen/My/ApplicationStatusScreen';
-import BlacklistScreen from '@screen/My/BlacklistScreen';
-import BookmarkManageScreen from '@screen/My/BookmarkManageScreen';
-import CenterProfileEditScreen from '@screen/My/CenterProfileEditScreen';
-import CenterRecruitmentScreen from '@screen/My/CenterRecruitmentScreen';
-import CertifyInstructorFormScreen from '@screen/My/CertifyInstructorFormScreen';
-import CertifyInstructorScreen from '@screen/My/CertifyInstructorScreen';
-import CertifyLocationScreen from '@screen/My/CertifyLocationScreen';
-import CompanyInfoScreen from '@screen/My/CompanyInfoScreen';
-import FollowingManageScreen from '@screen/My/FollowingManageScreen';
-import InquiryFormScreen from '@screen/My/InquiryFormScreen';
-import InquiryScreen from '@screen/My/InquiryScreen';
-import LinkAddScreen from '@screen/My/LinkAddScreen';
-import MyNotificationScreen from '@screen/My/MyNotificationScreen';
-import MyProfileScreen from '@screen/My/MyProfileScreen';
-import MyRecruitmentScreen from '@screen/My/MyRecruitmentScreen';
-import NoticeScreen from '@screen/My/NoticeScreen';
-import NotificationSettingScreen from '@screen/My/NotificationSettingScreen';
-import ProfileEditScreen from '@screen/My/ProfileEditScreen';
-import ReceivedSuggestionDetailScreen from '@screen/My/ReceivedSuggestionDetailScreen';
-import ReceivedSuggestionScreen from '@screen/My/ReceivedSuggestionScreen';
-import ResumeFormScreen from '@screen/My/ResumeFormScreen';
-import ResumeManageScreen from '@screen/My/ResumeManageScreen';
-import ResumePreviewScreen from '@screen/My/ResumePreviewScreen';
-import ReviewFormScreen from '@screen/My/ReviewFormScreen';
-import ReviewManageScreen from '@screen/My/ReviewManageScreen';
-import RulesScreen from '@screen/My/RulesScreen';
-import SendSuggestionDetailScreen from '@screen/My/SendSuggestionDetailScreen';
-import SendSuggestionScreen from '@screen/My/SendSuggestionScreen';
-import SettingScreen from '@screen/My/SettingScreen';
-import VersionScreen from '@screen/My/VersionScreen';
-import MyCenterProfileScreen from '@screen/MyCenterProfileScreen';
-import MyCenterScreen from '@screen/MyCenterScreen';
-import ProfileScreen from '@screen/ProfileScreen';
-import RecruitListScreen from '@screen/RecruitListScreen';
-import RecruitMapScreen from '@screen/RecruitMapScreen';
-import SuggestionScreen from '@screen/SuggestionScreen';
 import { WHITE } from '@styles/colors';
 import common from '@styles/common';
 import { useState } from 'react';
 import { Alert, Image, Pressable } from 'react-native';
 import { LoggedInParamList } from '../../AppInner';
-import { ROUTE } from './routes';
 
 const Stack = createNativeStackNavigator<LoggedInParamList>();
 
@@ -73,7 +73,7 @@ const MainStack = () => {
 
   return (
     <Stack.Navigator
-      initialRouteName={'ContentTab'}
+      initialRouteName={ROUTE.TAB.CONTENT}
       screenOptions={{
         headerTitleAlign: 'center',
         headerTintColor: '#000',
@@ -88,23 +88,27 @@ const MainStack = () => {
       }}>
       <Stack.Group>
         <Stack.Screen
-          name="ContentTab"
+          name={ROUTE.TAB.CONTENT}
           component={BottomTabs}
           options={{ headerShown: false, gestureEnabled: false }}
         />
-        <Stack.Screen name="RecruitMap" component={RecruitMapScreen} options={{ title: '구인' }} />
         <Stack.Screen
-          name="RecruitList"
+          name={ROUTE.RECRUIT.MAP}
+          component={RecruitMapScreen}
+          options={{ title: '구인' }}
+        />
+        <Stack.Screen
+          name={ROUTE.RECRUIT.LIST}
           component={RecruitListScreen}
           options={{ title: '구인' }}
         />
         <Stack.Screen
-          name="InstructorList"
+          name={ROUTE.INSTRUCTOR.LIST}
           component={InstructorListScreen}
           options={{ title: '강사' }}
         />
         <Stack.Screen
-          name="Gallery"
+          name={ROUTE.GALLERY}
           component={GalleryScreen}
           options={{
             title: '3/5',
@@ -112,16 +116,14 @@ const MainStack = () => {
             headerTintColor: '#fff',
           }}
         />
-        {/* 커뮤니티 게시글 작성 화면 */}
         <Stack.Screen
-          name="CommunityPostForm"
+          name={ROUTE.COMMUNITY.POST_CREATE}
           component={CommunityPostFormScreen}
           options={{ title: '게시글 작성' }}
         />
-        {/* 커뮤니티 게시글 화면 */}
         <Stack.Screen
-          name="CommunityPost"
-          component={CommunityPostScreen}
+          name={ROUTE.COMMUNITY.POST_DETAIL}
+          component={CommunityPostDetailScreen}
           options={{
             title: '게시글',
             // headerRight: () => (
@@ -134,9 +136,8 @@ const MainStack = () => {
             // ),
           }}
         />
-        {/* 커뮤니티 MY 화면 */}
         <Stack.Screen
-          name="CommunityMy"
+          name={ROUTE.COMMUNITY.MY}
           component={CommunityMyScreen}
           options={{ title: 'MY 커뮤니티' }}
         />
@@ -255,13 +256,13 @@ const MainStack = () => {
           options={{ title: '강사 인증' }}
         />
         <Stack.Screen
-          name="ResumeManage"
+          name={ROUTE.MY.RESUME_MANAGE}
           component={ResumeManageScreen}
           options={{
             title: '이력서 관리',
             headerRight: () => (
               <Pressable
-                onPress={() => navigation.navigate('ResumeForm')}
+                onPress={() => navigation.navigate(ROUTE.MY.RESUME_CREATE)}
                 hitSlop={10}
                 style={[common.mh4, common.size24]}>
                 <Image source={iconPath.ADD_LICENSE} style={common.size24} />
@@ -270,12 +271,12 @@ const MainStack = () => {
           }}
         />
         <Stack.Screen
-          name="ResumeForm"
-          component={ResumeFormScreen}
+          name={ROUTE.MY.RESUME_CREATE}
+          component={ResumeCreateScreen}
           options={{ title: '이력서' }}
         />
         <Stack.Screen
-          name="ResumePreview"
+          name={ROUTE.MY.RESUME_PREVIEW}
           component={ResumePreviewScreen}
           options={{
             title: '이력서 미리보기',
@@ -291,19 +292,19 @@ const MainStack = () => {
         />
         {/* 지원 현황 */}
         <Stack.Screen
-          name="ApplicationStatus"
+          name={ROUTE.MY.APPLICATION_STATUS}
           component={ApplicationStatusScreen}
           options={{ title: '지원 현황' }}
         />
         {/* 받은 포지션 제안 */}
         <Stack.Screen
-          name="ReceivedSuggestion"
-          component={ReceivedSuggestionScreen}
+          name={ROUTE.MY.RECEIVED_POSITION_SUGGESTION_LIST}
+          component={ReceivedPositionSuggestionListScreen}
           options={{ title: '받은 포지션 제안' }}
         />
         <Stack.Screen
-          name="ReceivedSuggestionDetail"
-          component={ReceivedSuggestionDetailScreen}
+          name={ROUTE.MY.RECEIVED_POSITION_SUGGESTION_DETAIL}
+          component={ReceivedPositionSuggestionDetailScreen}
           options={{ title: '받은 포지션 제안' }}
         />
         {/* 내 공고 */}
@@ -313,7 +314,7 @@ const MainStack = () => {
           options={{ title: '공고 현황' }}
         />
         <Stack.Screen
-          name="ApplicantStatus"
+          name={ROUTE.MY.APPLICANT_STATUS}
           component={ApplicantStatusScreen}
           options={{ title: '지원자 현황' }}
         />
@@ -323,17 +324,17 @@ const MainStack = () => {
           options={{ title: '작성 후기 관리' }}
         />
         <Stack.Screen
-          name="ReviewForm"
-          component={ReviewFormScreen}
+          name={ROUTE.MY.REVIEW_CREATE}
+          component={ReviewCreateScreen}
           options={{ title: '후기 작성' }}
         />
         <Stack.Screen
-          name="FollowingManage"
+          name={ROUTE.MY.FOLLOWING_MANAGE}
           component={FollowingManageScreen}
           options={{ title: '팔로잉 관리' }}
         />
         <Stack.Screen
-          name="CertifyLocation"
+          name={ROUTE.MY.CERTIFY_LOCATION}
           component={CertifyLocationScreen}
           options={{ title: '지역 인증' }}
         />
@@ -344,34 +345,46 @@ const MainStack = () => {
         />
         <Stack.Screen name="Setting" component={SettingScreen} options={{ title: '설정' }} />
         <Stack.Screen
-          name="NotificationSetting"
+          name={ROUTE.MY.NOTIFICATION_SETTING}
           component={NotificationSettingScreen}
           options={{ title: '알림 설정' }}
         />
         <Stack.Screen name="Account" component={AccountScreen} options={{ title: '계정 관리' }} />
         <Stack.Screen
-          name="Blacklist"
+          name={ROUTE.MY.BLACKLIST}
           component={BlacklistScreen}
           options={{ title: '차단 사용자 관리' }}
         />
         <Stack.Screen
-          name={ROUTE.NOTICE_LIST}
-          component={NoticeScreen}
+          name={ROUTE.MY.NOTICE_LIST}
+          component={NoticeListScreen}
           options={{ title: '공지사항' }}
         />
         <Stack.Screen
-          name="Inquiry"
-          component={InquiryScreen}
+          name={ROUTE.MY.INQUIRY_LIST}
+          component={InquiryListScreen}
           options={{ title: '1:1 문의 내역' }}
         />
         <Stack.Screen
-          name="InquiryForm"
+          name={ROUTE.MY.INQUIRY_FORM}
           component={InquiryFormScreen}
           options={{ title: '문의하기' }}
         />
-        <Stack.Screen name="Version" component={VersionScreen} options={{ title: '버전 정보' }} />
-        <Stack.Screen name="Rule" component={RulesScreen} options={{ title: '서비스 이용약관' }} />
-        <Stack.Screen name="LinkAdd" component={LinkAddScreen} options={{ title: '링크 추가' }} />
+        <Stack.Screen
+          name={ROUTE.MY.VERSION}
+          component={VersionScreen}
+          options={{ title: '버전 정보' }}
+        />
+        <Stack.Screen
+          name={ROUTE.MY.RULES}
+          component={RulesScreen}
+          options={{ title: '서비스 이용약관' }}
+        />
+        <Stack.Screen
+          name={ROUTE.MY.LINK_ADD}
+          component={LinkAddScreen}
+          options={{ title: '링크 추가' }}
+        />
         <Stack.Screen
           name="Suggestion"
           component={SuggestionScreen}
@@ -429,7 +442,7 @@ const MainStack = () => {
         options={{ title: '1:1 문의' }}
       />
       <Stack.Screen
-        name={ROUTE.NOTICE_DETAIL}
+        name={ROUTE.MY.NOTICE_DETAIL}
         component={NoticeDetailScreen}
         options={{ title: '공지사항' }}
       />

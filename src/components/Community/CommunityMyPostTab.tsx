@@ -2,9 +2,9 @@ import { useCommunityPostDeleteMutation } from '@/hooks/community/use-community-
 import { useCommunityPostListQuery } from '@/hooks/community/use-community-post-list-query';
 import { useAppNavigation } from '@/hooks/use-app-navigation';
 import useModal from '@/hooks/use-modal';
-import { ROUTE } from '@/navigations/routes';
 import common from '@/styles/common';
 import THEME from '@/styles/theme';
+import { ROUTE } from '@/utils/constants/route';
 import { iconPath } from '@/utils/iconPath';
 import { formatDate } from '@/utils/util';
 import { GRAY, WHITE } from '@styles/colors';

@@ -1,5 +1,5 @@
 import { memberApi } from '@/api/member';
-import { UpdateProfileBody } from '@/types/api/member';
+import { UpdateProfileBody } from '@/types/api/member.type';
 import { useMutation } from '@tanstack/react-query';
 
 const LINKS = {

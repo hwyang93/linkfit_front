@@ -3,12 +3,12 @@ import {
   FetchCommunityPostResponse,
   FetchCommunityPostsParams,
   FetchCommunityPostsResponse,
-} from '@/types/api/community';
+} from '@/types/api/community.type';
 import {
   CreateCommunityCommentDto,
   CreateCommunityDto,
   UpdateCommunityDto,
-} from '@/types/api/dtos';
+} from '@/types/api/dtos.type';
 import { DeleteResponse, PostResponse } from '@/types/common';
 import request from './request';
 

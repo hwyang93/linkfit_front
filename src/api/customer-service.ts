@@ -1,5 +1,5 @@
-import { CreateInquiryDto } from '@/types/api/dtos';
-import { FetchInquiryListResponse, FetchInquiryResponse } from '@/types/api/inquiry';
+import { CreateInquiryDto } from '@/types/api/dtos.type';
+import { FetchInquiryListResponse, FetchInquiryResponse } from '@/types/api/inquiry.type';
 import { PostResponse } from '@/types/common';
 import request from '@api/request';
 

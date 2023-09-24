@@ -1,5 +1,5 @@
 import { memberApi } from '@/api/member';
-import { FetchMemberFollowingsParams } from '@/types/api/member';
+import { FetchMemberFollowingsParams } from '@/types/api/member.type';
 import { useQuery } from '@tanstack/react-query';
 
 export const useMemberFollowingList = (params: FetchMemberFollowingsParams) => {

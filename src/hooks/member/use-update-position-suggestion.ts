@@ -1,5 +1,5 @@
 import { memberApi } from '@/api/member';
-import { UpdatePositionSuggestDto } from '@/types/api/dtos';
+import { UpdatePositionSuggestDto } from '@/types/api/dtos.type';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 
 export const useUpdatePositionSuggestion = () => {

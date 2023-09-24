@@ -1,4 +1,8 @@
-import { CreateRecruitApplyDto, CreateRecruitDto, UpdateRecruitApplyDto } from '@/types/api/dtos';
+import {
+  CreateRecruitApplyDto,
+  CreateRecruitDto,
+  UpdateRecruitApplyDto,
+} from '@/types/api/dtos.type';
 import {
   FetchBookmarkRecruitsResponse,
   FetchRecommendedRecruitsResponse,
@@ -9,7 +13,7 @@ import {
   FetchRecruitResponse,
   FetchRecruitsParams,
   FetchRecruitsResponse,
-} from '@/types/api/recruit';
+} from '@/types/api/recruit.type';
 import { DeleteResponse, PostResponse } from '@/types/common';
 import request from './request';
 
