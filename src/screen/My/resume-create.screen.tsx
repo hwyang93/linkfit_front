@@ -20,7 +20,7 @@ import { useState } from 'react';
 import { Image, Pressable, StyleSheet, View } from 'react-native';
 import { LoggedInParamList } from '../../../AppInner';
 
-const GENDER_DATA = [{ value: '남자' }, { value: '여자' }];
+const GENDER_DATA = ['남자', '여자'];
 
 type Props = NativeStackScreenProps<LoggedInParamList, typeof ROUTE.MY.RESUME_CREATE>;
 
@@ -183,11 +183,7 @@ export const ResumeCreateScreen = ({ navigation }: Props) => {
           />
         </View>
         <View style={[common.mb16]}>
-          <TabButton
-            genderData={GENDER_DATA}
-            onSelect={genderInput.onChange}
-            value={genderInput.value}
-          />
+          <TabButton list={GENDER_DATA} onSelect={genderInput.onChange} value={genderInput.value} />
         </View>
         {careers.map((_: any, index: number) => (
           <View key={index} style={[common.mv20]}>
@@ -238,7 +234,7 @@ export const ResumeCreateScreen = ({ navigation }: Props) => {
           <SelectBox
             label="자격증"
             data={licences?.map((licence) => licence.issuer + '_' + licence.field)}
-            onSelect={(_: any, index: number) => selectLicence(index)}
+            onSelect={(_, index: number) => selectLicence(index)}
             defaultButtonText="자격증을 선택하세요."
             selectKey="index"
           />

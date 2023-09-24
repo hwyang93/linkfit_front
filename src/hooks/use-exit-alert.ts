@@ -9,11 +9,9 @@ const useExitAlert = () => {
     useCallback(() => {
       return navigation.addListener('beforeRemove', (e) => {
         e.preventDefault();
+
         Alert.alert('잠시만요!', '앱을 종료하시겠습니까?', [
-          {
-            text: '취소',
-            onPress: () => null,
-          },
+          { text: '취소', onPress: () => null },
           { text: '확인', onPress: () => BackHandler.exitApp() },
         ]);
       });

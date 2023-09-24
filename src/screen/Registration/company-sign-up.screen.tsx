@@ -30,7 +30,7 @@ export const CompanySignUpFormScreen = ({}: Props) => {
   const [loading, setLoading] = useState(false);
 
   const categoryData = ['필라테스', '요가'];
-  const genderData = [{ value: '남자' }, { value: '여자' }];
+  const genderData = ['남자', '여자'];
   const agencyData = ['SKT', 'KT', 'LG U+', '알뜰폰'];
 
   const canGoNext = false;
@@ -112,11 +112,7 @@ export const CompanySignUpFormScreen = ({}: Props) => {
         </View>
         {/* 성별 */}
         <View style={[common.mb16]}>
-          <TabButton
-            genderData={genderData}
-            onSelect={(value: any) => setGender(value)}
-            value={gender}
-          />
+          <TabButton list={genderData} onSelect={(value: any) => setGender(value)} value={gender} />
         </View>
         {/* 통신사 */}
         <View style={[common.mb16, common.row]}>

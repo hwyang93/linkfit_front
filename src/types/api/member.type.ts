@@ -47,7 +47,7 @@ export interface FetchMemberInfoResponse {
   company: CompanyEntity;
   links: MemberLinkEntity[];
   licences: MemberLicenceEntity[];
-  profileImage: {
+  profileImage?: {
     createdAt: string;
     updatedAt: string;
     seq: number;

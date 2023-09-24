@@ -13,7 +13,7 @@ interface SelectBoxProps {
   textAlign?: string;
   icon?: string;
   selectKey?: string;
-  onSelect: (value: string, index?: number) => void;
+  onSelect: (value: string, index: number) => void;
   onChangeSearchInputText?: () => void;
 }
 
@@ -34,7 +34,7 @@ const SelectBox: React.FC<SelectBoxProps> = ({
     if (selectKey === 'index') {
       onSelect(value, index);
     }
-    onSelect(value);
+    onSelect(value, index);
     setSelectItem(value);
   };
 

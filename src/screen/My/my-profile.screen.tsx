@@ -244,7 +244,7 @@ export const MyProfileScreen = ({ navigation }: Props) => {
   return (
     <>
       <Header
-        profileImageOriginFileUrl={memberInfo?.profileImage.originFileUrl}
+        profileImageOriginFileUrl={memberInfo?.profileImage?.originFileUrl}
         nickname={memberInfo?.nickname}
         name={memberInfo?.name}
         field={memberInfo?.field}
