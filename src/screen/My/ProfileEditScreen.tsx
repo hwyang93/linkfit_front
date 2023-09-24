@@ -1,10 +1,10 @@
 import BoxButton from '@/components/Common/BoxButton';
 import CTAButton from '@/components/Common/CTAButton';
 import TextField from '@/components/Common/TextField';
-import { useCheckNicknameQuery } from '@/hooks/member/useCheckNicknameQuery';
-import { useMemberInfoQuery } from '@/hooks/member/useMemberInfoQuery';
-import { useUpdateProfileMutation } from '@/hooks/member/useUpdateProfileMutation';
-import useInput from '@/hooks/useInput';
+import { useCheckNickname } from '@/hooks/member/use-check-nickname';
+import { useMemberInfo } from '@/hooks/member/use-member-info';
+import { useUpdateProfile } from '@/hooks/member/use-update-profile';
+import useInput from '@/hooks/use-input';
 import MESSAGE from '@/utils/constants/message';
 import { iconPath } from '@/utils/iconPath';
 import DismissKeyboardView from '@components/DismissKeyboardView';
@@ -32,11 +32,11 @@ const ProfileEditScreen = ({ navigation }: Props) => {
   }>({ name: undefined, type: undefined, uri: undefined });
   const [imageUri, setImageUri] = useState<{ uri?: string }>();
 
-  const memberInfoQuery = useMemberInfoQuery();
+  const memberInfoQuery = useMemberInfo();
   const user = memberInfoQuery.data;
 
-  const checkNicknameQuery = useCheckNicknameQuery(nicknameInput.value);
-  const updateProfileMutation = useUpdateProfileMutation();
+  const checkNicknameQuery = useCheckNickname(nicknameInput.value);
+  const updateProfileMutation = useUpdateProfile();
 
   useEffect(() => {
     if (user) {

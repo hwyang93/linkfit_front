@@ -1,8 +1,8 @@
 import { LoggedInParamList } from '@/../AppInner';
 import CTAButton from '@/components/Common/CTAButton';
 import toast from '@/hooks/toast';
-import useAuth from '@/hooks/useAuth';
-import useInput from '@/hooks/useInput';
+import useAuth from '@/hooks/use-auth';
+import useInput from '@/hooks/use-input';
 import TOAST from '@/utils/constants/toast';
 import Input, { KeyboardTypes, ReturnKeyTypes } from '@components/Input';
 import Logo from '@components/Logo';

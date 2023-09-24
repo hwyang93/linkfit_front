@@ -2,7 +2,7 @@ import EmptyState from '@/components/Common/EmptyState';
 import FilterChip from '@/components/Common/FilterChip';
 import FilterChipContainer from '@/components/Common/FilterChipContainer';
 import FloatingActionButton from '@/components/Common/FloatingActionButton';
-import { useCommunityPostListQuery } from '@/hooks/community/useCommunityPostListQuery';
+import { useCommunityPostListQuery } from '@/hooks/community/use-community-post-list-query';
 import { ROUTE } from '@/navigations/routes';
 import { useAppSelector } from '@/store';
 import { CommunityEntity } from '@/types/api/entities';

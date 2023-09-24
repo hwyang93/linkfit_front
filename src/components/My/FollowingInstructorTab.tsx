@@ -1,4 +1,4 @@
-import { useMemberFollowingListQuery } from '@/hooks/member/useMemberFollowingListQuery';
+import { useMemberFollowingList } from '@/hooks/member/use-member-following-list';
 import THEME from '@/styles/theme';
 import { Member } from '@/types/common';
 import { iconPath } from '@/utils/iconPath';
@@ -14,7 +14,7 @@ import EmptySet from '../EmptySet';
 const FollowingInstructorTab: React.FC = () => {
   const navigation = useNavigation<NavigationProp<LoggedInParamList>>();
 
-  const { data } = useMemberFollowingListQuery({ type: Member.Instructor });
+  const { data } = useMemberFollowingList({ type: Member.Instructor });
   const followings = data;
 
   return (

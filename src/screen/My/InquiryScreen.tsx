@@ -1,6 +1,6 @@
 import FloatingActionButton from '@/components/Common/FloatingActionButton';
 import EmptySet from '@/components/EmptySet';
-import { useCsInquiryListQuery } from '@/hooks/customer-service/useCsInquiryListQuery';
+import { useCsInquiryList } from '@/hooks/customer-service/use-cs-inquiry-list';
 import { ROUTE } from '@/navigations/routes';
 import THEME from '@/styles/theme';
 import { iconPath } from '@/utils/iconPath';
@@ -16,7 +16,7 @@ import { LoggedInParamList } from '../../../AppInner';
 type Props = NativeStackScreenProps<LoggedInParamList, 'Inquiry'>;
 
 const InquiryScreen = ({ navigation }: Props) => {
-  const { data } = useCsInquiryListQuery();
+  const { data } = useCsInquiryList();
   const inquiries = data;
 
   const toInquiry = () => {

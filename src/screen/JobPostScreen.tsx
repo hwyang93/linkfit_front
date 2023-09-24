@@ -1,7 +1,7 @@
 import BottomSheet from '@/components/Common/BottomSheet';
 import BoxButton from '@/components/Common/BoxButton';
 import CTAButton from '@/components/Common/CTAButton';
-import useModal from '@/hooks/useModal';
+import useModal from '@/hooks/use-modal';
 import THEME from '@/styles/theme';
 import { RecruitDateEntity } from '@/types/api/entities';
 import { FetchRecruitResponse } from '@/types/api/recruit';

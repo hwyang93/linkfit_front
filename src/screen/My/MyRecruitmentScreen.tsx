@@ -2,9 +2,9 @@ import BottomSheet from '@/components/Common/BottomSheet';
 import BottomSheetOption from '@/components/Common/BottomSheetOption';
 import FilterChip from '@/components/Common/FilterChip';
 import FilterChipContainer from '@/components/Common/FilterChipContainer';
-import { useRecruitListQuery } from '@/hooks/recruit/useRecruitListQuery';
-import useFilter from '@/hooks/useFilter';
-import useModal from '@/hooks/useModal';
+import { useRecruitList } from '@/hooks/recruit/use-recruit-list';
+import useFilter from '@/hooks/use-filter';
+import useModal from '@/hooks/use-modal';
 import FILTER from '@/utils/constants/filter';
 import { iconPath } from '@/utils/iconPath';
 import { formatDate } from '@/utils/util';
@@ -66,7 +66,7 @@ const MyRecruitmentScreen = ({ navigation }: Props) => {
   const periodModal = useModal();
   const progressionModal = useModal();
 
-  const recruitListQuery = useRecruitListQuery({
+  const recruitListQuery = useRecruitList({
     isWriter: 'Y',
     period: periodFilter.value,
     status: progressionFilter.value,

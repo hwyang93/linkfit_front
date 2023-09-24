@@ -1,5 +1,5 @@
-import { useInstructorFollowMutation } from '@/hooks/instructor/useInstructorFollowMutation';
-import { useInstructorUnfollowMutation } from '@/hooks/instructor/useInstuctorUnfollowMutation';
+import { useFollowInstructor } from '@/hooks/instructor/use-follow-instructor';
+import { useUnfollowInstructor } from '@/hooks/instructor/use-unfollow-instructor';
 import { iconPath } from '@/utils/iconPath';
 import { BLUE } from '@styles/colors';
 import common from '@styles/common';
@@ -42,8 +42,8 @@ const InstructorListItem: React.FC<InstructorListItemProps> = ({
   //   Alert.alert('기능 준비 중입니다.');
   // };
 
-  const instructorFollowMutation = useInstructorFollowMutation();
-  const instructorUnfollowMutation = useInstructorUnfollowMutation();
+  const instructorFollowMutation = useFollowInstructor();
+  const instructorUnfollowMutation = useUnfollowInstructor();
 
   const onFavoriteIconPress = () => {
     if (following) {

@@ -8,7 +8,7 @@ const LINKS = {
   url: '',
 };
 
-export const useUpdateProfileMutation = () => {
+export const useUpdateProfile = () => {
   return useMutation({
     mutationFn: (body: UpdateProfileBody) => {
       const formData = new FormData();

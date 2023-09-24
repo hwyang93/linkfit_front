@@ -1,5 +1,5 @@
 import CTAButton from '@/components/Common/CTAButton';
-import useInput from '@/hooks/useInput';
+import useInput from '@/hooks/use-input';
 import { useAppSelector } from '@/store';
 import { iconPath } from '@/utils/iconPath';
 import { createMemberLicence } from '@api/member';

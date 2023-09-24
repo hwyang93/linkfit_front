@@ -1,6 +1,6 @@
 import AppScrollView from '@/components/\bLayout/AppScrollView';
 import Icon from '@/components/Common/Icon';
-import { useCsInquiryQuery } from '@/hooks/customer-service/useCsInquiryQuery';
+import { useCsInquiry } from '@/hooks/customer-service/use-cs-inquiry';
 import { ROUTE } from '@/navigations/routes';
 import THEME from '@/styles/theme';
 import { iconPath } from '@/utils/iconPath';
@@ -12,7 +12,7 @@ import { LoggedInParamList } from '../../../AppInner';
 type Props = NativeStackScreenProps<LoggedInParamList, typeof ROUTE.MY.INQUIRY_DETAIL>;
 
 const InquiryDetailScreen = ({ route }: Props) => {
-  const { data } = useCsInquiryQuery(route.params.inquiryId);
+  const { data } = useCsInquiry(route.params.inquiryId);
 
   return (
     <>

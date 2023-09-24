@@ -1,9 +1,9 @@
 import BottomSheet from '@/components/Common/BottomSheet';
 import BottomSheetOption from '@/components/Common/BottomSheetOption';
 import CommunityUserProfile from '@/components/Community/CommunityUserProfile';
-import { useCommunityPostQuery } from '@/hooks/community/useCommunityPostQuery';
-import useAuth from '@/hooks/useAuth';
-import useModal from '@/hooks/useModal';
+import { useCommunityPostQuery } from '@/hooks/community/use-community-post-query';
+import useAuth from '@/hooks/use-auth';
+import useModal from '@/hooks/use-modal';
 import CommunityPostTop from '@components/Community/CommunityPostTop';
 import ReplyComponent from '@components/Community/ReplyComponent';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';

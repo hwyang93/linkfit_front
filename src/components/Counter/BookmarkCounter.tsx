@@ -1,5 +1,5 @@
-import { useCreateCommunityBookmark } from '@/hooks/community/useCreateCommunityBookmark';
-import { useDeleteCommunityBookmark } from '@/hooks/community/useDeleteCommunityBookmark';
+import { useCreateCommunityBookmark } from '@/hooks/community/use-create-community-bookmark';
+import { useDeleteCommunityBookmark } from '@/hooks/community/use-delete-community-bookmark';
 import toast from '@/hooks/toast';
 import { YesNoFlag } from '@/types/common';
 import TOAST from '@/utils/constants/toast';

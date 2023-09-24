@@ -1,5 +1,5 @@
 import CTAButton from '@/components/Common/CTAButton';
-import useInput from '@/hooks/useInput';
+import useInput from '@/hooks/use-input';
 import TOAST from '@/utils/constants/toast';
 import { createCommunityPost } from '@api/community';
 import DismissKeyboardView from '@components/DismissKeyboardView';

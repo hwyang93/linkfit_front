@@ -1,7 +1,7 @@
 import FloatingActionButton from '@/components/Common/FloatingActionButton';
 import InstructorListItem from '@/components/Compound/InstructorListItem';
-import { useInstructorListQuery } from '@/hooks/instructor/useInstructorListQuery';
-import useExitAlert from '@/hooks/useExitAlert';
+import { useInstructorList } from '@/hooks/instructor/use-instructor-list';
+import useExitAlert from '@/hooks/use-exit-alert';
 import { iconPath } from '@/utils/iconPath';
 import LinkTop from '@components/LinkTop';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
@@ -15,7 +15,7 @@ type Props = NativeStackScreenProps<LoggedInParamList, 'Link'>;
 const LinkScreen = ({ navigation }: Props) => {
   useExitAlert();
 
-  const { data } = useInstructorListQuery();
+  const { data } = useInstructorList();
 
   return (
     <>

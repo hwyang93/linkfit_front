@@ -1,7 +1,7 @@
 import { instructorApi } from '@/api/instructor';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 
-export const useInstructorUnfollowMutation = () => {
+export const useUnfollowInstructor = () => {
   const queryClient = useQueryClient();
 
   return useMutation({

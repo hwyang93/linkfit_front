@@ -1,5 +1,5 @@
-import { useRecruitApplicationListQuery } from '@/hooks/recruit/useRecruitApplicationListQuery';
-import useModal from '@/hooks/useModal';
+import { useRecruitApplicationList } from '@/hooks/recruit/use-recruit-application-list';
+import useModal from '@/hooks/use-modal';
 import { RecruitStatus } from '@/types/api/recruit';
 import { iconPath } from '@/utils/iconPath';
 import ApplicantListItem from '@components/My/ApplicantListItem';
@@ -19,7 +19,7 @@ const ApplicantFinishTab: React.FC<ApplicantFinishTabProps> = ({ recruitId }) =>
   const [modalData, setModalData] = useState<any[]>([]);
   const [selectedFilter, setSelectedFilter] = useState('');
 
-  const { data } = useRecruitApplicationListQuery(recruitId);
+  const { data } = useRecruitApplicationList(recruitId);
 
   const finishedApplications = data?.recruitApply.filter((item) => {
     return item.status !== RecruitStatus.Applied;

@@ -3,9 +3,9 @@ import BottomSheetOption from '@/components/Common/BottomSheetOption';
 import FilterChip from '@/components/Common/FilterChip';
 import FilterChipContainer from '@/components/Common/FilterChipContainer';
 import IconButton from '@/components/Common/IconButton';
-import { useMyRecruitApplicationListQuery } from '@/hooks/recruit/useMyRecruitApplicationListQuery';
-import useFilter from '@/hooks/useFilter';
-import useModal from '@/hooks/useModal';
+import { useMyRecruitApplicationList } from '@/hooks/recruit/use-my-recruit-application-list';
+import useFilter from '@/hooks/use-filter';
+import useModal from '@/hooks/use-modal';
 import { SCREEN_WIDTH } from '@/utils/constants/common';
 import FILTER from '@/utils/constants/filter';
 import { iconPath } from '@/utils/iconPath';
@@ -83,7 +83,7 @@ const ApplicationStatusScreen = ({ navigation }: Props) => {
     statusFilter.reset();
   };
 
-  const myRecruitApplicationListQuery = useMyRecruitApplicationListQuery({
+  const myRecruitApplicationListQuery = useMyRecruitApplicationList({
     period: periodFilter.value,
     status: statusFilter.value,
   });

@@ -1,6 +1,6 @@
 import CTAButton from '@/components/Common/CTAButton';
-import { useReceivedPositionSuggestionQuery } from '@/hooks/member/useReceivedPositionSuggestionQuery';
-import { useUpdatePositionSuggestionMutation } from '@/hooks/member/useUpdatePositionSuggestionMutation';
+import { useReceivedPositionSuggestion } from '@/hooks/member/use-received-position-suggestion';
+import { useUpdatePositionSuggestion } from '@/hooks/member/use-update-position-suggestion';
 import { ROUTE } from '@/navigations/routes';
 import { RecruitStatus } from '@/types/api/recruit';
 import { Member } from '@/types/common';
@@ -20,10 +20,10 @@ type Props = NativeStackScreenProps<
 >;
 
 const ReceivedSuggestionDetailScreen = ({ route, navigation }: Props) => {
-  const { data } = useReceivedPositionSuggestionQuery(route.params.suggestSeq);
+  const { data } = useReceivedPositionSuggestion(route.params.suggestSeq);
   const suggestInfo = data;
 
-  const updatePositionSuggestionMutation = useUpdatePositionSuggestionMutation();
+  const updatePositionSuggestionMutation = useUpdatePositionSuggestion();
 
   const onUpdateSuggestStatus = (status: string) => {
     const data = { status: status };

@@ -1,9 +1,9 @@
 import { LoggedInParamList } from '@/../AppInner';
 import BottomSheet, { BottomSheetCTAContainer } from '@/components/Common/BottomSheet';
 import CTAButton from '@/components/Common/CTAButton';
-import { useUnregisterMutation } from '@/hooks/member/useUnregisterMutation';
-import useAuth from '@/hooks/useAuth';
-import useModal from '@/hooks/useModal';
+import { useUnregister } from '@/hooks/member/use-unregister';
+import useAuth from '@/hooks/use-auth';
+import useModal from '@/hooks/use-modal';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { BLUE, WHITE } from '@styles/colors';
 import common from '@styles/common';
@@ -16,7 +16,7 @@ const AccountScreen = ({ navigation }: Props) => {
 
   const { user, signOut } = useAuth();
 
-  const unregisterMutation = useUnregisterMutation();
+  const unregisterMutation = useUnregister();
 
   const onUnregisterButtonClick = () => {
     unregisterMutation.mutate(user.seq, {

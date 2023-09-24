@@ -22,7 +22,6 @@ type Props = NativeStackScreenProps<LoggedInParamList, 'Suggestion'>;
 
 const SuggestionScreen = ({ navigation, route }: Props) => {
   const [loading, setLoading] = useState(false);
-  console.log(setLoading);
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
   const [recruitSeq, setRecruitSeq] = useState('');

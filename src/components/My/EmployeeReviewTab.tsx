@@ -1,6 +1,6 @@
-import { useDeleteMemberReputationMutation } from '@/hooks/member/useDeleteMemberReputationMutation';
-import { useMemberReputationListQuery } from '@/hooks/member/useMemberReputationListQuery';
-import useModal from '@/hooks/useModal';
+import { useDeleteMemberReputation } from '@/hooks/member/use-delete-member-reputation';
+import { useMemberReputationList } from '@/hooks/member/use-member-reputation-list';
+import useModal from '@/hooks/use-modal';
 import { Member } from '@/types/common';
 import { iconPath } from '@/utils/iconPath';
 import { formatDate } from '@/utils/util';
@@ -22,10 +22,10 @@ const EmployeeReviewTab: React.FC = () => {
 
   const navigation = useNavigation<NavigationProp<LoggedInParamList>>();
 
-  const memberReputationListQuery = useMemberReputationListQuery();
+  const memberReputationListQuery = useMemberReputationList();
   const reputations = memberReputationListQuery.data;
 
-  const deleteMemberReputationMutation = useDeleteMemberReputationMutation();
+  const deleteMemberReputationMutation = useDeleteMemberReputation();
 
   const modal = useModal();
 

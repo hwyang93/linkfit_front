@@ -1,4 +1,4 @@
-import useAuth from '@/hooks/useAuth';
+import useAuth from '@/hooks/use-auth';
 import { iconPath } from '@/utils/iconPath';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { BLUE, GRAY, WHITE } from '@styles/colors';

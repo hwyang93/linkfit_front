@@ -1,5 +1,5 @@
-import { useCommunityBookmarkListQuery } from '@/hooks/community/useCommunityBookmarkListQuery';
-import { useAppNavigation } from '@/hooks/useAppNavigation';
+import { useCommunityBookmarkListQuery } from '@/hooks/community/use-community-bookmark-list-query';
+import { useAppNavigation } from '@/hooks/use-app-navigation';
 import { ROUTE } from '@/navigations/routes';
 import { Member } from '@/types/common';
 import { formatDate } from '@/utils/util';

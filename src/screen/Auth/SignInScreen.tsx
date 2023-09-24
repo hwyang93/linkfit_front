@@ -1,7 +1,7 @@
 import CTAButton from '@/components/Common/CTAButton';
 import TextField from '@/components/Common/TextField';
 import toast from '@/hooks/toast';
-import useInput from '@/hooks/useInput';
+import useInput from '@/hooks/use-input';
 import { AuthStackParamList } from '@/navigations/AuthStack';
 import THEME from '@/styles/theme';
 import { removeWhitespace, validateEmail } from '@/utils/util';

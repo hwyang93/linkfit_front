@@ -1,7 +1,7 @@
 import CTAButton from '@/components/Common/CTAButton';
-import { useMemberLicenceListQuery } from '@/hooks/member/useMemberLicenceListQuery';
-import { useCreateResumeMutation } from '@/hooks/resume/useCreateResumeMutation';
-import useInput from '@/hooks/useInput';
+import { useMemberLicenceList } from '@/hooks/member/use-member-licence-list';
+import { useCreateResume } from '@/hooks/resume/use-create-resume';
+import useInput from '@/hooks/use-input';
 import { useAppSelector } from '@/store';
 import { iconPath } from '@/utils/iconPath';
 import DismissKeyboardView from '@components/DismissKeyboardView';
@@ -38,10 +38,10 @@ const ResumeFormScreen = ({ navigation }: Props) => {
   const birthInput = useInput(memberInfo.birth);
   const phoneNumberInput = useInput(memberInfo.phone);
 
-  const memberLicenceListQuery = useMemberLicenceListQuery();
+  const memberLicenceListQuery = useMemberLicenceList();
   const licences = memberLicenceListQuery.data;
 
-  const createResumeMutation = useCreateResumeMutation();
+  const createResumeMutation = useCreateResume();
 
   const addCareerForm = () => {
     setCareers([...careers, {}]);

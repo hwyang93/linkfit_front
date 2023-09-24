@@ -2,8 +2,8 @@ import BottomSheet from '@/components/Common/BottomSheet';
 import BottomSheetOption from '@/components/Common/BottomSheetOption';
 import Card from '@/components/Common/Card';
 import ApplicantWaitingTab from '@/components/My/ApplicantWaitingTab';
-import { useRecruitApplicationListQuery } from '@/hooks/recruit/useRecruitApplicationListQuery';
-import useModal from '@/hooks/useModal';
+import { useRecruitApplicationList } from '@/hooks/recruit/use-recruit-application-list';
+import useModal from '@/hooks/use-modal';
 import { iconPath } from '@/utils/iconPath';
 import { materialTopTabNavigationOptions } from '@/utils/options/tab';
 import { formatDate } from '@/utils/util';
@@ -20,7 +20,7 @@ const Tab = createMaterialTopTabNavigator();
 type Props = NativeStackScreenProps<LoggedInParamList, 'ApplicantStatus'>;
 
 const ApplicantStatusScreen = ({ route }: Props) => {
-  const { data } = useRecruitApplicationListQuery(route.params.recruitSeq);
+  const { data } = useRecruitApplicationList(route.params.recruitSeq);
 
   const recruitInfo = data?.recruit;
 

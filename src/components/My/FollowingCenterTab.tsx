@@ -1,4 +1,4 @@
-import { useMemberFollowingListQuery } from '@/hooks/member/useMemberFollowingListQuery';
+import { useMemberFollowingList } from '@/hooks/member/use-member-following-list';
 import THEME from '@/styles/theme';
 import { Member } from '@/types/common';
 import { iconPath } from '@/utils/iconPath';
@@ -14,7 +14,7 @@ import EmptySet from '../EmptySet';
 import hairlineWidth = StyleSheet.hairlineWidth;
 
 const FollowingCenterTab: React.FC = () => {
-  const { data } = useMemberFollowingListQuery({ type: Member.Company });
+  const { data } = useMemberFollowingList({ type: Member.Company });
   const followings = data;
 
   const navigation = useNavigation<NavigationProp<LoggedInParamList>>();

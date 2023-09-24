@@ -1,5 +1,5 @@
-import { useRecruitApplicationListQuery } from '@/hooks/recruit/useRecruitApplicationListQuery';
-import useModal from '@/hooks/useModal';
+import { useRecruitApplicationList } from '@/hooks/recruit/use-recruit-application-list';
+import useModal from '@/hooks/use-modal';
 import { RecruitStatus } from '@/types/api/recruit';
 import { formatDate } from '@/utils/util';
 import ApplicantListItem from '@components/My/ApplicantListItem';
@@ -16,7 +16,7 @@ interface ApplicantWaitingTabProps {
 }
 
 const ApplicantWaitingTab: React.FC<ApplicantWaitingTabProps> = ({ recruitId }) => {
-  const { data } = useRecruitApplicationListQuery(recruitId);
+  const { data } = useRecruitApplicationList(recruitId);
 
   const waitingApplications = data?.recruitApply.filter((item) => {
     return item.status === RecruitStatus.Applied;

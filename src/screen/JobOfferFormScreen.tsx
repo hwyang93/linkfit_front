@@ -1,6 +1,6 @@
 import CTAButton from '@/components/Common/CTAButton';
-import useInput from '@/hooks/useInput';
-import { useSelect } from '@/hooks/useSelect';
+import useInput from '@/hooks/use-input';
+import { useSelect } from '@/hooks/use-select';
 import { useAppSelector } from '@/store';
 import { Coordinate, Member } from '@/types/common';
 import { SCREEN_WIDTH } from '@/utils/constants/common';

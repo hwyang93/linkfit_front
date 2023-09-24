@@ -1,8 +1,8 @@
 import CommunityUserProfile from '@/components/Community/CommunityUserProfile';
-import { useCommunityPostDeleteMutation } from '@/hooks/community/useCommunityPostDeleteMutation';
-import { useAppNavigation } from '@/hooks/useAppNavigation';
-import useAuth from '@/hooks/useAuth';
-import useModal from '@/hooks/useModal';
+import { useCommunityPostDeleteMutation } from '@/hooks/community/use-community-post-delete-mutation';
+import { useAppNavigation } from '@/hooks/use-app-navigation';
+import useAuth from '@/hooks/use-auth';
+import useModal from '@/hooks/use-modal';
 import { ROUTE } from '@/navigations/routes';
 import { CommunityEntity } from '@/types/api/entities';
 import { iconPath } from '@/utils/iconPath';

@@ -1,7 +1,7 @@
 import { memberApi } from '@/api/member';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 
-export const useDeleteMemberReputationMutation = () => {
+export const useDeleteMemberReputation = () => {
   const queryClient = useQueryClient();
 
   return useMutation({

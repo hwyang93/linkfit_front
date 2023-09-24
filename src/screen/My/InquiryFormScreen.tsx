@@ -1,6 +1,6 @@
 import { LoggedInParamList } from '@/../AppInner';
 import CTAButton from '@/components/Common/CTAButton';
-import { useCreateCsInquiryMutation } from '@/hooks/customer-service/useCreateCsInquiryMutation';
+import { useCreateCsInquiry } from '@/hooks/customer-service/use-create-cs-inquiry';
 import DismissKeyboardView from '@components/DismissKeyboardView';
 import Input, { KeyboardTypes } from '@components/Input';
 import toast from '@hooks/toast';
@@ -20,7 +20,7 @@ const InquiryFormScreen = ({ navigation }: Props) => {
 
   const canGoNext = title && content;
 
-  const createCsInquiryMutation = useCreateCsInquiryMutation();
+  const createCsInquiryMutation = useCreateCsInquiry();
 
   const data = { title: title, contents: content };
 

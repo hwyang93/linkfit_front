@@ -1,6 +1,6 @@
 import { LoggedInParamList } from '@/../AppInner';
 import EmptySet from '@/components/EmptySet';
-import { useNoticeListQuery } from '@/hooks/notice/useNoticeListQuery';
+import { useNoticeList } from '@/hooks/notice/use-notice-list';
 import { ROUTE } from '@/navigations/routes';
 import { iconPath } from '@/utils/iconPath';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
@@ -25,7 +25,7 @@ const DATA = [
 type Props = NativeStackScreenProps<LoggedInParamList, 'Notice'>;
 
 const NoticeScreen = ({ navigation }: Props) => {
-  const { data } = useNoticeListQuery();
+  const { data } = useNoticeList();
   console.log('notice list', data);
 
   const toNoticeDetail = (noticeId: number) => {

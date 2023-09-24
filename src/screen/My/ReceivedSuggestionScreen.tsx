@@ -2,9 +2,9 @@ import BottomSheet from '@/components/Common/BottomSheet';
 import BottomSheetOption from '@/components/Common/BottomSheetOption';
 import FilterChip from '@/components/Common/FilterChip';
 import FilterChipContainer from '@/components/Common/FilterChipContainer';
-import { useReceivedPositionSuggestionListQuery } from '@/hooks/member/useReceivedPositionSuggestionListQuery';
-import useFilter from '@/hooks/useFilter';
-import useModal from '@/hooks/useModal';
+import { useReceivedPositionSuggestionList } from '@/hooks/member/use-received-position-suggestion-list';
+import useFilter from '@/hooks/use-filter';
+import useModal from '@/hooks/use-modal';
 import { ROUTE } from '@/navigations/routes';
 import { Member } from '@/types/common';
 import FILTER from '@/utils/constants/filter';
@@ -72,7 +72,7 @@ const ReceivedSuggestionScreen = ({ navigation }: Props) => {
     replyOrNotFilter.reset();
   };
 
-  const { data } = useReceivedPositionSuggestionListQuery();
+  const { data } = useReceivedPositionSuggestionList();
   const suggests = data;
 
   const handlePeriodOptionPress = (option: string) => {

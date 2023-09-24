@@ -1,7 +1,7 @@
-import { useCommunityPostDeleteMutation } from '@/hooks/community/useCommunityPostDeleteMutation';
-import { useCommunityPostListQuery } from '@/hooks/community/useCommunityPostListQuery';
-import { useAppNavigation } from '@/hooks/useAppNavigation';
-import useModal from '@/hooks/useModal';
+import { useCommunityPostDeleteMutation } from '@/hooks/community/use-community-post-delete-mutation';
+import { useCommunityPostListQuery } from '@/hooks/community/use-community-post-list-query';
+import { useAppNavigation } from '@/hooks/use-app-navigation';
+import useModal from '@/hooks/use-modal';
 import { ROUTE } from '@/navigations/routes';
 import common from '@/styles/common';
 import THEME from '@/styles/theme';

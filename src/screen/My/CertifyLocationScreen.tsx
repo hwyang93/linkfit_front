@@ -1,6 +1,6 @@
 import { LoggedInParamList } from '@/../AppInner';
 import CTAButton from '@/components/Common/CTAButton';
-import useKakaoLocation from '@/hooks/useKakaoLocation';
+import useKakaoLocation from '@/hooks/use-kakao-location';
 import { FetchRegionAuthResponse } from '@/types/api/member';
 import { iconPath } from '@/utils/iconPath';
 import { requestPermission } from '@/utils/util';

@@ -1,6 +1,6 @@
 import AppScrollView from '@/components/\bLayout/AppScrollView';
 import Icon from '@/components/Common/Icon';
-import { useNoticeQuery } from '@/hooks/notice/useNoticeQuery';
+import { useNotice } from '@/hooks/notice/use-notice';
 import { ROUTE } from '@/navigations/routes';
 import THEME from '@/styles/theme';
 import { iconPath } from '@/utils/iconPath';
@@ -11,7 +11,7 @@ import { LoggedInParamList } from '../../../AppInner';
 type Props = NativeStackScreenProps<LoggedInParamList, typeof ROUTE.NOTICE_DETAIL>;
 
 const NoticeDetailScreen = ({ route }: Props) => {
-  const { data } = useNoticeQuery(route.params.noticeId);
+  const { data } = useNotice(route.params.noticeId);
   console.log('notice detail', data);
 
   return (

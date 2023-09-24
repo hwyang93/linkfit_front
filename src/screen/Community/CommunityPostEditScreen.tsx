@@ -1,9 +1,9 @@
 import CTAButton from '@/components/Common/CTAButton';
 import TextField from '@/components/Common/TextField';
 import SelectBox from '@/components/SelectBox';
-import { useCommunityPostQuery } from '@/hooks/community/useCommunityPostQuery';
-import { useCommunityPostUpdateMutation } from '@/hooks/community/useCommunityPostUpdateMutation';
-import useInput from '@/hooks/useInput';
+import { useCommunityPostQuery } from '@/hooks/community/use-community-post-query';
+import { useUpdateCommunityPost } from '@/hooks/community/use-update-community-post';
+import useInput from '@/hooks/use-input';
 import THEME from '@/styles/theme';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { useState } from 'react';
@@ -17,7 +17,7 @@ const CommunityPostEditScreen = ({ navigation, route }: Props) => {
   const [channelSelectValue, setChannelSelectValue] = useState('');
 
   const communityPostQuery = useCommunityPostQuery(route.params.postId);
-  const communityPostUpdateMutation = useCommunityPostUpdateMutation();
+  const communityPostUpdateMutation = useUpdateCommunityPost();
 
   const titleInput = useInput(communityPostQuery.data?.title);
   const contentInput = useInput(communityPostQuery.data?.contents);

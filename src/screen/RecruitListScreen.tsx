@@ -6,7 +6,7 @@ import PositionFilterModal from '@/components/Modal/PositionFilterModal';
 import RecruitTypeFilterModal from '@/components/Modal/RecruitTypeFilterModal';
 import TimeFilterModal from '@/components/Modal/TimeFilterModal';
 import ViewFilterModal from '@/components/Modal/ViewFilterModal';
-import useModal from '@/hooks/useModal';
+import useModal from '@/hooks/use-modal';
 import THEME from '@/styles/theme';
 import { FetchRecruitsResponse } from '@/types/api/recruit';
 import { iconPath } from '@/utils/iconPath';
