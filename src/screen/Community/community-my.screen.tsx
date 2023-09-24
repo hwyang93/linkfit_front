@@ -1,6 +1,6 @@
 import { LoggedInParamList } from '@/../AppInner';
 import CTAButton from '@/components/Common/CTAButton';
-import CommunityMyScreenTabView from '@/screen/Community/community-my-tab-view.screen';
+import CommunityMyScreenTabView from '@/screen/community/community-my-tab-view.screen';
 import { FetchMemberInfoResponse } from '@/types/api/member.type';
 import { Member } from '@/types/common';
 import { ROUTE } from '@/utils/constants/route';

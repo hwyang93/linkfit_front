@@ -1,8 +1,8 @@
-import { CommunityTab } from '@/screen/Tabs/community-tab.screen';
-import { LinkTab } from '@/screen/Tabs/link-tab.screen';
-import { MessageTab } from '@/screen/Tabs/message-tab.screen';
-import { MyTab } from '@/screen/Tabs/my-tab.screen';
 import { MyCenterScreen } from '@/screen/my-center.screen';
+import { CommunityTab } from '@/screen/tab/community-tab.screen';
+import { LinkTab } from '@/screen/tab/link-tab.screen';
+import { MessageTab } from '@/screen/tab/message-tab.screen';
+import { MyTab } from '@/screen/tab/my-tab.screen';
 import { useAppSelector } from '@/store';
 import { Member } from '@/types/common';
 import { IS_ANDROID, SCREEN_WIDTH } from '@/utils/constants/common';
