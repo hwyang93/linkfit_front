@@ -14,11 +14,9 @@ export const NoticeDetailScreen = ({ route }: Props) => {
   const { data } = useNotice(route.params.noticeId);
   console.log('notice detail', data);
 
-  // TODO: 기능 추가
-
   return (
     <>
-      {true && (
+      {
         <AppScrollView>
           <View style={{ paddingHorizontal: 16 }}>
             <View>
@@ -42,7 +40,7 @@ export const NoticeDetailScreen = ({ route }: Props) => {
             </Text>
           </View>
         </AppScrollView>
-      )}
+      }
     </>
   );
 };

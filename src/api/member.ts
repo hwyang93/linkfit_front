@@ -2,7 +2,7 @@ import {
   CreateMemberDto,
   CreateMemberReputationDto,
   CreateRegionAuthDto,
-  ResetPasswordDto,
+  UpdateMemberPasswordDto,
   UpdateMemberReputationDto,
   UpdatePositionSuggestDto,
 } from '@/types/api/dtos.type';
@@ -120,10 +120,6 @@ export const fetchRecruitByMember = (seq: number) => {
   return request.get<FetchRecruitByMemberResponse>(`/member/${seq}/recruit`);
 };
 
-export const updateMemberPassword = (body: UpdateMemberPasswordDto) => {
-  return request.patch('member/password', body);
-};
-
 const ENDPOINT = '/member';
 
 export const memberApi = {
@@ -180,7 +176,7 @@ export const memberApi = {
     const response = await request.delete<DeleteResponse>(`${ENDPOINT}/${memberId}`);
     return response.data;
   },
-  resetPassword: async (body: ResetPasswordDto) => {
+  updateMemberPassword: async (body: UpdateMemberPasswordDto) => {
     const response = await request.patch(`${ENDPOINT}/password`, body);
     return response.data;
   },

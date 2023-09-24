@@ -180,9 +180,9 @@ export interface CreateInquiryDto {
   contents: string;
 }
 
-export interface ResetPasswordDto {
-  email: string;
-  password: string;
+export interface UpdateMemberPasswordDto {
+  email?: string;
+  password?: string;
   newPassword: string;
-  isCheckAuthCode: YesNoFlag;
+  isCheckAuthCode: string;
 }
