@@ -1,8 +1,8 @@
 import CTAButton from '@/components/Common/CTAButton';
+import { useCreateCommunityPost } from '@/hooks/community/use-create-community-post';
 import useInput from '@/hooks/use-input';
 import { ROUTE } from '@/utils/constants/route';
 import TOAST from '@/utils/constants/toast';
-import { createCommunityPost } from '@api/community';
 import DismissKeyboardView from '@components/DismissKeyboardView';
 import Input, { KeyboardTypes } from '@components/Input';
 import SelectBox from '@components/SelectBox';
@@ -11,7 +11,6 @@ import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { WHITE } from '@styles/colors';
 import common from '@styles/common';
 import { isAxiosError } from 'axios';
-import { useCallback } from 'react';
 import { StyleSheet, View } from 'react-native';
 import { LoggedInParamList } from '../../../AppInner';
 
@@ -30,24 +29,25 @@ export const CommunityPostCreateScreen = ({ navigation }: Props) => {
   const isContentsValid = contentsInput.value.length > 0;
   const isAllFieldValid = isTitleValid && isCategoryValid && isContentsValid;
 
-  const onCreateCommunityPost = useCallback(() => {
+  const createCommunityPostMutation = useCreateCommunityPost();
+
+  const onCreateCommunityPost = () => {
     const data = {
       category: categoryInput.value,
       title: titleInput.value,
       contents: contentsInput.value,
     };
 
-    createCommunityPost(data)
-      .then(() => {
+    createCommunityPostMutation.mutate(data, {
+      onSuccess: () => {
         toast.success({ message: TOAST.COMMUNITY_POST_SUCCESS });
         navigation.navigate('Community');
-      })
-      .catch((error) => {
-        if (isAxiosError(error)) {
-          toast.error({ message: error.message });
-        }
-      });
-  }, [categoryInput.value, contentsInput.value, navigation, titleInput.value]);
+      },
+      onError: (error) => {
+        isAxiosError(error) && toast.error({ message: error.message });
+      },
+    });
+  };
 
   return (
     <DismissKeyboardView>

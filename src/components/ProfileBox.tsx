@@ -35,17 +35,18 @@ const ProfileBox: React.FC<ProfileBoxProps> = ({ memberInfo }) => {
             </Text>
             {memberInfo.type === Member.Instructor && (
               <View style={common.rowCenter}>
-                <Text style={[common.text_s, { color: BLUE.DEFAULT }]}>인증강사</Text>
-                <Image
-                  style={{ marginLeft: 2, width: 14, height: 14 }}
-                  source={iconPath.CERTIFICATION}
-                />
+                <Text style={[common.text_s, { color: BLUE.DEFAULT, marginRight: 2 }]}>
+                  인증강사
+                </Text>
+                <Image style={{ width: 14, height: 14 }} source={iconPath.CERTIFICATION} />
               </View>
             )}
           </View>
 
           <View style={common.rowCenter}>
-            <Text style={[common.text_m, common.fwb, common.mr8]}>{memberInfo.field}</Text>
+            {memberInfo.field && (
+              <Text style={[common.text_m, common.fwb, common.mr8]}>{memberInfo.field}</Text>
+            )}
             <Text style={[common.text, common.mr8, { alignSelf: 'flex-end' }]}>
               {memberInfo.career}
             </Text>

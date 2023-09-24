@@ -12,10 +12,6 @@ import {
 import { DeleteResponse, PostResponse } from '@/types/common';
 import request from './request';
 
-export const createCommunityPost = (data: CreateCommunityDto) => {
-  return request.post<PostResponse>('/community', data);
-};
-
 export const fetchBookmarkCommunities = () => {
   return request.get<FetchBookmarkCommunitiesResponse>('/community/bookmark');
 };
@@ -35,6 +31,10 @@ export const communityApi = {
     const response = await request.get<FetchCommunityPostsResponse>(ENDPOINT, {
       params,
     });
+    return response.data;
+  },
+  createPost: async (body: CreateCommunityDto) => {
+    const response = await request.post<PostResponse>(ENDPOINT, body);
     return response.data;
   },
   updatePostById: async (postId: number, body: UpdateCommunityDto) => {

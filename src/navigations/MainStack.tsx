@@ -106,7 +106,7 @@ const MainStack = () => {
         <Stack.Screen
           name={ROUTE.INSTRUCTOR.LIST}
           component={InstructorListScreen}
-          options={{ title: '강사' }}
+          options={{ headerShown: false }}
         />
         <Stack.Screen
           name={ROUTE.GALLERY}

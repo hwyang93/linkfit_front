@@ -11,9 +11,9 @@ interface HeaderProps {
 const Header: React.FC<HeaderProps> = ({ title, leftContent, rightContent }) => {
   return (
     <RowView style={styles.container}>
-      {leftContent ? leftContent : <View />}
+      {leftContent ? <View style={{ width: '25%' }}>{leftContent}</View> : <View />}
       <Text style={{ fontSize: 20, textAlign: 'center' }}>{title}</Text>
-      {rightContent ? rightContent : <View />}
+      {rightContent ? <View style={{ width: '25%' }}>{rightContent}</View> : <View />}
     </RowView>
   );
 };

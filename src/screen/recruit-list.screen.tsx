@@ -4,23 +4,21 @@ import FilterChip from '@/components/Common/FilterChip';
 import FilterChipContainer from '@/components/Common/FilterChipContainer';
 import FloatingActionButton from '@/components/Common/FloatingActionButton';
 import RecruitListItem from '@/components/Compound/RecruitListItem';
+import EmptySet from '@/components/EmptySet';
 import PositionFilterModal from '@/components/Modal/PositionFilterModal';
 import RecruitTypeFilterModal from '@/components/Modal/RecruitTypeFilterModal';
 import TimeFilterModal from '@/components/Modal/TimeFilterModal';
+import { useRecruitList } from '@/hooks/recruit/use-recruit-list';
 import useModal from '@/hooks/use-modal';
 import THEME from '@/styles/theme';
-import { FetchRecruitsResponse } from '@/types/api/recruit.type';
 import { ROUTE } from '@/utils/constants/route';
 import { SORT } from '@/utils/constants/sort';
 import { iconPath } from '@/utils/iconPath';
 import { getFilterChipLabel } from '@/utils/util';
-import { fetchRecruits } from '@api/recruit';
 import FABContainer from '@components/Common/FABContainer';
-import toast from '@hooks/toast';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import common from '@styles/common';
-import { isAxiosError } from 'axios';
-import { useCallback, useEffect, useState } from 'react';
+import { useState } from 'react';
 import { FlatList, StyleSheet, Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { LoggedInParamList } from '../../AppInner';
@@ -28,12 +26,22 @@ import { LoggedInParamList } from '../../AppInner';
 type Props = NativeStackScreenProps<LoggedInParamList, typeof ROUTE.RECRUIT.LIST>;
 
 export const RecruitListScreen = ({ navigation }: Props) => {
-  const [recruits, setRecruits] = useState<FetchRecruitsResponse>();
-
   const [positionFilterValueList, setPositionFilterValueList] = useState<string[]>([]);
   const [recruitTypeFilterValueList, setRecruitTypeFilterValueList] = useState<string[]>([]);
   const [timeFilterValueList, setTimeFilterValueList] = useState<string[]>([]);
   const [viewFilterValue, setViewFilterValue] = useState<string | null>(null);
+
+  const params = {
+    fields: positionFilterValueList,
+    time: timeFilterValueList,
+    recruitType: recruitTypeFilterValueList,
+    view: viewFilterValue,
+  };
+
+  const recruitListQuery = useRecruitList(params);
+  const recruitList = recruitListQuery.data;
+
+  console.log('@', recruitList);
 
   const positionModal = useModal();
   const recruitTypeModal = useModal();
@@ -67,29 +75,6 @@ export const RecruitListScreen = ({ navigation }: Props) => {
     setTimeFilterValueList(selectedOptions);
     timeModal.close();
   };
-
-  const getRecruits = useCallback(() => {
-    const params = {
-      fields: positionFilterValueList,
-      time: timeFilterValueList,
-      recruitType: recruitTypeFilterValueList,
-      view: viewFilterValue,
-    };
-
-    fetchRecruits(params)
-      .then(({ data }) => {
-        setRecruits(data);
-      })
-      .catch((error) => {
-        if (isAxiosError(error)) {
-          toast.error({ message: error.message });
-        }
-      });
-  }, [positionFilterValueList, recruitTypeFilterValueList, timeFilterValueList, viewFilterValue]);
-
-  useEffect(() => {
-    getRecruits();
-  }, [getRecruits]);
 
   return (
     <SafeAreaView edges={['bottom', 'left', 'right']} style={styles.container}>
@@ -130,36 +115,41 @@ export const RecruitListScreen = ({ navigation }: Props) => {
           onPress={viewModal.open}
         />
       </FilterChipContainer>
-      <View style={{ marginHorizontal: 16 }}>
-        <FlatList
-          data={recruits}
-          decelerationRate="fast"
-          renderItem={({ item }) => (
-            <View style={{ marginBottom: 16 }}>
-              <RecruitListItem
-                seq={item.seq}
-                position={item.position}
-                title={item.title}
-                companyName={item.companyName}
-                address={item.companyName}
-                bookmarkChecked={item.isBookmark === 'Y'}
-                imageSrc={item.writer?.profileImage?.originFileUrl}
-                onPress={() => navigation.navigate('JobPost', { recruitSeq: item.seq })}
-              />
-            </View>
-          )}
-          snapToAlignment="start"
-          numColumns={2}
-          contentContainerStyle={{ paddingBottom: 32 }}
-          ListHeaderComponent={
-            <View style={{ paddingVertical: 16 }}>
-              <Text style={[common.title]}>구인 공고</Text>
-              <Text style={common.text_m}>내 주변의 구인 공고를 만나보세요!</Text>
-            </View>
-          }
-          showsVerticalScrollIndicator={false}
-        />
+      <View style={{ paddingVertical: 16, marginHorizontal: 16 }}>
+        <Text style={[common.title]}>구인 공고</Text>
+        <Text style={common.text_m}>내 주변의 구인 공고를 만나보세요!</Text>
       </View>
+      <View style={{ marginHorizontal: 16 }}>
+        {recruitList && recruitList.length > 0 && (
+          <FlatList
+            data={recruitList}
+            decelerationRate="fast"
+            renderItem={({ item }) => (
+              <View style={{ marginBottom: 16 }}>
+                <RecruitListItem
+                  seq={item.seq}
+                  position={item.position}
+                  title={item.title}
+                  companyName={item.companyName}
+                  address={item.companyName}
+                  bookmarkChecked={item.isBookmark === 'Y'}
+                  imageSrc={item.writer?.profileImage?.originFileUrl}
+                  onPress={() => navigation.navigate('JobPost', { recruitSeq: item.seq })}
+                />
+              </View>
+            )}
+            snapToAlignment="start"
+            numColumns={2}
+            contentContainerStyle={{ paddingBottom: 32 }}
+            showsVerticalScrollIndicator={false}
+          />
+        )}
+      </View>
+      {recruitList && recruitList.length === 0 && (
+        <View style={{ flex: 1, marginBottom: 32 }}>
+          <EmptySet text="등록된 구인 공고가 없어요." />
+        </View>
+      )}
       <FABContainer>
         <FloatingActionButton
           iconSource={iconPath.PENCIL_W}

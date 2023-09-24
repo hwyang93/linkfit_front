@@ -51,7 +51,7 @@ const MENU = [
     title: '설정',
     link: 'Setting',
   },
-];
+] as const;
 
 type Props = NativeStackScreenProps<LoggedInParamList, typeof ROUTE.TAB.MY>;
 
@@ -91,12 +91,11 @@ export const MyTab = ({ navigation }: Props) => {
             <View style={common.mb8}>
               <SectionHeader title="프로필 메뉴" />
               <View style={[common.rowCenter, { flexWrap: 'wrap' }]}>
-                {/* TODO: 타입 정의 */}
                 {MENU.map((item, index) => (
                   <Pressable
                     key={index}
                     style={[styles.menuItem, { width: columns3, height: 80 }]}
-                    onPress={() => navigation.navigate(item.link as any)}>
+                    onPress={() => navigation.navigate(item.link)}>
                     <Image source={item.icon} style={common.size32} />
                     <Text style={common.text_s}>{item.title}</Text>
                   </Pressable>

@@ -2,13 +2,14 @@ import { LoggedInParamList } from '@/../AppInner';
 import { fetchBookmarkCommunities } from '@/api/community';
 import { fetchBookmarkRecruits } from '@/api/recruit';
 import RecruitListItem from '@/components/Compound/RecruitListItem';
+import BookmarkCounter from '@/components/Counter/BookmarkCounter';
 import EmptySet from '@/components/EmptySet';
 import toast from '@/hooks/toast';
 import { useAppNavigation } from '@/hooks/use-app-navigation';
 import common from '@/styles/common';
 import { FetchBookmarkCommunitiesResponse } from '@/types/api/community.type';
 import { FetchBookmarkRecruitsResponse } from '@/types/api/recruit.type';
-import { Member } from '@/types/common';
+import { Member, YesNoFlag } from '@/types/common';
 import { ROUTE } from '@/utils/constants/route';
 import { iconPath } from '@/utils/iconPath';
 import { materialTopTabNavigationOptions } from '@/utils/options/tab';
@@ -20,12 +21,14 @@ import { useCallback, useEffect, useState } from 'react';
 import { FlatList, Image, Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
 
 interface BookmarkCommunityListItemProps {
+  postId: number;
   title: string;
   writerType: string;
   writerCompanyName: string;
   writerName: string;
   updatedAt: string;
   contents: string;
+  isBookmarked: YesNoFlag;
   bookmarkCount: number;
   commentsLength: number;
   category: string;
@@ -33,12 +36,14 @@ interface BookmarkCommunityListItemProps {
 }
 
 const BookmarkCommunityListItem: React.FC<BookmarkCommunityListItemProps> = ({
+  postId,
   title,
   writerType,
   writerCompanyName,
   writerName,
   updatedAt,
   contents,
+  isBookmarked,
   bookmarkCount,
   commentsLength,
   category,
@@ -68,6 +73,7 @@ const BookmarkCommunityListItem: React.FC<BookmarkCommunityListItemProps> = ({
         <View style={common.rowCenterBetween}>
           <View style={common.rowCenter}>
             <View style={[common.rowCenter, common.mr10]}>
+              <BookmarkCounter isBookmark={isBookmarked} counter={bookmarkCount} postId={postId} />
               <Pressable>
                 <Image source={iconPath.BOOKMARK_ON} style={common.size24} />
               </Pressable>
@@ -164,12 +170,14 @@ const CommunityTab: React.FC = () => {
           {bookmarks.map((bookmark, index) => (
             <BookmarkCommunityListItem
               key={index}
+              postId={bookmark.community.seq}
               title={bookmark.community.title}
               writerType={bookmark.community.writerType}
               writerCompanyName={bookmark.community.writerCompanyName}
               writerName={bookmark.community.writerName}
               updatedAt={formatDate(bookmark.community.updatedAt)}
               contents={bookmark.community.contents}
+              isBookmarked={bookmark.community.isBookmark}
               bookmarkCount={bookmark.community.bookmarkCount}
               commentsLength={bookmark.community.commentsLength}
               category={bookmark.community.category}

@@ -100,10 +100,14 @@ const Header: React.FC<HeaderProps> = ({
         </View>
 
         <View style={common.rowCenter}>
-          <Text style={[common.text_m, common.fwb, common.mr8]}>{field}</Text>
+          {field && <Text style={[common.text_m, common.fwb, common.mr8]}>{field}</Text>}
           <Text style={[common.text]}>{career}</Text>
-          <Text style={[common.mh8]}>|</Text>
-          <Text style={[common.text_s, common.fcg]}>{address}</Text>
+          {address && (
+            <>
+              <Text style={[common.mh8]}>|</Text>
+              <Text style={[common.text_s, common.fcg]}>{address}</Text>
+            </>
+          )}
         </View>
 
         <View style={common.rowCenter}>
