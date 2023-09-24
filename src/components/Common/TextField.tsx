@@ -100,3 +100,30 @@ const styles = StyleSheet.create({
 });
 
 export default TextField;
+
+interface TextFieldHelperTextProps {
+  children: React.ReactNode;
+  variant?: 'default' | 'placeholder' | 'error';
+}
+
+export const TextFieldHelperText: React.FC<TextFieldHelperTextProps> = ({
+  children,
+  variant = 'default',
+}) => {
+  const color = {
+    default: THEME.GREY01,
+    placeholder: THEME.GREY03,
+    error: THEME.ERROR,
+  };
+
+  return (
+    <Text
+      style={{
+        marginLeft: 16,
+        marginTop: 4,
+        color: color[variant],
+      }}>
+      {children}
+    </Text>
+  );
+};

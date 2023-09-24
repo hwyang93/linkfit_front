@@ -8,23 +8,23 @@ import FontAwesome from 'react-native-vector-icons/FontAwesome';
 
 interface SelectBoxProps {
   data: any;
-  onSelect: Function;
   defaultButtonText: string;
   label?: string;
   textAlign?: string;
   icon?: string;
   selectKey?: string;
+  onSelect: (value: string, index?: number) => void;
   onChangeSearchInputText?: () => void;
 }
 
 const SelectBox: React.FC<SelectBoxProps> = ({
   data,
-  onSelect,
   defaultButtonText,
   label,
   textAlign,
   icon,
   selectKey,
+  onSelect,
   onChangeSearchInputText,
 }) => {
   const [focus, setFocus] = useState(false);
@@ -79,13 +79,7 @@ const SelectBox: React.FC<SelectBoxProps> = ({
           );
         }}
         renderDropdownIcon={(isOpened) => {
-          return (
-            <FontAwesome
-              name={isOpened ? 'chevron-up' : 'chevron-down'}
-              color="#acacac"
-              size={16}
-            />
-          );
+          return <FontAwesome name="chevron-down" color="#acacac" size={14} />;
         }}
         dropdownIconPosition="right"
         dropdownStyle={styles.dropBox}

@@ -1,7 +1,7 @@
 import { useState } from 'react';
 
-export const useSelect = () => {
-  const [value, setValue] = useState('');
+export const useSelect = (initialValue?: string) => {
+  const [value, setValue] = useState(initialValue || '');
 
   const onChange = (value: string) => {
     setValue(value);
@@ -11,9 +11,5 @@ export const useSelect = () => {
     setValue('');
   };
 
-  return {
-    value,
-    onChange,
-    reset,
-  };
+  return { value, onChange, reset };
 };

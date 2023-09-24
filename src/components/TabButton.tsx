@@ -1,35 +1,33 @@
+import THEME from '@/styles/theme';
 import { GRAY } from '@styles/colors';
 import { useState } from 'react';
 import { Pressable, StyleSheet, Text, View } from 'react-native';
 
 interface TabButtonProps {
-  genderData: Array<any>;
+  list: string[];
   value: string;
-  onSelect: Function;
+  initialValue?: string;
+  onSelect: (value: string) => void;
 }
 
-const TabButton: React.FC<TabButtonProps> = ({ genderData, onSelect }) => {
-  const [userOption, setUserOption] = useState('');
+const TabButton: React.FC<TabButtonProps> = ({ list, initialValue, onSelect }) => {
+  const [userOption, setUserOption] = useState(initialValue || list[0]);
 
-  const selectHandler = (value: any) => {
+  const handleSelect = (value: string) => {
     onSelect(value);
     setUserOption(value);
   };
 
   return (
     <View style={styles.tabWrap}>
-      {genderData.map((item, index) => {
-        return (
-          <Pressable
-            key={index}
-            style={[styles.tabBox, item.value === userOption ? styles.selected : styles.unSelected]}
-            onPress={() => selectHandler(item.value)}>
-            <Text style={[styles.option, item.value === userOption && { color: '#fff' }]}>
-              {item.value}
-            </Text>
-          </Pressable>
-        );
-      })}
+      {list.map((item, index) => (
+        <Pressable
+          key={index}
+          style={[styles.tabBox, item === userOption ? styles.selected : styles.unSelected]}
+          onPress={() => handleSelect(item)}>
+          <Text style={[styles.option, item === userOption && { color: THEME.WHITE }]}>{item}</Text>
+        </Pressable>
+      ))}
     </View>
   );
 };

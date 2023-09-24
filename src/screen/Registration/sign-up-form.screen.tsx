@@ -1,44 +1,67 @@
 import CTAButton from '@/components/Common/CTAButton';
+import TextField, { TextFieldHelperText } from '@/components/Common/TextField';
+import useInput from '@/hooks/use-input';
+import { useSelect } from '@/hooks/use-select';
+import { passwordSchema } from '@/schema/form';
 import { ROUTE } from '@/utils/constants/route';
 import { createMember } from '@api/member';
 import BirthdayPicker from '@components/BirthdayPicker';
 import DismissKeyboardView from '@components/DismissKeyboardView';
-import Input, { KeyboardTypes } from '@components/Input';
+import { KeyboardTypes } from '@components/Input';
 import SelectBox from '@components/SelectBox';
 import TabButton from '@components/TabButton';
 import toast from '@hooks/toast';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import common from '@styles/common';
-import { useCallback, useState } from 'react';
+import { useState } from 'react';
 import { View } from 'react-native';
 import { LoggedInParamList } from '../../../AppInner';
 
-const GENDER_DATA = [{ value: '남자' }, { value: '여자' }];
+const GENDER_DATA = ['남자', '여자'];
 const AGENCY_DATA = ['SKT', 'KT', 'LG U+', '알뜰폰'];
 
 type Props = NativeStackScreenProps<LoggedInParamList, typeof ROUTE.AUTH.SIGN_UP_FORM>;
 
 export const SignUpFormScreen = ({ navigation, route }: Props) => {
   const [loading, setLoading] = useState(false);
-  const [email] = useState(route.params.email);
-  const [userName, setUserName] = useState('');
-  const [birth, setBirth] = useState('');
-  const [gender, setGender] = useState('');
-  const [agency, setAgency] = useState('');
-  const [phoneNumber, setPhoneNumber] = useState('');
-  const [password, setPassword] = useState('');
-  const [passwordConfirm, setPasswordConfirm] = useState('');
 
-  const signIn = useCallback(async () => {
-    const data = {
-      email: email,
-      password: password,
-      name: userName,
-      birth: birth,
-      gender: gender,
-      phone: phoneNumber,
+  const nameInput = useInput();
+  const phoneNumberInput = useInput();
+  const passwordInput = useInput();
+  const passwordConfirmInput = useInput();
+
+  const isPasswordInputValid = passwordSchema.safeParse(passwordInput.value).success;
+  const isPasswordConfirmInputValid = passwordInput.value === passwordConfirmInput.value;
+
+  const passwordHelperText =
+    passwordInput.value.length === 0
+      ? '영문, 숫자, 특수문자 / 8자 이상'
+      : isPasswordInputValid
+      ? '비밀번호가 적절해요 :)'
+      : '비밀번호 형식을 확인하세요.';
+
+  const passwordConfirmHelperText =
+    passwordConfirmInput.value.length === 0
+      ? ''
+      : isPasswordConfirmInputValid
+      ? '비밀번호가 일치해요 :)'
+      : '비밀번호를 확인하세요.';
+
+  const birthSelect = useSelect();
+  const genderSelect = useSelect(GENDER_DATA[0]);
+  const agencySelect = useSelect();
+
+  const signIn = async () => {
+    const body = {
+      email: route.params.email,
+      password: passwordInput.value,
+      name: nameInput.value,
+      birth: birthSelect.value,
+      gender: genderSelect.value,
+      phone: phoneNumberInput.value,
     };
-    await createMember(data)
+
+    await createMember(body)
       .then(() => {
         setLoading(true);
         toast.success({ message: '회원가입이 완료되었어요!' });
@@ -48,36 +71,45 @@ export const SignUpFormScreen = ({ navigation, route }: Props) => {
       .catch((error) => {
         toast.error({ message: error.message });
       });
-  }, [email, birth, gender, navigation, password, phoneNumber, userName]);
+  };
 
-  const canGoNext = userName && gender && birth && phoneNumber && password && passwordConfirm;
+  const canGoNext =
+    nameInput.value &&
+    genderSelect.value &&
+    birthSelect.value &&
+    phoneNumberInput.value &&
+    isPasswordInputValid &&
+    isPasswordConfirmInputValid;
+
+  console.log('gender', genderSelect.value);
 
   return (
     <DismissKeyboardView>
       <View style={common.container}>
         <View>
           <View style={common.mb16}>
-            <Input
-              label={'이름'}
-              onChangeText={(text: string) => setUserName(text.trim())}
-              value={userName}
-              placeholder={'이름을 입력 하세요.'}
+            <TextField
+              label="이름"
+              onChangeText={nameInput.onChange}
+              value={nameInput.value}
+              placeholder="김링크"
               keyboardType={KeyboardTypes.DEFAULT}
             />
           </View>
           <View style={common.mb16}>
             <BirthdayPicker
-              label={'생년월일'}
-              onSelect={(value: any) => setBirth(value)}
-              placeholder={'생년월일을 선택하세요.'}
-              value={birth}
+              label="생년월일"
+              onSelect={birthSelect.onChange}
+              placeholder="2000.01.01"
+              value={birthSelect.value}
             />
           </View>
           <View style={[common.mb16]}>
             <TabButton
-              genderData={GENDER_DATA}
-              onSelect={(value: any) => setGender(value)}
-              value={gender}
+              list={GENDER_DATA}
+              onSelect={genderSelect.onChange}
+              initialValue={GENDER_DATA[0]}
+              value={genderSelect.value}
             />
           </View>
 
@@ -93,43 +125,63 @@ export const SignUpFormScreen = ({ navigation, route }: Props) => {
             <View style={{ flex: 1, marginRight: 8 }}>
               <SelectBox
                 data={AGENCY_DATA}
-                onSelect={(value: any) => setAgency(value)}
-                defaultButtonText={'통신사'}
+                onSelect={agencySelect.onChange}
+                defaultButtonText="통신사"
               />
             </View>
             <View style={{ flex: 2 }}>
-              <Input
-                label={'휴대폰 번호'}
-                onChangeText={(text: any) => setPhoneNumber(text)}
-                value={phoneNumber}
-                placeholder={'01012345678'}
+              <TextField
+                label="휴대폰 번호"
+                onChangeText={phoneNumberInput.onChange}
+                value={phoneNumberInput.value}
+                placeholder="01012345678"
                 keyboardType={KeyboardTypes.PHONE}
               />
             </View>
           </View>
-
           <View>
             <View style={common.mb16}>
-              <Input
-                label={'비밀번호'}
-                onChangeText={(text: string) => setPassword(text.trim())}
-                value={password}
-                placeholder={'비밀번호를 입력하세요.'}
+              <TextField
+                label="비밀번호"
+                onChangeText={passwordInput.onChange}
+                value={passwordInput.value}
+                placeholder="비밀번호를 입력하세요."
                 keyboardType={KeyboardTypes.DEFAULT}
+                error={passwordInput.value.length !== 0 && !isPasswordInputValid}
                 secureTextEntry
               />
+              <TextFieldHelperText
+                variant={
+                  passwordInput.value.length === 0
+                    ? 'placeholder'
+                    : isPasswordInputValid
+                    ? 'default'
+                    : 'error'
+                }>
+                {passwordHelperText}
+              </TextFieldHelperText>
             </View>
           </View>
-
           <View style={common.mb16}>
-            <Input
-              label={'비밀번호 확인'}
-              onChangeText={(text: string) => setPasswordConfirm(text.trim())}
-              value={passwordConfirm}
-              placeholder={'비밀번호를 다시한번 입력하세요.'}
+            <TextField
+              label="비밀번호 확인"
+              onChangeText={passwordConfirmInput.onChange}
+              value={passwordConfirmInput.value}
+              placeholder="비밀번호를 다시한번 입력하세요."
               keyboardType={KeyboardTypes.DEFAULT}
               secureTextEntry
+              error={passwordConfirmInput.value.length !== 0 && !isPasswordConfirmInputValid}
             />
+            <TextFieldHelperText
+              variant={
+                passwordConfirmInput.value.length === 0
+                  ? 'placeholder'
+                  : isPasswordConfirmInputValid
+                  ? 'default'
+                  : 'error'
+              }>
+              {passwordConfirmHelperText}
+            </TextFieldHelperText>
           </View>
           <View style={common.mt20}>
             <CTAButton label="회원가입" loading={loading} disabled={!canGoNext} onPress={signIn} />
