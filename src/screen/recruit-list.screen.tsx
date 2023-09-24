@@ -1,3 +1,5 @@
+import BottomSheet from '@/components/Common/BottomSheet';
+import BottomSheetOption from '@/components/Common/BottomSheetOption';
 import FilterChip from '@/components/Common/FilterChip';
 import FilterChipContainer from '@/components/Common/FilterChipContainer';
 import FloatingActionButton from '@/components/Common/FloatingActionButton';
@@ -5,11 +7,11 @@ import RecruitListItem from '@/components/Compound/RecruitListItem';
 import PositionFilterModal from '@/components/Modal/PositionFilterModal';
 import RecruitTypeFilterModal from '@/components/Modal/RecruitTypeFilterModal';
 import TimeFilterModal from '@/components/Modal/TimeFilterModal';
-import ViewFilterModal from '@/components/Modal/ViewFilterModal';
 import useModal from '@/hooks/use-modal';
 import THEME from '@/styles/theme';
 import { FetchRecruitsResponse } from '@/types/api/recruit.type';
 import { ROUTE } from '@/utils/constants/route';
+import { SORT } from '@/utils/constants/sort';
 import { iconPath } from '@/utils/iconPath';
 import { getFilterChipLabel } from '@/utils/util';
 import { fetchRecruits } from '@api/recruit';
@@ -31,7 +33,7 @@ export const RecruitListScreen = ({ navigation }: Props) => {
   const [positionFilterValueList, setPositionFilterValueList] = useState<string[]>([]);
   const [recruitTypeFilterValueList, setRecruitTypeFilterValueList] = useState<string[]>([]);
   const [timeFilterValueList, setTimeFilterValueList] = useState<string[]>([]);
-  const [viewFilterValueList, setViewFilterValueList] = useState<string[]>([]);
+  const [viewFilterValue, setViewFilterValue] = useState<string | null>(null);
 
   const positionModal = useModal();
   const recruitTypeModal = useModal();
@@ -41,13 +43,14 @@ export const RecruitListScreen = ({ navigation }: Props) => {
   const resetChipVisible =
     positionFilterValueList.length > 0 ||
     recruitTypeFilterValueList.length > 0 ||
-    timeFilterValueList.length > 0;
+    timeFilterValueList.length > 0 ||
+    viewFilterValue;
 
   const resetFilter = () => {
     setPositionFilterValueList([]);
     setRecruitTypeFilterValueList([]);
     setTimeFilterValueList([]);
-    setViewFilterValueList([]);
+    setViewFilterValue(null);
   };
 
   const handlePositionFilterApply = (selectedOptions: string[]) => {
@@ -65,17 +68,12 @@ export const RecruitListScreen = ({ navigation }: Props) => {
     timeModal.close();
   };
 
-  const handleViewFilterApply = (selectedOptions: string[]) => {
-    setViewFilterValueList(selectedOptions);
-    viewModal.close();
-  };
-
   const getRecruits = useCallback(() => {
     const params = {
       fields: positionFilterValueList,
       time: timeFilterValueList,
       recruitType: recruitTypeFilterValueList,
-      view: viewFilterValueList,
+      view: viewFilterValue,
     };
 
     fetchRecruits(params)
@@ -87,12 +85,7 @@ export const RecruitListScreen = ({ navigation }: Props) => {
           toast.error({ message: error.message });
         }
       });
-  }, [
-    positionFilterValueList,
-    recruitTypeFilterValueList,
-    timeFilterValueList,
-    viewFilterValueList,
-  ]);
+  }, [positionFilterValueList, recruitTypeFilterValueList, timeFilterValueList, viewFilterValue]);
 
   useEffect(() => {
     getRecruits();
@@ -129,7 +122,13 @@ export const RecruitListScreen = ({ navigation }: Props) => {
           rightIcon
           onPress={timeModal.open}
         />
-        <FilterChip label="조회순" style={{ marginLeft: 8 }} rightIcon onPress={viewModal.open} />
+        <FilterChip
+          active={!!viewFilterValue}
+          label={SORT[viewFilterValue as keyof typeof SORT] || '조회순'}
+          style={{ marginLeft: 8 }}
+          rightIcon
+          onPress={viewModal.open}
+        />
       </FilterChipContainer>
       <View style={{ marginHorizontal: 16 }}>
         <FlatList
@@ -199,14 +198,27 @@ export const RecruitListScreen = ({ navigation }: Props) => {
           onApply={handleTimeFilterApply}
         />
       )}
-      {viewModal.visible && (
+      {/* {viewModal.visible && (
         <ViewFilterModal
           visible={viewModal.visible}
           onDismiss={viewModal.close}
-          initialOptions={viewFilterValueList}
+          initialOptions={viewFilterValue}
           onApply={handleViewFilterApply}
         />
-      )}
+      )} */}
+      <BottomSheet visible={viewModal.visible} onDismiss={viewModal.close}>
+        {Object.entries(SORT).map(([value, label], index) => (
+          <BottomSheetOption
+            key={index}
+            label={label}
+            selected={viewFilterValue === value}
+            onPress={() => {
+              setViewFilterValue(value);
+              viewModal.close();
+            }}
+          />
+        ))}
+      </BottomSheet>
     </SafeAreaView>
   );
 };
