@@ -4,7 +4,6 @@ import {
   MemberEntity,
   MemberLicenceEntity,
   MemberLinkEntity,
-  MemberReputationEntity,
   PositionSuggestEntity,
   RecruitEntity,
   RegionAuthEntity,
@@ -94,8 +93,6 @@ export interface FetchMemberMyInfoResponse {
 export type FetchRegionAuthResponse = RegionAuthEntity;
 
 export type FetchMemberLicencesResponse = MemberLicenceEntity[];
-
-export type FetchMemberReputationsResponse = MemberReputationEntity[];
 
 export interface FetchSendPositionSuggestsParams {
   period?: string;

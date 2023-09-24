@@ -1,66 +1,50 @@
 import ResumeCard from '@/components/Compound/ResumeCard';
+import { useResumeList } from '@/hooks/resume/use-resume-list';
 import { ROUTE } from '@/utils/constants/route';
 import { iconPath } from '@/utils/iconPath';
 import { formatDate } from '@/utils/util';
-import { deleteResume, fetchResumes, updateResumeMaster } from '@api/resume';
+import { deleteResume, updateResumeMaster } from '@api/resume';
 import Modal from '@components/ModalSheet';
 import toast from '@hooks/toast';
-import { useIsFocused } from '@react-navigation/native';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { BLUE, WHITE } from '@styles/colors';
 import common from '@styles/common';
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useState } from 'react';
 import { Alert, Image, Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { LoggedInParamList } from '../../../AppInner';
 
 type Props = NativeStackScreenProps<LoggedInParamList, typeof ROUTE.MY.RESUME_MANAGE>;
 
 export const ResumeManageScreen = ({ navigation }: Props) => {
-  const [resumes, setResumes] = useState<any[]>([]);
   const [selectedResume, setSelectedResume] = useState<any>({});
   const [modalVisible, setModalVisible] = useState(false);
 
-  const isFocused = useIsFocused();
-
-  const getResumes = useCallback(() => {
-    if (isFocused) {
-      fetchResumes()
-        .then(({ data }) => {
-          setResumes(data);
-        })
-        .catch((error) => {
-          Alert.alert(error.message);
-        });
-    }
-  }, [isFocused]);
+  const resumeListQuery = useResumeList();
+  const resumes = resumeListQuery.data;
 
   const onUpdateResumeMaster = useCallback(() => {
     updateResumeMaster(selectedResume.seq)
       .then(() => {
         closeModel();
         toast.success({ message: '대표이력서 설정이 완료되었어요!' });
-        getResumes();
+        resumeListQuery.refetch();
       })
       .catch((error) => {
         toast.error({ message: error.message });
       });
-  }, [getResumes, selectedResume.seq]);
+  }, [selectedResume.seq]);
 
   const onDeleteResume = useCallback(() => {
     deleteResume(selectedResume.seq)
       .then(() => {
         closeModel();
         toast.success({ message: '이력서가 삭제되었습니다.' });
-        getResumes();
+        resumeListQuery.refetch();
       })
       .catch((error) => {
         toast.error({ message: error.message });
       });
-  }, [getResumes, selectedResume.seq]);
-
-  useEffect(() => {
-    getResumes();
-  }, [getResumes]);
+  }, [selectedResume.seq]);
 
   const MODAL = [
     // {
@@ -124,11 +108,11 @@ export const ResumeManageScreen = ({ navigation }: Props) => {
 
   return (
     <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
-      {resumes.map((resume) => (
+      {resumes?.map((resume) => (
         <ResumeCard
           style={{ marginBottom: 8 }}
           key={resume.seq}
-          isMaster={resume.isMaster}
+          isMaster={resume.isMaster === 'Y'}
           title={resume.title}
           timestamp={formatDate(resume.updatedAt)}
           kebabIconShown
@@ -151,20 +135,16 @@ export const ResumeManageScreen = ({ navigation }: Props) => {
         title={'더보기'}
         content={
           <View>
-            {MODAL.map((item, index) => {
-              return (
-                <View key={index} style={common.modalItemBox}>
-                  <Pressable
-                    onPress={item.job}
-                    style={[common.rowCenterBetween, { width: '100%' }]}>
-                    <Text style={[common.modalText, item.selected && { color: BLUE.DEFAULT }]}>
-                      {item.value}
-                    </Text>
-                    {item.selected && <Image source={iconPath.CHECK} style={common.size24} />}
-                  </Pressable>
-                </View>
-              );
-            })}
+            {MODAL.map((item, index) => (
+              <View key={index} style={common.modalItemBox}>
+                <Pressable onPress={item.job} style={[common.rowCenterBetween, { width: '100%' }]}>
+                  <Text style={[common.modalText, item.selected && { color: BLUE.DEFAULT }]}>
+                    {item.value}
+                  </Text>
+                  {item.selected && <Image source={iconPath.CHECK} style={common.size24} />}
+                </Pressable>
+              </View>
+            ))}
           </View>
         }
       />

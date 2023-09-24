@@ -1,10 +1,5 @@
 import { YesNoFlag } from '../common';
-import {
-  CommonFileEntity,
-  MemberLinkEntity,
-  MemberReputationEntity,
-  ResumeEntity,
-} from './entities.type';
+import { CommonFileEntity, MemberLinkEntity, ResumeEntity, ReviewEntity } from './entities.type';
 
 export interface FetchInstructorsParams {
   noPaging?: boolean;
@@ -36,7 +31,7 @@ export interface FetchInstructorResponse {
   career: string;
   links: MemberLinkEntity[];
   follower: string;
-  reputations: MemberReputationEntity[];
+  reputations: ReviewEntity[];
 }
 
 export type FetchRecommendedInstructorsResponse = {

@@ -147,7 +147,7 @@ export interface CareerEntity extends BaseEntity {
   resume: ResumeEntity;
 }
 
-export interface MemberReputationEntity extends BaseEntity {
+export interface ReviewEntity extends BaseEntity {
   seq: number;
   type: string;
   score: number;

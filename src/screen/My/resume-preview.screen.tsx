@@ -111,7 +111,8 @@ export const ResumePreviewScreen = ({ route, navigation }: Props) => {
       evaluationMemberSeq: memberInfo.seq,
       targetMemberSeq: application.memberSeq,
     };
-    navigation.navigate(ROUTE.MY.REVIEW_CREATE, { reputationInfo: params });
+    // TODO: 기능 추가
+    navigation.navigate(ROUTE.MY.REVIEW_EDIT, { reviewId: 1 });
   };
 
   return (

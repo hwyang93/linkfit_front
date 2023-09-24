@@ -41,6 +41,7 @@ import { ResumeCreateScreen } from '@/screen/my/resume-create.screen';
 import { ResumeManageScreen } from '@/screen/my/resume-manange.screen';
 import { ResumePreviewScreen } from '@/screen/my/resume-preview.screen';
 import { ReviewCreateScreen } from '@/screen/my/review-create.screen';
+import { ReviewEditScreen } from '@/screen/my/review-edit.screen';
 import { ReviewManageScreen } from '@/screen/my/review-manage';
 import { RulesScreen } from '@/screen/my/rules.screen';
 import { SendSuggestionDetailScreen } from '@/screen/my/send-suggestion-detail.screen';
@@ -319,7 +320,7 @@ const MainStack = () => {
           options={{ title: '지원자 현황' }}
         />
         <Stack.Screen
-          name="ReviewManage"
+          name={ROUTE.MY.REVIEW_MANAGE}
           component={ReviewManageScreen}
           options={{ title: '작성 후기 관리' }}
         />
@@ -327,6 +328,11 @@ const MainStack = () => {
           name={ROUTE.MY.REVIEW_CREATE}
           component={ReviewCreateScreen}
           options={{ title: '후기 작성' }}
+        />
+        <Stack.Screen
+          name={ROUTE.MY.REVIEW_EDIT}
+          component={ReviewEditScreen}
+          options={{ title: '후기 수정' }}
         />
         <Stack.Screen
           name={ROUTE.MY.FOLLOWING_MANAGE}
@@ -421,7 +427,7 @@ const MainStack = () => {
           }}
         />
         <Stack.Screen
-          name="PasswordReset"
+          name={ROUTE.AUTH.PASSWORD_RESET}
           component={PasswordResetScreen}
           options={{ title: '비밀번호 재설정' }}
         />

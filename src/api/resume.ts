@@ -24,7 +24,12 @@ export const deleteResume = (seq: number) => {
 const ENDPOINT = '/resume';
 
 export const resumeApi = {
-  createResume: (data: object) => {
-    return request.post(`${ENDPOINT}`, data);
+  getResumeList: async () => {
+    const response = await request.get<FetchResumesResponse>(`${ENDPOINT}`);
+    return response.data;
+  },
+  createResume: async (data: object) => {
+    const resposne = await request.post(`${ENDPOINT}`, data);
+    return resposne.data;
   },
 };

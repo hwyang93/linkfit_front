@@ -1,39 +1,38 @@
-import { useDeleteMemberReputation } from '@/hooks/member/use-delete-member-reputation';
-import { useMemberReputationList } from '@/hooks/member/use-member-reputation-list';
+import { useDeleteReview } from '@/hooks/review/use-delete-review';
+import { useReviewList } from '@/hooks/review/use-review-list';
+import { useAppNavigation } from '@/hooks/use-app-navigation';
 import useModal from '@/hooks/use-modal';
 import { Member } from '@/types/common';
 import { ROUTE } from '@/utils/constants/route';
 import { iconPath } from '@/utils/iconPath';
 import { formatDate } from '@/utils/util';
 import toast from '@hooks/toast';
-import { NavigationProp, useNavigation } from '@react-navigation/native';
 import { BLUE, GRAY, WHITE } from '@styles/colors';
 import common from '@styles/common';
 import { isAxiosError } from 'axios';
 import { useState } from 'react';
 import { Image, Pressable, StyleSheet, Text, View } from 'react-native';
 import AppScrollView from '../\bLayout/AppScrollView';
-import { LoggedInParamList } from '../../../AppInner';
 import BottomSheet from '../Common/BottomSheet';
 import BottomSheetOption from '../Common/BottomSheetOption';
 import EmptySet from '../EmptySet';
 
 const EmployeeReviewTab: React.FC = () => {
-  const [selectedReputationId, setSelectedReputationId] = useState<number | null>(null);
+  const [selectedReviewId, setSelectedReviewId] = useState<number | null>(null);
 
-  const navigation = useNavigation<NavigationProp<LoggedInParamList>>();
+  const navigation = useAppNavigation();
 
-  const memberReputationListQuery = useMemberReputationList();
-  const reputations = memberReputationListQuery.data;
+  const reviewListQuery = useReviewList();
+  const reviewList = reviewListQuery.data;
 
-  const deleteMemberReputationMutation = useDeleteMemberReputation();
+  const deleteReviewMutation = useDeleteReview();
 
   const modal = useModal();
 
-  const deleteReputation = () => {
-    if (!selectedReputationId) return;
+  const deleteReview = () => {
+    if (!selectedReviewId) return;
 
-    deleteMemberReputationMutation.mutate(selectedReputationId, {
+    deleteReviewMutation.mutate(selectedReviewId, {
       onSuccess: () => {
         toast.success({ message: '후기 삭제가 완료되었어요!' });
         modal.close();
@@ -47,20 +46,20 @@ const EmployeeReviewTab: React.FC = () => {
   };
 
   const onEditPress = () => {
+    if (!selectedReviewId) return;
+
     modal.close();
-    navigation.navigate(ROUTE.MY.REVIEW_CREATE, {
-      reputationInfo: selectedReputationId,
-    });
+    navigation.navigate(ROUTE.MY.REVIEW_EDIT, { reviewId: selectedReviewId });
   };
 
   const onDeletePress = () => {
-    deleteReputation();
+    deleteReview();
   };
 
   return (
     <AppScrollView style={styles.container} showsVerticalScrollIndicator={false}>
-      {reputations?.length === 0 && <EmptySet text="작성한 후기가 없어요" />}
-      {reputations?.map((item) =>
+      {reviewList?.length === 0 && <EmptySet text="작성한 후기가 없어요" />}
+      {reviewList?.map((item) =>
         item.targetMember.type === Member.Instructor ? (
           <View key={'review_' + item.seq} style={styles.reviewBox}>
             <View style={common.rowCenter}>
@@ -99,7 +98,7 @@ const EmployeeReviewTab: React.FC = () => {
               style={styles.kebabIcon}
               hitSlop={10}
               onPress={() => {
-                setSelectedReputationId(item.seq);
+                setSelectedReviewId(item.seq);
                 modal.open();
               }}>
               <Image source={iconPath.KEBAB} style={[common.size24]} />
@@ -119,7 +118,7 @@ const EmployeeReviewTab: React.FC = () => {
               style={styles.kebabIcon}
               hitSlop={10}
               onPress={() => {
-                setSelectedReputationId(item.seq);
+                setSelectedReviewId(item.seq);
                 modal.open();
               }}>
               <Image source={iconPath.KEBAB} style={[common.size24]} />

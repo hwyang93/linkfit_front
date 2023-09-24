@@ -15,7 +15,6 @@ import {
   FetchMemberInfoResponse,
   FetchMemberLicencesResponse,
   FetchMemberMyInfoResponse,
-  FetchMemberReputationsResponse,
   FetchPositionSuggestResponse,
   FetchReceivePositionSuggestsParams,
   FetchReceivePositionSuggestsResponse,
@@ -162,14 +161,6 @@ export const memberApi = {
   },
   updatePositionSuggestion: async (suggestionId: number, body: UpdatePositionSuggestDto) => {
     const response = await request.patch(`${ENDPOINT}/suggest/${suggestionId}`, body);
-    return response.data;
-  },
-  getReputationList: async () => {
-    const response = await request.get<FetchMemberReputationsResponse>(`${ENDPOINT}/reputation`);
-    return response.data;
-  },
-  deleteReputation: async (reputationId: number) => {
-    const response = await request.delete<DeleteResponse>(`${ENDPOINT}/reputation/${reputationId}`);
     return response.data;
   },
   unregister: async (memberId: number) => {
