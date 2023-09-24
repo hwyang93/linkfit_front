@@ -20,7 +20,7 @@ const CHANNEL = ['필라테스', '요가', '릴리리맘보'];
 
 type Props = NativeStackScreenProps<LoggedInParamList, typeof ROUTE.COMMUNITY.POST_CREATE>;
 
-const CommunityPostFormScreen = ({ navigation }: Props) => {
+export const CommunityPostCreateScreen = ({ navigation }: Props) => {
   const titleInput = useInput();
   const categoryInput = useInput();
   const contentsInput = useInput();
@@ -103,5 +103,3 @@ const styles = StyleSheet.create({
     backgroundColor: WHITE,
   },
 });
-
-export default CommunityPostFormScreen;

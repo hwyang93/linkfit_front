@@ -90,4 +90,3 @@ const styles = StyleSheet.create({
     backgroundColor: WHITE,
   },
 });
-export default InquiryFormScreen;

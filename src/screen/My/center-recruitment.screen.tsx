@@ -181,5 +181,3 @@ const styles = StyleSheet.create({
   },
   kebabIcon: { position: 'absolute', top: 16, right: 16 },
 });
-
-export default CenterRecruitmentScreen;

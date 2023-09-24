@@ -2,7 +2,7 @@ import IconButton from '@/components/Common/IconButton';
 import BottomTabs from '@/navigations/BottomTabs';
 import { CommunityCommentEditScreen } from '@/screen/Community/community-comment-edit.screen';
 import { CommunityMyScreen } from '@/screen/Community/community-my.screen';
-import CommunityPostFormScreen from '@/screen/Community/community-post-create';
+import { CommunityPostCreateScreen } from '@/screen/Community/community-post-create';
 import { CommunityPostDetailScreen } from '@/screen/Community/community-post-detail.screen';
 import { CommunityPostEditScreen } from '@/screen/Community/community-post-edit.screen';
 import { AccountScreen } from '@/screen/My/account.screen';
@@ -11,14 +11,14 @@ import { ApplicationStatusScreen } from '@/screen/My/application-status.screen';
 import { BlacklistScreen } from '@/screen/My/blacklist.screen';
 import { BookmarkManageScreen } from '@/screen/My/bookmark-manage.screen';
 import { CenterProfileEditScreen } from '@/screen/My/center-profile-edit.screen';
-import CenterRecruitmentScreen from '@/screen/My/center-recruitment.screen';
+import { CenterRecruitmentScreen } from '@/screen/My/center-recruitment.screen';
 import { CertifyInstructorFormScreen } from '@/screen/My/certify-instructor-form.screen';
 import { CertifyInstructorScreen } from '@/screen/My/certify-instructor.screen';
 import { CertifyLocationScreen } from '@/screen/My/certify-location.screen';
 import { CompanyInfoScreen } from '@/screen/My/company-info.screen';
 import { FollowingManageScreen } from '@/screen/My/following-manage.screen';
 import { InquiryDetailScreen } from '@/screen/My/inquiry-detail.screen';
-import InquiryFormScreen from '@/screen/My/inquiry-form.screen';
+import { InquiryFormScreen } from '@/screen/My/inquiry-form.screen';
 import { InquiryListScreen } from '@/screen/My/inquiry-list.screen';
 import { LinkAddScreen } from '@/screen/My/link-add.screen';
 import { MyNotificationScreen } from '@/screen/My/my-notification.screen';
@@ -118,7 +118,7 @@ const MainStack = () => {
         />
         <Stack.Screen
           name={ROUTE.COMMUNITY.POST_CREATE}
-          component={CommunityPostFormScreen}
+          component={CommunityPostCreateScreen}
           options={{ title: '게시글 작성' }}
         />
         <Stack.Screen
