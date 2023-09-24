@@ -30,6 +30,7 @@ export const CertifyInstructorFormScreen = ({ navigation }: Props) => {
   const birthInput = useInput(memberInfo.birth);
   const fieldInput = useInput('');
   const issuerInput = useInput('');
+  const issuerDateInput = useInput('');
   const licenceNumberInput = useInput('');
 
   const [licenceImageObj, setLicenceImageObj] = useState<{
@@ -44,6 +45,7 @@ export const CertifyInstructorFormScreen = ({ navigation }: Props) => {
   const isBirthInputValid = birthInput.value.length > 0;
   const isFieldInputValid = fieldInput.value.length > 0;
   const isIssuerInputValid = issuerInput.value.length > 0;
+  const isIssuerDateInputValid = issuerDateInput.value.length > 0;
   const isLicenceNumberInputValid = licenceNumberInput.value.length > 0;
   const isLicenceImageObjValid =
     licenceImageObj.name !== undefined &&
@@ -55,6 +57,7 @@ export const CertifyInstructorFormScreen = ({ navigation }: Props) => {
     isBirthInputValid &&
     isFieldInputValid &&
     isIssuerInputValid &&
+    isIssuerDateInputValid &&
     isLicenceNumberInputValid &&
     isLicenceImageObjValid;
 
@@ -64,6 +67,7 @@ export const CertifyInstructorFormScreen = ({ navigation }: Props) => {
     formData.append('field', fieldInput.value);
     formData.append('licenceNumber', licenceNumberInput.value);
     formData.append('issuer', issuerInput.value);
+    formData.append('issuerDate', issuerDateInput.value);
     formData.append('file', licenceImageObj);
 
     setIsLoading(true);
@@ -159,6 +163,15 @@ export const CertifyInstructorFormScreen = ({ navigation }: Props) => {
             value={issuerInput.value}
             placeholder={'자격증 발급기관을 입력하세요.'}
             keyboardType={KeyboardTypes.DEFAULT}
+          />
+        </View>
+
+        <View style={common.mb16}>
+          <BirthdayPicker
+              label={'자격증 발급일자'}
+              onSelect={issuerDateInput.onChange}
+              value={issuerDateInput.value}
+              placeholder={'자격증 발급일자를 선택하세요.'}
           />
         </View>
 

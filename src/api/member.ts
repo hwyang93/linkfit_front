@@ -120,6 +120,10 @@ export const fetchRecruitByMember = (seq: number) => {
   return request.get<FetchRecruitByMemberResponse>(`/member/${seq}/recruit`);
 };
 
+export const updateMemberPassword = (body: UpdateMemberPasswordDto) => {
+  return request.patch('member/password', body);
+};
+
 const ENDPOINT = '/member';
 
 export const memberApi = {
