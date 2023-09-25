@@ -1,15 +1,8 @@
-import {iconPath} from '@/utils/iconPath';
-import {GRAY, INPUT} from '@styles/colors';
+import { iconPath } from '@/utils/iconPath';
+import { GRAY, INPUT } from '@styles/colors';
 import common from '@styles/common';
-import {useState} from 'react';
-import {
-  Image,
-  KeyboardTypeOptions,
-  StyleSheet,
-  Text,
-  TextInput,
-  View,
-} from 'react-native';
+import { useState } from 'react';
+import { Image, KeyboardTypeOptions, StyleSheet, Text, TextInput, View } from 'react-native';
 
 export const KeyboardTypes: Record<string, KeyboardTypeOptions> = {
   DEFAULT: 'default',
@@ -77,19 +70,19 @@ const Input = ({
         <Text
           style={[
             common.label,
-            {color: value || isFocused ? INPUT.FOCUS : GRAY.LIGHT},
+            { color: value || isFocused ? INPUT.FOCUS : GRAY.LIGHT },
             // {color: value && !isFocused ? INPUT.DEFAULT : INPUT.DEFAULT},
           ]}>
           {label}
         </Text>
       ) : null}
       {icon !== 'time' ? null : (
-        <View style={{position: 'absolute', left: 16, top: 16}}>
+        <View style={{ position: 'absolute', left: 16, top: 16 }}>
           <Image source={iconPath.TIME} style={[common.size24]} />
         </View>
       )}
       {icon !== 'day' ? null : (
-        <View style={{position: 'absolute', left: 16, top: 16}}>
+        <View style={{ position: 'absolute', left: 16, top: 16 }}>
           <Image source={iconPath.DAY} style={[common.size24]} />
         </View>
       )}

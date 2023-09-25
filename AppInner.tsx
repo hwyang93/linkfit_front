@@ -1,13 +1,14 @@
-import {fetchMemberInfo} from '@/api/member';
+import { fetchMemberInfo } from '@/api/member';
 import AuthStack from '@/navigations/AuthStack';
-import {useAppDispatch, useAppSelector} from '@/store';
+import { useAppDispatch, useAppSelector } from '@/store';
+import { Term } from '@/types/common';
 import STORAGE_KEY from '@/utils/constants/storage';
-import {requestPermission} from '@/utils/util';
+import { requestPermission } from '@/utils/util';
 import toast from '@hooks/toast';
 import MainStack from '@navigations/MainStack';
 import userSlice from '@slices/user';
-import {isAxiosError} from 'axios';
-import {useCallback, useEffect, useState} from 'react';
+import { isAxiosError } from 'axios';
+import { useCallback, useEffect, useState } from 'react';
 import EncryptedStorage from 'react-native-encrypted-storage';
 import Geolocation from 'react-native-geolocation-service';
 import SplashScreen from 'react-native-splash-screen';
@@ -18,14 +19,14 @@ export type LoggedInParamList = {
   Message: undefined;
   Community: undefined;
   CommunityMy: undefined;
-  CommunityPostForm: undefined;
-  CommunityPost: {postSeq: number};
+  CommunityPostCreate: undefined;
+  CommunityPost: { postId: number };
   My: undefined;
   MyCenter: undefined;
   MyCenterInfo: undefined;
   MyNotification: undefined;
 
-  CenterProfile: {memberSeq: number};
+  CenterProfile: { memberSeq: number };
   CenterProfileEdit: undefined;
   CompanyInfo: undefined;
   CenterRecruitment: undefined;
@@ -38,14 +39,16 @@ export type LoggedInParamList = {
   CertifyInstructor: undefined;
   CertifyInstructorForm: undefined;
   ResumeManage: undefined;
-  ResumeForm: undefined;
-  ResumePreview: {resumeSeq: number; applySeq: any; recruitSeq: any};
+  ResumeCreate: undefined;
+  ResumeEdit: { resumeId: number };
+  ResumePreview: { resumeSeq: number; applySeq: any; recruitSeq: any };
   ReviewManage: undefined;
-  ReviewForm: {reputationInfo: any};
+  ReviewCreate: undefined;
+  ReviewEdit: { reviewId: number };
   ApplicationStatus: undefined;
-  ApplicantStatus: {recruitSeq: number};
+  ApplicantStatus: { recruitSeq: number };
   ReceivedSuggestion: undefined;
-  ReceivedSuggestionDetail: {suggestSeq: number};
+  ReceivedSuggestionDetail: { suggestSeq: number };
   MyPost: undefined;
   FollowingManage: undefined;
   BookmarkManage: undefined;
@@ -57,29 +60,30 @@ export type LoggedInParamList = {
   Inquiry: undefined;
   InquiryForm: undefined;
   Version: undefined;
-  Rule: undefined;
+  Rules: undefined;
   LinkAdd: undefined;
   RecruitMap: undefined;
   RecruitList: undefined;
   InstructorList: undefined;
-  Profile: {memberSeq: number};
-  Suggestion: {targetMemberSeq: number};
-  CenterInfo: {memberSeq: number};
-  JobPost: {recruitSeq: number};
+  Profile: { memberSeq: number };
+  Suggestion: { targetMemberSeq: number };
+  CenterInfo: { memberSeq: number };
+  JobPost: { recruitSeq: number };
   Gallery: any;
   JobOfferForm: undefined;
-  LogIn: {email: string};
-  SignIn: undefined;
-  SignUp: {email: string};
-  Terms: {email: string; isCompany: boolean};
-  TermDetail: undefined;
-  SignUpForm: {email: string};
-  CompanySignUpForm: {email: string};
+  SignInPassword: { email: string };
+  SignInEmail: undefined;
+  SignUp: { email: string };
+  TermList: { email: string; isCompany: boolean };
+  TermDetail: { type: Term };
+  SignUpForm: { email: string };
+  CompanySignUpForm: { email: string };
   PasswordReset: undefined;
-  CommunityCommentEdit: {commentId: number};
-  CommunityPostEdit: {postId: number};
-  InquiryDetail: {inquiryId: number};
-  NoticeDetail: {noticeId: number};
+  CommunityCommentEdit: { commentId: number };
+  CommunityPostEdit: { postId: number };
+  InquiryDetail: { inquiryId: number };
+  NoticeList: undefined;
+  NoticeDetail: { noticeId: number };
 };
 
 const AppInner = () => {
@@ -87,7 +91,7 @@ const AppInner = () => {
   const dispatch = useAppDispatch();
 
   // const position = useAppSelector(state => state.user.lon);
-  const isLoggedIn = useAppSelector(state => state.user.isLoggedIn);
+  const isLoggedIn = useAppSelector((state) => state.user.isLoggedIn);
 
   const getRefreshToken = async () => {
     const token = await EncryptedStorage.getItem(STORAGE_KEY.REFRESH_TOKEN);
@@ -106,7 +110,7 @@ const AppInner = () => {
       dispatch(userSlice.actions.setIsLoggedIn(true));
     } catch (error) {
       if (isAxiosError(error)) {
-        toast.error({message: error.message});
+        toast.error({ message: error.message });
       }
     } finally {
       setInitialized(true);
@@ -119,10 +123,10 @@ const AppInner = () => {
 
   useEffect(() => {
     initialized && SplashScreen.hide();
-    requestPermission().then(result => {
+    requestPermission().then((result) => {
       if (result === 'granted') {
         Geolocation.getCurrentPosition(
-          pos => {
+          (pos) => {
             dispatch(
               userSlice.actions.setLocation({
                 lon: pos.coords.latitude,
@@ -137,7 +141,7 @@ const AppInner = () => {
             // });
             // console.log('로케이션 위치', myLocation);
           },
-          error => {
+          (error) => {
             console.log(error);
           },
           {

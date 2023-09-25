@@ -1,13 +1,6 @@
 import THEME from '@/styles/theme';
 import React from 'react';
-import {
-  ActivityIndicator,
-  Pressable,
-  PressableProps,
-  StyleSheet,
-  Text,
-  View,
-} from 'react-native';
+import { ActivityIndicator, Pressable, PressableProps, StyleSheet, Text, View } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 
 interface BoxButtonProps extends PressableProps {
@@ -30,7 +23,7 @@ const BoxButton: React.FC<BoxButtonProps> = ({
     <>
       {variant === 'filled' && (
         <Pressable onPress={onPress} disabled={disabled || loading} {...props}>
-          {({pressed}) => (
+          {({ pressed }) => (
             <LinearGradient
               style={{
                 alignSelf: 'flex-start',
@@ -41,8 +34,8 @@ const BoxButton: React.FC<BoxButtonProps> = ({
                 borderRadius: 20,
                 height: 40,
               }}
-              start={{x: 0.1, y: 0.5}}
-              end={{x: 0.6, y: 1}}
+              start={{ x: 0.1, y: 0.5 }}
+              end={{ x: 0.6, y: 1 }}
               colors={
                 disabled
                   ? [THEME.GREY04, THEME.GREY04]
@@ -74,20 +67,16 @@ const BoxButton: React.FC<BoxButtonProps> = ({
       )}
       {variant === 'stroked' && (
         <Pressable onPress={onPress} disabled={loading || disabled}>
-          {({pressed}) => (
+          {({ pressed }) => (
             <LinearGradient
               style={styles.gradientBorder}
-              start={{x: 0, y: 1}}
-              end={{x: 1, y: 1}}
-              colors={
-                disabled
-                  ? [THEME.GREY04, THEME.GREY04]
-                  : ['#74ebe4', THEME.PRIMARY]
-              }>
+              start={{ x: 0, y: 1 }}
+              end={{ x: 1, y: 1 }}
+              colors={disabled ? [THEME.GREY04, THEME.GREY04] : ['#74ebe4', THEME.PRIMARY]}>
               <View
                 style={[
                   styles.gradientBorderInner,
-                  {backgroundColor: pressed ? '#E8EDFF' : THEME.WHITE},
+                  { backgroundColor: pressed ? '#E8EDFF' : THEME.WHITE },
                 ]}>
                 {loading && (
                   <ActivityIndicator

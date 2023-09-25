@@ -1,30 +1,28 @@
-import {MemberEntity} from '@/types/api/entities';
-import {Member} from '@/types/common';
-import {iconPath} from '@/utils/iconPath';
-import {NavigationProp, useNavigation} from '@react-navigation/native';
-import {BLUE, GRAY} from '@styles/colors';
+import { MemberEntity } from '@/types/api/entities.type';
+import { Member } from '@/types/common';
+import { iconPath } from '@/utils/iconPath';
+import { NavigationProp, useNavigation } from '@react-navigation/native';
+import { BLUE, GRAY } from '@styles/colors';
 import common from '@styles/common';
-import {Alert, Image, Pressable, StyleSheet, Text, View} from 'react-native';
+import { Alert, Image, Pressable, StyleSheet, Text, View } from 'react-native';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
-import {LoggedInParamList} from '../../AppInner';
+import { LoggedInParamList } from '../../AppInner';
 
 interface ProfileBoxProps {
   memberInfo: MemberEntity;
 }
 
-const ProfileBox: React.FC<ProfileBoxProps> = ({memberInfo}) => {
+const ProfileBox: React.FC<ProfileBoxProps> = ({ memberInfo }) => {
   const navigation = useNavigation<NavigationProp<LoggedInParamList>>();
 
   return (
     <View>
-      <Pressable
-        style={styles.profileBox}
-        onPress={() => navigation.navigate('MyProfile')}>
+      <Pressable style={styles.profileBox} onPress={() => navigation.navigate('MyProfile')}>
         <View style={[common.mr16, styles.thumbnailBox]}>
           <Image
             source={
               memberInfo.profileImage
-                ? {uri: memberInfo.profileImage.originFileUrl}
+                ? { uri: memberInfo.profileImage.originFileUrl }
                 : iconPath.THUMBNAIL
             }
             style={styles.thumbnail}
@@ -37,39 +35,29 @@ const ProfileBox: React.FC<ProfileBoxProps> = ({memberInfo}) => {
             </Text>
             {memberInfo.type === Member.Instructor && (
               <View style={common.rowCenter}>
-                <Text style={[common.text_s, {color: BLUE.DEFAULT}]}>
+                <Text style={[common.text_s, { color: BLUE.DEFAULT, marginRight: 2 }]}>
                   인증강사
                 </Text>
-                <Image
-                  style={{marginLeft: 2, width: 14, height: 14}}
-                  source={iconPath.CERTIFICATION}
-                />
+                <Image style={{ width: 14, height: 14 }} source={iconPath.CERTIFICATION} />
               </View>
             )}
           </View>
 
           <View style={common.rowCenter}>
-            <Text style={[common.text_m, common.fwb, common.mr8]}>
-              {memberInfo.field}
-            </Text>
-            <Text style={[common.text, common.mr8, {alignSelf: 'flex-end'}]}>
+            {memberInfo.field && (
+              <Text style={[common.text_m, common.fwb, common.mr8]}>{memberInfo.field}</Text>
+            )}
+            <Text style={[common.text, common.mr8, { alignSelf: 'flex-end' }]}>
               {memberInfo.career}
             </Text>
-            <Text style={[common.text_s, common.fcg]}>
-              {memberInfo.address}
-            </Text>
+            <Text style={[common.text_s, common.fcg]}>{memberInfo.address}</Text>
           </View>
 
           <View style={common.rowCenter}>
             <Pressable onPress={() => Alert.alert('click', 'test')}>
-              <Image
-                source={iconPath.FAVORITE_FILL}
-                style={[common.size24, common.mr8]}
-              />
+              <Image source={iconPath.FAVORITE_FILL} style={[common.size24, common.mr8]} />
             </Pressable>
-            <Text style={[common.text_m, common.fwb, common.mr8]}>
-              {memberInfo.followerCount}
-            </Text>
+            <Text style={[common.text_m, common.fwb, common.mr8]}>{memberInfo.followerCount}</Text>
           </View>
         </View>
         <View style={styles.nextArrow}>
@@ -101,7 +89,7 @@ const styles = StyleSheet.create({
     borderRadius: 200,
     backgroundColor: GRAY.LIGHT,
   },
-  thumbnail: {width: 64, height: 64, borderRadius: 200},
+  thumbnail: { width: 64, height: 64, borderRadius: 200 },
   nextArrow: {
     position: 'absolute',
     top: '50%',

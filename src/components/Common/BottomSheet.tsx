@@ -1,7 +1,7 @@
-import {SCREEN_HEIGHT, SCREEN_WIDTH} from '@/utils/constants/common';
-import {BLACK, GRAY} from '@styles/colors';
-import common, {width} from '@styles/common';
-import {useEffect, useRef} from 'react';
+import { SCREEN_HEIGHT, SCREEN_WIDTH } from '@/utils/constants/common';
+import { BLACK, GRAY } from '@styles/colors';
+import common, { width } from '@styles/common';
+import { useEffect, useRef } from 'react';
 import {
   Animated,
   Modal,
@@ -78,11 +78,7 @@ const BottomSheet: React.FC<BottomSheetProps> = ({
   };
 
   return (
-    <Modal
-      visible={visible}
-      animationType="fade"
-      transparent
-      statusBarTranslucent>
+    <Modal visible={visible} animationType="fade" transparent statusBarTranslucent>
       <View style={styles.overlay}>
         <TouchableWithoutFeedback onPress={closeModal}>
           <View style={styles.background} />
@@ -92,7 +88,7 @@ const BottomSheet: React.FC<BottomSheetProps> = ({
           style={[
             styles.bottomSheetContainer,
             {
-              transform: [{translateY: translateY}],
+              transform: [{ translateY: translateY }],
               height: modalHeight,
               paddingBottom: 32,
               maxHeight: '93%',
@@ -113,9 +109,7 @@ const BottomSheet: React.FC<BottomSheetProps> = ({
           </View>
 
           {useScroll ? (
-            <ScrollView
-              style={{width: '100%'}}
-              showsVerticalScrollIndicator={false}>
+            <ScrollView style={{ width: '100%' }} showsVerticalScrollIndicator={false}>
               {children}
             </ScrollView>
           ) : (
@@ -133,7 +127,7 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-end',
     backgroundColor: 'rgba(0, 0, 0, 0.4)',
   },
-  background: {flex: 1},
+  background: { flex: 1 },
   bottomSheetContainer: {
     width: '100%',
     alignItems: 'center',
@@ -170,3 +164,11 @@ const styles = StyleSheet.create({
 });
 
 export default BottomSheet;
+
+interface BottomSheetCTAContainerProps {
+  children: React.ReactNode;
+}
+
+export const BottomSheetCTAContainer: React.FC<BottomSheetCTAContainerProps> = ({ children }) => {
+  return <View style={{ padding: 16, marginTop: 32 }}>{children}</View>;
+};

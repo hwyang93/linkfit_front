@@ -5,7 +5,7 @@ import {
   UpdateMemberPasswordDto,
   UpdateMemberReputationDto,
   UpdatePositionSuggestDto,
-} from '@/types/api/dtos';
+} from '@/types/api/dtos.type';
 import {
   FetchCheckNicknameResponse,
   FetchMemberFollowingsParams,
@@ -15,7 +15,6 @@ import {
   FetchMemberInfoResponse,
   FetchMemberLicencesResponse,
   FetchMemberMyInfoResponse,
-  FetchMemberReputationsResponse,
   FetchPositionSuggestResponse,
   FetchReceivePositionSuggestsParams,
   FetchReceivePositionSuggestsResponse,
@@ -23,8 +22,8 @@ import {
   FetchRegionAuthResponse,
   FetchSendPositionSuggestsParams,
   FetchSendPositionSuggestsResponse,
-} from '@/types/api/member';
-import {DeleteResponse, PostResponse} from '@/types/common';
+} from '@/types/api/member.type';
+import { DeleteResponse, PostResponse } from '@/types/common';
 import request from './request';
 
 export const createMember = (data: CreateMemberDto) => {
@@ -36,15 +35,11 @@ export const fetchMemberInfo = () => {
 };
 
 export const fetchMemberInfoByEmail = (email: string) => {
-  return request.get<FetchMemberInfoByEmailResponse>(
-    `/member/check/email/${email}`,
-  );
+  return request.get<FetchMemberInfoByEmailResponse>(`/member/check/email/${email}`);
 };
 
 export const fetchCheckNickname = (nickname: string) => {
-  return request.get<FetchCheckNicknameResponse>(
-    `/member/check/nickname/${nickname}`,
-  );
+  return request.get<FetchCheckNicknameResponse>(`/member/check/nickname/${nickname}`);
 };
 
 export const fetchMemberMyInfo = () => {
@@ -55,7 +50,7 @@ export const fetchMemberMyInfo = () => {
 // TODO: data 타입 확인
 export const updateProfile = (data: FormData) => {
   return request.patch('/member/profile', data, {
-    headers: {'content-type': 'multipart/form-data'},
+    headers: { 'content-type': 'multipart/form-data' },
   });
 };
 
@@ -77,7 +72,7 @@ export const fetchMemberLicences = () => {
 
 export const createMemberLicence = (data: FormData) => {
   return request.post<PostResponse>('/member/licence', data, {
-    headers: {'content-type': 'multipart/form-data'},
+    headers: { 'content-type': 'multipart/form-data' },
   });
 };
 
@@ -91,29 +86,16 @@ export const createReview = (data: CreateMemberReputationDto) => {
 };
 
 // TODO: Response 타입 추가
-export const updateMemberReputation = (
-  seq: number,
-  data: UpdateMemberReputationDto,
-) => {
+export const updateMemberReputation = (seq: number, data: UpdateMemberReputationDto) => {
   return request.patch(`/member/reputation/${seq}`, data);
 };
 
-export const fetchReceivePositionSuggests = (
-  params?: FetchReceivePositionSuggestsParams,
-) => {
-  return request.get<FetchReceivePositionSuggestsResponse>(
-    '/member/suggest/to',
-    {params},
-  );
+export const fetchReceivePositionSuggests = (params?: FetchReceivePositionSuggestsParams) => {
+  return request.get<FetchReceivePositionSuggestsResponse>('/member/suggest/to', { params });
 };
 
-export const fetchSendPositionSuggests = (
-  params?: FetchSendPositionSuggestsParams,
-) => {
-  return request.get<FetchSendPositionSuggestsResponse>(
-    '/member/suggest/from',
-    {params},
-  );
+export const fetchSendPositionSuggests = (params?: FetchSendPositionSuggestsParams) => {
+  return request.get<FetchSendPositionSuggestsResponse>('/member/suggest/from', { params });
 };
 
 export const fetchPositionSuggest = (seq: number) => {
@@ -121,17 +103,12 @@ export const fetchPositionSuggest = (seq: number) => {
 };
 
 // TODO: Response 타입 추가
-export const updatePositionSuggestStatus = (
-  seq: number,
-  data: UpdatePositionSuggestDto,
-) => {
+export const updatePositionSuggestStatus = (seq: number, data: UpdatePositionSuggestDto) => {
   return request.patch(`/member/suggest/${seq}`, data);
 };
 
-export const fetchMemberFollowings = ({type}: FetchMemberFollowingsParams) => {
-  return request.get<FetchMemberFollowingsResponse>(
-    `/member/following/${type}`,
-  );
+export const fetchMemberFollowings = ({ type }: FetchMemberFollowingsParams) => {
+  return request.get<FetchMemberFollowingsResponse>(`/member/following/${type}`);
 };
 
 export const fetchMemberInfoBySeq = (seq: number) => {
@@ -140,10 +117,6 @@ export const fetchMemberInfoBySeq = (seq: number) => {
 
 export const fetchRecruitByMember = (seq: number) => {
   return request.get<FetchRecruitByMemberResponse>(`/member/${seq}/recruit`);
-};
-
-export const updateMemberPassword = (body: UpdateMemberPasswordDto) => {
-  return request.patch('member/password', body);
 };
 
 const ENDPOINT = '/member';
@@ -160,9 +133,7 @@ export const memberApi = {
     return response.data;
   },
   getMemberLicenceList: async () => {
-    const response = await request.get<FetchMemberLicencesResponse>(
-      `${ENDPOINT}/licence`,
-    );
+    const response = await request.get<FetchMemberLicencesResponse>(`${ENDPOINT}/licence`);
     return response.data;
   },
   checkNickname: async (nickname: string) => {
@@ -175,12 +146,10 @@ export const memberApi = {
     const response = await request.patch(`${ENDPOINT}/profile`, body);
     return response.data;
   },
-  getReceivedPositionSuggestionList: async (
-    params: FetchReceivePositionSuggestsParams,
-  ) => {
+  getReceivedPositionSuggestionList: async (params: FetchReceivePositionSuggestsParams) => {
     const response = await request.get<FetchReceivePositionSuggestsResponse>(
       `${ENDPOINT}/suggest/to`,
-      {params},
+      { params },
     );
     return response.data;
   },
@@ -190,26 +159,16 @@ export const memberApi = {
     );
     return response.data;
   },
-  updatePositionSuggestion: async (
-    suggestionId: number,
-    body: UpdatePositionSuggestDto,
-  ) => {
-    const response = await request.patch(
-      `${ENDPOINT}/suggest/${suggestionId}`,
-      body,
-    );
+  updatePositionSuggestion: async (suggestionId: number, body: UpdatePositionSuggestDto) => {
+    const response = await request.patch(`${ENDPOINT}/suggest/${suggestionId}`, body);
     return response.data;
   },
-  getReputationList: async () => {
-    const response = await request.get<FetchMemberReputationsResponse>(
-      `${ENDPOINT}/reputation`,
-    );
+  unregister: async (memberId: number) => {
+    const response = await request.delete<DeleteResponse>(`${ENDPOINT}/${memberId}`);
     return response.data;
   },
-  deleteReputation: async (reputationId: number) => {
-    const response = await request.delete<DeleteResponse>(
-      `${ENDPOINT}/reputation/${reputationId}`,
-    );
+  updateMemberPassword: async (body: UpdateMemberPasswordDto) => {
+    const response = await request.patch(`${ENDPOINT}/password`, body);
     return response.data;
   },
 };

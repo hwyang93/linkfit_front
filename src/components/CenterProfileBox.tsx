@@ -1,21 +1,19 @@
-import {iconPath} from '@/utils/iconPath';
-import {NavigationProp, useNavigation} from '@react-navigation/native';
-import {GRAY} from '@styles/colors';
+import { iconPath } from '@/utils/iconPath';
+import { NavigationProp, useNavigation } from '@react-navigation/native';
+import { GRAY } from '@styles/colors';
 import common from '@styles/common';
-import {Alert, Image, Pressable, StyleSheet, Text, View} from 'react-native';
+import { Alert, Image, Pressable, StyleSheet, Text, View } from 'react-native';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
-import {LoggedInParamList} from '../../AppInner';
+import { LoggedInParamList } from '../../AppInner';
 
-const ProfileBox: React.FC<any> = ({memberInfo}) => {
+const ProfileBox: React.FC<any> = ({ memberInfo }) => {
   const navigation = useNavigation<NavigationProp<LoggedInParamList>>();
 
   return (
     <View>
       <Pressable
         style={styles.profileBox}
-        onPress={() =>
-          navigation.navigate('CenterProfile', {memberSeq: memberInfo.seq})
-        }>
+        onPress={() => navigation.navigate('CenterProfile', { memberSeq: memberInfo.seq })}>
         <View>
           <View style={common.rowCenter}>
             <Text style={[common.text_l, common.fwb, common.mr8]}>
@@ -23,10 +21,7 @@ const ProfileBox: React.FC<any> = ({memberInfo}) => {
             </Text>
             <View style={common.rowCenter}>
               <Pressable onPress={() => Alert.alert('click', 'test')}>
-                <Image
-                  source={iconPath.FAVORITE_FILL}
-                  style={[common.size24, common.mr4]}
-                />
+                <Image source={iconPath.FAVORITE_FILL} style={[common.size24, common.mr4]} />
               </Pressable>
               <Text style={[common.text_m, common.fwb, common.mr8]}>
                 {memberInfo?.followerCount}
@@ -34,12 +29,9 @@ const ProfileBox: React.FC<any> = ({memberInfo}) => {
             </View>
           </View>
           <View style={common.rowCenter}>
-            <Text style={[common.text_m, common.fwb, common.mr8]}>
-              {memberInfo?.company.field}
-            </Text>
-            <Text style={[common.text, {color: GRAY.DARK}]}>
-              {memberInfo?.company.address} ·{' '}
-              {memberInfo?.company.addressDetail}
+            <Text style={[common.text_m, common.fwb, common.mr8]}>{memberInfo?.company.field}</Text>
+            <Text style={[common.text, { color: GRAY.DARK }]}>
+              {memberInfo?.company.address} · {memberInfo?.company.addressDetail}
             </Text>
           </View>
         </View>
@@ -70,7 +62,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     paddingBottom: 16,
   },
-  thumbnail: {width: '50%', height: '50%'},
+  thumbnail: { width: '50%', height: '50%' },
   nextArrow: {
     position: 'absolute',
     top: '50%',

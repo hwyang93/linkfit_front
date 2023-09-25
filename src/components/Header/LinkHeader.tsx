@@ -1,20 +1,18 @@
-import {iconPath} from '@/utils/iconPath';
-import {NavigationProp, useNavigation} from '@react-navigation/native';
-import {Image, View} from 'react-native';
-import {LoggedInParamList} from '../../../AppInner';
+import { iconPath } from '@/utils/iconPath';
+import { NavigationProp, useNavigation } from '@react-navigation/native';
+import { Image, View } from 'react-native';
+import { LoggedInParamList } from '../../../AppInner';
 import IconButton from '../Common/IconButton';
 
 interface LinkHeaderProps {
   toCommunityMy?: boolean;
 }
 
-const LinkHeader: React.FC<LinkHeaderProps> = ({toCommunityMy}) => {
+const LinkHeader: React.FC<LinkHeaderProps> = ({ toCommunityMy }) => {
   const navigation = useNavigation<NavigationProp<LoggedInParamList>>();
 
   const handleMyIconPress = () => {
-    toCommunityMy
-      ? navigation.navigate('CommunityMy')
-      : navigation.navigate('My');
+    toCommunityMy ? navigation.navigate('CommunityMy') : navigation.navigate('My');
   };
 
   return (
@@ -26,8 +24,8 @@ const LinkHeader: React.FC<LinkHeaderProps> = ({toCommunityMy}) => {
         flexDirection: 'row',
         justifyContent: 'space-between',
       }}>
-      <View style={{flex: 0}}>
-        <Image source={iconPath.LOGO} style={{width: 116, height: 32}} />
+      <View style={{ flex: 0 }}>
+        <Image source={iconPath.LOGO} style={{ width: 116, height: 32 }} />
       </View>
       <View
         style={{
@@ -37,7 +35,7 @@ const LinkHeader: React.FC<LinkHeaderProps> = ({toCommunityMy}) => {
         }}>
         <IconButton
           source={iconPath.BELL}
-          style={{marginRight: 16}}
+          style={{ marginRight: 16 }}
           onPress={() => navigation.navigate('MyNotification')}
         />
         <IconButton source={iconPath.MY} onPress={handleMyIconPress} />

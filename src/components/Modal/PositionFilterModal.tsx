@@ -1,19 +1,19 @@
 import FILTER from '@/utils/constants/filter';
-import {iconPath} from '@/utils/iconPath';
-import React, {useState} from 'react';
-import {ImageSourcePropType} from 'react-native';
+import { iconPath } from '@/utils/iconPath';
+import React, { useState } from 'react';
+import { ImageSourcePropType } from 'react-native';
 import BottomSheet from '../Common/BottomSheet';
 import BottomSheetOption from '../Common/BottomSheetOption';
 import CTAButton from '../Common/CTAButton';
 import Icon from '../Common/Icon';
 
-const positionOptionIcon: {[key: string]: ImageSourcePropType} = {
+const positionOptionIcon: { [key: string]: ImageSourcePropType } = {
   전체: iconPath.LINK,
   필라테스: iconPath.PILATES,
   요가: iconPath.YOGA,
 };
 
-const selectedPositionOptionIcon: {[key: string]: ImageSourcePropType} = {
+const selectedPositionOptionIcon: { [key: string]: ImageSourcePropType } = {
   전체: iconPath.LINK_ON,
   필라테스: iconPath.PILATES_ON,
   요가: iconPath.YOGA_ON,
@@ -36,7 +36,7 @@ const PositionFilterModal: React.FC<PositionFilterModalProps> = ({
 
   const handleOptionPress = (option: string) => {
     if (selectedOptions.includes(option)) {
-      setSelectedOptions(selectedOptions.filter(item => item !== option));
+      setSelectedOptions(selectedOptions.filter((item) => item !== option));
     } else {
       setSelectedOptions([...selectedOptions, option]);
     }
@@ -62,7 +62,7 @@ const PositionFilterModal: React.FC<PositionFilterModalProps> = ({
         />
       ))}
       <CTAButton
-        style={{marginHorizontal: 16, marginTop: 32}}
+        style={{ marginHorizontal: 16, marginTop: 32 }}
         label="필터 적용"
         onPress={() => onApply(selectedOptions)}
       />

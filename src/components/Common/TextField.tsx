@@ -1,5 +1,5 @@
 import THEME from '@/styles/theme';
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import {
   StyleProp,
   StyleSheet,
@@ -36,17 +36,11 @@ const TextField: React.FC<TextFieldProps> = ({
     setIsFocused(true);
   };
 
-  const inputColor = error
-    ? THEME.ERROR
-    : isFocused
-    ? THEME.PRIMARY
-    : THEME.GREY04;
+  const inputColor = error ? THEME.ERROR : isFocused ? THEME.PRIMARY : THEME.GREY04;
 
   return (
-    <View style={[{position: 'relative'}, style]}>
-      {label && (
-        <Text style={[styles.label, {color: inputColor}]}>{label}</Text>
-      )}
+    <View style={[{ position: 'relative' }, style]}>
+      {label && <Text style={[styles.label, { color: inputColor }]}>{label}</Text>}
       <TextInput
         style={[
           styles.textInput,
@@ -65,9 +59,7 @@ const TextField: React.FC<TextFieldProps> = ({
         onFocus={onFocus}
         {...props}
       />
-      {error && errorMessage && (
-        <Text style={styles.errorMessage}>{errorMessage}</Text>
-      )}
+      {error && errorMessage && <Text style={styles.errorMessage}>{errorMessage}</Text>}
     </View>
   );
 };
@@ -108,3 +100,30 @@ const styles = StyleSheet.create({
 });
 
 export default TextField;
+
+interface TextFieldHelperTextProps {
+  children: React.ReactNode;
+  variant?: 'default' | 'placeholder' | 'error';
+}
+
+export const TextFieldHelperText: React.FC<TextFieldHelperTextProps> = ({
+  children,
+  variant = 'default',
+}) => {
+  const color = {
+    default: THEME.GREY01,
+    placeholder: THEME.GREY03,
+    error: THEME.ERROR,
+  };
+
+  return (
+    <Text
+      style={{
+        marginLeft: 16,
+        marginTop: 4,
+        color: color[variant],
+      }}>
+      {children}
+    </Text>
+  );
+};

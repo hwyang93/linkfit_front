@@ -1,11 +1,11 @@
-import {RecruitEntity} from '@/types/api/entities';
-import {iconPath} from '@/utils/iconPath';
+import { RecruitEntity } from '@/types/api/entities.type';
+import { iconPath } from '@/utils/iconPath';
 import OfferListItem from '@components/OfferListItem';
-import {NavigationProp, useNavigation} from '@react-navigation/native';
-import {GRAY} from '@styles/colors';
+import { NavigationProp, useNavigation } from '@react-navigation/native';
+import { GRAY } from '@styles/colors';
 import common from '@styles/common';
-import {Image, Pressable, StyleSheet, Text, View} from 'react-native';
-import {LoggedInParamList} from '../../AppInner';
+import { Image, Pressable, StyleSheet, Text, View } from 'react-native';
+import { LoggedInParamList } from '../../AppInner';
 
 interface CenterInfoTopProps {
   centerInfo: any;
@@ -13,11 +13,7 @@ interface CenterInfoTopProps {
   fromMy?: boolean;
 }
 
-const CenterInfoTop: React.FC<CenterInfoTopProps> = ({
-  centerInfo,
-  recruits,
-  fromMy,
-}) => {
+const CenterInfoTop: React.FC<CenterInfoTopProps> = ({ centerInfo, recruits, fromMy }) => {
   const navigation = useNavigation<NavigationProp<LoggedInParamList>>();
 
   return (
@@ -25,7 +21,7 @@ const CenterInfoTop: React.FC<CenterInfoTopProps> = ({
       {centerInfo.member?.profileImage && (
         <View style={common.mb16}>
           <Image
-            source={{uri: centerInfo.member.profileImage.originFileUrl}}
+            source={{ uri: centerInfo.member.profileImage.originFileUrl }}
             resizeMode={'cover'}
             style={common.imgBox}
           />
@@ -34,25 +30,15 @@ const CenterInfoTop: React.FC<CenterInfoTopProps> = ({
 
       <View style={[common.rowBetween, common.mb8]}>
         <View style={common.rowCenter}>
-          <Text style={[common.title_l, common.mr8]}>
-            {centerInfo.companyName}
-          </Text>
+          <Text style={[common.title_l, common.mr8]}>{centerInfo.companyName}</Text>
           <Image
-            source={
-              centerInfo.isFollow === 'Y'
-                ? iconPath.FAVORITE_ON
-                : iconPath.FAVORITE
-            }
+            source={centerInfo.isFollow === 'Y' ? iconPath.FAVORITE_ON : iconPath.FAVORITE}
             style={common.size24}
           />
-          <Text style={[common.text_m, common.fwb]}>
-            {centerInfo.followerCount}
-          </Text>
+          <Text style={[common.text_m, common.fwb]}>{centerInfo.followerCount}</Text>
         </View>
         {fromMy ? (
-          <Pressable
-            style={styles.pencil}
-            onPress={() => navigation.navigate('CenterProfileEdit')}>
+          <Pressable style={styles.pencil} onPress={() => navigation.navigate('CenterProfileEdit')}>
             <Image source={iconPath.PENCIL_B} style={[common.size24]} />
           </Pressable>
         ) : null}
@@ -60,7 +46,7 @@ const CenterInfoTop: React.FC<CenterInfoTopProps> = ({
       <View style={[common.rowCenter, common.mb16]}>
         <Text style={[common.text_m, common.fwb]}>{centerInfo.field}</Text>
         <Text style={[common.mh8, common.fcg]}>|</Text>
-        <Text style={[common.text_s, {color: GRAY.DARK}]}>
+        <Text style={[common.text_s, { color: GRAY.DARK }]}>
           {centerInfo.address + ' · ' + centerInfo.addressDetail}
         </Text>
       </View>
@@ -85,7 +71,7 @@ const CenterInfoTop: React.FC<CenterInfoTopProps> = ({
 };
 
 const styles = StyleSheet.create({
-  pencil: {position: 'absolute', top: 0, right: 0},
+  pencil: { position: 'absolute', top: 0, right: 0 },
 });
 
 export default CenterInfoTop;

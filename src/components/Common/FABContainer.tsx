@@ -1,12 +1,12 @@
 import React from 'react';
-import {StyleProp, View, ViewStyle} from 'react-native';
+import { StyleProp, View, ViewStyle } from 'react-native';
 
 interface FABContainerProps {
   children: React.ReactNode;
   style?: StyleProp<ViewStyle>;
 }
 
-const FABContainer: React.FC<FABContainerProps> = ({children, style}) => {
+const FABContainer: React.FC<FABContainerProps> = ({ children, style }) => {
   return (
     <View
       style={[

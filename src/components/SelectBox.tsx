@@ -1,30 +1,30 @@
-import {iconPath} from '@/utils/iconPath';
-import {GRAY, INPUT} from '@styles/colors';
+import { iconPath } from '@/utils/iconPath';
+import { GRAY, INPUT } from '@styles/colors';
 import common from '@styles/common';
-import {useState} from 'react';
-import {Image, StyleSheet, Text, View} from 'react-native';
+import { useState } from 'react';
+import { Image, StyleSheet, Text, View } from 'react-native';
 import SelectDropdown from 'react-native-select-dropdown';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 
 interface SelectBoxProps {
   data: any;
-  onSelect: Function;
   defaultButtonText: string;
   label?: string;
   textAlign?: string;
   icon?: string;
   selectKey?: string;
+  onSelect: (value: string, index: number) => void;
   onChangeSearchInputText?: () => void;
 }
 
 const SelectBox: React.FC<SelectBoxProps> = ({
   data,
-  onSelect,
   defaultButtonText,
   label,
   textAlign,
   icon,
   selectKey,
+  onSelect,
   onChangeSearchInputText,
 }) => {
   const [focus, setFocus] = useState(false);
@@ -34,7 +34,7 @@ const SelectBox: React.FC<SelectBoxProps> = ({
     if (selectKey === 'index') {
       onSelect(value, index);
     }
-    onSelect(value);
+    onSelect(value, index);
     setSelectItem(value);
   };
 
@@ -45,15 +45,15 @@ const SelectBox: React.FC<SelectBoxProps> = ({
         onSelect={(selectedItem, index) => {
           selectHandler(selectedItem, index);
         }}
-        buttonTextAfterSelection={selectedItem => selectedItem}
-        rowTextForSelection={item => item}
+        buttonTextAfterSelection={(selectedItem) => selectedItem}
+        rowTextForSelection={(item) => item}
         defaultButtonText={defaultButtonText}
         // buttonStyle={{width: '100%', backgroundColor: WHITE}}
         buttonStyle={focus ? styles.selectBoxFocus : styles.selectBox}
         // buttonTextStyle={focus ? styles.selectTextFocus : styles.selectText}
-        renderCustomizedButtonChild={selectedItem => {
+        renderCustomizedButtonChild={(selectedItem) => {
           return (
-            <View style={[common.rowCenter, {height: 56, width: '100%'}]}>
+            <View style={[common.rowCenter, { height: 56, width: '100%' }]}>
               {icon === 'time' && (
                 <View
                   style={{
@@ -78,14 +78,8 @@ const SelectBox: React.FC<SelectBoxProps> = ({
             </View>
           );
         }}
-        renderDropdownIcon={isOpened => {
-          return (
-            <FontAwesome
-              name={isOpened ? 'chevron-up' : 'chevron-down'}
-              color="#acacac"
-              size={16}
-            />
-          );
+        renderDropdownIcon={(isOpened) => {
+          return <FontAwesome name="chevron-down" color="#acacac" size={14} />;
         }}
         dropdownIconPosition="right"
         dropdownStyle={styles.dropBox}
@@ -96,9 +90,7 @@ const SelectBox: React.FC<SelectBoxProps> = ({
         onChangeSearchInputText={onChangeSearchInputText || (() => {})}
       />
       {label && (
-        <Text style={[common.label, {color: focus ? INPUT.FOCUS : GRAY.LIGHT}]}>
-          {label}
-        </Text>
+        <Text style={[common.label, { color: focus ? INPUT.FOCUS : GRAY.LIGHT }]}>{label}</Text>
       )}
     </View>
   );

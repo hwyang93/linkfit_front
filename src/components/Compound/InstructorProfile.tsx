@@ -1,9 +1,9 @@
 import THEME from '@/styles/theme';
-import {iconPath} from '@/utils/iconPath';
-import {GRAY} from '@styles/colors';
+import { iconPath } from '@/utils/iconPath';
+import { GRAY } from '@styles/colors';
 import common from '@styles/common';
-import {useState} from 'react';
-import {Image, Pressable, StyleSheet, Text, View} from 'react-native';
+import { useState } from 'react';
+import { Image, Pressable, StyleSheet, Text, View } from 'react-native';
 import Icon from '../Common/Icon';
 import IconButton from '../Common/IconButton';
 
@@ -44,44 +44,32 @@ const InstructorProfile: React.FC<InstructorProfileProps> = ({
       <Pressable style={styles.profileBox} onPress={onPress}>
         <View style={[common.mr16, styles.thumbnailBox]}>
           <Image
-            source={avatarImageSrc ? {uri: avatarImageSrc} : iconPath.THUMBNAIL}
+            source={avatarImageSrc ? { uri: avatarImageSrc } : iconPath.THUMBNAIL}
             style={styles.thumbnail}
           />
         </View>
         <View>
           <View style={common.rowCenter}>
-            <Text style={[common.text_l, common.fwb, common.mr8]}>
-              {nickname}
-            </Text>
+            <Text style={[common.text_l, common.fwb, common.mr8]}>{nickname}</Text>
             {isCertificated && (
               <View style={common.rowCenter}>
-                <Text style={[common.text_s, {color: THEME.PRIMARY}]}>
-                  인증강사
-                </Text>
-                <Icon
-                  style={{marginLeft: 2}}
-                  size={14}
-                  source={iconPath.CERTIFICATION}
-                />
+                <Text style={[common.text_s, { color: THEME.PRIMARY }]}>인증강사</Text>
+                <Icon style={{ marginLeft: 2 }} size={14} source={iconPath.CERTIFICATION} />
               </View>
             )}
           </View>
           <View style={common.rowCenter}>
             <Text style={[common.text_m, common.fwb, common.mr8]}>{field}</Text>
-            <Text style={[common.text, common.mr8, {alignSelf: 'flex-end'}]}>
-              {career}
-            </Text>
+            <Text style={[common.text, common.mr8, { alignSelf: 'flex-end' }]}>{career}</Text>
             <Text style={[common.text_s, common.fcg]}>{address}</Text>
           </View>
           <View style={common.rowCenter}>
             <IconButton
-              style={{marginRight: 8}}
+              style={{ marginRight: 8 }}
               source={isFavorite ? iconPath.FAVORITE_FILL : iconPath.FAVORITE}
               onPress={onFavoriteIconPress}
             />
-            <Text style={[common.text_m, common.fwb, common.mr8]}>
-              {followerCount}
-            </Text>
+            <Text style={[common.text_m, common.fwb, common.mr8]}>{followerCount}</Text>
           </View>
         </View>
       </Pressable>
@@ -110,7 +98,7 @@ const styles = StyleSheet.create({
     borderRadius: 200,
     backgroundColor: GRAY.LIGHT,
   },
-  thumbnail: {width: 64, height: 64, borderRadius: 200},
+  thumbnail: { width: 64, height: 64, borderRadius: 200 },
   nextArrow: {
     position: 'absolute',
     top: '50%',

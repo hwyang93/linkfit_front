@@ -1,34 +1,27 @@
-import {useRecruitApplicationListQuery} from '@/hooks/recruit/useRecruitApplicationListQuery';
-import useModal from '@/hooks/useModal';
-import {RecruitStatus} from '@/types/api/recruit';
-import {iconPath} from '@/utils/iconPath';
+import { useRecruitApplicationList } from '@/hooks/recruit/use-recruit-application-list';
+import useModal from '@/hooks/use-modal';
+import { RecruitStatus } from '@/types/api/recruit.type';
+import { iconPath } from '@/utils/iconPath';
 import ApplicantListItem from '@components/My/ApplicantListItem';
 import TopFilter from '@components/TopFilter';
-import {BLUE, WHITE} from '@styles/colors';
+import { BLUE, WHITE } from '@styles/colors';
 import common from '@styles/common';
-import {useCallback, useState} from 'react';
-import {
-  Image,
-  Pressable,
-  ScrollView,
-  StyleSheet,
-  Text,
-  View,
-} from 'react-native';
+import { useCallback, useState } from 'react';
+import { Image, Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
 import BottomSheet from '../Common/BottomSheet';
 
 interface ApplicantFinishTabProps {
   recruitId: number;
 }
 
-const ApplicantFinishTab: React.FC<ApplicantFinishTabProps> = ({recruitId}) => {
+const ApplicantFinishTab: React.FC<ApplicantFinishTabProps> = ({ recruitId }) => {
   const [modalTitle, setModalTitle] = useState('');
   const [modalData, setModalData] = useState<any[]>([]);
   const [selectedFilter, setSelectedFilter] = useState('');
 
-  const {data} = useRecruitApplicationListQuery(recruitId);
+  const { data } = useRecruitApplicationList(recruitId);
 
-  const finishedApplications = data?.recruitApply.filter(item => {
+  const finishedApplications = data?.recruitApply.filter((item) => {
     return item.status !== RecruitStatus.Applied;
   });
 
@@ -72,7 +65,7 @@ const ApplicantFinishTab: React.FC<ApplicantFinishTabProps> = ({recruitId}) => {
     (selectItem: any) => {
       if (selectedFilter === 'period') {
         setMODAL(() => {
-          return MODAL.map(item => {
+          return MODAL.map((item) => {
             if (item.value === selectItem.value) {
               item.selected = !item.selected;
             } else {
@@ -82,7 +75,7 @@ const ApplicantFinishTab: React.FC<ApplicantFinishTabProps> = ({recruitId}) => {
           });
         });
         setFILTER(() => {
-          return FILTER.map(filter => {
+          return FILTER.map((filter) => {
             if (filter.key === 'period') {
               const value = modalData.find((item: any) => {
                 return item.selected;
@@ -119,30 +112,21 @@ const ApplicantFinishTab: React.FC<ApplicantFinishTabProps> = ({recruitId}) => {
             status={item.status}
           />
         ))}
-        <View style={{paddingBottom: 24}} />
+        <View style={{ paddingBottom: 24 }} />
       </ScrollView>
 
       {/* 모달 */}
-      <BottomSheet
-        visible={modal.visible}
-        onDismiss={modal.close}
-        title={modalTitle}>
+      <BottomSheet visible={modal.visible} onDismiss={modal.close} title={modalTitle}>
         <View>
           {modalData.map((item, index) => (
             <View key={index} style={common.modalItemBox}>
               <Pressable
                 onPress={() => onSelectFilter(item)}
-                style={[common.rowCenterBetween, {width: '100%'}]}>
-                <Text
-                  style={[
-                    common.modalText,
-                    item.selected && {color: BLUE.DEFAULT},
-                  ]}>
+                style={[common.rowCenterBetween, { width: '100%' }]}>
+                <Text style={[common.modalText, item.selected && { color: BLUE.DEFAULT }]}>
                   {item.value}
                 </Text>
-                {item.selected && (
-                  <Image source={iconPath.CHECK} style={common.size24} />
-                )}
+                {item.selected && <Image source={iconPath.CHECK} style={common.size24} />}
               </Pressable>
             </View>
           ))}
@@ -159,7 +143,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 16,
     backgroundColor: WHITE,
   },
-  kebabIcon: {position: 'absolute', top: 16, right: 16},
+  kebabIcon: { position: 'absolute', top: 16, right: 16 },
 });
 
 export default ApplicantFinishTab;

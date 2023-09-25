@@ -1,5 +1,5 @@
 import React from 'react';
-import {StyleSheet, Text, View} from 'react-native';
+import { StyleSheet, Text, View } from 'react-native';
 import RowView from '../Common/RowView';
 
 interface HeaderProps {
@@ -8,12 +8,12 @@ interface HeaderProps {
   rightContent?: React.ReactNode;
 }
 
-const Header: React.FC<HeaderProps> = ({title, leftContent, rightContent}) => {
+const Header: React.FC<HeaderProps> = ({ title, leftContent, rightContent }) => {
   return (
     <RowView style={styles.container}>
-      {leftContent ? leftContent : <View />}
-      <Text style={{fontSize: 20, textAlign: 'center'}}>{title}</Text>
-      {rightContent ? rightContent : <View />}
+      {leftContent ? <View style={{ width: '25%' }}>{leftContent}</View> : <View />}
+      <Text style={{ fontSize: 20, textAlign: 'center' }}>{title}</Text>
+      {rightContent ? <View style={{ width: '25%' }}>{rightContent}</View> : <View />}
     </RowView>
   );
 };

@@ -1,8 +1,8 @@
-import {GRAY, INPUT} from '@styles/colors';
+import { GRAY, INPUT } from '@styles/colors';
 import common from '@styles/common';
 import moment from 'moment';
-import {useState} from 'react';
-import {Pressable, StyleSheet, Text, View} from 'react-native';
+import { useState } from 'react';
+import { Pressable, StyleSheet, Text, View } from 'react-native';
 import DateTimePickerModal from 'react-native-modal-datetime-picker';
 
 interface DatePickerProps {
@@ -11,11 +11,7 @@ interface DatePickerProps {
   onSelectDate: Function;
 }
 
-const DatePicker: React.FC<DatePickerProps> = ({
-  label,
-  placeholder,
-  onSelectDate,
-}) => {
+const DatePicker: React.FC<DatePickerProps> = ({ label, placeholder, onSelectDate }) => {
   const [focus, setFocus] = useState(false);
   const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
   const [date, setDate] = useState('');
@@ -39,14 +35,12 @@ const DatePicker: React.FC<DatePickerProps> = ({
   return (
     <View>
       <View style={[common.inputWrapper]}>
-        <Text style={[common.label, {color: focus ? INPUT.FOCUS : GRAY.LIGHT}]}>
-          {label}
-        </Text>
+        <Text style={[common.label, { color: focus ? INPUT.FOCUS : GRAY.LIGHT }]}>{label}</Text>
         <Pressable
-          style={[common.textInput, focus && {borderColor: INPUT.FOCUS}]}
+          style={[common.textInput, focus && { borderColor: INPUT.FOCUS }]}
           onPress={showDatePicker}>
           {date ? (
-            <Text style={[styles.text, {color: '#292929'}]}>{date}</Text>
+            <Text style={[styles.text, { color: '#292929' }]}>{date}</Text>
           ) : (
             <Text style={[styles.text]}>{placeholder}</Text>
           )}

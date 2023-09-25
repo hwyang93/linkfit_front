@@ -1,15 +1,8 @@
 import BlockButton from '@components/BlockButton';
 import EmptySet from '@components/EmptySet';
-import {GRAY} from '@styles/colors';
+import { GRAY } from '@styles/colors';
 import common from '@styles/common';
-import {
-  Image,
-  Pressable,
-  ScrollView,
-  StyleSheet,
-  Text,
-  View,
-} from 'react-native';
+import { Image, Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
 
 import hairlineWidth = StyleSheet.hairlineWidth;
 
@@ -51,31 +44,16 @@ const BlockCenterComponent: React.FC = () => {
                 {/* TODO: CenterInfo 스크린 퍼러미터로 memberSeq이 필요함 */}
                 <Pressable onPress={() => {}}>
                   <View style={common.mb16}>
-                    <Image
-                      source={item.image}
-                      resizeMode={'cover'}
-                      style={common.imgBox}
-                    />
+                    <Image source={item.image} resizeMode={'cover'} style={common.imgBox} />
                   </View>
                   <Text style={common.title}>{item.title}</Text>
                   <View style={common.row}>
-                    <Text style={[common.text_s, common.fcg]}>
-                      {item.field}
-                    </Text>
-                    <Text style={[common.text_s, common.fcg, common.mh8]}>
-                      |
-                    </Text>
-                    <Text style={[common.text_s, common.fcg]}>
-                      {item.location}
-                    </Text>
+                    <Text style={[common.text_s, common.fcg]}>{item.field}</Text>
+                    <Text style={[common.text_s, common.fcg, common.mh8]}>|</Text>
+                    <Text style={[common.text_s, common.fcg]}>{item.location}</Text>
                   </View>
                   {/* block true = 차단중, block false = 차단하기  */}
-                  <BlockButton
-                    title={'차단중'}
-                    job={onBlock}
-                    bottom={0}
-                    right={0}
-                  />
+                  <BlockButton title={'차단중'} job={onBlock} bottom={0} right={0} />
                 </Pressable>
               </View>
             );
@@ -93,8 +71,8 @@ const styles = StyleSheet.create({
     borderBottomWidth: hairlineWidth,
     borderColor: GRAY.DEFAULT,
   },
-  thumbnail: {marginBottom: 16, width: '100%', height: 160, borderRadius: 8},
-  kebabIcon: {position: 'absolute', top: 16, right: 0},
+  thumbnail: { marginBottom: 16, width: '100%', height: 160, borderRadius: 8 },
+  kebabIcon: { position: 'absolute', top: 16, right: 0 },
 });
 
 export default BlockCenterComponent;

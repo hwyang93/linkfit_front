@@ -1,7 +1,7 @@
 import THEME from '@/styles/theme';
-import {iconPath} from '@/utils/iconPath';
+import { iconPath } from '@/utils/iconPath';
 import React from 'react';
-import {Pressable, Text, View} from 'react-native';
+import { Pressable, Text, View } from 'react-native';
 import Icon from './Icon';
 
 interface Props {
@@ -11,12 +11,7 @@ interface Props {
   onPress?: () => void;
 }
 
-const BottomSheetOption: React.FC<Props> = ({
-  label,
-  selected = false,
-  leftIcon,
-  onPress,
-}) => {
+const BottomSheetOption: React.FC<Props> = ({ label, selected = false, leftIcon, onPress }) => {
   return (
     <Pressable
       style={{
@@ -28,14 +23,14 @@ const BottomSheetOption: React.FC<Props> = ({
         height: 56,
       }}
       onPress={onPress}>
-      <View style={{flexDirection: 'row', alignItems: 'center'}}>
+      <View style={{ flexDirection: 'row', alignItems: 'center' }}>
         {leftIcon && leftIcon}
         <Text
           style={[
-            {fontSize: 18, marginLeft: leftIcon ? 10 : 0},
-            {fontWeight: selected ? '700' : '400'},
+            { fontSize: 18, marginLeft: leftIcon ? 10 : 0 },
+            { fontWeight: selected ? '700' : '400' },
             // selected && {color: THEME.PRIMARY},
-            {color: selected ? THEME.PRIMARY : THEME.BLACK},
+            { color: selected ? THEME.PRIMARY : THEME.BLACK },
           ]}>
           {label}
         </Text>

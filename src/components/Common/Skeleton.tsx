@@ -1,6 +1,6 @@
 import THEME from '@/styles/theme';
 import React from 'react';
-import {StyleProp, View, ViewProps, ViewStyle} from 'react-native';
+import { StyleProp, View, ViewProps, ViewStyle } from 'react-native';
 
 interface SkeletonProps extends ViewProps {
   variant: 'text' | 'circle' | 'rect';

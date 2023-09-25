@@ -1,8 +1,8 @@
-import {IS_ANDROID, IS_IOS} from '@/utils/constants/common';
-import {SHOW_TOAST_MESSAGE} from '@/utils/constants/toast';
-import {iconPath} from '@/utils/iconPath';
+import { IS_ANDROID, IS_IOS } from '@/utils/constants/common';
+import { SHOW_TOAST_MESSAGE } from '@/utils/constants/toast';
+import { iconPath } from '@/utils/iconPath';
 import common from '@styles/common';
-import {useCallback, useEffect, useRef, useState} from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import {
   DeviceEventEmitter,
   Image,
@@ -12,11 +12,7 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import Animated, {
-  useAnimatedStyle,
-  useSharedValue,
-  withTiming,
-} from 'react-native-reanimated';
+import Animated, { useAnimatedStyle, useSharedValue, withTiming } from 'react-native-reanimated';
 
 type Colors = {
   info: string;
@@ -54,9 +50,7 @@ type ToastData = {
 };
 
 const Toast: React.FC = () => {
-  const [messageType, setMessageType] = useState<
-    null | keyof Colors | keyof Icons
-  >(null);
+  const [messageType, setMessageType] = useState<null | keyof Colors | keyof Icons>(null);
   const [message, setMessage] = useState<string | null>(null);
   const [timeOutDuration, setTimeOutDuration] = useState(2000);
 
@@ -94,7 +88,7 @@ const Toast: React.FC = () => {
         if (timeOutDuration === 0) {
           closeToast();
         } else {
-          setTimeOutDuration(prev => prev - 1000);
+          setTimeOutDuration((prev) => prev - 1000);
         }
       }, 1000);
     }
@@ -106,7 +100,7 @@ const Toast: React.FC = () => {
 
   useEffect(() => {
     if (message) {
-      animatedOpacity.value = withTiming(1, {duration: 1000});
+      animatedOpacity.value = withTiming(1, { duration: 1000 });
     }
   }, [message, animatedOpacity]);
 
@@ -126,20 +120,15 @@ const Toast: React.FC = () => {
     <Animated.View
       style={[
         styles.wrapper,
-        {backgroundColor: messageType ? colors[messageType] : 'blue'},
+        { backgroundColor: messageType ? colors[messageType] : 'blue' },
         animatedStyle,
       ]}>
       <TouchableOpacity onPress={closeToast} style={common.rowCenterBetween}>
         <View style={common.rowCenter}>
-          <Image
-            source={messageType ? icons[messageType] : null}
-            style={common.size24}
-          />
+          <Image source={messageType ? icons[messageType] : null} style={common.size24} />
           <Text style={[styles.text, common.text_m]}>{message}</Text>
         </View>
-        {IS_IOS && (
-          <Image source={iconPath.TOAST_CLOSE} style={common.size24} />
-        )}
+        {IS_IOS && <Image source={iconPath.TOAST_CLOSE} style={common.size24} />}
       </TouchableOpacity>
     </Animated.View>
   );

@@ -1,21 +1,13 @@
-import {iconPath} from '@/utils/iconPath';
-import common, {width} from '@styles/common';
-import {Image, StyleSheet, Text, View} from 'react-native';
+import { iconPath } from '@/utils/iconPath';
+import common, { width } from '@styles/common';
+import { Image, StyleSheet, Text, View } from 'react-native';
 
 const Logo: React.FC = () => {
   return (
     <View style={styles.logoArea}>
       <View style={styles.logoBox}>
-        <Image
-          source={iconPath.LOGO_TEXT}
-          style={styles.logoText}
-          resizeMode={'cover'}
-        />
-        <Image
-          source={iconPath.LOGO}
-          style={styles.logoImage}
-          resizeMode={'cover'}
-        />
+        <Image source={iconPath.LOGO_TEXT} style={styles.logoText} resizeMode={'cover'} />
+        <Image source={iconPath.LOGO} style={styles.logoImage} resizeMode={'cover'} />
       </View>
       <Text style={[common.text_m, common.tac, common.mt20]}>
         당신의 커리어를 위한 여정에{'\n'} Linkfit이 함께 할게요.

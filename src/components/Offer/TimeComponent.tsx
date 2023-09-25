@@ -1,8 +1,8 @@
 import BirthdayPicker from '@components/BirthdayPicker';
 import SelectBox from '@components/SelectBox';
 import common from '@styles/common';
-import {useState} from 'react';
-import {View} from 'react-native';
+import { useState } from 'react';
+import { View } from 'react-native';
 
 const TIME2 = ['오전', '오후', '전일', '시간 협의'];
 
@@ -11,10 +11,7 @@ interface TimeComponentProps {
   onSelectTime: Function;
 }
 
-const TimeComponent: React.FC<TimeComponentProps> = ({
-  onSelectDay,
-  onSelectTime,
-}) => {
+const TimeComponent: React.FC<TimeComponentProps> = ({ onSelectDay, onSelectTime }) => {
   const [day, setDay] = useState('');
 
   const onSelectDatePicker = (value: string) => {

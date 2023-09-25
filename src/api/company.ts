@@ -1,4 +1,4 @@
-import {FetchCompanyResponse} from '@/types/api/company';
+import { FetchCompanyResponse } from '@/types/api/company.type';
 import request from '@api/request';
 
 export const fetchCompany = (seq: number) => {

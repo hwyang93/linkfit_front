@@ -1,26 +1,34 @@
 import {
-  checkVerificationCodeBody,
+  CheckEmailVerificationCodeBody,
+  FindEmailParams,
   LoginBody,
   LoginResponse,
   RefreshTokenResponse,
   SendEmailVerificationCodeBody,
-} from '@/types/api/auth';
+} from '@/types/api/auth.type';
 import request from './request';
 
-export const login = (body: LoginBody) => {
-  return request.post<LoginResponse>('/auth/login', body);
-};
+const ENDPOINT = '/auth';
 
-export const refreshToken = () => {
-  return request.post<RefreshTokenResponse>('/auth/refresh');
-};
-
-export const sendEmailVerificationCode = (
-  body: SendEmailVerificationCodeBody,
-) => {
-  return request.post('/auth/email', body);
-};
-
-export const checkVerificationCode = (body: checkVerificationCodeBody) => {
-  return request.post('/auth/check/email', body);
+export const authApi = {
+  login: async (body: LoginBody) => {
+    const response = await request.post<LoginResponse>(`${ENDPOINT}/login`, body);
+    return response.data;
+  },
+  refreshToken: async () => {
+    const response = await request.post<RefreshTokenResponse>(`${ENDPOINT}/refresh`);
+    return response.data;
+  },
+  findEmail: async (params: FindEmailParams) => {
+    const response = await request.get(`${ENDPOINT}/email`, { params });
+    return response.data;
+  },
+  sendEmailVerificationCode: async (body: SendEmailVerificationCodeBody) => {
+    const response = await request.post(`${ENDPOINT}/email`, body);
+    return response.data;
+  },
+  checkEmailVerificationCode: async (body: CheckEmailVerificationCodeBody) => {
+    const response = await request.post(`${ENDPOINT}/check/email`, body);
+    return response.data;
+  },
 };

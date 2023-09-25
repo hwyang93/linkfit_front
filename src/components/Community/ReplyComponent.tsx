@@ -1,10 +1,10 @@
 import THEME from '@/styles/theme';
-import {formatDate} from '@/utils/util';
+import { formatDate } from '@/utils/util';
 import common from '@styles/common';
-import {useState} from 'react';
-import {Pressable, Text, View} from 'react-native';
+import { useState } from 'react';
+import { Pressable, Text, View } from 'react-native';
 
-const ReplyComponent: React.FC<any> = ({commentInfo}) => {
+const ReplyComponent: React.FC<any> = ({ commentInfo }) => {
   const [textLine, setTextLine] = useState(2);
   const textExpansion = () => {
     if (textLine === 2) {
@@ -16,7 +16,7 @@ const ReplyComponent: React.FC<any> = ({commentInfo}) => {
   return (
     <View>
       <View style={common.mt8}>
-        <Text style={{fontSize: 12, color: THEME.GREY02}}>
+        <Text style={{ fontSize: 12, color: THEME.GREY02 }}>
           {formatDate(commentInfo.updatedAt)}
         </Text>
       </View>

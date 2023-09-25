@@ -1,8 +1,8 @@
 import common from '@/styles/common';
 import THEME from '@/styles/theme';
-import {iconPath} from '@/utils/iconPath';
+import { iconPath } from '@/utils/iconPath';
 import React from 'react';
-import {StyleProp, StyleSheet, Text, ViewStyle} from 'react-native';
+import { StyleProp, StyleSheet, Text, ViewStyle } from 'react-native';
 import Card from '../Common/Card';
 import Chip from '../Common/Chip';
 import IconButton from '../Common/IconButton';
@@ -30,13 +30,9 @@ const ResumeCard: React.FC<ResumeCardProps> = ({
     <Card style={style} onPress={onPress}>
       {isMaster && <Chip label="대표" />}
       <Text style={common.title}>{title}</Text>
-      <Text style={[common.text_s, {color: THEME.GREY02}]}>{timestamp}</Text>
+      <Text style={[common.text_s, { color: THEME.GREY02 }]}>{timestamp}</Text>
       {kebabIconShown && (
-        <IconButton
-          source={iconPath.KEBAB}
-          style={styles.kebabIcon}
-          onPress={onKebabIconPress}
-        />
+        <IconButton source={iconPath.KEBAB} style={styles.kebabIcon} onPress={onKebabIconPress} />
       )}
     </Card>
   );

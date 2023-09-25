@@ -1,7 +1,8 @@
-import {NavigationProp, useNavigation} from '@react-navigation/native';
+import { ROUTE } from '@/utils/constants/route';
+import { NavigationProp, useNavigation } from '@react-navigation/native';
 import common from '@styles/common';
-import {Pressable, StyleSheet, Text, View} from 'react-native';
-import {LoggedInParamList} from '../../AppInner';
+import { Pressable, StyleSheet, Text, View } from 'react-native';
+import { LoggedInParamList } from '../../AppInner';
 
 interface PostCarouselItemProps {
   item: {
@@ -14,16 +15,12 @@ interface PostCarouselItemProps {
   };
 }
 
-const PostCarouselItem: React.FC<PostCarouselItemProps> = ({item}) => {
+const PostCarouselItem: React.FC<PostCarouselItemProps> = ({ item }) => {
   const navigation = useNavigation<NavigationProp<LoggedInParamList>>();
   return (
     <Pressable
       style={styles.postBox}
-      onPress={() =>
-        navigation.navigate('CommunityPost', {
-          postSeq: item.id,
-        })
-      }>
+      onPress={() => navigation.navigate(ROUTE.COMMUNITY.POST_DETAIL, { postId: item.id })}>
       <Text numberOfLines={1} style={common.text_m}>
         {item.title}
       </Text>

@@ -1,5 +1,5 @@
 import PostCarouselItem from '@components/PostCarouselItem';
-import {FlatList} from 'react-native';
+import { FlatList } from 'react-native';
 
 interface PostCarouselProps {
   links: any[];
@@ -8,8 +8,8 @@ interface PostCarouselProps {
   pageWidth: number;
 }
 
-const PostCarousel: React.FC<PostCarouselProps> = ({links, pageWidth, gap}) => {
-  const renderItem = ({item}: any) => {
+const PostCarousel: React.FC<PostCarouselProps> = ({ links, pageWidth, gap }) => {
+  const renderItem = ({ item }: any) => {
     return <PostCarouselItem item={item} />;
   };
 

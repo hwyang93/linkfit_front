@@ -1,27 +1,20 @@
-import {useMemberFollowingListQuery} from '@/hooks/member/useMemberFollowingListQuery';
+import { useMemberFollowingList } from '@/hooks/member/use-member-following-list';
 import THEME from '@/styles/theme';
-import {Member} from '@/types/common';
-import {iconPath} from '@/utils/iconPath';
-import {NavigationProp, useNavigation} from '@react-navigation/native';
-import {GRAY} from '@styles/colors';
+import { Member } from '@/types/common';
+import { iconPath } from '@/utils/iconPath';
+import { NavigationProp, useNavigation } from '@react-navigation/native';
+import { GRAY } from '@styles/colors';
 import common from '@styles/common';
-import {
-  Image,
-  Pressable,
-  ScrollView,
-  StyleSheet,
-  Text,
-  View,
-} from 'react-native';
-import {SafeAreaView} from 'react-native-safe-area-context';
-import {LoggedInParamList} from '../../../AppInner';
+import { Image, Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
+import { LoggedInParamList } from '../../../AppInner';
 import IconButton from '../Common/IconButton';
 import EmptySet from '../EmptySet';
 
 import hairlineWidth = StyleSheet.hairlineWidth;
 
 const FollowingCenterTab: React.FC = () => {
-  const {data} = useMemberFollowingListQuery({type: Member.Company});
+  const { data } = useMemberFollowingList({ type: Member.Company });
   const followings = data;
 
   const navigation = useNavigation<NavigationProp<LoggedInParamList>>();
@@ -30,13 +23,9 @@ const FollowingCenterTab: React.FC = () => {
 
   return (
     <SafeAreaView edges={['bottom', 'left', 'right']} style={styles.container}>
-      <ScrollView
-        showsVerticalScrollIndicator={false}
-        contentContainerStyle={{flex: 1}}>
-        {followings?.length === 0 && (
-          <EmptySet text="팔로우 중인 센터가 없어요" />
-        )}
-        {followings?.map(following => (
+      <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={{ flex: 1 }}>
+        {followings?.length === 0 && <EmptySet text="팔로우 중인 센터가 없어요" />}
+        {followings?.map((following) => (
           <View
             key={`${following.seq} ${following.memberSeq} ${following.favoriteSeq}`}
             style={styles.listBox}>
@@ -54,11 +43,9 @@ const FollowingCenterTab: React.FC = () => {
                   style={common.imgBox}
                 />
               </View>
-              <Text style={common.title}>
-                {following.followingMember.company?.companyName}
-              </Text>
+              <Text style={common.title}>{following.followingMember.company?.companyName}</Text>
               <View style={common.rowCenterBetween}>
-                <Text style={[common.text_s, {color: GRAY.DARK}]}>
+                <Text style={[common.text_s, { color: GRAY.DARK }]}>
                   {following.followingMember.company?.field} | 서울 · 송파구
                 </Text>
                 <View style={common.rowCenterBetween}>
@@ -72,10 +59,7 @@ const FollowingCenterTab: React.FC = () => {
                     onPress={() => Alert.alert('쪽지', '쪽지를 보내주세용')}>
                     <Image source={iconPath.MESSAGE} style={common.size24} />
                   </Pressable> */}
-                  <IconButton
-                    source={iconPath.FAVORITE_ON}
-                    onPress={toggleFavorite}
-                  />
+                  <IconButton source={iconPath.FAVORITE_ON} onPress={toggleFavorite} />
                 </View>
               </View>
             </Pressable>
@@ -105,8 +89,8 @@ const styles = StyleSheet.create({
     borderBottomWidth: hairlineWidth,
     borderColor: GRAY.DEFAULT,
   },
-  thumbnail: {marginBottom: 16, width: '100%', height: 160, borderRadius: 8},
-  kebabIcon: {position: 'absolute', top: 16, right: 0},
+  thumbnail: { marginBottom: 16, width: '100%', height: 160, borderRadius: 8 },
+  kebabIcon: { position: 'absolute', top: 16, right: 0 },
 });
 
 export default FollowingCenterTab;

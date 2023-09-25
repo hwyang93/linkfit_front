@@ -1,18 +1,18 @@
-import {CreateinstructorSuggestDto} from '@/types/api/dtos';
+import { CreateinstructorSuggestDto } from '@/types/api/dtos.type';
 import {
   FetchInstructorResponse,
   FetchInstructorsParams,
   FetchInstructorsResponse,
   FetchRecommendedInstructorsResponse,
-} from '@/types/api/instructor';
-import {AxiosResponseWithPagingInfo, PostResponse} from '@/types/common';
+} from '@/types/api/instructor.type';
+import { AxiosResponseWithPagingInfo, PostResponse } from '@/types/common';
 import request from './request';
 
 // TODO: data 바깥 타입 지정하는 방법 찾아보기
 export const fetchInstructors = (
   params?: FetchInstructorsParams,
 ): Promise<AxiosResponseWithPagingInfo<FetchInstructorsResponse>> => {
-  return request.get<FetchInstructorsResponse>('/instructor', {params});
+  return request.get<FetchInstructorsResponse>('/instructor', { params });
 };
 
 export const fetchInstructor = (seq: number) => {
@@ -24,33 +24,24 @@ export const createInstructorSuggest = (data: CreateinstructorSuggestDto) => {
 };
 
 export const fetchRecommendedInstructors = () => {
-  return request.get<FetchRecommendedInstructorsResponse>(
-    '/instructor/recommended',
-  );
+  return request.get<FetchRecommendedInstructorsResponse>('/instructor/recommended');
 };
 
 const ENDPOINT = '/instructor';
 
 export const instructorApi = {
   getInstructorList: async (params?: FetchInstructorsParams) => {
-    const response = await request.get<FetchInstructorsResponse>(
-      `${ENDPOINT}`,
-      {
-        params,
-      },
-    );
+    const response = await request.get<FetchInstructorsResponse>(`${ENDPOINT}`, {
+      params,
+    });
     return response.data;
   },
   followInstructor: async (instructorId: number) => {
-    const response = await request.post<PostResponse>(
-      `${ENDPOINT}/follow/${instructorId}`,
-    );
+    const response = await request.post<PostResponse>(`${ENDPOINT}/follow/${instructorId}`);
     return response.data;
   },
   unfollowInstructor: async (instructorId: number) => {
-    const response = await request.delete<PostResponse>(
-      `${ENDPOINT}/follow/${instructorId}`,
-    );
+    const response = await request.delete<PostResponse>(`${ENDPOINT}/follow/${instructorId}`);
     return response.data;
   },
 };

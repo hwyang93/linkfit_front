@@ -1,22 +1,15 @@
-import {getKakaoCoordinate} from '@/api/kakao';
-import {Coordinate} from '@/types/common';
-import {iconPath} from '@/utils/iconPath';
-import {OnCompleteParams} from '@actbase/react-daum-postcode/lib/types';
+import { getKakaoCoordinate } from '@/api/kakao';
+import useModal from '@/hooks/use-modal';
+import { Coordinate } from '@/types/common';
+import { iconPath } from '@/utils/iconPath';
+import { OnCompleteParams } from '@actbase/react-daum-postcode/lib/types';
 import BottomSheet from '@components/Common/BottomSheet';
 import SearchAddress from '@components/Common/SearchAddress';
 import toast from '@hooks/toast';
-import useModal from '@hooks/useModal';
 import common from '@styles/common';
-import {isAxiosError} from 'axios';
-import {useEffect, useState} from 'react';
-import {
-  Pressable,
-  StyleSheet,
-  Text,
-  TextInput,
-  TextInputProps,
-  View,
-} from 'react-native';
+import { isAxiosError } from 'axios';
+import { useEffect, useState } from 'react';
+import { Pressable, StyleSheet, Text, TextInput, TextInputProps, View } from 'react-native';
 import Icon from './Icon';
 
 interface SearchAddressInputProps extends TextInputProps {
@@ -52,7 +45,7 @@ const SearchAddressInput: React.FC<SearchAddressInputProps> = ({
       });
     } catch (error) {
       if (isAxiosError(error)) {
-        toast.error({message: error.message});
+        toast.error({ message: error.message });
       }
     }
   };
@@ -64,7 +57,7 @@ const SearchAddressInput: React.FC<SearchAddressInputProps> = ({
   };
 
   useEffect(() => {
-    onChangeAddress({address, coordinate});
+    onChangeAddress({ address, coordinate });
   }, [address, coordinate, onChangeAddress]);
 
   return (
@@ -73,11 +66,7 @@ const SearchAddressInput: React.FC<SearchAddressInputProps> = ({
         <View style={common.inputWrapper}>
           <Text style={[common.label]}>{label}</Text>
           <TextInput
-            style={[
-              common.textInput,
-              {paddingLeft: icon && 50},
-              comment && styles.comment,
-            ]}
+            style={[common.textInput, { paddingLeft: icon && 50 }, comment && styles.comment]}
             value={address}
             placeholderTextColor="#acacac"
             importantForAutofill="yes"
@@ -92,15 +81,12 @@ const SearchAddressInput: React.FC<SearchAddressInputProps> = ({
             returnKeyType="done"
             {...props}
           />
-          <View style={{position: 'absolute', right: 16, top: 16}}>
+          <View style={{ position: 'absolute', right: 16, top: 16 }}>
             <Icon source={iconPath.SEARCH} />
           </View>
         </View>
       </Pressable>
-      <BottomSheet
-        visible={modal.visible}
-        onDismiss={modal.close}
-        useScroll={false}>
+      <BottomSheet visible={modal.visible} onDismiss={modal.close} useScroll={false}>
         <SearchAddress onSelectAddress={selectAddress} />
       </BottomSheet>
     </View>

@@ -1,8 +1,8 @@
-import {iconPath} from '@/utils/iconPath';
-import {NavigationProp, useNavigation} from '@react-navigation/native';
+import { iconPath } from '@/utils/iconPath';
+import { NavigationProp, useNavigation } from '@react-navigation/native';
 import common from '@styles/common';
-import {Image, Pressable, Text, View} from 'react-native';
-import {LoggedInParamList} from '../../../AppInner';
+import { Image, Pressable, Text, View } from 'react-native';
+import { LoggedInParamList } from '../../../AppInner';
 
 interface ApplicantListItemProps {
   applySeq: number;
@@ -40,10 +40,7 @@ const ApplicantListItem: React.FC<ApplicantListItemProps> = ({
           <Text style={[common.text_s, common.fcb]}>{status}</Text>
         </View>
         <View style={common.rowCenter}>
-          <Image
-            source={iconPath.THUMBNAIL}
-            style={[common.thumbnail, common.mr12]}
-          />
+          <Image source={iconPath.THUMBNAIL} style={[common.thumbnail, common.mr12]} />
           <Text style={common.title} numberOfLines={1}>
             {resumeTitle}
           </Text>

@@ -1,4 +1,4 @@
-import {WHITE} from '@/styles/colors';
+import { WHITE } from '@/styles/colors';
 import common from '@/styles/common';
 import THEME from '@/styles/theme';
 import React from 'react';
@@ -36,12 +36,9 @@ const FloatingActionButton: React.FC<FloatingActionButtonProps> = ({
     <Pressable style={[styles.shadow, style]} onPress={onPress} {...props}>
       {variant === 'primary' && (
         <LinearGradient
-          style={[
-            styles.iconContainer,
-            label ? styles.styleWithLabel : styles.styleWithoutLabel,
-          ]}
-          start={{x: 0, y: 0}}
-          end={{x: 1, y: 0}}
+          style={[styles.iconContainer, label ? styles.styleWithLabel : styles.styleWithoutLabel]}
+          start={{ x: 0, y: 0 }}
+          end={{ x: 1, y: 0 }}
           colors={['#62C1E9', '#3962f3']}>
           {iconSource && (
             <Image
@@ -54,9 +51,7 @@ const FloatingActionButton: React.FC<FloatingActionButtonProps> = ({
               ]}
             />
           )}
-          {label && (
-            <Text style={[styles.text, {color: THEME.WHITE}]}>{label}</Text>
-          )}
+          {label && <Text style={[styles.text, { color: THEME.WHITE }]}>{label}</Text>}
         </LinearGradient>
       )}
       {variant === 'secondary' && (

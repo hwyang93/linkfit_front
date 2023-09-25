@@ -1,8 +1,8 @@
-import {SCREEN_WIDTH} from '@/utils/constants/common';
+import { SCREEN_WIDTH } from '@/utils/constants/common';
 import DatePicker from '@components/DatePicker';
 import SelectBox from '@components/SelectBox';
 import common from '@styles/common';
-import {View} from 'react-native';
+import { View } from 'react-native';
 const columns2 = (SCREEN_WIDTH - 40) / 2;
 
 const CAREER_DATA = ['필라테스', '요가'];
@@ -46,20 +46,12 @@ const CareerComponent: React.FC<CareerComponentProps> = ({
       {/* 입사일 퇴사일 */}
       <View style={common.mb16}>
         <View style={common.row}>
-          <View style={[common.mr8, {width: columns2}]}>
-            <DatePicker
-              label={'입사'}
-              placeholder={'입사 날짜'}
-              onSelectDate={onSelectStartDate}
-            />
+          <View style={[common.mr8, { width: columns2 }]}>
+            <DatePicker label={'입사'} placeholder={'입사 날짜'} onSelectDate={onSelectStartDate} />
           </View>
 
-          <View style={{width: columns2}}>
-            <DatePicker
-              label={'퇴사'}
-              placeholder={'퇴사 날짜'}
-              onSelectDate={onSelectEndDate}
-            />
+          <View style={{ width: columns2 }}>
+            <DatePicker label={'퇴사'} placeholder={'퇴사 날짜'} onSelectDate={onSelectEndDate} />
           </View>
         </View>
       </View>

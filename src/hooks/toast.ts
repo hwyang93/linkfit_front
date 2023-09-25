@@ -1,21 +1,25 @@
-import {SHOW_TOAST_MESSAGE} from '@/utils/constants/toast';
-import {DeviceEventEmitter} from 'react-native';
+import { SHOW_TOAST_MESSAGE } from '@/utils/constants/toast';
+import { DeviceEventEmitter } from 'react-native';
+
+type ToastOptions = {
+  message: string;
+};
 
 const toast = {
-  info: (options: any) => {
-    DeviceEventEmitter.emit(SHOW_TOAST_MESSAGE, {...options, type: 'info'});
+  info: (options: ToastOptions) => {
+    DeviceEventEmitter.emit(SHOW_TOAST_MESSAGE, { ...options, type: 'info' });
   },
-  success: (options: any) => {
-    DeviceEventEmitter.emit(SHOW_TOAST_MESSAGE, {...options, type: 'success'});
+  success: (options: ToastOptions) => {
+    DeviceEventEmitter.emit(SHOW_TOAST_MESSAGE, { ...options, type: 'success' });
   },
-  warn: (options: any) => {
-    DeviceEventEmitter.emit(SHOW_TOAST_MESSAGE, {...options, type: 'warn'});
+  warn: (options: ToastOptions) => {
+    DeviceEventEmitter.emit(SHOW_TOAST_MESSAGE, { ...options, type: 'warn' });
   },
-  error: (options: any) => {
-    DeviceEventEmitter.emit(SHOW_TOAST_MESSAGE, {...options, type: 'error'});
+  error: (options: ToastOptions) => {
+    DeviceEventEmitter.emit(SHOW_TOAST_MESSAGE, { ...options, type: 'error' });
   },
-  alert: (options: any) => {
-    DeviceEventEmitter.emit(SHOW_TOAST_MESSAGE, {...options, type: 'alert'});
+  alert: (options: ToastOptions) => {
+    DeviceEventEmitter.emit(SHOW_TOAST_MESSAGE, { ...options, type: 'alert' });
   },
 };
 

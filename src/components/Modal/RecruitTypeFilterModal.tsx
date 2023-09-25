@@ -1,5 +1,5 @@
 import FILTER from '@/utils/constants/filter';
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import BottomSheet from '../Common/BottomSheet';
 import BottomSheetOption from '../Common/BottomSheetOption';
 import CTAButton from '../Common/CTAButton';
@@ -21,7 +21,7 @@ const RecruitTypeFilterModal: React.FC<RecruitTypeFilterModalProps> = ({
 
   const handleOptionPress = (option: string) => {
     if (selectedOptions.includes(option)) {
-      setSelectedOptions(selectedOptions.filter(item => item !== option));
+      setSelectedOptions(selectedOptions.filter((item) => item !== option));
     } else {
       setSelectedOptions([...selectedOptions, option]);
     }
@@ -38,7 +38,7 @@ const RecruitTypeFilterModal: React.FC<RecruitTypeFilterModalProps> = ({
         />
       ))}
       <CTAButton
-        style={{marginHorizontal: 16, marginTop: 32}}
+        style={{ marginHorizontal: 16, marginTop: 32 }}
         label="필터 적용"
         onPress={() => onApply(selectedOptions)}
       />
