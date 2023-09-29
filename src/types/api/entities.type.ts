@@ -92,7 +92,7 @@ export interface MemberFavoriteEntity extends BaseEntity {
 export interface MemberLicenceEntity extends BaseEntity {
   seq: number;
   memberSeq: number;
-  field: string;
+  field: FieldTypeKo;
   licenceNumber: string;
   issuer: string;
   issuerDate: string;
