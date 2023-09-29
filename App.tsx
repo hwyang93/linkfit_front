@@ -1,4 +1,4 @@
-import usePermissions from '@/lib/usePermissions';
+import { usePermission } from '@/hooks/use-permission';
 import Toast from '@components/Toast';
 import { NavigationContainer } from '@react-navigation/native';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
@@ -9,7 +9,7 @@ import AppInner from './AppInner';
 import store from './src/store';
 
 const App = () => {
-  usePermissions();
+  usePermission();
   useEffect(() => {
     SplashScreen.hide();
   }, []);
