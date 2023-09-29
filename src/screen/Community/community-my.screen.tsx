@@ -1,10 +1,10 @@
 import { LoggedInParamList } from '@/../AppInner';
 import CTAButton from '@/components/Common/CTAButton';
+import { MEMBER_TYPE } from '@/lib/constants/enum';
+import { ROUTE } from '@/lib/constants/route';
+import { iconPath } from '@/lib/iconPath';
 import CommunityMyScreenTabView from '@/screen/community/community-my-tab-view.screen';
 import { FetchMemberInfoResponse } from '@/types/api/member.type';
-import { MEMBER_TYPE } from '@/utils/constants/enum';
-import { ROUTE } from '@/utils/constants/route';
-import { iconPath } from '@/utils/iconPath';
 import { fetchMemberInfo } from '@api/member';
 import toast from '@hooks/toast';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';

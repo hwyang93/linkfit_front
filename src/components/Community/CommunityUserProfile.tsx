@@ -1,5 +1,5 @@
-import { MemberType, MEMBER_TYPE } from '@/utils/constants/enum';
-import { iconPath } from '@/utils/iconPath';
+import { MemberType, MEMBER_TYPE } from '@/lib/constants/enum';
+import { iconPath } from '@/lib/iconPath';
 import { BLUE } from '@styles/colors';
 import common from '@styles/common';
 import { Image, Pressable, StyleSheet, Text, View } from 'react-native';

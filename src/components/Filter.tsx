@@ -1,4 +1,4 @@
-import { iconPath } from '@/utils/iconPath';
+import { iconPath } from '@/lib/iconPath';
 import { GRAY } from '@styles/colors';
 import common from '@styles/common';
 import { Image, Pressable, StyleSheet, Text, View } from 'react-native';

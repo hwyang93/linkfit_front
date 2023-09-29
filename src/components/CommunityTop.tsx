@@ -1,4 +1,4 @@
-import { SCREEN_WIDTH } from '@/utils/constants/common';
+import { SCREEN_WIDTH } from '@/lib/constants/common';
 import PostCarousel from '@components/PostCarousel';
 import common from '@styles/common';
 import { Text, View } from 'react-native';

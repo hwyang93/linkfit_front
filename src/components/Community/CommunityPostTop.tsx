@@ -3,10 +3,10 @@ import { useCommunityPostDeleteMutation } from '@/hooks/community/use-community-
 import { useAppNavigation } from '@/hooks/use-app-navigation';
 import useAuth from '@/hooks/use-auth';
 import useModal from '@/hooks/use-modal';
+import { ROUTE } from '@/lib/constants/route';
+import { iconPath } from '@/lib/iconPath';
+import { formatDate } from '@/lib/util';
 import { CommunityEntity } from '@/types/api/entities.type';
-import { ROUTE } from '@/utils/constants/route';
-import { iconPath } from '@/utils/iconPath';
-import { formatDate } from '@/utils/util';
 import { createCommunityComment } from '@api/community';
 import BookmarkCounter from '@components/Counter/BookmarkCounter';
 import CommentCounter from '@components/Counter/CommentCounter';

@@ -1,6 +1,6 @@
 import { useMemberFollow } from '@/hooks/member/use-member-follow';
 import { useMemberUnfollow } from '@/hooks/member/use-member-unfollow';
-import { iconPath } from '@/utils/iconPath';
+import { iconPath } from '@/lib/iconPath';
 import { BLUE } from '@styles/colors';
 import common from '@styles/common';
 import { StyleProp, StyleSheet, Text, View, ViewStyle } from 'react-native';

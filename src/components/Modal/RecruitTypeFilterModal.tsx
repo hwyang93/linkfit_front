@@ -1,4 +1,4 @@
-import FILTER from '@/utils/constants/filter';
+import FILTER from '@/lib/constants/filter';
 import React, { useState } from 'react';
 import BottomSheet from '../Common/BottomSheet';
 import BottomSheetOption from '../Common/BottomSheetOption';

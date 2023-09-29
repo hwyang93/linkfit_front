@@ -1,4 +1,4 @@
-import { SCREEN_HEIGHT, SCREEN_WIDTH } from '@/utils/constants/common';
+import { SCREEN_HEIGHT, SCREEN_WIDTH } from '@/lib/constants/common';
 import { BLACK, GRAY } from '@styles/colors';
 import common, { width } from '@styles/common';
 import { useEffect, useRef } from 'react';

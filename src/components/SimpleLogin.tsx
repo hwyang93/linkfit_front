@@ -1,4 +1,4 @@
-import { iconPath } from '@/utils/iconPath';
+import { iconPath } from '@/lib/iconPath';
 import { Alert, Image, Pressable, StyleSheet, Text, View } from 'react-native';
 import common, { width } from '../styles/common';
 

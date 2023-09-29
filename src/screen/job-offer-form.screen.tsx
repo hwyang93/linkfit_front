@@ -1,11 +1,11 @@
 import CTAButton from '@/components/Common/CTAButton';
 import useInput from '@/hooks/use-input';
 import { useSelect } from '@/hooks/use-select';
+import { SCREEN_WIDTH } from '@/lib/constants/common';
+import { MEMBER_TYPE } from '@/lib/constants/enum';
+import { iconPath } from '@/lib/iconPath';
 import { useAppSelector } from '@/store';
 import { Coordinate } from '@/types/common';
-import { SCREEN_WIDTH } from '@/utils/constants/common';
-import { MEMBER_TYPE } from '@/utils/constants/enum';
-import { iconPath } from '@/utils/iconPath';
 import { createRecruit } from '@api/recruit';
 import SearchAddressInput from '@components/Common/SearchAddressInput';
 import DismissKeyboardView from '@components/DismissKeyboardView';

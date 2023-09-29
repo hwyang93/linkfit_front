@@ -1,7 +1,7 @@
 import { LoggedInParamList } from '@/../AppInner';
 import CTAButton from '@/components/Common/CTAButton';
 import { useCreateCsInquiry } from '@/hooks/customer-service/use-create-cs-inquiry';
-import { ROUTE } from '@/utils/constants/route';
+import { ROUTE } from '@/lib/constants/route';
 import DismissKeyboardView from '@components/DismissKeyboardView';
 import Input, { KeyboardTypes } from '@components/Input';
 import toast from '@hooks/toast';

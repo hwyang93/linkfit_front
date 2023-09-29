@@ -1,10 +1,10 @@
 import Chip from '@/components/Common/Chip';
 import CTAButton from '@/components/Common/CTAButton';
+import { MEMBER_TYPE } from '@/lib/constants/enum';
+import { ROUTE } from '@/lib/constants/route';
+import { iconPath } from '@/lib/iconPath';
 import { useAppSelector } from '@/store';
 import { RecruitStatus } from '@/types/api/recruit.type';
-import { MEMBER_TYPE } from '@/utils/constants/enum';
-import { ROUTE } from '@/utils/constants/route';
-import { iconPath } from '@/utils/iconPath';
 import { fetchRecruitApplication, updateRecruitApplyStatus } from '@api/recruit';
 import { fetchResume } from '@api/resume';
 import Modal from '@components/ModalSheet';

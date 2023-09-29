@@ -1,4 +1,4 @@
-import { ROUTE } from '@/utils/constants/route';
+import { ROUTE } from '@/lib/constants/route';
 import InstructorInfoComponent from '@components/InstructorInfoComponent';
 import Modal from '@components/ModalSheet';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';

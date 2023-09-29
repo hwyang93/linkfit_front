@@ -1,9 +1,9 @@
 import { useCreateCommunityBookmark } from '@/hooks/community/use-create-community-bookmark';
 import { useDeleteCommunityBookmark } from '@/hooks/community/use-delete-community-bookmark';
 import toast from '@/hooks/toast';
+import TOAST from '@/lib/constants/toast';
+import { iconPath } from '@/lib/iconPath';
 import { YesNoFlag } from '@/types/common';
-import TOAST from '@/utils/constants/toast';
-import { iconPath } from '@/utils/iconPath';
 import common from '@styles/common';
 import { useState } from 'react';
 import { Image, Pressable, Text, View } from 'react-native';

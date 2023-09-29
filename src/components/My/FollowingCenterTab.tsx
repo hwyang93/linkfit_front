@@ -1,7 +1,7 @@
 import { useMemberFollowingList } from '@/hooks/member/use-member-following-list';
+import { MEMBER_TYPE } from '@/lib/constants/enum';
+import { iconPath } from '@/lib/iconPath';
 import THEME from '@/styles/theme';
-import { MEMBER_TYPE } from '@/utils/constants/enum';
-import { iconPath } from '@/utils/iconPath';
 import { NavigationProp, useNavigation } from '@react-navigation/native';
 import { GRAY } from '@styles/colors';
 import common from '@styles/common';

@@ -1,8 +1,8 @@
 import { useCommunityBookmarkListQuery } from '@/hooks/community/use-community-bookmark-list-query';
 import { useAppNavigation } from '@/hooks/use-app-navigation';
-import { MEMBER_TYPE } from '@/utils/constants/enum';
-import { ROUTE } from '@/utils/constants/route';
-import { formatDate } from '@/utils/util';
+import { MEMBER_TYPE } from '@/lib/constants/enum';
+import { ROUTE } from '@/lib/constants/route';
+import { formatDate } from '@/lib/util';
 import BookmarkCounter from '@components/Counter/BookmarkCounter';
 import CommentCounter from '@components/Counter/CommentCounter';
 import { GRAY, WHITE } from '@styles/colors';

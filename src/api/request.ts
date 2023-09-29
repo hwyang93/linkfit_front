@@ -1,5 +1,5 @@
-import { IS_IOS } from '@/utils/constants/common';
-import STORAGE_KEY from '@/utils/constants/storage';
+import { IS_IOS } from '@/lib/constants/common';
+import STORAGE_KEY from '@/lib/constants/storage';
 import { authApi } from '@api/auth';
 import toast from '@hooks/toast';
 import axios, { AxiosRequestConfig, isAxiosError } from 'axios';

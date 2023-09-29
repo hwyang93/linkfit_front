@@ -1,8 +1,8 @@
 import { authApi } from '@/api/auth';
 import { fetchMemberInfo } from '@/api/member';
+import STORAGE_KEY from '@/lib/constants/storage';
 import userSlice from '@/slices/user';
 import { useAppDispatch, useAppSelector } from '@/store';
-import STORAGE_KEY from '@/utils/constants/storage';
 import axios from 'axios';
 import { useState } from 'react';
 import { Alert } from 'react-native';

@@ -1,8 +1,8 @@
 import ResumeCard from '@/components/Compound/ResumeCard';
 import { useResumeList } from '@/hooks/resume/use-resume-list';
-import { ROUTE } from '@/utils/constants/route';
-import { iconPath } from '@/utils/iconPath';
-import { formatDate } from '@/utils/util';
+import { ROUTE } from '@/lib/constants/route';
+import { iconPath } from '@/lib/iconPath';
+import { formatDate } from '@/lib/util';
 import { deleteResume, updateResumeMaster } from '@api/resume';
 import Modal from '@components/ModalSheet';
 import toast from '@hooks/toast';

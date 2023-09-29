@@ -1,4 +1,4 @@
-import { iconPath } from '@/utils/iconPath';
+import { iconPath } from '@/lib/iconPath';
 import { NavigationProp, useNavigation } from '@react-navigation/native';
 import common from '@styles/common';
 import { Image, Pressable, View } from 'react-native';

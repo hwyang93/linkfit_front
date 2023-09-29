@@ -1,6 +1,6 @@
 import { useCompany } from '@/hooks/company/use-company';
+import { SCREEN_WIDTH } from '@/lib/constants/common';
 import { CompanyEntity, RecruitEntity } from '@/types/api/entities.type';
-import { SCREEN_WIDTH } from '@/utils/constants/common';
 import CenterInfoTop from '@components/CenterInfoTop';
 import EmptySet from '@components/EmptySet';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';

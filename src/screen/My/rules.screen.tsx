@@ -1,5 +1,5 @@
 import { LoggedInParamList } from '@/../AppInner';
-import { ROUTE } from '@/utils/constants/route';
+import { ROUTE } from '@/lib/constants/route';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { WHITE } from '@styles/colors';
 import common from '@styles/common';

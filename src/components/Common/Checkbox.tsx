@@ -1,5 +1,5 @@
+import { iconPath } from '@/lib/iconPath';
 import common from '@/styles/common';
-import { iconPath } from '@/utils/iconPath';
 import React from 'react';
 import { Image, Pressable, PressableProps } from 'react-native';
 

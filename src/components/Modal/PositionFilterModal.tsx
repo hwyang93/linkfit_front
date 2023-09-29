@@ -1,5 +1,5 @@
-import FILTER from '@/utils/constants/filter';
-import { iconPath } from '@/utils/iconPath';
+import FILTER from '@/lib/constants/filter';
+import { iconPath } from '@/lib/iconPath';
 import React, { useState } from 'react';
 import { ImageSourcePropType } from 'react-native';
 import BottomSheet from '../Common/BottomSheet';

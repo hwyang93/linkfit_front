@@ -1,10 +1,10 @@
 import { LoggedInParamList } from '@/../AppInner';
 import CTAButton from '@/components/Common/CTAButton';
 import useKakaoLocation from '@/hooks/use-kakao-location';
+import { ROUTE } from '@/lib/constants/route';
+import { iconPath } from '@/lib/iconPath';
+import { requestPermission } from '@/lib/util';
 import { FetchRegionAuthResponse } from '@/types/api/member.type';
-import { ROUTE } from '@/utils/constants/route';
-import { iconPath } from '@/utils/iconPath';
-import { requestPermission } from '@/utils/util';
 import { createRegionAuth, deleteRegionAuth, fetchRegionAuth } from '@api/member';
 import LocationButton from '@components/LocationButton';
 import toast from '@hooks/toast';

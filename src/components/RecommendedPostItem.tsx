@@ -1,7 +1,7 @@
+import { MEMBER_TYPE } from '@/lib/constants/enum';
+import { ROUTE } from '@/lib/constants/route';
+import { formatDate } from '@/lib/util';
 import { CommunityEntity } from '@/types/api/entities.type';
-import { MEMBER_TYPE } from '@/utils/constants/enum';
-import { ROUTE } from '@/utils/constants/route';
-import { formatDate } from '@/utils/util';
 import BookmarkCounter from '@components/Counter/BookmarkCounter';
 import CommentCounter from '@components/Counter/CommentCounter';
 import { NavigationProp, useNavigation } from '@react-navigation/native';

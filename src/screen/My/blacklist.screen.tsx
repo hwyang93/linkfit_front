@@ -1,4 +1,4 @@
-import { materialTopTabNavigationOptions } from '@/utils/options/tab';
+import { materialTopTabNavigationOptions } from '@/lib/options/tab';
 import BlockCenterComponent from '@components/My/BlockCenterComponent';
 import BlockInstructorComponent from '@components/My/BlockInstructorComponent';
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';

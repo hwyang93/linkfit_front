@@ -1,4 +1,4 @@
-import { FieldTypeKo, MemberType, ReplyStatus } from '@/utils/constants/enum';
+import { FieldTypeKo, MemberType, ReplyStatus } from '@/lib/constants/enum';
 import { YesNoFlag } from '../common';
 
 export interface BaseEntity {

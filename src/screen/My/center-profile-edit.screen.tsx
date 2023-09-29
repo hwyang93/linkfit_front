@@ -1,5 +1,5 @@
 import CTAButton from '@/components/Common/CTAButton';
-import { ROUTE } from '@/utils/constants/route';
+import { ROUTE } from '@/lib/constants/route';
 import DismissKeyboardView from '@components/DismissKeyboardView';
 import Input, { KeyboardTypes } from '@components/Input';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
@@ -7,7 +7,7 @@ import { WHITE } from '@styles/colors';
 import common from '@styles/common';
 import { useState } from 'react';
 import { Image, Pressable, StyleSheet, View } from 'react-native';
-import { Asset, MediaType, launchImageLibrary } from 'react-native-image-picker';
+import { Asset, launchImageLibrary, MediaType } from 'react-native-image-picker';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { LoggedInParamList } from '../../../AppInner';
 

@@ -1,4 +1,4 @@
-import usePermissions from '@/utils/usePermissions';
+import usePermissions from '@/lib/usePermissions';
 import Toast from '@components/Toast';
 import { NavigationContainer } from '@react-navigation/native';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';

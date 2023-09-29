@@ -1,7 +1,7 @@
 import BoxButton from '@/components/Common/BoxButton';
 import CTAButton from '@/components/Common/CTAButton';
+import { ROUTE } from '@/lib/constants/route';
 import { AuthStackParamList } from '@/navigations/auth-stack';
-import { ROUTE } from '@/utils/constants/route';
 import BirthdayPicker from '@components/BirthdayPicker';
 import DismissKeyboardView from '@components/DismissKeyboardView';
 import Input, { KeyboardTypes } from '@components/Input';

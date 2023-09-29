@@ -1,5 +1,5 @@
-import { ROUTE } from '@/utils/constants/route';
-import { iconPath } from '@/utils/iconPath';
+import { ROUTE } from '@/lib/constants/route';
+import { iconPath } from '@/lib/iconPath';
 import Modal from '@components/ModalSheet';
 import toast from '@hooks/toast';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';

@@ -1,8 +1,8 @@
 import CTAButton from '@/components/Common/CTAButton';
 import useInput from '@/hooks/use-input';
+import { ROUTE } from '@/lib/constants/route';
+import { iconPath } from '@/lib/iconPath';
 import { useAppSelector } from '@/store';
-import { ROUTE } from '@/utils/constants/route';
-import { iconPath } from '@/utils/iconPath';
 import { createMemberLicence } from '@api/member';
 import BirthdayPicker from '@components/BirthdayPicker';
 import Input, { KeyboardTypes } from '@components/Input';
@@ -14,7 +14,7 @@ import common from '@styles/common';
 import { isAxiosError } from 'axios';
 import { useState } from 'react';
 import { Image, Pressable, ScrollView, StyleSheet, View } from 'react-native';
-import { Asset, MediaType, launchImageLibrary } from 'react-native-image-picker';
+import { Asset, launchImageLibrary, MediaType } from 'react-native-image-picker';
 import { LoggedInParamList } from '../../../AppInner';
 
 const FIELD = ['필라테스', '요가'];
@@ -168,10 +168,10 @@ export const CertifyInstructorFormScreen = ({ navigation }: Props) => {
 
         <View style={common.mb16}>
           <BirthdayPicker
-              label={'자격증 발급일자'}
-              onSelect={issuerDateInput.onChange}
-              value={issuerDateInput.value}
-              placeholder={'자격증 발급일자를 선택하세요.'}
+            label={'자격증 발급일자'}
+            onSelect={issuerDateInput.onChange}
+            value={issuerDateInput.value}
+            placeholder={'자격증 발급일자를 선택하세요.'}
           />
         </View>
 

@@ -1,7 +1,7 @@
+import SRC from '@/lib/constants/assets';
+import { FieldTypeKo } from '@/lib/constants/enum';
+import { iconPath } from '@/lib/iconPath';
 import THEME from '@/styles/theme';
-import SRC from '@/utils/constants/assets';
-import { FieldTypeKo } from '@/utils/constants/enum';
-import { iconPath } from '@/utils/iconPath';
 import React from 'react';
 import { Image, Text, View } from 'react-native';
 import IconButton from '../Common/IconButton';

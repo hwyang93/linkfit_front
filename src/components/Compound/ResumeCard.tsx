@@ -1,6 +1,6 @@
+import { iconPath } from '@/lib/iconPath';
 import common from '@/styles/common';
 import THEME from '@/styles/theme';
-import { iconPath } from '@/utils/iconPath';
 import React from 'react';
 import { StyleProp, StyleSheet, Text, ViewStyle } from 'react-native';
 import Card from '../Common/Card';

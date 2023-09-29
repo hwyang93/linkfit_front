@@ -1,6 +1,6 @@
+import { MEMBER_TYPE } from '@/lib/constants/enum';
+import { iconPath } from '@/lib/iconPath';
 import { MemberEntity } from '@/types/api/entities.type';
-import { MEMBER_TYPE } from '@/utils/constants/enum';
-import { iconPath } from '@/utils/iconPath';
 import { NavigationProp, useNavigation } from '@react-navigation/native';
 import { BLUE, GRAY } from '@styles/colors';
 import common from '@styles/common';

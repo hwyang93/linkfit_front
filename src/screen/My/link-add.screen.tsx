@@ -1,6 +1,6 @@
 import { LoggedInParamList } from '@/../AppInner';
 import CTAButton from '@/components/Common/CTAButton';
-import { ROUTE } from '@/utils/constants/route';
+import { ROUTE } from '@/lib/constants/route';
 import Input, { KeyboardTypes } from '@components/Input';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { WHITE } from '@styles/colors';

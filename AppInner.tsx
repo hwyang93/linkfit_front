@@ -1,10 +1,10 @@
 import { fetchMemberInfo } from '@/api/member';
+import STORAGE_KEY from '@/lib/constants/storage';
+import { requestPermission } from '@/lib/util';
 import { AuthStack } from '@/navigations/auth-stack';
 import { MainStack } from '@/navigations/main-stack';
 import { useAppDispatch, useAppSelector } from '@/store';
 import { Term } from '@/types/common';
-import STORAGE_KEY from '@/utils/constants/storage';
-import { requestPermission } from '@/utils/util';
 import toast from '@hooks/toast';
 import userSlice from '@slices/user';
 import { isAxiosError } from 'axios';
