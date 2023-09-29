@@ -1,3 +1,4 @@
+import { ReplyStatus } from '@/utils/constants/enum';
 import { MemberType, YesNoFlag } from '../common';
 
 export interface BaseEntity {
@@ -239,7 +240,7 @@ export interface PositionSuggestEntity extends BaseEntity {
   closingDate?: string;
   suggestMemberSeq: number;
   targetMemberSeq: number;
-  status: string;
+  status: ReplyStatus;
   writer: MemberEntity;
   recruit?: RecruitEntity;
 }

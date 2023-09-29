@@ -3,6 +3,7 @@ import { useReceivedPositionSuggestion } from '@/hooks/member/use-received-posit
 import { useUpdatePositionSuggestion } from '@/hooks/member/use-update-position-suggestion';
 import { RecruitStatus } from '@/types/api/recruit.type';
 import { Member } from '@/types/common';
+import { REPLY_STATUS_KO } from '@/utils/constants/enum';
 import { ROUTE } from '@/utils/constants/route';
 import InstructorInfoComponent from '@components/InstructorInfoComponent';
 import toast from '@hooks/toast';
@@ -42,21 +43,24 @@ export const ReceivedPositionSuggestionDetailScreen = ({ route, navigation }: Pr
   const toOffer = () => {
     // navigation.navigate('JobPost');
   };
+
+  if (!suggestInfo) return null;
+
   return (
     <SafeAreaView edges={['bottom', 'left', 'right']} style={styles.container}>
       <ScrollView showsVerticalScrollIndicator={false}>
         <View>
-          <Text style={[common.title_l, common.mt16, common.mb16]}>{suggestInfo?.title}</Text>
+          <Text style={[common.title_l, common.mt16, common.mb16]}>{suggestInfo.title}</Text>
           <View style={[common.row, common.mb24]}>
             <Text style={[common.text_s, common.fcg]}>
-              {!suggestInfo?.closingDate ? '채용시 마감' : `~${suggestInfo.closingDate} 마감`}
+              {!suggestInfo.closingDate ? '채용시 마감' : `~${suggestInfo.closingDate} 마감`}
             </Text>
             <Text style={[common.text_s, common.fcg, common.mh8]}>|</Text>
-            <Text style={[common.text_s, common.fcg]}>{suggestInfo?.status}</Text>
+            <Text style={[common.text_s, common.fcg]}>{REPLY_STATUS_KO[suggestInfo.status]}</Text>
           </View>
           <Text style={[common.text_m, common.fwb, common.mb8]}>제안 내용</Text>
-          <Text style={[common.text_m, common.mb24]}>{suggestInfo?.contents}</Text>
-          {suggestInfo?.recruit && (
+          <Text style={[common.text_m, common.mb24]}>{suggestInfo.contents}</Text>
+          {suggestInfo.recruit && (
             <View>
               <Text style={[common.text_m, common.fwb, common.mb8]}>구인 공고</Text>
 
@@ -75,10 +79,10 @@ export const ReceivedPositionSuggestionDetailScreen = ({ route, navigation }: Pr
           {/* 채용 기간 */}
           <Text style={[common.text_m, common.fwb, common.mb8]}>마감 기간</Text>
           <Text style={[common.text_m, common.mb24]}>
-            {!suggestInfo?.closingDate ? '채용시 마감' : `~${suggestInfo.closingDate} 마감`}
+            {!suggestInfo.closingDate ? '채용시 마감' : `~${suggestInfo.closingDate} 마감`}
           </Text>
 
-          {suggestInfo?.writer.type === Member.Company && (
+          {suggestInfo.writer.type === Member.Company && (
             <View style={common.mb24}>
               <Pressable
                 onPress={() =>
