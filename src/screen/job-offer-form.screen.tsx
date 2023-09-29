@@ -2,8 +2,9 @@ import CTAButton from '@/components/Common/CTAButton';
 import useInput from '@/hooks/use-input';
 import { useSelect } from '@/hooks/use-select';
 import { useAppSelector } from '@/store';
-import { Coordinate, Member } from '@/types/common';
+import { Coordinate } from '@/types/common';
 import { SCREEN_WIDTH } from '@/utils/constants/common';
+import { MEMBER_TYPE } from '@/utils/constants/enum';
 import { iconPath } from '@/utils/iconPath';
 import { createRecruit } from '@api/recruit';
 import SearchAddressInput from '@components/Common/SearchAddressInput';
@@ -313,7 +314,7 @@ export const JobOfferFormScreen = ({ navigation }: Props) => {
           />
         </View>
 
-        {memberInfo.type !== Member.Company && (
+        {memberInfo.type !== MEMBER_TYPE.COMPANY && (
           <View>
             <View style={common.mb16}>
               <Input

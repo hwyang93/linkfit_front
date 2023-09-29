@@ -1,12 +1,12 @@
+import { useCompany } from '@/hooks/company/use-company';
+import { CompanyEntity, RecruitEntity } from '@/types/api/entities.type';
 import { SCREEN_WIDTH } from '@/utils/constants/common';
-import { fetchCompany } from '@api/company';
 import CenterInfoTop from '@components/CenterInfoTop';
 import EmptySet from '@components/EmptySet';
-import toast from '@hooks/toast';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { BLUE, GRAY, WHITE } from '@styles/colors';
 import common from '@styles/common';
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useState } from 'react';
 import { Image, Pressable, StyleSheet, Text, View } from 'react-native';
 import { MaterialTabBar, TabBarProps, Tabs } from 'react-native-collapsible-tab-view';
 import { LoggedInParamList } from '../../AppInner';
@@ -18,8 +18,8 @@ const tabWidth = width / 2;
 const imageSize = (width - 6) / 3;
 
 type HeaderProps = {
-  centerInfo: any;
-  recruits: any[];
+  centerInfo: CompanyEntity;
+  recruits: RecruitEntity[];
 };
 // 센터 프로필 상단 영역 시작
 const Header: React.FC<HeaderProps> = ({ centerInfo, recruits }) => {
@@ -31,25 +31,10 @@ const Header: React.FC<HeaderProps> = ({ centerInfo, recruits }) => {
 type Props = NativeStackScreenProps<LoggedInParamList, 'CenterProfile'>;
 
 export const MyCenterProfileScreen = ({ navigation, route }: Props) => {
-  const [centerInfo, setCenterInfo] = useState<any>({});
-  const [recruits, setRecruits] = useState<any[]>([]);
-  const [reputations, setReputations] = useState<any[]>([]);
-
-  const getCenterInfo = useCallback(() => {
-    fetchCompany(route.params.memberSeq)
-      .then(({ data }: any) => {
-        setCenterInfo(data.companyInfo);
-        setRecruits(data.recruits);
-        setReputations(data.reputations);
-      })
-      .catch((error) => {
-        toast.error({ message: error.message });
-      });
-  }, [route.params.memberSeq]);
-
-  useEffect(() => {
-    getCenterInfo();
-  }, [getCenterInfo]);
+  const companyQuery = useCompany(route.params.memberSeq);
+  const centerInfo = companyQuery.data?.companyInfo;
+  const recruits = companyQuery.data?.recruits;
+  const reputations = companyQuery.data?.reputations;
 
   // 탭 바 영역
   const tabBar = (props: TabBarProps) => (
@@ -78,7 +63,7 @@ export const MyCenterProfileScreen = ({ navigation, route }: Props) => {
     return (
       <View style={common.mt16}>
         <Text style={[common.text_m, common.fwb]}>센터 주소</Text>
-        <Text style={common.text_m}>{`${centerInfo.address} ${centerInfo.addressDetail}`}</Text>
+        <Text style={common.text_m}>{`${centerInfo?.address} ${centerInfo?.addressDetail}`}</Text>
       </View>
     );
   };
@@ -129,7 +114,7 @@ export const MyCenterProfileScreen = ({ navigation, route }: Props) => {
       };
       return (
         <>
-          {reputations.length < 1 ? (
+          {reputations && reputations.length < 1 ? (
             <View style={{ flex: 1 }}>
               <EmptySet text={'등록된 후기가 없어요.'} />
             </View>
@@ -160,8 +145,10 @@ export const MyCenterProfileScreen = ({ navigation, route }: Props) => {
         </>
       );
     },
-    [textLine, reputations.length],
+    [textLine, reputations?.length],
   );
+
+  if (!recruits || !centerInfo) return null;
 
   return (
     <Tabs.Container
@@ -174,7 +161,6 @@ export const MyCenterProfileScreen = ({ navigation, route }: Props) => {
         shadowOpacity: 0,
         elevation: 0,
       }}
-      // headerHeight={HEADER_HEIGHT}
       renderTabBar={tabBar}>
       <Tabs.Tab name="센터 소개">
         <View style={{ padding: 16 }}>

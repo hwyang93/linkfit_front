@@ -5,15 +5,12 @@ import SectionHeader from '@/components/Common/SectionHeader';
 import CenterProfile from '@/components/Compound/CenterProfile';
 import RecruitCard from '@/components/Compound/RecruitCard';
 import ReviewListItem from '@/components/Compound/ReviewListItem';
+import { useCompany } from '@/hooks/company/use-company';
 import SRC from '@/utils/constants/assets';
 import { SCREEN_WIDTH } from '@/utils/constants/common';
 import { ROUTE } from '@/utils/constants/route';
 import { iconPath } from '@/utils/iconPath';
-import { fetchCompany } from '@api/company';
-import toast from '@hooks/toast';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
-import { isAxiosError } from 'axios';
-import { useCallback, useEffect } from 'react';
 import { Image, Pressable, ScrollView, Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { LoggedInParamList } from '../../AppInner';
@@ -29,29 +26,14 @@ const DUMMY_IMAGES = [
 type Props = NativeStackScreenProps<LoggedInParamList, typeof ROUTE.CENTER.INFO>;
 
 export const CenterInfoScreen = ({ route }: Props) => {
-  // const [centerInfo, setCenterInfo] = useState<CompanyEntity>();
-  // const [recruits, setRecruits] = useState<RecruitEntity[]>();
-  // const [reputations, setReputations] = useState<MemberReputationEntity[]>();
-
-  const getCenterInfo = useCallback(() => {
-    fetchCompany(route.params.memberSeq)
-      .then(() => {
-        // setCenterInfo(data.companyInfo);
-        // setRecruits(data.recruits);
-        // setReputations(data.reputations);
-      })
-      .catch((error) => {
-        if (isAxiosError(error)) {
-          toast.error({ message: error.message });
-        }
-      });
-  }, [route.params.memberSeq]);
-
-  useEffect(() => {
-    getCenterInfo();
-  }, [getCenterInfo]);
+  const companyQuery = useCompany(route.params.memberSeq);
+  const centerInfo = companyQuery.data?.companyInfo;
+  const recruits = companyQuery.data?.recruits;
+  const reputations = companyQuery.data?.reputations;
 
   // TODO: api 연동 필요
+
+  if (!companyQuery.data || !centerInfo) return null;
 
   return (
     <SafeAreaView edges={['left', 'right']} style={{ flex: 1 }}>
@@ -63,6 +45,7 @@ export const CenterInfoScreen = ({ route }: Props) => {
           />
           <View style={{ marginTop: 16 }}>
             <CenterProfile
+              centerId={centerInfo.seq}
               name="링크 필라테스"
               isFavorite={false}
               favoriteCount="23"

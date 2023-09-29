@@ -1,5 +1,5 @@
-import { ReplyStatus } from '@/utils/constants/enum';
-import { MemberType, YesNoFlag } from '../common';
+import { FieldTypeKo, MemberType, ReplyStatus } from '@/utils/constants/enum';
+import { YesNoFlag } from '../common';
 
 export interface BaseEntity {
   createdAt: string;
@@ -19,7 +19,7 @@ export interface CompanyEntity extends BaseEntity {
   memberSeq: number;
   companyName: string;
   businessNumber: string;
-  field: string;
+  field: FieldTypeKo;
   address: string;
   addressDetail: string;
   phone: string;
@@ -33,7 +33,6 @@ export interface CompanyEntity extends BaseEntity {
 
 export interface MemberEntity extends BaseEntity {
   seq: number;
-  memberSeq: number;
   email: string;
   password: string;
   name: string;

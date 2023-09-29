@@ -1,4 +1,5 @@
-import { MemberType, YesNoFlag } from '../common';
+import { MemberType } from '@/utils/constants/enum';
+import { YesNoFlag } from '../common';
 import {
   CompanyEntity,
   MemberEntity,

@@ -1,4 +1,4 @@
-import { Member, MemberType } from '@/types/common';
+import { MemberType, MEMBER_TYPE } from '@/utils/constants/enum';
 import { iconPath } from '@/utils/iconPath';
 import { BLUE } from '@styles/colors';
 import common from '@styles/common';
@@ -32,7 +32,7 @@ const CommunityUserProfile: React.FC<CommunityUserProfileProps> = ({
       <View>
         <View style={common.rowCenter}>
           <Text style={[common.text_m, common.fwb, common.mr8]}>{name}</Text>
-          {writerType === Member.Instructor ? (
+          {writerType === MEMBER_TYPE.INSTRUCTOR ? (
             <View>
               <View style={common.rowCenter}>
                 <Text style={[common.text_s, { color: BLUE.DEFAULT }]}>인증강사</Text>
@@ -42,7 +42,7 @@ const CommunityUserProfile: React.FC<CommunityUserProfileProps> = ({
                 />
               </View>
             </View>
-          ) : writerType === Member.Company ? (
+          ) : writerType === MEMBER_TYPE.COMPANY ? (
             <View>
               <View style={common.rowCenter}>
                 <Text>센터</Text>
@@ -52,7 +52,7 @@ const CommunityUserProfile: React.FC<CommunityUserProfileProps> = ({
         </View>
         <View style={common.row}>
           <Text style={[common.text_m, common.fwb, common.mr4]}>
-            {writerType === Member.Company && field}
+            {writerType === MEMBER_TYPE.COMPANY && field}
           </Text>
           <Text style={[common.text, { alignSelf: 'flex-end' }]}>{career}</Text>
         </View>

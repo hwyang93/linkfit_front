@@ -2,7 +2,7 @@ import { useDeleteReview } from '@/hooks/review/use-delete-review';
 import { useReviewList } from '@/hooks/review/use-review-list';
 import { useAppNavigation } from '@/hooks/use-app-navigation';
 import useModal from '@/hooks/use-modal';
-import { Member } from '@/types/common';
+import { MEMBER_TYPE } from '@/utils/constants/enum';
 import { ROUTE } from '@/utils/constants/route';
 import { iconPath } from '@/utils/iconPath';
 import { formatDate } from '@/utils/util';
@@ -60,7 +60,7 @@ const EmployeeReviewTab: React.FC = () => {
     <AppScrollView style={styles.container} showsVerticalScrollIndicator={false}>
       {reviewList?.length === 0 && <EmptySet text="작성한 후기가 없어요" />}
       {reviewList?.map((item) =>
-        item.targetMember.type === Member.Instructor ? (
+        item.targetMember.type === MEMBER_TYPE.INSTRUCTOR ? (
           <View key={'review_' + item.seq} style={styles.reviewBox}>
             <View style={common.rowCenter}>
               <Image

@@ -9,7 +9,8 @@ import { useAppNavigation } from '@/hooks/use-app-navigation';
 import common from '@/styles/common';
 import { FetchBookmarkCommunitiesResponse } from '@/types/api/community.type';
 import { FetchBookmarkRecruitsResponse } from '@/types/api/recruit.type';
-import { Member, YesNoFlag } from '@/types/common';
+import { YesNoFlag } from '@/types/common';
+import { MEMBER_TYPE } from '@/utils/constants/enum';
 import { ROUTE } from '@/utils/constants/route';
 import { iconPath } from '@/utils/iconPath';
 import { materialTopTabNavigationOptions } from '@/utils/options/tab';
@@ -53,7 +54,7 @@ const BookmarkCommunityListItem: React.FC<BookmarkCommunityListItemProps> = ({
     <Pressable onPress={onPress}>
       <View style={styles.listBox}>
         <Text style={[common.title, common.fs18, common.mb8]}>{title}</Text>
-        {writerType === Member.Company ? (
+        {writerType === MEMBER_TYPE.COMPANY ? (
           <View style={common.row}>
             <Text style={[common.text_m, common.fwb]}>{writerCompanyName}</Text>
             <Text style={[common.text, common.mh4, { alignSelf: 'flex-end' }]}>센터</Text>
@@ -63,7 +64,7 @@ const BookmarkCommunityListItem: React.FC<BookmarkCommunityListItemProps> = ({
           <View style={common.row}>
             <Text style={[common.text_m, common.fwb]}>{writerName}</Text>
             <Text style={[common.text, common.mh4, { alignSelf: 'flex-end' }]}>
-              {writerType === Member.Instructor ? '강사' : '일반인'}
+              {writerType === MEMBER_TYPE.INSTRUCTOR ? '강사' : '일반인'}
             </Text>
             <Text style={[common.text, { alignSelf: 'flex-end' }]}>{updatedAt}</Text>
           </View>

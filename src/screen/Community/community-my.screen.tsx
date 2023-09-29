@@ -2,7 +2,7 @@ import { LoggedInParamList } from '@/../AppInner';
 import CTAButton from '@/components/Common/CTAButton';
 import CommunityMyScreenTabView from '@/screen/community/community-my-tab-view.screen';
 import { FetchMemberInfoResponse } from '@/types/api/member.type';
-import { Member } from '@/types/common';
+import { MEMBER_TYPE } from '@/utils/constants/enum';
 import { ROUTE } from '@/utils/constants/route';
 import { iconPath } from '@/utils/iconPath';
 import { fetchMemberInfo } from '@api/member';
@@ -50,7 +50,7 @@ export const CommunityMyScreen = ({}: Props) => {
                   {memberInfo?.nickname ? memberInfo.nickname : memberInfo?.name}
                 </Text>
                 <View>
-                  {memberInfo?.type === Member.Instructor ? (
+                  {memberInfo?.type === MEMBER_TYPE.INSTRUCTOR ? (
                     <View style={common.rowCenter}>
                       <Text style={[common.text_s, { color: BLUE.DEFAULT }]}>인증강사</Text>
                       <Image
@@ -61,7 +61,7 @@ export const CommunityMyScreen = ({}: Props) => {
                   ) : (
                     <View style={common.rowCenter}>
                       <Text style={[common.text_s, { color: BLUE.DEFAULT }]}>
-                        {memberInfo?.type === Member.Company ? '센터' : '일반인'}
+                        {memberInfo?.type === MEMBER_TYPE.COMPANY ? '센터' : '일반인'}
                       </Text>
                     </View>
                   )}
@@ -69,7 +69,7 @@ export const CommunityMyScreen = ({}: Props) => {
               </View>
               <View style={common.row}>
                 <Text style={[common.text_m, common.fwb, common.mr4]}>
-                  {memberInfo?.type === Member.Company
+                  {memberInfo?.type === MEMBER_TYPE.COMPANY
                     ? memberInfo?.company.field
                     : memberInfo?.field}
                 </Text>

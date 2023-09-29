@@ -1,6 +1,6 @@
 import { useCommunityBookmarkListQuery } from '@/hooks/community/use-community-bookmark-list-query';
 import { useAppNavigation } from '@/hooks/use-app-navigation';
-import { Member } from '@/types/common';
+import { MEMBER_TYPE } from '@/utils/constants/enum';
 import { ROUTE } from '@/utils/constants/route';
 import { formatDate } from '@/utils/util';
 import BookmarkCounter from '@components/Counter/BookmarkCounter';
@@ -42,7 +42,7 @@ const CommunityMyBookmarkTab: React.FC = () => {
               <View>
                 <Text style={[common.title, common.fs18, common.mb8]}>{item.community.title}</Text>
                 <View style={[common.rowCenter, common.mb12]}>
-                  {item.community.writer.type === Member.Company ? (
+                  {item.community.writer.type === MEMBER_TYPE.COMPANY ? (
                     <Text style={[common.text_m, common.fwb]}>
                       {item.community.writer.company?.companyName}
                     </Text>
@@ -55,9 +55,9 @@ const CommunityMyBookmarkTab: React.FC = () => {
                   )}
 
                   <Text style={[common.text, common.mh4, { alignSelf: 'flex-end' }]}>
-                    {item.community.writer.type === Member.Company
+                    {item.community.writer.type === MEMBER_TYPE.COMPANY
                       ? '센터'
-                      : item.community.writer.type === Member.Instructor
+                      : item.community.writer.type === MEMBER_TYPE.INSTRUCTOR
                       ? '강사'
                       : '일반인'}
                   </Text>

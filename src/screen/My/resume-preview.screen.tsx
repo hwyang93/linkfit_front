@@ -1,8 +1,8 @@
-import CTAButton from '@/components/Common/CTAButton';
 import Chip from '@/components/Common/Chip';
+import CTAButton from '@/components/Common/CTAButton';
 import { useAppSelector } from '@/store';
 import { RecruitStatus } from '@/types/api/recruit.type';
-import { Member } from '@/types/common';
+import { MEMBER_TYPE } from '@/utils/constants/enum';
 import { ROUTE } from '@/utils/constants/route';
 import { iconPath } from '@/utils/iconPath';
 import { fetchRecruitApplication, updateRecruitApplyStatus } from '@api/recruit';
@@ -129,7 +129,7 @@ export const ResumePreviewScreen = ({ route, navigation }: Props) => {
         <View style={common.mb24}>
           <View style={[common.rowCenter, common.mb8]}>
             <Text style={[common.title, common.mr8]}>{resume.name}</Text>
-            {resume.writer?.type === Member.Instructor && (
+            {resume.writer?.type === MEMBER_TYPE.INSTRUCTOR && (
               <View style={common.rowCenter}>
                 <Text style={[common.text_s, { color: BLUE.DEFAULT }]}>인증강사</Text>
                 <Image

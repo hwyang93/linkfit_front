@@ -4,8 +4,8 @@ import { LinkTab } from '@/screen/tab/link-tab.screen';
 import { MessageTab } from '@/screen/tab/message-tab.screen';
 import { MyTab } from '@/screen/tab/my-tab.screen';
 import { useAppSelector } from '@/store';
-import { Member } from '@/types/common';
 import { IS_ANDROID, SCREEN_WIDTH } from '@/utils/constants/common';
+import { MEMBER_TYPE } from '@/utils/constants/enum';
 import { ROUTE } from '@/utils/constants/route';
 import { iconPath } from '@/utils/iconPath';
 import { bottomTabNavigationOptions } from '@/utils/options/tab';
@@ -96,7 +96,7 @@ export const BottomTab = () => {
             },
           })}
         />
-        {memberInfo.type !== Member.Company ? (
+        {memberInfo.type !== MEMBER_TYPE.COMPANY ? (
           <Tab.Screen
             name={ROUTE.TAB.MY}
             component={MyTab}
