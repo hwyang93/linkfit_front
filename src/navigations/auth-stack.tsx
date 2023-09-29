@@ -1,3 +1,4 @@
+import { ROUTE } from '@/lib/constants/route';
 import { FindEmailScreen } from '@/screen/auth/find-email.screen';
 import { SignInEmailScreen } from '@/screen/auth/sign-in-email.screen';
 import { SignInPasswordScreen } from '@/screen/auth/sign-in-password.screen';
@@ -8,7 +9,6 @@ import { SignUpFormScreen } from '@/screen/registration/sign-up-form.screen';
 import { TermDetailScreen } from '@/screen/registration/term-detail.screen';
 import { TermListScreen } from '@/screen/registration/term-list.screen';
 import { Term } from '@/types/common';
-import { ROUTE } from '@/utils/constants/route';
 import HeaderLeft from '@components/HeaderLeft';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { WHITE } from '@styles/colors';
@@ -27,7 +27,7 @@ export type AuthStackParamList = {
 
 const Stack = createNativeStackNavigator<AuthStackParamList>();
 
-const AuthStack = () => {
+export const AuthStack = () => {
   return (
     <Stack.Navigator
       initialRouteName={ROUTE.AUTH.SIGN_IN_EMAIL}
@@ -99,5 +99,3 @@ const AuthStack = () => {
     </Stack.Navigator>
   );
 };
-
-export default AuthStack;

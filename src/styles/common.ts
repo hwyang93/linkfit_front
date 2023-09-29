@@ -1,4 +1,4 @@
-import { SCREEN_HEIGHT, SCREEN_WIDTH } from '@/utils/constants/common';
+import { SCREEN_HEIGHT, SCREEN_WIDTH } from '@/lib/constants/common';
 import { StyleSheet } from 'react-native';
 import { BLACK, BLUE, GRAY, WHITE } from './colors';
 

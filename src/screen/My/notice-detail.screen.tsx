@@ -1,9 +1,9 @@
 import AppScrollView from '@/components/\bLayout/AppScrollView';
 import Icon from '@/components/Common/Icon';
 import { useNotice } from '@/hooks/notice/use-notice';
+import { ROUTE } from '@/lib/constants/route';
+import { iconPath } from '@/lib/iconPath';
 import THEME from '@/styles/theme';
-import { ROUTE } from '@/utils/constants/route';
-import { iconPath } from '@/utils/iconPath';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { Text, View } from 'react-native';
 import { LoggedInParamList } from '../../../AppInner';

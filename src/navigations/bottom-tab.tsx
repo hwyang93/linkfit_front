@@ -1,14 +1,14 @@
+import { IS_ANDROID, SCREEN_WIDTH } from '@/lib/constants/common';
+import { MEMBER_TYPE } from '@/lib/constants/enum';
+import { ROUTE } from '@/lib/constants/route';
+import { iconPath } from '@/lib/iconPath';
+import { bottomTabNavigationOptions } from '@/lib/options/tab';
 import { MyCenterScreen } from '@/screen/my-center.screen';
 import { CommunityTab } from '@/screen/tab/community-tab.screen';
 import { LinkTab } from '@/screen/tab/link-tab.screen';
 import { MessageTab } from '@/screen/tab/message-tab.screen';
 import { MyTab } from '@/screen/tab/my-tab.screen';
 import { useAppSelector } from '@/store';
-import { Member } from '@/types/common';
-import { IS_ANDROID, SCREEN_WIDTH } from '@/utils/constants/common';
-import { ROUTE } from '@/utils/constants/route';
-import { iconPath } from '@/utils/iconPath';
-import { bottomTabNavigationOptions } from '@/utils/options/tab';
 import LinkHeader from '@components/Header/LinkHeader';
 import MyHeader from '@components/Header/MyHeader';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
@@ -19,7 +19,7 @@ import { LoggedInParamList } from '../../AppInner';
 
 const Tab = createBottomTabNavigator<LoggedInParamList>();
 
-const ContentTab = () => {
+export const BottomTab = () => {
   const memberInfo = useAppSelector((state) => state.user);
 
   const tabOffsetValue = useRef(new Animated.Value(0)).current;
@@ -96,7 +96,7 @@ const ContentTab = () => {
             },
           })}
         />
-        {memberInfo.type !== Member.Company ? (
+        {memberInfo.type !== MEMBER_TYPE.COMPANY ? (
           <Tab.Screen
             name={ROUTE.TAB.MY}
             component={MyTab}
@@ -161,5 +161,3 @@ const ContentTab = () => {
     </>
   );
 };
-
-export default ContentTab;

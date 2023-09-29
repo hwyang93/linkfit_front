@@ -1,9 +1,9 @@
 import { useEffect } from 'react';
 import { Alert, Linking } from 'react-native';
-import { PERMISSIONS, RESULTS, check, request } from 'react-native-permissions';
-import { IS_ANDROID, IS_IOS } from './constants/common';
+import { check, PERMISSIONS, request, RESULTS } from 'react-native-permissions';
+import { IS_ANDROID, IS_IOS } from '../lib/constants/common';
 
-const usePermissions = () => {
+export const usePermission = () => {
   const checkAndroidLocation = () => {
     check(PERMISSIONS.ANDROID.ACCESS_FINE_LOCATION)
       .then((result) => {
@@ -91,5 +91,3 @@ const usePermissions = () => {
     }
   }, []);
 };
-
-export default usePermissions;

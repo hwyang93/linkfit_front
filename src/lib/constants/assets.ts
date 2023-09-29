@@ -11,6 +11,9 @@ const SRC = {
     INSTRUCTOR04: require('@images/instructor_04.png'),
     INSTRUCTOR05: require('@images/instructor_05.png'),
   },
+  ICON: {
+    LICENSE_FILL: require('@images/icon/license_fill.png'),
+  },
 };
 
 export default SRC;

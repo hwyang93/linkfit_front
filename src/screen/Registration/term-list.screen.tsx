@@ -1,9 +1,9 @@
-import CTAButton from '@/components/Common/CTAButton';
 import Checkbox from '@/components/Common/Checkbox';
+import CTAButton from '@/components/Common/CTAButton';
 import RowView from '@/components/Common/RowView';
+import { ROUTE } from '@/lib/constants/route';
+import { iconPath } from '@/lib/iconPath';
 import { Term } from '@/types/common';
-import { ROUTE } from '@/utils/constants/route';
-import { iconPath } from '@/utils/iconPath';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { BLUE } from '@styles/colors';
 import common from '@styles/common';

@@ -1,6 +1,6 @@
 import { LoggedInParamList } from '@/../AppInner';
-import { ROUTE } from '@/utils/constants/route';
-import { iconPath } from '@/utils/iconPath';
+import { ROUTE } from '@/lib/constants/route';
+import { iconPath } from '@/lib/iconPath';
 import Modal from '@components/ModalSheet';
 import TopFilter from '@components/TopFilter';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';

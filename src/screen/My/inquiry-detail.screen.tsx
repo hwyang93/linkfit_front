@@ -1,10 +1,10 @@
 import AppScrollView from '@/components/\bLayout/AppScrollView';
 import Icon from '@/components/Common/Icon';
 import { useCsInquiry } from '@/hooks/customer-service/use-cs-inquiry';
+import { ROUTE } from '@/lib/constants/route';
+import { iconPath } from '@/lib/iconPath';
+import { formatDate } from '@/lib/util';
 import THEME from '@/styles/theme';
-import { ROUTE } from '@/utils/constants/route';
-import { iconPath } from '@/utils/iconPath';
-import { formatDate } from '@/utils/util';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { Text, View } from 'react-native';
 import { LoggedInParamList } from '../../../AppInner';

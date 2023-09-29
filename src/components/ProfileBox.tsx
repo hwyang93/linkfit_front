@@ -1,6 +1,6 @@
+import { MEMBER_TYPE } from '@/lib/constants/enum';
+import { iconPath } from '@/lib/iconPath';
 import { MemberEntity } from '@/types/api/entities.type';
-import { Member } from '@/types/common';
-import { iconPath } from '@/utils/iconPath';
 import { NavigationProp, useNavigation } from '@react-navigation/native';
 import { BLUE, GRAY } from '@styles/colors';
 import common from '@styles/common';
@@ -33,7 +33,7 @@ const ProfileBox: React.FC<ProfileBoxProps> = ({ memberInfo }) => {
             <Text style={[common.text_l, common.fwb, common.mr8]}>
               {!memberInfo.nickname ? memberInfo.name : memberInfo.nickname}
             </Text>
-            {memberInfo.type === Member.Instructor && (
+            {memberInfo.type === MEMBER_TYPE.INSTRUCTOR && (
               <View style={common.rowCenter}>
                 <Text style={[common.text_s, { color: BLUE.DEFAULT, marginRight: 2 }]}>
                   인증강사

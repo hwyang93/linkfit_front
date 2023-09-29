@@ -1,7 +1,7 @@
+import { MEMBER_TYPE } from '@/lib/constants/enum';
+import { ROUTE } from '@/lib/constants/route';
+import { formatDate } from '@/lib/util';
 import { CommunityEntity } from '@/types/api/entities.type';
-import { Member } from '@/types/common';
-import { ROUTE } from '@/utils/constants/route';
-import { formatDate } from '@/utils/util';
 import BookmarkCounter from '@components/Counter/BookmarkCounter';
 import CommentCounter from '@components/Counter/CommentCounter';
 import { NavigationProp, useNavigation } from '@react-navigation/native';
@@ -29,7 +29,7 @@ const RecommendedPostItem: React.FC<RecommendedPostItemProps> = ({ item }) => {
       <View>
         <Text style={[common.title, common.fs18]}>{postInfo.title}</Text>
         <View style={[common.rowEnd, common.mb8]}>
-          {postInfo.writer.type === Member.Company ? (
+          {postInfo.writer.type === MEMBER_TYPE.COMPANY ? (
             <Text style={[common.text_m, common.fwb]}>{postInfo.writer.company?.companyName}</Text>
           ) : (
             <Text style={[common.text_m, common.fwb]}>
@@ -37,9 +37,9 @@ const RecommendedPostItem: React.FC<RecommendedPostItemProps> = ({ item }) => {
             </Text>
           )}
           <Text style={[common.text, common.mh4]}>
-            {postInfo.writer.type === Member.Instructor
+            {postInfo.writer.type === MEMBER_TYPE.INSTRUCTOR
               ? '강사'
-              : postInfo.writer.type === Member.Company
+              : postInfo.writer.type === MEMBER_TYPE.COMPANY
               ? '센터'
               : '일반'}
           </Text>

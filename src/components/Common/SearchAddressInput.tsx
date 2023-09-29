@@ -1,7 +1,7 @@
 import { getKakaoCoordinate } from '@/api/kakao';
 import useModal from '@/hooks/use-modal';
+import { iconPath } from '@/lib/iconPath';
 import { Coordinate } from '@/types/common';
-import { iconPath } from '@/utils/iconPath';
 import { OnCompleteParams } from '@actbase/react-daum-postcode/lib/types';
 import BottomSheet from '@components/Common/BottomSheet';
 import SearchAddress from '@components/Common/SearchAddress';

@@ -4,7 +4,7 @@ import CTAButton from '@/components/Common/CTAButton';
 import { useUnregister } from '@/hooks/member/use-unregister';
 import useAuth from '@/hooks/use-auth';
 import useModal from '@/hooks/use-modal';
-import { ROUTE } from '@/utils/constants/route';
+import { ROUTE } from '@/lib/constants/route';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { BLUE, WHITE } from '@styles/colors';
 import common from '@styles/common';

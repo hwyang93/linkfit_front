@@ -66,6 +66,7 @@ export const ROUTE = {
   },
   INSTRUCTOR: {
     LIST: 'InstructorList',
+    PROFILE: 'Profile',
   },
   CENTER: {
     INFO: 'CenterInfo',

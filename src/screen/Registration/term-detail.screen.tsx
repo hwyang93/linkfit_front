@@ -1,8 +1,8 @@
 import IconButton from '@/components/Common/IconButton';
 import Header from '@/components/Header/Header';
-import { AuthStackParamList } from '@/navigations/AuthStack';
-import { ROUTE } from '@/utils/constants/route';
-import { iconPath } from '@/utils/iconPath';
+import { ROUTE } from '@/lib/constants/route';
+import { iconPath } from '@/lib/iconPath';
+import { AuthStackParamList } from '@/navigations/auth-stack';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';

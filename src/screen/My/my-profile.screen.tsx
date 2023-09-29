@@ -1,8 +1,8 @@
+import { SCREEN_WIDTH } from '@/lib/constants/common';
+import { ROUTE } from '@/lib/constants/route';
+import { iconPath } from '@/lib/iconPath';
+import { materialTopTabNavigationOptions } from '@/lib/options/tab';
 import { FetchMemberInfoResponse } from '@/types/api/member.type';
-import { SCREEN_WIDTH } from '@/utils/constants/common';
-import { ROUTE } from '@/utils/constants/route';
-import { iconPath } from '@/utils/iconPath';
-import { materialTopTabNavigationOptions } from '@/utils/options/tab';
 import { fetchMemberInfo } from '@api/member';
 import toast from '@hooks/toast';
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';

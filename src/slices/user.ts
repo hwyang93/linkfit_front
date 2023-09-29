@@ -31,6 +31,7 @@ const initialState: MemberState = {
   type: '',
   isLoggedIn: false,
 };
+
 const userSlice = createSlice({
   name: 'user',
   initialState,
@@ -63,7 +64,6 @@ const userSlice = createSlice({
       state.isLoggedIn = action.payload;
     },
   },
-  // extraReducers: builder => {},
 });
 
 export default userSlice;

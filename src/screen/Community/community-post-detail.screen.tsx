@@ -4,7 +4,7 @@ import CommunityUserProfile from '@/components/Community/CommunityUserProfile';
 import { useCommunityPostQuery } from '@/hooks/community/use-community-post-query';
 import useAuth from '@/hooks/use-auth';
 import useModal from '@/hooks/use-modal';
-import { ROUTE } from '@/utils/constants/route';
+import { ROUTE } from '@/lib/constants/route';
 import CommunityPostTop from '@components/Community/CommunityPostTop';
 import ReplyComponent from '@components/Community/ReplyComponent';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';

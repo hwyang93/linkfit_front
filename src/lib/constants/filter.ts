@@ -1,3 +1,5 @@
+import { REPLY_STATUS_KO } from './enum';
+
 const FILTER = {
   PERIOD: {
     'ONE-WEEK': '일주일',
@@ -17,12 +19,7 @@ const FILTER = {
     ING: '진행중',
     CLOSE: '마감',
   },
-  REPLY_OR_NOT: {
-    WAITING: '답변 대기중',
-    ACCEPT: '답변 수락',
-    REJECT: '답변 거절',
-    CLOSED: '제안 마감',
-  },
+  REPLY_OR_NOT: REPLY_STATUS_KO,
   POSITION: ['필라테스', '요가'],
   RECRUIT_TYPE: ['전임', '파트타임', '대강', '실장'],
   TIME: ['오전', '오후', '전일', '협의'],

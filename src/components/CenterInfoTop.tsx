@@ -1,5 +1,5 @@
+import { iconPath } from '@/lib/iconPath';
 import { RecruitEntity } from '@/types/api/entities.type';
-import { iconPath } from '@/utils/iconPath';
 import OfferListItem from '@components/OfferListItem';
 import { NavigationProp, useNavigation } from '@react-navigation/native';
 import { GRAY } from '@styles/colors';

@@ -1,5 +1,5 @@
+import { iconPath } from '@/lib/iconPath';
 import THEME from '@/styles/theme';
-import { iconPath } from '@/utils/iconPath';
 import { GRAY } from '@styles/colors';
 import common from '@styles/common';
 import { useState } from 'react';

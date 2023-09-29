@@ -9,13 +9,13 @@ import IconButton from '@/components/Common/IconButton';
 import LoadingFallback from '@/components/Common/LoadingFallback';
 import useGeolocation from '@/hooks/use-geolocation';
 import useModal from '@/hooks/use-modal';
+import SRC from '@/lib/constants/assets';
+import { SCREEN_WIDTH } from '@/lib/constants/common';
+import { ROUTE } from '@/lib/constants/route';
+import { iconPath } from '@/lib/iconPath';
+import { materialTopTabNavigationOptions } from '@/lib/options/tab';
 import common from '@/styles/common';
 import THEME from '@/styles/theme';
-import SRC from '@/utils/constants/assets';
-import { SCREEN_WIDTH } from '@/utils/constants/common';
-import { ROUTE } from '@/utils/constants/route';
-import { iconPath } from '@/utils/iconPath';
-import { materialTopTabNavigationOptions } from '@/utils/options/tab';
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import {

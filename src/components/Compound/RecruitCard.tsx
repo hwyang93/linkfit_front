@@ -1,5 +1,5 @@
+import { iconPath } from '@/lib/iconPath';
 import THEME from '@/styles/theme';
-import { iconPath } from '@/utils/iconPath';
 import React from 'react';
 import { Pressable, StyleProp, StyleSheet, Text, View, ViewStyle } from 'react-native';
 import IconButton from '../Common/IconButton';

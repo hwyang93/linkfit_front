@@ -1,6 +1,6 @@
-import { useFollowInstructor } from '@/hooks/instructor/use-follow-instructor';
-import { useUnfollowInstructor } from '@/hooks/instructor/use-unfollow-instructor';
-import { iconPath } from '@/utils/iconPath';
+import { useMemberFollow } from '@/hooks/member/use-member-follow';
+import { useMemberUnfollow } from '@/hooks/member/use-member-unfollow';
+import { iconPath } from '@/lib/iconPath';
 import { BLUE } from '@styles/colors';
 import common from '@styles/common';
 import { StyleProp, StyleSheet, Text, View, ViewStyle } from 'react-native';
@@ -42,16 +42,16 @@ const InstructorListItem: React.FC<InstructorListItemProps> = ({
   //   Alert.alert('기능 준비 중입니다.');
   // };
 
-  const instructorFollowMutation = useFollowInstructor();
-  const instructorUnfollowMutation = useUnfollowInstructor();
+  const memberFollowMutation = useMemberFollow();
+  const memberUnfollowMutation = useMemberUnfollow();
 
   const onFavoriteIconPress = () => {
     if (following) {
-      instructorUnfollowMutation.mutate(instructorId);
+      memberUnfollowMutation.mutate(instructorId);
     }
 
     if (!following) {
-      instructorFollowMutation.mutate(instructorId);
+      memberFollowMutation.mutate(instructorId);
     }
   };
 

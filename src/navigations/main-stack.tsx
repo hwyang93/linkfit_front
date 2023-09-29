@@ -1,5 +1,7 @@
 import IconButton from '@/components/Common/IconButton';
-import BottomTabs from '@/navigations/BottomTabs';
+import { ROUTE } from '@/lib/constants/route';
+import { iconPath } from '@/lib/iconPath';
+import { BottomTab } from '@/navigations/bottom-tab';
 import { CenterInfoScreen } from '@/screen/center-info.screen';
 import { CommunityCommentEditScreen } from '@/screen/community/community-comment-edit.screen';
 import { CommunityMyScreen } from '@/screen/community/community-my.screen';
@@ -53,8 +55,6 @@ import { RecruitListScreen } from '@/screen/recruit-list.screen';
 import { RecruitMapScreen } from '@/screen/recruit-map.screen';
 import { PasswordResetScreen } from '@/screen/registration/password-reset.screen';
 import { SuggestionScreen } from '@/screen/suggestion.screen';
-import { ROUTE } from '@/utils/constants/route';
-import { iconPath } from '@/utils/iconPath';
 import HeaderLeft from '@components/HeaderLeft';
 import Modal from '@components/ModalSheet';
 import { NavigationProp, useNavigation } from '@react-navigation/native';
@@ -67,7 +67,7 @@ import { LoggedInParamList } from '../../AppInner';
 
 const Stack = createNativeStackNavigator<LoggedInParamList>();
 
-const MainStack = () => {
+export const MainStack = () => {
   const [modalVisible, setModalVisible] = useState(false);
 
   const navigation = useNavigation<NavigationProp<LoggedInParamList>>();
@@ -90,7 +90,7 @@ const MainStack = () => {
       <Stack.Group>
         <Stack.Screen
           name={ROUTE.TAB.CONTENT}
-          component={BottomTabs}
+          component={BottomTab}
           options={{ headerShown: false, gestureEnabled: false }}
         />
         <Stack.Screen
@@ -455,5 +455,3 @@ const MainStack = () => {
     </Stack.Navigator>
   );
 };
-
-export default MainStack;

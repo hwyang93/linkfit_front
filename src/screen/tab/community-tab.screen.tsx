@@ -3,12 +3,12 @@ import FilterChip from '@/components/Common/FilterChip';
 import FilterChipContainer from '@/components/Common/FilterChipContainer';
 import FloatingActionButton from '@/components/Common/FloatingActionButton';
 import { useCommunityPostListQuery } from '@/hooks/community/use-community-post-list-query';
+import { MEMBER_TYPE } from '@/lib/constants/enum';
+import MESSAGE from '@/lib/constants/message';
+import { ROUTE } from '@/lib/constants/route';
+import { iconPath } from '@/lib/iconPath';
 import { useAppSelector } from '@/store';
 import { CommunityEntity } from '@/types/api/entities.type';
-import { Member } from '@/types/common';
-import MESSAGE from '@/utils/constants/message';
-import { ROUTE } from '@/utils/constants/route';
-import { iconPath } from '@/utils/iconPath';
 import FABContainer from '@components/Common/FABContainer';
 import RecommendedPostItem from '@components/RecommendedPostItem';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
@@ -60,7 +60,7 @@ export const CommunityTab = ({ navigation }: Props) => {
           active={filterList.includes('요가')}
           onPress={() => handleFilterChipPress('요가')}
         />
-        {userType === Member.Instructor && (
+        {userType === MEMBER_TYPE.INSTRUCTOR && (
           <FilterChip
             label="강사"
             style={{ marginLeft: 8 }}
@@ -68,7 +68,7 @@ export const CommunityTab = ({ navigation }: Props) => {
             onPress={() => handleFilterChipPress('강사')}
           />
         )}
-        {userType === Member.Center && (
+        {userType === MEMBER_TYPE.CENTER && (
           <FilterChip
             label="센터"
             style={{ marginLeft: 8 }}

@@ -1,7 +1,7 @@
 import { createRecruitBookmark, deleteRecruitBookmark } from '@/api/recruit';
 import toast from '@/hooks/toast';
-import { SCREEN_WIDTH } from '@/utils/constants/common';
-import { iconPath } from '@/utils/iconPath';
+import { SCREEN_WIDTH } from '@/lib/constants/common';
+import { iconPath } from '@/lib/iconPath';
 import common from '@styles/common';
 import { useState } from 'react';
 import { Image, Pressable, StyleSheet, Text, View } from 'react-native';

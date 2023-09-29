@@ -1,27 +1,32 @@
+import { iconPath } from '@/lib/iconPath';
 import THEME from '@/styles/theme';
-import { iconPath } from '@/utils/iconPath';
 import React from 'react';
 import { Text, View } from 'react-native';
 import IconButton from '../Common/IconButton';
 import RowView from '../Common/RowView';
 
 interface CenterProfileProps {
+  centerId: number;
   name: string;
   field: string;
   isFavorite: boolean;
   favoriteCount: string;
   address: string;
-  onFavorite?: () => void;
 }
 
 const CenterProfile: React.FC<CenterProfileProps> = ({
+  centerId,
   name,
   field,
   isFavorite,
   favoriteCount,
   address,
-  onFavorite,
 }) => {
+  const onFavorite = () => {
+    // TODO: api 연동
+    console.log('하트 아이콘 클릭');
+  };
+
   return (
     <View>
       <RowView style={{ alignItems: 'center' }}>

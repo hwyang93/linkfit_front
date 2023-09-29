@@ -1,6 +1,6 @@
 import CommunityMyBookmarkTab from '@/components/Community/CommunityMyBookmarkTab';
 import CommunityMyPostTab from '@/components/Community/CommunityMyPostTab';
-import { materialTopTabNavigationOptions } from '@/utils/options/tab';
+import { materialTopTabNavigationOptions } from '@/lib/options/tab';
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 
 const Tab = createMaterialTopTabNavigator();

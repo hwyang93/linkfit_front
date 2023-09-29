@@ -1,4 +1,4 @@
-import { SHOW_TOAST_MESSAGE } from '@/utils/constants/toast';
+import { SHOW_TOAST_MESSAGE } from '@/lib/constants/toast';
 import { DeviceEventEmitter } from 'react-native';
 
 type ToastOptions = {

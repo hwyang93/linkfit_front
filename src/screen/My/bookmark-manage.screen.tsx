@@ -6,14 +6,15 @@ import BookmarkCounter from '@/components/Counter/BookmarkCounter';
 import EmptySet from '@/components/EmptySet';
 import toast from '@/hooks/toast';
 import { useAppNavigation } from '@/hooks/use-app-navigation';
+import { MEMBER_TYPE } from '@/lib/constants/enum';
+import { ROUTE } from '@/lib/constants/route';
+import { iconPath } from '@/lib/iconPath';
+import { materialTopTabNavigationOptions } from '@/lib/options/tab';
+import { formatDate } from '@/lib/util';
 import common from '@/styles/common';
 import { FetchBookmarkCommunitiesResponse } from '@/types/api/community.type';
 import { FetchBookmarkRecruitsResponse } from '@/types/api/recruit.type';
-import { Member, YesNoFlag } from '@/types/common';
-import { ROUTE } from '@/utils/constants/route';
-import { iconPath } from '@/utils/iconPath';
-import { materialTopTabNavigationOptions } from '@/utils/options/tab';
-import { formatDate } from '@/utils/util';
+import { YesNoFlag } from '@/types/common';
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 import { NavigationProp, useNavigation } from '@react-navigation/native';
 import { GRAY, WHITE } from '@styles/colors';
@@ -53,7 +54,7 @@ const BookmarkCommunityListItem: React.FC<BookmarkCommunityListItemProps> = ({
     <Pressable onPress={onPress}>
       <View style={styles.listBox}>
         <Text style={[common.title, common.fs18, common.mb8]}>{title}</Text>
-        {writerType === Member.Company ? (
+        {writerType === MEMBER_TYPE.COMPANY ? (
           <View style={common.row}>
             <Text style={[common.text_m, common.fwb]}>{writerCompanyName}</Text>
             <Text style={[common.text, common.mh4, { alignSelf: 'flex-end' }]}>센터</Text>
@@ -63,7 +64,7 @@ const BookmarkCommunityListItem: React.FC<BookmarkCommunityListItemProps> = ({
           <View style={common.row}>
             <Text style={[common.text_m, common.fwb]}>{writerName}</Text>
             <Text style={[common.text, common.mh4, { alignSelf: 'flex-end' }]}>
-              {writerType === Member.Instructor ? '강사' : '일반인'}
+              {writerType === MEMBER_TYPE.INSTRUCTOR ? '강사' : '일반인'}
             </Text>
             <Text style={[common.text, { alignSelf: 'flex-end' }]}>{updatedAt}</Text>
           </View>

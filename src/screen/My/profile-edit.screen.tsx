@@ -1,13 +1,15 @@
 import BoxButton from '@/components/Common/BoxButton';
+import Card from '@/components/Common/Card';
 import CTAButton from '@/components/Common/CTAButton';
 import TextField from '@/components/Common/TextField';
 import { useCheckNickname } from '@/hooks/member/use-check-nickname';
 import { useMemberInfo } from '@/hooks/member/use-member-info';
 import { useUpdateProfile } from '@/hooks/member/use-update-profile';
-import useInput from '@/hooks/use-input';
-import MESSAGE from '@/utils/constants/message';
-import { ROUTE } from '@/utils/constants/route';
-import { iconPath } from '@/utils/iconPath';
+import SRC from '@/lib/constants/assets';
+import MESSAGE from '@/lib/constants/message';
+import { ROUTE } from '@/lib/constants/route';
+import { iconPath } from '@/lib/iconPath';
+import { imageSchema } from '@/schema/form';
 import DismissKeyboardView from '@components/DismissKeyboardView';
 import toast from '@hooks/toast';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
@@ -15,17 +17,40 @@ import { WHITE } from '@styles/colors';
 import common from '@styles/common';
 import { isAxiosError } from 'axios';
 import { useEffect, useState } from 'react';
+import { Controller, useForm } from 'react-hook-form';
 import { Image, Pressable, StyleSheet, Text, View } from 'react-native';
-import { Asset, MediaType, launchImageLibrary } from 'react-native-image-picker';
+import { Asset, launchImageLibrary, MediaType } from 'react-native-image-picker';
+import { z } from 'zod';
 import { LoggedInParamList } from '../../../AppInner';
+
+const formSchema = z.object({
+  nickname: z.string().min(2),
+  intro: z.string().nonempty(),
+  field: z.string().nonempty(),
+  image: imageSchema,
+});
+
+type FormSchema = z.infer<typeof formSchema>;
 
 type Props = NativeStackScreenProps<LoggedInParamList, typeof ROUTE.MY.PROFILE_EDIT>;
 
 export const ProfileEditScreen = ({ navigation }: Props) => {
-  const nicknameInput = useInput();
-  const introInput = useInput();
+  const { control, handleSubmit, formState, getValues, reset, setValue } = useForm<FormSchema>({
+    defaultValues: {
+      nickname: '',
+      intro: '',
+      field: '',
+      image: {
+        name: '',
+        type: '',
+        uri: '',
+      },
+    },
+  });
 
-  const [field, setField] = useState('');
+  const nicknameInputValue = getValues('nickname');
+  const fieldInputValue = getValues('field');
+
   const [imageObj, setImageObj] = useState<{
     name: string | undefined;
     type: string | undefined;
@@ -36,28 +61,31 @@ export const ProfileEditScreen = ({ navigation }: Props) => {
   const memberInfoQuery = useMemberInfo();
   const user = memberInfoQuery.data;
 
-  const checkNicknameQuery = useCheckNickname(nicknameInput.value);
+  const checkNicknameQuery = useCheckNickname(nicknameInputValue);
   const updateProfileMutation = useUpdateProfile();
 
   useEffect(() => {
     if (user) {
-      user.nickname && nicknameInput.setValue(user.nickname);
-      user.intro && introInput.setValue(user.intro);
-      user.field && setField(user.field);
+      reset({
+        nickname: user.nickname,
+        intro: user.intro,
+        field: user.field,
+      });
+
       user.profileImage && setImageUri({ uri: user.profileImage.originFileUrl });
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [user]);
 
-  const onUpdateProfile = async () => {
+  const onSubmit = handleSubmit(async (data) => {
     if (!user) {
       return;
     }
 
     const body = {
-      nickname: nicknameInput.value,
-      intro: introInput.value,
-      field: field,
+      nickname: data.nickname,
+      intro: data.intro,
+      field: data.field,
       imageObj: imageObj,
     };
 
@@ -68,7 +96,7 @@ export const ProfileEditScreen = ({ navigation }: Props) => {
       },
       onError: (error) => isAxiosError(error) && toast.error({ message: error.message }),
     });
-  };
+  });
 
   const onCheckNickname = async () => {
     const response = await checkNicknameQuery.refetch();
@@ -110,7 +138,14 @@ export const ProfileEditScreen = ({ navigation }: Props) => {
     });
   };
 
-  const canGoNext = nicknameInput.value && introInput.value;
+  const isNicknameDirty = formState.dirtyFields.nickname;
+
+  const isNicknameValid = checkNicknameQuery.data?.duplication === false;
+
+  const canGoNext =
+    formState.isDirty &&
+    formState.isValid &&
+    (!isNicknameDirty || (isNicknameDirty && isNicknameValid));
 
   return (
     <DismissKeyboardView>
@@ -124,53 +159,58 @@ export const ProfileEditScreen = ({ navigation }: Props) => {
         </Pressable>
         <View style={[common.mv16, common.rowCenter]}>
           <View style={[common.mr8, { flex: 3 }]}>
-            <TextField
-              label="닉네임"
-              onChangeText={nicknameInput.onChange}
-              value={nicknameInput.value}
-              placeholder="김링크"
-              keyboardType="default"
+            <Controller
+              name="nickname"
+              control={control}
+              render={({ field }) => (
+                <TextField
+                  label="닉네임"
+                  onChangeText={field.onChange}
+                  value={field.value}
+                  onBlur={field.onBlur}
+                  placeholder="김링크"
+                  keyboardType="default"
+                />
+              )}
             />
           </View>
           <BoxButton
             label="확인"
             onPress={onCheckNickname}
             loading={checkNicknameQuery.isFetching}
-            disabled={!canGoNext}
+            disabled={!isNicknameDirty}
           />
         </View>
         <View style={common.mb16}>
-          <TextField
-            height={343}
-            label="소개글"
-            onChangeText={introInput.onChange}
-            placeholder="소개글을 작성해주세요."
-            value={introInput.value}
-            keyboardType="default"
-            editable
-            multiline
+          <Controller
+            name="intro"
+            control={control}
+            render={({ field }) => (
+              <TextField
+                height={343}
+                label="소개글"
+                placeholder="소개글을 작성해주세요."
+                onChangeText={field.onChange}
+                value={field.value}
+                onBlur={field.onBlur}
+                keyboardType="default"
+                editable
+                multiline
+              />
+            )}
           />
         </View>
         {user?.licences.map((licence, index) => (
-          <Pressable
-            key={licence + '' + index}
-            onPress={() => {
-              console.log(licence.field);
-              setField(licence.field);
-            }}>
-            <View>
-              <View style={[common.basicBox, common.rowCenterBetween, common.mb8]}>
-                <View style={common.rowCenter}>
-                  <Image source={iconPath.MY_LICENSE} style={[common.size24, common.mr8]} />
-                  <Text style={common.text_m}>{licence.field}</Text>
-                </View>
-                {field === licence.field ? (
-                  <Image source={iconPath.CHECK_BLACK} style={common.size24} />
-                ) : (
-                  ''
-                )}
+          <Pressable key={licence + '' + index} onPress={() => setValue('field', licence.field)}>
+            <Card style={[common.rowCenterBetween, common.mb8, { paddingVertical: 8 }]}>
+              <View style={common.rowCenter}>
+                <Image source={SRC.ICON.LICENSE_FILL} style={[common.size24, common.mr8]} />
+                <Text style={common.text_m}>{licence.field}</Text>
               </View>
-            </View>
+              {fieldInputValue === licence.field && (
+                <Image source={iconPath.CHECK_BLACK} style={common.size24} />
+              )}
+            </Card>
           </Pressable>
         ))}
         <View style={common.mt40}>
@@ -178,7 +218,7 @@ export const ProfileEditScreen = ({ navigation }: Props) => {
             label="완료"
             loading={updateProfileMutation.isLoading}
             disabled={!canGoNext}
-            onPress={onUpdateProfile}
+            onPress={onSubmit}
           />
         </View>
       </View>

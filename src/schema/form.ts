@@ -8,3 +8,9 @@ export const verificationCodeSchema = z.string().length(6);
 export const passwordSchema = z.string().refine((password) => {
   return /^(?=.*[a-zA-Z0-9])(?=.*[^a-zA-Z0-9]).{8,}$/.test(password);
 });
+
+export const imageSchema = z.object({
+  name: z.string().optional(),
+  type: z.string().optional(),
+  uri: z.string().optional(),
+});

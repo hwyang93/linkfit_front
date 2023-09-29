@@ -1,4 +1,4 @@
-import { ROUTE } from '@/utils/constants/route';
+import { ROUTE } from '@/lib/constants/route';
 import { NavigationProp, useNavigation } from '@react-navigation/native';
 import common from '@styles/common';
 import { Pressable, StyleSheet, Text, View } from 'react-native';

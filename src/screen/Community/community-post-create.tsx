@@ -1,8 +1,8 @@
 import CTAButton from '@/components/Common/CTAButton';
 import { useCreateCommunityPost } from '@/hooks/community/use-create-community-post';
 import useInput from '@/hooks/use-input';
-import { ROUTE } from '@/utils/constants/route';
-import TOAST from '@/utils/constants/toast';
+import { ROUTE } from '@/lib/constants/route';
+import TOAST from '@/lib/constants/toast';
 import DismissKeyboardView from '@components/DismissKeyboardView';
 import Input, { KeyboardTypes } from '@components/Input';
 import SelectBox from '@components/SelectBox';

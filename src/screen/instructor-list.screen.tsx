@@ -5,9 +5,9 @@ import EmptySet from '@/components/EmptySet';
 import Header from '@/components/Header/Header';
 import HeaderLeft from '@/components/HeaderLeft';
 import { useInstructorList } from '@/hooks/instructor/use-instructor-list';
+import { ROUTE } from '@/lib/constants/route';
 import common from '@/styles/common';
 import { Instructor } from '@/types/api/instructor.type';
-import { ROUTE } from '@/utils/constants/route';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { FlatList, Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
@@ -66,7 +66,7 @@ export const InstructorListScreen = ({ navigation }: Props) => {
               followerCount={item.followerCount}
               isCertificated
               onAvatarPress={() =>
-                navigation.navigate('Profile', {
+                navigation.navigate(ROUTE.INSTRUCTOR.PROFILE, {
                   memberSeq: item.seq,
                 })
               }

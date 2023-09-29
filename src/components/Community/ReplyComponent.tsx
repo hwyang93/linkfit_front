@@ -1,5 +1,5 @@
+import { formatDate } from '@/lib/util';
 import THEME from '@/styles/theme';
-import { formatDate } from '@/utils/util';
 import common from '@styles/common';
 import { useState } from 'react';
 import { Pressable, Text, View } from 'react-native';

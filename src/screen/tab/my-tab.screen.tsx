@@ -1,10 +1,10 @@
 import SectionHeader from '@/components/Common/SectionHeader';
 import ResumeCard from '@/components/Compound/ResumeCard';
+import { SCREEN_WIDTH } from '@/lib/constants/common';
+import { ROUTE } from '@/lib/constants/route';
+import { iconPath } from '@/lib/iconPath';
+import { formatDate } from '@/lib/util';
 import { FetchMemberMyInfoResponse } from '@/types/api/member.type';
-import { SCREEN_WIDTH } from '@/utils/constants/common';
-import { ROUTE } from '@/utils/constants/route';
-import { iconPath } from '@/utils/iconPath';
-import { formatDate } from '@/utils/util';
 import { fetchMemberMyInfo } from '@api/member';
 import ProfileBox from '@components/ProfileBox';
 import toast from '@hooks/toast';

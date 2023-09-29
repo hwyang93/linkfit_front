@@ -2,8 +2,8 @@ import FloatingActionButton from '@/components/Common/FloatingActionButton';
 import InstructorListItem from '@/components/Compound/InstructorListItem';
 import { useInstructorList } from '@/hooks/instructor/use-instructor-list';
 import useExitAlert from '@/hooks/use-exit-alert';
-import { ROUTE } from '@/utils/constants/route';
-import { iconPath } from '@/utils/iconPath';
+import { ROUTE } from '@/lib/constants/route';
+import { iconPath } from '@/lib/iconPath';
 import LinkTop from '@components/LinkTop';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { WHITE } from '@styles/colors';
@@ -37,7 +37,9 @@ export const LinkTab = ({ navigation }: Props) => {
                 following={item.isFollow === 'Y'}
                 followerCount={item.followerCount}
                 isCertificated
-                onAvatarPress={() => navigation.navigate('Profile', { memberSeq: item.seq })}
+                onAvatarPress={() =>
+                  navigation.navigate(ROUTE.INSTRUCTOR.PROFILE, { memberSeq: item.seq })
+                }
               />
             )}
             ListHeaderComponent={<LinkTop />}

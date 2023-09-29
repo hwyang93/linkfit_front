@@ -5,10 +5,10 @@ import FilterChipContainer from '@/components/Common/FilterChipContainer';
 import { useReceivedPositionSuggestionList } from '@/hooks/member/use-received-position-suggestion-list';
 import useFilter from '@/hooks/use-filter';
 import useModal from '@/hooks/use-modal';
-import { Member } from '@/types/common';
-import FILTER from '@/utils/constants/filter';
-import { ROUTE } from '@/utils/constants/route';
-import { formatDate } from '@/utils/util';
+import { MEMBER_TYPE } from '@/lib/constants/enum';
+import FILTER from '@/lib/constants/filter';
+import { ROUTE } from '@/lib/constants/route';
+import { formatDate } from '@/lib/util';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { WHITE } from '@styles/colors';
 import common from '@styles/common';
@@ -44,7 +44,7 @@ const ReceivedSuggestionCard: React.FC<ReceivedSuggestionCardProps> = ({
         {title}
       </Text>
       <Text style={[common.text_m, common.fwb, common.mb12]}>
-        {type === Member.Company ? companyName : writerName}
+        {type === MEMBER_TYPE.COMPANY ? companyName : writerName}
       </Text>
       <Text style={[common.text_s, common.fcg]}>
         {closingDate ? closingDate : '채용시 마감'} | {status}

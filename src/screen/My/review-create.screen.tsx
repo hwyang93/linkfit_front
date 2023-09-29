@@ -1,5 +1,5 @@
 import { ReviewForm } from '@/components/Review/ReviewForm';
-import { ROUTE } from '@/utils/constants/route';
+import { ROUTE } from '@/lib/constants/route';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { LoggedInParamList } from '../../../AppInner';
 

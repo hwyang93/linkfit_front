@@ -1,4 +1,4 @@
-import { SCREEN_WIDTH } from '@/utils/constants/common';
+import { SCREEN_WIDTH } from '@/lib/constants/common';
 import DatePicker from '@components/DatePicker';
 import SelectBox from '@components/SelectBox';
 import common from '@styles/common';

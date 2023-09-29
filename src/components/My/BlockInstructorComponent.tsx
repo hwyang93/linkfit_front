@@ -1,4 +1,4 @@
-import { iconPath } from '@/utils/iconPath';
+import { iconPath } from '@/lib/iconPath';
 import BlockButton from '@components/BlockButton';
 import EmptySet from '@components/EmptySet';
 import { BLUE, GRAY, WHITE } from '@styles/colors';

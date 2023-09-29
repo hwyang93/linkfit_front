@@ -1,5 +1,5 @@
-import { SCREEN_WIDTH } from '@/utils/constants/common';
-import { iconPath } from '@/utils/iconPath';
+import { SCREEN_WIDTH } from '@/lib/constants/common';
+import { iconPath } from '@/lib/iconPath';
 import { fetchMemberMyInfo } from '@api/member';
 import CenterProfileBox from '@components/CenterProfileBox';
 import MyTitle from '@components/My/MyTitle';

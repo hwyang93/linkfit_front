@@ -1,6 +1,6 @@
 import { LoggedInParamList } from '@/../AppInner';
-import { ROUTE } from '@/utils/constants/route';
-import { iconPath } from '@/utils/iconPath';
+import { ROUTE } from '@/lib/constants/route';
+import { iconPath } from '@/lib/iconPath';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import common from '@styles/common';
 import { Image, StyleSheet, View } from 'react-native';
