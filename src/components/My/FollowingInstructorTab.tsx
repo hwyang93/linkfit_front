@@ -1,6 +1,7 @@
 import { useMemberFollowingList } from '@/hooks/member/use-member-following-list';
 import THEME from '@/styles/theme';
 import { Member } from '@/types/common';
+import { ROUTE } from '@/utils/constants/route';
 import { iconPath } from '@/utils/iconPath';
 import { NavigationProp, useNavigation } from '@react-navigation/native';
 import { BLUE, GRAY } from '@styles/colors';
@@ -25,7 +26,7 @@ const FollowingInstructorTab: React.FC = () => {
           <Pressable
             key={`${following.seq} ${following.memberSeq} ${following.favoriteSeq}`}
             onPress={() =>
-              navigation.navigate('Profile', {
+              navigation.navigate(ROUTE.INSTRUCTOR.PROFILE, {
                 memberSeq: following.favoriteSeq,
               })
             }>

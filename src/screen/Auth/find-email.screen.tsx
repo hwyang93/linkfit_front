@@ -7,7 +7,7 @@ import DismissKeyboardView from '@/components/DismissKeyboardView';
 import { useFindEmail } from '@/hooks/auth/use-find-email';
 import toast from '@/hooks/toast';
 import useInput from '@/hooks/use-input';
-import { AuthStackParamList } from '@/navigations/AuthStack';
+import { AuthStackParamList } from '@/navigations/auth-stack';
 import common from '@/styles/common';
 import { ROUTE } from '@/utils/constants/route';
 import TOAST from '@/utils/constants/toast';

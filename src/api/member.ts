@@ -171,4 +171,12 @@ export const memberApi = {
     const response = await request.patch(`${ENDPOINT}/password`, body);
     return response.data;
   },
+  follow: async (memberId: number) => {
+    const response = await request.post<PostResponse>(`${ENDPOINT}/follow/${memberId}`);
+    return response.data;
+  },
+  unfollow: async (memberId: number) => {
+    const response = await request.delete<DeleteResponse>(`${ENDPOINT}/follow/${memberId}`);
+    return response.data;
+  },
 };

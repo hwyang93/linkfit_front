@@ -9,10 +9,6 @@ export const validateEmail = (email: string) => {
   return REGEXP.EMAIL.test(email);
 };
 
-export const validatePassword = (password: string) => {
-  return REGEXP.PASSWORD.test(password);
-};
-
 export const removeWhitespace = (text: string) => {
   return text.replace(REGEXP.WHITE_SPACE, '');
 };

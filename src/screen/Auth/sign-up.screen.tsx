@@ -1,5 +1,5 @@
 import CTAButton from '@/components/Common/CTAButton';
-import { AuthStackParamList } from '@/navigations/AuthStack';
+import { AuthStackParamList } from '@/navigations/auth-stack';
 import { ROUTE } from '@/utils/constants/route';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import common from '@styles/common';

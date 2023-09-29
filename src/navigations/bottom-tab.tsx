@@ -19,7 +19,7 @@ import { LoggedInParamList } from '../../AppInner';
 
 const Tab = createBottomTabNavigator<LoggedInParamList>();
 
-const ContentTab = () => {
+export const BottomTab = () => {
   const memberInfo = useAppSelector((state) => state.user);
 
   const tabOffsetValue = useRef(new Animated.Value(0)).current;
@@ -161,5 +161,3 @@ const ContentTab = () => {
     </>
   );
 };
-
-export default ContentTab;

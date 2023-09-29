@@ -2,7 +2,7 @@ import CTAButton from '@/components/Common/CTAButton';
 import TextField from '@/components/Common/TextField';
 import toast from '@/hooks/toast';
 import useInput from '@/hooks/use-input';
-import { AuthStackParamList } from '@/navigations/AuthStack';
+import { AuthStackParamList } from '@/navigations/auth-stack';
 import THEME from '@/styles/theme';
 import { ROUTE } from '@/utils/constants/route';
 import { removeWhitespace, validateEmail } from '@/utils/util';

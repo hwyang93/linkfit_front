@@ -37,7 +37,9 @@ export const LinkTab = ({ navigation }: Props) => {
                 following={item.isFollow === 'Y'}
                 followerCount={item.followerCount}
                 isCertificated
-                onAvatarPress={() => navigation.navigate('Profile', { memberSeq: item.seq })}
+                onAvatarPress={() =>
+                  navigation.navigate(ROUTE.INSTRUCTOR.PROFILE, { memberSeq: item.seq })
+                }
               />
             )}
             ListHeaderComponent={<LinkTop />}

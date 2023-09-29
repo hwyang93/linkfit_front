@@ -1,6 +1,6 @@
 import DismissKeyboardView from '@/components/DismissKeyboardView';
 import useAuth from '@/hooks/use-auth';
-import { AuthStackParamList } from '@/navigations/AuthStack';
+import { AuthStackParamList } from '@/navigations/auth-stack';
 import { IS_ANDROID } from '@/utils/constants/common';
 import { ROUTE } from '@/utils/constants/route';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';

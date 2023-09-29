@@ -27,7 +27,7 @@ export type AuthStackParamList = {
 
 const Stack = createNativeStackNavigator<AuthStackParamList>();
 
-const AuthStack = () => {
+export const AuthStack = () => {
   return (
     <Stack.Navigator
       initialRouteName={ROUTE.AUTH.SIGN_IN_EMAIL}
@@ -99,5 +99,3 @@ const AuthStack = () => {
     </Stack.Navigator>
   );
 };
-
-export default AuthStack;

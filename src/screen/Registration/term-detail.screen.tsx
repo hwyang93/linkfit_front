@@ -1,6 +1,6 @@
 import IconButton from '@/components/Common/IconButton';
 import Header from '@/components/Header/Header';
-import { AuthStackParamList } from '@/navigations/AuthStack';
+import { AuthStackParamList } from '@/navigations/auth-stack';
 import { ROUTE } from '@/utils/constants/route';
 import { iconPath } from '@/utils/iconPath';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';

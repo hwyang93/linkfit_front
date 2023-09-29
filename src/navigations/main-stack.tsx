@@ -1,5 +1,5 @@
 import IconButton from '@/components/Common/IconButton';
-import BottomTabs from '@/navigations/BottomTabs';
+import { BottomTab } from '@/navigations/bottom-tab';
 import { CenterInfoScreen } from '@/screen/center-info.screen';
 import { CommunityCommentEditScreen } from '@/screen/community/community-comment-edit.screen';
 import { CommunityMyScreen } from '@/screen/community/community-my.screen';
@@ -67,7 +67,7 @@ import { LoggedInParamList } from '../../AppInner';
 
 const Stack = createNativeStackNavigator<LoggedInParamList>();
 
-const MainStack = () => {
+export const MainStack = () => {
   const [modalVisible, setModalVisible] = useState(false);
 
   const navigation = useNavigation<NavigationProp<LoggedInParamList>>();
@@ -90,7 +90,7 @@ const MainStack = () => {
       <Stack.Group>
         <Stack.Screen
           name={ROUTE.TAB.CONTENT}
-          component={BottomTabs}
+          component={BottomTab}
           options={{ headerShown: false, gestureEnabled: false }}
         />
         <Stack.Screen
@@ -455,5 +455,3 @@ const MainStack = () => {
     </Stack.Navigator>
   );
 };
-
-export default MainStack;

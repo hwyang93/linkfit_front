@@ -1,4 +1,3 @@
-import { fetchInstructor } from '@/api/instructor';
 import EmptyState from '@/components/Common/EmptyState';
 import ExpandButton from '@/components/Common/ExpandButton';
 import RowView from '@/components/Common/RowView';
@@ -6,13 +5,13 @@ import SectionHeader from '@/components/Common/SectionHeader';
 import InstructorProfile from '@/components/Compound/InstructorProfile';
 import RecruitCard from '@/components/Compound/RecruitCard';
 import ReviewListItem from '@/components/Compound/ReviewListItem';
-import { FetchInstructorResponse } from '@/types/api/instructor.type';
+import { useInstructor } from '@/hooks/instructor/use-instructor';
 import { SCREEN_WIDTH } from '@/utils/constants/common';
 import MESSAGE from '@/utils/constants/message';
 import { ROUTE } from '@/utils/constants/route';
 import { formatDate } from '@/utils/util';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
-import { useCallback, useEffect, useState } from 'react';
+import { useState } from 'react';
 import { Image, Pressable, ScrollView, Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { LoggedInParamList } from '../../AppInner';
@@ -31,20 +30,9 @@ type Props = NativeStackScreenProps<LoggedInParamList, typeof ROUTE.PROFILE>;
 
 export const ProfileScreen = ({ route }: Props) => {
   const [expanded, setExpanded] = useState(false);
-  const [data, setData] = useState<FetchInstructorResponse>();
 
-  const fetchData = useCallback(async () => {
-    try {
-      const response = await fetchInstructor(route.params.memberSeq);
-      setData(response.data);
-    } catch (error) {
-      console.log(error);
-    }
-  }, [route.params.memberSeq]);
-
-  useEffect(() => {
-    fetchData();
-  }, [fetchData]);
+  const instructorQuery = useInstructor(route.params.memberSeq);
+  const data = instructorQuery.data;
 
   const onFavorite = (instructorId: number) => {
     console.log(instructorId);
@@ -57,6 +45,7 @@ export const ProfileScreen = ({ route }: Props) => {
         <ScrollView contentContainerStyle={{ padding: 16, paddingBottom: 32 }}>
           <InstructorProfile
             nickname={data.nickname}
+            // TODO: 필드 데이터 연동
             field="필라테스"
             career={data.career}
             address={data.address}

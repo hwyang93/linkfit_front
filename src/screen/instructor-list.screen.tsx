@@ -66,7 +66,7 @@ export const InstructorListScreen = ({ navigation }: Props) => {
               followerCount={item.followerCount}
               isCertificated
               onAvatarPress={() =>
-                navigation.navigate('Profile', {
+                navigation.navigate(ROUTE.INSTRUCTOR.PROFILE, {
                   memberSeq: item.seq,
                 })
               }
