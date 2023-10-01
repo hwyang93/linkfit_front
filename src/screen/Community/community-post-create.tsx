@@ -1,6 +1,8 @@
 import CTAButton from '@/components/Common/CTAButton';
 import { useCreateCommunityPost } from '@/hooks/community/use-create-community-post';
+import { useMemberInfo } from '@/hooks/member/use-member-info';
 import useInput from '@/hooks/use-input';
+import { MEMBER_TYPE } from '@/lib/constants/enum';
 import { ROUTE } from '@/lib/constants/route';
 import TOAST from '@/lib/constants/toast';
 import DismissKeyboardView from '@components/DismissKeyboardView';
@@ -14,12 +16,21 @@ import { isAxiosError } from 'axios';
 import { StyleSheet, View } from 'react-native';
 import { LoggedInParamList } from '../../../AppInner';
 
-const LOADING = false;
-const CHANNEL = ['필라테스', '요가', '릴리리맘보'];
+const BASE_CHANNEL_SELECT = ['필라테스', '요가'];
+
+const CHANNEL_SELECT = {
+  [MEMBER_TYPE.PUBLIC]: BASE_CHANNEL_SELECT,
+  [MEMBER_TYPE.INSTRUCTOR]: [...BASE_CHANNEL_SELECT, '강사'],
+  [MEMBER_TYPE.COMPANY]: [...BASE_CHANNEL_SELECT, '센터'],
+  [MEMBER_TYPE.CENTER]: [...BASE_CHANNEL_SELECT, '센터'],
+};
 
 type Props = NativeStackScreenProps<LoggedInParamList, typeof ROUTE.COMMUNITY.POST_CREATE>;
 
 export const CommunityPostCreateScreen = ({ navigation }: Props) => {
+  const memberInfoQuery = useMemberInfo();
+  const userType = memberInfoQuery.data?.status;
+
   const titleInput = useInput();
   const categoryInput = useInput();
   const contentsInput = useInput();
@@ -49,6 +60,8 @@ export const CommunityPostCreateScreen = ({ navigation }: Props) => {
     });
   };
 
+  if (!userType) return null;
+
   return (
     <DismissKeyboardView>
       <View style={styles.container}>
@@ -66,7 +79,7 @@ export const CommunityPostCreateScreen = ({ navigation }: Props) => {
         <View style={common.mb16}>
           <SelectBox
             label="채널"
-            data={CHANNEL}
+            data={CHANNEL_SELECT[userType]}
             onSelect={categoryInput.onChange}
             defaultButtonText="채널을 선택하세요."
           />
@@ -86,7 +99,7 @@ export const CommunityPostCreateScreen = ({ navigation }: Props) => {
         <View style={common.mt20}>
           <CTAButton
             label="게시글 등록"
-            loading={LOADING}
+            loading={createCommunityPostMutation.isLoading}
             disabled={!isAllFieldValid}
             onPress={onCreateCommunityPost}
           />

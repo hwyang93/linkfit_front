@@ -1,46 +1,15 @@
 import { LoggedInParamList } from '@/../AppInner';
 import RecruitListItem from '@/components/Compound/RecruitListItem';
-import { FetchRecommendedRecruitsResponse } from '@/types/api/recruit.type';
-import { fetchRecommendedRecruits } from '@api/recruit';
-import toast from '@hooks/toast';
+import { useRecommendedRecruitList } from '@/hooks/recruit/use-recommended-recruit-list';
 import { NavigationProp, useNavigation } from '@react-navigation/native';
 import common from '@styles/common';
-import { isAxiosError } from 'axios';
-import { useEffect, useState } from 'react';
 import { FlatList, Text, View } from 'react-native';
 import GradientNaivgationTab from './GradientNavigationTab';
 
 const LinkTop: React.FC = () => {
-  const [recruits, setRecruits] = useState<FetchRecommendedRecruitsResponse>([]);
-
   const navigation = useNavigation<NavigationProp<LoggedInParamList>>();
 
-  useEffect(() => {
-    fetchRecommendedRecruits()
-      .then(({ data }) => {
-        setRecruits(data);
-      })
-      .catch((error) => {
-        if (isAxiosError(error)) {
-          toast.error({ message: error.message });
-        }
-      });
-  }, []);
-
-  const renderItem = ({ item }: any) => {
-    return (
-      <RecruitListItem
-        seq={item.seq}
-        title={item.title}
-        position={item.position}
-        companyName={item.companyName}
-        address={item.address}
-        bookmarkChecked={item.isBookmark === 'Y'}
-        imageSrc={item.writer?.profileImage?.originFileUrl}
-        onPress={() => navigation.navigate('JobPost', { recruitSeq: item.seq })}
-      />
-    );
-  };
+  const { data } = useRecommendedRecruitList();
 
   return (
     <View style={{ marginTop: 32 }}>
@@ -56,9 +25,20 @@ const LinkTop: React.FC = () => {
           <FlatList
             contentContainerStyle={{ paddingHorizontal: 16 }}
             keyExtractor={(_, index) => index.toString()}
-            data={recruits}
+            data={data}
             horizontal
-            renderItem={renderItem}
+            renderItem={({ item }) => (
+              <RecruitListItem
+                seq={item.seq}
+                title={item.title}
+                position={item.position}
+                companyName={item.companyName}
+                address={item.address}
+                bookmarkChecked={item.isBookmark === 'Y'}
+                imageSrc={item.writer?.profileImage?.originFileUrl}
+                onPress={() => navigation.navigate('JobPost', { recruitSeq: item.seq })}
+              />
+            )}
             showsHorizontalScrollIndicator={false}
           />
         </View>
