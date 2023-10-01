@@ -1,19 +1,14 @@
+import { useMemberInfo } from '@/hooks/member/use-member-info';
 import { SCREEN_WIDTH } from '@/lib/constants/common';
 import { ROUTE } from '@/lib/constants/route';
 import { iconPath } from '@/lib/iconPath';
 import { materialTopTabNavigationOptions } from '@/lib/options/tab';
-import { FetchMemberInfoResponse } from '@/types/api/member.type';
-import { fetchMemberInfo } from '@api/member';
-import toast from '@hooks/toast';
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
-import { useIsFocused } from '@react-navigation/native';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { BLUE, GRAY } from '@styles/colors';
 import common from '@styles/common';
-import { isAxiosError } from 'axios';
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import {
-  Alert,
   FlatList,
   Image,
   ImageSourcePropType,
@@ -56,6 +51,7 @@ const width = SCREEN_WIDTH - 32;
 const imageSize = (width - 6) / 3;
 
 interface HeaderProps {
+  memberId: number;
   profileImageOriginFileUrl?: string;
   nickname?: string;
   name?: string;
@@ -68,6 +64,7 @@ interface HeaderProps {
 
 // TODO: 안드로이드에서 레이아웃이 깨지는 버그 수정
 const Header: React.FC<HeaderProps> = ({
+  memberId,
   profileImageOriginFileUrl,
   nickname,
   name,
@@ -111,13 +108,12 @@ const Header: React.FC<HeaderProps> = ({
         </View>
 
         <View style={common.rowCenter}>
-          <Pressable onPress={() => Alert.alert('click', 'test')}>
+          <Pressable>
             <Image source={iconPath.FAVORITE_FILL} style={[common.size24, common.mr8]} />
           </Pressable>
           <Text style={[common.text_m, common.fwb, common.mr8]}>{followerCount}</Text>
         </View>
       </View>
-
       <Pressable style={styles.pencil} onPress={onPencilIconPress}>
         <Image source={iconPath.PENCIL_B} style={[common.size24]} />
       </Pressable>
@@ -185,23 +181,9 @@ const MyIntroductionTabItem: React.FC<MyIntroductionTabItemProps> = ({ src, onPr
 type Props = NativeStackScreenProps<LoggedInParamList, typeof ROUTE.MY.PROFILE>;
 
 export const MyProfileScreen = ({ navigation }: Props) => {
-  const [memberInfo, setMemberInfo] = useState<FetchMemberInfoResponse>();
-
-  const isFocused = useIsFocused();
-
-  useEffect(() => {
-    if (isFocused) {
-      fetchMemberInfo()
-        .then(({ data }) => {
-          setMemberInfo(data);
-        })
-        .catch((error) => {
-          if (isAxiosError(error)) {
-            toast.error({ message: error.message });
-          }
-        });
-    }
-  }, [isFocused]);
+  const memberInfoQury = useMemberInfo();
+  const memberInfo = memberInfoQury.data;
+  console.log(JSON.stringify(memberInfo, null, 2));
 
   const renderMyIntroductionTabItem = ({ item }: { item: MyIntroductionTabItemProps }) => (
     <MyIntroductionTabItem src={item.src} onPress={() => navigation.navigate('Gallery')} />
@@ -245,16 +227,20 @@ export const MyProfileScreen = ({ navigation }: Props) => {
     );
   };
 
+  if (!memberInfo) return null;
+
+  // TODO: isFollowing 추가
   return (
     <>
       <Header
-        profileImageOriginFileUrl={memberInfo?.profileImage?.originFileUrl}
-        nickname={memberInfo?.nickname}
-        name={memberInfo?.name}
-        field={memberInfo?.field}
-        career={memberInfo?.career}
-        address={memberInfo?.address}
-        followerCount={memberInfo?.followerCount}
+        memberId={memberInfo.seq}
+        profileImageOriginFileUrl={memberInfo.profileImage?.originFileUrl}
+        nickname={memberInfo.nickname}
+        name={memberInfo.name}
+        field={memberInfo.field}
+        career={memberInfo.career}
+        address={memberInfo.address}
+        followerCount={memberInfo.followerCount}
         onPencilIconPress={() => navigation.navigate('ProfileEdit')}
       />
       <Tab.Navigator screenOptions={materialTopTabNavigationOptions}>
