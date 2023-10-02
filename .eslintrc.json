@@ -6,7 +6,12 @@
     "react-native/react-native": true
   },
   "plugins": ["react", "react-native"],
-  "extends": ["plugin:react-hooks/recommended"],
+  "extends": [
+    "plugin:react/recommended",
+    "plugin:react-hooks/recommended",
+    "plugin:@tanstack/eslint-plugin-query/recommended",
+    "prettier"
+  ],
   "parser": "@typescript-eslint/parser",
   "parserOptions": {
     "sourceType": "module",
@@ -14,5 +19,10 @@
     "ecmaFeatures": {
       "jsx": true
     }
+  },
+  "rules": {
+    "react/react-in-jsx-scope": "off",
+    "react/prop-types": "off",
+    "react/display-name": "off"
   }
 }

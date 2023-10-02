@@ -1,18 +1,18 @@
 import Chip from '@/components/Common/Chip';
 import CTAButton from '@/components/Common/CTAButton';
+import { useRecruitApplicationList } from '@/hooks/recruit/use-recruit-application-list';
+import { useResume } from '@/hooks/resume/use-resume';
 import { MEMBER_TYPE } from '@/lib/constants/enum';
 import { ROUTE } from '@/lib/constants/route';
 import { iconPath } from '@/lib/iconPath';
 import { useAppSelector } from '@/store';
-import { RecruitStatus } from '@/types/api/recruit.type';
-import { fetchRecruitApplication, updateRecruitApplyStatus } from '@api/recruit';
-import { fetchResume } from '@api/resume';
+import { updateRecruitApplyStatus } from '@api/recruit';
 import Modal from '@components/ModalSheet';
 import toast from '@hooks/toast';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { BLUE, GRAY, WHITE } from '@styles/colors';
 import common from '@styles/common';
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useState } from 'react';
 import { Image, Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { LoggedInParamList } from '../../../AppInner';
@@ -30,32 +30,9 @@ export const ResumePreviewScreen = ({ route, navigation }: Props) => {
 
   const memberInfo = useAppSelector((state) => state.user);
 
-  const getResume = useCallback(() => {
-    if (route.params.applySeq) {
-      fetchRecruitApplication(route.params.applySeq)
-        .then(({ data }: any) => {
-          setApplication(data);
-          if (data.status === RecruitStatus.Applied) {
-            setApplyResult(data.status);
-          }
-          if (data.status === RecruitStatus.Passed) {
-            setApplyResult(data.status);
-          }
-        })
-        .catch((error) => {
-          toast.error({ message: error.message });
-          navigation.goBack();
-        });
-    }
-    fetchResume(route.params.resumeSeq)
-      .then(({ data }: any) => {
-        setResume(data);
-      })
-      .catch((error) => {
-        toast.error({ message: error.message });
-        navigation.goBack();
-      });
-  }, [route.params.applySeq, route.params.resumeSeq, navigation]);
+  const recruitApplicationQuery = useRecruitApplicationList(route.params.applySeq);
+
+  const resumeQuery = useResume(route.params.resumeSeq);
 
   const onUpdatePassOrNot = useCallback(
     (status: string) => {
@@ -75,10 +52,6 @@ export const ResumePreviewScreen = ({ route, navigation }: Props) => {
     },
     [navigation, route.params.applySeq, route.params.recruitSeq],
   );
-
-  useEffect(() => {
-    getResume();
-  }, [getResume]);
 
   const MODAL = [
     {

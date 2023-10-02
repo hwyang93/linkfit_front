@@ -1,15 +1,14 @@
 import BottomSheet from '@/components/Common/BottomSheet';
 import BoxButton from '@/components/Common/BoxButton';
 import CTAButton from '@/components/Common/CTAButton';
+import { useRecruit } from '@/hooks/recruit/use-recruit';
 import useModal from '@/hooks/use-modal';
 import { MEMBER_TYPE } from '@/lib/constants/enum';
 import { iconPath } from '@/lib/iconPath';
 import { formatDate } from '@/lib/util';
 import THEME from '@/styles/theme';
-import { RecruitDateEntity } from '@/types/api/entities.type';
-import { FetchRecruitResponse } from '@/types/api/recruit.type';
 import { FetchResumesResponse } from '@/types/api/resume.type';
-import { createRecruitApply, fetchRecruit, updateRecruitApplyCancel } from '@api/recruit';
+import { createRecruitApply, updateRecruitApplyCancel } from '@api/recruit';
 import { fetchResumes } from '@api/resume';
 import CenterInfoComponent from '@components/CenterInfoComponent';
 import FABContainer from '@components/Common/FABContainer';
@@ -153,14 +152,10 @@ export const JobPostScreen = ({ route }: Props) => {
 
   const { recruitSeq } = route.params;
 
-  const [recruitInfo, setRecruitInfo] = useState<FetchRecruitResponse>();
-
   const [resumes, setResumes] = useState<FetchResumesResponse>([]);
 
   const [selectedResumeSeq, setSelectedResumeSeq] = useState<number | null>(null);
   const [selectedRecruitDates, setSelectedRecruitDates] = useState<number[]>([]);
-
-  const [recruitDates, setRecruitDates] = useState<RecruitDateEntity[]>([]);
 
   const [contentVerticalOffset, setContentVerticalOffset] = useState(0);
 
@@ -168,24 +163,19 @@ export const JobPostScreen = ({ route }: Props) => {
     setContentVerticalOffset(event.nativeEvent.contentOffset.y);
   };
 
+  const recruitQuery = useRecruit(recruitSeq);
+  const recruitInfo = recruitQuery.data;
+  const recruitDates = recruitQuery.data?.dates;
+
   const shouldCancelButtonDisabled = !recruitInfo?.dates.some((date) => date.isApplied);
 
   const selectedDatesSeqList = recruitDates
-    .filter((date) => {
-      return date.isSelected;
-    })
-    .map((item) => item.seq);
-
-  const getRecruitInfo = useCallback(() => {
-    fetchRecruit(recruitSeq)
-      .then(({ data }) => {
-        setRecruitInfo(data);
-        setRecruitDates(data.dates);
-      })
-      .catch((error) => {
-        toast.error({ message: error.message });
-      });
-  }, [recruitSeq]);
+    ? recruitDates
+        .filter((date) => {
+          return date.isSelected;
+        })
+        .map((item) => item.seq)
+    : [];
 
   const getResumeList = useCallback(() => {
     fetchResumes()
@@ -212,7 +202,7 @@ export const JobPostScreen = ({ route }: Props) => {
       .then(() => {
         toast.success({ message: '지원이 완료되었어요!' });
         applyModal.close();
-        getRecruitInfo();
+        recruitQuery.refetch();
       })
       .catch((error) => {
         toast.error({ message: error.message });
@@ -226,7 +216,7 @@ export const JobPostScreen = ({ route }: Props) => {
       .then(() => {
         toast.success({ message: '지원이 취소되었어요!' });
         cancelModal.close();
-        getRecruitInfo();
+        recruitQuery.refetch();
       })
       .catch((error) => {
         toast.error({ message: error.message });
@@ -255,9 +245,8 @@ export const JobPostScreen = ({ route }: Props) => {
   };
 
   useEffect(() => {
-    getRecruitInfo();
     getResumeList();
-  }, [getRecruitInfo, getResumeList]);
+  }, [getResumeList]);
 
   // TODO: 지원을 안했으면 지원하기 버튼 표시 || 지원을 했으면 지원완료 메시지 표시
 
@@ -392,7 +381,7 @@ export const JobPostScreen = ({ route }: Props) => {
             onDismiss={handleCancelModalClose}
             title="지원 취소할 날짜 및 시간을 선택하세요.">
             <View style={{ paddingHorizontal: 16 }}>
-              {recruitDates.map((item, index) => (
+              {recruitDates?.map((item, index) => (
                 <ResumeDateListItem
                   key={index}
                   selected={selectedRecruitDates.includes(item.seq)}
@@ -433,7 +422,7 @@ export const JobPostScreen = ({ route }: Props) => {
                   <View style={[common.mt40, common.mb8]}>
                     <Text style={common.title_s}>지원할 날짜 및 시간을 선택하세요.</Text>
                   </View>
-                  {recruitDates.map((item, index) => (
+                  {recruitDates?.map((item, index) => (
                     <ResumeDateListItem
                       key={index}
                       selected={selectedRecruitDates.includes(item.seq)}

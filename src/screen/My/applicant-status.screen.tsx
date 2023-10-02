@@ -60,11 +60,11 @@ export const ApplicantStatusScreen = ({ route }: Props) => {
           <Tab.Navigator screenOptions={materialTopTabNavigationOptions}>
             <Tab.Screen
               name="대기중"
-              children={() => <ApplicantWaitingTab recruitId={route.params.recruitSeq} />}
+              component={() => <ApplicantWaitingTab recruitId={route.params.recruitSeq} />}
             />
             <Tab.Screen
               name="완료"
-              children={() => <ApplicantFinishTab recruitId={route.params.recruitSeq} />}
+              component={() => <ApplicantFinishTab recruitId={route.params.recruitSeq} />}
             />
           </Tab.Navigator>
         </>

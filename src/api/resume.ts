@@ -28,6 +28,10 @@ export const resumeApi = {
     const response = await request.get<FetchResumesResponse>(`${ENDPOINT}`);
     return response.data;
   },
+  getResume: async (resumeId: number) => {
+    const response = await request.get<FetchResumeResponse>(`${ENDPOINT}/${resumeId}`);
+    return response.data;
+  },
   createResume: async (data: object) => {
     const resposne = await request.post(`${ENDPOINT}`, data);
     return resposne.data;
