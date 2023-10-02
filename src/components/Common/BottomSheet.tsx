@@ -18,7 +18,7 @@ interface BottomSheetProps {
   visible: boolean;
   title?: string;
   modalHeight?: number;
-  useScroll?: boolean;
+  scrollable?: boolean;
   onDismiss: () => void;
 }
 
@@ -27,7 +27,7 @@ const BottomSheet: React.FC<BottomSheetProps> = ({
   title,
   visible,
   modalHeight,
-  useScroll = true,
+  scrollable = true,
   onDismiss,
 }) => {
   const panY = useRef(new Animated.Value(SCREEN_HEIGHT)).current;
@@ -108,12 +108,12 @@ const BottomSheet: React.FC<BottomSheetProps> = ({
             <Text style={styles.modalTitle}>{title}</Text>
           </View>
 
-          {useScroll ? (
+          {scrollable ? (
             <ScrollView style={{ width: '100%' }} showsVerticalScrollIndicator={false}>
               {children}
             </ScrollView>
           ) : (
-            children
+            <View style={{ width: '100%' }}>{children}</View>
           )}
         </Animated.View>
       </View>
