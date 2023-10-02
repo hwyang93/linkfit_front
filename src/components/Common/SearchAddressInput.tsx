@@ -86,7 +86,7 @@ const SearchAddressInput: React.FC<SearchAddressInputProps> = ({
           </View>
         </View>
       </Pressable>
-      <BottomSheet visible={modal.visible} onDismiss={modal.close} useScroll={false}>
+      <BottomSheet visible={modal.visible} onDismiss={modal.close} scrollable={false}>
         <SearchAddress onSelectAddress={selectAddress} />
       </BottomSheet>
     </View>
