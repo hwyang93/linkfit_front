@@ -116,7 +116,7 @@ export const RecruitListScreen = ({ navigation }: Props) => {
         />
       </FilterChipContainer>
       <View style={{ paddingVertical: 16, marginHorizontal: 16 }}>
-        <Text style={[common.title]}>구인 공고</Text>
+        <Text style={common.title}>구인 공고</Text>
         <Text style={common.text_m}>내 주변의 구인 공고를 만나보세요!</Text>
       </View>
       <View style={{ marginHorizontal: 16, flex: 1 }}>
@@ -153,7 +153,7 @@ export const RecruitListScreen = ({ navigation }: Props) => {
       <FABContainer>
         <FloatingActionButton
           iconSource={iconPath.PENCIL_W}
-          onPress={() => navigation.navigate('JobOfferForm')}
+          onPress={() => navigation.navigate(ROUTE.RECRUIT.CREATE)}
         />
         {/* 임시 비활성화 */}
         {/* <FloatingActionButton
@@ -215,7 +215,7 @@ export const RecruitListScreen = ({ navigation }: Props) => {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
     backgroundColor: THEME.WHITE,
+    flex: 1,
   },
 });

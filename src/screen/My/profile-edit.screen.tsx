@@ -121,7 +121,7 @@ export const ProfileEditScreen = ({ navigation }: Props) => {
         console.log('ImagePicker Error: ', response.errorCode);
         console.log('ImagePicker Message: ', response.errorMessage);
       } else {
-        let assets: Asset[] | undefined = response.assets;
+        const assets: Asset[] | undefined = response.assets;
         let source;
         if (assets) {
           source = {
@@ -224,27 +224,27 @@ export const ProfileEditScreen = ({ navigation }: Props) => {
 };
 
 const styles = StyleSheet.create({
+  confirm: {
+    color: WHITE,
+    fontWeight: '700',
+  },
   container: {
+    backgroundColor: WHITE,
     flex: 1,
     padding: 16,
-    backgroundColor: WHITE,
   },
   imageBox: {
-    flex: 1,
     alignItems: 'center',
+    flex: 1,
     paddingVertical: 16,
   },
   profileImage: {
-    width: 80,
-    height: 80,
     borderRadius: 200,
+    height: 80,
+    width: 80,
   },
   textPosition: {
-    position: 'absolute',
     bottom: 20,
-  },
-  confirm: {
-    fontWeight: '700',
-    color: WHITE,
+    position: 'absolute',
   },
 });

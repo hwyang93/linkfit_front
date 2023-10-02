@@ -2,11 +2,11 @@ import {
   CreateRecruitApplyDto,
   CreateRecruitDto,
   UpdateRecruitApplyDto,
+  UpdateRecruitDto,
 } from '@/types/api/dtos.type';
 import {
   FetchBookmarkRecruitsResponse,
   FetchRecommendedRecruitsResponse,
-  FetchRecruitApplicationResponse,
   FetchRecruitApplicationsMyParams,
   FetchRecruitApplicationsMyResponse,
   FetchRecruitApplicationsResponse,
@@ -16,18 +16,6 @@ import {
 } from '@/types/api/recruit.type';
 import { DeleteResponse, PostResponse } from '@/types/common';
 import request from './request';
-
-export const createRecruit = (body: CreateRecruitDto) => {
-  return request.post<PostResponse>('/recruit', body);
-};
-
-export const fetchRecruit = (seq: number) => {
-  return request.get<FetchRecruitResponse>(`/recruit/${seq}`);
-};
-
-export const fetchRecruits = (params?: FetchRecruitsParams) => {
-  return request.get<FetchRecruitsResponse>('/recruit', { params });
-};
 
 export const fetchBookmarkRecruits = () => {
   return request.get<FetchBookmarkRecruitsResponse>('/recruit/bookmark');
@@ -49,14 +37,6 @@ export const updateRecruitApplyCancel = (data: { seqs: number[] }) => {
   return request.patch('/recruit/apply', data);
 };
 
-export const fetchRecruitApplications = (seq: number) => {
-  return request.get<FetchRecruitApplicationsResponse>(`/recruit/${seq}/apply`);
-};
-
-export const fetchRecruitApplication = (seq: number) => {
-  return request.get<FetchRecruitApplicationResponse>(`/recruit/apply/${seq}`);
-};
-
 export const updateRecruitApplyStatus = (seq: number, data: UpdateRecruitApplyDto) => {
   return request.patch(`/recruit/${seq}/apply`, data);
 };
@@ -68,6 +48,18 @@ export const recruitApi = {
     const response = await request.get<FetchRecruitsResponse>(ENDPOINT, {
       params,
     });
+    return response.data;
+  },
+  getRecruitById: async (recruitId: number) => {
+    const response = await request.get<FetchRecruitResponse>(`${ENDPOINT}/${recruitId}`);
+    return response.data;
+  },
+  createRecruit: async (body: CreateRecruitDto) => {
+    const response = await request.post<PostResponse>(ENDPOINT, body);
+    return response.data;
+  },
+  updateRecruit: async ({ recruitId, body }: { recruitId: number; body: UpdateRecruitDto }) => {
+    const response = await request.patch<PostResponse>(`${ENDPOINT}/${recruitId}`, body);
     return response.data;
   },
   getApplicationList: async (recruitId: number) => {

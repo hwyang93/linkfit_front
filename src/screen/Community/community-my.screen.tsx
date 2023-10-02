@@ -75,8 +75,8 @@ export const CommunityMyScreen = ({}: Props) => {
 
 const styles = StyleSheet.create({
   container: {
-    padding: 16,
     backgroundColor: WHITE,
+    padding: 16,
   },
-  kebabIcon: { position: 'absolute', top: 16, right: 0 },
+  kebabIcon: { position: 'absolute', right: 0, top: 16 },
 });

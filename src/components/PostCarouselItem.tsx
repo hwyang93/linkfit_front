@@ -39,11 +39,11 @@ const PostCarouselItem: React.FC<PostCarouselItemProps> = ({ item }) => {
 
 const styles = StyleSheet.create({
   postBox: {
-    padding: 16,
-    marginRight: 12,
-    width: 208,
     backgroundColor: '#e8edff',
     borderRadius: 8,
+    marginRight: 12,
+    padding: 16,
+    width: 208,
   },
 });
 

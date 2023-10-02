@@ -101,7 +101,7 @@ const EmployeeReviewTab: React.FC = () => {
                 setSelectedReviewId(item.seq);
                 modal.open();
               }}>
-              <Image source={iconPath.KEBAB} style={[common.size24]} />
+              <Image source={iconPath.KEBAB} style={common.size24} />
             </Pressable>
           </View>
         ) : (
@@ -121,7 +121,7 @@ const EmployeeReviewTab: React.FC = () => {
                 setSelectedReviewId(item.seq);
                 modal.open();
               }}>
-              <Image source={iconPath.KEBAB} style={[common.size24]} />
+              <Image source={iconPath.KEBAB} style={common.size24} />
             </Pressable>
           </View>
         ),
@@ -135,14 +135,14 @@ const EmployeeReviewTab: React.FC = () => {
 };
 
 const styles = StyleSheet.create({
-  container: { flex: 1, padding: 16, backgroundColor: WHITE },
+  container: { backgroundColor: WHITE, flex: 1, padding: 16 },
+  kebabIcon: { position: 'absolute', right: 0, top: 16 },
   reviewBox: {
-    paddingVertical: 16,
     borderBottomWidth: 1,
     borderColor: GRAY.DEFAULT,
+    paddingVertical: 16,
   },
-  thumbnail: { marginRight: 12, width: 48, height: 48 },
-  kebabIcon: { position: 'absolute', top: 16, right: 0 },
+  thumbnail: { height: 48, marginRight: 12, width: 48 },
 });
 
 export default EmployeeReviewTab;

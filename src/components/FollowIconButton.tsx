@@ -43,7 +43,7 @@ export const FollowToggleButton = ({
       <IconButton
         source={isFollowing ? iconPath.FAVORITE_FILL : iconPath.FAVORITE}
         onPress={onPress}>
-        <Image source={iconPath.FAVORITE_FILL} style={[common.size24]} />
+        <Image source={iconPath.FAVORITE_FILL} style={common.size24} />
         {followerCount && (
           <Text style={[common.text_m, common.fwb, common.ml8]}>{followerCount}</Text>
         )}

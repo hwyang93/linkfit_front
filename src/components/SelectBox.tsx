@@ -61,7 +61,7 @@ const SelectBox: React.FC<SelectBoxProps> = ({
                     left: 8,
                     top: 16,
                   }}>
-                  <Image source={iconPath.TIME} style={[common.size24]} />
+                  <Image source={iconPath.TIME} style={common.size24} />
                 </View>
               )}
               <Text
@@ -97,49 +97,49 @@ const SelectBox: React.FC<SelectBoxProps> = ({
 };
 
 const styles = StyleSheet.create({
-  selectBox: {
-    width: '100%',
-    height: 56,
+  dropBox: {
     backgroundColor: '#fff',
     borderRadius: 8,
-    borderWidth: 2,
+  },
+  dropItem: {
+    borderBottomColor: INPUT.DEFAULT,
+    borderBottomWidth: 1,
+  },
+  dropText: {},
+  selectBox: {
+    backgroundColor: '#fff',
     borderColor: GRAY.LIGHT,
+    borderRadius: 8,
+    borderWidth: 2,
+    height: 56,
+    width: '100%',
+  },
+  selectBoxFocus: {
+    backgroundColor: '#fff',
+    borderColor: INPUT.FOCUS,
+    borderRadius: 8,
+    borderWidth: 2,
+    height: 56,
+    width: '100%',
   },
   selectText: {
     color: '#acacac',
     fontSize: 16,
     paddingLeft: 8,
   },
-  dropBox: {
-    backgroundColor: '#fff',
-    borderRadius: 8,
-  },
-  dropItem: {
-    borderBottomWidth: 1,
-    borderBottomColor: INPUT.DEFAULT,
-  },
-  dropText: {},
-  selectBoxFocus: {
-    width: '100%',
-    height: 56,
-    backgroundColor: '#fff',
-    borderRadius: 8,
-    borderWidth: 2,
-    borderColor: INPUT.FOCUS,
-  },
   selectTextFocus: {
     color: '#292929',
     fontSize: 16,
     paddingLeft: 8,
   },
+  textLeft: {
+    color: '#acacac',
+    fontSize: 16,
+  },
   textRight: {
     color: '#292929',
     fontSize: 16,
     textAlign: 'right',
-  },
-  textLeft: {
-    color: '#acacac',
-    fontSize: 16,
   },
 });
 

@@ -124,7 +124,7 @@ export const NotificationSettingScreen = ({}: Props) => {
 };
 
 const styles = StyleSheet.create({
-  container: { flex: 1, padding: 16, backgroundColor: WHITE },
-  line: { width: '100%', height: 1, backgroundColor: GRAY.LIGHT },
+  container: { backgroundColor: WHITE, flex: 1, padding: 16 },
+  line: { backgroundColor: GRAY.LIGHT, height: 1, width: '100%' },
   time: { color: BLUE.DEFAULT },
 });

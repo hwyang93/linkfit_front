@@ -2,15 +2,8 @@ import { IS_IOS } from '@/lib/constants/common';
 import STORAGE_KEY from '@/lib/constants/storage';
 import { authApi } from '@api/auth';
 import toast from '@hooks/toast';
-import axios, { AxiosRequestConfig, isAxiosError } from 'axios';
+import axios, { isAxiosError } from 'axios';
 import EncryptedStorage from 'react-native-encrypted-storage';
-
-interface CustomAxiosRequestConfig extends AxiosRequestConfig {
-  headers?: {
-    Authorization?: string;
-    [header: string]: any;
-  };
-}
 
 const uri =
   process.env.NODE_ENV === 'production'
@@ -43,7 +36,7 @@ export const getHeaders = async (tokenType: string) => {
 };
 
 service.interceptors.request.use(
-  async (config: CustomAxiosRequestConfig) => {
+  async (config) => {
     let authHeader;
 
     if (config.url?.includes('/refresh')) {

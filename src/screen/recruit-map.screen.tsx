@@ -286,7 +286,7 @@ export const RecruitMapScreen = ({ navigation }: Props) => {
         <FloatingActionButton
           style={common.mt16}
           iconSource={iconPath.PENCIL_W}
-          onPress={() => navigation.navigate('JobOfferForm')}
+          onPress={() => navigation.navigate(ROUTE.RECRUIT.CREATE)}
         />
         <FloatingActionButton
           style={common.mt16}
@@ -321,9 +321,9 @@ export const RecruitMapScreen = ({ navigation }: Props) => {
 
 const styles = StyleSheet.create({
   fabContainer: {
+    alignItems: 'flex-end',
+    bottom: 32,
     position: 'absolute',
     right: 16,
-    bottom: 32,
-    alignItems: 'flex-end',
   },
 });

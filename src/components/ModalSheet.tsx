@@ -88,15 +88,13 @@ const ModalSheet: React.FC<ModalSheetProps> = (props) => {
         </TouchableWithoutFeedback>
 
         <Animated.View
-          style={[
-            {
+          style={{
               ...styles.bottomSheetContainer,
               transform: [{ translateY: translateY }],
               height: props.modalHeight,
               paddingBottom: 32,
               maxHeight: '93%',
-            },
-          ]}>
+            }}>
           <View
             style={styles.topBar}
             {...panResponders.panHandlers}
@@ -127,61 +125,61 @@ const ModalSheet: React.FC<ModalSheetProps> = (props) => {
 };
 
 const styles = StyleSheet.create({
-  overlay: {
-    flex: 1,
-    justifyContent: 'flex-end',
-    backgroundColor: 'rgba(0, 0, 0, 0.4)',
-  },
   background: { flex: 1 },
   bottomSheetContainer: {
-    width: '100%',
     alignItems: 'center',
-    padding: 16,
-    height: 320,
     backgroundColor: 'white',
     borderTopLeftRadius: 16,
     borderTopRightRadius: 16,
+    height: 320,
+    padding: 16,
+    width: '100%',
   },
-  topBar: {
-    position: 'absolute',
-    top: 16,
-    justifyContent: 'center',
-    marginBottom: 16,
-    width: 40,
-    height: 3,
-    backgroundColor: GRAY.DEFAULT,
-    zIndex: 9999,
+  itemBox: {
+    flexDirection: 'row',
+    paddingVertical: 19,
+    width: '100%',
   },
   modalText: {
-    fontFamily: 'NotoSansKR-Medium',
     color: BLACK,
+    fontFamily: 'NotoSansKR-Medium',
     fontSize: +width * 18,
     fontWeight: 'normal',
-    textAlign: 'left',
     lineHeight: +width * 24,
+    textAlign: 'left',
   },
   modalTitle: {
     color: BLACK,
     fontSize: +width * 16,
     fontWeight: '700',
-    textAlign: 'left',
     lineHeight: +width * 24,
+    textAlign: 'left',
   },
-  itemBox: {
-    flexDirection: 'row',
-    width: '100%',
-    paddingVertical: 19,
+  overlay: {
+    backgroundColor: 'rgba(0, 0, 0, 0.4)',
+    flex: 1,
+    justifyContent: 'flex-end',
   },
   selectBox: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    width: '100%',
-    paddingVertical: 8,
-    paddingHorizontal: 16,
-    marginVertical: 8,
-    borderWidth: 2,
     borderColor: GRAY.LIGHT,
     borderRadius: 8,
+    borderWidth: 2,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginVertical: 8,
+    paddingHorizontal: 16,
+    paddingVertical: 8,
+    width: '100%',
+  },
+  topBar: {
+    backgroundColor: GRAY.DEFAULT,
+    height: 3,
+    justifyContent: 'center',
+    marginBottom: 16,
+    position: 'absolute',
+    top: 16,
+    width: 40,
+    zIndex: 9999,
   },
 });
 

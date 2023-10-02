@@ -51,12 +51,12 @@ const MyApplicationListItem: React.FC<MyApplicationItemProps> = ({
     <Pressable style={styles.itemBox} onPress={onPress}>
       <View style={styles.imgBox}>
         <Image style={styles.img} source={require('assets/images/sample_02.png')} />
-        <View style={[styles.statusBox]}>
-          <Text style={[styles.statusText]}>{statusMap[status as keyof typeof statusMap]}</Text>
+        <View style={styles.statusBox}>
+          <Text style={styles.statusText}>{statusMap[status as keyof typeof statusMap]}</Text>
         </View>
       </View>
       <View>
-        <Text style={[common.text]}>{position}</Text>
+        <Text style={common.text}>{position}</Text>
         <Text style={[common.text_m, common.fwb]} numberOfLines={1}>
           {title}
         </Text>
@@ -193,29 +193,29 @@ export const ApplicationStatusScreen = ({ navigation }: Props) => {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
     backgroundColor: WHITE,
+    flex: 1,
   },
-  itemBox: { width: columns2, marginBottom: 16, marginHorizontal: 4 },
+  img: { borderRadius: 8, height: 104, width: '100%' },
   imgBox: {
-    marginBottom: 8,
-    height: 104,
     borderRadius: 8,
+    height: 104,
+    marginBottom: 8,
   },
-  img: { width: '100%', height: 104, borderRadius: 8 },
+  itemBox: { marginBottom: 16, marginHorizontal: 4, width: columns2 },
+  resume: { position: 'absolute', right: 0, top: 3 },
   statusBox: {
-    zIndex: 10,
-    position: 'absolute',
-    top: 8,
-    right: 8,
+    backgroundColor: '#d7e0fd',
+    borderRadius: 16,
     paddingHorizontal: 8,
     paddingVertical: 4,
-    borderRadius: 16,
-    backgroundColor: '#d7e0fd',
+    position: 'absolute',
+    right: 8,
+    top: 8,
+    zIndex: 10,
   },
   statusText: {
-    fontSize: +width * 10,
     color: BLUE.DEFAULT,
+    fontSize: +width * 10,
   },
-  resume: { position: 'absolute', top: 3, right: 0 },
 });

@@ -30,7 +30,7 @@ const InstructorInfoComponent: React.FC<any> = ({ from, job }) => {
             <Text style={[common.text, { color: GRAY.DARK }]}>서울 · 송파구</Text>
           </View>
           <Pressable style={styles.kebabIcon} hitSlop={10} onPress={job}>
-            <Image source={iconPath.KEBAB} style={[common.size24]} />
+            <Image source={iconPath.KEBAB} style={common.size24} />
           </Pressable>
           {/* 아이콘 모음 */}
           <View style={[common.rowCenterBetween, styles.iconPosition]}>
@@ -88,27 +88,27 @@ const InstructorInfoComponent: React.FC<any> = ({ from, job }) => {
 };
 
 const styles = StyleSheet.create({
+  iconPosition: {
+    bottom: 16,
+    position: 'absolute',
+    right: 0,
+  },
+  kebabIcon: { position: 'absolute', right: 16, top: 0 },
   profileBox: {
-    position: 'relative',
+    alignItems: 'center',
     flexDirection: 'row',
     justifyContent: 'flex-start',
-    alignItems: 'center',
     paddingBottom: 16,
+    position: 'relative',
   },
+  thumbnail: { height: '50%', width: '50%' },
   thumbnailBox: {
     alignItems: 'center',
+    backgroundColor: GRAY.LIGHT,
+    borderRadius: 200,
+    height: 64,
     justifyContent: 'center',
     width: 64,
-    height: 64,
-    borderRadius: 200,
-    backgroundColor: GRAY.LIGHT,
-  },
-  thumbnail: { width: '50%', height: '50%' },
-  kebabIcon: { position: 'absolute', top: 0, right: 16 },
-  iconPosition: {
-    position: 'absolute',
-    bottom: 16,
-    right: 0,
   },
 });
 

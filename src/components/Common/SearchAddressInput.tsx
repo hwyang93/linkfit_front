@@ -64,7 +64,7 @@ const SearchAddressInput: React.FC<SearchAddressInputProps> = ({
     <View>
       <Pressable onPress={modal.open}>
         <View style={common.inputWrapper}>
-          <Text style={[common.label]}>{label}</Text>
+          <Text style={common.label}>{label}</Text>
           <TextInput
             style={[common.textInput, { paddingLeft: icon && 50 }, comment && styles.comment]}
             value={address}
@@ -94,14 +94,14 @@ const SearchAddressInput: React.FC<SearchAddressInputProps> = ({
 };
 
 const styles = StyleSheet.create({
-  multiline: {
-    height: 276,
-    textAlignVertical: 'top',
-    paddingTop: 16,
-  },
   comment: {
     height: 40,
     paddingVertical: 0,
+  },
+  multiline: {
+    height: 276,
+    paddingTop: 16,
+    textAlignVertical: 'top',
   },
 });
 

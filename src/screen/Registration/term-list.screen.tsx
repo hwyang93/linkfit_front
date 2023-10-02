@@ -161,7 +161,7 @@ const TermListItem: React.FC<TermListItemProps> = ({
         <Text style={[common.text_m, { flex: showDetailButton ? undefined : 1 }]}>{text}</Text>
       </Pressable>
       {showDetailButton && (
-        <Pressable style={[styles.link]} onPress={onDetailButtonPress}>
+        <Pressable style={styles.link} onPress={onDetailButtonPress}>
           <Text style={[common.text, common.mr8]}>보기</Text>
           <Image source={iconPath.CIRCLE_ARROW_RIGHT} style={common.CIRCLE_ARROW_RIGHT} />
         </Pressable>
@@ -172,26 +172,26 @@ const TermListItem: React.FC<TermListItemProps> = ({
 
 const styles = StyleSheet.create({
   container: {
+    backgroundColor: '#fff',
     flex: 1,
     paddingHorizontal: 16,
     paddingVertical: 16,
-    backgroundColor: '#fff',
+  },
+  divideLine: {
+    backgroundColor: BLUE.DEFAULT,
+    height: 1,
+    marginVertical: 16,
+    width: '100%',
+  },
+  link: {
+    alignItems: 'center',
+    flexDirection: 'row',
   },
   terms: {
-    flexDirection: 'row',
     alignItems: 'flex-start',
+    flexDirection: 'row',
     justifyContent: 'space-between',
     marginVertical: 8,
   },
-  touchWrap: { flexDirection: 'row', alignItems: 'center' },
-  link: {
-    flexDirection: 'row',
-    alignItems: 'center',
-  },
-  divideLine: {
-    marginVertical: 16,
-    width: '100%',
-    height: 1,
-    backgroundColor: BLUE.DEFAULT,
-  },
+  touchWrap: { alignItems: 'center', flexDirection: 'row' },
 });

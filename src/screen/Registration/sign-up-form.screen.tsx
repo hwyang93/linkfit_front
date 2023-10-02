@@ -1,6 +1,9 @@
 import CTAButton from '@/components/Common/CTAButton';
+import { RegionPicker } from '@/components/Common/RegionPicker';
 import TextField, { TextFieldHelperText } from '@/components/Common/TextField';
+import { Region } from '@/components/RegionSelector';
 import useInput from '@/hooks/use-input';
+import { useLabeledSelect } from '@/hooks/use-labeled-select';
 import { useSelect } from '@/hooks/use-select';
 import { ROUTE } from '@/lib/constants/route';
 import { passwordSchema } from '@/schema/form';
@@ -51,6 +54,14 @@ export const SignUpFormScreen = ({ navigation, route }: Props) => {
   const genderSelect = useSelect(GENDER_DATA[0]);
   const agencySelect = useSelect();
 
+  const citySelect = useLabeledSelect();
+  const districtSelect = useLabeledSelect();
+
+  const onRegionPickerSelect = (region: Region) => {
+    citySelect.onChange(region.city);
+    districtSelect.onChange(region.district);
+  };
+
   const signIn = async () => {
     const body = {
       email: route.params.email,
@@ -81,7 +92,7 @@ export const SignUpFormScreen = ({ navigation, route }: Props) => {
     isPasswordInputValid &&
     isPasswordConfirmInputValid;
 
-  console.log('gender', genderSelect.value);
+  console.log('citySelect', citySelect);
 
   return (
     <DismissKeyboardView>
@@ -104,7 +115,7 @@ export const SignUpFormScreen = ({ navigation, route }: Props) => {
               value={birthSelect.value}
             />
           </View>
-          <View style={[common.mb16]}>
+          <View style={common.mb16}>
             <TabButton
               list={GENDER_DATA}
               onSelect={genderSelect.onChange}
@@ -112,7 +123,6 @@ export const SignUpFormScreen = ({ navigation, route }: Props) => {
               value={genderSelect.value}
             />
           </View>
-
           <View
             style={[
               common.mb16,
@@ -134,10 +144,18 @@ export const SignUpFormScreen = ({ navigation, route }: Props) => {
                 label="휴대폰 번호"
                 onChangeText={phoneNumberInput.onChange}
                 value={phoneNumberInput.value}
-                placeholder="01012345678"
+                placeholder="ex) 01012345678"
                 keyboardType={KeyboardTypes.PHONE}
               />
             </View>
+          </View>
+          <View style={{ marginBottom: 16 }}>
+            <RegionPicker
+              value={
+                citySelect.data.label && `${citySelect.data.label}시 ${districtSelect.data.label}`
+              }
+              onSelect={onRegionPickerSelect}
+            />
           </View>
           <View>
             <View style={common.mb16}>

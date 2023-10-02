@@ -21,16 +21,16 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   logoBox: {
-    justifyContent: 'center',
     alignItems: 'center',
-  },
-  logoText: {
-    width: +width * 200,
-    marginBottom: 8,
+    justifyContent: 'center',
   },
   logoImage: {
-    width: +width * 200,
     height: 58,
+    width: +width * 200,
+  },
+  logoText: {
+    marginBottom: 8,
+    width: +width * 200,
   },
 });
 

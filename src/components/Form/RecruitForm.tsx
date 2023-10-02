@@ -1,4 +1,8 @@
 import CTAButton from '@/components/Common/CTAButton';
+import { useCreateRecruit } from '@/hooks/recruit/use-create-recruit';
+import { useRecruit } from '@/hooks/recruit/use-recruit';
+import { useUpdateRecruit } from '@/hooks/recruit/use-update-recruit';
+import { useAppNavigation } from '@/hooks/use-app-navigation';
 import useInput from '@/hooks/use-input';
 import { useSelect } from '@/hooks/use-select';
 import { SCREEN_WIDTH } from '@/lib/constants/common';
@@ -6,19 +10,17 @@ import { MEMBER_TYPE } from '@/lib/constants/enum';
 import { iconPath } from '@/lib/iconPath';
 import { useAppSelector } from '@/store';
 import { Coordinate } from '@/types/common';
-import { createRecruit } from '@api/recruit';
 import SearchAddressInput from '@components/Common/SearchAddressInput';
 import DismissKeyboardView from '@components/DismissKeyboardView';
 import Input, { KeyboardTypes } from '@components/Input';
 import TimeComponent from '@components/Offer/TimeComponent';
 import SelectBox from '@components/SelectBox';
 import toast from '@hooks/toast';
-import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { GRAY } from '@styles/colors';
 import common from '@styles/common';
+import { isAxiosError } from 'axios';
 import { useState } from 'react';
 import { Image, Pressable, StyleSheet, Text, View } from 'react-native';
-import { LoggedInParamList } from '../../AppInner';
 
 const POSITION = ['실장', '필라테스', '요가'];
 const EDUCATION = ['학력 무관', '고졸 이상', '대졸 이상'];
@@ -32,10 +34,18 @@ const RECRUIT_TYPE = ['전임', '파트', '대강'];
 
 const columns7 = (SCREEN_WIDTH - 80) / 7;
 
-type Props = NativeStackScreenProps<LoggedInParamList, 'JobOfferForm'>;
+interface RecruitFormProps {
+  mode: 'create' | 'edit';
+  recruitId?: number;
+}
 
-export const JobOfferFormScreen = ({ navigation }: Props) => {
+export const RecruitForm = ({ mode, recruitId }: RecruitFormProps) => {
   const memberInfo = useAppSelector((state) => state.user);
+
+  const recruitQuery = useRecruit(recruitId);
+
+  const createRecruitMutation = useCreateRecruit();
+  const updateRecruitMutation = useUpdateRecruit();
 
   const offerTitleInput = useInput();
   const payInput = useInput();
@@ -93,6 +103,8 @@ export const JobOfferFormScreen = ({ navigation }: Props) => {
   //   }
   // };
 
+  const navigation = useAppNavigation();
+
   const addTimetable = () => {
     setDateForm([...dateForm, {}]);
   };
@@ -139,11 +151,9 @@ export const JobOfferFormScreen = ({ navigation }: Props) => {
   };
 
   const onCreateRecruit = () => {
-    if (!lon || !lat) {
-      return;
-    }
+    if (!lon || !lat) return;
 
-    const data = {
+    const body = {
       title: offerTitleInput.value,
       companyName: companyNameInput.value,
       position: positionSelect.value,
@@ -163,14 +173,19 @@ export const JobOfferFormScreen = ({ navigation }: Props) => {
       dates: dateForm,
     };
 
-    createRecruit(data)
-      .then(() => {
+    createRecruitMutation.mutate(body, {
+      onSuccess: () => {
         toast.success({ message: '채용 공고 등록이 완료되었어요!' });
-        navigation.pop();
-      })
-      .catch((error) => {
-        toast.error({ message: error.message });
-      });
+        navigation.goBack();
+      },
+      onError: (error) => {
+        isAxiosError(error) && toast.error({ message: error.message });
+      },
+    });
+  };
+
+  const onUpdateRecruit = () => {
+    // TODO: 업데이트
   };
 
   return (
@@ -284,13 +299,13 @@ export const JobOfferFormScreen = ({ navigation }: Props) => {
                 ))}
 
                 {/* 추가 버튼 */}
-                {dateForm.length < 3 ? (
+                {dateForm.length < 3 && (
                   <View style={common.mb16}>
                     <Pressable style={{ alignSelf: 'center' }} onPress={addTimetable}>
                       <Image source={iconPath.ADD_BUTTON} style={common.size40} />
                     </Pressable>
                   </View>
-                ) : null}
+                )}
               </>
             )}
           </>
@@ -356,27 +371,31 @@ export const JobOfferFormScreen = ({ navigation }: Props) => {
             multiline
           />
         </View>
-        <CTAButton label="채용 공고 등록" onPress={onCreateRecruit} disabled={!isFormValid} />
+        <CTAButton
+          label={mode === 'create' ? '채용 공고 등록' : '채용 공고 수정'}
+          onPress={mode === 'create' ? onCreateRecruit : onUpdateRecruit}
+          disabled={!isFormValid}
+        />
       </View>
     </DismissKeyboardView>
   );
 };
 
 const styles = StyleSheet.create({
-  photoBox: {
-    alignItems: 'center',
-    justifyContent: 'center',
-    width: 80,
-    height: 80,
-    borderWidth: 2,
-    borderColor: GRAY.LIGHT,
-    borderRadius: 8,
-  },
   dateItem: {
-    width: columns7,
-    height: columns7,
-    justifyContent: 'center',
     alignItems: 'center',
     borderRadius: 200,
+    height: columns7,
+    justifyContent: 'center',
+    width: columns7,
+  },
+  photoBox: {
+    alignItems: 'center',
+    borderColor: GRAY.LIGHT,
+    borderRadius: 8,
+    borderWidth: 2,
+    height: 80,
+    justifyContent: 'center',
+    width: 80,
   },
 });

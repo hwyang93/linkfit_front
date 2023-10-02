@@ -47,18 +47,18 @@ const SimpleLogin: React.FC = () => {
 };
 
 const styles = StyleSheet.create({
-  iconBox: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'center',
-    marginTop: +width * 16,
-  },
-  icon: {
-    width: 40,
-    height: 40,
-  },
   easyIcon: {
     marginHorizontal: 8,
+  },
+  icon: {
+    height: 40,
+    width: 40,
+  },
+  iconBox: {
+    alignItems: 'center',
+    flexDirection: 'row',
+    justifyContent: 'center',
+    marginTop: +width * 16,
   },
 });
 

@@ -14,7 +14,7 @@ const MyTitle: React.FC<MyTitleProps> = ({ title, button, link }) => {
   const navigation = useNavigation<NavigationProp<LoggedInParamList>>();
 
   return (
-    <Pressable style={[common.rowCenterBetween]} onPress={() => navigation.navigate(link)}>
+    <Pressable style={common.rowCenterBetween} onPress={() => navigation.navigate(link)}>
       <Text style={common.title_s}>{title}</Text>
       {button && (
         <View>

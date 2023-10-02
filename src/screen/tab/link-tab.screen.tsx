@@ -49,7 +49,7 @@ export const LinkTab = ({ navigation }: Props) => {
           <View style={styles.fabContainer}>
             <FloatingActionButton
               iconSource={iconPath.PENCIL_W}
-              onPress={() => navigation.navigate('JobOfferForm')}
+              onPress={() => navigation.navigate(ROUTE.RECRUIT.CREATE)}
             />
           </View>
         </View>
@@ -60,12 +60,12 @@ export const LinkTab = ({ navigation }: Props) => {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
     backgroundColor: WHITE,
+    flex: 1,
   },
   fabContainer: {
-    position: 'absolute',
     bottom: 16,
+    position: 'absolute',
     right: 16,
   },
 });

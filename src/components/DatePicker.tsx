@@ -34,7 +34,7 @@ const DatePicker: React.FC<DatePickerProps> = ({ label, placeholder, onSelectDat
 
   return (
     <View>
-      <View style={[common.inputWrapper]}>
+      <View style={common.inputWrapper}>
         <Text style={[common.label, { color: focus ? INPUT.FOCUS : GRAY.LIGHT }]}>{label}</Text>
         <Pressable
           style={[common.textInput, focus && { borderColor: INPUT.FOCUS }]}
@@ -42,7 +42,7 @@ const DatePicker: React.FC<DatePickerProps> = ({ label, placeholder, onSelectDat
           {date ? (
             <Text style={[styles.text, { color: '#292929' }]}>{date}</Text>
           ) : (
-            <Text style={[styles.text]}>{placeholder}</Text>
+            <Text style={styles.text}>{placeholder}</Text>
           )}
         </Pressable>
       </View>

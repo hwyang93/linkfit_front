@@ -91,28 +91,11 @@ const FloatingActionButton: React.FC<FloatingActionButtonProps> = ({
 };
 
 const styles = StyleSheet.create({
-  textPrimary: {
-    color: WHITE,
-  },
-  text: {
-    fontSize: 14,
-    fontWeight: '700',
-    lineHeight: 20,
-  },
-  styleWithLabel: {
-    height: 40,
-    paddingHorizontal: 24,
-    paddingVertical: 10,
-  },
-  styleWithoutLabel: {
-    width: 40,
-    height: 40,
-  },
   iconContainer: {
-    flexDirection: 'row',
     alignItems: 'center',
-    justifyContent: 'center',
     borderRadius: 20,
+    flexDirection: 'row',
+    justifyContent: 'center',
   },
   secondary: {
     backgroundColor: WHITE,
@@ -132,6 +115,23 @@ const styles = StyleSheet.create({
         elevation: 3,
       },
     }),
+  },
+  styleWithLabel: {
+    height: 40,
+    paddingHorizontal: 24,
+    paddingVertical: 10,
+  },
+  styleWithoutLabel: {
+    height: 40,
+    width: 40,
+  },
+  text: {
+    fontSize: 14,
+    fontWeight: '700',
+    lineHeight: 20,
+  },
+  textPrimary: {
+    color: WHITE,
   },
 });
 

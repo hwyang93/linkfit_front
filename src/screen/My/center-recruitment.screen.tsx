@@ -153,7 +153,7 @@ export const CenterRecruitmentScreen = ({}: Props) => {
                 </Text>
                 <Text style={[common.text_m, common.fwb]}>{item.field}</Text>
                 <Pressable style={styles.kebabIcon} hitSlop={10} onPress={item.kebab}>
-                  <Image source={iconPath.KEBAB} style={[common.size24]} />
+                  <Image source={iconPath.KEBAB} style={common.size24} />
                 </Pressable>
               </Pressable>
             );
@@ -175,9 +175,9 @@ export const CenterRecruitmentScreen = ({}: Props) => {
 
 const styles = StyleSheet.create({
   container: {
+    backgroundColor: WHITE,
     flex: 1,
     padding: 16,
-    backgroundColor: WHITE,
   },
-  kebabIcon: { position: 'absolute', top: 16, right: 16 },
+  kebabIcon: { position: 'absolute', right: 16, top: 16 },
 });

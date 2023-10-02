@@ -16,5 +16,5 @@ export const VersionScreen = ({}: Props) => {
 };
 
 const styles = StyleSheet.create({
-  container: { flex: 1, padding: 16, backgroundColor: WHITE },
+  container: { backgroundColor: WHITE, flex: 1, padding: 16 },
 });

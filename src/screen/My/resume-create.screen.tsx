@@ -182,14 +182,14 @@ export const ResumeCreateScreen = ({ navigation }: Props) => {
             editable={false}
           />
         </View>
-        <View style={[common.mb16]}>
+        <View style={common.mb16}>
           <TabButton list={GENDER_DATA} onSelect={genderInput.onChange} value={genderInput.value} />
         </View>
         {careers.map((_: any, index: number) => (
-          <View key={index} style={[common.mv20]}>
+          <View key={index} style={common.mv20}>
             {index !== 0 && (
               <Pressable onPress={removeCareerForm} style={styles.removeButton}>
-                <Image source={iconPath.CANCEL} style={[common.size24]} />
+                <Image source={iconPath.CANCEL} style={common.size24} />
               </Pressable>
             )}
             <View>
@@ -211,7 +211,7 @@ export const ResumeCreateScreen = ({ navigation }: Props) => {
           <View key={index} style={common.mv20}>
             {index !== 0 && (
               <Pressable onPress={removeEducationForm} style={styles.removeButton}>
-                <Image source={iconPath.CANCEL} style={[common.size24]} />
+                <Image source={iconPath.CANCEL} style={common.size24} />
               </Pressable>
             )}
             <View>
@@ -265,9 +265,9 @@ export const ResumeCreateScreen = ({ navigation }: Props) => {
 
 const styles = StyleSheet.create({
   container: {
+    backgroundColor: WHITE,
     flex: 1,
     padding: 16,
-    backgroundColor: WHITE,
   },
-  removeButton: { marginBottom: 8, alignItems: 'flex-end' },
+  removeButton: { alignItems: 'flex-end', marginBottom: 8 },
 });

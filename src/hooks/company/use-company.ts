@@ -4,6 +4,6 @@ import { useQuery } from '@tanstack/react-query';
 export const useCompany = (companyId: number) => {
   return useQuery({
     queryFn: () => companyApi.getCompany(companyId),
-    queryKey: ['company'],
+    queryKey: ['company', companyId],
   });
 };

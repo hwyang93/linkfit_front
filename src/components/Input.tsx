@@ -78,12 +78,12 @@ const Input = ({
       ) : null}
       {icon !== 'time' ? null : (
         <View style={{ position: 'absolute', left: 16, top: 16 }}>
-          <Image source={iconPath.TIME} style={[common.size24]} />
+          <Image source={iconPath.TIME} style={common.size24} />
         </View>
       )}
       {icon !== 'day' ? null : (
         <View style={{ position: 'absolute', left: 16, top: 16 }}>
-          <Image source={iconPath.DAY} style={[common.size24]} />
+          <Image source={iconPath.DAY} style={common.size24} />
         </View>
       )}
       <TextInput
@@ -125,14 +125,14 @@ Input.defaultProps = {
 };
 
 const styles = StyleSheet.create({
-  multiline: {
-    height: 276,
-    textAlignVertical: 'top',
-    paddingTop: 16,
-  },
   comment: {
     height: 40,
     paddingVertical: 0,
+  },
+  multiline: {
+    height: 276,
+    paddingTop: 16,
+    textAlignVertical: 'top',
   },
 });
 

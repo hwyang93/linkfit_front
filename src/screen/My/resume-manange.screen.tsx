@@ -9,7 +9,7 @@ import toast from '@hooks/toast';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { BLUE, WHITE } from '@styles/colors';
 import common from '@styles/common';
-import { useCallback, useState } from 'react';
+import { useState } from 'react';
 import { Alert, Image, Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { LoggedInParamList } from '../../../AppInner';
 
@@ -22,7 +22,7 @@ export const ResumeManageScreen = ({ navigation }: Props) => {
   const resumeListQuery = useResumeList();
   const resumes = resumeListQuery.data;
 
-  const onUpdateResumeMaster = useCallback(() => {
+  const onUpdateResumeMaster = () => {
     updateResumeMaster(selectedResume.seq)
       .then(() => {
         closeModel();
@@ -32,9 +32,9 @@ export const ResumeManageScreen = ({ navigation }: Props) => {
       .catch((error) => {
         toast.error({ message: error.message });
       });
-  }, [selectedResume.seq]);
+  };
 
-  const onDeleteResume = useCallback(() => {
+  const onDeleteResume = () => {
     deleteResume(selectedResume.seq)
       .then(() => {
         closeModel();
@@ -44,7 +44,7 @@ export const ResumeManageScreen = ({ navigation }: Props) => {
       .catch((error) => {
         toast.error({ message: error.message });
       });
-  }, [selectedResume.seq]);
+  };
 
   const MODAL = [
     // {
@@ -153,16 +153,16 @@ export const ResumeManageScreen = ({ navigation }: Props) => {
 };
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    padding: 16,
-    backgroundColor: WHITE,
-  },
   box: {
+    backgroundColor: '#d7e0fd',
+    borderRadius: 12,
     paddingHorizontal: 8,
     paddingVertical: 4,
-    borderRadius: 12,
-    backgroundColor: '#d7e0fd',
   },
-  kebabIcon: { position: 'absolute', top: 16, right: 16 },
+  container: {
+    backgroundColor: WHITE,
+    flex: 1,
+    padding: 16,
+  },
+  kebabIcon: { position: 'absolute', right: 16, top: 16 },
 });

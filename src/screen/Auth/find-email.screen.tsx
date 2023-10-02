@@ -101,12 +101,12 @@ export const FindEmailScreen = ({ navigation }: Props) => {
 };
 
 const styles = StyleSheet.create({
-  title: {
-    fontSize: 24,
-    fontWeight: 'bold',
-  },
   subtitle: {
     fontSize: 20,
+    fontWeight: 'bold',
+  },
+  title: {
+    fontSize: 24,
     fontWeight: 'bold',
   },
 });

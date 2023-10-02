@@ -55,19 +55,19 @@ const styles = StyleSheet.create({
     paddingHorizontal: 16,
     paddingVertical: 16,
   },
-  profileBox: {
-    position: 'relative',
-    flexDirection: 'row',
-    justifyContent: 'flex-start',
-    alignItems: 'center',
-    paddingBottom: 16,
-  },
-  thumbnail: { width: '50%', height: '50%' },
   nextArrow: {
     position: 'absolute',
-    top: '50%',
     right: 0,
+    top: '50%',
   },
+  profileBox: {
+    alignItems: 'center',
+    flexDirection: 'row',
+    justifyContent: 'flex-start',
+    paddingBottom: 16,
+    position: 'relative',
+  },
+  thumbnail: { height: '50%', width: '50%' },
   // pencil: {position: 'absolute', top: 0, right: 0},
 });
 

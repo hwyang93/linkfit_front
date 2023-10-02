@@ -74,26 +74,26 @@ const styles = StyleSheet.create({
     paddingHorizontal: 16,
     paddingVertical: 16,
   },
-  profileBox: {
-    position: 'relative',
-    flexDirection: 'row',
-    justifyContent: 'flex-start',
-    alignItems: 'center',
-    paddingBottom: 16,
-  },
-  thumbnailBox: {
-    alignItems: 'center',
-    justifyContent: 'center',
-    width: 64,
-    height: 64,
-    borderRadius: 200,
-    backgroundColor: GRAY.LIGHT,
-  },
-  thumbnail: { width: 64, height: 64, borderRadius: 200 },
   nextArrow: {
     position: 'absolute',
-    top: '50%',
     right: 0,
+    top: '50%',
+  },
+  profileBox: {
+    alignItems: 'center',
+    flexDirection: 'row',
+    justifyContent: 'flex-start',
+    paddingBottom: 16,
+    position: 'relative',
+  },
+  thumbnail: { borderRadius: 200, height: 64, width: 64 },
+  thumbnailBox: {
+    alignItems: 'center',
+    backgroundColor: GRAY.LIGHT,
+    borderRadius: 200,
+    height: 64,
+    justifyContent: 'center',
+    width: 64,
   },
 });
 

@@ -66,33 +66,33 @@ const FilterChip: React.FC<FilterChipProps> = ({
 };
 
 const styles = StyleSheet.create({
+  active: {
+    backgroundColor: THEME.PRIMARY04,
+    borderColor: THEME.PRIMARY04,
+    borderWidth: 1,
+  },
+  activeText: {
+    color: THEME.GREY01,
+  },
   container: {
-    height: 28,
-    alignSelf: 'flex-start',
-    flexDirection: 'row',
-    paddingHorizontal: 12,
-    justifyContent: 'center',
     alignItems: 'center',
+    alignSelf: 'flex-start',
     borderRadius: 16,
+    flexDirection: 'row',
+    height: 28,
+    justifyContent: 'center',
+    paddingHorizontal: 12,
   },
   default: {
     backgroundColor: THEME.WHITE,
     borderColor: THEME.GREY04,
     borderWidth: 1,
   },
-  active: {
-    backgroundColor: THEME.PRIMARY04,
-    borderWidth: 1,
-    borderColor: THEME.PRIMARY04,
-  },
-  reset: {
-    backgroundColor: THEME.WHITE,
-  },
   defaultText: {
     color: THEME.GREY02,
   },
-  activeText: {
-    color: THEME.GREY01,
+  reset: {
+    backgroundColor: THEME.WHITE,
   },
   resetText: {
     color: THEME.PRIMARY,

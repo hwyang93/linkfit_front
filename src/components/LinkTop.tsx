@@ -18,7 +18,7 @@ const LinkTop: React.FC = () => {
       </View>
       <View style={common.mt40}>
         <View style={{ marginHorizontal: 16 }}>
-          <Text style={[common.title]}>추천 채용</Text>
+          <Text style={common.title}>추천 채용</Text>
           <Text style={common.text_m}>내 주변의 채용중인 센터! 지금 바로 지원해 보세요.</Text>
         </View>
         <View style={common.mt16}>
@@ -44,7 +44,7 @@ const LinkTop: React.FC = () => {
         </View>
       </View>
       <View style={[common.mt40, { marginHorizontal: 16 }]}>
-        <Text style={[common.title]}>추천 강사</Text>
+        <Text style={common.title}>추천 강사</Text>
         <Text style={common.text_m}>능력있는 강사들을 지금 바로 만나보세요!</Text>
       </View>
     </View>

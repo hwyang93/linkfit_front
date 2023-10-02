@@ -78,19 +78,19 @@ const CTAButton: React.FC<CTAButtonProps> = ({
 
 const styles = StyleSheet.create({
   gradientBorder: {
-    height: 56,
-    width: '100%',
-    justifyContent: 'center',
     alignSelf: 'center',
     borderRadius: 28,
+    height: 56,
+    justifyContent: 'center',
+    width: '100%',
   },
   gradientBorderInner: {
-    flex: 1,
     alignSelf: 'center',
-    justifyContent: 'center',
-    width: '99%',
-    margin: 1,
     borderRadius: 28,
+    flex: 1,
+    justifyContent: 'center',
+    margin: 1,
+    width: '99%',
   },
 });
 

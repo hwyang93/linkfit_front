@@ -78,19 +78,19 @@ const FollowingCenterTab: React.FC = () => {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    paddingHorizontal: 16,
-    paddingBottom: 16,
     backgroundColor: THEME.WHITE,
+    flex: 1,
     height: '100%',
+    paddingBottom: 16,
+    paddingHorizontal: 16,
   },
+  kebabIcon: { position: 'absolute', right: 0, top: 16 },
   listBox: {
-    paddingVertical: 16,
     borderBottomWidth: hairlineWidth,
     borderColor: GRAY.DEFAULT,
+    paddingVertical: 16,
   },
-  thumbnail: { marginBottom: 16, width: '100%', height: 160, borderRadius: 8 },
-  kebabIcon: { position: 'absolute', top: 16, right: 0 },
+  thumbnail: { borderRadius: 8, height: 160, marginBottom: 16, width: '100%' },
 });
 
 export default FollowingCenterTab;

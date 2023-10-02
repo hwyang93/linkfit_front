@@ -112,5 +112,5 @@ export const ReviewForm = ({
 };
 
 const styles = StyleSheet.create({
-  container: { flex: 1, padding: 16, backgroundColor: THEME.WHITE },
+  container: { backgroundColor: THEME.WHITE, flex: 1, padding: 16 },
 });

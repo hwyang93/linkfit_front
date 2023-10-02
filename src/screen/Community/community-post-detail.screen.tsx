@@ -62,9 +62,9 @@ export const CommunityPostDetailScreen = ({ route }: Props) => {
 
 const styles = StyleSheet.create({
   container: {
+    backgroundColor: WHITE,
     flex: 1,
     padding: 16,
-    backgroundColor: WHITE,
   },
-  kebabIcon: { position: 'absolute', top: 16, right: 0 },
+  kebabIcon: { position: 'absolute', right: 0, top: 16 },
 });

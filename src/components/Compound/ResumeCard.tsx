@@ -41,8 +41,8 @@ const ResumeCard: React.FC<ResumeCardProps> = ({
 const styles = StyleSheet.create({
   kebabIcon: {
     position: 'absolute',
-    top: 16,
     right: 16,
+    top: 16,
   },
 });
 

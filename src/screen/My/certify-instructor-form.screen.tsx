@@ -187,7 +187,7 @@ export const CertifyInstructorFormScreen = ({ navigation }: Props) => {
             />
 
             <View style={styles.cameraIcon}>
-              <Image source={iconPath.PHOTO} style={[common.size24]} />
+              <Image source={iconPath.PHOTO} style={common.size24} />
             </View>
           </Pressable>
         </View>
@@ -204,17 +204,17 @@ export const CertifyInstructorFormScreen = ({ navigation }: Props) => {
   );
 };
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    padding: 16,
-    backgroundColor: WHITE,
-  },
   cameraIcon: {
-    position: 'absolute',
-    width: 30,
+    backgroundColor: WHITE,
     height: 30,
+    position: 'absolute',
     right: 16,
     top: 16,
+    width: 30,
+  },
+  container: {
     backgroundColor: WHITE,
+    flex: 1,
+    padding: 16,
   },
 });

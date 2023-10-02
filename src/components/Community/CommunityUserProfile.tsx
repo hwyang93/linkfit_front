@@ -59,7 +59,7 @@ const CommunityUserProfile: React.FC<CommunityUserProfileProps> = ({
       </View>
       {isMine && (
         <Pressable style={styles.kebabIcon} hitSlop={10} onPress={onKebabPress}>
-          <Image source={iconPath.KEBAB} style={[common.size24]} />
+          <Image source={iconPath.KEBAB} style={common.size24} />
         </Pressable>
       )}
     </View>
@@ -67,7 +67,7 @@ const CommunityUserProfile: React.FC<CommunityUserProfileProps> = ({
 };
 
 const styles = StyleSheet.create({
-  kebabIcon: { position: 'absolute', top: 16, right: 0 },
+  kebabIcon: { position: 'absolute', right: 0, top: 16 },
 });
 
 export default CommunityUserProfile;

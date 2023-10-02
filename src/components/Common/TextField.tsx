@@ -65,37 +65,37 @@ const TextField: React.FC<TextFieldProps> = ({
 };
 
 const styles = StyleSheet.create({
-  textInput: {
-    padding: 16,
-    paddingTop: 16,
-    width: '100%',
-    height: 56,
-    fontSize: 16,
-    borderWidth: 2,
-    borderColor: THEME.GREY04,
-    borderRadius: 8,
+  errorMessage: {
+    bottom: -18,
+    color: THEME.ERROR,
+    fontSize: 12,
+    left: 12,
+    position: 'absolute',
   },
   label: {
-    position: 'absolute',
-    paddingHorizontal: 4,
-    top: -4,
-    left: 16,
+    backgroundColor: THEME.WHITE,
     color: THEME.GREY04,
     fontSize: 12,
-    backgroundColor: THEME.WHITE,
+    left: 16,
+    paddingHorizontal: 4,
+    position: 'absolute',
+    top: -4,
     zIndex: 10,
   },
   startIcon: {
-    position: 'absolute',
     left: 16,
+    position: 'absolute',
     top: 16,
   },
-  errorMessage: {
-    position: 'absolute',
-    bottom: -18,
-    left: 12,
-    color: THEME.ERROR,
-    fontSize: 12,
+  textInput: {
+    borderColor: THEME.GREY04,
+    borderRadius: 8,
+    borderWidth: 2,
+    fontSize: 16,
+    height: 56,
+    padding: 16,
+    paddingTop: 16,
+    width: '100%',
   },
 });
 

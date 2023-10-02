@@ -38,7 +38,7 @@ export const MyNotificationScreen = ({}: Props) => {
           {DATA.map((item, index) => {
             return (
               <View key={index} style={common.mv16}>
-                <View style={[common.rowCenter]}>
+                <View style={common.rowCenter}>
                   <Image source={item.icon} style={[common.size24, common.mr8]} />
                   <Text style={[common.text_m, { flex: 1 }]} numberOfLines={1}>
                     {item.value}

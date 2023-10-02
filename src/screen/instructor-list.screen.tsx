@@ -40,7 +40,7 @@ export const InstructorListScreen = ({ navigation }: Props) => {
         rightContent={<FilterChip label="포지션" rightIcon />}
       />
       <View style={[common.mt16, { marginHorizontal: 16 }]}>
-        <Text style={[common.title]}>내 주변 강사</Text>
+        <Text style={common.title}>내 주변 강사</Text>
         <Text style={common.text_m}>링크핏의 우수 강사를 확인하세요.</Text>
       </View>
       {instructorList && instructorList.length === 0 && (

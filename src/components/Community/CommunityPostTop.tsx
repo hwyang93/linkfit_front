@@ -119,7 +119,7 @@ const CommunityPostTop: React.FC<CommunityPostTopProps> = ({ postInfo, onComment
         <View>
           <Image source={iconPath.THUMBNAIL} style={common.size32} />
         </View>
-        <View style={[{ flex: 1, marginHorizontal: 6 }]}>
+        <View style={{ flex: 1, marginHorizontal: 6 }}>
           <Input
             onChangeText={(text: string) => setComment(text)}
             value={comment}

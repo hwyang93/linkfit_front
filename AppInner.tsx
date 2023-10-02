@@ -70,7 +70,8 @@ export type LoggedInParamList = {
   CenterInfo: { memberSeq: number };
   JobPost: { recruitSeq: number };
   Gallery: any;
-  JobOfferForm: undefined;
+  RecruitCreate: undefined;
+  RecruitEdit: { recruitId: number };
   SignInPassword: { email: string };
   SignInEmail: undefined;
   SignUp: { email: string };

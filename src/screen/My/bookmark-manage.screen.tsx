@@ -85,8 +85,8 @@ const BookmarkCommunityListItem: React.FC<BookmarkCommunityListItemProps> = ({
               <Text style={[common.text_m, common.fwb]}>{commentsLength}</Text>
             </View>
           </View>
-          <View style={[styles.labelBox]}>
-            <Text style={[common.text_m]}>{category}</Text>
+          <View style={styles.labelBox}>
+            <Text style={common.text_m}>{category}</Text>
           </View>
         </View>
       </View>
@@ -116,7 +116,7 @@ const JobOfferTab: React.FC = () => {
   }, [getBookmarkRecruits]);
 
   return (
-    <View style={[styles.container]}>
+    <View style={styles.container}>
       {bookmarkedRecruits && bookmarkedRecruits.length > 0 && (
         <FlatList
           contentContainerStyle={{ marginTop: 16, paddingBottom: 48 }}
@@ -207,20 +207,20 @@ export const BookmarkManageScreen = () => {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    paddingHorizontal: 16,
     backgroundColor: WHITE,
+    flex: 1,
     height: '100%',
-  },
-  listBox: {
-    paddingVertical: 16,
-    borderBottomWidth: 1,
-    borderColor: GRAY.DEFAULT,
+    paddingHorizontal: 16,
   },
   labelBox: {
-    paddingHorizontal: 12,
-    paddingVertical: 2,
     backgroundColor: '#d7e0fd',
     borderRadius: 16,
+    paddingHorizontal: 12,
+    paddingVertical: 2,
+  },
+  listBox: {
+    borderBottomWidth: 1,
+    borderColor: GRAY.DEFAULT,
+    paddingVertical: 16,
   },
 });

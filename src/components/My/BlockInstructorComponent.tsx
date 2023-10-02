@@ -40,7 +40,7 @@ const BlockInstructorComponent: React.FC = () => {
                   <View style={{ flex: 1 }}>
                     <View style={common.rowCenter}>
                       <Text style={[common.text_m, common.fwb, common.mr8]}>{item.field}</Text>
-                      <Text style={[common.text]}>{item.career}</Text>
+                      <Text style={common.text}>{item.career}</Text>
                     </View>
                     <View style={common.rowCenter}>
                       <Text style={[common.text_l, common.fwb, common.mr8]}>{item.nickname}</Text>
@@ -50,7 +50,7 @@ const BlockInstructorComponent: React.FC = () => {
                         source={iconPath.CERTIFICATION}
                       />
                     </View>
-                    <View style={[common.rowCenterBetween]}>
+                    <View style={common.rowCenterBetween}>
                       <Text style={[common.text_s, common.fcg, { flex: 1 }]}>{item.location}</Text>
                       {/* 차단 버튼 */}
                       <View style={common.mt20}>
@@ -70,19 +70,19 @@ const BlockInstructorComponent: React.FC = () => {
   );
 };
 const styles = StyleSheet.create({
-  container: { flex: 1, padding: 16, backgroundColor: WHITE },
-  listBox: {
-    paddingVertical: 16,
-    borderBottomWidth: 1,
-    borderColor: GRAY.DEFAULT,
-  },
-  thumbnail: { marginRight: 12, width: 80, height: 80 },
-  kebabIcon: { position: 'absolute', top: 16, right: 0 },
   blockButton: {
-    position: 'absolute',
     bottom: 0,
+    position: 'absolute',
     right: 0,
   },
+  container: { backgroundColor: WHITE, flex: 1, padding: 16 },
+  kebabIcon: { position: 'absolute', right: 0, top: 16 },
+  listBox: {
+    borderBottomWidth: 1,
+    borderColor: GRAY.DEFAULT,
+    paddingVertical: 16,
+  },
+  thumbnail: { height: 80, marginRight: 12, width: 80 },
 });
 
 export default BlockInstructorComponent;
