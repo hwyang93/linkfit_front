@@ -75,7 +75,7 @@ const Header: React.FC<HeaderProps> = ({
   onPencilIconPress,
 }) => {
   return (
-    <View style={[styles.profileBox]}>
+    <View style={styles.profileBox}>
       <View style={[styles.thumbnailBox, common.mr16]}>
         <Image
           source={
@@ -98,10 +98,10 @@ const Header: React.FC<HeaderProps> = ({
 
         <View style={common.rowCenter}>
           {field && <Text style={[common.text_m, common.fwb, common.mr8]}>{field}</Text>}
-          <Text style={[common.text]}>{career}</Text>
+          <Text style={common.text}>{career}</Text>
           {address && (
             <>
-              <Text style={[common.mh8]}>|</Text>
+              <Text style={common.mh8}>|</Text>
               <Text style={[common.text_s, common.fcg]}>{address}</Text>
             </>
           )}
@@ -115,7 +115,7 @@ const Header: React.FC<HeaderProps> = ({
         </View>
       </View>
       <Pressable style={styles.pencil} onPress={onPencilIconPress}>
-        <Image source={iconPath.PENCIL_B} style={[common.size24]} />
+        <Image source={iconPath.PENCIL_B} style={common.size24} />
       </Pressable>
     </View>
   );
@@ -252,23 +252,23 @@ export const MyProfileScreen = ({ navigation }: Props) => {
 };
 
 const styles = StyleSheet.create({
-  pencil: { position: 'absolute', top: 16, right: 16 },
   indicator: {
     backgroundColor: BLUE.DEFAULT,
   },
+  pencil: { position: 'absolute', right: 16, top: 16 },
   profileBox: {
-    position: 'relative',
+    alignItems: 'center',
     flexDirection: 'row',
     justifyContent: 'flex-start',
-    alignItems: 'center',
     padding: 16,
+    position: 'relative',
   },
   thumbnailBox: {
     alignItems: 'center',
+    backgroundColor: GRAY.LIGHT,
+    borderRadius: 40,
+    height: 60,
     justifyContent: 'center',
     width: 60,
-    height: 60,
-    borderRadius: 40,
-    backgroundColor: GRAY.LIGHT,
   },
 });

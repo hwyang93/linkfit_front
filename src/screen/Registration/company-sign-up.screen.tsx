@@ -111,7 +111,7 @@ export const CompanySignUpFormScreen = ({}: Props) => {
           />
         </View>
         {/* 성별 */}
-        <View style={[common.mb16]}>
+        <View style={common.mb16}>
           <TabButton list={genderData} onSelect={(value: any) => setGender(value)} value={gender} />
         </View>
         {/* 통신사 */}

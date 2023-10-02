@@ -11,7 +11,7 @@ const GradientNaivgationTab: React.FC = () => {
   const navigation = useNavigation<NavigationProp<LoggedInParamList>>();
   return (
     <LinearGradient
-      style={[styles.tabBox]}
+      style={styles.tabBox}
       start={{ x: 0, y: 0 }}
       end={{ x: 1, y: 0 }}
       colors={['#62C1E9', THEME.PRIMARY]}>
@@ -27,26 +27,26 @@ const GradientNaivgationTab: React.FC = () => {
 };
 
 const styles = StyleSheet.create({
-  tabBox: {
-    position: 'relative',
-    flexDirection: 'row',
-    justifyContent: 'center',
-    width: '100%',
-    height: 48,
-    borderRadius: 8,
-  },
-  tabItem: {
-    width: '50%',
-    height: '100%',
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
   centerLine: {
+    backgroundColor: WHITE,
+    height: 24,
     position: 'absolute',
     top: 12,
-    height: 24,
     width: 1,
-    backgroundColor: WHITE,
+  },
+  tabBox: {
+    borderRadius: 8,
+    flexDirection: 'row',
+    height: 48,
+    justifyContent: 'center',
+    position: 'relative',
+    width: '100%',
+  },
+  tabItem: {
+    alignItems: 'center',
+    height: '100%',
+    justifyContent: 'center',
+    width: '50%',
   },
 });
 

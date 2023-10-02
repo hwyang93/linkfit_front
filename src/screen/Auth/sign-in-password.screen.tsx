@@ -89,14 +89,14 @@ const styles = StyleSheet.create({
     width: '100%',
   },
   leftBox: {
-    flex: 1,
     color: BLACK,
+    flex: 1,
     fontSize: 16,
     textAlign: 'left',
   },
   rightBox: {
-    flex: 1,
     color: '#3962f3',
+    flex: 1,
     fontSize: 16,
     textAlign: 'right',
     textDecorationLine: 'underline',

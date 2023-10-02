@@ -37,7 +37,7 @@ export const CenterProfileEditScreen = ({}: Props) => {
         console.log('ImagePicker Error: ', response.errorCode);
         console.log('ImagePicker Message: ', response.errorMessage);
       } else {
-        let assets: Asset[] | undefined = response.assets;
+        const assets: Asset[] | undefined = response.assets;
         let source;
         if (assets) {
           source = {
@@ -108,27 +108,27 @@ export const CenterProfileEditScreen = ({}: Props) => {
 };
 
 const styles = StyleSheet.create({
+  confirm: {
+    color: WHITE,
+    fontWeight: '700',
+  },
   container: {
+    backgroundColor: WHITE,
     flex: 1,
     paddingHorizontal: 16,
-    backgroundColor: WHITE,
   },
   imageBox: {
-    flex: 1,
     alignItems: 'center',
+    flex: 1,
     paddingVertical: 8,
   },
   profileImage: {
-    width: '100%',
-    height: 160,
     borderRadius: 8,
+    height: 160,
+    width: '100%',
   },
   textPosition: {
-    position: 'absolute',
     bottom: 20,
-  },
-  confirm: {
-    fontWeight: '700',
-    color: WHITE,
+    position: 'absolute',
   },
 });

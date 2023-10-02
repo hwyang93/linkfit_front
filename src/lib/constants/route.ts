@@ -62,6 +62,8 @@ export const ROUTE = {
   },
   RECRUIT: {
     LIST: 'RecruitList',
+    CREATE: 'RecruitCreate',
+    EDIT: 'RecruitEdit',
     MAP: 'RecruitMap',
   },
   INSTRUCTOR: {

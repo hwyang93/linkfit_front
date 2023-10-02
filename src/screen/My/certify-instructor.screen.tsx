@@ -112,7 +112,7 @@ export const CertifyInstructorScreen = ({}: Props) => {
             {MODAL.map((item, index) => (
               <View key={index} style={common.modalItemBox}>
                 <Pressable onPress={item.job} style={[common.rowCenterBetween, { width: '100%' }]}>
-                  <Text style={[common.modalText]}>{item.value}</Text>
+                  <Text style={common.modalText}>{item.value}</Text>
                 </Pressable>
               </View>
             ))}
@@ -123,17 +123,17 @@ export const CertifyInstructorScreen = ({}: Props) => {
   );
 };
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    padding: 16,
-    backgroundColor: WHITE,
-  },
   box: {
-    padding: 16,
-    marginBottom: 8,
-    borderWidth: 1,
     borderColor: GRAY.DEFAULT,
     borderRadius: 8,
+    borderWidth: 1,
+    marginBottom: 8,
+    padding: 16,
   },
-  kebabIcon: { position: 'absolute', top: 16, right: 16 },
+  container: {
+    backgroundColor: WHITE,
+    flex: 1,
+    padding: 16,
+  },
+  kebabIcon: { position: 'absolute', right: 16, top: 16 },
 });

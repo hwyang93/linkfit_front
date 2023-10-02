@@ -46,7 +46,7 @@ const CommunityTop: React.FC = () => {
       </View>
 
       <View style={common.mb16}>
-        <Text style={[common.title]}>추천 게시글</Text>
+        <Text style={common.title}>추천 게시글</Text>
       </View>
     </View>
   );

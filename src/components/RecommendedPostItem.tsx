@@ -56,7 +56,7 @@ const RecommendedPostItem: React.FC<RecommendedPostItemProps> = ({ item }) => {
             <CommentCounter counter={postInfo.comments.length} />
           </View>
           <View style={[common.filterBox, common.filterBoxActive]}>
-            <Text style={[common.text_m]}>{postInfo.category}</Text>
+            <Text style={common.text_m}>{postInfo.category}</Text>
           </View>
         </View>
       </View>

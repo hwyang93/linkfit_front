@@ -73,7 +73,7 @@ const PostListItem: React.FC<PostListItemProps> = ({ postId, title, contents, up
         </Text>
       </Pressable>
       <Pressable style={styles.kebabIcon} hitSlop={10} onPress={modal.open}>
-        <Image source={iconPath.KEBAB} style={[common.size24]} />
+        <Image source={iconPath.KEBAB} style={common.size24} />
       </Pressable>
       <BottomSheet visible={modal.visible} onDismiss={modal.close} title="더보기">
         <BottomSheetOption label="수정하기" onPress={onEdit} />
@@ -113,16 +113,16 @@ const CommunityMyPostTab: React.FC = () => {
 
 const styles = StyleSheet.create({
   container: {
+    backgroundColor: WHITE,
     flex: 1,
     paddingHorizontal: 16,
-    backgroundColor: WHITE,
   },
+  kebabIcon: { position: 'absolute', right: 0, top: 16 },
   postBox: {
-    paddingVertical: 16,
     borderBottomWidth: 1,
     borderColor: GRAY.DEFAULT,
+    paddingVertical: 16,
   },
-  kebabIcon: { position: 'absolute', top: 16, right: 0 },
 });
 
 export default CommunityMyPostTab;

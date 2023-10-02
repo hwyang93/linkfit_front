@@ -75,26 +75,26 @@ const OfferListItem: React.FC<OfferListItemProps> = ({ offer, button }) => {
 };
 
 const styles = StyleSheet.create({
-  offer: {
-    padding: 16,
-    marginBottom: 8,
-    borderWidth: 1,
-    borderColor: GRAY.DEFAULT,
-    borderRadius: 8,
-  },
   iconPosition: {
     position: 'absolute',
-    top: 30,
     right: 30,
+    top: 30,
   },
   moreButton: {
-    flexDirection: 'row',
-    justifyContent: 'center',
     alignItems: 'center',
-    paddingVertical: 12,
-    borderWidth: 1,
     borderColor: GRAY.DEFAULT,
     borderRadius: 8,
+    borderWidth: 1,
+    flexDirection: 'row',
+    justifyContent: 'center',
+    paddingVertical: 12,
+  },
+  offer: {
+    borderColor: GRAY.DEFAULT,
+    borderRadius: 8,
+    borderWidth: 1,
+    marginBottom: 8,
+    padding: 16,
   },
 });
 

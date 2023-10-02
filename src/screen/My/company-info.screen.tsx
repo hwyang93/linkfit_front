@@ -17,8 +17,8 @@ export const CompanyInfoScreen = ({}: Props) => {
 
 const styles = StyleSheet.create({
   container: {
+    backgroundColor: WHITE,
     flex: 1,
     padding: 16,
-    backgroundColor: WHITE,
   },
 });

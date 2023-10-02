@@ -134,23 +134,23 @@ const Toast: React.FC = () => {
   );
 };
 const styles = StyleSheet.create({
-  wrapper: {
-    position: 'absolute',
-    bottom: '4%',
-    left: '4%',
-    right: '4%',
-    zIndex: 1000,
-    paddingVertical: 10,
-    paddingHorizontal: 16,
-    elevation: 1,
-    borderRadius: 8,
-  },
-
   text: {
-    marginLeft: 8,
     color: '#292929',
     fontSize: 16,
+    marginLeft: 8,
     textAlign: 'left',
+  },
+
+  wrapper: {
+    borderRadius: 8,
+    bottom: '4%',
+    elevation: 1,
+    left: '4%',
+    paddingHorizontal: 16,
+    paddingVertical: 10,
+    position: 'absolute',
+    right: '4%',
+    zIndex: 1000,
   },
 });
 

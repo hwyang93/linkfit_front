@@ -155,27 +155,23 @@ export const SignUp = ({ navigation }: Props) => {
 };
 
 const styles = StyleSheet.create({
-  textInput: {
-    padding: 5,
-    borderBottomWidth: StyleSheet.hairlineWidth,
+  buttonZone: {
+    alignItems: 'center',
   },
   inputWrapper: {
     padding: 20,
   },
   label: {
-    fontWeight: 'bold',
     fontSize: 16,
+    fontWeight: 'bold',
     marginBottom: 20,
-  },
-  buttonZone: {
-    alignItems: 'center',
   },
   loginButton: {
     backgroundColor: 'gray',
-    paddingHorizontal: 20,
-    paddingVertical: 10,
     borderRadius: 5,
     marginBottom: 10,
+    paddingHorizontal: 20,
+    paddingVertical: 10,
   },
   loginButtonActive: {
     backgroundColor: 'blue',
@@ -183,5 +179,9 @@ const styles = StyleSheet.create({
   loginButtonText: {
     color: 'white',
     fontSize: 16,
+  },
+  textInput: {
+    borderBottomWidth: StyleSheet.hairlineWidth,
+    padding: 5,
   },
 });

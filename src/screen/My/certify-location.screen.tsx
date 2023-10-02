@@ -182,24 +182,24 @@ export const CertifyLocationScreen = ({}: Props) => {
 
 const styles = StyleSheet.create({
   container: {
+    backgroundColor: WHITE,
     flex: 1,
     padding: 16,
-    backgroundColor: WHITE,
-  },
-  map: {
-    marginBottom: 16,
-    width: '100%',
-    height: 320,
   },
   locationBox: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
     alignItems: 'center',
-    paddingVertical: 10,
-    paddingHorizontal: 16,
-    marginTop: 8,
-    borderWidth: 1,
     borderColor: GRAY.LIGHT,
     borderRadius: 8,
+    borderWidth: 1,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginTop: 8,
+    paddingHorizontal: 16,
+    paddingVertical: 10,
+  },
+  map: {
+    height: 320,
+    marginBottom: 16,
+    width: '100%',
   },
 });

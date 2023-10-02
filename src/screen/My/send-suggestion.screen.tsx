@@ -262,7 +262,7 @@ export const SendSuggestionScreen = ({ navigation }: Props) => {
               </View>
 
               <Pressable style={styles.kebabIcon} hitSlop={10} onPress={item.job}>
-                <Image source={iconPath.KEBAB} style={[common.size24]} />
+                <Image source={iconPath.KEBAB} style={common.size24} />
               </Pressable>
             </Pressable>
           );
@@ -302,9 +302,9 @@ export const SendSuggestionScreen = ({ navigation }: Props) => {
 
 const styles = StyleSheet.create({
   container: {
+    backgroundColor: WHITE,
     flex: 1,
     padding: 16,
-    backgroundColor: WHITE,
   },
-  kebabIcon: { position: 'absolute', top: 16, right: 16 },
+  kebabIcon: { position: 'absolute', right: 16, top: 16 },
 });

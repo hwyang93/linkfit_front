@@ -10,7 +10,6 @@ import { CommunityPostDetailScreen } from '@/screen/community/community-post-det
 import { CommunityPostEditScreen } from '@/screen/community/community-post-edit.screen';
 import { GalleryScreen } from '@/screen/gallery.screen';
 import { InstructorListScreen } from '@/screen/instructor-list.screen';
-import { JobOfferFormScreen } from '@/screen/job-offer-form.screen';
 import { JobPostScreen } from '@/screen/job-post.screen';
 import { MyCenterProfileScreen } from '@/screen/my-center-profile.screen';
 import { MyCenterScreen } from '@/screen/my-center.screen';
@@ -51,6 +50,8 @@ import { SendSuggestionScreen } from '@/screen/my/send-suggestion.screen';
 import { SettingScreen } from '@/screen/my/setting.screen';
 import { VersionScreen } from '@/screen/my/version.screen';
 import { ProfileScreen } from '@/screen/profile.screen';
+import { RecruitCreateScreen } from '@/screen/recruit-create.screen';
+import { RecruitEditScreen } from '@/screen/recruit-edit.screen';
 import { RecruitListScreen } from '@/screen/recruit-list.screen';
 import { RecruitMapScreen } from '@/screen/recruit-map.screen';
 import { PasswordResetScreen } from '@/screen/registration/password-reset.screen';
@@ -420,10 +421,17 @@ export const MainStack = () => {
           }}
         />
         <Stack.Screen
-          name="JobOfferForm"
-          component={JobOfferFormScreen}
+          name={ROUTE.RECRUIT.CREATE}
+          component={RecruitCreateScreen}
           options={{
             title: '채용 공고 등록',
+          }}
+        />
+        <Stack.Screen
+          name={ROUTE.RECRUIT.EDIT}
+          component={RecruitEditScreen}
+          options={{
+            title: '채용 공고 수정',
           }}
         />
         <Stack.Screen

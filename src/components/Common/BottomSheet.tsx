@@ -122,44 +122,44 @@ const BottomSheet: React.FC<BottomSheetProps> = ({
 };
 
 const styles = StyleSheet.create({
-  overlay: {
-    flex: 1,
-    justifyContent: 'flex-end',
-    backgroundColor: 'rgba(0, 0, 0, 0.4)',
-  },
   background: { flex: 1 },
   bottomSheetContainer: {
-    width: '100%',
     alignItems: 'center',
-    height: 320,
     backgroundColor: 'white',
     borderTopLeftRadius: 16,
     borderTopRightRadius: 16,
-  },
-  topBar: {
-    position: 'absolute',
-    top: 16,
-    justifyContent: 'center',
-    marginBottom: 16,
-    width: 40,
-    height: 3,
-    backgroundColor: GRAY.DEFAULT,
-    zIndex: 9999,
+    height: 320,
+    width: '100%',
   },
   modalText: {
-    fontFamily: 'NotoSansKR-Medium',
     color: BLACK,
+    fontFamily: 'NotoSansKR-Medium',
     fontSize: +width * 18,
     fontWeight: 'normal',
-    textAlign: 'left',
     lineHeight: +width * 24,
+    textAlign: 'left',
   },
   modalTitle: {
     color: BLACK,
     fontSize: +width * 16,
     fontWeight: '700',
-    textAlign: 'left',
     lineHeight: +width * 24,
+    textAlign: 'left',
+  },
+  overlay: {
+    backgroundColor: 'rgba(0, 0, 0, 0.4)',
+    flex: 1,
+    justifyContent: 'flex-end',
+  },
+  topBar: {
+    backgroundColor: GRAY.DEFAULT,
+    height: 3,
+    justifyContent: 'center',
+    marginBottom: 16,
+    position: 'absolute',
+    top: 16,
+    width: 40,
+    zIndex: 9999,
   },
 });
 

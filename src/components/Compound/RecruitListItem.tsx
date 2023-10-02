@@ -72,7 +72,7 @@ const RecruitListItem: React.FC<RecruitListItemProps> = ({
         <Pressable style={styles.bookmark} onPress={handleBookmarkPress}>
           <Image
             source={isBookmarkChecked ? iconPath.BOOKMARK_ON : iconPath.BOOKMARK}
-            style={[common.size24]}
+            style={common.size24}
           />
         </Pressable>
       </View>
@@ -81,18 +81,18 @@ const RecruitListItem: React.FC<RecruitListItemProps> = ({
 };
 
 const styles = StyleSheet.create({
-  slideBox: {
-    width: imageSize,
-    marginRight: 8,
-  },
+  bookmark: { position: 'absolute', right: 0, top: 0 },
   imgBox: {
+    borderRadius: 8,
+    height: 104,
     marginBottom: 8,
     width: imageSize,
-    height: 104,
-    borderRadius: 8,
   },
   infoBox: { position: 'relative' },
-  bookmark: { position: 'absolute', top: 0, right: 0 },
+  slideBox: {
+    marginRight: 8,
+    width: imageSize,
+  },
 });
 
 export default RecruitListItem;

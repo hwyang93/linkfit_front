@@ -66,7 +66,7 @@ export const ReceivedPositionSuggestionDetailScreen = ({ route, navigation }: Pr
 
               {/* 구인공고 영역 */}
               <View style={common.mb24}>
-                <Pressable style={[common.basicBox]} onPress={toOffer}>
+                <Pressable style={common.basicBox} onPress={toOffer}>
                   <Text style={[common.title, common.mb12]} numberOfLines={1}>
                     {suggestInfo.recruit.title}
                   </Text>
@@ -135,8 +135,8 @@ export const ReceivedPositionSuggestionDetailScreen = ({ route, navigation }: Pr
 
 const styles = StyleSheet.create({
   container: {
+    backgroundColor: WHITE,
     flex: 1,
     padding: 16,
-    backgroundColor: WHITE,
   },
 });

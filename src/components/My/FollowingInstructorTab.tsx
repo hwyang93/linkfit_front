@@ -41,7 +41,7 @@ const FollowingInstructorTab: React.FC = () => {
                     <Text style={[common.text_m, common.fwb, common.mr8]}>
                       {following.followingMember.field}
                     </Text>
-                    <Text style={[common.text]}>{following.career}</Text>
+                    <Text style={common.text}>{following.career}</Text>
                   </View>
                   <View style={common.rowCenter}>
                     <Text style={[common.text_l, common.fwb, common.mr8]}>
@@ -55,7 +55,7 @@ const FollowingInstructorTab: React.FC = () => {
                       source={iconPath.CERTIFICATION}
                     />
                   </View>
-                  <View style={[common.rowCenterBetween]}>
+                  <View style={common.rowCenterBetween}>
                     <Text style={[common.text_s, { flex: 1 }]}>지역</Text>
                     <View style={[common.rowCenter, {}]}>
                       <View>
@@ -87,19 +87,19 @@ const FollowingInstructorTab: React.FC = () => {
 };
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    paddingHorizontal: 16,
-    paddingBottom: 16,
     backgroundColor: THEME.WHITE,
+    flex: 1,
     height: '100%',
+    paddingBottom: 16,
+    paddingHorizontal: 16,
   },
+  kebabIcon: { position: 'absolute', right: 0, top: 16 },
   reviewBox: {
-    paddingVertical: 16,
     borderBottomWidth: 1,
     borderColor: GRAY.DEFAULT,
+    paddingVertical: 16,
   },
-  thumbnail: { marginRight: 12, width: 80, height: 80 },
-  kebabIcon: { position: 'absolute', top: 16, right: 0 },
+  thumbnail: { height: 80, marginRight: 12, width: 80 },
 });
 
 export default FollowingInstructorTab;

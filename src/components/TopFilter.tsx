@@ -32,8 +32,8 @@ const styles = StyleSheet.create({
     paddingVertical: 8,
   },
   filterIcon: {
-    width: 10,
     height: 6,
+    width: 10,
   },
 });
 

@@ -155,7 +155,7 @@ export const ResumePreviewScreen = ({ route, navigation }: Props) => {
           )}
 
           <Pressable style={styles.phoneIcon} hitSlop={10} onPress={() => {}}>
-            <Image source={iconPath.PHONE} style={[common.size24]} />
+            <Image source={iconPath.PHONE} style={common.size24} />
           </Pressable>
         </View>
 
@@ -237,22 +237,22 @@ export const ResumePreviewScreen = ({ route, navigation }: Props) => {
 };
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: WHITE,
-  },
   box: {
+    backgroundColor: '#d7e0fd',
+    borderRadius: 16,
     paddingHorizontal: 8,
     paddingVertical: 4,
-    borderRadius: 16,
-    backgroundColor: '#d7e0fd',
   },
-  kebabIcon: { position: 'absolute', top: 0, right: 16 },
-  phoneIcon: { position: 'absolute', bottom: 0, right: 8 },
+  container: {
+    backgroundColor: WHITE,
+    flex: 1,
+  },
+  kebabIcon: { position: 'absolute', right: 16, top: 0 },
   line: {
-    marginTop: 8,
-    marginBottom: 12,
-    height: 1,
     backgroundColor: GRAY.DARK,
+    height: 1,
+    marginBottom: 12,
+    marginTop: 8,
   },
+  phoneIcon: { bottom: 0, position: 'absolute', right: 8 },
 });

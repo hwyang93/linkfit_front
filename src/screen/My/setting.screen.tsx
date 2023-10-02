@@ -88,19 +88,19 @@ export const SettingScreen = ({ navigation }: Props) => {
 };
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    padding: 16,
-    backgroundColor: WHITE,
-  },
   box: {
-    paddingVertical: 16,
     borderBottomWidth: 1,
     borderColor: GRAY.LIGHT,
+    paddingVertical: 16,
+  },
+  container: {
+    backgroundColor: WHITE,
+    flex: 1,
+    padding: 16,
   },
   linkText: {
     color: BLUE.DEFAULT,
-    textDecorationLine: 'underline',
     textDecorationColor: BLUE.DEFAULT,
+    textDecorationLine: 'underline',
   },
 });

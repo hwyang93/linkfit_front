@@ -95,13 +95,13 @@ const CommunityMyBookmarkTab: React.FC = () => {
 };
 
 const styles = StyleSheet.create({
-  container: { flex: 1, paddingHorizontal: 16, backgroundColor: WHITE },
+  container: { backgroundColor: WHITE, flex: 1, paddingHorizontal: 16 },
+  kebabIcon: { position: 'absolute', right: 0, top: 16 },
   postBox: {
-    paddingVertical: 16,
     borderBottomWidth: 1,
     borderColor: GRAY.DEFAULT,
+    paddingVertical: 16,
   },
-  kebabIcon: { position: 'absolute', top: 16, right: 0 },
 });
 
 export default CommunityMyBookmarkTab;

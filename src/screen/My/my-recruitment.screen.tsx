@@ -3,9 +3,11 @@ import BottomSheetOption from '@/components/Common/BottomSheetOption';
 import FilterChip from '@/components/Common/FilterChip';
 import FilterChipContainer from '@/components/Common/FilterChipContainer';
 import { useRecruitList } from '@/hooks/recruit/use-recruit-list';
+import { useAppNavigation } from '@/hooks/use-app-navigation';
 import useFilter from '@/hooks/use-filter';
 import useModal from '@/hooks/use-modal';
 import FILTER from '@/lib/constants/filter';
+import { ROUTE } from '@/lib/constants/route';
 import { iconPath } from '@/lib/iconPath';
 import { formatDate } from '@/lib/util';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
@@ -25,6 +27,7 @@ interface MyRecruitmentListItemProps {
 }
 
 const MyRecruitmentListItem: React.FC<MyRecruitmentListItemProps> = ({
+  recruitId,
   status,
   title,
   createdAt,
@@ -32,6 +35,13 @@ const MyRecruitmentListItem: React.FC<MyRecruitmentListItemProps> = ({
   onPress,
 }) => {
   const kebabModal = useModal();
+
+  const navigation = useAppNavigation();
+
+  const onEditButtonPress = () => {
+    navigation.navigate(ROUTE.RECRUIT.EDIT, { recruitId });
+    kebabModal.close();
+  };
 
   return (
     <Pressable style={[common.basicBox, common.mv8]} onPress={onPress}>
@@ -45,12 +55,12 @@ const MyRecruitmentListItem: React.FC<MyRecruitmentListItemProps> = ({
       </Text>
       <Text style={[common.text_m, common.fwb]}>{position}</Text>
       <Pressable style={styles.kebabIcon} hitSlop={10} onPress={kebabModal.open}>
-        <Image source={iconPath.KEBAB} style={[common.size24]} />
+        <Image source={iconPath.KEBAB} style={common.size24} />
       </Pressable>
       <BottomSheet visible={kebabModal.visible} onDismiss={kebabModal.close} title="더보기">
         <BottomSheetOption label="지원자 현황보기" />
-        <BottomSheetOption label="공고 수정하기" />
-        <BottomSheetOption label="공고 복사하기" />
+        <BottomSheetOption label="공고 수정하기" onPress={onEditButtonPress} />
+        {/* <BottomSheetOption label="공고 복사하기" /> */}
       </BottomSheet>
     </Pressable>
   );
@@ -174,8 +184,8 @@ export const MyRecruitmentScreen = ({ navigation }: Props) => {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
     backgroundColor: WHITE,
+    flex: 1,
   },
-  kebabIcon: { position: 'absolute', top: 16, right: 16 },
+  kebabIcon: { position: 'absolute', right: 16, top: 16 },
 });

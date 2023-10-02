@@ -85,8 +85,8 @@ export const InquiryFormScreen = ({ navigation }: Props) => {
 };
 const styles = StyleSheet.create({
   container: {
+    backgroundColor: WHITE,
     flex: 1,
     paddingHorizontal: 16,
-    backgroundColor: WHITE,
   },
 });

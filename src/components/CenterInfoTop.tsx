@@ -39,7 +39,7 @@ const CenterInfoTop: React.FC<CenterInfoTopProps> = ({ centerInfo, recruits, fro
         </View>
         {fromMy ? (
           <Pressable style={styles.pencil} onPress={() => navigation.navigate('CenterProfileEdit')}>
-            <Image source={iconPath.PENCIL_B} style={[common.size24]} />
+            <Image source={iconPath.PENCIL_B} style={common.size24} />
           </Pressable>
         ) : null}
       </View>
@@ -71,7 +71,7 @@ const CenterInfoTop: React.FC<CenterInfoTopProps> = ({ centerInfo, recruits, fro
 };
 
 const styles = StyleSheet.create({
-  pencil: { position: 'absolute', top: 0, right: 0 },
+  pencil: { position: 'absolute', right: 0, top: 0 },
 });
 
 export default CenterInfoTop;

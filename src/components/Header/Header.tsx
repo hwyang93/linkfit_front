@@ -20,10 +20,10 @@ const Header: React.FC<HeaderProps> = ({ title, leftContent, rightContent }) => 
 
 const styles = StyleSheet.create({
   container: {
-    height: 44,
-    paddingHorizontal: 16,
     alignItems: 'center',
+    height: 44,
     justifyContent: 'space-between',
+    paddingHorizontal: 16,
   },
 });
 

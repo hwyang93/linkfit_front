@@ -41,13 +41,13 @@ const RecruitCard: React.FC<RecruitCardProps> = ({
 
 const styles = StyleSheet.create({
   container: {
-    padding: 16,
-    borderWidth: 1,
-    borderRadius: 8,
+    alignItems: 'center',
     borderColor: THEME.GREY03,
+    borderRadius: 8,
+    borderWidth: 1,
     flexDirection: 'row',
     justifyContent: 'space-between',
-    alignItems: 'center',
+    padding: 16,
   },
 });
 

@@ -61,12 +61,12 @@ const ApplicantWaitingTab: React.FC<ApplicantWaitingTabProps> = ({ recruitId }) 
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    paddingVertical: 8,
-    paddingHorizontal: 16,
     backgroundColor: WHITE,
+    flex: 1,
+    paddingHorizontal: 16,
+    paddingVertical: 8,
   },
-  kebabIcon: { position: 'absolute', top: 16, right: 16 },
+  kebabIcon: { position: 'absolute', right: 16, top: 16 },
 });
 
 export default ApplicantWaitingTab;

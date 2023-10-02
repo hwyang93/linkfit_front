@@ -103,50 +103,47 @@ export const MyCenterProfileScreen = ({ navigation, route }: Props) => {
 
   const [textLine, setTextLine] = useState(2);
 
-  const ReviewTab = useCallback(
-    ({ item }: any) => {
-      const textExpansion = () => {
-        if (textLine === 2) {
-          setTextLine(0);
-        } else {
-          setTextLine(2);
-        }
-      };
-      return (
-        <>
-          {reputations && reputations.length < 1 ? (
-            <View style={{ flex: 1 }}>
-              <EmptySet text={'등록된 후기가 없어요.'} />
+  const ReviewTab = ({ item }: any) => {
+    const textExpansion = () => {
+      if (textLine === 2) {
+        setTextLine(0);
+      } else {
+        setTextLine(2);
+      }
+    };
+    return (
+      <>
+        {reputations && reputations.length < 1 ? (
+          <View style={{ flex: 1 }}>
+            <EmptySet text={'등록된 후기가 없어요.'} />
+          </View>
+        ) : (
+          <View
+            style={{
+              width: width,
+              // padding: 16,
+            }}>
+            <View style={[common.row, common.mb8]}>
+              <Text style={[common.text_m, common.fwb, common.fs18]}>
+                {item.evaluationMember?.nickname
+                  ? item.evaluationMember?.nickname
+                  : item.evaluationMember?.name}
+              </Text>
+              <Text style={[common.text, { alignSelf: 'flex-end', marginHorizontal: 4 }]}>
+                {item.evaluationMember?.field}
+              </Text>
+              <Text style={[common.text, { alignSelf: 'flex-end' }]}>{item.updatedAt}</Text>
             </View>
-          ) : (
-            <View
-              style={{
-                width: width,
-                // padding: 16,
-              }}>
-              <View style={[common.row, common.mb8]}>
-                <Text style={[common.text_m, common.fwb, common.fs18]}>
-                  {item.evaluationMember?.nickname
-                    ? item.evaluationMember?.nickname
-                    : item.evaluationMember?.name}
-                </Text>
-                <Text style={[common.text, { alignSelf: 'flex-end', marginHorizontal: 4 }]}>
-                  {item.evaluationMember?.field}
-                </Text>
-                <Text style={[common.text, { alignSelf: 'flex-end' }]}>{item.updatedAt}</Text>
-              </View>
-              <Pressable onPress={textExpansion}>
-                <Text style={common.text_m} numberOfLines={textLine}>
-                  {item.comment}
-                </Text>
-              </Pressable>
-            </View>
-          )}
-        </>
-      );
-    },
-    [textLine, reputations?.length],
-  );
+            <Pressable onPress={textExpansion}>
+              <Text style={common.text_m} numberOfLines={textLine}>
+                {item.comment}
+              </Text>
+            </Pressable>
+          </View>
+        )}
+      </>
+    );
+  };
 
   if (!recruits || !centerInfo) return null;
 
@@ -192,14 +189,14 @@ export const MyCenterProfileScreen = ({ navigation, route }: Props) => {
 };
 
 const styles = StyleSheet.create({
-  pencil: { position: 'absolute', top: 0, right: 0 },
+  indicator: {
+    backgroundColor: BLUE.DEFAULT,
+    width: tabWidth,
+  },
+  pencil: { position: 'absolute', right: 0, top: 0 },
   tab: {
     backgroundColor: WHITE,
     borderBottomWidth: 1,
     borderColor: GRAY.LIGHT,
-  },
-  indicator: {
-    width: tabWidth,
-    backgroundColor: BLUE.DEFAULT,
   },
 });

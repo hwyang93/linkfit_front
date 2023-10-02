@@ -178,7 +178,7 @@ export const MyTab = ({ navigation }: Props) => {
                 </View>
               </View>
             </View>
-            <View style={[common.mb8]}>
+            <View style={common.mb8}>
               <SectionHeader
                 title="받은 포지션 제안"
                 onPress={() => navigation.navigate('ReceivedSuggestion')}
@@ -240,7 +240,7 @@ export const MyTab = ({ navigation }: Props) => {
                 </View>
               </View>
             </View>
-            <View style={[common.mb8]}>
+            <View style={common.mb8}>
               <SectionHeader title="내 공고" onPress={() => navigation.navigate('MyPost')} />
             </View>
             <View style={common.mb16}>
@@ -280,7 +280,7 @@ export const MyTab = ({ navigation }: Props) => {
                     },
                   ]}>
                   <Text style={common.text_s}>구직 공고</Text>
-                  <Text style={[common.title_s]}>{myInfo?.noticeCountInfo.seekCount}</Text>
+                  <Text style={common.title_s}>{myInfo?.noticeCountInfo.seekCount}</Text>
                 </View>
               </View>
             </View>
@@ -293,18 +293,18 @@ export const MyTab = ({ navigation }: Props) => {
 
 const styles = StyleSheet.create({
   container: {
+    backgroundColor: WHITE,
     flex: 1,
     paddingHorizontal: 16,
     paddingTop: 16,
-    backgroundColor: WHITE,
+  },
+  kebabIcon: {
+    position: 'absolute',
+    right: 16,
+    top: 16,
   },
   menuItem: {
     alignItems: 'center',
     justifyContent: 'center',
-  },
-  kebabIcon: {
-    position: 'absolute',
-    top: 16,
-    right: 16,
   },
 });

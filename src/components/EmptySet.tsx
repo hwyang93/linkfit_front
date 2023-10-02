@@ -18,15 +18,15 @@ const EmptySet: React.FC<EmptySetProps> = ({ text }) => {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    padding: 16,
     alignItems: 'center',
+    flex: 1,
     justifyContent: 'center',
+    padding: 16,
   },
   empty: {
-    width: 56,
     height: 56,
     marginBottom: 8,
+    width: 56,
   },
 });
 

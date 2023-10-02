@@ -33,33 +33,33 @@ const TabButton: React.FC<TabButtonProps> = ({ list, initialValue, onSelect }) =
 };
 
 const styles = StyleSheet.create({
-  tabWrap: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    height: 48,
-    borderWidth: 2,
-    borderRadius: 8,
-    borderColor: GRAY.LIGHT,
-    backgroundColor: '#fff',
-  },
-  tabBox: {
-    flex: 1,
-    height: '100%',
-    alignItems: 'center',
-    justifyContent: 'center',
-    borderRadius: 6,
-  },
-  unSelected: {
-    backgroundColor: '#fff',
+  option: {
+    color: '#acacac',
+    fontSize: 16,
+    textAlign: 'center',
   },
   selected: {
     backgroundColor: '#3962f3',
   },
-  option: {
-    fontSize: 16,
-    textAlign: 'center',
-    color: '#acacac',
+  tabBox: {
+    alignItems: 'center',
+    borderRadius: 6,
+    flex: 1,
+    height: '100%',
+    justifyContent: 'center',
+  },
+  tabWrap: {
+    alignItems: 'center',
+    backgroundColor: '#fff',
+    borderColor: GRAY.LIGHT,
+    borderRadius: 8,
+    borderWidth: 2,
+    flexDirection: 'row',
+    height: 48,
+    justifyContent: 'space-between',
+  },
+  unSelected: {
+    backgroundColor: '#fff',
   },
 });
 

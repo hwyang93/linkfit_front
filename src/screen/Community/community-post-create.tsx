@@ -111,8 +111,8 @@ export const CommunityPostCreateScreen = ({ navigation }: Props) => {
 
 const styles = StyleSheet.create({
   container: {
+    backgroundColor: WHITE,
     flex: 1,
     padding: 16,
-    backgroundColor: WHITE,
   },
 });

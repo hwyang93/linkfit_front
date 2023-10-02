@@ -43,7 +43,7 @@ export const SendSuggestionDetailScreen = ({}: Props) => {
             <Text style={[common.text_s, common.fcg, common.mh8]}>|</Text>
             <Text style={[common.text_s, common.fcg]}>서울 · 송파구</Text>
           </View>
-          <View style={[common.mb40]}>
+          <View style={common.mb40}>
             <Text style={[common.text_s, common.fcg, common.mb12]}>2022.10.09 제안</Text>
             <Text style={[common.text_s, common.fcg]}>2022.11.09 마감</Text>
           </View>
@@ -60,7 +60,7 @@ export const SendSuggestionDetailScreen = ({}: Props) => {
           <View style={common.mb40}>
             <Text style={[common.text_m, common.fwb, common.mb8]}>제안한 채용 공고</Text>
             <View>
-              <Pressable style={[common.basicBox]} onPress={toOffer}>
+              <Pressable style={common.basicBox} onPress={toOffer}>
                 <View style={common.rowCenter}>
                   <Text style={[common.text_s, common.fcg]}>2022.12.09 작성</Text>
                   <Text style={[common.text_s, common.fcg, common.mh8]}>|</Text>
@@ -95,8 +95,8 @@ export const SendSuggestionDetailScreen = ({}: Props) => {
 
 const styles = StyleSheet.create({
   container: {
+    backgroundColor: WHITE,
     flex: 1,
     padding: 16,
-    backgroundColor: WHITE,
   },
 });

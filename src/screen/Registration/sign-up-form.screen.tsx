@@ -104,7 +104,7 @@ export const SignUpFormScreen = ({ navigation, route }: Props) => {
               value={birthSelect.value}
             />
           </View>
-          <View style={[common.mb16]}>
+          <View style={common.mb16}>
             <TabButton
               list={GENDER_DATA}
               onSelect={genderSelect.onChange}

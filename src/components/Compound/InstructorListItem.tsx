@@ -71,7 +71,7 @@ const InstructorListItem: React.FC<InstructorListItemProps> = ({
       <View>
         <View style={common.rowCenter}>
           <Text style={[common.text_m, common.fwb, common.mr8]}>{field}</Text>
-          <Text style={[common.text]}>{career}</Text>
+          <Text style={common.text}>{career}</Text>
         </View>
         <View style={common.rowCenter}>
           <Text style={[common.title, common.mr8]}>{nickname}</Text>
@@ -111,21 +111,21 @@ const InstructorListItem: React.FC<InstructorListItemProps> = ({
 };
 
 const styles = StyleSheet.create({
+  kebabIcon: { position: 'absolute', right: 0, top: 16 },
   listBox: {
-    position: 'relative',
+    alignItems: 'center',
     flexDirection: 'row',
     justifyContent: 'flex-start',
-    alignItems: 'center',
     paddingVertical: 16,
+    position: 'relative',
   },
   rightBox: {
-    position: 'absolute',
-    bottom: 16,
-    right: 0,
-    flexDirection: 'row',
     alignItems: 'center',
+    bottom: 16,
+    flexDirection: 'row',
+    position: 'absolute',
+    right: 0,
   },
-  kebabIcon: { position: 'absolute', top: 16, right: 0 },
 });
 
 export default InstructorListItem;

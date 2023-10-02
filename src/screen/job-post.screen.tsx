@@ -85,7 +85,7 @@ const ResumeListItem: React.FC<ResumeListItemProps> = ({
             },
           ]}>
           {isMaster && (
-            <View style={[common.resumeBadge]}>
+            <View style={common.resumeBadge}>
               <Text
                 style={[common.text, common.fs10, { color: BLUE.DEFAULT, textAlign: 'center' }]}>
                 대표
@@ -134,7 +134,7 @@ const ResumeDateListItem: React.FC<ResumeDateListItemProps> = ({
             },
             disabled && { opacity: 0.5 },
           ]}>
-          <View style={[common.rowCenter]}>
+          <View style={common.rowCenter}>
             <Image source={iconPath.CALENDAR} style={[common.size24, common.mr8]} />
             <Text style={common.modalText}>{`${day} / ${time}`}</Text>
           </View>
@@ -462,12 +462,12 @@ export const JobPostScreen = ({ route }: Props) => {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
     backgroundColor: WHITE,
+    flex: 1,
   },
   imgBox: {
-    width: '100%',
-    height: 160,
     borderRadius: 8,
+    height: 160,
+    width: '100%',
   },
 });

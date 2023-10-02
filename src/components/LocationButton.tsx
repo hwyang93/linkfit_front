@@ -19,15 +19,15 @@ const LocationButton: React.FC<LocationButtonProps> = ({ job, bottom }) => {
 };
 const styles = StyleSheet.create({
   locationButton: {
-    position: 'absolute',
-    bottom: 88,
-    right: 16,
     alignItems: 'center',
-    justifyContent: 'center',
-    width: 40,
-    height: 40,
-    borderRadius: 20,
     backgroundColor: WHITE,
+    borderRadius: 20,
+    bottom: 88,
+    height: 40,
+    justifyContent: 'center',
+    position: 'absolute',
+    right: 16,
+    width: 40,
     ...Platform.select({
       ios: {
         shadowColor: 'rgb(0,0,0)',

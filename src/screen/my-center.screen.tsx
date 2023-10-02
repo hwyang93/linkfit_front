@@ -70,7 +70,7 @@ export const MyCenterScreen = ({ navigation }: Props) => {
         </View>
 
         <View style={common.mb8}>
-          <Text style={[common.title_s]}>프로필 메뉴</Text>
+          <Text style={common.title_s}>프로필 메뉴</Text>
           <View style={[common.rowCenter, { flexWrap: 'wrap' }]}>
             {MENU.map((item: any, index) => {
               return (
@@ -86,7 +86,7 @@ export const MyCenterScreen = ({ navigation }: Props) => {
           </View>
         </View>
 
-        <View style={[common.mb8]}>
+        <View style={common.mb8}>
           <MyTitle title={'채용 공고'} button={true} link={'MyPost'} />
         </View>
 
@@ -120,7 +120,7 @@ export const MyCenterScreen = ({ navigation }: Props) => {
           </View>
         </View>
 
-        <View style={[common.mb8]}>
+        <View style={common.mb8}>
           <MyTitle title={'포지션 제안'} button={true} link={'SendSuggestion'} />
         </View>
 
@@ -172,24 +172,24 @@ export const MyCenterScreen = ({ navigation }: Props) => {
 };
 
 const styles = StyleSheet.create({
+  borderBox: {
+    borderColor: GRAY.DEFAULT,
+    borderRadius: 8,
+    borderWidth: 1,
+    padding: 16,
+  },
   container: {
+    backgroundColor: WHITE,
     flex: 1,
     padding: 16,
-    backgroundColor: WHITE,
+  },
+  kebabIcon: {
+    position: 'absolute',
+    right: 16,
+    top: 16,
   },
   menuItem: {
     alignItems: 'center',
     justifyContent: 'center',
-  },
-  borderBox: {
-    padding: 16,
-    borderWidth: 1,
-    borderRadius: 8,
-    borderColor: GRAY.DEFAULT,
-  },
-  kebabIcon: {
-    position: 'absolute',
-    top: 16,
-    right: 16,
   },
 });

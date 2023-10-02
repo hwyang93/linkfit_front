@@ -56,10 +56,10 @@ export const AccountScreen = ({ navigation }: Props) => {
 };
 
 const styles = StyleSheet.create({
-  container: { flex: 1, padding: 16, backgroundColor: WHITE },
+  container: { backgroundColor: WHITE, flex: 1, padding: 16 },
   linkText: {
     color: BLUE.DEFAULT,
-    textDecorationLine: 'underline',
     textDecorationColor: BLUE.DEFAULT,
+    textDecorationLine: 'underline',
   },
 });

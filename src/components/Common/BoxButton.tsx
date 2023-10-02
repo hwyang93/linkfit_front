@@ -108,20 +108,20 @@ const BoxButton: React.FC<BoxButtonProps> = ({
 
 const styles = StyleSheet.create({
   gradientBorder: {
-    justifyContent: 'center',
     alignSelf: 'center',
     borderRadius: 20,
+    justifyContent: 'center',
   },
   gradientBorderInner: {
-    position: 'relative',
+    alignSelf: 'center',
+    borderRadius: 20,
     flex: 1,
+    justifyContent: 'center',
+    margin: 1,
     paddingHorizontal: 24,
     paddingVertical: 10,
-    alignSelf: 'center',
-    justifyContent: 'center',
+    position: 'relative',
     width: '99%',
-    margin: 1,
-    borderRadius: 20,
   },
 });
 

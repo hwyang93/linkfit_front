@@ -32,7 +32,7 @@ export const ApplicantStatusScreen = ({ route }: Props) => {
       {recruitInfo && (
         <>
           <View style={styles.container}>
-            <Card style={[common.mv4]}>
+            <Card style={common.mv4}>
               <View style={common.rowCenter}>
                 <Text style={[common.text_s, common.fcg]}>
                   {formatDate(recruitInfo.createdAt)} 작성
@@ -49,7 +49,7 @@ export const ApplicantStatusScreen = ({ route }: Props) => {
                 {recruitInfo.position}
               </Text>
               <Pressable style={styles.kebabIcon} hitSlop={10} onPress={modal.open}>
-                <Image source={iconPath.KEBAB} style={[common.size24]} />
+                <Image source={iconPath.KEBAB} style={common.size24} />
               </Pressable>
             </Card>
           </View>
@@ -75,8 +75,8 @@ export const ApplicantStatusScreen = ({ route }: Props) => {
 
 const styles = StyleSheet.create({
   container: {
-    padding: 16,
     backgroundColor: WHITE,
+    padding: 16,
   },
-  kebabIcon: { position: 'absolute', top: 16, right: 16 },
+  kebabIcon: { position: 'absolute', right: 16, top: 16 },
 });

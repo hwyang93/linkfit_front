@@ -65,12 +65,12 @@ export const InquiryListScreen = ({ navigation }: Props) => {
 };
 
 const styles = StyleSheet.create({
-  container: { flex: 1, padding: 16, backgroundColor: WHITE },
+  container: { backgroundColor: WHITE, flex: 1, padding: 16 },
   statusBox: {
-    paddingVertical: 4,
-    paddingHorizontal: 8,
+    borderColor: GRAY.LIGHT,
     borderRadius: 20,
     borderWidth: 1,
-    borderColor: GRAY.LIGHT,
+    paddingHorizontal: 8,
+    paddingVertical: 4,
   },
 });

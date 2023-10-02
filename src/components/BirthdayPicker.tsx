@@ -46,7 +46,7 @@ const BirthdayPicker: React.FC<BirthdayPickerProps> = ({
 
   return (
     <View>
-      <View style={[common.inputWrapper]}>
+      <View style={common.inputWrapper}>
         {label ? (
           <Text style={[common.label, { color: focus ? INPUT.FOCUS : GRAY.LIGHT }]}>{label}</Text>
         ) : null}
@@ -56,7 +56,7 @@ const BirthdayPicker: React.FC<BirthdayPickerProps> = ({
           disabled={disabled}>
           {icon !== 'day' ? null : (
             <View style={{ position: 'absolute', left: 16, top: 16 }}>
-              <Image source={iconPath.DAY} style={[common.size24]} />
+              <Image source={iconPath.DAY} style={common.size24} />
             </View>
           )}
           {birth ? (

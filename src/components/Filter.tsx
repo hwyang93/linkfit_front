@@ -37,28 +37,28 @@ const styles = StyleSheet.create({
   box: {
     justifyContent: 'center',
   },
+  downArrow: {
+    height: 6,
+    position: 'absolute',
+    right: 11,
+    top: 16,
+    width: 10,
+  },
   item: {
-    flexDirection: 'row',
     alignItems: 'center',
-    paddingVertical: 6,
-    paddingLeft: 12,
-    paddingRight: 30,
-    marginRight: 8,
-    borderWidth: 1,
     borderColor: GRAY.LIGHT,
     borderRadius: 16,
+    borderWidth: 1,
+    flexDirection: 'row',
+    marginRight: 8,
+    paddingLeft: 12,
+    paddingRight: 30,
+    paddingVertical: 6,
   },
+  selected: {},
   title: {
     color: '#666',
     fontSize: 16,
-  },
-  selected: {},
-  downArrow: {
-    position: 'absolute',
-    top: 16,
-    right: 11,
-    width: 10,
-    height: 6,
   },
 });
 export default Filter;
