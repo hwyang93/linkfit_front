@@ -434,7 +434,7 @@ PODS:
     - React-jsi (= 0.70.6)
     - React-logger (= 0.70.6)
     - React-perflogger (= 0.70.6)
-  - RNDateTimePicker (7.5.0):
+  - RNDateTimePicker (7.6.0):
     - React-Core
   - RNPermissions (3.9.2):
     - React-Core
@@ -470,7 +470,7 @@ PODS:
     - React-RCTImage
   - RNVectorIcons (9.2.0):
     - React-Core
-  - SocketRocket (0.6.0)
+  - SocketRocket (0.6.1)
   - TLPhotoPicker (2.1.4)
   - Yoga (1.14.0)
   - YogaKit (1.18.1):
@@ -776,16 +776,16 @@ SPEC CHECKSUMS:
   React-RCTVibration: c75ceef7aa60a33b2d5731ebe5800ddde40cefc4
   React-runtimeexecutor: 15437b576139df27635400de0599d9844f1ab817
   ReactCommon: 349be31adeecffc7986a0de875d7fb0dcf4e251c
-  RNDateTimePicker: b722c23030b744763cf51d80fc22f354653f65e0
+  RNDateTimePicker: ccd988deb223cbb2e669e157ec576c2c6217128c
   RNPermissions: 868c4e459921873df0c756f37450457a88bf037c
   RNReanimated: bec7736122a268883bdede07f1bf9cf4b40158db
   RNScreens: 85d3880b52d34db7b8eeebe2f1a0e807c05e69fa
   RNVectorIcons: fcc2f6cb32f5735b586e66d14103a74ce6ad61f8
-  SocketRocket: fccef3f9c5cedea1353a9ef6ada904fde10d6608
+  SocketRocket: f32cd54efbe0f095c4d7594881e52619cfe80b17
   TLPhotoPicker: f486e8499e1c3f464d0e886697635e25a72a52b8
   Yoga: 99caf8d5ab45e9d637ee6e0174ec16fbbb01bcfc
   YogaKit: f782866e155069a2cca2517aafea43200b01fd5a
 
 PODFILE CHECKSUM: 8e0ad29f805668ee657a3a125d468de549a62863
 
-COCOAPODS: 1.11.3
+COCOAPODS: 1.12.1
