@@ -61,10 +61,6 @@ export const updateRecruitApplyStatus = (seq: number, data: UpdateRecruitApplyDt
   return request.patch(`/recruit/${seq}/apply`, data);
 };
 
-export const fetchRecommendedRecruits = () => {
-  return request.get<FetchRecommendedRecruitsResponse>('/recruit/recommended');
-};
-
 const ENDPOINT = '/recruit';
 
 export const recruitApi = {
@@ -84,6 +80,10 @@ export const recruitApi = {
     const response = await request.get<FetchRecruitApplicationsMyResponse>(`${ENDPOINT}/apply`, {
       params,
     });
+    return response.data;
+  },
+  getRecommendedRecruitList: async () => {
+    const response = await request.get<FetchRecommendedRecruitsResponse>(`${ENDPOINT}/recommended`);
     return response.data;
   },
 };

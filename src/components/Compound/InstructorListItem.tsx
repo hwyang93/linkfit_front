@@ -35,13 +35,6 @@ const InstructorListItem: React.FC<InstructorListItemProps> = ({
   isCertificated,
   onAvatarPress,
 }) => {
-  // const modal = useModal();
-
-  // const onMessageIconPress = () => {
-  //   // TODO: 기능 추가
-  //   Alert.alert('기능 준비 중입니다.');
-  // };
-
   const memberFollowMutation = useMemberFollow();
   const memberUnfollowMutation = useMemberUnfollow();
 

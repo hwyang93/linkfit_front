@@ -142,10 +142,7 @@ export const ProfileEditScreen = ({ navigation }: Props) => {
 
   const isNicknameValid = checkNicknameQuery.data?.duplication === false;
 
-  const canGoNext =
-    formState.isDirty &&
-    formState.isValid &&
-    (!isNicknameDirty || (isNicknameDirty && isNicknameValid));
+  const canGoNext = formState.isValid && (!isNicknameDirty || (isNicknameDirty && isNicknameValid));
 
   return (
     <DismissKeyboardView>

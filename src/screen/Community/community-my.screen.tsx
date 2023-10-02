@@ -1,39 +1,21 @@
 import { LoggedInParamList } from '@/../AppInner';
 import CTAButton from '@/components/Common/CTAButton';
+import { useMemberInfo } from '@/hooks/member/use-member-info';
 import { MEMBER_TYPE } from '@/lib/constants/enum';
 import { ROUTE } from '@/lib/constants/route';
 import { iconPath } from '@/lib/iconPath';
 import CommunityMyScreenTabView from '@/screen/community/community-my-tab-view.screen';
-import { FetchMemberInfoResponse } from '@/types/api/member.type';
-import { fetchMemberInfo } from '@api/member';
-import toast from '@hooks/toast';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { BLUE, GRAY, WHITE } from '@styles/colors';
 import common from '@styles/common';
-import { isAxiosError } from 'axios';
-import { useCallback, useEffect, useState } from 'react';
 import { Image, StyleSheet, Text, View } from 'react-native';
 
 type Props = NativeStackScreenProps<LoggedInParamList, typeof ROUTE.COMMUNITY.MY>;
 
 export const CommunityMyScreen = ({}: Props) => {
-  const [memberInfo, setMemberInfo] = useState<FetchMemberInfoResponse>();
+  const { data } = useMemberInfo();
 
-  const getMemberInfo = useCallback(() => {
-    fetchMemberInfo()
-      .then(({ data }) => {
-        setMemberInfo(data);
-      })
-      .catch((error) => {
-        if (isAxiosError(error)) {
-          toast.error({ message: error.message });
-        }
-      });
-  }, []);
-
-  useEffect(() => {
-    getMemberInfo();
-  }, [getMemberInfo]);
+  if (!data) return null;
 
   return (
     <>
@@ -47,10 +29,10 @@ export const CommunityMyScreen = ({}: Props) => {
             <View>
               <View style={common.rowCenter}>
                 <Text style={[common.text_m, common.fwb, common.mr8]}>
-                  {memberInfo?.nickname ? memberInfo.nickname : memberInfo?.name}
+                  {data.nickname ? data.nickname : data.name}
                 </Text>
                 <View>
-                  {memberInfo?.type === MEMBER_TYPE.INSTRUCTOR ? (
+                  {data.type === MEMBER_TYPE.INSTRUCTOR ? (
                     <View style={common.rowCenter}>
                       <Text style={[common.text_s, { color: BLUE.DEFAULT }]}>인증강사</Text>
                       <Image
@@ -61,7 +43,7 @@ export const CommunityMyScreen = ({}: Props) => {
                   ) : (
                     <View style={common.rowCenter}>
                       <Text style={[common.text_s, { color: BLUE.DEFAULT }]}>
-                        {memberInfo?.type === MEMBER_TYPE.COMPANY ? '센터' : '일반인'}
+                        {data.type === MEMBER_TYPE.COMPANY ? '센터' : '일반인'}
                       </Text>
                     </View>
                   )}
@@ -69,13 +51,13 @@ export const CommunityMyScreen = ({}: Props) => {
               </View>
               <View style={common.row}>
                 <Text style={[common.text_m, common.fwb, common.mr4]}>
-                  {memberInfo?.type === MEMBER_TYPE.COMPANY
-                    ? memberInfo?.company.field
-                    : memberInfo?.field}
+                  {data?.type === MEMBER_TYPE.COMPANY ? data.company?.field : data.field}
                 </Text>
-                <Text style={[common.text, { alignSelf: 'flex-end' }]}>{memberInfo?.career}</Text>
+                <Text style={[common.text, { alignSelf: 'flex-end' }]}>{data.career}</Text>
               </View>
-              <Text style={[common.text_s, { color: GRAY.DARK }]}>서울 · 송파구</Text>
+              <Text style={[common.text_s, { color: GRAY.DARK }]}>
+                {data.address} · {data.addressDetail}
+              </Text>
             </View>
             {/*<Pressable style={styles.kebabIcon} hitSlop={10}>*/}
             {/*  <Image source={iconPath.KEBAB} style={[common.size24]} />*/}

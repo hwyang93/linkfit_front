@@ -64,6 +64,7 @@ export type FetchRecommendedRecruitsResponse = {
   seq: 1;
   title: string;
   companyName: string;
+  isBookmark: YesNoFlag;
   position: string;
   address: string;
   addressDetail: string;

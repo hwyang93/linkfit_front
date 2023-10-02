@@ -1,6 +1,6 @@
 import { memberApi } from '@/api/member';
 import { UpdateProfileBody } from '@/types/api/member.type';
-import { useMutation } from '@tanstack/react-query';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 
 const LINKS = {
   seq: null,
@@ -9,6 +9,8 @@ const LINKS = {
 };
 
 export const useUpdateProfile = () => {
+  const queryClient = useQueryClient();
+
   return useMutation({
     mutationFn: (body: UpdateProfileBody) => {
       const formData = new FormData();
@@ -22,5 +24,7 @@ export const useUpdateProfile = () => {
 
       return memberApi.updateProfile(formData);
     },
+
+    onSuccess: () => queryClient.invalidateQueries(['member']),
   });
 };

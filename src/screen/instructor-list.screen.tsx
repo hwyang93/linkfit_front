@@ -5,6 +5,7 @@ import EmptySet from '@/components/EmptySet';
 import Header from '@/components/Header/Header';
 import HeaderLeft from '@/components/HeaderLeft';
 import { useInstructorList } from '@/hooks/instructor/use-instructor-list';
+import useFilter from '@/hooks/use-filter';
 import { ROUTE } from '@/lib/constants/route';
 import common from '@/styles/common';
 import { Instructor } from '@/types/api/instructor.type';
@@ -14,7 +15,10 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 
 type Props = NativeStackScreenProps<LoggedInParamList, typeof ROUTE.INSTRUCTOR.LIST>;
 
+// TODO: 페이지네이션 추가
 export const InstructorListScreen = ({ navigation }: Props) => {
+  const positionFilter = useFilter('');
+
   const params = {
     noPaging: false,
     curPage: 1,
@@ -35,9 +39,6 @@ export const InstructorListScreen = ({ navigation }: Props) => {
         leftContent={<HeaderLeft canGoBack />}
         rightContent={<FilterChip label="포지션" rightIcon />}
       />
-      {/* <FilterChipContainer>
-        <FilterChip label="포지션" rightIcon />
-      </FilterChipContainer> */}
       <View style={[common.mt16, { marginHorizontal: 16 }]}>
         <Text style={[common.title]}>내 주변 강사</Text>
         <Text style={common.text_m}>링크핏의 우수 강사를 확인하세요.</Text>

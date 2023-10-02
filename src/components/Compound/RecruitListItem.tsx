@@ -34,7 +34,7 @@ const RecruitListItem: React.FC<RecruitListItemProps> = ({
   const [isBookmarkChecked, setIsBookmarkChecked] = useState(bookmarkChecked);
 
   const handleBookmarkPress = () => {
-    if (isBookmarkChecked) {
+    if (!isBookmarkChecked) {
       setIsBookmarkChecked(true);
       createRecruitBookmark(seq)
         .then(() => {
@@ -71,7 +71,7 @@ const RecruitListItem: React.FC<RecruitListItemProps> = ({
         <Text style={[common.text_s, common.fcg]}>{address}</Text>
         <Pressable style={styles.bookmark} onPress={handleBookmarkPress}>
           <Image
-            source={bookmarkChecked ? iconPath.BOOKMARK_ON : iconPath.BOOKMARK}
+            source={isBookmarkChecked ? iconPath.BOOKMARK_ON : iconPath.BOOKMARK}
             style={[common.size24]}
           />
         </Pressable>

@@ -47,7 +47,7 @@ export interface MemberEntity extends BaseEntity {
   lastLogin?: string;
   isOpenProfile?: YesNoFlag;
   field?: string;
-  status?: string;
+  status?: MemberType;
   profileFileSeq?: number;
   isVerification?: YesNoFlag;
   profileImage?: CommonFileEntity;

@@ -119,7 +119,7 @@ export const RecruitListScreen = ({ navigation }: Props) => {
         <Text style={[common.title]}>구인 공고</Text>
         <Text style={common.text_m}>내 주변의 구인 공고를 만나보세요!</Text>
       </View>
-      <View style={{ marginHorizontal: 16 }}>
+      <View style={{ marginHorizontal: 16, flex: 1 }}>
         {recruitList && recruitList.length > 0 && (
           <FlatList
             data={recruitList}
@@ -140,7 +140,7 @@ export const RecruitListScreen = ({ navigation }: Props) => {
             )}
             snapToAlignment="start"
             numColumns={2}
-            contentContainerStyle={{ paddingBottom: 32 }}
+            contentContainerStyle={{ paddingBottom: 32, flex: 1 }}
             showsVerticalScrollIndicator={false}
           />
         )}
