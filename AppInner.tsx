@@ -75,7 +75,8 @@ export type LoggedInParamList = {
   SignInPassword: { email: string };
   SignInEmail: undefined;
   SignUp: { email: string };
-  TermList: { email: string; isCompany: boolean };
+  TermsAgreement: { email: string; isCompany: boolean };
+  TermList: undefined;
   TermDetail: { type: Term };
   SignUpForm: { email: string };
   CompanySignUpForm: { email: string };

@@ -17,11 +17,11 @@ const TERMS = [
   { id: 3, type: 'service', title: '서비스 이용약관 동의', required: true },
 ];
 
-type Props = NativeStackScreenProps<LoggedInParamList, typeof ROUTE.AUTH.TERM_LIST>;
+type Props = NativeStackScreenProps<LoggedInParamList, typeof ROUTE.AUTH.TERMS_AGREEMENT>;
 
 // TODO: 필수항목 전체 동의, 필수 항목 체크 후 다음 버튼 동작, 보기 버튼 클릭 시 약관 확인
 
-export const TermListScreen = ({ navigation, route }: Props) => {
+export const TermsAgreementScreen = ({ navigation, route }: Props) => {
   const [checkedTermIds, setCheckedTermIds] = useState<number[]>([]);
 
   const requiredTerms = TERMS.filter((item) => item.required);
@@ -69,7 +69,7 @@ export const TermListScreen = ({ navigation, route }: Props) => {
   };
 
   const handleTermDetailButtonPress = (type: Term) => {
-    navigation.navigate(ROUTE.AUTH.TERM_DETAIL, { type });
+    navigation.navigate(ROUTE.TERM.DETAIL, { type });
   };
 
   return (

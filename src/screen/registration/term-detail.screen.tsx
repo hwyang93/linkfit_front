@@ -7,18 +7,18 @@ import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
-const HEADER = {
-  privacy: '개인정보 수집 및 이용',
+const HEADER_TITLE = {
   service: '서비스 이용약관',
+  privacy: '개인정보 처리방침',
 } as const;
 
-type Props = NativeStackScreenProps<AuthStackParamList, typeof ROUTE.AUTH.TERM_DETAIL>;
+type Props = NativeStackScreenProps<AuthStackParamList, typeof ROUTE.TERM.DETAIL>;
 
 export const TermDetailScreen = ({ navigation, route }: Props) => {
   return (
     <SafeAreaView style={{ flex: 1 }}>
       <Header
-        title={HEADER[route.params.type]}
+        title={HEADER_TITLE[route.params.type]}
         rightContent={<IconButton source={iconPath.CLOSE} onPress={navigation.goBack} />}
       />
       <View style={{ paddingHorizontal: 16 }}>

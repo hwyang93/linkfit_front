@@ -18,7 +18,7 @@ export const SignUpScreen = ({ navigation, route }: Props) => {
         <CTAButton
           label="일반 회원"
           onPress={() =>
-            navigation.navigate(ROUTE.AUTH.TERM_LIST, {
+            navigation.navigate(ROUTE.AUTH.TERMS_AGREEMENT, {
               email: route.params.email,
               isCompany: false,
             })
@@ -30,7 +30,7 @@ export const SignUpScreen = ({ navigation, route }: Props) => {
           label="사업자 회원"
           variant="stroked"
           onPress={() =>
-            navigation.navigate(ROUTE.AUTH.TERM_LIST, {
+            navigation.navigate(ROUTE.AUTH.TERMS_AGREEMENT, {
               email: route.params.email,
               isCompany: true,
             })
@@ -40,6 +40,7 @@ export const SignUpScreen = ({ navigation, route }: Props) => {
     </View>
   );
 };
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,

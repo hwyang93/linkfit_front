@@ -44,7 +44,6 @@ import { ResumePreviewScreen } from '@/screen/my/resume-preview.screen';
 import { ReviewCreateScreen } from '@/screen/my/review-create.screen';
 import { ReviewEditScreen } from '@/screen/my/review-edit.screen';
 import { ReviewManageScreen } from '@/screen/my/review-manage';
-import { RulesScreen } from '@/screen/my/rules.screen';
 import { SendSuggestionDetailScreen } from '@/screen/my/send-suggestion-detail.screen';
 import { SendSuggestionScreen } from '@/screen/my/send-suggestion.screen';
 import { SettingScreen } from '@/screen/my/setting.screen';
@@ -55,7 +54,9 @@ import { RecruitEditScreen } from '@/screen/recruit-edit.screen';
 import { RecruitListScreen } from '@/screen/recruit-list.screen';
 import { RecruitMapScreen } from '@/screen/recruit-map.screen';
 import { PasswordResetScreen } from '@/screen/registration/password-reset.screen';
+import { TermDetailScreen } from '@/screen/registration/term-detail.screen';
 import { SuggestionScreen } from '@/screen/suggestion.screen';
+import { TermListScreen } from '@/screen/term-list.screen';
 import HeaderLeft from '@components/HeaderLeft';
 import Modal from '@components/ModalSheet';
 import { NavigationProp, useNavigation } from '@react-navigation/native';
@@ -383,9 +384,9 @@ export const MainStack = () => {
           options={{ title: '버전 정보' }}
         />
         <Stack.Screen
-          name={ROUTE.MY.RULES}
-          component={RulesScreen}
-          options={{ title: '서비스 이용약관' }}
+          name={ROUTE.TERM.LIST}
+          component={TermListScreen}
+          options={{ title: '이용약관' }}
         />
         <Stack.Screen
           name={ROUTE.MY.LINK_ADD}
@@ -460,6 +461,13 @@ export const MainStack = () => {
         component={NoticeDetailScreen}
         options={{ title: '공지사항' }}
       />
+      <Stack.Group
+        screenOptions={{
+          headerShown: false,
+          presentation: 'fullScreenModal',
+        }}>
+        <Stack.Screen name={ROUTE.TERM.DETAIL} component={TermDetailScreen} />
+      </Stack.Group>
     </Stack.Navigator>
   );
 };

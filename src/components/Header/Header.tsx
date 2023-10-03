@@ -11,9 +11,17 @@ interface HeaderProps {
 const Header: React.FC<HeaderProps> = ({ title, leftContent, rightContent }) => {
   return (
     <RowView style={styles.container}>
-      {leftContent ? <View style={{ width: '25%' }}>{leftContent}</View> : <View />}
+      {leftContent ? (
+        <View style={{ width: '25%' }}>{leftContent}</View>
+      ) : (
+        <View style={{ width: '25%' }} />
+      )}
       <Text style={{ fontSize: 20, textAlign: 'center' }}>{title}</Text>
-      {rightContent ? <View style={{ width: '25%' }}>{rightContent}</View> : <View />}
+      {rightContent ? (
+        <View style={{ width: '25%', alignItems: 'flex-end' }}>{rightContent}</View>
+      ) : (
+        <View />
+      )}
     </RowView>
   );
 };

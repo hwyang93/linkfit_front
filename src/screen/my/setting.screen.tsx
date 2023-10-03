@@ -42,8 +42,8 @@ const DATA = [
   },
   {
     icon: iconPath.RULE,
-    title: '서비스 이용약관',
-    link: 'Rule',
+    title: '이용약관',
+    link: ROUTE.TERM.LIST,
   },
 ];
 
