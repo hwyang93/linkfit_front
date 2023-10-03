@@ -104,7 +104,7 @@ export const PasswordResetScreen = ({ navigation }: Props) => {
       {
         onSuccess: () => {
           toast.success({ message: TOAST.PASSWORD_RESET_SUCCESS });
-          navigation.navigate('Account');
+          navigation.goBack();
         },
         onError: (error) => {
           if (error instanceof Error) toast.warn({ message: error.message });

@@ -1,10 +1,10 @@
 import { ROUTE } from '@/lib/constants/route';
 import { FindEmailScreen } from '@/screen/auth/find-email.screen';
+import { PasswordResetScreen } from '@/screen/auth/password-reset.screen';
 import { SignInEmailScreen } from '@/screen/auth/sign-in-email.screen';
 import { SignInPasswordScreen } from '@/screen/auth/sign-in-password.screen';
 import { SignUpScreen } from '@/screen/auth/sign-up.screen';
 import { CompanySignUpFormScreen } from '@/screen/registration/company-sign-up.screen';
-import { PasswordResetScreen } from '@/screen/registration/password-reset.screen';
 import { SignUpFormScreen } from '@/screen/registration/sign-up-form.screen';
 import { TermDetailScreen } from '@/screen/registration/term-detail.screen';
 import { TermsAgreementScreen } from '@/screen/registration/terms-agreement.screen';

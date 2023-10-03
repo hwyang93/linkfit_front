@@ -41,8 +41,6 @@ export const RecruitListScreen = ({ navigation }: Props) => {
   const recruitListQuery = useRecruitList(params);
   const recruitList = recruitListQuery.data;
 
-  console.log('@', recruitList);
-
   const positionModal = useModal();
   const recruitTypeModal = useModal();
   const timeModal = useModal();
@@ -144,12 +142,12 @@ export const RecruitListScreen = ({ navigation }: Props) => {
             showsVerticalScrollIndicator={false}
           />
         )}
+        {recruitList && recruitList.length === 0 && (
+          <View style={{ flex: 1, marginBottom: 32 }}>
+            <EmptySet text="등록된 구인 공고가 없어요." />
+          </View>
+        )}
       </View>
-      {recruitList && recruitList.length === 0 && (
-        <View style={{ flex: 1, marginBottom: 32 }}>
-          <EmptySet text="등록된 구인 공고가 없어요." />
-        </View>
-      )}
       <FABContainer>
         <FloatingActionButton
           iconSource={iconPath.PENCIL_W}
