@@ -7,7 +7,7 @@ import { CompanySignUpFormScreen } from '@/screen/registration/company-sign-up.s
 import { PasswordResetScreen } from '@/screen/registration/password-reset.screen';
 import { SignUpFormScreen } from '@/screen/registration/sign-up-form.screen';
 import { TermDetailScreen } from '@/screen/registration/term-detail.screen';
-import { TermListScreen } from '@/screen/registration/term-list.screen';
+import { TermsAgreementScreen } from '@/screen/registration/terms-agreement.screen';
 import { Term } from '@/types/common';
 import HeaderLeft from '@components/HeaderLeft';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
@@ -17,7 +17,7 @@ export type AuthStackParamList = {
   SignInEmail: undefined;
   SignInPassword: { email: string };
   SignUp: { email: string };
-  TermList: { email: string; isCompany: boolean };
+  TermsAgreement: { email: string; isCompany: boolean };
   TermDetail: { type: Term };
   SignUpForm: { email: string };
   CompanySignUpForm: { email: string };
@@ -54,8 +54,8 @@ export const AuthStack = () => {
           options={{ title: '로그인' }}
         />
         <Stack.Screen
-          name={ROUTE.AUTH.TERM_LIST}
-          component={TermListScreen}
+          name={ROUTE.AUTH.TERMS_AGREEMENT}
+          component={TermsAgreementScreen}
           options={{ title: '회원가입' }}
         />
 
@@ -90,11 +90,7 @@ export const AuthStack = () => {
           headerShown: false,
           presentation: 'fullScreenModal',
         }}>
-        <Stack.Screen
-          name={ROUTE.AUTH.TERM_DETAIL}
-          component={TermDetailScreen}
-          options={{ title: '개인정보 수집 및 이용동의' }}
-        />
+        <Stack.Screen name={ROUTE.TERM.DETAIL} component={TermDetailScreen} />
       </Stack.Group>
     </Stack.Navigator>
   );

@@ -36,7 +36,6 @@ export const ROUTE = {
     REVIEW_CREATE: 'ReviewCreate',
     REVIEW_EDIT: 'ReviewEdit',
     REVIEW_MANAGE: 'ReviewManage',
-    RULES: 'Rules',
     SEND_SUGGESTION_DETAIL: 'SendSuggestionDetail',
     SEND_SUGGESTION: 'SendSuggestion',
     SETTING: 'Setting',
@@ -57,8 +56,7 @@ export const ROUTE = {
     SIGN_UP: 'SignUp',
     COMPANY_SIGN_UP_FORM: 'CompanySignUpForm',
     SIGN_UP_FORM: 'SignUpForm',
-    TERM_LIST: 'TermList',
-    TERM_DETAIL: 'TermDetail',
+    TERMS_AGREEMENT: 'TermsAgreement',
   },
   RECRUIT: {
     LIST: 'RecruitList',
@@ -73,6 +71,10 @@ export const ROUTE = {
   CENTER: {
     INFO: 'CenterInfo',
     PROFILE_EDIT: 'CenterProfileEdit',
+  },
+  TERM: {
+    LIST: 'TermList',
+    DETAIL: 'TermDetail',
   },
   PROFILE: 'Profile',
   GALLERY: 'Gallery',
