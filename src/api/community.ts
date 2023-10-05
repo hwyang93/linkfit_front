@@ -38,7 +38,7 @@ export const communityApi = {
     return response.data;
   },
   updatePostById: async (postId: number, body: UpdateCommunityDto) => {
-    const response = await request.put<PostResponse>(`${ENDPOINT}/${postId}`, body);
+    const response = await request.patch<PostResponse>(`${ENDPOINT}/${postId}`, body);
     return response.data;
   },
   deletePostById: async (postId: number) => {
