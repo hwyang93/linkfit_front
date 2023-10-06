@@ -1,15 +1,15 @@
 import { iconPath } from '@/lib/iconPath';
 import { GRAY } from '@styles/colors';
 import common from '@styles/common';
-import { Image, StyleSheet, Text, View } from 'react-native';
+import { Image, StyleSheet, Text, View, ViewProps } from 'react-native';
 
-type EmptySetProps = {
+interface EmptySetProps extends ViewProps {
   text: string;
-};
+}
 
-const EmptySet: React.FC<EmptySetProps> = ({ text }) => {
+const EmptySet: React.FC<EmptySetProps> = ({ text, style, ...props }) => {
   return (
-    <View style={styles.container}>
+    <View style={[styles.container, style]} {...props}>
       <Image source={iconPath.EMPTY} style={styles.empty} />
       <Text style={[common.text_m, { color: GRAY.DARK }]}>{text}</Text>
     </View>

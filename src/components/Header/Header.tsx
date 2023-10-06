@@ -1,3 +1,4 @@
+import THEME from '@/styles/theme';
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import RowView from '../Common/RowView';
@@ -16,7 +17,7 @@ const Header: React.FC<HeaderProps> = ({ title, leftContent, rightContent }) => 
       ) : (
         <View style={{ width: '25%' }} />
       )}
-      <Text style={{ fontSize: 20, textAlign: 'center' }}>{title}</Text>
+      <Text style={{ fontSize: 20, textAlign: 'center', color: THEME.BLACK }}>{title}</Text>
       {rightContent ? (
         <View style={{ width: '25%', alignItems: 'flex-end' }}>{rightContent}</View>
       ) : (

@@ -50,6 +50,7 @@ export const ROUTE = {
   },
   AUTH: {
     FIND_EMAIL: 'FindEmail',
+    PASSWORD_CHANGE: 'PasswordChange',
     PASSWORD_RESET: 'PasswordReset',
     SIGN_IN_EMAIL: 'SignInEmail',
     SIGN_IN_PASSWORD: 'SignInPassword',

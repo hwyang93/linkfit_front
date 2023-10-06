@@ -14,6 +14,6 @@ const SRC = {
   ICON: {
     LICENSE_FILL: require('@images/icon/license_fill.png'),
   },
-};
+} as const;
 
 export default SRC;

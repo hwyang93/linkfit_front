@@ -2,6 +2,8 @@ import IconButton from '@/components/Common/IconButton';
 import { ROUTE } from '@/lib/constants/route';
 import { iconPath } from '@/lib/iconPath';
 import { BottomTab } from '@/navigations/bottom-tab';
+import { PasswordChangeScreen } from '@/screen/auth/password-change.screen';
+import { PasswordResetScreen } from '@/screen/auth/password-reset.screen';
 import { CenterInfoScreen } from '@/screen/center-info.screen';
 import { CommunityCommentEditScreen } from '@/screen/community/community-comment-edit.screen';
 import { CommunityMyScreen } from '@/screen/community/community-my.screen';
@@ -53,7 +55,6 @@ import { RecruitCreateScreen } from '@/screen/recruit-create.screen';
 import { RecruitEditScreen } from '@/screen/recruit-edit.screen';
 import { RecruitListScreen } from '@/screen/recruit-list.screen';
 import { RecruitMapScreen } from '@/screen/recruit-map.screen';
-import { PasswordResetScreen } from '@/screen/registration/password-reset.screen';
 import { TermDetailScreen } from '@/screen/registration/term-detail.screen';
 import { SuggestionScreen } from '@/screen/suggestion.screen';
 import { TermListScreen } from '@/screen/term-list.screen';
@@ -434,6 +435,11 @@ export const MainStack = () => {
           options={{
             title: '채용 공고 수정',
           }}
+        />
+        <Stack.Screen
+          name={ROUTE.AUTH.PASSWORD_CHANGE}
+          component={PasswordChangeScreen}
+          options={{ title: '비밀번호 변경' }}
         />
         <Stack.Screen
           name={ROUTE.AUTH.PASSWORD_RESET}

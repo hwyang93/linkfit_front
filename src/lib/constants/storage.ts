@@ -1,6 +1,6 @@
 const STORAGE_KEY = {
   ACCESS_TOKEN: 'accessToken',
   REFRESH_TOKEN: 'refreshToken',
-};
+} as const;
 
 export default STORAGE_KEY;

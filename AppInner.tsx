@@ -80,6 +80,7 @@ export type LoggedInParamList = {
   TermDetail: { type: Term };
   SignUpForm: { email: string };
   CompanySignUpForm: { email: string };
+  PasswordChange: undefined;
   PasswordReset: undefined;
   CommunityCommentEdit: { commentId: number };
   CommunityPostEdit: { postId: number };
