@@ -10,6 +10,6 @@ const TOAST = {
   VERIFICATION_CODE_VALID_10_MIN: '인증번호는 10분간 유효합니다.',
   PASSWORD_RESET_SUCCESS: '비밀번호 재설정이 완료되었습니다.',
   EMAIL_NOT_FOUND: '가입되지 않은 이메일입니다.',
-};
+} as const;
 
 export default TOAST;

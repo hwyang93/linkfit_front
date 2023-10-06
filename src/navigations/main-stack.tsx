@@ -2,6 +2,7 @@ import IconButton from '@/components/Common/IconButton';
 import { ROUTE } from '@/lib/constants/route';
 import { iconPath } from '@/lib/iconPath';
 import { BottomTab } from '@/navigations/bottom-tab';
+import { PasswordChangeScreen } from '@/screen/auth/password-change.screen';
 import { PasswordResetScreen } from '@/screen/auth/password-reset.screen';
 import { CenterInfoScreen } from '@/screen/center-info.screen';
 import { CommunityCommentEditScreen } from '@/screen/community/community-comment-edit.screen';
@@ -434,6 +435,11 @@ export const MainStack = () => {
           options={{
             title: '채용 공고 수정',
           }}
+        />
+        <Stack.Screen
+          name={ROUTE.AUTH.PASSWORD_CHANGE}
+          component={PasswordChangeScreen}
+          options={{ title: '비밀번호 변경' }}
         />
         <Stack.Screen
           name={ROUTE.AUTH.PASSWORD_RESET}

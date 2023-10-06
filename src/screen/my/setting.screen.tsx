@@ -4,7 +4,6 @@ import { iconPath } from '@/lib/iconPath';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { BLUE, GRAY, WHITE } from '@styles/colors';
 import common from '@styles/common';
-import { useCallback } from 'react';
 import { Alert, Image, Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import { LoggedInParamList } from '../../../AppInner';
@@ -18,7 +17,7 @@ const DATA = [
   {
     icon: iconPath.ACCOUNT,
     title: '계정 관리',
-    link: 'Account',
+    link: ROUTE.MY.ACCOUNT,
   },
   {
     icon: iconPath.BLACKLIST,
@@ -52,9 +51,9 @@ type Props = NativeStackScreenProps<LoggedInParamList, typeof ROUTE.MY.SETTING>;
 export const SettingScreen = ({ navigation }: Props) => {
   const { signOut } = useAuth();
 
-  const onLogout = useCallback(async () => {
+  const onLogout = async () => {
     signOut();
-  }, [signOut]);
+  };
 
   return (
     <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>

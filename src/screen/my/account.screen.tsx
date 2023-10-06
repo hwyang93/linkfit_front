@@ -30,8 +30,8 @@ export const AccountScreen = ({ navigation }: Props) => {
       <View>
         <Pressable
           style={common.mv20}
-          onPress={() => navigation.navigate(ROUTE.AUTH.PASSWORD_RESET)}>
-          <Text style={[common.text_m, styles.linkText]}>비밀번호 재설정</Text>
+          onPress={() => navigation.navigate(ROUTE.AUTH.PASSWORD_CHANGE)}>
+          <Text style={[common.text_m, styles.linkText]}>비밀번호 변경</Text>
         </Pressable>
         <Pressable style={common.mv20} onPress={unregisterModal.open}>
           <Text style={[common.text_m, styles.linkText]}>회원 탈퇴</Text>
