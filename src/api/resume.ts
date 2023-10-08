@@ -1,20 +1,8 @@
 import { FetchResumeResponse, FetchResumesResponse } from '@/types/api/resume.type';
 import request from '@api/request';
 
-export const createResume = (data: object) => {
-  return request.post('/resume', data);
-};
-
 export const fetchResumes = () => {
   return request.get<FetchResumesResponse>('/resume');
-};
-
-export const fetchResume = (seq: number) => {
-  return request.get<FetchResumeResponse>(`/resume/${seq}`);
-};
-
-export const updateResumeMaster = (seq: number) => {
-  return request.patch(`/resume/master/${seq}`);
 };
 
 export const deleteResume = (seq: number) => {
@@ -33,7 +21,15 @@ export const resumeApi = {
     return response.data;
   },
   createResume: async (data: object) => {
-    const resposne = await request.post(`${ENDPOINT}`, data);
-    return resposne.data;
+    const response = await request.post(`${ENDPOINT}`, data);
+    return response.data;
+  },
+  updateResumeMaster: async (resumeId: number) => {
+    const response = await request.patch(`${ENDPOINT}/master/${resumeId}`);
+    return response.data;
+  },
+  deleteResume: async (resumeId: number) => {
+    const response = await request.delete(`${ENDPOINT}/${resumeId}`);
+    return response.data;
   },
 };

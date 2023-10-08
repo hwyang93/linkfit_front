@@ -7,6 +7,7 @@ import { useMyRecruitApplicationList } from '@/hooks/recruit/use-my-recruit-appl
 import useFilter from '@/hooks/use-filter';
 import useModal from '@/hooks/use-modal';
 import { SCREEN_WIDTH } from '@/lib/constants/common';
+import { ResumeStatus, RESUME_STATUS_KO } from '@/lib/constants/enum';
 import FILTER from '@/lib/constants/filter';
 import { ROUTE } from '@/lib/constants/route';
 import { iconPath } from '@/lib/iconPath';
@@ -17,14 +18,6 @@ import common, { width } from '@styles/common';
 import { Image, Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { LoggedInParamList } from '../../../AppInner';
-
-const statusMap = {
-  APPLY: '지원 완료',
-  CANCEL: '지원 취소',
-  OPEN: '열람',
-  PASS: '합격',
-  FAIL: '불합격',
-} as const;
 
 const columns2 = (SCREEN_WIDTH - 48) / 2;
 
@@ -52,7 +45,7 @@ const MyApplicationListItem: React.FC<MyApplicationItemProps> = ({
       <View style={styles.imgBox}>
         <Image style={styles.img} source={require('assets/images/sample_02.png')} />
         <View style={styles.statusBox}>
-          <Text style={styles.statusText}>{statusMap[status as keyof typeof statusMap]}</Text>
+          <Text style={styles.statusText}>{RESUME_STATUS_KO[status as ResumeStatus]}</Text>
         </View>
       </View>
       <View>

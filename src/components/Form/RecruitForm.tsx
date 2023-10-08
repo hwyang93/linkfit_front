@@ -19,7 +19,7 @@ import toast from '@hooks/toast';
 import { GRAY } from '@styles/colors';
 import common from '@styles/common';
 import { isAxiosError } from 'axios';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Image, Pressable, StyleSheet, Text, View } from 'react-native';
 
 const POSITION = ['실장', '필라테스', '요가'];
@@ -185,8 +185,78 @@ export const RecruitForm = ({ mode, recruitId }: RecruitFormProps) => {
   };
 
   const onUpdateRecruit = () => {
-    // TODO: 업데이트
+    if (!lon || !lat || !recruitId) return;
+
+    const body = {
+      title: offerTitleInput.value,
+      companyName: companyNameInput.value,
+      position: positionSelect.value,
+      address: address,
+      addressDetail: addressDetailInput.value,
+      district: 'string',
+      phone: memberInfo.phone,
+      recruitType: recruitTypeSelect.value,
+      career: careerSelect.value,
+      education: educationSelect.value,
+      payType: payTypeSelect.value,
+      pay: payInput.value,
+      classType: 'string',
+      content: contentInput.value,
+      lon: lon,
+      lat: lat,
+      dates: dateForm,
+    };
+
+    updateRecruitMutation.mutate(
+      { recruitId: recruitId, body },
+      {
+        onSuccess: () => {
+          toast.success({ message: '채용 공고 수정이 완료되었어요!' });
+          navigation.goBack();
+        },
+        onError: (error) => {
+          isAxiosError(error) && toast.error({ message: error.message });
+        },
+      },
+    );
   };
+
+  useEffect(() => {
+    if (mode === 'edit' && recruitQuery.data) {
+      const recruit = recruitQuery.data;
+
+      offerTitleInput.setValue(recruit.title);
+      positionSelect.setValue(recruit.position);
+      educationSelect.setValue(recruit.education);
+      careerSelect.setValue(recruit.career);
+      payTypeSelect.setValue(recruit.payType);
+      payInput.setValue(recruit.pay);
+      contentInput.setValue(recruit.content);
+      recruitTypeSelect.setValue(recruit.recruitType);
+      companyNameInput.setValue(recruit.companyName);
+      addressDetailInput.setValue(recruit.addressDetail);
+      setAddress(recruit.address);
+      setLat(recruit.lat);
+      setLon(recruit.lon);
+      setDateForm(recruit.dates);
+    }
+  }, [
+    recruitQuery.data,
+    addressDetailInput,
+    companyNameInput,
+    contentInput,
+    educationSelect,
+    mode,
+    offerTitleInput,
+    payInput,
+    payTypeSelect,
+    positionSelect,
+    recruitId,
+    recruitTypeSelect,
+    careerSelect,
+  ]);
+
+  if (mode === 'edit' && !recruitQuery.data) return null;
 
   return (
     <DismissKeyboardView>

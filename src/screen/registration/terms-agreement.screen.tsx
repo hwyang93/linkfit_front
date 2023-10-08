@@ -17,18 +17,27 @@ const TERMS = [
   { id: 3, type: 'service', title: '서비스 이용약관 동의', required: true },
 ];
 
+const INFO = [
+  { id: 1, title: '이메일' },
+  { id: 2, title: '문자 메시지' },
+  { id: 3, title: '앱 푸시' },
+];
+
 type Props = NativeStackScreenProps<LoggedInParamList, typeof ROUTE.AUTH.TERMS_AGREEMENT>;
 
 // TODO: 필수항목 전체 동의, 필수 항목 체크 후 다음 버튼 동작, 보기 버튼 클릭 시 약관 확인
 
 export const TermsAgreementScreen = ({ navigation, route }: Props) => {
   const [checkedTermIds, setCheckedTermIds] = useState<number[]>([]);
+  const [checkedInfoIds, setCheckedInfoIds] = useState<number[]>([]);
 
   const requiredTerms = TERMS.filter((item) => item.required);
 
   const isAllRequiredCheckboxChecked = requiredTerms.every((item) =>
     checkedTermIds.includes(item.id),
   );
+
+  const isAllInfoCheckboxChecked = INFO.every((item) => checkedInfoIds.includes(item.id));
 
   const toggleAllRequiredCheckbox = () => {
     if (isAllRequiredCheckboxChecked) {
@@ -40,11 +49,27 @@ export const TermsAgreementScreen = ({ navigation, route }: Props) => {
     }
   };
 
+  const toggleAllInfoCheckbox = () => {
+    if (isAllInfoCheckboxChecked) {
+      setCheckedInfoIds(checkedInfoIds.filter((id) => !INFO.map((item) => item.id).includes(id)));
+    } else {
+      setCheckedInfoIds((prev) => [...prev, ...INFO.map((item) => item.id)]);
+    }
+  };
+
   const toggleCheckbox = (id: number) => {
     if (checkedTermIds.includes(id)) {
       setCheckedTermIds(checkedTermIds.filter((item) => item !== id));
     } else {
       setCheckedTermIds([...checkedTermIds, id]);
+    }
+  };
+
+  const toggleInfoCheckbox = (id: number) => {
+    if (checkedInfoIds.includes(id)) {
+      setCheckedInfoIds(checkedInfoIds.filter((item) => item !== id));
+    } else {
+      setCheckedInfoIds([...checkedInfoIds, id]);
     }
   };
 
@@ -105,16 +130,23 @@ export const TermsAgreementScreen = ({ navigation, route }: Props) => {
           ))}
           <TermListItem
             text="채용 소식, 컨텐츠, 이벤트 등 링크핏 맞춤 정보 받기"
-            checked={false}
-            onPress={() => {}}
+            checked={isAllInfoCheckboxChecked}
+            onPress={toggleAllInfoCheckbox}
           />
           <RowView style={{ justifyContent: 'flex-end', alignItems: 'center' }}>
-            <Checkbox style={{ marginRight: 8 }} />
-            <Text style={{ fontSize: 16, marginRight: 8 }}>이메일</Text>
-            <Checkbox style={{ marginRight: 8 }} />
+            {INFO.map((item, index) => (
+              <Pressable
+                style={{ flexDirection: 'row', alignItems: 'center' }}
+                key={index}
+                onPress={() => toggleInfoCheckbox(item.id)}>
+                <Checkbox checked={checkedInfoIds.includes(item.id)} style={{ marginRight: 8 }} />
+                <Text style={{ fontSize: 16, marginRight: 8 }}>{item.title}</Text>
+              </Pressable>
+            ))}
+            {/* <Checkbox style={{ marginRight: 8 }} />
             <Text style={{ fontSize: 16, marginRight: 8 }}>문자 메시지</Text>
             <Checkbox style={{ marginRight: 8 }} />
-            <Text style={{ fontSize: 16, marginRight: 8 }}>앱 푸시</Text>
+            <Text style={{ fontSize: 16, marginRight: 8 }}>앱 푸시</Text> */}
           </RowView>
         </View>
         <View style={styles.divideLine} />

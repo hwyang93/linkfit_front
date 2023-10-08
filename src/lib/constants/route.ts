@@ -32,7 +32,6 @@ export const ROUTE = {
     RESUME_CREATE: 'ResumeCreate',
     RESUME_EDIT: 'ResumeEdit',
     RESUME_MANAGE: 'ResumeManage',
-    RESUME_PREVIEW: 'ResumePreview',
     REVIEW_CREATE: 'ReviewCreate',
     REVIEW_EDIT: 'ReviewEdit',
     REVIEW_MANAGE: 'ReviewManage',
@@ -64,6 +63,9 @@ export const ROUTE = {
     CREATE: 'RecruitCreate',
     EDIT: 'RecruitEdit',
     MAP: 'RecruitMap',
+  },
+  RESUME: {
+    PREVIEW: 'ResumePreview',
   },
   INSTRUCTOR: {
     LIST: 'InstructorList',

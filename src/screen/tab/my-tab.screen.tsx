@@ -61,10 +61,8 @@ export const MyTab = ({ navigation }: Props) => {
   const isFocused = useIsFocused();
 
   const handleResumeCardPress = (resumeSeq: number) => {
-    navigation.navigate('ResumePreview', {
+    navigation.navigate(ROUTE.RESUME.PREVIEW, {
       resumeSeq: resumeSeq,
-      applySeq: null,
-      recruitSeq: null,
     });
   };
 
@@ -105,7 +103,7 @@ export const MyTab = ({ navigation }: Props) => {
             <SectionHeader
               style={{ marginBottom: 8 }}
               title="이력서"
-              onPress={() => navigation.navigate('ResumeManage')}
+              onPress={() => navigation.navigate(ROUTE.MY.RESUME_MANAGE)}
             />
             {/* TODO: 플레이스홀더 UI 추가 */}
             {myInfo.masterResume.seq ? (

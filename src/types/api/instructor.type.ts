@@ -5,7 +5,7 @@ export interface FetchInstructorsParams {
   noPaging?: boolean;
   curPage?: number;
   perPage?: number;
-  fields?: string;
+  fields?: string[];
 }
 
 export type Instructor = {

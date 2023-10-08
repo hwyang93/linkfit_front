@@ -1,8 +1,8 @@
+import { useAppNavigation } from '@/hooks/use-app-navigation';
+import { ROUTE } from '@/lib/constants/route';
 import { iconPath } from '@/lib/iconPath';
-import { NavigationProp, useNavigation } from '@react-navigation/native';
 import common from '@styles/common';
 import { Image, Pressable, Text, View } from 'react-native';
-import { LoggedInParamList } from '../../../AppInner';
 
 interface ApplicantListItemProps {
   applySeq: number;
@@ -21,14 +21,14 @@ const ApplicantListItem: React.FC<ApplicantListItemProps> = ({
   status,
   resumeTitle,
 }) => {
-  const navigation = useNavigation<NavigationProp<LoggedInParamList>>();
+  const navigation = useAppNavigation();
 
   return (
     <View>
       <Pressable
         style={[common.basicBox, common.mb8]}
         onPress={() => {
-          navigation.navigate('ResumePreview', {
+          navigation.navigate(ROUTE.RESUME.PREVIEW, {
             resumeSeq: resumeSeq,
             applySeq: applySeq,
             recruitSeq: recruitSeq,

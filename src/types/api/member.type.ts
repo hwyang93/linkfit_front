@@ -121,3 +121,11 @@ export type UpdateProfileBody = {
   field: string;
   imageObj?: { uri?: string; name?: string; type?: string };
 };
+
+export type CreateMemberPortfolioBody = {
+  field: string;
+  licenceNumber: string;
+  issuer: string;
+  issueDate: string;
+  file: {};
+};

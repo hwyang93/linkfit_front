@@ -4,118 +4,24 @@ import ResumeCard from '@/components/Compound/ResumeCard';
 import EmptySet from '@/components/EmptySet';
 import { useResumeList } from '@/hooks/resume/use-resume-list';
 import { ROUTE } from '@/lib/constants/route';
-import { iconPath } from '@/lib/iconPath';
 import { formatDate } from '@/lib/util';
-import { deleteResume, updateResumeMaster } from '@api/resume';
-import Modal from '@components/ModalSheet';
-import toast from '@hooks/toast';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
-import { BLUE, WHITE } from '@styles/colors';
-import common from '@styles/common';
-import { useState } from 'react';
-import { Alert, Image, Pressable, StyleSheet, Text, View } from 'react-native';
 import { LoggedInParamList } from '../../../AppInner';
 
 type Props = NativeStackScreenProps<LoggedInParamList, typeof ROUTE.MY.RESUME_MANAGE>;
 
 export const ResumeManageScreen = ({ navigation }: Props) => {
-  const [selectedResume, setSelectedResume] = useState<any>({});
-  const [modalVisible, setModalVisible] = useState(false);
-
   const resumeListQuery = useResumeList();
   const resumes = resumeListQuery.data;
-
-  const onUpdateResumeMaster = () => {
-    updateResumeMaster(selectedResume.seq)
-      .then(() => {
-        closeModel();
-        toast.success({ message: '대표이력서 설정이 완료되었어요!' });
-        resumeListQuery.refetch();
-      })
-      .catch((error) => {
-        toast.error({ message: error.message });
-      });
-  };
-
-  const onDeleteResume = () => {
-    deleteResume(selectedResume.seq)
-      .then(() => {
-        closeModel();
-        toast.success({ message: '이력서가 삭제되었습니다.' });
-        resumeListQuery.refetch();
-      })
-      .catch((error) => {
-        toast.error({ message: error.message });
-      });
-  };
-
-  const MODAL = [
-    // {
-    //   value: '새 이력서 작성',
-    //   selected: false,
-    //   // job: () => {
-    //   //   closeModel();
-    //   //   navigation.navigate('ResumeForm');
-    //   // },
-    // },
-    {
-      value: '대표 이력서로 설정',
-      job: () => onUpdateResumeMaster(),
-    },
-    // {
-    //   value: '이력서 이름 변경',
-    //   selected: false,
-    // },
-    // {
-    //   value: '이력서 복제',
-    //   selected: false,
-    // },
-    {
-      value: '미리보기',
-      job: () => {
-        closeModel();
-        navigation.navigate('ResumePreview', {
-          resumeSeq: selectedResume.seq,
-          applySeq: null,
-          recruitSeq: null,
-        });
-      },
-    },
-    {
-      value: '수정',
-      selected: false,
-    },
-    {
-      value: '삭제',
-      job: () => {
-        Alert.alert('', '삭제하시겠습니까?', [
-          {
-            text: '취소',
-          },
-          {
-            text: '삭제',
-            onPress: () => onDeleteResume(),
-            style: 'cancel',
-          },
-        ]);
-      },
-    },
-  ];
-
-  const openModal = () => {
-    setModalVisible(true);
-  };
-  const closeModel = () => {
-    setModalVisible(false);
-  };
 
   return (
     <AppSafeAreaView edges={['bottom']}>
       {resumes && resumes.length === 0 && <EmptySet text="등록된 이력서가 없어요." />}
       {resumes && resumes.length > 0 && (
-        <AppScrollView>
+        <AppScrollView style={{ padding: 16 }}>
           {resumes.map((resume) => (
             <ResumeCard
+              resumeId={resume.seq}
               style={{ marginBottom: 8 }}
               key={resume.seq}
               isMaster={resume.isMaster === 'Y'}
@@ -123,19 +29,13 @@ export const ResumeManageScreen = ({ navigation }: Props) => {
               timestamp={formatDate(resume.updatedAt)}
               kebabIconShown
               onPress={() =>
-                navigation.navigate('ResumePreview', {
+                navigation.navigate(ROUTE.RESUME.PREVIEW, {
                   resumeSeq: resume.seq,
-                  applySeq: null,
-                  recruitSeq: null,
                 })
               }
-              onKebabIconPress={() => {
-                setSelectedResume(resume);
-                openModal();
-              }}
             />
           ))}
-          <Modal
+          {/* <Modal
             modalVisible={modalVisible}
             setModalVisible={setModalVisible}
             title={'더보기'}
@@ -155,24 +55,9 @@ export const ResumeManageScreen = ({ navigation }: Props) => {
                 ))}
               </View>
             }
-          />
+          /> */}
         </AppScrollView>
       )}
     </AppSafeAreaView>
   );
 };
-
-const styles = StyleSheet.create({
-  box: {
-    backgroundColor: '#d7e0fd',
-    borderRadius: 12,
-    paddingHorizontal: 8,
-    paddingVertical: 4,
-  },
-  container: {
-    backgroundColor: WHITE,
-    flex: 1,
-    padding: 16,
-  },
-  kebabIcon: { position: 'absolute', right: 16, top: 16 },
-});

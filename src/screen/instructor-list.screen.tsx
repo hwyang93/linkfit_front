@@ -1,28 +1,34 @@
 import { LoggedInParamList } from '@/../AppInner';
+import AppSafeAreaView from '@/components/\bLayout/AppSafeAreaView';
 import FilterChip from '@/components/Common/FilterChip';
 import InstructorListItem from '@/components/Compound/InstructorListItem';
 import EmptySet from '@/components/EmptySet';
 import Header from '@/components/Header/Header';
 import HeaderLeft from '@/components/HeaderLeft';
+import PositionFilterModal from '@/components/Modal/PositionFilterModal';
 import { useInstructorList } from '@/hooks/instructor/use-instructor-list';
-import useFilter from '@/hooks/use-filter';
+import useModal from '@/hooks/use-modal';
 import { ROUTE } from '@/lib/constants/route';
+import { getFilterChipLabel } from '@/lib/util';
 import common from '@/styles/common';
 import { Instructor } from '@/types/api/instructor.type';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
+import { useState } from 'react';
 import { FlatList, Text, View } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
 
 type Props = NativeStackScreenProps<LoggedInParamList, typeof ROUTE.INSTRUCTOR.LIST>;
 
 // TODO: 페이지네이션 추가
 export const InstructorListScreen = ({ navigation }: Props) => {
-  const positionFilter = useFilter('');
+  const [positionFilterValueList, setPositionFilterValueList] = useState<string[]>([]);
+
+  const positionFilterModal = useModal();
 
   const params = {
     noPaging: false,
     curPage: 1,
     perPage: 10,
+    fields: positionFilterValueList,
   };
 
   const instructorListQuery = useInstructorList(params);
@@ -32,12 +38,23 @@ export const InstructorListScreen = ({ navigation }: Props) => {
 
   // TODO: 좋아요 기능 추가
 
+  const onPositionFilterApply = (selectedOptions: string[]) => {
+    setPositionFilterValueList(selectedOptions);
+    positionFilterModal.close();
+  };
+
   return (
-    <SafeAreaView edges={['top', 'bottom', 'left', 'right']} style={{ flex: 1 }}>
+    <AppSafeAreaView>
       <Header
         title="강사"
         leftContent={<HeaderLeft canGoBack />}
-        rightContent={<FilterChip label="포지션" rightIcon />}
+        rightContent={
+          <FilterChip
+            label={getFilterChipLabel(positionFilterValueList, '포지션')}
+            rightIcon
+            onPress={positionFilterModal.open}
+          />
+        }
       />
       <View style={[common.mt16, { marginHorizontal: 16 }]}>
         <Text style={common.title}>내 주변 강사</Text>
@@ -76,6 +93,14 @@ export const InstructorListScreen = ({ navigation }: Props) => {
           ItemSeparatorComponent={() => <View style={common.separator} />}
         />
       )}
-    </SafeAreaView>
+      {positionFilterModal.visible && (
+        <PositionFilterModal
+          visible={positionFilterModal.visible}
+          onDismiss={positionFilterModal.close}
+          initialOptions={positionFilterValueList}
+          onApply={onPositionFilterApply}
+        />
+      )}
+    </AppSafeAreaView>
   );
 };

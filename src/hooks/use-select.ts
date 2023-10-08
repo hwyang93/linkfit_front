@@ -11,5 +11,5 @@ export const useSelect = (initialValue?: string) => {
     setValue('');
   };
 
-  return { value, onChange, reset };
+  return { value, onChange, reset, setValue };
 };

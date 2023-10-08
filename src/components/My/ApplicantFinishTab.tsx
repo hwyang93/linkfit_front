@@ -1,111 +1,69 @@
 import { useRecruitApplicationList } from '@/hooks/recruit/use-recruit-application-list';
+import useFilter from '@/hooks/use-filter';
 import useModal from '@/hooks/use-modal';
-import { iconPath } from '@/lib/iconPath';
+import FILTER from '@/lib/constants/filter';
+import { formatDate } from '@/lib/util';
 import { RecruitStatus } from '@/types/api/recruit.type';
 import ApplicantListItem from '@components/My/ApplicantListItem';
-import TopFilter from '@components/TopFilter';
-import { BLUE, WHITE } from '@styles/colors';
-import common from '@styles/common';
-import { useCallback, useState } from 'react';
-import { Image, Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
+import { WHITE } from '@styles/colors';
+import { ScrollView, StyleSheet, View } from 'react-native';
 import BottomSheet from '../Common/BottomSheet';
+import BottomSheetOption from '../Common/BottomSheetOption';
+import FilterChip from '../Common/FilterChip';
+import RowView from '../Common/RowView';
 
 interface ApplicantFinishTabProps {
   recruitId: number;
 }
 
 const ApplicantFinishTab: React.FC<ApplicantFinishTabProps> = ({ recruitId }) => {
-  const [modalTitle, setModalTitle] = useState('');
-  const [modalData, setModalData] = useState<any[]>([]);
-  const [selectedFilter, setSelectedFilter] = useState('');
-
   const { data } = useRecruitApplicationList(recruitId);
 
   const finishedApplications = data?.recruitApply.filter((item) => {
     return item.status !== RecruitStatus.Applied;
   });
 
+  const periodFilter = useFilter();
+
+  const filterActive = !!periodFilter.value;
+
+  const resetFilter = () => {
+    periodFilter.reset();
+  };
+
   const modal = useModal();
 
-  // const navigation = useNavigation<NavigationProp<LoggedInParamList>>();
-
-  const [FILTER, setFILTER] = useState([
-    {
-      key: 'period',
-      value: '기간',
-      job: () => {
-        setSelectedFilter('period');
-        setModalTitle('기간');
-        setModalData(MODAL);
-        modal.open();
-      },
-    },
-  ]);
-
-  const [MODAL, setMODAL] = useState([
-    {
-      value: '일주일',
-      selected: false,
-    },
-    {
-      value: '1개월',
-      selected: false,
-    },
-    {
-      value: '2개월',
-      selected: false,
-    },
-    {
-      value: '3개월 이상',
-      selected: false,
-    },
-  ]);
-
-  const onSelectFilter = useCallback(
-    (selectItem: any) => {
-      if (selectedFilter === 'period') {
-        setMODAL(() => {
-          return MODAL.map((item) => {
-            if (item.value === selectItem.value) {
-              item.selected = !item.selected;
-            } else {
-              item.selected = false;
-            }
-            return item;
-          });
-        });
-        setFILTER(() => {
-          return FILTER.map((filter) => {
-            if (filter.key === 'period') {
-              const value = modalData.find((item: any) => {
-                return item.selected;
-              })?.value;
-              filter.value = value ? value : '기간';
-            }
-            return filter;
-          });
-        });
-      }
-    },
-    [FILTER, MODAL, modalData, selectedFilter],
-  );
   return (
     <>
       <View
         style={{
-          flex: 0,
           paddingVertical: 8,
           paddingHorizontal: 16,
           backgroundColor: WHITE,
         }}>
-        <TopFilter data={FILTER} />
+        <RowView style={{ marginTop: 8 }}>
+          {filterActive && (
+            <FilterChip
+              label="초기화"
+              style={{ marginRight: 8 }}
+              variant="reset"
+              onPress={resetFilter}
+            />
+          )}
+          <FilterChip
+            active={!!periodFilter.value}
+            label={FILTER.PERIOD[periodFilter.value as keyof typeof FILTER.PERIOD] || '기간'}
+            rightIcon
+            onPress={modal.open}
+          />
+        </RowView>
       </View>
       <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
         {finishedApplications?.map((item, index) => (
           <ApplicantListItem
             key={index}
             applySeq={item.seq}
-            createdAt={item.createdAt}
+            createdAt={formatDate(item.createdAt)}
             recruitSeq={item.recruitSeq}
             resumeSeq={item.resumeSeq}
             resumeTitle={item.resume?.title}
@@ -114,23 +72,18 @@ const ApplicantFinishTab: React.FC<ApplicantFinishTabProps> = ({ recruitId }) =>
         ))}
         <View style={{ paddingBottom: 24 }} />
       </ScrollView>
-
-      {/* 모달 */}
-      <BottomSheet visible={modal.visible} onDismiss={modal.close} title={modalTitle}>
-        <View>
-          {modalData.map((item, index) => (
-            <View key={index} style={common.modalItemBox}>
-              <Pressable
-                onPress={() => onSelectFilter(item)}
-                style={[common.rowCenterBetween, { width: '100%' }]}>
-                <Text style={[common.modalText, item.selected && { color: BLUE.DEFAULT }]}>
-                  {item.value}
-                </Text>
-                {item.selected && <Image source={iconPath.CHECK} style={common.size24} />}
-              </Pressable>
-            </View>
-          ))}
-        </View>
+      <BottomSheet visible={modal.visible} onDismiss={modal.close} title="기간">
+        {Object.entries(FILTER.PERIOD).map(([value, label], index) => (
+          <BottomSheetOption
+            key={index}
+            label={label}
+            onPress={() => {
+              periodFilter.setValue(value);
+              modal.close();
+            }}
+            selected={periodFilter.value === value}
+          />
+        ))}
       </BottomSheet>
     </>
   );
