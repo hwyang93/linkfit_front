@@ -18,6 +18,7 @@ import {
   FetchReceivePositionSuggestsParams,
   FetchReceivePositionSuggestsResponse,
   FetchRegionAuthResponse,
+  Portfolio,
 } from '@/types/api/member.type';
 import { DeleteResponse, PostResponse } from '@/types/common';
 import request from './request';
@@ -125,7 +126,7 @@ export const memberApi = {
     return response.data;
   },
   getPortfolioList: async () => {
-    const response = await request.get(`${ENDPOINT}/portfolio`);
+    const response = await request.get<Portfolio[]>(`${ENDPOINT}/portfolio`);
     return response.data;
   },
   createPortfolio: async (body: CreateMemberPortfolioBody) => {

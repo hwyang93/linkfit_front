@@ -28,6 +28,7 @@ export interface FetchInstructorResponse {
   nickname: string;
   address: string;
   intro: string;
+  field: string;
   career: string;
   links: MemberLinkEntity[];
   follower: string;

@@ -129,3 +129,15 @@ export type CreateMemberPortfolioBody = {
   issueDate: string;
   file: {};
 };
+
+export type Portfolio = {
+  seq: number;
+  memberSeq: number;
+  originFileName: string;
+  originFileUrl: string;
+  thumbnailFileUrl: string;
+  createdAt: string;
+  updatedAt: string;
+};
+
+export type GetPortfolioListResponse = Portfolio[];

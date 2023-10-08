@@ -1,4 +1,5 @@
 import { useMemberInfo } from '@/hooks/member/use-member-info';
+import { usePortfolioList } from '@/hooks/member/use-portfolio-list';
 import { SCREEN_WIDTH } from '@/lib/constants/common';
 import { ROUTE } from '@/lib/constants/route';
 import { iconPath } from '@/lib/iconPath';
@@ -8,24 +9,8 @@ import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { BLUE, GRAY } from '@styles/colors';
 import common from '@styles/common';
 import React, { useState } from 'react';
-import {
-  FlatList,
-  Image,
-  ImageSourcePropType,
-  Pressable,
-  StyleSheet,
-  Text,
-  View,
-} from 'react-native';
+import { FlatList, Image, Pressable, StyleSheet, Text, View } from 'react-native';
 import { LoggedInParamList } from '../../../AppInner';
-
-const DUMMY_MY_INTRODUCTION_DATA = [
-  { src: require('@images/instructor_01.png') },
-  { src: require('@images/instructor_02.png') },
-  { src: require('@images/instructor_03.png') },
-  { src: require('@images/instructor_04.png') },
-  { src: require('@images/instructor_05.png') },
-];
 
 const DUMMY_REVIEW_DATA = [
   {
@@ -158,7 +143,7 @@ const ReviewTabItem: React.FC<ReviewTabItemProps> = ({ nickname, type, date, rev
 };
 
 interface MyIntroductionTabItemProps {
-  src: ImageSourcePropType;
+  src: string;
   onPress?: () => void;
 }
 
@@ -166,7 +151,7 @@ const MyIntroductionTabItem: React.FC<MyIntroductionTabItemProps> = ({ src, onPr
   return (
     <Pressable onPress={onPress}>
       <Image
-        source={src}
+        source={{ uri: src }}
         resizeMode={'cover'}
         style={{
           width: imageSize,
@@ -183,45 +168,42 @@ type Props = NativeStackScreenProps<LoggedInParamList, typeof ROUTE.MY.PROFILE>;
 export const MyProfileScreen = ({ navigation }: Props) => {
   const memberInfoQury = useMemberInfo();
   const memberInfo = memberInfoQury.data;
-  console.log(JSON.stringify(memberInfo, null, 2));
 
-  const renderMyIntroductionTabItem = ({ item }: { item: MyIntroductionTabItemProps }) => (
-    <MyIntroductionTabItem src={item.src} onPress={() => navigation.navigate('Gallery')} />
-  );
-
-  const renderReviewTabItem = ({ item }: { item: ReviewTabItemProps }) => (
-    <ReviewTabItem
-      nickname={item.nickname}
-      type={item.type}
-      date={item.date}
-      review={item.review}
-    />
-  );
-  // TODO: api 연동 필요
+  const portfolioListQuery = usePortfolioList();
 
   const MyIntroductionTab: React.FC = () => {
     return (
       <FlatList
-        data={DUMMY_MY_INTRODUCTION_DATA}
-        renderItem={renderMyIntroductionTabItem}
+        data={portfolioListQuery.data}
         numColumns={3}
         ListHeaderComponent={<MyIntroductionTabHeader />}
         style={{ padding: 16, backgroundColor: 'white' }}
+        renderItem={({ item }) => (
+          <MyIntroductionTabItem
+            src={item.originFileUrl}
+            // onPress={() => navigation.navigate('Gallery')}
+          />
+        )}
       />
     );
   };
-
-  // TODO: api 연동 필요
 
   const ReviewTab: React.FC = () => {
     return (
       <FlatList
         data={DUMMY_REVIEW_DATA}
-        renderItem={renderReviewTabItem}
         keyExtractor={(item) => String(item.id)}
         style={{ padding: 16, backgroundColor: 'white' }}
         ItemSeparatorComponent={() => (
           <View style={[common.separator, common.mv16, { width: width }]} />
+        )}
+        renderItem={({ item }) => (
+          <ReviewTabItem
+            nickname={item.nickname}
+            type={item.type}
+            date={item.date}
+            review={item.review}
+          />
         )}
       />
     );
