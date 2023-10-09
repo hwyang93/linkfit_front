@@ -1,12 +1,11 @@
 import {
   CreateMemberDto,
-  CreateMemberReputationDto,
   CreateRegionAuthDto,
   UpdateMemberPasswordDto,
-  UpdateMemberReputationDto,
   UpdatePositionSuggestDto,
 } from '@/types/api/dtos.type';
 import {
+  CreateMemberPortfolioBody,
   FetchCheckNicknameResponse,
   FetchMemberFollowingsParams,
   FetchMemberFollowingsResponse,
@@ -18,10 +17,8 @@ import {
   FetchPositionSuggestResponse,
   FetchReceivePositionSuggestsParams,
   FetchReceivePositionSuggestsResponse,
-  FetchRecruitByMemberResponse,
   FetchRegionAuthResponse,
-  FetchSendPositionSuggestsParams,
-  FetchSendPositionSuggestsResponse,
+  Portfolio,
 } from '@/types/api/member.type';
 import { DeleteResponse, PostResponse } from '@/types/common';
 import request from './request';
@@ -38,20 +35,8 @@ export const fetchMemberInfoByEmail = (email: string) => {
   return request.get<FetchMemberInfoByEmailResponse>(`/member/check/email/${email}`);
 };
 
-export const fetchCheckNickname = (nickname: string) => {
-  return request.get<FetchCheckNicknameResponse>(`/member/check/nickname/${nickname}`);
-};
-
 export const fetchMemberMyInfo = () => {
   return request.get<FetchMemberMyInfoResponse>('/member/my');
-};
-
-// TODO: Response 타입 추가
-// TODO: data 타입 확인
-export const updateProfile = (data: FormData) => {
-  return request.patch('/member/profile', data, {
-    headers: { 'content-type': 'multipart/form-data' },
-  });
 };
 
 export const createRegionAuth = (data: CreateRegionAuthDto) => {
@@ -76,47 +61,8 @@ export const createMemberLicence = (data: FormData) => {
   });
 };
 
-// TODO: Response 타입 추가
 export const cancelMemberLicence = (seq: number) => {
   return request.patch(`/member/licence/${seq}`);
-};
-
-export const createReview = (data: CreateMemberReputationDto) => {
-  return request.post<PostResponse>('/member/reputation', data);
-};
-
-// TODO: Response 타입 추가
-export const updateMemberReputation = (seq: number, data: UpdateMemberReputationDto) => {
-  return request.patch(`/member/reputation/${seq}`, data);
-};
-
-export const fetchReceivePositionSuggests = (params?: FetchReceivePositionSuggestsParams) => {
-  return request.get<FetchReceivePositionSuggestsResponse>('/member/suggest/to', { params });
-};
-
-export const fetchSendPositionSuggests = (params?: FetchSendPositionSuggestsParams) => {
-  return request.get<FetchSendPositionSuggestsResponse>('/member/suggest/from', { params });
-};
-
-export const fetchPositionSuggest = (seq: number) => {
-  return request.get<FetchPositionSuggestResponse>(`/member/suggest/${seq}`);
-};
-
-// TODO: Response 타입 추가
-export const updatePositionSuggestStatus = (seq: number, data: UpdatePositionSuggestDto) => {
-  return request.patch(`/member/suggest/${seq}`, data);
-};
-
-export const fetchMemberFollowings = ({ type }: FetchMemberFollowingsParams) => {
-  return request.get<FetchMemberFollowingsResponse>(`/member/following/${type}`);
-};
-
-export const fetchMemberInfoBySeq = (seq: number) => {
-  return request.get<FetchMemberInfoBySeqResponse>(`/member/${seq}`);
-};
-
-export const fetchRecruitByMember = (seq: number) => {
-  return request.get<FetchRecruitByMemberResponse>(`/member/${seq}/recruit`);
 };
 
 const ENDPOINT = '/member';
@@ -177,6 +123,14 @@ export const memberApi = {
   },
   unfollow: async (memberId: number) => {
     const response = await request.delete<DeleteResponse>(`${ENDPOINT}/follow/${memberId}`);
+    return response.data;
+  },
+  getPortfolioList: async () => {
+    const response = await request.get<Portfolio[]>(`${ENDPOINT}/portfolio`);
+    return response.data;
+  },
+  createPortfolio: async (body: CreateMemberPortfolioBody) => {
+    const response = await request.post<PostResponse>(`${ENDPOINT}/portfolio`, body);
     return response.data;
   },
 };

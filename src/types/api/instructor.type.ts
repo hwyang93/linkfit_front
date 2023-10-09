@@ -5,7 +5,7 @@ export interface FetchInstructorsParams {
   noPaging?: boolean;
   curPage?: number;
   perPage?: number;
-  fields?: string;
+  fields?: string[];
 }
 
 export type Instructor = {
@@ -28,6 +28,7 @@ export interface FetchInstructorResponse {
   nickname: string;
   address: string;
   intro: string;
+  field: string;
   career: string;
   links: MemberLinkEntity[];
   follower: string;

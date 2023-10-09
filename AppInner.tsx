@@ -41,7 +41,7 @@ export type LoggedInParamList = {
   ResumeManage: undefined;
   ResumeCreate: undefined;
   ResumeEdit: { resumeId: number };
-  ResumePreview: { resumeSeq: number; applySeq: any; recruitSeq: any };
+  ResumePreview: { resumeSeq: number; applySeq?: number; recruitSeq?: number };
   ReviewManage: undefined;
   ReviewCreate: undefined;
   ReviewEdit: { reviewId: number };

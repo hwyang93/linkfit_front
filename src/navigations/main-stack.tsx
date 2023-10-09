@@ -41,6 +41,7 @@ import { ProfileEditScreen } from '@/screen/my/profile-edit.screen';
 import { ReceivedPositionSuggestionDetailScreen } from '@/screen/my/received-position-suggestion-detail.screen';
 import { ReceivedPositionSuggestionListScreen } from '@/screen/my/received-position-suggestion-list.screen';
 import { ResumeCreateScreen } from '@/screen/my/resume-create.screen';
+import { ResumeEditScreen } from '@/screen/my/resume-edit.screen';
 import { ResumeManageScreen } from '@/screen/my/resume-manange.screen';
 import { ResumePreviewScreen } from '@/screen/my/resume-preview.screen';
 import { ReviewCreateScreen } from '@/screen/my/review-create.screen';
@@ -280,7 +281,12 @@ export const MainStack = () => {
           options={{ title: '이력서' }}
         />
         <Stack.Screen
-          name={ROUTE.MY.RESUME_PREVIEW}
+          name={ROUTE.MY.RESUME_EDIT}
+          component={ResumeEditScreen}
+          options={{ title: '이력서 수정' }}
+        />
+        <Stack.Screen
+          name={ROUTE.RESUME.PREVIEW}
           component={ResumePreviewScreen}
           options={{
             title: '이력서 미리보기',

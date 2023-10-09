@@ -45,8 +45,7 @@ export const ProfileScreen = ({ route }: Props) => {
         <ScrollView contentContainerStyle={{ padding: 16, paddingBottom: 32 }}>
           <InstructorProfile
             nickname={data.nickname}
-            // TODO: 필드 데이터 연동
-            field="필라테스"
+            field={data.field}
             career={data.career}
             address={data.address}
             followerCount={data.follower}

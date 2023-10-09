@@ -102,7 +102,7 @@ export const MyRecruitmentScreen = ({ navigation }: Props) => {
   };
 
   const handleMyRecruitmentListItemPress = (recruitSeq: number) => {
-    navigation.navigate('ApplicantStatus', {
+    navigation.navigate(ROUTE.MY.APPLICANT_STATUS, {
       recruitSeq,
     });
   };

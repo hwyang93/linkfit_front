@@ -1,92 +1,69 @@
+import BottomSheet from '@/components/Common/BottomSheet';
 import Chip from '@/components/Common/Chip';
 import CTAButton from '@/components/Common/CTAButton';
 import { useRecruitApplicationList } from '@/hooks/recruit/use-recruit-application-list';
+import { useUpdateRecruitApplyStatus } from '@/hooks/recruit/use-update-recruit-apply-status';
 import { useResume } from '@/hooks/resume/use-resume';
+import useAuth from '@/hooks/use-auth';
+import useModal from '@/hooks/use-modal';
 import { MEMBER_TYPE } from '@/lib/constants/enum';
 import { ROUTE } from '@/lib/constants/route';
 import { iconPath } from '@/lib/iconPath';
-import { useAppSelector } from '@/store';
-import { updateRecruitApplyStatus } from '@api/recruit';
-import Modal from '@components/ModalSheet';
-import toast from '@hooks/toast';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { BLUE, GRAY, WHITE } from '@styles/colors';
 import common from '@styles/common';
-import { useCallback, useState } from 'react';
 import { Image, Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { LoggedInParamList } from '../../../AppInner';
 
-type Props = NativeStackScreenProps<LoggedInParamList, typeof ROUTE.MY.RESUME_PREVIEW>;
+type Props = NativeStackScreenProps<LoggedInParamList, typeof ROUTE.RESUME.PREVIEW>;
 
 export const ResumePreviewScreen = ({ route, navigation }: Props) => {
-  const [loading, setLoading] = useState(false);
-  const [modalVisible, setModalVisible] = useState(false);
-  const [modalTitle, setModalTitle] = useState('');
-  const [modalData, setModalData] = useState<any[]>([]);
-  const [resume, setResume] = useState<any>({});
-  const [applyResult, setApplyResult] = useState('');
-  const [application, setApplication] = useState<any>({});
+  const { user } = useAuth();
 
-  const memberInfo = useAppSelector((state) => state.user);
+  const recruitApplicationQuery = useRecruitApplicationList(route.params.applySeq || 0, {
+    enabled: !!route.params.applySeq,
+  });
+  console.log('recruitApplicationQuery', recruitApplicationQuery.data);
 
-  const recruitApplicationQuery = useRecruitApplicationList(route.params.applySeq);
+  const applyResult = recruitApplicationQuery.data?.recruit.status;
 
   const resumeQuery = useResume(route.params.resumeSeq);
 
-  const onUpdatePassOrNot = useCallback(
-    (status: string) => {
-      updateRecruitApplyStatus(route.params.applySeq, { status: status })
-        .then(() => {
-          setLoading(true);
-          toast.success({ message: '합격 여부 전달이 완료되었어요!' });
-          navigation.navigate('ApplicantStatus', {
-            recruitSeq: route.params.recruitSeq,
-          });
-          setLoading(false);
-        })
-        .catch((error) => {
-          setLoading(false);
-          toast.error({ message: error.message });
-        });
-    },
-    [navigation, route.params.applySeq, route.params.recruitSeq],
-  );
+  const resume = resumeQuery.data;
 
-  const MODAL = [
-    {
-      value: '합격',
-      job: () => {
-        onUpdatePassOrNot('PASS');
+  const updateRecruitApplyStatusMutation = useUpdateRecruitApplyStatus();
+
+  const passOrNotModal = useModal();
+
+  const onUpdatePassOrNot = async (status: string) => {
+    if (!route.params.applySeq || !route.params.recruitSeq) return;
+
+    updateRecruitApplyStatusMutation.mutate(
+      {
+        seq: route.params.applySeq,
+        body: { status: status },
       },
-    },
-    {
-      value: '불합격',
-      job: () => {
-        onUpdatePassOrNot('FAIL');
+      {
+        onSuccess: () =>
+          navigation.navigate(ROUTE.MY.APPLICANT_STATUS, {
+            recruitSeq: route.params.recruitSeq!,
+          }),
       },
-    },
-  ];
-
-  const passModal = () => {
-    setModalTitle('합격 여부를 전달하세요.');
-    setModalData(MODAL);
-    openModal();
-  };
-
-  const openModal = () => {
-    setModalVisible(true);
+    );
   };
 
   const toReview = () => {
-    const params = {
-      recruitSeq: application.recruitSeq,
-      evaluationMemberSeq: memberInfo.seq,
-      targetMemberSeq: application.memberSeq,
-    };
+    // const params = {
+    //   recruitSeq: application.recruitSeq,
+    //   evaluationMemberSeq: memberInfo.seq,
+    //   targetMemberSeq: application.memberSeq,
+    // };
     // TODO: 기능 추가
     navigation.navigate(ROUTE.MY.REVIEW_EDIT, { reviewId: 1 });
   };
+
+  if (!resume) return null;
 
   return (
     <SafeAreaView edges={['left', 'right']} style={styles.container}>
@@ -180,30 +157,18 @@ export const ResumePreviewScreen = ({ route, navigation }: Props) => {
         </View>
         {applyResult === 'APPLY' && (
           <View style={common.mt20}>
-            <CTAButton label="합격 여부 전달하기" loading={loading} onPress={passModal} />
+            <CTAButton label="합격 여부 전달하기" onPress={passOrNotModal.open} />
           </View>
         )}
         {applyResult === 'PASS' && (
           <View style={common.mt20}>
-            <CTAButton label="후기 작성하기" loading={loading} onPress={toReview} />
+            <CTAButton label="후기 작성하기" onPress={toReview} />
           </View>
         )}
-        <Modal
-          modalVisible={modalVisible}
-          setModalVisible={setModalVisible}
-          title={modalTitle}
-          modalData={modalData}
-          type={'button'}
-          content={
-            <View>
-              {MODAL.map((item, index) => (
-                <View key={index} style={[common.modalItemBox, { paddingVertical: 8 }]}>
-                  <CTAButton label={item.value} loading={loading} onPress={item.job} />
-                </View>
-              ))}
-            </View>
-          }
-        />
+        <BottomSheet visible={passOrNotModal.visible} onDismiss={passOrNotModal.close}>
+          <CTAButton label="합격" />
+          <CTAButton label="불합격" />
+        </BottomSheet>
       </ScrollView>
     </SafeAreaView>
   );

@@ -78,4 +78,8 @@ export const recruitApi = {
     const response = await request.get<FetchRecommendedRecruitsResponse>(`${ENDPOINT}/recommended`);
     return response.data;
   },
+  updateRecruitApplyStatus: async ({ seq, body }: { seq: number; body: UpdateRecruitApplyDto }) => {
+    const response = await request.patch<PostResponse>(`${ENDPOINT}/${seq}/apply`, body);
+    return response.data;
+  },
 };
